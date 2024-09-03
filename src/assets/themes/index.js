@@ -36,25 +36,54 @@ const theme = createTheme({
             red300: "#E63232", // SP-Red-300
             red400: "#CC2D2D", // SP-Red-400
         },
+        cardBorder: "#C8C8C8",
+        action: {
+            hover: "#E5F3FF",
+            selected: "#D8ECFF",
+        },
     },
     typography: {
-        fontFamily: "Poppins, Arial, sans-serif",
+        fontFamily: "DM Sans, Arial, sans-serif",
         h1: {
             fontSize: "2.5rem", // Default size ( 40px )
+            fontFamily: "Poppins, Arial, sans-serif",
             "@media (max-width:480px)": {
                 fontSize: "2rem", // Mobile size ( 32px )
             },
         },
         h2: {
             fontSize: "2rem", // Default size ( 32px )
+            fontFamily: "Poppins, Arial, sans-serif",
             "@media (max-width:480px)": {
                 fontSize: "1.5rem", // Mobile size ( 24px )
             },
         },
         h3: {
             fontSize: "1.5rem", // Default size ( 24px )
+            fontFamily: "Poppins, Arial, sans-serif",
             "@media (max-width:480px)": {
                 fontSize: "1rem", // Mobile size ( 16px )
+            },
+        },
+        h4: {
+            fontSize: "1.125rem", // Default size ( 20px )
+            fontFamily: "Poppins, Arial, sans-serif",
+            "@media (max-width:480px)": {
+                fontSize: "1rem", // Mobile size ( 16px )
+            },
+        },
+        h5: {
+            fontSize: "1.rem", // Default size ( 16px )
+            fontFamily: "Poppins, Arial, sans-serif",
+            "@media (max-width:480px)": {
+                fontSize: "0.875rem", // Mobile size ( 14px )
+            },
+        },
+        h6: {
+            fontSize: "0.875rem", // Default size ( 14px )
+            fontFamily: "Poppins, Arial, sans-serif",
+            "@media (max-width:480px)": {
+                fontSize: "0.625rem", // Mobile size ( 12px )
             },
         },
         body1: {
@@ -75,10 +104,31 @@ const theme = createTheme({
                 fontSize: "0.5rem", // Mobile size ( 10px )
             },
         },
+        sidebarItems: {
+            fontSize: "0.75rem", // Default size ( 12px )
+            "@media (max-width:480px)": {
+                fontSize: "0.5rem", // Mobile size ( 10px )
+            },
+        },
+    },
+    fontWeight: {
+        default: 400,
+        semiBold: 500,
+        bold: 600,
+        extraBold: 700,
     },
     shape: {
-        borderRadius: "100px",
+        borderRadius: {
+            input: "8px",
+            card: "12px",
+            section: "16px",
+            btn: "100px",
+        },
     },
+    shadows: {
+        default: "#E2E2E2 0px 4px 10px",
+    },
+
     breakpoints: {
         values: {
             xs: 320, // Mobile devices (small screens)
