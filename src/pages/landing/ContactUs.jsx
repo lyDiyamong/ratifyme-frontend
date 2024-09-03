@@ -16,10 +16,10 @@ const ContactUs = () => {
             sx={{
                 borderRadius: theme.shape.borderRadius.section,
                 boxShadow: theme.shadows.default,
-                mt: 4,
+                my: 8,
             }}
         >
-            <Grid>
+            <Grid container spacing={4}>
                 <Grid
                     component="form"
                     item
