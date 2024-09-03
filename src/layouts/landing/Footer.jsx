@@ -1,3 +1,4 @@
+// MUI import
 import {
     Box,
     Typography,
@@ -7,22 +8,27 @@ import {
     List,
     ListItem,
 } from "@mui/material";
+
+// React Router library import
 import { Link } from "react-router-dom";
+
+// Icons and Images import
 import VerifyMeLogo from "../../assets/images/VerifyME-Logo.svg";
-import Facebook from "../../assets/icons/facebok-svg.svg";
-import Instagram from "../../assets/icons/instagram-svg.svg";
-import LinkedIn from "../../assets/icons/logos_linkedin-icon.svg";
+import Facebook from "../../assets/icons/facebook.svg";
+import Instagram from "../../assets/icons/instagram.svg";
+import LinkedIn from "../../assets/icons/linkedin.svg";
+
+// Config themes import
 import theme from "../../assets/themes";
 
 const Footer = () => {
-
     // Copyright item style
     const copyrightItem = {
         textDecoration: "none",
         color: theme.palette.text.disabled,
     };
 
-    // Sub List ite style
+    // Sub List item style
     const SubListItemStyle = {
         padding: "0px",
         fontStyle: theme.typography.fontFamily,
@@ -37,8 +43,39 @@ const Footer = () => {
         fontSize: `${theme.typography.body1.fontSize}`,
     };
 
+    //============ start mapping the dubplicate section ============
+    // Learn More section mapping
+    const learnMoreLinks = [
+        { to: "/", text: "About Us" },
+        { to: "/", text: "Support" },
+        { to: "/", text: "Careers" },
+        { to: "/", text: "For Developers" },
+    ];
+
+    // Other Solutions section mapping
+    const otherSolutionsLinks = [
+        { to: "/", text: "Tech A Workforce" },
+        { to: "/", text: "Help" },
+    ];
+
+    // Social Media section mapping
+    const socialMediaLinks = [
+        { src: Facebook, alt: "Facebook" },
+        { src: Instagram, alt: "Instagram" },
+        { src: LinkedIn, alt: "LinkedIn" },
+    ];
+
+    // Copyright section mapping
+    const copyrightLinks = [
+        { to: "/", text: "Terms of Use" },
+        { to: "/", text: "Privacy Policy" },
+        { to: "/", text: "Cookies" },
+    ];
+    //============ end mapping the dubplicate section ============
+
     return (
         <Box sx={{ bgcolor: "inherit", py: 2 }}>
+            {/* ============ start main footer ============ */}
             <Container
                 maxWidth={false}
                 sx={{ maxWidth: "1600px", mx: "auto", py: 1, mb: 3 }}
@@ -49,13 +86,13 @@ const Footer = () => {
                     sx={{ display: "flex", justifyContent: "space-between" }}
                 >
                     <Grid item xs={12} md={3}>
-                        <Link to={"/"}>
+                        <Link to="/">
                             <Box
                                 component="img"
                                 sx={{
                                     width: 140,
                                 }}
-                                alt="The house from the offer."
+                                alt="VerifyME Logo"
                                 src={VerifyMeLogo}
                             />
                         </Link>
@@ -82,29 +119,13 @@ const Footer = () => {
                         </Typography>
 
                         <List>
-                            <ListItem sx={SubListItemStyle}>
-                                <Link to="/" style={linkItemStyle}>
-                                    About Us
-                                </Link>
-                            </ListItem>
-
-                            <ListItem sx={SubListItemStyle}>
-                                <Link to="/" style={linkItemStyle}>
-                                    Support
-                                </Link>
-                            </ListItem>
-
-                            <ListItem sx={SubListItemStyle}>
-                                <Link to="/" style={linkItemStyle}>
-                                    Careers
-                                </Link>
-                            </ListItem>
-
-                            <ListItem sx={SubListItemStyle}>
-                                <Link to="/" style={linkItemStyle}>
-                                    For Developers
-                                </Link>
-                            </ListItem>
+                            {learnMoreLinks.map((link, index) => (
+                                <ListItem key={index} sx={SubListItemStyle}>
+                                    <Link to={link.to} style={linkItemStyle}>
+                                        {link.text}
+                                    </Link>
+                                </ListItem>
+                            ))}
                         </List>
                     </Grid>
                     <Grid item xs={6} md={2}>
@@ -119,15 +140,13 @@ const Footer = () => {
                             Other Solutions
                         </Typography>
                         <List>
-                            <ListItem sx={SubListItemStyle}>
-                                <Link style={linkItemStyle} >
-                                    Tech A Workforce
-                                </Link>
-                            </ListItem>
-
-                            <ListItem sx={SubListItemStyle}>
-                                <Link style={linkItemStyle}>Help</Link>
-                            </ListItem>
+                            {otherSolutionsLinks.map((link, index) => (
+                                <ListItem key={index} sx={SubListItemStyle}>
+                                    <Link to={link.to} style={linkItemStyle}>
+                                        {link.text}
+                                    </Link>
+                                </ListItem>
+                            ))}
                         </List>
                     </Grid>
                     <Grid item xs={12} md={3}>
@@ -143,38 +162,18 @@ const Footer = () => {
                         </Typography>
 
                         <List sx={{ display: "flex", gap: 2 }}>
-                            <Link sx={linkItemStyle}>
-                                <Box
-                                    component="img"
-                                    sx={{
-                                        width: 30,
-                                    }}
-                                    alt="The house from the offer."
-                                    src={Facebook}
-                                />
-                            </Link>
-
-                            <Link sx={linkItemStyle}>
-                                <Box
-                                    component="img"
-                                    sx={{
-                                        width: 30,
-                                    }}
-                                    alt="The house from the offer."
-                                    src={Instagram}
-                                />
-                            </Link>
-
-                            <Link sx={linkItemStyle}>
-                                <Box
-                                    component="img"
-                                    sx={{
-                                        width: 30,
-                                    }}
-                                    alt="The house from the offer."
-                                    src={LinkedIn}
-                                />
-                            </Link>
+                            {socialMediaLinks.map((link, index) => (
+                                <Link key={index} sx={linkItemStyle}>
+                                    <Box
+                                        component="img"
+                                        sx={{
+                                            width: 30,
+                                        }}
+                                        alt={link.alt}
+                                        src={link.src}
+                                    />
+                                </Link>
+                            ))}
                         </List>
                         <Typography variant="body2" color="text.disabled">
                             Join the{" "}
@@ -187,19 +186,21 @@ const Footer = () => {
                                 }}
                             >
                                 VerifyME
-                            </Typography>
+                            </Typography>{" "}
                             revolution. Follow us on [Social media platforms]
                             for updates and insights.
                         </Typography>
                     </Grid>
                 </Grid>
             </Container>
+            {/* ============ end main footer ============ */}
 
             <Divider
                 maxWidth={false}
                 sx={{ maxWidth: "1600px", mx: "auto", py: 1, mb: 3 }}
             />
 
+            {/* ============ start copyright section ============ */}
             <Box sx={{ bgcolor: "inherit", color: "inherit", py: 1, mt: 2 }}>
                 <Container
                     maxWidth={false}
@@ -208,7 +209,7 @@ const Footer = () => {
                     <Typography
                         variant="body2"
                         sx={{
-                            display: { xs: "block", sm: "flex" }, // Disable flex below 538px
+                            display: { xs: "block", sm: "flex" },
                             alignItems: "center",
                             justifyContent: "space-between",
                             color: "text.disabled",
@@ -231,14 +232,18 @@ const Footer = () => {
                                 gap: 4,
                             }}
                         >
-                            <Link style={copyrightItem}>Terms of Use</Link>
-                            <Link style={copyrightItem}>Privacy Policy</Link>
-                            <Link style={copyrightItem}>Cookies</Link>
+                            {copyrightLinks.map((link, index) => (
+                                <Link key={index} to={link.to} style={copyrightItem}>
+                                    {link.text}
+                                </Link>
+                            ))}
                         </List>
                     </Typography>
                 </Container>
             </Box>
+            {/* ============ end copyright section ============ */}
         </Box>
+        // ============ end footer ============
     );
 };
 
