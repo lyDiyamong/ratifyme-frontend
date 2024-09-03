@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
-import verifyMe from "../../assets/images/VerifyME-Logo.svg";
+import VerifyMeLogo from "../../assets/images/VerifyME-Logo.svg";
 import { useTheme } from "@emotion/react";
 
 // Custom hook for hiding the navbar on scroll down and showing on scroll up
@@ -92,26 +92,21 @@ function Navbar() {
                                         width: 120,
                                     }}
                                     alt="The house from the offer."
-                                    src={verifyMe}
+                                    src={VerifyMeLogo}
                                 />
                             </Link>
                         </Box>
                         <Box
                             sx={{
                                 display: {
-                                    xs: "none",
+                                    xss: "none",
                                     md: "flex",
                                     gap: "100px",
                                 },
                             }}
                         >
                             <Box display={"flex"} gap={2}>
-                                <Link
-                                    to="/price"
-                                    // sx={{
-                                    //     borderRadius: "0px",
-                                    // }}
-                                >
+                                <Link to="/price">
                                     <Button sx={buttonStyle}>Price</Button>
                                 </Link>
                                 <Link to="/contactus">
@@ -135,10 +130,8 @@ function Navbar() {
                                     <Button
                                         variant="contained"
                                         sx={{
-                                            borderRadius:
-                                                theme.shape.borderRadius.btn,
-                                            color: theme.palette.text
-                                                .contrastText,
+                                            borderRadius: theme.shape.borderRadius.btn,
+                                            color: theme.palette.text.contrastText,
                                             fontWeight: theme.fontWeight.bold,
                                         }}
                                     >
@@ -177,8 +170,7 @@ function Navbar() {
                                 onClose={handleClose}
                                 sx={{
                                     "& .MuiPaper-root": {
-                                        borderRadius:
-                                            theme.shape.borderRadius.card,
+                                        borderRadius: theme.shape.borderRadius.card,
                                         boxShadow: theme.shadows.default,
                                         border: `1px solid ${theme.palette.text.light}`,
                                     },
@@ -186,20 +178,14 @@ function Navbar() {
                             >
                                 <MenuItem onClick={handleClose}>
                                     <Link to="/signup">
-                                        <Button
-                                            variant="text"
-                                            sx={menuResItem}
-                                        >
+                                        <Button variant="text" sx={menuResItem}>
                                             Price
                                         </Button>
                                     </Link>
                                 </MenuItem>
                                 <MenuItem onClick={handleClose}>
                                     <Link to="/signup">
-                                        <Button
-                                            variant="text"
-                                            sx={menuResItem}
-                                        >
+                                        <Button variant="text" sx={menuResItem}>
                                             Contact Us
                                         </Button>
                                     </Link>
@@ -209,11 +195,10 @@ function Navbar() {
                                         <Button
                                             variant="text"
                                             sx={{
-                                              borderRadius: "0px",
-                                              backgroundColor: "inherit",
-                                              fontWeight:
-                                                  theme.fontWeight.bold,
-                                          }}
+                                                borderRadius: "0px",
+                                                backgroundColor: "inherit",
+                                                fontWeight: theme.fontWeight.bold,
+                                            }}
                                         >
                                             Sign In
                                         </Button>
@@ -226,8 +211,7 @@ function Navbar() {
                                             sx={{
                                                 borderRadius: "0px",
                                                 backgroundColor: "inherit",
-                                                fontWeight:
-                                                    theme.fontWeight.bold,
+                                                fontWeight: theme.fontWeight.bold,
                                             }}
                                         >
                                             Sign Up
