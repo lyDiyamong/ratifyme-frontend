@@ -1,5 +1,4 @@
 import PriceCard from "../../components/PriceCard";
-// import ServiceDetail from "../../components/ServiceDetail";
 import theme from "../../assets/themes/index";
 import { Box, Paper, Typography } from "@mui/material";
 
@@ -46,7 +45,6 @@ const PricePage = () => {
             </Typography>
             <Box sx={{ width: "100%" }}>
                 <PriceCard />
-                {/* <ServiceDetail /> */}
             </Box>
         </Paper>
     );
