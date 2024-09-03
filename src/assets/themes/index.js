@@ -135,6 +135,7 @@ const theme = createTheme({
 
     breakpoints: {
         values: {
+            xss: 0,
             xs: 320, // Mobile devices (small screens)
             sm: 600, // Tablets and small screens
             md: 960, // Medium screens (e.g., small desktops)
