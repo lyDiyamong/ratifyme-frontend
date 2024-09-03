@@ -12,7 +12,13 @@ import { useTheme } from "@emotion/react";
 const ContactUs = () => {
     const theme = useTheme();
     return (
-        <Container>
+        <Container
+            sx={{
+                borderRadius: theme.shape.borderRadius.section,
+                boxShadow: theme.shadows.default,
+                mt: 4,
+            }}
+        >
             <Grid>
                 <Grid
                     component="form"
@@ -82,7 +88,34 @@ const ContactUs = () => {
                             id="outlined-required"
                             label="Profession"
                         ></TextField>
+                        <Typography variant="">
+                            We would like to contact you about our products that
+                            may be of interest to you.
+                        </Typography>
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            sx={{
+                                color: theme.palette.background.default,
+                                borderRadius: theme.shape.borderRadius.btn,
+                                my: 4, // Applying custom borderRadius to the input field
+                            }}
+                        >
+                            Submit
+                        </Button>
                     </Box>
+                </Grid>
+                <Grid item xs={12} md={7} order={{ xs: 1, md: 2 }}>
+                    <Box
+                        component="img"
+                        sx={{
+                            width: "100%",
+                            maxHeight: 600,
+                            maxWidth: 600,
+                        }}
+                        alt="contactus"
+                        src={ContactUsImg}
+                    />
                 </Grid>
             </Grid>
         </Container>

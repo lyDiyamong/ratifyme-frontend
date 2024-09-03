@@ -122,7 +122,7 @@ const theme = createTheme({
     shape: {
         borderRadius: {
             input: "8px",
-            card: "12px",
+            cardult: "12px",
             section: "16px",
             btn: "100px",
         },
