@@ -8,7 +8,7 @@ import {
   List,
   ListItem,
 } from "@mui/material";
-import verifyMe from "../../assets/images/VerifyME-Logo.svg";
+import VerifyMeLogo from "../../assets/images/VerifyME-Logo.svg";
 import Facebook from "../../assets/icons/facebok-svg.svg";
 import Instagram from "../../assets/icons/instagram-svg.svg";
 import Twiiter from "../../assets/icons/twitter-svg.svg";
@@ -54,7 +54,7 @@ const Footer = () => {
                               width: 160,
                           }}
                           alt="The house from the offer."
-                          src={verifyMe}
+                          src={VerifyMeLogo}
                       />
                       <Typography
                           variant="body2"
@@ -166,6 +166,50 @@ const Footer = () => {
                   </Grid>
               </Grid>
           </Container>
+
+          <Divider
+              maxWidth={false}
+              sx={{ maxWidth: "1600px", mx: "auto", py: 1, mb: 3 }}
+          />
+
+          <Box sx={{ bgcolor: "inherit", color: "inherit", py: 1, mt: 2 }}>
+              <Container
+                  maxWidth={false}
+                  sx={{ maxWidth: "1600px", mx: "auto", py: 1, mb: 3 }}
+              >
+                  <Typography
+                      variant="body2"
+                      sx={{
+                          display: { xs: "block", sm: "flex" }, // Disable flex below 538px
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          color: "text.disabled",
+                      }}
+                  >
+                      <Typography>
+                          © Copyright -{" "}
+                          <Typography
+                              component="span"
+                              sx={{ color: theme.palette.primary.main }}
+                          >
+                              Tech A
+                          </Typography>
+                      </Typography>
+
+                      <List
+                          sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 4,
+                          }}
+                      >
+                          <Link sx={copyrightItem}>Terms of Use</Link>
+                          <Link sx={copyrightItem}>Privacy Policy</Link>
+                          <Link sx={copyrightItem}>Cookies</Link>
+                      </List>
+                  </Typography>
+              </Container>
+          </Box>
       </Box>
   );
 };
