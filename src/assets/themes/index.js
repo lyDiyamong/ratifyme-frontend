@@ -18,6 +18,8 @@ const theme = createTheme({
             primary: "#0C0C0C", // text-primary
             secondary: "#ADADAD", // text-secondary
             disabled: "#707070", // text-secondary-2
+            light: "#E2E2E2", //light-secondary
+            contrastText: "#FFFFFF",
         },
         background: {
             default: "#F9FBFF", // bg-primary
