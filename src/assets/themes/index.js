@@ -121,16 +121,17 @@ const theme = createTheme({
         bold: 600,
         extraBold: 700,
     },
-    shape: {
-        borderRadius: {
-            input: "8px",
-            card: "12px",
-            section: "16px",
-            btn: "100px",
-        },
-    },
-    shadows: {
+    customShadows: {
         default: "#E2E2E2 0px 4px 10px",
+    },
+    shape: {
+        borderRadius: 8, // Default borderRadius
+    },
+    customShape: {
+        input: "8px",
+        card: "12px",
+        section: "16px",
+        btn: "100px",
     },
 
     breakpoints: {
