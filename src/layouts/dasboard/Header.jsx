@@ -36,7 +36,7 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
                     {isTablet && (
                         <FlexBetween
                             backgroundColor={theme.palette.customColors.white}
-                            borderRadius={theme.shape.borderRadius.btn}
+                            borderRadius='20px'
                             paddingLeft="24px"
                             width="30rem"
                             py="4px"
