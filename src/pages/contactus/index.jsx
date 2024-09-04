@@ -1,3 +1,7 @@
+//useTheme allow us to use theme that we have already constome in MUI
+import { useTheme } from "@emotion/react";
+
+//Import neccessary item in MUI
 import {
     Box,
     Container,
@@ -6,12 +10,15 @@ import {
     Button,
     TextField,
 } from "@mui/material";
-import ContactUsImg from "../../assets/images/contactUs.svg";
-import { useTheme } from "@emotion/react";
 
-const ContactUs = () => {
+//Import Contact Icon for Contact us page
+import ContactUsIcon from "../../assets/icons/contactUs.svg";
+
+// ============ Start Contact Us Page ============
+const ContactUsPage = () => {
     const theme = useTheme();
     return (
+        // Use Container to wrap the contact us form and contact us icon
         <Container
             sx={{
                 borderRadius: theme.shape.borderRadius.section,
@@ -23,8 +30,10 @@ const ContactUs = () => {
                 <Grid
                     component="form"
                     item
+                    // xs={12} and md={5} in here is working for responsive 
                     xs={12}
                     md={5}
+                    //order right here means that we want to give the position to the section
                     order={{ xs: 2, md: 1 }}
                 >
                     <Box>
@@ -97,8 +106,8 @@ const ContactUs = () => {
                             variant="contained"
                             sx={{
                                 color: theme.palette.background.default,
-                                borderRadius: theme.shape.borderRadius.btn,
-                                my: 4, // Applying custom borderRadius to the input field
+                                borderRadius: theme.shape.borderRadius.btn, // Applying custom borderRadius to the Button
+                                my: 4,
                             }}
                         >
                             Submit
@@ -114,7 +123,7 @@ const ContactUs = () => {
                             maxWidth: 600,
                         }}
                         alt="contactus"
-                        src={ContactUsImg}
+                        src={ContactUsIcon}
                     />
                 </Grid>
             </Grid>
@@ -122,4 +131,5 @@ const ContactUs = () => {
     );
 };
 
-export default ContactUs;
+export default ContactUsPage;
+// ============ Start Contact Us Page ============
