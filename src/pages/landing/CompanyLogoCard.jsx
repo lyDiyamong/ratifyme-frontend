@@ -1,8 +1,8 @@
 
-//Import Mui
+//Mui Import 
 import { Box, Card, CardContent, Grid } from "@mui/material";
 
-//Import Image
+//Image Import
 import AnB from "../../assets/images/AnB.svg";
 import Emcast from "../../assets/images/Emcast.svg";
 import TechA from "../../assets/images/TechA.svg";
@@ -88,7 +88,7 @@ const  LogoCards = () => {
                 }
              }}
             
-            >{/* ============ Start List of  LogoImage   ============ */}
+            >{/* Start List of  LogoImage    */}
                 {logoImage.map((card, index) => (
                     <Grid item key={index} paddingBottom="16px">
                         <InfoCard
@@ -97,7 +97,7 @@ const  LogoCards = () => {
                         />
                     </Grid>
                 ))}
-                {/* ============ End List of  LogoImage   ============ */}
+                {/*  End List of  LogoImage    */}
             </Grid>
         </Box>
         

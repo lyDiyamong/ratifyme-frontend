@@ -1,8 +1,8 @@
 
-//Import Mui
-
+//Mui Import 
 import { useTheme } from "@mui/material/styles";
 import { Box} from  "@mui/material";
+//Custom Import
 import LogoCards from "./CompanyLogoCard.jsx";
 
 
