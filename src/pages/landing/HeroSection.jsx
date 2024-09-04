@@ -1,15 +1,16 @@
-//Import React
-import React from "react";
-//Import Mui
+
+// Start Import Mui
 import { Box, Button, TextField } from  "@mui/material";
 import { useTheme } from "@mui/material/styles";
-//import Image
+// End Import Mui
+//Start import Image
 import Poster from "../../assets/images/Poster.svg";
+//End import Image
+
+const PosterHeroSvg = Poster;
 
 
 
-
-//Component Hero Section
 const HeroSection = () => {
 
     const theme = useTheme();
@@ -23,7 +24,7 @@ const HeroSection = () => {
             paddingTop = "32px"
             minHeight="613px"
         >
-            {/* ============ Start Hero Container  ============ */}
+            {/*  Start Hero Container  */}
             <Box
                 sx={{
                     maxWidth: "1200px",
@@ -47,7 +48,7 @@ const HeroSection = () => {
                             marginX: "15px",
                         },
                     }}
-                >{/* ============ Start Left Content Wrapper ============ */}
+                >{/* Start Left Content Wrapper */}
                     <Box
                         component="div"
                         sx={{
@@ -148,11 +149,11 @@ const HeroSection = () => {
                             </Button>
                         </Box>
                     </Box>
-                    {/* ============ End Left Content Wrapper ============ */}
-                    {/* ============ Start Right Content Wrapper ============ */}
+                    {/*  End Left Content Wrapper */}
+                    {/* Start Right Content Wrapper  */}
                     <Box
                         component="img"
-                        src={Poster}
+                        src={PosterHeroSvg}
                         alt="Hero"
                         sx={{
                             width: "100%",
@@ -168,9 +169,9 @@ const HeroSection = () => {
                         }}
                     />
                 </Box>
-                {/* ============ End Right Content Wrapper ============ */}
+                {/* End Right Content Wrapper  */}
             </Box>
-            {/* ============ End Hero Container  ============ */}
+            {/* End Hero Container  */}
         </Box> 
     );
     //============ End Hero Section  ============
