@@ -10,7 +10,7 @@ import TechA from "../../assets/images/TechA.svg";
 
 
 //LogoCards Component
-function LogoCards() {
+const  LogoCards = () => {
     //============ Start Card Data  ============
     const logoImage = [
         {
@@ -36,7 +36,7 @@ function LogoCards() {
     ];
     //============ End Card Data  ============
 
-    function InfoCard({ logoSrc, alt }) {
+    const  InfoCard = ({ logoSrc, alt }) => {
         return (
             //============ Start Logo Card  ============
             <Card

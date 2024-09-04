@@ -11,7 +11,7 @@ import LogoCards from "./CompanyLogoCard.jsx";
 
 
 //Our Customer Component
-function OurCustomer(){
+const  OurCustomer = () =>{
 
     const theme = useTheme();
     return (
