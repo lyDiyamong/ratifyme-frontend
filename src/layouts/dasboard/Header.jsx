@@ -1,5 +1,7 @@
-// Library import
+// React library import
 import React from "react";
+
+// MUI import 
 import { AppBar, IconButton, InputBase, Toolbar, useMediaQuery } from "@mui/material";
 import {
     Menu as MenuIcon,
@@ -20,7 +22,8 @@ const headerIcons = [<NotificationsNoneOutlined />, <AccountCircleOutlined />, <
  *
  *
  * @param {boolean} isSidebarOpen - prop to check action of sidebar
- * @return {boolean} setIsSidebarOpen - prop to set action of sidebar
+ * @param {boolean} setIsSidebarOpen - prop to set action of sidebar
+ * @return {JSX.Element} Render Header component
  */
 const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const theme = useTheme();
@@ -63,7 +66,7 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
                     )}
                     {!isTablet && (
                         <IconButton>
-                            <Search sx={{ fontSize: "28px", color: theme.palette.customColors.gray200 }} />
+                            <Search sx={{ fontSize: "28px", color: theme.palette.customColors.gray500 }} />
                         </IconButton>
                     )}
                 </FlexBetween>
