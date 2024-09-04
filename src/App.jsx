@@ -1,6 +1,7 @@
 // MUI Import
 import { ThemeProvider } from "@emotion/react";
 import { CssBaseline } from "@mui/material";
+import { BrowserRouter } from "react-router-dom";
 
 // Custom Import
 import theme from "./assets/themes";
@@ -13,8 +14,10 @@ const App = () => {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <LandingRouter />
-            <AuthRouter />
+            <BrowserRouter>
+                <LandingRouter />
+                <AuthRouter />
+            </BrowserRouter>
         </ThemeProvider>
     );
 };
