@@ -15,8 +15,9 @@ const theme = createTheme({
             contrastText: "#ADADAD", // text-secondary
         },
         text: {
-            primary: "#0C0C0C", // text-primary
-            secondary: "#ADADAD", // text-secondary
+            primary: "#0C0C0C", // text-primary.
+
+            secondary: "#637381", // text-secondary
             disabled: "#707070", // text-secondary-2
             light: "#E2E2E2", //light-secondary
             contrastText: "#FFFFFF",
@@ -37,7 +38,11 @@ const theme = createTheme({
             red200: "#ff3838", // SP-Red-200
             red300: "#E63232", // SP-Red-300
             red400: "#CC2D2D", // SP-Red-400
-            gray100: "#E2E2E2", // SP-Gray-100
+            gray100: 'rgba(178, 178, 178, 0.1)',
+            gray200: '#E2E2E2',
+            gray300: '#ADADAD',
+            gray500: '#637381',
+            gray600: '#1f1c2e',
             white: "#FFFFFF", //SP-White
         },
         cardBorder: "#C8C8C8",
@@ -117,20 +122,21 @@ const theme = createTheme({
     },
     fontWeight: {
         default: 400,
-        semiBold: 500,
+        semiBold: 700,
         bold: 600,
         extraBold: 700,
     },
-    shape: {
-        borderRadius: {
-            input: "8px",
-            card: "12px",
-            section: "16px",
-            btn: "100px",
-        },
-    },
-    shadows: {
+    customShadows: {
         default: "#E2E2E2 0px 4px 10px",
+    },
+    shape: {
+        borderRadius: 8, // Default borderRadius
+    },
+    customShape: {
+        input: "8px",
+        card: "12px",
+        section: "16px",
+        btn: "100px",
     },
 
     breakpoints: {
