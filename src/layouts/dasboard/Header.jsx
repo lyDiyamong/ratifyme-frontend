@@ -1,3 +1,4 @@
+// Library import
 import React from "react";
 import { AppBar, IconButton, InputBase, Toolbar, useMediaQuery } from "@mui/material";
 import {
@@ -9,14 +10,23 @@ import {
 } from "@mui/icons-material";
 import { useTheme } from "@emotion/react";
 
+// Custom Import
 import FlexBetween from "../../components/styles/FlexBetween";
 
+// Header icons
 const headerIcons = [<NotificationsNoneOutlined />, <AccountCircleOutlined />, <SettingsOutlined />];
 
+/**
+ *
+ *
+ * @param {boolean} isSidebarOpen - prop to check action of sidebar
+ * @return {boolean} setIsSidebarOpen - prop to set action of sidebar
+ */
 const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const theme = useTheme();
     const isTablet = useMediaQuery(theme.breakpoints.up("md"));
     return (
+        // ============ Start Appbar ============
         <AppBar
             sx={{
                 position: "static",
@@ -26,7 +36,7 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
             }}
         >
             <Toolbar sx={{ justifyContent: "space-between" }}>
-                {/* Left Side */}
+                {/* Start left side */}
                 <FlexBetween>
                     {!isSidebarOpen && (
                         <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
@@ -36,7 +46,7 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
                     {isTablet && (
                         <FlexBetween
                             backgroundColor={theme.palette.customColors.white}
-                            borderRadius='20px'
+                            borderRadius="20px"
                             paddingLeft="24px"
                             width="30rem"
                             py="4px"
@@ -57,15 +67,18 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
                         </IconButton>
                     )}
                 </FlexBetween>
+                {/* End left side */}
 
-                {/* Right Side  */}
+                {/* Start right side  */}
                 <FlexBetween>
                     {headerIcons.map((icon) => (
                         <IconButton>{icon}</IconButton>
                     ))}
                 </FlexBetween>
+                {/* End right side  */}
             </Toolbar>
         </AppBar>
+        // ============ End Appbar ============
     );
 };
 
