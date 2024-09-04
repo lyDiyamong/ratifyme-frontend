@@ -14,13 +14,16 @@ function HeroSection() {
 
     const theme = useTheme();
     return (
+        //============ Start Hero Section  ============
         <Box
             component="section"
             display="flex"
             justifyContent="center"
             alignItems="center"
+            paddingTop = "32px"
             minHeight="613px"
         >
+            {/* ============ Start Hero Container  ============ */}
             <Box
                 sx={{
                     maxWidth: "1200px",
@@ -44,7 +47,7 @@ function HeroSection() {
                             marginX: "15px",
                         },
                     }}
-                >
+                >{/* ============ Start Left Content Wrapper ============ */}
                     <Box
                         component="div"
                         sx={{
@@ -165,8 +168,10 @@ function HeroSection() {
                     />
                 </Box>
             </Box>
-        </Box>
+            {/* ============ End Hero Container  ============ */}
+        </Box> 
     );
+    //============ End Hero Section  ============
 }
 
 export default HeroSection;
