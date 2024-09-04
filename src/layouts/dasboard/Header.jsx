@@ -11,6 +11,8 @@ import { useTheme } from "@emotion/react";
 
 import FlexBetween from "../../components/styles/FlexBetween";
 
+const headerIcons = [<NotificationsNoneOutlined />, <AccountCircleOutlined />, <SettingsOutlined />];
+
 const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const theme = useTheme();
     const isTablet = useMediaQuery(theme.breakpoints.up("md"));
@@ -58,17 +60,9 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
                 {/* Right Side  */}
                 <FlexBetween>
-                    <IconButton>
-                        <NotificationsNoneOutlined
-                            sx={{ fontSize: "24px", color: theme.palette.customColors.gray200 }}
-                        />
-                    </IconButton>
-                    <IconButton>
-                        <AccountCircleOutlined sx={{ fontSize: "24px", color: theme.palette.customColors.gray200 }} />
-                    </IconButton>
-                    <IconButton>
-                        <SettingsOutlined sx={{ fontSize: "24px", color: theme.palette.customColors.gray200 }} />
-                    </IconButton>
+                    {headerIcons.map((icon) => (
+                        <IconButton>{icon}</IconButton>
+                    ))}
                 </FlexBetween>
             </Toolbar>
         </AppBar>
