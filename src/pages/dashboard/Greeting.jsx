@@ -2,7 +2,7 @@
 import { Box, Stack, Typography } from "@mui/material";
 
 // Custom theme
-import theme from "../assets/themes/index";
+import theme from "../../assets/themes/index";
 import GreetingIconSvg from "../assets/images/Greeting-illu.svg";
 
 const Greeting = () => {
