@@ -22,7 +22,7 @@ function SignupPage() {
 
     return (
         // ============ Start Container ============
-        <Container sx={{ my: 4 }}>
+        <Container disableGutters sx={{ my: 4 }}>
             {/* Start Grid container */}
             <Grid container spacing={4}>
                 {/* Start Signup section */}
@@ -30,6 +30,7 @@ function SignupPage() {
                     {/* Top text container */}
                     <Box mb={5}>
                         <Typography
+                        component="h4"
                             sx={{
                                 fontSize: theme.typography.h3,
                                 fontWeight: theme.fontWeight.bold,
