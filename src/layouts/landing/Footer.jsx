@@ -14,14 +14,14 @@ import { Link } from "react-router-dom";
 
 // Icons and Images import
 import VerifyMeLogo from "../../assets/images/VerifyME-Logo.svg";
-import Facebook from "../../assets/icons/facebook.svg";
-import Instagram from "../../assets/icons/instagram.svg";
-import LinkedIn from "../../assets/icons/linkedin.svg";
 
 // Config themes import
 import theme from "../../assets/themes";
 import LandingContainer from "../../components/styles/LandingContainer";
 import FlexBetween from "../../components/styles/FlexBetween";
+
+import {learnMoreLinks, otherSolutionsLinks, copyrightLinks, socialMediaLinks} from "../../data/footerData";
+
 
 const Footer = () => {
     // Copyright item style
@@ -45,40 +45,10 @@ const Footer = () => {
         fontSize: `${theme.typography.body1.fontSize}`,
     };
 
-    //============ start mapping the dubplicate section ============
-    // Learn More section mapping
-    const learnMoreLinks = [
-        { to: "/", text: "About Us" },
-        { to: "/", text: "Support" },
-        { to: "/", text: "Careers" },
-        { to: "/", text: "For Developers" },
-    ];
-
-    // Other Solutions section mapping
-    const otherSolutionsLinks = [
-        { to: "/", text: "Tech A Workforce" },
-        { to: "/", text: "Help" },
-    ];
-
-    // Social Media section mapping
-    const socialMediaLinks = [
-        { src: Facebook, alt: "Facebook" },
-        { src: Instagram, alt: "Instagram" },
-        { src: LinkedIn, alt: "LinkedIn" },
-    ];
-
-    // Copyright section mapping
-    const copyrightLinks = [
-        { to: "/", text: "Terms of Use" },
-        { to: "/", text: "Privacy Policy" },
-        { to: "/", text: "Cookies" },
-    ];
-    //============ end mapping the dubplicate section ============
-
     return (
         <LandingContainer>
             <Box sx={{ bgcolor: "inherit", py: 2 }}>
-                {/* ============ start main footer ============ */}
+                {/* ============ Start main footer ============ */}
                 <Container sx={{ py: "32px" }}>
                     <Grid
                         container
@@ -208,12 +178,12 @@ const Footer = () => {
                         </Grid>
                     </Grid>
                 </Container>
-                {/* ============ end main footer ============ */}
+                {/* ============ End main footer ============ */}
 
                 {/* Divder line */}
                 <Divider />
 
-                {/* ============ start copyright section ============ */}
+                {/* ============ Start copyright section ============ */}
                 <Box
                     sx={{ bgcolor: "inherit", color: "inherit", py: 1, mt: 2 }}
                 >
@@ -239,7 +209,7 @@ const Footer = () => {
                                 sx={{
                                     display: "flex",
                                     justifyContent: "space-between",
-                                    // alignItems: "center",
+                                    alignItems: "center",
                                     gap: 2,
                                     flexDirection: { xss: 'column', sm: 'row' },
                                 }}
@@ -258,9 +228,9 @@ const Footer = () => {
                         </FlexBetween>
                     </Container>
                 </Box>
-                {/* ============ end copyright section ============ */}
+                {/* ============ End copyright section ============ */}
             </Box>
-            {/* // ============ end footer ============ */}
+            {/* // ============ End footer ============ */}
         </LandingContainer>
     );
 };
