@@ -27,7 +27,7 @@ export default function WhatWeDo() {
                 variant="h2"
                 align="center"
                 gutterBottom
-                sx={{ fontWeight: 600, color: theme.palette.text.disabled }}
+                sx={{ fontWeight: 600, color: theme.palette.text.disabled, marginTop: '50px'}}
             >
                 What We Do
             </Typography>
@@ -68,7 +68,7 @@ export default function WhatWeDo() {
             {/* end first image and paragraph */}
 
             {/* start second image and paragraph */}
-            <Grid container spacing={4} alignItems="center" sx={{ mt: 4 }}>
+            <Grid container spacing={4} alignItems="center" sx={{ mt: 4}}>
                 <Grid
                     container
                     item

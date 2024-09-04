@@ -48,7 +48,7 @@ const Testimonial = () => {
             <Typography
                 variant="h2"
                 gutterBottom
-                sx={{ fontWeight: 600, color: theme.palette.text.disabled }}
+                sx={{ fontWeight: 600, color: theme.palette.text.disabled, display:'flex', justifyContent:'center', marginTop:'50px' }}
             >
                 What Our Clients Say
             </Typography>
