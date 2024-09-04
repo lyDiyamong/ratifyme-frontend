@@ -52,6 +52,20 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
         setActive(pathname.substring(1));
     }, [pathname]);
 
+    const drawerStyles = useMemo(
+        () => ({
+            width: drawerWidth,
+            "& .MuiDrawer-paper": {
+                boxSizing: "border-box",
+                borderWidth: isDesktop ? 0 : "2px",
+                width: drawerWidth,
+                borderRight: `1px solid ${theme.palette.divider}`,
+                boxShadow: isDesktop ? theme.shadows.default : "",
+                padding: "0 16px",
+            },
+        }),
+        [drawerWidth, isDesktop, theme.palette.divider],
+    );
 
     const handleNavigation = useCallback(
         (path) => {
