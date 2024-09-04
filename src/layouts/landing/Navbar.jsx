@@ -1,4 +1,8 @@
+// React import
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
+// MUI import
 import {
     AppBar,
     Box,
@@ -6,13 +10,14 @@ import {
     Button,
     Menu,
     MenuItem,
-    Container,
     Slide,
 } from "@mui/material";
-import { Link } from "react-router-dom";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
-import VerifyMeLogo from "../../assets/images/VerifyME-Logo.svg";
 import { useTheme } from "@emotion/react";
+
+//Images import
+import VerifyMeLogo from "../../assets/images/VerifyME-Logo.svg";
+import LandingContainer from "../../components/styles/LandingContainer";
 
 // Custom hook for hiding the navbar on scroll down and showing on scroll up
 function useHideOnScroll() {
@@ -42,6 +47,7 @@ function useHideOnScroll() {
 }
 
 function Navbar() {
+    // Burger menu function
     const [anchorEl, setAnchorEl] = useState(null);
     const show = useHideOnScroll();
 
@@ -53,6 +59,7 @@ function Navbar() {
         setAnchorEl(null);
     };
 
+    // ============ start config style ============
     const theme = useTheme();
 
     const buttonStyle = {
@@ -67,6 +74,7 @@ function Navbar() {
         color: `${theme.palette.text.primary}`,
         fontWeight: theme.fontWeight.bold,
     };
+    // ============ end config style ============
 
     return (
         <Slide appear={false} direction="down" in={show}>
@@ -79,10 +87,8 @@ function Navbar() {
                     borderRadius: "0px 0px 12px 12px",
                 }}
             >
-                <Container
-                    maxWidth={false}
-                    sx={{ maxWidth: "1600px", mx: "auto" }}
-                >
+                {/* ============ start Navbar ============ */}
+                <LandingContainer>
                     <Toolbar disableGutters sx={{ width: "100%" }}>
                         <Box flexGrow={1} display={"flex"}>
                             <Link to={"/"}>
@@ -96,6 +102,8 @@ function Navbar() {
                                 />
                             </Link>
                         </Box>
+
+                        {/* ============ start Menu navbar ============ */}
                         <Box
                             sx={{
                                 display: {
@@ -105,6 +113,7 @@ function Navbar() {
                                 },
                             }}
                         >
+                            {/* Menu */}
                             <Box display={"flex"} gap={2}>
                                 <Link to="/price">
                                     <Button sx={buttonStyle}>Price</Button>
@@ -114,6 +123,7 @@ function Navbar() {
                                 </Link>
                             </Box>
 
+                            {/* Sign In/Up buttons */}
                             <Box display={"flex"} gap={2}>
                                 <Link to="/login">
                                     <Button
@@ -130,8 +140,10 @@ function Navbar() {
                                     <Button
                                         variant="contained"
                                         sx={{
-                                            borderRadius: theme.shape.borderRadius.btn,
-                                            color: theme.palette.text.contrastText,
+                                            borderRadius:
+                                                theme.shape.borderRadius.btn,
+                                            color: theme.palette.text
+                                                .contrastText,
                                             fontWeight: theme.fontWeight.bold,
                                         }}
                                     >
@@ -140,8 +152,11 @@ function Navbar() {
                                 </Link>
                             </Box>
                         </Box>
+                        {/* ============ end Menu navbar ============ */}
 
+                        {/* ============ start Navbar responsive ============ */}
                         <Box sx={{ display: { xs: "flex", md: "none" } }}>
+                            {/* //Burger */}
                             <Button
                                 aria-controls="mobile-menu"
                                 aria-haspopup="true"
@@ -154,6 +169,8 @@ function Navbar() {
                                     color="primary"
                                 />
                             </Button>
+
+                            {/* ============ start Modal Responsive Menu ============ */}
                             <Menu
                                 id="mobile-menu"
                                 anchorEl={anchorEl}
@@ -170,7 +187,8 @@ function Navbar() {
                                 onClose={handleClose}
                                 sx={{
                                     "& .MuiPaper-root": {
-                                        borderRadius: theme.shape.borderRadius.card,
+                                        borderRadius:
+                                            theme.shape.borderRadius.card,
                                         boxShadow: theme.shadows.default,
                                         border: `1px solid ${theme.palette.text.light}`,
                                     },
@@ -197,7 +215,8 @@ function Navbar() {
                                             sx={{
                                                 borderRadius: "0px",
                                                 backgroundColor: "inherit",
-                                                fontWeight: theme.fontWeight.bold,
+                                                fontWeight:
+                                                    theme.fontWeight.bold,
                                             }}
                                         >
                                             Sign In
@@ -211,7 +230,8 @@ function Navbar() {
                                             sx={{
                                                 borderRadius: "0px",
                                                 backgroundColor: "inherit",
-                                                fontWeight: theme.fontWeight.bold,
+                                                fontWeight:
+                                                    theme.fontWeight.bold,
                                             }}
                                         >
                                             Sign Up
@@ -219,9 +239,12 @@ function Navbar() {
                                     </Link>
                                 </MenuItem>
                             </Menu>
+                            {/* ============ end Modal Responsive Menu ============ */}
                         </Box>
+                        {/* ============ end Navbar responsive ============ */}
                     </Toolbar>
-                </Container>
+                </LandingContainer>
+                {/* //============ end Navbar ============ */}
             </AppBar>
         </Slide>
     );
