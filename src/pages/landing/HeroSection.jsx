@@ -1,11 +1,10 @@
 
-// Start Import Mui
+// Mui Import 
 import { Box, Button, TextField } from  "@mui/material";
 import { useTheme } from "@mui/material/styles";
-// End Import Mui
-//Start import Image
+//Custom Import
 import Poster from "../../assets/images/Poster.svg";
-//End import Image
+
 
 const PosterHeroSvg = Poster;
 
