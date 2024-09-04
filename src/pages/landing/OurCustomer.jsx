@@ -1,5 +1,4 @@
-//Import React 
-import React from "react";
+
 //Import Mui
 
 import { useTheme } from "@mui/material/styles";
@@ -9,8 +8,6 @@ import LogoCards from "./CompanyLogoCard.jsx";
 
 
 
-
-//Our Customer Component
 const  OurCustomer = () =>{
 
     const theme = useTheme();

@@ -1,4 +1,3 @@
-//Import React 
 
 //Import Mui
 import { Box, Card, CardContent, Grid } from "@mui/material";
@@ -9,28 +8,32 @@ import Emcast from "../../assets/images/Emcast.svg";
 import TechA from "../../assets/images/TechA.svg";
 
 
-//LogoCards Component
+const AnBLogoSvg = AnB;
+const EmcastLogoSvg = Emcast;
+const TechALogoSvg = TechA;
+
+
 const  LogoCards = () => {
     //============ Start Card Data  ============
     const logoImage = [
         {
-            logoSrc: AnB,
+            logoSrc: AnBLogoSvg,
             alt: "AnB Logo"
         },
         {
-            logoSrc: Emcast,
+            logoSrc: EmcastLogoSvg,
             alt: "Emcast Logo"
         },
         {
-            logoSrc: TechA,
+            logoSrc: TechALogoSvg,
             alt: "TechA Logo"
         },
         {
-            logoSrc: Emcast,
+            logoSrc: EmcastLogoSvg,
             alt: "Emcast Logo"
         },
         {
-            logoSrc: AnB,
+            logoSrc: AnBLogoSvg,
             alt: "AnB Logo"
         },
     ];
