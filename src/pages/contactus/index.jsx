@@ -1,47 +1,46 @@
 //useTheme allow us to use theme that we have already constome in MUI
 import { useTheme } from "@emotion/react";
+import { useForm } from "react-hook-form";
 
 //Import neccessary item in MUI
-import {
-    Box,
-    Container,
-    Grid,
-    Typography,
-    Button,
-    TextField,
-} from "@mui/material";
+import { Box, Grid, Typography, Button } from "@mui/material";
 
 //Import Contact Icon for Contact us page
-import ContactUsIcon from "../../assets/icons/contactUs.svg";
+import LandingContainer from "../../components/styles/LandingContainer";
+import FormInput from "../../components/FormInput";
+
+import ContactUsIconSvg from "../../assets/icons/contactUs.svg";
 
 // ============ Start Contact Us Page ============
 const ContactUsPage = () => {
+    // for use theme costom
     const theme = useTheme();
+    // form controller
+    const { handleSubmit, control } = useForm();
+
+    // handle submission
+    const onSubmit = (data) => console.log(data);
+
     return (
         // Use Container to wrap the contact us form and contact us icon
-        <Container
-            sx={{
-                borderRadius: theme.shape.borderRadius.section,
-                boxShadow: theme.shadows.default,
-                my: 8,
-            }}
-        >
+        <LandingContainer sx={{ mt: 6 }}>
             <Grid container spacing={4}>
                 <Grid
                     component="form"
                     item
-                    // xs={12} and md={5} in here is working for responsive 
+                    // xs={12} and md={5} in here is working for responsive
                     xs={12}
                     md={5}
                     //order right here means that we want to give the position to the section
                     order={{ xs: 2, md: 1 }}
                 >
-                    <Box>
+                    <Box mb={5}>
                         <Typography
                             component="label"
                             sx={{
-                                fontWeight: theme.typography.fontWeightLight,
-                                fontSize: theme.typography.h3,
+                                fontSize: theme.typography.h2,
+                                fontWeight: theme.fontWeight.bold,
+                                lineHeight: 2,
                             }}
                         >
                             Contact Us
@@ -52,56 +51,48 @@ const ContactUsPage = () => {
                             here to help you:
                         </Typography>
                     </Box>
-                    <Box display="flex" flexDirection="column" gap={2}>
-                        <TextField
-                            sx={{
-                                "& .MuiOutlinedInput-root": {
-                                    borderRadius:
-                                        theme.shape.borderRadius.input, // Applying custom borderRadius to the input field
-                                },
-                            }}
-                            required
-                            id="outlined-required"
+                    <Box
+                        component="form"
+                        onSubmit={handleSubmit(onSubmit)}
+                        display="flex"
+                        flexDirection="column"
+                        gap={3}
+                        noValidate
+                    >
+                        <FormInput
+                            name="name"
                             label="Name"
-                        ></TextField>
-                        <TextField
-                            sx={{
-                                "& .MuiOutlinedInput-root": {
-                                    borderRadius:
-                                        theme.shape.borderRadius.input, // Applying custom borderRadius to the input field
-                                },
-                            }}
-                            required
-                            id="outlined-required"
+                            control={control}
+                            type="text"
+                            required={true}
+                        />
+                        <FormInput
                             label="Email"
-                        ></TextField>
-                        <TextField
-                            sx={{
-                                "& .MuiOutlinedInput-root": {
-                                    borderRadius:
-                                        theme.shape.borderRadius.input, // Applying custom borderRadius to the input field
-                                },
-                            }}
-                            required
-                            id="outlined-required"
+                            name="email"
+                            control={control}
+                            required={true}
+                            type="text"
+                        />
+                        <FormInput
+                            name="organization"
                             label="Organization Name"
-                        ></TextField>
-                        <TextField
-                            sx={{
-                                "& .MuiOutlinedInput-root": {
-                                    borderRadius:
-                                        theme.shape.borderRadius.input, // Applying custom borderRadius to the input field
-                                },
-                            }}
-                            required
-                            id="outlined-required"
+                            control={control}
+                            type="text"
+                            required={true}
+                        />
+                        <FormInput
+                            name="profession"
                             label="Profession"
-                        ></TextField>
+                            control={control}
+                            type="text"
+                            required={true}
+                        />
                         <Typography variant="">
                             We would like to contact you about our products that
                             may be of interest to you.
                         </Typography>
                         <Button
+                            type="submit"
                             fullWidth
                             variant="contained"
                             sx={{
@@ -123,11 +114,11 @@ const ContactUsPage = () => {
                             maxWidth: 600,
                         }}
                         alt="contactus"
-                        src={ContactUsIcon}
+                        src={ContactUsIconSvg}
                     />
                 </Grid>
             </Grid>
-        </Container>
+        </LandingContainer>
     );
 };
 
