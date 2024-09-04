@@ -15,8 +15,9 @@ const theme = createTheme({
             contrastText: "#ADADAD", // text-secondary
         },
         text: {
-            primary: "#0C0C0C", // text-primary
-            secondary: "#ADADAD", // text-secondary
+            primary: "#0C0C0C", // text-primary.
+
+            secondary: "#637381", // text-secondary
             disabled: "#707070", // text-secondary-2
             light: "#E2E2E2", //light-secondary
             contrastText: "#FFFFFF",
@@ -117,7 +118,7 @@ const theme = createTheme({
     },
     fontWeight: {
         default: 400,
-        semiBold: 500,
+        semiBold: 700,
         bold: 600,
         extraBold: 700,
     },

@@ -7,6 +7,7 @@ import { Box, Container, Grid, Typography, Button } from "@mui/material";
 // Custom Import
 import FormInput from "../../components/FormInput";
 import theme from "../../assets/themes";
+import LandingContainer from "../../components/styles/LandingContainer";
 
 // Img Import
 import SignupImgSvg from "../../assets/images/Signup-illu.svg";
@@ -22,7 +23,7 @@ function SignupPage() {
 
     return (
         // ============ Start Container ============
-        <Container disableGutters sx={{ my: 4 }}>
+        <LandingContainer sx={{mt : 6}}>
             {/* Start Grid container */}
             <Grid container spacing={4}>
                 {/* Start Signup section */}
@@ -32,8 +33,9 @@ function SignupPage() {
                         <Typography
                         component="h4"
                             sx={{
-                                fontSize: theme.typography.h3,
+                                fontSize: theme.typography.h2,
                                 fontWeight: theme.fontWeight.bold,
+                                lineHeight : 2
                             }}
                         >
                             Sign up
@@ -129,7 +131,7 @@ function SignupPage() {
                                 sx={{
                                     color: theme.palette.text.primary,
                                     fontWeight:
-                                        theme.typography.fontWeightMedium,
+                                        theme.fontWeight.bold,
                                 }}
                             >
                                 Log in
@@ -160,9 +162,7 @@ function SignupPage() {
                     />
                 </Grid>
             </Grid>
-            {/* End Grid container */}
-        </Container>
-        // ============ End Container ============
+        </LandingContainer>
     );
 }
 
