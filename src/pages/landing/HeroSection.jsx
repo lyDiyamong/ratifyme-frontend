@@ -4,6 +4,7 @@ import { Box, Button, TextField } from  "@mui/material";
 import { useTheme } from "@mui/material/styles";
 //Custom Import
 import Poster from "../../assets/images/Poster.svg";
+import LandingContainer from "../../components/styles/LandingContainer";
 
 
 const PosterHeroSvg = Poster;
@@ -24,10 +25,8 @@ const HeroSection = () => {
             minHeight="613px"
         >
             {/*  Start Hero Container  */}
-            <Box
-                sx={{
-                    maxWidth: "1200px",
-                }}
+            <LandingContainer
+                
             >
                 <Box
                     component="div"
@@ -169,7 +168,7 @@ const HeroSection = () => {
                     />
                 </Box>
                 {/* End Right Content Wrapper  */}
-            </Box>
+            </LandingContainer>
             {/* End Hero Container  */}
         </Box> 
     );
