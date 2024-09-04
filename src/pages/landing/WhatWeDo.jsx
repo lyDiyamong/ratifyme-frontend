@@ -24,6 +24,7 @@ export default function WhatWeDo () {
         <Grid item xs={12} md={6}>
          
 
+
         <Box component="img" src={WhatWeDoImg1} alt="What We Do" sx={{ width: '100%', borderRadius: '8px' } }  />
         </Grid>
         <Grid container item xs={12} md={6} gap={2.5}>
