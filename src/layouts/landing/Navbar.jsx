@@ -59,7 +59,7 @@ function Navbar() {
         setAnchorEl(null);
     };
 
-    // ============ start config style ============
+    // ============ Start config style ============
     const theme = useTheme();
 
     const buttonStyle = {
@@ -74,7 +74,7 @@ function Navbar() {
         color: `${theme.palette.text.primary}`,
         fontWeight: theme.fontWeight.bold,
     };
-    // ============ end config style ============
+    // ============ End config style ============
 
     return (
         <Slide appear={false} direction="down" in={show}>
@@ -87,7 +87,7 @@ function Navbar() {
                     borderRadius: "0px 0px 12px 12px",
                 }}
             >
-                {/* ============ start Navbar ============ */}
+                {/* ============ Start Navbar ============ */}
                 <LandingContainer>
                     <Toolbar disableGutters sx={{ width: "100%" }}>
                         <Box flexGrow={1} display={"flex"}>
@@ -103,7 +103,7 @@ function Navbar() {
                             </Link>
                         </Box>
 
-                        {/* ============ start Menu navbar ============ */}
+                        {/* ============ Start Menu navbar ============ */}
                         <Box
                             sx={{
                                 display: {
@@ -129,7 +129,7 @@ function Navbar() {
                                     <Button
                                         variant="outlined"
                                         sx={{
-                                            borderRadius: `${theme.shape.borderRadius.btn}`,
+                                            borderRadius: theme.shape.borderRadius.btn,
                                             fontWeight: theme.fontWeight.bold,
                                         }}
                                     >
@@ -152,9 +152,9 @@ function Navbar() {
                                 </Link>
                             </Box>
                         </Box>
-                        {/* ============ end Menu navbar ============ */}
+                        {/* ============ End Menu navbar ============ */}
 
-                        {/* ============ start Navbar responsive ============ */}
+                        {/* ============ Start Navbar responsive ============ */}
                         <Box sx={{ display: { xs: "flex", md: "none" } }}>
                             {/* //Burger */}
                             <Button
@@ -170,7 +170,7 @@ function Navbar() {
                                 />
                             </Button>
 
-                            {/* ============ start Modal Responsive Menu ============ */}
+                            {/* ============ Start Modal Responsive Menu ============ */}
                             <Menu
                                 id="mobile-menu"
                                 anchorEl={anchorEl}
@@ -239,12 +239,12 @@ function Navbar() {
                                     </Link>
                                 </MenuItem>
                             </Menu>
-                            {/* ============ end Modal Responsive Menu ============ */}
+                            {/* ============ End Modal Responsive Menu ============ */}
                         </Box>
-                        {/* ============ end Navbar responsive ============ */}
+                        {/* ============ End Navbar responsive ============ */}
                     </Toolbar>
                 </LandingContainer>
-                {/* //============ end Navbar ============ */}
+                {/*============ End Navbar ============ */}
             </AppBar>
         </Slide>
     );
