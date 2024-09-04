@@ -1,4 +1,7 @@
+// React Library Import
 import * as React from 'react';
+
+// MUI Import
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -8,7 +11,10 @@ import Grid from '@mui/material/Grid';
 import { Container } from '@mui/material';
 import Box from '@mui/material/Box';
 
-// Accordoin Data Obj
+// Custom Import
+import theme from "../../assets/themes/index"
+
+// <!-- ============ Start accordionData ============ -->
 const accordionData = [
     {   panel: 'panel1',
         title: 'How to create account',
@@ -39,32 +45,38 @@ const accordionData = [
         subtitle: '',
         content: 'Ad mollit fugiat aute commodo cupidatat sunt est qui aliqua mollit qui esse voluptate voluptate. Labore sit excepteur enim consectetur irure elit. Consequat velit nostrud nostrud ullamco incididunt do laborum labore labore incididunt enim velit.'
     },
+    {   panel: 'panel6',
+        title: 'Personal data',
+        subtitle: '',
+        content: 'Occaecat sunt consequat minim minim magna commodo dolore incididunt aliqua dolor anim sunt consequat. Laborum nostrud quis incididunt id et adipisicing anim nostrud deserunt. Eiusmod officia Lorem consequat irure adipisicing aute aliqua ad dolor laboris sit ut do. Magna aute ea Lorem reprehenderit exercitation aliquip mollit pariatur aliqua aute proident occaecat. Et fugiat voluptate esse aliqua ex cillum commodo fugiat mollit Lorem deserunt minim culpa. Lorem elit Lorem dolore quis Lorem proident proident. Pariatur incididunt cillum consequat pariatur laborum enim nisi commodo officia qui.'
+    },
   // Add more accordions as needed
 ];
-
+// <!-- ============ End accordionData ============ -->
+// <!-- ============ Start Faq Function ============ -->
 const Faq = () => {
-  // State to track which accordion is expanded
-  const [expanded, setExpanded] = React.useState(false);
-
-  // Handle the change of which accordion is expanded
-  const handleChange = (panel) => (event, isExpanded) => {
+    // State to track which accordion is expanded
+    const [expanded, setExpanded] = React.useState(false);
+    // Handle the change of which accordion is expanded
+    const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : true);
-  };
-
-  return (
-    <section>
-
-        <Container sx={{maxWidth:'1200px', mx:'auto'}}>
+    };
+    return (
+        <Container sx={{maxWidth:'1200px', width:"100%" , mx:'auto'}}>
             {/* Heading Section */}
-            <div>
                 <Box display="flex"
                     justifyContent="center"
                     alignItems="center">
-                    <h1>FAQ</h1>
+                        <Typography component="h1"
+                                    sx={{
+                                        fontSize: theme.typography.h1,
+                                        fontWeight: theme.fontWeight.bold,
+                                        margin: '41px' // Add this line to create the gap
+                                    }}>
+                                        FAQ
+                        </Typography>
                 </Box>
-            </div>
             {/* FAQ component */}
-            <div>
                 {/* Componet allignment with Gride */}
                 <Grid container spacing={2}>
                     {accordionData.map((item) => (
@@ -89,33 +101,30 @@ const Faq = () => {
                                 id={`${item.panel}bh-header`}
                                 >
                                     {/* Accordion Tittle */}
-                                    <Typography sx={{ width: '50%', flexShrink: 0 }}>
-                                        <h3>{item.title}</h3>
+                                    <Typography component="h3"
+                                                sx={{   fontSize:theme.typography.h3,
+                                                        fontWeight: theme.fontWeight.bold,
+                                                        width: '80%', flexShrink: 0 }}
+                                    >
+                                        {item.title}
                                     </Typography>
                                     {/* Accordion subtittle *NOTE - if have*/}
-                                    <Typography sx={{ color: 'text.secondary' }}>
+                                    <Typography sx={{ fontSize: theme.typography.sx }}>
                                         {item.subtitle}
                                     </Typography>
-
                                 </AccordionSummary>
                                 {/* Accordion Content Description */}
                                 <AccordionDetails>
-
                                     <Typography>
                                         {item.content}
                                     </Typography>
-
                                 </AccordionDetails>
                             </Accordion>
                         </Grid>
                     ))}
                 </Grid>
-            </div>
-
         </Container>
-    </section>
-
     );
 }
-
+// <!-- ============ End Faq Function ============ -->
 export default Faq
