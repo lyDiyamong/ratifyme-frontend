@@ -32,7 +32,7 @@ function SignupPage() {
                         <Typography
                             sx={{
                                 fontSize: theme.typography.h3,
-                                fontWeight: theme.typography.fontWeightMedium,
+                                fontWeight: theme.fontWeight.bold,
                             }}
                         >
                             Sign up
@@ -48,7 +48,7 @@ function SignupPage() {
                         onSubmit={handleSubmit(onSubmit)}
                         display="flex"
                         flexDirection="column"
-                        gap={2}
+                        gap={3}
                         noValidate // Reset to default
                     >
                         <FormInput
@@ -147,6 +147,7 @@ function SignupPage() {
                 </Grid>
                 {/* End Signup section */}
 
+                {/* Image Container */}
                 <Grid item xs={12} md={7} order={{ xs: 1, md: 2 }}>
                     <Box
                         component="img"
