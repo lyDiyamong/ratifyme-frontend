@@ -38,7 +38,11 @@ const theme = createTheme({
             red200: "#ff3838", // SP-Red-200
             red300: "#E63232", // SP-Red-300
             red400: "#CC2D2D", // SP-Red-400
-            gray100: "#E2E2E2", // SP-Gray-100
+            gray100: 'rgba(178, 178, 178, 0.1)',
+            gray200: '#E2E2E2',
+            gray300: '#ADADAD',
+            gray500: '#637381',
+            gray600: '#1f1c2e',
             white: "#FFFFFF", //SP-White
         },
         cardBorder: "#C8C8C8",
