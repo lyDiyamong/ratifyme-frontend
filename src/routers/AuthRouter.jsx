@@ -1,4 +1,7 @@
+// React library Import
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+// Component Import
 import AuthLayout from "../layouts/auth";
 import SignupPage from "../pages/auth/SignupPage";
 import LoginPage from "../pages/auth/LoginPage";
