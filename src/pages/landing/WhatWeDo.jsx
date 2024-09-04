@@ -9,14 +9,17 @@ import WhatWeDoImg1 from "../../assets/icons/WhatWeDoImg1.svg";
 import WhatWeDoImg2 from "../../assets/icons/WhatWeDoImg2.svg";
 import theme from "../../assets/themes/index";
 
+//import custom component
+import LandingContainer from "../../components/styles/LandingContainer";
+
 //============ start What We Do section ============
 export default function WhatWeDo() {
     return (
-        <Container
+        <LandingContainer
             sx={{
                 my: 5,
                 backgroundColor: theme.palette.background,
-                maxWidth: "1200px",
+                // maxWidth: "1200px",
             }}
         >
             {/* Title */}
@@ -113,7 +116,7 @@ export default function WhatWeDo() {
             </Grid>
 
             {/* end second image and paragraph  */}
-        </Container>
+        </LandingContainer>
     );
 }
 

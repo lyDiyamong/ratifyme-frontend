@@ -10,6 +10,7 @@ import { Card, CardContent, Typography, Avatar, Grid } from "@mui/material";
 // import custom components
 import theme from "../../assets/themes";
 import { testimonials } from "../../data/testimonialData";
+import LandingContainer from "../../components/styles/LandingContainer";
 
 // Configuration for the carousel responsiveness
 const responsive = {
@@ -35,12 +36,12 @@ const responsive = {
 
 const Testimonial = () => {
     return (
-        <div
+        <LandingContainer
             style={{
                 padding: "0rem",
                 backgroundColor: "#F9FBFF",
-                maxWidth: "1200px",
-                margin: "auto",
+                // maxWidth: "1200px",
+                // margin: "auto",
                 textAlign: "center",
             }}
         >
@@ -168,7 +169,7 @@ const Testimonial = () => {
                     </div>
                 ))}
             </Carousel>
-        </div>
+        </LandingContainer>
     );
 };
 
