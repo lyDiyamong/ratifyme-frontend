@@ -10,7 +10,7 @@ import Poster from "../../assets/images/Poster.svg";
 
 
 //Component Hero Section
-function HeroSection() {
+const HeroSection = () => {
 
     const theme = useTheme();
     return (
