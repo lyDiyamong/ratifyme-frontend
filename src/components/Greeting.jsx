@@ -1,9 +1,13 @@
+// MUI component
 import { Box, Stack, Typography } from "@mui/material";
+
+// Custom theme
 import theme from "../assets/themes/index";
-import greetingImg from "../assets/images/Greeting-illu.svg";
+import GreetingIconSvg from "../assets/images/Greeting-illu.svg";
 
 const Greeting = () => {
     return (
+        // ============ Start Greeting Section ============
         <Stack
             component="section"
             flexDirection={{ xs: "column", md: "row" }}
@@ -12,11 +16,11 @@ const Greeting = () => {
                 borderRadius : theme.shape.borderRadius.section,
                 justifyContent: "space-between",
                 alignItems: "center",
-                padding: "30px",
+                padding: "32px",
                 bgcolor: theme.palette.background.paper,
             }}
         >
-            {/* text container */}
+            {/* Start Text Container */}
             <Box maxWidth={500}>
                 <Typography sx={{ fontSize: theme.typography.h3, marginBottom: 2, color: theme.palette.primary.main }}>
                     Welcome back, John Doe
@@ -25,10 +29,12 @@ const Greeting = () => {
                     You’ve complete 82% of your badges this week! Keep it up, we will help with global standard!
                 </Typography>
             </Box>
-            {/* img container */}
+            {/* End Text Container */}
+
+            {/* Img Container */}
             <Box
                 component="img"
-                src={greetingImg}
+                src={GreetingIconSvg}
                 alt="greeting"
                 sx={{
                     width: "100%",
@@ -37,6 +43,7 @@ const Greeting = () => {
                 }}
             />
         </Stack>
+        // ============ End Greeting Section ============
     );
 };
 
