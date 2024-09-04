@@ -148,7 +148,8 @@ function HeroSection() {
                             </Button>
                         </Box>
                     </Box>
-
+                    {/* ============ End Left Content Wrapper ============ */}
+                    {/* ============ Start Right Content Wrapper ============ */}
                     <Box
                         component="img"
                         src={Poster}
@@ -167,6 +168,7 @@ function HeroSection() {
                         }}
                     />
                 </Box>
+                {/* ============ End Right Content Wrapper ============ */}
             </Box>
             {/* ============ End Hero Container  ============ */}
         </Box> 
