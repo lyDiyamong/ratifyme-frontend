@@ -26,7 +26,7 @@ function SignupPage() {
             {/* Start Grid container */}
             <Grid container spacing={4}>
                 {/* Start Signup section */}
-                <Grid item xs={12} md={5} order={{ xs: 2, md: 1 }}>
+                <Grid item xs={12} md={4} order={{ xs: 2, md: 1 }}>
                     {/* Top text container */}
                     <Box mb={5}>
                         <Typography
@@ -148,13 +148,11 @@ function SignupPage() {
                 {/* End Signup section */}
 
                 {/* Image Container */}
-                <Grid item xs={12} md={7} order={{ xs: 1, md: 2 }}>
+                <Grid item xs={12} md={8} order={{ xs: 1, md: 2 }}>
                     <Box
                         component="img"
                         sx={{
                             width: "100%",
-                            maxHeight: 600,
-                            maxWidth: 600,
                         }}
                         alt="illustration"
                         src={SignupImgSvg}
