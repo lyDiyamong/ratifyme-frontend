@@ -1,18 +1,18 @@
 import { Route, Routes } from "react-router-dom";
 import LandingLayout from "../layouts/landing";
-import HomePage from "../pages/landing/HomePage";
-import ContactUs from "../pages/landing/ContactUs";
+import HomePage from "../pages/landing/index";
+import ContactUsPage from "../pages/contactus";
+import PricePage from "../pages/prices/index";
 
 const LandingRouter = () => {
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route element={<LandingLayout />}>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/contactus" element={<ContactUs />} />
-                </Route>
-            </Routes>
-        </BrowserRouter>
+        <Routes>
+            <Route element={<LandingLayout />}>
+                <Route path="/" element={<HomePage />}/>
+                <Route path="/price" element={<PricePage />} />
+                <Route path="/contactus" element={<ContactUsPage />} />
+            </Route>
+        </Routes>
     );
 };
 
