@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LandingLayout from "../layouts/landing";
-import HomePage from "../pages/landing/HomePage";
+import HomePage from "../pages/landing";
 import PricePage from "../pages/prices/index";
 
 const LandingRouter = () => {
