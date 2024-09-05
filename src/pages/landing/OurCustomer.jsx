@@ -1,14 +1,17 @@
+//Import React 
+import React from "react";
+//Import Mui
 
-//Mui Import 
 import { useTheme } from "@mui/material/styles";
 import { Box} from  "@mui/material";
-//Custom Import
 import LogoCards from "./CompanyLogoCard.jsx";
 
 
 
 
-const  OurCustomer = () =>{
+
+//Our Customer Component
+function OurCustomer(){
 
     const theme = useTheme();
     return (
