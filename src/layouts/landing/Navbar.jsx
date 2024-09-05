@@ -129,7 +129,7 @@ function Navbar() {
                                     <Button
                                         variant="outlined"
                                         sx={{
-                                            borderRadius: theme.shape.borderRadius.btn,
+                                            borderRadius: theme.customShape.btn,
                                             fontWeight: theme.fontWeight.bold,
                                         }}
                                     >
@@ -140,8 +140,7 @@ function Navbar() {
                                     <Button
                                         variant="contained"
                                         sx={{
-                                            borderRadius:
-                                                theme.shape.borderRadius.btn,
+                                            borderRadius: theme.customShape.btn,
                                             color: theme.palette.text
                                                 .contrastText,
                                             fontWeight: theme.fontWeight.bold,
