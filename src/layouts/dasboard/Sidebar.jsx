@@ -26,7 +26,7 @@ import { useTheme } from "@emotion/react";
 
 // Custom import
 import FlexBetween from "../../components/styles/FlexBetween";
-import LogoIconSvg from "../../assets/icons/Logo.svg";
+import LogoIconSvg from "../../assets/icons/logo.svg";
 import { sidebarItems } from "../../data/sidebarData";
 
 // Icon Style Constant

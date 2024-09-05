@@ -1,9 +1,10 @@
 import DashboardIconSvg from "../assets/icons/dashboard.svg";
 import ManagementIconSvg from "../assets/icons/management.svg";
 import SaleIconSvg from "../assets/icons/sales.svg";
-import Report from "../assets/icons/report.svg";
-import Setting from "../assets/icons/setting.svg";
-import Logout from "../assets/icons/logout.svg";
+import BackpackIconSvg from "../assets/icons/backpack.svg"
+import ReportIconSvg from "../assets/icons/report.svg";
+import SettingIconSvg from "../assets/icons/setting.svg";
+import LogoutIconSvg from "../assets/icons/logout.svg";
 
 // Navigation Items
 export const sidebarItems = [
@@ -49,13 +50,19 @@ export const sidebarItems = [
     },
     {
         text: "Reports",
-        icon: Report,
+        icon: ReportIconSvg,
         path: "/reports",
         altText: "Reports icon",
     },
     {
+        text: "My Backpack",
+        icon: BackpackIconSvg,
+        path: "/mybackpacks",
+        altText: "Backpack icon",
+    },
+    {
         text: "Settings",
-        icon: Setting,
+        icon: SettingIconSvg,
         dropdown: true,
         subItems: [
             {
@@ -70,7 +77,7 @@ export const sidebarItems = [
     },
     {
         text: "Logout",
-        icon: Logout,
+        icon: LogoutIconSvg,
         path: "/logout",
     },
 ];

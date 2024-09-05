@@ -14,13 +14,6 @@ const theme = createTheme({
             dark: "#1869B8", // primary-300
             contrastText: "#ADADAD", // text-secondary
         },
-        gray: {
-            gray100: 'rgba(178, 178, 178, 0.1)',
-            gray200: '#E2E2E2',
-            gray300: '#ADADAD',
-            gray500: '#637381',
-            gray600: '#1f1c2e'
-        },
         text: {
             primary: "#0C0C0C", // text-primary.
 
@@ -49,6 +42,11 @@ const theme = createTheme({
             gray500: '#637381',
             gray600: '#1f1c2e',
             white: "#FFFFFF", //SP-White
+            gray100: 'rgba(178, 178, 178, 0.1)',
+            gray200: '#E2E2E2',
+            gray300: '#ADADAD',
+            gray500: '#637381',
+            gray600: '#1f1c2e'
         },
         cardBorder: "#C8C8C8",
         action: {
@@ -113,12 +111,6 @@ const theme = createTheme({
             },
         },
         body3: {
-            fontSize: "0.75rem", // Default size ( 12px )
-            "@media (max-width:480px)": {
-                fontSize: "0.5rem", // Mobile size ( 10px )
-            },
-        },
-        sidebarItems: {
             fontSize: "0.75rem", // Default size ( 12px )
             "@media (max-width:480px)": {
                 fontSize: "0.5rem", // Mobile size ( 10px )
