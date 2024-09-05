@@ -1,24 +1,23 @@
-//useTheme allow us to use theme that we have already constome in MUI
+//React library import
 import { useTheme } from "@emotion/react";
 import { useForm } from "react-hook-form";
 
-//Import neccessary item in MUI
+//MUI import
 import { Box, Grid, Typography, Button } from "@mui/material";
 
-//Import Contact Icon for Contact us page
+//Custom import
 import LandingContainer from "../../components/styles/LandingContainer";
 import FormInput from "../../components/FormInput";
-
 import ContactUsIconSvg from "../../assets/icons/contactUs.svg";
 
-// ============ Start Contact Us Page ============
+// ============ Start contact us page ============
 const ContactUsPage = () => {
-    // for use theme costom
+    // For use theme costom
     const theme = useTheme();
-    // form controller
+    // Form controller
     const { handleSubmit, control } = useForm();
 
-    // handle submission
+    // Handle submission
     const onSubmit = (data) => console.log(data);
 
     return (
@@ -31,7 +30,7 @@ const ContactUsPage = () => {
                     // xs={12} and md={5} in here is working for responsive
                     xs={12}
                     md={5}
-                    //order right here means that we want to give the position to the section
+                    // order right here means that we want to give the position to the section
                     order={{ xs: 2, md: 1 }}
                 >
                     <Box mb={5}>
@@ -59,6 +58,7 @@ const ContactUsPage = () => {
                         gap={3}
                         noValidate
                     >
+                        {/* FormInput is the input Feild that we custom */}
                         <FormInput
                             name="name"
                             label="Name"
@@ -123,4 +123,4 @@ const ContactUsPage = () => {
 };
 
 export default ContactUsPage;
-// ============ End Contact Us Page ============
+// ============ End contact us page ============
