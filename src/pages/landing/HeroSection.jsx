@@ -3,11 +3,8 @@
 import { Box, Button, TextField } from  "@mui/material";
 import { useTheme } from "@mui/material/styles";
 //Custom Import
-import Poster from "../../assets/images/Poster.svg";
+import PosterHeroSvg from "../../assets/images/Poster.svg";
 import LandingContainer from "../../components/styles/LandingContainer";
-
-
-const PosterHeroSvg = Poster;
 
 
 
@@ -80,8 +77,7 @@ const HeroSection = () => {
                                 },
                                 maxWidth: "609px",
                                 height: "auto",
-                                marginBottom: "0px",
-                                marginTop: " 0",
+                                my: "0"
                             }}
                         >
                             Unlock the future of credentials with accessible,
