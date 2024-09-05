@@ -6,7 +6,6 @@ import SreyPov from "../assets/icons/SreyPov.webp";
 import Chounan from "../assets/icons/Chounan.webp";
 import Malen from "../assets/icons/Malen.webp";
 import Yamong from "../assets/icons/Yamong.webp";
-import Manet from "../assets/icons/Manet.webp";
 
 export const testimonials = [
     {
@@ -61,8 +60,8 @@ export const testimonials = [
     {
         id: 8,
         text: "Verifyme has made the process of verifying student badges so easy and reliable. It's a game changer for HR departments like ours!",
-        author: "Manet",
+        author: "Rotha",
         position: "Tech A co.,ltd",
-        image: Manet,
+        image: Rotha,
     },
 ];

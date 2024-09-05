@@ -84,7 +84,7 @@ function Navbar() {
                     backgroundColor: "white",
                     border: `1px solid ${theme.palette.text.light}`,
                     boxShadow: theme.customShadows.default,
-                    borderRadius: "0px 0px 12px 12px",
+                    // borderRadius: "0px 0px 12px 12px",
                 }}
             >
                 {/* ============ Start Navbar ============ */}
@@ -141,8 +141,7 @@ function Navbar() {
                                         variant="contained"
                                         sx={{
                                             borderRadius: theme.customShape.btn,
-                                            color: theme.palette.text
-                                                .contrastText,
+                                            color: theme.palette.customColors.white,
                                             fontWeight: theme.fontWeight.bold,
                                         }}
                                     >
@@ -187,14 +186,14 @@ function Navbar() {
                                 sx={{
                                     "& .MuiPaper-root": {
                                         borderRadius:
-                                            theme.shape.borderRadius.card,
+                                            theme.customShape.input,
                                         boxShadow: theme.shadows.default,
                                         border: `1px solid ${theme.palette.text.light}`,
                                     },
                                 }}
                             >
                                 <MenuItem onClick={handleClose}>
-                                    <Link to="/signup">
+                                    <Link to="/price">
                                         <Button variant="text" sx={menuResItem}>
                                             Price
                                         </Button>

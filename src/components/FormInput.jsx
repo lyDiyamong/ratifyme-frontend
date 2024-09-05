@@ -61,7 +61,7 @@ const FormInput = ({ label, name, control, type = "text", required = false, icon
             helperText={error ? error.message : null} // Display error message if present
             sx={{
                 "& .MuiOutlinedInput-root": {
-                    borderRadius: theme.shape.borderRadius.input, // Apply custom border-radius
+                    borderRadius: theme.customShape.input, // Apply custom border-radius
                 },
                 "& .MuiInputBase-input": {
                     fontSize: theme.typography.body2, // Apply custom font size

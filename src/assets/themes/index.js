@@ -114,7 +114,7 @@ const theme = createTheme({
     },
     fontWeight: {
         default: 400,
-        semiBold: 700,
+        semiBold: 500,
         bold: 600,
         extraBold: 700,
     },
@@ -122,7 +122,7 @@ const theme = createTheme({
         default: "#E2E2E2 0px 4px 10px",
     },
     shape: {
-        borderRadius: 8, // Default borderRadius
+        borderRadius: 0, // Default borderRadius
     },
     customShape: {
         input: "8px",

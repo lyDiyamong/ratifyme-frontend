@@ -45,39 +45,9 @@ const Footer = () => {
         fontSize: `${theme.typography.body1.fontSize}`,
     };
 
-    //============ start mapping the dubplicate section ============
-    // Learn More section mapping
-    const learnMoreLinks = [
-        { to: "/", text: "About Us" },
-        { to: "/", text: "Support" },
-        { to: "/", text: "Careers" },
-        { to: "/", text: "For Developers" },
-    ];
-
-    // Other Solutions section mapping
-    const otherSolutionsLinks = [
-        { to: "/", text: "Tech A Workforce" },
-        { to: "/", text: "Help" },
-    ];
-
-    // Social Media section mapping
-    const socialMediaLinks = [
-        { src: Facebook, alt: "Facebook" },
-        { src: Instagram, alt: "Instagram" },
-        { src: LinkedIn, alt: "LinkedIn" },
-    ];
-
-    // Copyright section mapping
-    const copyrightLinks = [
-        { to: "/", text: "Terms of Use" },
-        { to: "/", text: "Privacy Policy" },
-        { to: "/", text: "Cookies" },
-    ];
-    //============ end mapping the dubplicate section ============
-
     return (
         <LandingContainer>
-            <Box sx={{ bgcolor: "inherit", py: 2 }}>
+            <Box sx={{ bgcolor: "inherit", mt: 6 }}>
                 {/* ============ Start main footer ============ */}
                 <Container sx={{ py: "32px" }}>
                     <Grid
@@ -177,7 +147,7 @@ const Footer = () => {
                                 Social Media
                             </Typography>
 
-                            <List sx={{ display: "flex", gap: 2 }}>
+                            <List sx={{ display: "flex", gap: 2, my: 2 }}>
                                 {socialMediaLinks.map((link, index) => (
                                     <Link key={index} sx={linkItemStyle}>
                                         <Box
@@ -215,17 +185,17 @@ const Footer = () => {
 
                 {/* ============ Start copyright section ============ */}
                 <Box
-                    sx={{ bgcolor: "inherit", color: "inherit", py: 1, mt: 2 }}
+                    sx={{ bgcolor: "inherit", color: "inherit", my: 2}}
                 >
                     <Container>
                         <FlexBetween
                             variant="body2"
                             sx={{
-                                display: { sm: "flex", xss: 'block' },
+                                display: { sm: "flex", xss: 'block',  },
                                 color: "text.disabled",
                             }}
                         >
-                            <Typography sx={{mb: "20px"}}>
+                            <Typography >
                                 © Copyright -{" "}
                                 <Typography
                                     component="span"
@@ -239,9 +209,9 @@ const Footer = () => {
                                 sx={{
                                     display: "flex",
                                     justifyContent: "space-between",
-                                    alignItems: "center",
                                     gap: 2,
                                     flexDirection: { xss: 'column', sm: 'row' },
+                                    mt: { xss: 2, sm: 0}
                                 }}
                             >
                                 {copyrightLinks.map((link, index) => (
