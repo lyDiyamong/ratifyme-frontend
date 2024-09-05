@@ -141,8 +141,7 @@ function Navbar() {
                                         variant="contained"
                                         sx={{
                                             borderRadius: theme.customShape.btn,
-                                            color: theme.palette.text
-                                                .contrastText,
+                                            color: theme.palette.customColors.white,
                                             fontWeight: theme.fontWeight.bold,
                                         }}
                                     >
