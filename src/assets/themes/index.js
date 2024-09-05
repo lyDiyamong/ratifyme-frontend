@@ -15,9 +15,12 @@ const theme = createTheme({
             contrastText: "#ADADAD", // text-secondary
         },
         text: {
-            primary: "#0C0C0C", // text-primary
-            secondary: "#ADADAD", // text-secondary
+            primary: "#0C0C0C", // text-primary.
+
+            secondary: "#637381", // text-secondary
             disabled: "#707070", // text-secondary-2
+            light: "#E2E2E2", //light-secondary
+            contrastText: "#FFFFFF",
         },
         background: {
             default: "#F9FBFF", // bg-primary
@@ -35,6 +38,12 @@ const theme = createTheme({
             red200: "#ff3838", // SP-Red-200
             red300: "#E63232", // SP-Red-300
             red400: "#CC2D2D", // SP-Red-400
+            gray100: 'rgba(178, 178, 178, 0.1)',
+            gray200: '#E2E2E2',
+            gray300: '#ADADAD',
+            gray500: '#637381',
+            gray600: '#1f1c2e',
+            white: "#FFFFFF", //SP-White
         },
         cardBorder: "#C8C8C8",
         action: {
@@ -117,20 +126,22 @@ const theme = createTheme({
         bold: 600,
         extraBold: 700,
     },
-    shape: {
-        borderRadius: {
-            input: "8px",
-            card: "12px",
-            section: "16px",
-            btn: "100px",
-        },
-    },
-    shadows: {
+    customShadows: {
         default: "#E2E2E2 0px 4px 10px",
+    },
+    shape: {
+        borderRadius: 8, // Default borderRadius
+    },
+    customShape: {
+        input: "8px",
+        card: "12px",
+        section: "16px",
+        btn: "100px",
     },
 
     breakpoints: {
         values: {
+            xss: 0,
             xs: 320, // Mobile devices (small screens)
             sm: 600, // Tablets and small screens
             md: 960, // Medium screens (e.g., small desktops)
