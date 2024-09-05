@@ -14,13 +14,18 @@ const theme = createTheme({
             dark: "#1869B8", // primary-300
             contrastText: "#ADADAD", // text-secondary
         },
+        gray: {
+            gray100: 'rgba(178, 178, 178, 0.1)',
+            gray200: '#E2E2E2',
+            gray300: '#ADADAD',
+            gray500: '#637381',
+            gray600: '#1f1c2e'
+        },
         text: {
             primary: "#0C0C0C", // text-primary.
 
             secondary: "#637381", // text-secondary
             disabled: "#707070", // text-secondary-2
-            light: "#E2E2E2", //light-secondary
-            contrastText: "#FFFFFF",
         },
         background: {
             default: "#F9FBFF", // bg-primary
@@ -48,7 +53,7 @@ const theme = createTheme({
         cardBorder: "#C8C8C8",
         action: {
             hover: "#E5F3FF",
-            selected: "#D8ECFF",
+            selected: "#C7E4FF",
         },
     },
     typography: {
@@ -82,7 +87,7 @@ const theme = createTheme({
             },
         },
         h5: {
-            fontSize: "1.rem", // Default size ( 16px )
+            fontSize: "1rem", // Default size ( 16px )
             fontFamily: "Poppins, Arial, sans-serif",
             "@media (max-width:480px)": {
                 fontSize: "0.875rem", // Mobile size ( 14px )
@@ -144,8 +149,8 @@ const theme = createTheme({
             xss: 0,
             xs: 320, // Mobile devices (small screens)
             sm: 600, // Tablets and small screens
-            md: 960, // Medium screens (e.g., small desktops)
-            lg: 1280, // Large screens (e.g., large desktops)
+            md: 900, // Medium screens (e.g., small desktops)
+            lg: 1200, // Large screens (e.g., large desktops)
             xl: 1920, // Extra large screens (e.g., ultra-wide monitors)
         },
     },
