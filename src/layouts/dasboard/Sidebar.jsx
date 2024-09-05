@@ -71,8 +71,7 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
         (path) => {
             setActive(path.substring(1));
             navigate(path);
-
-            if(!isDesktop) setIsSidebarOpen(false)
+            if (!isDesktop) setIsSidebarOpen(false);
         },
         [navigate],
     );
@@ -223,14 +222,13 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
                                             </List>
                                         </AccordionDetails>
                                         {/* End main list item of sidebar  */}
-
                                     </Accordion>
                                 );
                             }
                             // ============ Start list item of sidebar when dropdown ============
 
                             return (
-                                //  Start list item of sidebar 
+                                // ============ Start list item of sidebar ============
                                 <ListItem key={text} disablePadding sx={{ mb: 1 }}>
                                     <ListItemButton
                                         disableRipple
@@ -265,14 +263,13 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
                                         <ListItemText primary={<Typography variant="body1">{text}</Typography>} />
                                     </ListItemButton>
                                 </ListItem>
-                                //  End list item of sidebar 
-
+                                // ============ End list item of sidebar ============
                             );
                         })}
                     </List>
                     {/* ============ End list of Sidebar ============ */}
                 </Box>
-                    
+
                 {/* Start Sidebar footer  */}
                 <Box position="absolute" bottom="2rem">
                     <Divider />
@@ -287,7 +284,6 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
                     </FlexBetween>
                 </Box>
                 {/* End Sidebar footer  */}
-
             </Drawer>
             {/* ============ End Drawer of Sidebar ============ */}
         </Box>
