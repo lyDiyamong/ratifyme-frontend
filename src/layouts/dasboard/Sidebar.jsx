@@ -27,7 +27,7 @@ import { useTheme } from "@emotion/react";
 // Custom import
 import FlexBetween from "../../components/styles/FlexBetween";
 import LogoIconSvg from "../../assets/icons/Logo.svg";
-import {sidebarItems} from '../../data/sidebarData'
+import { sidebarItems } from "../../data/sidebarData";
 
 // Icon Style Constant
 const iconStyles = { width: "20px", height: "20px" };
@@ -120,6 +120,96 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
                     <List>
                         {sidebarItems.map(({ text, icon, dropdown, subItems, path, altText }) => {
                             const lcText = text.toLowerCase();
+
+                            if (dropdown) {
+                                return (
+                                    <Accordion
+                                        disableGutters
+                                        key={text}
+                                        sx={{
+                                            background: "none",
+                                            boxShadow: "none",
+                                            border: "none",
+                                            "&:before": {
+                                                display: "none",
+                                            },
+                                        }}
+                                    >
+                                        <AccordionSummary
+                                            expandIcon={<ExpandMoreIcon sx={{ width: "20px", height: "20px" }} />}
+                                            aria-controls={`${lcText}-content`}
+                                            id={`${lcText}-header`}
+                                            sx={{
+                                                display: "flex",
+                                                alignItems: "center",
+                                                paddingLeft: "14px",
+                                                "& .MuiAccordionSummary-content": {
+                                                    margin: 0,
+                                                },
+                                                backgroundColor: active.startsWith(lcText)
+                                                    ? theme.palette.action.selected
+                                                    : "transparent",
+                                                "&:hover": {
+                                                    backgroundColor: active.startsWith(lcText)
+                                                        ? theme.palette.action.selected
+                                                        : theme.palette.action.hover,
+                                                    borderRadius: "100px",
+                                                },
+                                                borderRadius: active.startsWith(lcText) ? "100px" : "0px",
+                                                mb: 1,
+                                            }}
+                                        >
+                                            <ListItem disablePadding>
+                                                <ListItemIcon sx={{ minWidth: "2rem" }}>
+                                                    <Box component="img" src={icon} alt={altText} sx={iconStyles} />
+                                                </ListItemIcon>
+                                                <ListItemText
+                                                    primary={<Typography variant="body1">{text}</Typography>}
+                                                />
+                                            </ListItem>
+                                        </AccordionSummary>
+                                        <AccordionDetails sx={{ padding: "0" }}>
+                                            <List sx={{ padding: "0" }}>
+                                                {subItems?.map((subItem) => (
+                                                    <ListItem key={subItem.text} disablePadding>
+                                                        <ListItemButton
+                                                            onClick={() => handleNavigation(subItem.path)}
+                                                            sx={{
+                                                                backgroundColor:
+                                                                    active === subItem.path.substring(1)
+                                                                        ? theme.palette.action.selected
+                                                                        : "transparent",
+                                                                "&:hover": {
+                                                                    backgroundColor: theme.palette.action.hover,
+                                                                    borderRadius: "100px",
+                                                                },
+                                                                borderRadius: "100px",
+                                                                pl: "36px",
+                                                                mb: 1,
+                                                            }}
+                                                        >
+                                                            <FiberManualRecordIcon
+                                                                sx={{
+                                                                    width: "7px",
+                                                                    height: "7px",
+                                                                    marginRight: "12px",
+                                                                }}
+                                                            />
+                                                            <ListItemText
+                                                                primary={
+                                                                    <Typography variant="body1">
+                                                                        {subItem.text}
+                                                                    </Typography>
+                                                                }
+                                                            />
+                                                        </ListItemButton>
+                                                    </ListItem>
+                                                ))}
+                                            </List>
+                                        </AccordionDetails>
+                                    </Accordion>
+                                );
+                            }
 
                             return (
                                 <ListItem key={text} disablePadding sx={{ mb: 1 }}>
