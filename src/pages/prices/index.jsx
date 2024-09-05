@@ -1,11 +1,14 @@
-import PriceCard from "../../components/PriceCard";
-import theme from "../../assets/themes/index";
+// MUI import
 import { Box, Paper, Typography } from "@mui/material";
 
+// Custom import
+import PriceCard from "../../components/PriceCard";
+import { useTheme } from "@mui/material";
+
 const PricePage = () => {
+    const theme = useTheme();
     return (
         <Paper
-            square={true}
             sx={{
                 maxWidth: 1200,
                 mx: "auto",
@@ -14,8 +17,8 @@ const PricePage = () => {
                 flexDirection: "column",
                 gap: 5,
                 boxShadow: theme.shadows.default,
-                borderRadius: theme.shape.borderRadius.card,
-                mt: 4
+                borderRadius: theme.customShape.card,
+                mt: 4,
             }}
         >
             <Typography

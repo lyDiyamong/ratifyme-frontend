@@ -1,10 +1,8 @@
-// import from materialUI
+// MUI import
 import { Box, Paper, Typography, Button } from "@mui/material";
 
-// import config style
+// Custom import
 import { useTheme } from "@mui/material";
-
-// import data
 import { priceTemplate } from "../data/pricePage/priceData";
 
 const PriceCard = () => {
@@ -23,7 +21,7 @@ const PriceCard = () => {
                     width: 300,
                     height: 282,
                     gap: 5,
-                    borderRadius: theme.shape.borderRadius.section,
+                    borderRadius: theme.customShape.card,
                     px: "14px",
                     boxShadow: theme.shadows.default,
                 }}
@@ -70,6 +68,7 @@ const PriceCard = () => {
                         bgcolor: theme.palette.primary.main,
                         color: theme.palette.text.contrastText,
                         width: "100%",
+                        borderRadius: theme.customShape.btn,
                     }}
                 >
                     Subscribe
