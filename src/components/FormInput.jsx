@@ -1,16 +1,16 @@
-// React Library Import
+// React library import
 import { useState } from "react";
 import { useController } from "react-hook-form";
 
-// MUI Import
+// MUI import
 import { TextField, IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-// Custom Import
+// Custom import
 import theme from "../assets/themes/index";
 
 /**
- * FormInput Component
+ * FormInput component
  *
  * A reusable input component for forms that integrates with React Hook Form and Material UI.
  * It supports various input types including password fields with visibility toggle.

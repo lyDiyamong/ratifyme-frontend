@@ -83,7 +83,7 @@ function Navbar() {
                 sx={{
                     backgroundColor: "white",
                     border: `1px solid ${theme.palette.text.light}`,
-                    boxShadow: theme.shadows.default,
+                    boxShadow: theme.customShadows.default,
                     borderRadius: "0px 0px 12px 12px",
                 }}
             >
@@ -129,7 +129,7 @@ function Navbar() {
                                     <Button
                                         variant="outlined"
                                         sx={{
-                                            borderRadius: theme.shape.borderRadius.btn,
+                                            borderRadius: theme.customShape.btn,
                                             fontWeight: theme.fontWeight.bold,
                                         }}
                                     >
@@ -140,8 +140,7 @@ function Navbar() {
                                     <Button
                                         variant="contained"
                                         sx={{
-                                            borderRadius:
-                                                theme.shape.borderRadius.btn,
+                                            borderRadius: theme.customShape.btn,
                                             color: theme.palette.text
                                                 .contrastText,
                                             fontWeight: theme.fontWeight.bold,
