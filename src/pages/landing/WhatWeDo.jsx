@@ -1,5 +1,5 @@
 // MUI import
-import {Typography, Grid, Box } from "@mui/material";
+import { Typography, Grid, Box } from "@mui/material";
 
 // React library import
 import WhatWeDoImg1 from "../../assets/icons/WhatWeDoImg1.svg";
@@ -24,12 +24,15 @@ export default function WhatWeDo() {
                 align="center"
                 gutterBottom
                 sx={{
+                    fontSize: theme.typography.h1,
                     fontWeight: theme.fontWeight.bold,
-                    color: theme.palette.text.disabled,
-                    marginTop: "50px",
+                    textAlign: "center",
                 }}
             >
                 What We Do
+                <Typography textAlign={"center"}>
+                    Digital credentialing platform looking to prepare your workforce for the future.
+                </Typography>
             </Typography>
 
             {/* Start first image and paragraph */}
@@ -44,23 +47,18 @@ export default function WhatWeDo() {
                 </Grid>
                 <Grid container item xs={12} md={6} gap={2.5}>
                     <Typography variant="body1">
-                        At Verifyme, we provide fast, secure verification of
-                        badges and credentials for students, professionals, and
-                        organizations. Our platform simplifies the process,
-                        ensuring authenticity and reducing the risk of fraud.
+                        At Verifyme, we provide fast, secure verification of badges and credentials for students,
+                        professionals, and organizations. Our platform simplifies the process, ensuring authenticity and
+                        reducing the risk of fraud.
                     </Typography>
                     <Typography variant="body1">
-                        With automated systems and real-time checks, we
-                        streamline verification, making it efficient and
-                        reliable. Whether you're validating student badges or
-                        professional credentials, Verifyme guarantees secure,
-                        accurate results.
+                        With automated systems and real-time checks, we streamline verification, making it efficient and
+                        reliable. Whether you're validating student badges or professional credentials, Verifyme
+                        guarantees secure, accurate results.
                     </Typography>
                     <Typography variant="body1">
-                        Our goal is to make verification seamless and
-                        trustworthy. We prioritize security and efficiency,
-                        helping organizations and individuals confirm
-                        credentials with confidence.
+                        Our goal is to make verification seamless and trustworthy. We prioritize security and
+                        efficiency, helping organizations and individuals confirm credentials with confidence.
                     </Typography>
                 </Grid>
             </Grid>
@@ -69,14 +67,7 @@ export default function WhatWeDo() {
 
             {/* Start second image and paragraph */}
             <Grid container spacing={4} alignItems="center" sx={{ mt: 4 }}>
-                <Grid
-                    container
-                    item
-                    xs={12}
-                    md={6}
-                    sx={{ order: { xs: 2, md: 1 } }}
-                    gap={2.5}
-                >
+                <Grid container item xs={12} md={6} sx={{ order: { xs: 2, md: 1 } }} gap={2.5}>
                     <Typography
                         component="h4"
                         sx={{
@@ -89,16 +80,14 @@ export default function WhatWeDo() {
                     </Typography>
 
                     <Typography variant="body1">
-                        Provide the digital credential standard that allows
-                        individuals to earn, display, and share verified badges
-                        representing their skills and achievements. Each badge
-                        contains detailed metadata, such as the issuing
-                        organization, criteria for earning the badge, and
-                        evidence of the achievement.
+                        Provide the digital credential standard that allows individuals to earn, display, and share
+                        verified badges representing their skills and achievements. Each badge contains detailed
+                        metadata, such as the issuing organization, criteria for earning the badge, and evidence of the
+                        achievement.
                     </Typography>
                     <Typography variant="body1">
-                        making it a trustworthy and portable way to showcase
-                        skills across different platforms and communities.
+                        making it a trustworthy and portable way to showcase skills across different platforms and
+                        communities.
                     </Typography>
                 </Grid>
                 <Grid item xs={12} md={6} sx={{ order: { xs: 1, md: 2 } }}>

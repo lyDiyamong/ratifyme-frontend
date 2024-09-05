@@ -39,20 +39,15 @@ const Testimonial = () => {
             style={{
                 padding: "0rem",
                 backgroundColor: theme.palette.background,
-                // maxWidth: "1200px",
-                // margin: "auto",
                 textAlign: "center",
             }}
         >
             <Typography
                 gutterBottom
                 sx={{
-                    fontSize: theme.typography.h2,
+                    fontSize: theme.typography.h1,
                     fontWeight: theme.fontWeight.bold,
-                    color: theme.palette.text.disabled,
-                    display: "flex",
-                    justifyContent: "center",
-                    marginTop: "50px",
+                    textAlign: "center"
                 }}
             >
                 What Our Clients Say
