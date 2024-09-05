@@ -17,7 +17,6 @@ const App = () => {
             <CssBaseline />
             <BrowserRouter>
                 <LandingRouter />
-                <AuthRouter />
                 <DashbaordRouter />
             </BrowserRouter>
         </ThemeProvider>
