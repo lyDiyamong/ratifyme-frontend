@@ -1,8 +1,16 @@
+// React library import
 import React from 'react'
+import WhatWeDo from './WhatWeDo'
+import Testimonial from './Testimonial'
 
 const HomePage = () => {
   return (
-    <div>HomePage</div>
+    <div>
+
+      <WhatWeDo/>
+      <Testimonial/>
+    </div>
+
   )
 }
 
