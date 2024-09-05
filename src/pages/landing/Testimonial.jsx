@@ -1,13 +1,12 @@
-// import react property
-import React from "react";
+// React library import
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-// import React MUI components
+// MUI import
 import { FormatQuote } from "@mui/icons-material";
 import { Card, CardContent, Typography, Avatar, Grid } from "@mui/material";
 
-// import custom components
+//Custom import
 import theme from "../../assets/themes";
 import { testimonials } from "../../data/testimonialData";
 import LandingContainer from "../../components/styles/LandingContainer";
@@ -34,22 +33,27 @@ const responsive = {
 
 //============ start testimonial section ============
 
-
 const Testimonial = () => {
     return (
         <LandingContainer
             style={{
                 padding: "0rem",
-                backgroundColor: "#F9FBFF",
+                backgroundColor: theme.palette.background,
                 // maxWidth: "1200px",
                 // margin: "auto",
                 textAlign: "center",
             }}
         >
             <Typography
-                variant="h2"
                 gutterBottom
-                sx={{ fontWeight: 600, color: theme.palette.text.disabled, display:'flex', justifyContent:'center', marginTop:'50px' }}
+                sx={{
+                    fontSize: theme.typography.h2,
+                    fontWeight: theme.fontWeight.bold,
+                    color: theme.palette.text.disabled,
+                    display: "flex",
+                    justifyContent: "center",
+                    marginTop: "50px",
+                }}
             >
                 What Our Clients Say
             </Typography>
@@ -58,7 +62,7 @@ const Testimonial = () => {
                 infinite={true} // Makes the carousel loop infinitely
                 autoPlay={true} // Enables autoplay
                 autoPlaySpeed={3000} // Auto slides every 3 seconds
-                keyBoardControl={true} // Enable keyboard navigation 
+                keyBoardControl={true} // Enable keyboard navigation
                 swipeable={true} // Allow swiping on touch devices
                 draggable={true} // Enable dragging for mouse users
                 showDots={true} // Show navigation dots
@@ -100,6 +104,7 @@ const Testimonial = () => {
                                     },
                                 }}
                             />
+                            {/* Start testimonial card */}
                             <CardContent>
                                 <Grid container spacing={2}>
                                     <Grid item>
@@ -128,7 +133,8 @@ const Testimonial = () => {
                                         <Typography
                                             variant="body1"
                                             sx={{
-                                                fontWeight: 600,
+                                                fontWeight:
+                                                    theme.fontWeight.bold,
                                                 color: theme.palette.text
                                                     .primary,
                                                 marginBottom: "1rem",
@@ -144,9 +150,8 @@ const Testimonial = () => {
                                         <Typography
                                             variant="body2"
                                             sx={{
-                                                fontWeight: 500,
-                                                color: theme.palette.text
-                                                    .disabled,
+                                                fontWeight: theme.fontWeight.semiBold,
+                                                color: theme.palette.text.disabled,
                                                 fontSize: "0.85rem",
                                             }}
                                         >
@@ -155,9 +160,8 @@ const Testimonial = () => {
                                         <Typography
                                             variant="body2"
                                             sx={{
-                                                fontWeight: 500,
-                                                color: theme.palette.text
-                                                    .disabled,
+                                                fontWeight: theme.fontWeight.semiBold,
+                                                color: theme.palette.text.disabled,
                                                 fontSize: "0.75rem",
                                             }}
                                         >
@@ -166,6 +170,8 @@ const Testimonial = () => {
                                     </Grid>
                                 </Grid>
                             </CardContent>
+
+                            {/* End testimonial card */}
                         </Card>
                     </div>
                 ))}
