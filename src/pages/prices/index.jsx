@@ -6,6 +6,10 @@ import { useTheme } from "@mui/material";
 import PriceCard from "../../components/PriceCard";
 import LandingContainer from "../../components/styles/LandingContainer";
 
+// Custom import
+import PriceCard from "../../components/PriceCard";
+import { useTheme } from "@mui/material";
+
 const PricePage = () => {
     const theme = useTheme();
     return (
