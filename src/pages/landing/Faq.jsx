@@ -8,7 +8,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Grid from '@mui/material/Grid';
-import { Container } from '@mui/material';
+import { Container, Stack } from '@mui/material';
 import Box from '@mui/material/Box';
 
 // Custom Import
@@ -78,20 +78,19 @@ const Faq = () => {
                 </Box>
             {/* FAQ component */}
                 {/* Componet allignment with Gride */}
-                <Grid container spacing={2}>
+                {/* <Stack sx={{boxShadow: theme.shadows.default}}> */}
+                <Stack >
                     {accordionData.map((item) => (
                         // Create a 2-column layout using Grid. Accordions alternate sides. And loop data Accordions Obj.
-                        <Grid
-                            item
-                            xs={12}
-                            sm={6}
+                        <Box
                             key={item.panel}>
                             {/* Accordion Stage Logic */}
                             <Accordion
                                 expanded={expanded === item.panel}
                                 onChange={handleChange(item.panel)}
                                 sx={{
-                                    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)', // Adjust shadow properties as needed
+                                    padding: 2,
+                                    borderBottom: `1px solid ${theme.palette.customColors.gray200}`,
                                     }}
                             >
                                 {/* Icon stage */}
@@ -102,7 +101,7 @@ const Faq = () => {
                                 >
                                     {/* Accordion Tittle */}
                                     <Typography component="h3"
-                                                sx={{   fontSize:theme.typography.h3,
+                                                sx={{   fontSize:theme.typography.h4,
                                                         fontWeight: theme.fontWeight.bold,
                                                         width: '80%', flexShrink: 0 }}
                                     >
@@ -120,9 +119,9 @@ const Faq = () => {
                                     </Typography>
                                 </AccordionDetails>
                             </Accordion>
-                        </Grid>
+                        </Box>
                     ))}
-                </Grid>
+                </Stack>
         </Container>
     );
 }
