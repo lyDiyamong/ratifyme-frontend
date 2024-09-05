@@ -9,7 +9,6 @@ import { priceTemplate } from "../data/pricePage/priceData";
 import { priceTemplate } from "../data/pricePage/priceData";
 
 const PriceCard = () => {
-    const theme = useTheme();
     // ============ Start renderedCardfunction ============
     const renderPriceCard = priceTemplate.map((item) => {
         return (
@@ -82,7 +81,7 @@ const PriceCard = () => {
     // ============ End renderedCardfunction  ============
 
     return (
-        // Start priceCardSection
+        // ============ Start priceCardSection ============
         <Box
             component="div"
             sx={{
@@ -95,7 +94,7 @@ const PriceCard = () => {
         >
             {renderPriceCard}
         </Box>
-        // End priceCardSection
+        // ============ End priceCardSection ============
     );
 };
 
