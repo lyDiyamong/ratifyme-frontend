@@ -9,6 +9,7 @@ import theme from "./assets/themes";
 // Router Import
 import LandingRouter from "./routers/LandingRouter";
 import AuthRouter from "./routers/AuthRouter";
+import DashbaordRouter from "./routers/DashboardRouter";
 
 const App = () => {
     return (
@@ -17,6 +18,7 @@ const App = () => {
             <BrowserRouter>
                 <LandingRouter />
                 <AuthRouter />
+                <DashbaordRouter />
             </BrowserRouter>
         </ThemeProvider>
     );
