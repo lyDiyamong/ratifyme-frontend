@@ -17,7 +17,7 @@ const PricePage = () => {
                 flexDirection: "column",
                 gap: 5,
                 boxShadow: theme.shadows.default,
-                borderRadius: theme.customShape.card,
+                borderRadius: theme.customShape.section,
                 mt: 4,
             }}
         >
