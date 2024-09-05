@@ -60,7 +60,7 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
                 borderWidth: isDesktop ? 0 : "2px",
                 width: drawerWidth,
                 borderRight: `1px solid ${theme.palette.divider}`,
-                boxShadow: isDesktop ? theme.shadows.default : "",
+                boxShadow: isDesktop ? theme.customShadows.default : "",
                 padding: "0 16px",
             },
         }),

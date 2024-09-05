@@ -55,7 +55,7 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
                             py="4px"
                             sx={{
                                 borderRight: `1px solid ${theme.palette.divider}`,
-                                boxShadow: theme.shadows.default,
+                                boxShadow: theme.customShadows.default,
                             }}
                         >
                             <InputBase placeholder="Search any topics..." sx={{ width: "30rem" }} />
@@ -74,8 +74,8 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
                 {/* Start right side  */}
                 <FlexBetween>
-                    {headerIcons.map((icon) => (
-                        <IconButton>{icon}</IconButton>
+                    {headerIcons.map((icon, index) => (
+                        <IconButton key={index}>{icon}</IconButton>
                     ))}
                 </FlexBetween>
                 {/* End right side  */}
