@@ -93,6 +93,7 @@ function SignupPage() {
                             sx={{
                                 color: theme.palette.background.default,
                                 borderRadius: theme.customShape.btn,
+                                fontWeight : theme.fontWeight.bold
                             }}
                         >
                             Sign Up
