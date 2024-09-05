@@ -83,7 +83,7 @@ function Navbar() {
                 sx={{
                     backgroundColor: "white",
                     border: `1px solid ${theme.palette.text.light}`,
-                    boxShadow: theme.shadows.default,
+                    boxShadow: theme.customShadows.default,
                     borderRadius: "0px 0px 12px 12px",
                 }}
             >
