@@ -114,7 +114,7 @@ const theme = createTheme({
     },
     fontWeight: {
         default: 400,
-        semiBold: 700,
+        semiBold: 500,
         bold: 600,
         extraBold: 700,
     },
