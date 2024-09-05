@@ -87,7 +87,11 @@ const ContactUsPage = () => {
                             type="text"
                             required={true}
                         />
-                        <Typography>
+                        <Typography
+                            sx={{
+                                color: theme.palette.text.secondary,
+                            }}
+                        >
                             We would like to contact you about our products that
                             may be of interest to you.
                         </Typography>
@@ -97,7 +101,7 @@ const ContactUsPage = () => {
                             variant="contained"
                             sx={{
                                 color: theme.palette.background.default,
-                                borderRadius: theme.shape.borderRadius.btn, // Applying custom borderRadius to the Button
+                                borderRadius: theme.customShape.btn, // Applying custom borderRadius to the Button
                                 my: 4,
                             }}
                         >
