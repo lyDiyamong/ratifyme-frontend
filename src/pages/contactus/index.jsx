@@ -108,7 +108,6 @@ const ContactUsPage = () => {
                             sx={{
                                 color: theme.palette.background.default,
                                 borderRadius: theme.customShape.btn, // Applying custom borderRadius to the Button
-                                my: 4,
                             }}
                         >
                             Submit
