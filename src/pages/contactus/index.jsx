@@ -59,6 +59,7 @@ const ContactUsPage = () => {
                         noValidate
                     >
                         {/* FormInput is the input Feild that we custom */}
+                        {/* Name feild */}
                         <FormInput
                             name="name"
                             label="Name"
@@ -66,6 +67,7 @@ const ContactUsPage = () => {
                             type="text"
                             required={true}
                         />
+                        {/* Email feild */}
                         <FormInput
                             label="Email"
                             name="email"
@@ -73,6 +75,7 @@ const ContactUsPage = () => {
                             required={true}
                             type="text"
                         />
+                        {/* Organization Name feild */}
                         <FormInput
                             name="organization"
                             label="Organization Name"
@@ -80,6 +83,7 @@ const ContactUsPage = () => {
                             type="text"
                             required={true}
                         />
+                        {/* Profession feild */}
                         <FormInput
                             name="profession"
                             label="Profession"
@@ -87,6 +91,7 @@ const ContactUsPage = () => {
                             type="text"
                             required={true}
                         />
+                        {/* Descriptive */}
                         <Typography
                             sx={{
                                 color: theme.palette.text.secondary,
@@ -95,6 +100,7 @@ const ContactUsPage = () => {
                             We would like to contact you about our products that
                             may be of interest to you.
                         </Typography>
+                        {/* Button submit that handle submit form */}
                         <Button
                             type="submit"
                             fullWidth
@@ -109,6 +115,7 @@ const ContactUsPage = () => {
                         </Button>
                     </Box>
                 </Grid>
+                {/* Container that scope Icon in contact us form */}
                 <Grid item xs={12} md={7} order={{ xs: 1, md: 2 }}>
                     <Box
                         component="img"
