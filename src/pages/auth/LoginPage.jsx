@@ -17,7 +17,7 @@ const LoginPage = () => {
     // Submit handler
     const onSubmit = (data) => {
         console.log(data);
-    }
+    };
 
     return (
         // ============ Start login container ============
@@ -28,12 +28,11 @@ const LoginPage = () => {
                 <Grid item xs={12} md={4} order={{ xs: 2, md: 1 }}>
                     <Box mb={5}>
                         <Typography
-                        component="h4"
+                            component="h4"
                             sx={{
                                 fontSize: theme.typography.h2,
                                 fontWeight: theme.fontWeight.bold,
-                                lineHeight: 2
-
+                                lineHeight: 2,
                             }}
                         >
                             Sign In
@@ -47,7 +46,14 @@ const LoginPage = () => {
                         </Typography>
                     </Box>
                     {/* Start form container */}
-                    <Box component="form" onSubmit={handleSubmit(onSubmit)} display="flex" flexDirection="column" gap={2} noValidate>
+                    <Box
+                        component="form"
+                        onSubmit={handleSubmit(onSubmit)}
+                        display="flex"
+                        flexDirection="column"
+                        gap={2}
+                        noValidate
+                    >
                         {/* Email */}
                         <FormInput
                             name="email"
@@ -71,9 +77,10 @@ const LoginPage = () => {
                             sx={{
                                 color: theme.palette.background.default,
                                 borderRadius: theme.customShape.btn,
+                                fontWeight: theme.fontWeight.bold,
                             }}
                         >
-                            Log in
+                            Sign in
                         </Button>
                         <Typography color={theme.palette.text.primary}>
                             Forgot Password?
