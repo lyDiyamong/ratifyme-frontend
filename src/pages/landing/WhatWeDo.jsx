@@ -1,15 +1,12 @@
-// import react property
-import React from "react";
+// MUI import
+import {Typography, Grid, Box } from "@mui/material";
 
-// import MUI element
-import { Container, Typography, Grid, Box } from "@mui/material";
-
-// import asset file
+// React library import
 import WhatWeDoImg1 from "../../assets/icons/WhatWeDoImg1.svg";
 import WhatWeDoImg2 from "../../assets/icons/WhatWeDoImg2.svg";
 import theme from "../../assets/themes/index";
 
-//import custom component
+//Custom import
 import LandingContainer from "../../components/styles/LandingContainer";
 
 //============ start What We Do section ============
@@ -19,7 +16,6 @@ export default function WhatWeDo() {
             sx={{
                 my: 5,
                 backgroundColor: theme.palette.background,
-                // maxWidth: "1200px",
             }}
         >
             {/* Title */}
@@ -27,12 +23,16 @@ export default function WhatWeDo() {
                 variant="h2"
                 align="center"
                 gutterBottom
-                sx={{ fontWeight: 600, color: theme.palette.text.disabled, marginTop: '50px'}}
+                sx={{
+                    fontWeight: theme.fontWeight.bold,
+                    color: theme.palette.text.disabled,
+                    marginTop: "50px",
+                }}
             >
                 What We Do
             </Typography>
 
-            {/* start first image and paragraph */}
+            {/* Start first image and paragraph */}
             <Grid container spacing={4} alignItems="center">
                 <Grid item xs={12} md={6}>
                     <Box
@@ -65,10 +65,10 @@ export default function WhatWeDo() {
                 </Grid>
             </Grid>
 
-            {/* end first image and paragraph */}
+            {/* End first image and paragraph */}
 
-            {/* start second image and paragraph */}
-            <Grid container spacing={4} alignItems="center" sx={{ mt: 4}}>
+            {/* Start second image and paragraph */}
+            <Grid container spacing={4} alignItems="center" sx={{ mt: 4 }}>
                 <Grid
                     container
                     item
@@ -81,7 +81,7 @@ export default function WhatWeDo() {
                         component="h4"
                         sx={{
                             fontSize: theme.typography.h2,
-                            fontWeight: 600,
+                            fontWeight: theme.fontWeight.bold,
                             color: theme.palette.text.primary,
                         }}
                     >
@@ -115,7 +115,7 @@ export default function WhatWeDo() {
                 </Grid>
             </Grid>
 
-            {/* end second image and paragraph  */}
+            {/* End second image and paragraph  */}
         </LandingContainer>
     );
 }
