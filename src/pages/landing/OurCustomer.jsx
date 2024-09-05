@@ -28,18 +28,18 @@ function OurCustomer(){
             minHeight: "248px",
             padding: "0",
         }}
-        >{/* ============ Start Tittle   ============ */}
+        >{/* Start Tittle   */}
             <Box component= "div"
                 sx={{
                     color: "white",
                     textAlign: "center",
                     
-                    fontWeight: "600",
-                    fontSize: "20px"
+                    fontWeight: theme.fontWeight.bold,
+                    fontSize: theme.typography.h4
                 }}>
-                <p>Our Customer</p>
+                <Box component="p">Our Customer</Box>
             </Box>
-        {/* ============ End Tittle   ============ */}
+        {/*  End Tittle   */}
             
             <LogoCards />
         </Box> 

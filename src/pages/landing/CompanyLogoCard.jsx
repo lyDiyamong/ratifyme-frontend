@@ -72,7 +72,7 @@ const  LogoCards = () => {
     }
 
     return (
-        //============ Start Logo Card Contatiner ============
+        // Start Logo Card Contatiner 
         <Box sx={{ padding: "20px", marginBottom: "12px",  }}>
             <Grid 
             container spacing={4} 
@@ -98,7 +98,7 @@ const  LogoCards = () => {
         </Box>
         
     );
-    //============ End Logo Card Contatiner ============
+    // End Logo Card Contatiner 
 }
 
 export default LogoCards;
