@@ -119,7 +119,7 @@ const theme = createTheme({
     },
     fontWeight: {
         default: 400,
-        semiBold: 500,
+        semiBold: 700,
         bold: 600,
         extraBold: 700,
     },
