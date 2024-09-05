@@ -1,27 +1,17 @@
+// import from materialUI
 import { Box, Paper, Typography, Button } from "@mui/material";
+
+// import config style
 import theme from "../assets/themes/index";
 
+// import data
+import { priceTemplate } from "../data/pricePage/priceData";
+
 const PriceCard = () => {
-    // const theme = useTheme();
-    const priceTemplate = [
-        {
-            priceDuration: "Quarterly Quater",
-            duration: "3 months",
-            price: 299,
-        },
-        {
-            priceDuration: "Midyear Membership",
-            duration: "6 months",
-            price: 599,
-        },
-        {
-            priceDuration: "Annual Advantage",
-            duration: "12 months",
-            price: 799,
-        },
-    ];
+    // ============ Start renderedCardfunction ============
     const renderPriceCard = priceTemplate.map((item) => {
         return (
+            // Paper that refer as section
             <Paper
                 key={item.price}
                 sx={{
@@ -34,10 +24,11 @@ const PriceCard = () => {
                     gap: 5,
                     borderRadius: "16px",
                     px: "14px",
-                    boxShadow: theme.shadows.default
+                    boxShadow: theme.shadows.default,
                 }}
                 square={true}
             >
+                {/* Box that contain price duration and duration together */}
                 <Box>
                     <Typography
                         sx={{
@@ -60,6 +51,8 @@ const PriceCard = () => {
                         {item.duration}
                     </Typography>
                 </Box>
+
+                {/* Typography refer to the price */}
                 <Typography
                     sx={{
                         fontSize: theme.typography.h1,
@@ -69,6 +62,8 @@ const PriceCard = () => {
                 >
                     $ {item.price}
                 </Typography>
+
+                {/* Button that refer to subscribe the plan */}
                 <Button
                     sx={{
                         bgcolor: theme.palette.primary.main,
@@ -81,8 +76,10 @@ const PriceCard = () => {
             </Paper>
         );
     });
+    // ============ End renderedCardfunction  ============
 
     return (
+        // ============ Start priceCardSection ============
         <Box
             component="div"
             sx={{
@@ -95,6 +92,7 @@ const PriceCard = () => {
         >
             {renderPriceCard}
         </Box>
+        // ============ End priceCardSection ============
     );
 };
 
