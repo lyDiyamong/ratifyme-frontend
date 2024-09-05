@@ -21,7 +21,7 @@ function SignupPage() {
 
     return (
         // ============ Start container ============
-        <LandingContainer sx={{ mt: 6 }}>
+        <LandingContainer sx={{ my: 6 }}>
             {/* Start grid container */}
             <Grid container spacing={4}>
                 {/* Start signup section */}
