@@ -32,4 +32,3 @@ const logoImage = [
 
 export default logoImage; 
 
-  
