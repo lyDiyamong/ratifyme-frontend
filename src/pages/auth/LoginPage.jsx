@@ -1,10 +1,10 @@
-// React Library Import
+// React library import
 import { useForm } from "react-hook-form";
 
-// MUI Import
+// MUI import
 import { Box, Grid, Typography, Button } from "@mui/material";
 
-// Custom Import
+// Custom import
 import FormInput from "../../components/FormInput";
 import theme from "../../assets/themes";
 import LandingContainer from "../../components/styles/LandingContainer";
@@ -14,17 +14,17 @@ const LoginPage = () => {
     // Form controller
     const { handleSubmit, control } = useForm();
 
-    // Submit Handler
+    // Submit handler
     const onSubmit = (data) => {
         console.log(data);
     }
 
     return (
-        // ============ Start Login Container ============
+        // ============ Start login container ============
         <LandingContainer sx={{ mt: 6 }}>
-            {/* Start Grid container */}
+            {/* Start grid container */}
             <Grid container spacing={4}>
-                {/* Start Login section */}
+                {/* Start login section */}
                 <Grid item xs={12} md={4} order={{ xs: 2, md: 1 }}>
                     <Box mb={5}>
                         <Typography
@@ -46,24 +46,24 @@ const LoginPage = () => {
                             Log In your account to manage your company!
                         </Typography>
                     </Box>
-                    {/* Start Form Container */}
+                    {/* Start form container */}
                     <Box component="form" onSubmit={handleSubmit(onSubmit)} display="flex" flexDirection="column" gap={2} noValidate>
                         {/* Email */}
                         <FormInput
                             name="email"
                             control={control}
-                            label="Email:"
+                            label="Email"
                             required={true}
                         />
                         {/* Password */}
                         <FormInput
                             name="password"
                             control={control}
-                            label="Password:"
+                            label="Password"
                             type="password"
                             required={true}
                         />
-                        {/* Submit Button */}
+                        {/* Submit button */}
                         <Button
                             fullWidth
                             variant="contained"
@@ -79,10 +79,10 @@ const LoginPage = () => {
                             Forgot Password?
                         </Typography>
                     </Box>
-                    {/* End Form Container */}
+                    {/* End form container */}
                 </Grid>
-                {/* End Signup section */}
-                {/* Image Container */}
+                {/* End signup section */}
+                {/* Image container */}
                 <Grid item xs={12} md={8} order={{ xs: 1, md: 2 }}>
                     <Box
                         component="img"
@@ -94,9 +94,9 @@ const LoginPage = () => {
                     />
                 </Grid>
             </Grid>
-            {/* End Grid container */}
+            {/* End grid container */}
         </LandingContainer>
-        // ============ End Login Container ============
+        // ============ End login container ============
     );
 };
 
