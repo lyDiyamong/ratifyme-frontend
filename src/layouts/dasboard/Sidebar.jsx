@@ -92,6 +92,7 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
                 />
             )}
 
+            {/* ============ Start Drawer of Sidebar ============ */}
             <Drawer
                 open={isSidebarOpen}
                 onClose={() => setIsSidebarOpen(false)}
@@ -101,10 +102,14 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
             >
                 <Box width="100%">
                     <Box m="1.75rem 2rem 2rem 2rem">
+                        {/* Start brand logo */}
                         <FlexBetween>
+                            {/* logo image  */}
                             <Box display="flex" alignItems="center" gap="0.5rem">
-                                <Box component="img" src={LogoIconSvg} />
+                                <Box component="img" src={LogoIconSvg} alt="Brand Logo" />
                             </Box>
+
+                            {/* IconButton for open and close sidebar  */}
                             <IconButton
                                 onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                                 sx={{
@@ -116,11 +121,15 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
                                 <ChevronLeft sx={{ fontSize: "24px" }} />
                             </IconButton>
                         </FlexBetween>
+                        {/* End brand logo  */}
                     </Box>
+
+                    {/* ============ Start list of Sidebar ============ */}
                     <List>
                         {sidebarItems.map(({ text, icon, dropdown, subItems, path, altText }) => {
                             const lcText = text.toLowerCase();
 
+                            // ============ Start list item of sidebar when dropdown ============
                             if (dropdown) {
                                 return (
                                     <Accordion
@@ -135,6 +144,7 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
                                             },
                                         }}
                                     >
+                                        {/* Start main list item of sidebar  */}
                                         <AccordionSummary
                                             expandIcon={<ExpandMoreIcon sx={{ width: "20px", height: "20px" }} />}
                                             aria-controls={`${lcText}-content`}
@@ -168,6 +178,9 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
                                                 />
                                             </ListItem>
                                         </AccordionSummary>
+                                        {/* End main list item of sidebar  */}
+
+                                        {/* Start sub list item of sidebar  */}
                                         <AccordionDetails sx={{ padding: "0" }}>
                                             <List sx={{ padding: "0" }}>
                                                 {subItems?.map((subItem) => (
@@ -207,11 +220,15 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
                                                 ))}
                                             </List>
                                         </AccordionDetails>
+                                        {/* End main list item of sidebar  */}
+
                                     </Accordion>
                                 );
                             }
+                            // ============ Start list item of sidebar when dropdown ============
 
                             return (
+                                //  Start list item of sidebar 
                                 <ListItem key={text} disablePadding sx={{ mb: 1 }}>
                                     <ListItemButton
                                         disableRipple
@@ -246,11 +263,15 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
                                         <ListItemText primary={<Typography variant="body1">{text}</Typography>} />
                                     </ListItemButton>
                                 </ListItem>
+                                //  End list item of sidebar 
+
                             );
                         })}
                     </List>
+                    {/* ============ End list of Sidebar ============ */}
                 </Box>
-
+                    
+                {/* Start Sidebar footer  */}
                 <Box position="absolute" bottom="2rem">
                     <Divider />
                     <FlexBetween textTransform="none" gap="1rem" m="1.5rem 2rem 0 3rem">
@@ -263,7 +284,10 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
                         <SettingsOutlined sx={{ fontSize: "25px" }} />
                     </FlexBetween>
                 </Box>
+                {/* End Sidebar footer  */}
+
             </Drawer>
+            {/* ============ End Drawer of Sidebar ============ */}
         </Box>
     );
 };
