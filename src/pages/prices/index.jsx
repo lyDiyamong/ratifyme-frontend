@@ -1,13 +1,12 @@
 // MUI import
 import { Box, Paper, Typography } from "@mui/material";
-import { useTheme } from "@mui/material";
 
 // Custom import
-import PriceCard from "../../components/PriceCard";
+import ServiceDetail from "../../components/ServiceDetail";
 import LandingContainer from "../../components/styles/LandingContainer";
+import theme from "../../assets/themes";
 
 const PricePage = () => {
-    const theme = useTheme();
     return (
         // ============ Start servicePlanSection ============
         <LandingContainer>
@@ -22,7 +21,7 @@ const PricePage = () => {
                     borderRadius: theme.customShape.section,
                     mt: 4,
                 }}
-            >   
+            >
                 {/* Typography refer to Title of service plan */}
                 <Typography
                     sx={{
@@ -55,7 +54,7 @@ const PricePage = () => {
 
                 {/* Box refer to container of card */}
                 <Box sx={{ width: "100%" }}>
-                    <PriceCard />
+                    <ServiceDetail />
                 </Box>
             </Paper>
         </LandingContainer>

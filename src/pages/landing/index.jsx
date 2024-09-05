@@ -2,15 +2,14 @@
 import React from 'react'
 import WhatWeDo from './WhatWeDo'
 import Testimonial from './Testimonial'
+import OurCustomer from './OurCustomer.jsx'
 
 const HomePage = () => {
   return (
     <div>
-
-      <WhatWeDo/>
-      <Testimonial/>
+        HomePage
+        <OurCustomer />
     </div>
-
   )
 }
 
