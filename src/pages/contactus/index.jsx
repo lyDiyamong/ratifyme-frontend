@@ -87,7 +87,7 @@ const ContactUsPage = () => {
                             type="text"
                             required={true}
                         />
-                        <Typography variant="">
+                        <Typography>
                             We would like to contact you about our products that
                             may be of interest to you.
                         </Typography>
