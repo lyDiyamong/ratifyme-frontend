@@ -2,12 +2,13 @@
 import { Box, Paper, Typography, Button } from "@mui/material";
 
 // import config style
-import theme from "../assets/themes/index";
+import { useTheme } from "@mui/material";
 
 // import data
 import { priceTemplate } from "../data/pricePage/priceData";
 
 const PriceCard = () => {
+    const theme = useTheme();
     // ============ Start renderedCardfunction ============
     const renderPriceCard = priceTemplate.map((item) => {
         return (
@@ -22,7 +23,7 @@ const PriceCard = () => {
                     width: 300,
                     height: 282,
                     gap: 5,
-                    borderRadius: "16px",
+                    borderRadius: theme.shape.borderRadius.section,
                     px: "14px",
                     boxShadow: theme.shadows.default,
                 }}
@@ -33,7 +34,7 @@ const PriceCard = () => {
                     <Typography
                         sx={{
                             fontSize: theme.typography.h3,
-                            fontWeight: 500,
+                            fontWeight: theme.fontWeight.semiBold,
                             fontFamily: theme.typography.fontFamily,
                         }}
                     >
@@ -44,7 +45,7 @@ const PriceCard = () => {
                             fontSize: theme.typography.body1,
                             textAlign: "center",
                             color: theme.palette.text.disabled,
-                            fontWeight: "medium",
+                            fontWeight: theme.fontWeight.semiBold,
                             fontFamily: theme.typography.fontFamily,
                         }}
                     >
@@ -56,7 +57,7 @@ const PriceCard = () => {
                 <Typography
                     sx={{
                         fontSize: theme.typography.h1,
-                        fontWeight: 700,
+                        fontWeight: theme.fontWeight.extraBold,
                         fontFamily: theme.typography.fontFamily,
                     }}
                 >
@@ -79,7 +80,7 @@ const PriceCard = () => {
     // ============ End renderedCardfunction  ============
 
     return (
-        // ============ Start priceCardSection ============
+        // Start priceCardSection
         <Box
             component="div"
             sx={{
@@ -92,7 +93,7 @@ const PriceCard = () => {
         >
             {renderPriceCard}
         </Box>
-        // ============ End priceCardSection ============
+        // End priceCardSection
     );
 };
 
