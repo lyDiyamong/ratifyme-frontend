@@ -20,20 +20,20 @@ function SignupPage() {
     };
 
     return (
-        // ============ Start container ============
-        <LandingContainer sx={{ my: 6 }}>
-            {/* Start grid container */}
+        // ============ Start Container ============
+        <LandingContainer sx={{mt : 6}}>
+            {/* Start Grid container */}
             <Grid container spacing={4}>
-                {/* Start signup section */}
+                {/* Start Signup section */}
                 <Grid item xs={12} md={4} order={{ xs: 2, md: 1 }}>
                     {/* Top text container */}
                     <Box mb={5}>
                         <Typography
-                            component="h4"
+                        component="h4"
                             sx={{
                                 fontSize: theme.typography.h2,
                                 fontWeight: theme.fontWeight.bold,
-                                lineHeight: 2,
+                                lineHeight : 2
                             }}
                         >
                             Sign up
@@ -43,7 +43,7 @@ function SignupPage() {
                             digital badge? Then boldly move forward with us.
                         </Typography>
                     </Box>
-                    {/* Start form Container */}
+                    {/* Start Form Container */}
                     <Box
                         component="form"
                         onSubmit={handleSubmit(onSubmit)}
@@ -52,40 +52,35 @@ function SignupPage() {
                         gap={3}
                         noValidate // Reset to default
                     >
-                        {/* Username */}
                         <FormInput
                             name="username"
-                            label="Username"
+                            label="Username:"
                             control={control}
                             type="text"
                             required={true}
                             // Additional props if needed
                         />
-                        {/* Email */}
                         <FormInput
-                            label="Email"
+                            label="Email:"
                             name="email"
                             control={control}
                             required={true}
                             type="text"
                         />
-                        {/* Password */}
                         <FormInput
-                            label="Password"
+                            label="Password:"
                             name="password"
                             control={control}
                             type="password"
                             required={true}
                         />
-                        {/* Confirm password */}
                         <FormInput
-                            label="Confirm Password"
+                            label="Confirm Password:"
                             name="cfPassword"
                             control={control}
                             type="password"
                             required={true}
                         />
-                        {/* Submit button */}
                         <Button
                             fullWidth
                             type="submmit"
@@ -93,12 +88,10 @@ function SignupPage() {
                             sx={{
                                 color: theme.palette.background.default,
                                 borderRadius: theme.customShape.btn,
-                                fontWeight : theme.fontWeight.bold
                             }}
                         >
                             Sign Up
                         </Button>
-                        {/* Text description */}
                         <Typography
                             textAlign="center"
                             color={theme.palette.text.secondary}
@@ -107,7 +100,8 @@ function SignupPage() {
                             <Typography
                                 component="span"
                                 sx={{
-                                    fontWeight: theme.fontWeight.semiBold,
+                                    fontWeight:
+                                        theme.typography.fontWeightMedium,
                                     color: theme.palette.text.primary,
                                 }}
                             >
@@ -117,7 +111,8 @@ function SignupPage() {
                             <Typography
                                 component="span"
                                 sx={{
-                                    fontWeight: theme.fontWeight.semiBold,
+                                    fontWeight:
+                                        theme.typography.fontWeightMedium,
                                     color: theme.palette.text.primary,
                                 }}
                             >
@@ -133,7 +128,8 @@ function SignupPage() {
                                 component="span"
                                 sx={{
                                     color: theme.palette.text.primary,
-                                    fontWeight: theme.fontWeight.bold,
+                                    fontWeight:
+                                        theme.fontWeight.bold,
                                 }}
                             >
                                 Log in
@@ -147,11 +143,12 @@ function SignupPage() {
                             digital badge? Then boldly move forward with us.
                         </Typography>
                     </Box>
-                    {/* End form container */}
-                </Grid>
-                {/* End signup section */}
+                    {/* End Form Container */}
 
-                {/* Image container */}
+                </Grid>
+                {/* End Signup section */}
+
+                {/* Image Container */}
                 <Grid item xs={12} md={8} order={{ xs: 1, md: 2 }}>
                     <Box
                         component="img"
