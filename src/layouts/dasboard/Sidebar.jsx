@@ -71,6 +71,8 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
         (path) => {
             setActive(path.substring(1));
             navigate(path);
+
+            if(!isDesktop) setIsSidebarOpen(false)
         },
         [navigate],
     );
