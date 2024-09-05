@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import LandingLayout from "../layouts/landing";
 import HomePage from "../pages/landing/index";
-import ContactUsPage from "../pages/contactus";
+import ContactUsPage from './../pages/contactus'
 import PricePage from "../pages/prices/index";
 
 const LandingRouter = () => {

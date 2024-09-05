@@ -88,7 +88,7 @@ function SignupPage() {
                         {/* Submit button */}
                         <Button
                             fullWidth
-                            type="submmit"
+                            type="submit"
                             variant="contained"
                             sx={{
                                 color: theme.palette.background.default,

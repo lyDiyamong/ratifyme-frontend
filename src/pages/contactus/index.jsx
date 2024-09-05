@@ -25,7 +25,6 @@ const ContactUsPage = () => {
         <LandingContainer sx={{ mt: 6 }}>
             <Grid container spacing={4}>
                 <Grid
-                    component="form"
                     item
                     // xs={12} and md={5} in here is working for responsive
                     xs={12}
