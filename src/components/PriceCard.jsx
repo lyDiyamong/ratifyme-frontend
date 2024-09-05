@@ -79,7 +79,7 @@ const PriceCard = () => {
     // ============ End renderedCardfunction  ============
 
     return (
-        // Start priceCardSection
+        // ============ Start priceCardSection ============
         <Box
             component="div"
             sx={{
@@ -92,7 +92,7 @@ const PriceCard = () => {
         >
             {renderPriceCard}
         </Box>
-        // End priceCardSection
+        // ============ End priceCardSection ============
     );
 };
 
