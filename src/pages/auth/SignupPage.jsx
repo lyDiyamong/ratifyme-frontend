@@ -2,7 +2,7 @@
 import { useForm } from "react-hook-form";
 
 // MUI Import
-import { Box, Container, Grid, Typography, Button } from "@mui/material";
+import { Box, Grid, Typography, Button } from "@mui/material";
 
 // Custom Import
 import FormInput from "../../components/FormInput";
@@ -23,7 +23,7 @@ function SignupPage() {
 
     return (
         // ============ Start Container ============
-        <LandingContainer sx={{mt : 6}}>
+        <LandingContainer sx={{ mt: 6 }}>
             {/* Start Grid container */}
             <Grid container spacing={4}>
                 {/* Start Signup section */}
@@ -31,11 +31,11 @@ function SignupPage() {
                     {/* Top text container */}
                     <Box mb={5}>
                         <Typography
-                        component="h4"
+                            component="h4"
                             sx={{
                                 fontSize: theme.typography.h2,
                                 fontWeight: theme.fontWeight.bold,
-                                lineHeight : 2
+                                lineHeight: 2,
                             }}
                         >
                             Sign up
@@ -54,6 +54,7 @@ function SignupPage() {
                         gap={3}
                         noValidate // Reset to default
                     >
+                        {/* Username */}
                         <FormInput
                             name="username"
                             label="Username:"
@@ -62,6 +63,7 @@ function SignupPage() {
                             required={true}
                             // Additional props if needed
                         />
+                        {/* Email */}
                         <FormInput
                             label="Email:"
                             name="email"
@@ -69,6 +71,7 @@ function SignupPage() {
                             required={true}
                             type="text"
                         />
+                        {/* Password */}
                         <FormInput
                             label="Password:"
                             name="password"
@@ -76,6 +79,7 @@ function SignupPage() {
                             type="password"
                             required={true}
                         />
+                        {/* Confirm password */}
                         <FormInput
                             label="Confirm Password:"
                             name="cfPassword"
@@ -83,6 +87,7 @@ function SignupPage() {
                             type="password"
                             required={true}
                         />
+                        {/* Submit Button */}
                         <Button
                             fullWidth
                             type="submmit"
@@ -94,6 +99,7 @@ function SignupPage() {
                         >
                             Sign Up
                         </Button>
+                        {/* Text Description */}
                         <Typography
                             textAlign="center"
                             color={theme.palette.text.secondary}
@@ -102,8 +108,7 @@ function SignupPage() {
                             <Typography
                                 component="span"
                                 sx={{
-                                    fontWeight:
-                                        theme.typography.fontWeightMedium,
+                                    fontWeight: theme.fontWeight.semiBold,
                                     color: theme.palette.text.primary,
                                 }}
                             >
@@ -113,8 +118,7 @@ function SignupPage() {
                             <Typography
                                 component="span"
                                 sx={{
-                                    fontWeight:
-                                        theme.typography.fontWeightMedium,
+                                    fontWeight: theme.fontWeight.semiBold,
                                     color: theme.palette.text.primary,
                                 }}
                             >
@@ -130,8 +134,7 @@ function SignupPage() {
                                 component="span"
                                 sx={{
                                     color: theme.palette.text.primary,
-                                    fontWeight:
-                                        theme.fontWeight.bold,
+                                    fontWeight: theme.fontWeight.bold,
                                 }}
                             >
                                 Log in
@@ -146,7 +149,6 @@ function SignupPage() {
                         </Typography>
                     </Box>
                     {/* End Form Container */}
-
                 </Grid>
                 {/* End Signup section */}
 
