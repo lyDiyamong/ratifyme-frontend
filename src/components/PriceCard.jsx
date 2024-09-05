@@ -5,6 +5,9 @@ import { Box, Paper, Typography, Button } from "@mui/material";
 import { useTheme } from "@mui/material";
 import { priceTemplate } from "../data/pricePage/priceData";
 
+// import data
+import { priceTemplate } from "../data/pricePage/priceData";
+
 const PriceCard = () => {
     const theme = useTheme();
     // ============ Start renderedCardfunction ============
