@@ -1,15 +1,13 @@
-// React Library Import
+// React library import
 import { useForm } from "react-hook-form";
 
-// MUI Import
+// MUI import
 import { Box, Grid, Typography, Button } from "@mui/material";
 
-// Custom Import
+// Custom import
 import FormInput from "../../components/FormInput";
 import theme from "../../assets/themes";
 import LandingContainer from "../../components/styles/LandingContainer";
-
-// Img Import
 import SignupImgSvg from "../../assets/images/Signup-illu.svg";
 
 function SignupPage() {
@@ -22,11 +20,11 @@ function SignupPage() {
     };
 
     return (
-        // ============ Start Container ============
+        // ============ Start container ============
         <LandingContainer sx={{ mt: 6 }}>
-            {/* Start Grid container */}
+            {/* Start grid container */}
             <Grid container spacing={4}>
-                {/* Start Signup section */}
+                {/* Start signup section */}
                 <Grid item xs={12} md={4} order={{ xs: 2, md: 1 }}>
                     {/* Top text container */}
                     <Box mb={5}>
@@ -45,7 +43,7 @@ function SignupPage() {
                             digital badge? Then boldly move forward with us.
                         </Typography>
                     </Box>
-                    {/* Start Form Container */}
+                    {/* Start form Container */}
                     <Box
                         component="form"
                         onSubmit={handleSubmit(onSubmit)}
@@ -57,7 +55,7 @@ function SignupPage() {
                         {/* Username */}
                         <FormInput
                             name="username"
-                            label="Username:"
+                            label="Username"
                             control={control}
                             type="text"
                             required={true}
@@ -65,7 +63,7 @@ function SignupPage() {
                         />
                         {/* Email */}
                         <FormInput
-                            label="Email:"
+                            label="Email"
                             name="email"
                             control={control}
                             required={true}
@@ -73,7 +71,7 @@ function SignupPage() {
                         />
                         {/* Password */}
                         <FormInput
-                            label="Password:"
+                            label="Password"
                             name="password"
                             control={control}
                             type="password"
@@ -81,13 +79,13 @@ function SignupPage() {
                         />
                         {/* Confirm password */}
                         <FormInput
-                            label="Confirm Password:"
+                            label="Confirm Password"
                             name="cfPassword"
                             control={control}
                             type="password"
                             required={true}
                         />
-                        {/* Submit Button */}
+                        {/* Submit button */}
                         <Button
                             fullWidth
                             type="submmit"
@@ -99,7 +97,7 @@ function SignupPage() {
                         >
                             Sign Up
                         </Button>
-                        {/* Text Description */}
+                        {/* Text description */}
                         <Typography
                             textAlign="center"
                             color={theme.palette.text.secondary}
@@ -148,11 +146,11 @@ function SignupPage() {
                             digital badge? Then boldly move forward with us.
                         </Typography>
                     </Box>
-                    {/* End Form Container */}
+                    {/* End form container */}
                 </Grid>
-                {/* End Signup section */}
+                {/* End signup section */}
 
-                {/* Image Container */}
+                {/* Image container */}
                 <Grid item xs={12} md={8} order={{ xs: 1, md: 2 }}>
                     <Box
                         component="img"
