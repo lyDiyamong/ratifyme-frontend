@@ -1,14 +1,15 @@
 // MUI import
 import { Box, Paper, Typography } from "@mui/material";
+import { useTheme } from "@mui/material";
 
 // Custom import
 import PriceCard from "../../components/PriceCard";
 import LandingContainer from "../../components/styles/LandingContainer";
-import { useTheme } from "@mui/material";
 
 const PricePage = () => {
     const theme = useTheme();
     return (
+        // ============ Start servicePlanSection ============
         <LandingContainer>
             <Paper
                 sx={{
@@ -21,7 +22,8 @@ const PricePage = () => {
                     borderRadius: theme.customShape.section,
                     mt: 4,
                 }}
-            >
+            >   
+                {/* Typography refer to Title of service plan */}
                 <Typography
                     sx={{
                         fontFamily: theme.typography.fontFamily,
@@ -32,6 +34,8 @@ const PricePage = () => {
                 >
                     Badge Service Pricing
                 </Typography>
+
+                {/* Typography refer to service plan detail */}
                 <Typography
                     sx={{
                         fontFamily: theme.typography.fontFamily,
@@ -48,11 +52,14 @@ const PricePage = () => {
                     it reflects your brand identity while celebrating the
                     recipient’s accomplishments.
                 </Typography>
+
+                {/* Box refer to container of card */}
                 <Box sx={{ width: "100%" }}>
                     <PriceCard />
                 </Box>
             </Paper>
         </LandingContainer>
+        // ============ End servicePlanSection ============
     );
 };
 
