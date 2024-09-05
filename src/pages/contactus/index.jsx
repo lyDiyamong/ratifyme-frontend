@@ -120,8 +120,6 @@ const ContactUsPage = () => {
                         component="img"
                         sx={{
                             width: "100%",
-                            maxHeight: 600,
-                            maxWidth: 600,
                         }}
                         alt="contactus"
                         src={ContactUsIconSvg}

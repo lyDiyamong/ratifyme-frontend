@@ -39,12 +39,12 @@ const Faq = () => {
                     sx={{
                         fontSize: theme.typography.h1,
                         fontWeight: theme.fontWeight.bold,
-                        textAlign: "center",
+                        textAlign: "center"
                     }}
                 >
                     Frequently Asked Questions
-                    <Typography textAlign={"center"}>
-                        If you want to know more about Open Badge,
+                    <Typography sx={{textAlign:"center"}}>
+                        If you want to know more about VerifyME,
                         please first check the questions below.
                     </Typography>
                 </Typography>

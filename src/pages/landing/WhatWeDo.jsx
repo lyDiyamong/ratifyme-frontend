@@ -20,18 +20,21 @@ export default function WhatWeDo() {
         >
             {/* Title */}
             <Typography
-                variant="h2"
+                component="h1"
+                variant="h1"
                 align="center"
                 gutterBottom
                 sx={{
                     fontSize: theme.typography.h1,
                     fontWeight: theme.fontWeight.bold,
-                    textAlign: "center",
+                    color: theme.palette.primary.contrastText,
+                    textAlign: "center"
                 }}
             >
                 What We Do
-                <Typography textAlign={"center"}>
-                    Digital credentialing platform looking to prepare your workforce for the future.
+                <Typography sx={{ textAlign: "center" }}>
+                    Brings through
+                    the world’s most connected digital credentialing network.
                 </Typography>
             </Typography>
 
@@ -47,14 +50,17 @@ export default function WhatWeDo() {
                 </Grid>
                 <Grid container item xs={12} md={6} gap={2.5}>
                     <Typography variant="body1">
-                        At Verifyme, we provide fast, secure verification of badges and credentials for students,
-                        professionals, and organizations. Our platform simplifies the process, ensuring authenticity and
-                        reducing the risk of fraud.
+                        At VerifyME, we provide fast, secure verification of
+                        badges and credentials for students, professionals, and
+                        organizations. Our platform simplifies the process,
+                        ensuring authenticity and reducing the risk of fraud.
                     </Typography>
                     <Typography variant="body1">
-                        With automated systems and real-time checks, we streamline verification, making it efficient and
-                        reliable. Whether you're validating student badges or professional credentials, Verifyme
-                        guarantees secure, accurate results.
+                        With automated systems and real-time checks, we
+                        streamline verification, making it efficient and
+                        reliable. Whether you're validating student badges or
+                        professional credentials, VerifyME guarantees secure,
+                        accurate results.
                     </Typography>
                     <Typography variant="body1">
                         Our goal is to make verification seamless and trustworthy. We prioritize security and
@@ -86,8 +92,8 @@ export default function WhatWeDo() {
                         achievement.
                     </Typography>
                     <Typography variant="body1">
-                        making it a trustworthy and portable way to showcase skills across different platforms and
-                        communities.
+                        Making it a trustworthy and portable way to showcase
+                        skills across different platforms and communities.
                     </Typography>
                 </Grid>
                 <Grid item xs={12} md={6} sx={{ order: { xs: 1, md: 2 } }}>

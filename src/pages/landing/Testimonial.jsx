@@ -43,6 +43,7 @@ const Testimonial = () => {
             }}
         >
             <Typography
+                component="h1"
                 gutterBottom
                 sx={{
                     fontSize: theme.typography.h1,

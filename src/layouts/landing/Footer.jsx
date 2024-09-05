@@ -147,7 +147,7 @@ const Footer = () => {
                                 Social Media
                             </Typography>
 
-                            <List sx={{ display: "flex", gap: 2 }}>
+                            <List sx={{ display: "flex", gap: 2, my: 2 }}>
                                 {socialMediaLinks.map((link, index) => (
                                     <Link key={index} sx={linkItemStyle}>
                                         <Box
@@ -191,7 +191,7 @@ const Footer = () => {
                         <FlexBetween
                             variant="body2"
                             sx={{
-                                display: { sm: "flex", xss: 'block' },
+                                display: { sm: "flex", xss: 'block',  },
                                 color: "text.disabled",
                             }}
                         >
