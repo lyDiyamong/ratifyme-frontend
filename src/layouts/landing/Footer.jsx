@@ -45,6 +45,36 @@ const Footer = () => {
         fontSize: `${theme.typography.body1.fontSize}`,
     };
 
+    //============ start mapping the dubplicate section ============
+    // Learn More section mapping
+    const learnMoreLinks = [
+        { to: "/", text: "About Us" },
+        { to: "/", text: "Support" },
+        { to: "/", text: "Careers" },
+        { to: "/", text: "For Developers" },
+    ];
+
+    // Other Solutions section mapping
+    const otherSolutionsLinks = [
+        { to: "/", text: "Tech A Workforce" },
+        { to: "/", text: "Help" },
+    ];
+
+    // Social Media section mapping
+    const socialMediaLinks = [
+        { src: Facebook, alt: "Facebook" },
+        { src: Instagram, alt: "Instagram" },
+        { src: LinkedIn, alt: "LinkedIn" },
+    ];
+
+    // Copyright section mapping
+    const copyrightLinks = [
+        { to: "/", text: "Terms of Use" },
+        { to: "/", text: "Privacy Policy" },
+        { to: "/", text: "Cookies" },
+    ];
+    //============ end mapping the dubplicate section ============
+
     return (
         <LandingContainer>
             <Box sx={{ bgcolor: "inherit", py: 2 }}>
