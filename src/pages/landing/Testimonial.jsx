@@ -37,18 +37,17 @@ const Testimonial = () => {
     return (
         <LandingContainer
             style={{
-                padding: "0rem",
                 backgroundColor: theme.palette.background,
                 textAlign: "center",
             }}
         >
             <Typography
                 component="h1"
-                gutterBottom
                 sx={{
                     fontSize: theme.typography.h1,
                     fontWeight: theme.fontWeight.bold,
-                    textAlign: "center"
+                    textAlign: "center",
+                    mb: 4
                 }}
             >
                 What Our Clients Say
@@ -177,5 +176,4 @@ const Testimonial = () => {
 };
 
 export default Testimonial;
-
 //============ end testimonial section ============

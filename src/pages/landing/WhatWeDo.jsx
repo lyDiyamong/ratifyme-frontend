@@ -14,29 +14,28 @@ export default function WhatWeDo() {
     return (
         <LandingContainer
             sx={{
-                my: 5,
                 backgroundColor: theme.palette.background,
             }}
         >
             {/* Title */}
-            <Typography
-                component="h1"
-                variant="h1"
-                align="center"
-                gutterBottom
-                sx={{
-                    fontSize: theme.typography.h1,
-                    fontWeight: theme.fontWeight.bold,
-                    color: theme.palette.primary.contrastText,
-                    textAlign: "center"
-                }}
-            >
-                What We Do
-                <Typography sx={{ textAlign: "center" }}>
-                    Brings through
-                    the world’s most connected digital credentialing network.
+            <Box sx={{mb: 4}}>
+                <Typography
+                    component="h1"
+                    variant="h1"
+                    align="center"
+                    sx={{
+                        fontSize: theme.typography.h1,
+                        fontWeight: theme.fontWeight.bold,
+                        color: theme.palette.primary.contrastText,
+                        textAlign: "center",
+                    }}
+                >
+                    What We Do
                 </Typography>
-            </Typography>
+                <Typography sx={{ textAlign: "center" }}>
+                    Brings through the world’s most connected digital credentialing network.
+                </Typography>
+            </Box>
 
             {/* Start first image and paragraph */}
             <Grid container spacing={4} alignItems="center">
@@ -50,17 +49,14 @@ export default function WhatWeDo() {
                 </Grid>
                 <Grid container item xs={12} md={6} gap={2.5}>
                     <Typography variant="body1">
-                        At VerifyME, we provide fast, secure verification of
-                        badges and credentials for students, professionals, and
-                        organizations. Our platform simplifies the process,
-                        ensuring authenticity and reducing the risk of fraud.
+                        At VerifyME, we provide fast, secure verification of badges and credentials for students,
+                        professionals, and organizations. Our platform simplifies the process, ensuring authenticity and
+                        reducing the risk of fraud.
                     </Typography>
                     <Typography variant="body1">
-                        With automated systems and real-time checks, we
-                        streamline verification, making it efficient and
-                        reliable. Whether you're validating student badges or
-                        professional credentials, VerifyME guarantees secure,
-                        accurate results.
+                        With automated systems and real-time checks, we streamline verification, making it efficient and
+                        reliable. Whether you're validating student badges or professional credentials, VerifyME
+                        guarantees secure, accurate results.
                     </Typography>
                     <Typography variant="body1">
                         Our goal is to make verification seamless and trustworthy. We prioritize security and
@@ -68,7 +64,6 @@ export default function WhatWeDo() {
                     </Typography>
                 </Grid>
             </Grid>
-
             {/* End first image and paragraph */}
 
             {/* Start second image and paragraph */}
@@ -77,7 +72,7 @@ export default function WhatWeDo() {
                     <Typography
                         component="h4"
                         sx={{
-                            fontSize: theme.typography.h2,
+                            fontSize: theme.typography.h3,
                             fontWeight: theme.fontWeight.bold,
                             color: theme.palette.text.primary,
                         }}
@@ -92,8 +87,8 @@ export default function WhatWeDo() {
                         achievement.
                     </Typography>
                     <Typography variant="body1">
-                        Making it a trustworthy and portable way to showcase
-                        skills across different platforms and communities.
+                        Making it a trustworthy and portable way to showcase skills across different platforms and
+                        communities.
                     </Typography>
                 </Grid>
                 <Grid item xs={12} md={6} sx={{ order: { xs: 1, md: 2 } }}>
