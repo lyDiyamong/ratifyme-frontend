@@ -1,8 +1,11 @@
-import { Box, Typography } from "@mui/material";
+// MUI import
+import { Typography } from "@mui/material";
+
+// Custom import
 import theme from "../assets/themes";
 import DashboardContainer from "./styles/DashboardContainer";
 
-// Start current time date
+// Start current date function
 const getCurrentDate = () => {
     const today = new Date();
     const options = { weekday: "short", year: "numeric", month: "short", day: "numeric" };
