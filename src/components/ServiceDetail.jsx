@@ -36,12 +36,12 @@ const ServiceDetail = () => {
     // Start rendering row by map method
     const renderedRows = rows.map((row, index) => (
         <Grid
-            spacing={1}
+            spacing={0}
             container
             key={index}
             sx={{
                 backgroundColor: index % 2 !== 0 ? theme.palette.primary.light : theme.palette.customColors.white,
-                py: 2,
+                py: 2, px: 1
             }}
         >
             <Grid item xs={3} sx={{ m: 0 }}>
