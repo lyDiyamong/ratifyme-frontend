@@ -57,6 +57,7 @@ const LoginPage = () => {
                         {/* Email */}
                         <FormInput
                             name="email"
+                            type="email"
                             control={control}
                             label="Email"
                             required={true}

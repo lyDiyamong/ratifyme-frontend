@@ -72,7 +72,7 @@ const ContactUsPage = () => {
                             name="email"
                             control={control}
                             required={true}
-                            type="text"
+                            type="email"
                         />
                         {/* Organization Name feild */}
                         <FormInput

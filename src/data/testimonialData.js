@@ -1,11 +1,12 @@
 // import image
-import RatanakImg from "../assets/icons/RatanakImg.svg";
-import LyHour from "../assets/icons/LyHour.svg";
-import Rotha from "../assets/icons/Rotha.webp";
-import SreyPov from "../assets/icons/SreyPov.webp";
-import Chounan from "../assets/icons/Chounan.webp";
-import Malen from "../assets/icons/Malen.webp";
-import Yamong from "../assets/icons/Yamong.webp";
+import RatanakImg from "../assets/images/Rotanak.svg";
+import LyHour from "../assets/images/LyHour.svg";
+import Rotha from "../assets/images/Rotha.webp";
+import SreyPov from "../assets/images/SreyPov.webp";
+import Chounan from "../assets/images/Chounan.jpg";
+import Malen from "../assets/images/Malen.webp";
+import Yamong from "../assets/images/Yamong.webp";
+import BunThong from "../assets/images/BunThong.svg";
 
 export const testimonials = [
     {
@@ -60,8 +61,8 @@ export const testimonials = [
     {
         id: 8,
         text: "Verifyme has made the process of verifying student badges so easy and reliable. It's a game changer for HR departments like ours!",
-        author: "Rotha",
+        author: "Bun Thorng",
         position: "Tech A co.,ltd",
-        image: Rotha,
+        image: BunThong,
     },
 ];

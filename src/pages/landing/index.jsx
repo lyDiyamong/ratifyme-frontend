@@ -1,5 +1,4 @@
 // React library import
-import React from "react";
 import WhatWeDo from "./WhatWeDo";
 import Testimonial from "./Testimonial";
 import OurCustomer from "./OurCustomer.jsx";
@@ -9,7 +8,7 @@ import { Stack } from "@mui/material";
 
 const HomePage = () => {
     return (
-        <Stack gap={8}>
+        <Stack gap={12}>
             <HeroSection />
             <OurCustomer />
             <WhatWeDo />

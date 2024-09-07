@@ -67,7 +67,7 @@ function SignupPage() {
                             name="email"
                             control={control}
                             required={true}
-                            type="text"
+                            type="email"
                         />
                         {/* Password */}
                         <FormInput

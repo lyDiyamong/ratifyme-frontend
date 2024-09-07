@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import DashboardLayout from "../layouts/dasboard";
-import Dashboard from "../pages/dasboard";
+import Dashboard from "../pages/dashboard";
 import BadgeManagement from "../pages/badgeMangements";
 import EarnerManagement from "../pages/earnerManagements";
 import IssuerManagement from "../pages/issuerManagements";

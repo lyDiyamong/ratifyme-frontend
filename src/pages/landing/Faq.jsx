@@ -28,9 +28,6 @@ const Faq = () => {
             {/* Heading Section */}
             <Box
                 sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
                     my: 4,
                 }}
             >
@@ -39,14 +36,13 @@ const Faq = () => {
                     sx={{
                         fontSize: theme.typography.h1,
                         fontWeight: theme.fontWeight.bold,
-                        textAlign: "center"
+                        textAlign: "center",
                     }}
                 >
                     Frequently Asked Questions
-                    <Typography sx={{textAlign:"center"}}>
-                        If you want to know more about VerifyME,
-                        please first check the questions below.
-                    </Typography>
+                </Typography>
+                <Typography sx={{ textAlign: "center" }}>
+                    If you want to know more about VerifyME, please first check the questions below.
                 </Typography>
             </Box>
             {/* FAQ component */}
