@@ -1,5 +1,5 @@
 REVIEWBOARD_URL = "https://review.clp.kr/"
 REPOSITORY = "Tech-A/Verify-Me/Frontend"
 REPOSITORY_TYPE = "git"
-BRANCH = "feature/11-contactus"
-LAND_DEST_BRANCH = "feature/11-contactus"
+BRANCH = "feature/16-refactor"
+LAND_DEST_BRANCH = "feature/16-refactor"
