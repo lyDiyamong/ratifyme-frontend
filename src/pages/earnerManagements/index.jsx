@@ -12,7 +12,7 @@ const EarnerManagement = () => {
 
     return (
         <DashboardConatiner>
-            <DataTable title={"Earner List"} config={listDB} />
+            <DataTable title="Earner List" config={listDB} />
         </DashboardConatiner>
     );
 };
