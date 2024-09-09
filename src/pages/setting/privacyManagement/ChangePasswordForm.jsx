@@ -31,7 +31,7 @@ const ChangePasswordForm = () => {
 
     return (
       // ============ Start Change Password Form ============
-        <DashboardContainer>
+        <DashboardContainer sx={{maxWidth: "1300px"}}>
             <Stack
                 component="section"
                 flexDirection={{ xs: "column", md: "row" }}
