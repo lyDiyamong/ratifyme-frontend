@@ -1,7 +1,14 @@
-import React from "react";
+import { Stack } from "@mui/material";
+
+// Custom import
+import PageTitle from "../../../components/PageTitle";
+import ChangePasswordForm from "./ChangePasswordForm";
 
 const PrivacySecurityManagement = () => {
-    return <div>PrivacySecurityManagement</div>;
+    return <Stack gap={3}>
+        <PageTitle title="Change Password"/>
+        <ChangePasswordForm />
+    </Stack>;
 };
 
 export default PrivacySecurityManagement;

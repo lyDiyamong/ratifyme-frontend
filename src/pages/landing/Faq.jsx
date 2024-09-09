@@ -41,9 +41,6 @@ const Faq = () => {
                 >
                     Frequently Asked Questions
                 </Typography>
-                <Typography sx={{ textAlign: "center" }}>
-                    If you want to know more about VerifyME, please first check the questions below.
-                </Typography>
             </Box>
             {/* FAQ component */}
             {/* Componet allignment with Gride */}

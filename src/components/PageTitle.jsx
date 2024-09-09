@@ -20,7 +20,7 @@ const PageTitle = ({ title }) => {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                p: {md:3, xss: 1},
+                p: {md:3},
                 marginTop: 2,
                 bgcolor: theme.palette.background.default,
             }}

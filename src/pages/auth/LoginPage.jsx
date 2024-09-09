@@ -12,7 +12,7 @@ import LoginImgSvg from "../../assets/images/Login-illu.svg";
 
 const LoginPage = () => {
     // Form controller
-    const { handleSubmit, control } = useForm();
+    const { handleSubmit, control, formState:{errors} } = useForm();
 
     // Submit handler
     const onSubmit = (data) => {

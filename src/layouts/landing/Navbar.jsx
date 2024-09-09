@@ -190,7 +190,7 @@ function Navbar() {
                                     </Link>
                                 </MenuItem>
                                 <MenuItem onClick={handleClose}>
-                                    <Link to="/signup">
+                                    <Link to="/contactus">
                                         <Button variant="text" sx={menuResItem}>
                                             Contact Us
                                         </Button>

@@ -16,6 +16,8 @@ import theme from "../assets/themes/index";
  * @param {string} [type="text"] - The type of the input field (e.g., "text", "email", "password").
  * @param {boolean} [required=false] - Whether the input field is required.
  * @param {JSX.Element} [icon] - An optional icon element to display inside the input field.
+ * @param {string} [customError] - Custom error message to display.
+ * @param {object} [validationRules] - Additional validation rules for the input.
  * @param {...object} rest - Additional props to pass to the TextField component.
  * @returns {JSX.Element} The rendered FormInput component.
  */
@@ -26,15 +28,20 @@ const FormInput = ({
     type = "text",
     required = false,
     icon,
+    validationRules = {},
     ...rest
 }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     // Toggle password visibility
-    const handleClickShowPassword = () => setShowPassword(!showPassword);
+    const handleClickShowPassword = () => {
+        setShowPassword(prev => !prev);
+    };
 
     // Prevent default action on mouse down for the password visibility icon
-    const handleMouseDownPassword = (event) => event.preventDefault();
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
 
     // Define validation rules based on the input type and required prop
     const validationEmailRules = {
@@ -47,15 +54,21 @@ const FormInput = ({
         }),
     };
 
+    // Combine custom validation rules with email validation rules
+    const combinedValidationRules = {
+        ...validationEmailRules,
+        ...validationRules,
+    };
+
     // Use useController to connect the input field with React Hook Form
     const {
-        field, // Contains value, onChange, onBlur, and name for the input
-        fieldState: { error }, // Contains error state and message for validation
+        field,
+        fieldState: { error },
     } = useController({
         name,
         control,
         defaultValue: "",
-        rules: validationEmailRules,
+        rules: combinedValidationRules,
     });
 
     return (
@@ -63,8 +76,8 @@ const FormInput = ({
             label={label}
             fullWidth
             required={required}
-            {...field} // Spread the field props onto the TextField component
-            type={type === "password" && !showPassword ? "password" : type} // Handle password visibility toggle
+            {...field}
+            type={type === "password" && !showPassword ? "password" : "text"}
             error={!!error}
             helperText={error ? error.message : null}
             sx={{
@@ -77,7 +90,7 @@ const FormInput = ({
             }}
             InputProps={{
                 endAdornment: type === "password" && (
-                    <InputAdornment sx={{ position: "absolute", right: 15 }}>
+                    <InputAdornment position="end">
                         <IconButton
                             onClick={handleClickShowPassword}
                             onMouseDown={handleMouseDownPassword}
@@ -88,7 +101,6 @@ const FormInput = ({
                     </InputAdornment>
                 ),
             }}
-            // Pass down any additional props to the TextField component
             {...rest}
         />
     );

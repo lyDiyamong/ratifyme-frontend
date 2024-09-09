@@ -1,5 +1,6 @@
 // React library import
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 // MUI import
 import { Box, Grid, Typography, Button } from "@mui/material";
@@ -129,15 +130,17 @@ function SignupPage() {
                             color={theme.palette.text.secondary}
                         >
                             Already have an account?{" "}
+                            <Link to="/login">
                             <Typography
                                 component="span"
                                 sx={{
                                     color: theme.palette.text.primary,
-                                    fontWeight: theme.fontWeight.bold,
+                                    fontWeight: theme.fontWeight.semiBold,
                                 }}
                             >
                                 Log in
                             </Typography>{" "}
+                            </Link>
                         </Typography>
                         <Typography
                             color={theme.palette.text.secondary}
