@@ -11,12 +11,15 @@ import { Typography } from '@mui/material';
 import theme from "./../assets/themes/index";
 import PropTypes from "prop-types";
 
+// <!-- ============ Start Cached Component ============ -->
 // Create cache instance for MUI DataTable styles
 const muiCache = createCache({
     key: "mui-datatables",
     prepend: true,
 });
+// <!-- ============ End Cached Component ============ -->
 
+// <!-- ============ Start Configure Option for DataTable ============ -->
 // Define default options for the MUIDataTable
 const defaultOptions = {
     selectableRows: false,
@@ -31,7 +34,9 @@ const defaultOptions = {
     tableBodyHeight: "500px",
     tableBodyMaxHeight: "400px",
 };
+// <!-- ============ End Configure Option for DataTable ============ -->
 
+// <!-- ============ Start Render DataTable ============ -->
 // Define the DataTable component with config object as prop
 const DataTable = ({ config, options = defaultOptions, title }) => {
   const { data, columns } = config; // Destructure data and columns from config
@@ -50,6 +55,7 @@ const formattedData = data.map((row, index) =>
             </Typography>
         ))
 );
+// <!-- ============ End Render DataTable ============ -->
 
 // Modify column headers to render as h4 using Typography
 const formattedColumns = columns.map((column, index) => ({
@@ -89,6 +95,7 @@ return (
     </CacheProvider>
     );
 };
+// <!-- ============ End Render DataTable ============ -->
 
 // Add PropTypes validation for props
 DataTable.propTypes = {
