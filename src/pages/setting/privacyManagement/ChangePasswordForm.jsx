@@ -23,15 +23,15 @@ const ChangePasswordForm = () => {
                 message: "Passwords do not match",
             });
         } else {
-            console.log(data)
+            console.log(data);
 
-            reset()
+            reset();
         }
     };
 
     return (
-      // ============ Start Change Password Form ============
-        <DashboardContainer sx={{maxWidth: "1300px"}}>
+        // ============ Start Change Password Form ============
+        <DashboardContainer sx={{ maxWidth: "1300px" }}>
             <Stack
                 component="section"
                 flexDirection={{ xs: "column", md: "row" }}
@@ -43,6 +43,7 @@ const ChangePasswordForm = () => {
                     padding: "32px",
                     bgcolor: theme.palette.customColors.white,
                     gap: 4,
+                    mb: 3,
                 }}
             >
                 {/* Start Text Container */}
@@ -64,7 +65,13 @@ const ChangePasswordForm = () => {
                         {/* Password */}
                         <FormInput label="Password" name="password" control={control} type="password" required={true} />
                         {/* New Password */}
-                        <FormInput label="New Password" name="newPassword" control={control} type="password" required={true} />
+                        <FormInput
+                            label="New Password"
+                            name="newPassword"
+                            control={control}
+                            type="password"
+                            required={true}
+                        />
                         {/* Confirm Password */}
                         <FormInput
                             label="Confirm Password"
@@ -97,6 +104,7 @@ const ChangePasswordForm = () => {
                         alt="Change Password"
                         sx={{
                             width: "100%",
+                            display: { xs: "none", md: "block" }, // Hide image on xs and sm sizes
                         }}
                     />
                 </Grid>
