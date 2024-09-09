@@ -11,6 +11,7 @@ import Report from "../pages/report";
 import AccountManagement from "../pages/setting/accountManagement";
 import PrivacySecurityManagement from "../pages/setting/privacyManagement";
 import BackpackManagement from "../pages/backpackManagement";
+import AddRecipient from "../pages/earnerManagements/AddRecipient";
 
 const DashbaordRouter = () => {
     return (
@@ -26,6 +27,7 @@ const DashbaordRouter = () => {
                 <Route path="/mybackpacks" element={<BackpackManagement />} />
                 <Route path="/setting/account" element={<AccountManagement />} />
                 <Route path="/setting/privacy&security" element={<PrivacySecurityManagement />} />
+                <Route path="/management/eaners/add-recipient" element={<AddRecipient />} />
             </Route>
         </Routes>
     );
