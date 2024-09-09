@@ -1,29 +1,41 @@
+// React import
 import { useForm, Controller } from "react-hook-form";
+import Select from "react-select";
+import countryList from "react-select-country-list";
+
+// MUI import
 import { Box, Typography, Button, Stack, TextField } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
-import Select from "react-select";
-import countryList from "react-select-country-list";
+
+// Custom import
 import theme from "../../assets/themes";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import FormInput from "../../components/FormInput";
 
 const AddRecipientForm = () => {
+
+    // Start React-hook-form function
     const { handleSubmit, control, reset } = useForm({
+        // Start Set to default
         defaultValues: {
             dateOfBirth: null,
             country: "",
         },
     });
 
+    // Start onSubmit function
     const onSubmit = (data) => {
         console.log(data);
+        //Reset after success
         reset();
     };
 
+    // Start options function of country select library
     const options = countryList().getData();
 
     return (
+        // ============ Start Add Recipient Form container ============
         <DashboardContainer>
             <Stack
                 component="form"
@@ -37,6 +49,7 @@ const AddRecipientForm = () => {
                     p: 3,
                 }}
             >
+                {/* ============ Start Personal information Form ============ */}
                 <Stack>
                     <Box
                         sx={{
@@ -45,8 +58,9 @@ const AddRecipientForm = () => {
                             gap: 10
                         }}
                     >
+                        {/* Start the Detail paragraph */}
                         <Stack gap={1} sx={{ maxWidth: 500, width: "100%", pb: 2 }}>
-                            <Typography variant="h3" fontWeight={theme.fontWeight.semiBold}>
+                            <Typography variant="h4" fontWeight={theme.fontWeight.semiBold}>
                                 Personal information
                             </Typography>
                             <Typography variant="body1" color={theme.palette.text.disabled}>
@@ -54,9 +68,12 @@ const AddRecipientForm = () => {
                                 to earn the badge.
                             </Typography>
                         </Stack>
+                        {/* End the Detail paragraph */}
 
+                        {/* Start the Input form field */}
                         <Box sx={{ maxWidth: "100%", width: "100%" }}>
                             <Stack gap={2}>
+                                {/* Start First Name */}
                                 <FormInput
                                     name="firstName"
                                     label="First Name"
@@ -64,6 +81,7 @@ const AddRecipientForm = () => {
                                     type="text"
                                     required={true}
                                 />
+                                {/* Start Last Name */}
                                 <FormInput
                                     name="lastName"
                                     label="Last Name"
@@ -71,6 +89,7 @@ const AddRecipientForm = () => {
                                     type="text"
                                     required={true}
                                 />
+                                {/* Start Selection DOB */}
                                 <LocalizationProvider
                                     dateAdapter={AdapterDayjs}
                                     sx={{
@@ -99,8 +118,11 @@ const AddRecipientForm = () => {
                                         )}
                                     />
                                 </LocalizationProvider>
+                                {/* Start Phonet */}
                                 <FormInput name="phone" label="Phone" control={control} type="tel" required={false} />
+                                {/* Start Email */}
                                 <FormInput name="email" label="Email" control={control} type="email" required={true} />
+                                {/* Start Organization */}
                                 <FormInput
                                     name="organization"
                                     label="Organization"
@@ -108,6 +130,7 @@ const AddRecipientForm = () => {
                                     type="text"
                                     required={false}
                                 />
+                                {/* Start Position */}
                                 <FormInput
                                     name="position"
                                     label="Position"
@@ -117,9 +140,12 @@ const AddRecipientForm = () => {
                                 />
                             </Stack>
                         </Box>
+                        {/* End the Input form field */}
                     </Box>
                 </Stack>
+                {/* ============ End Personal information Form ============ */}
 
+                {/* ============ Start Address information Form ============ */}
                 <Stack>
                     <Box
                         sx={{
@@ -128,8 +154,9 @@ const AddRecipientForm = () => {
                             justifyContent: "space-between",
                         }}
                     >
+                        {/* Start the Detail paragraph */}
                         <Stack gap={1} sx={{ maxWidth: 500, width: "100%", pb: 2 }}>
-                            <Typography variant="h3" fontWeight={theme.fontWeight.semiBold}>
+                            <Typography variant="h4" fontWeight={theme.fontWeight.semiBold}>
                                 Address Information
                             </Typography>
                             <Typography variant="body1" color={theme.palette.text.disabled}>
@@ -137,9 +164,12 @@ const AddRecipientForm = () => {
                                 storing this metadata inside the badge image.
                             </Typography>
                         </Stack>
+                        {/* End the Detail paragraph */}
 
+                        {/* Start the Input form field */}
                         <Box sx={{ maxWidth: "100%", width: "100%" }}>
                             <Stack gap={2}>
+                                {/* Start Selection Country */}
                                 <Controller
                                     name="country"
                                     control={control}
@@ -171,13 +201,18 @@ const AddRecipientForm = () => {
                                         />
                                     )}
                                 />
+                                {/* Start City/State */}
                                 <FormInput name="cityState" label="City/State" control={control} type="text" />
+                                {/* Start District */}
                                 <FormInput name="district" label="District" control={control} type="text" />
                             </Stack>
                         </Box>
+                        {/* End the Input form field */}
                     </Box>
                 </Stack>
+                {/* ============ End Address information Form ============ */}
 
+                {/* Start Button Add Recipient */}
                 <Stack alignItems={"end"}>
                     <Button
                         type="submit"
@@ -193,8 +228,10 @@ const AddRecipientForm = () => {
                         Add Recipient
                     </Button>
                 </Stack>
+                {/* End Button Add Recipient */}
             </Stack>
         </DashboardContainer>
+        // ============ End Add Recipient Form container ============
     );
 };
 
