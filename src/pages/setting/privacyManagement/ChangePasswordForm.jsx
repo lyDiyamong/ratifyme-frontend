@@ -34,7 +34,7 @@ const ChangePasswordForm = () => {
         <DashboardContainer sx={{ maxWidth: "1300px" }}>
             <Stack
                 component="section"
-                flexDirection={{ xs: "column", md: "row" }}
+                flexDirection={{ xs: "column-reverse", md: "row" }}
                 sx={{
                     boxShadow: theme.customShadows.default,
                     borderRadius: theme.customShape.section,
@@ -104,7 +104,7 @@ const ChangePasswordForm = () => {
                         alt="Change Password"
                         sx={{
                             width: "100%",
-                            display: { xs: "none", md: "block" }, // Hide image on xs and sm sizes
+                            display: { xs: "none", md: "block" ,},
                         }}
                     />
                 </Grid>
