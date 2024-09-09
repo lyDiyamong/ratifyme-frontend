@@ -33,82 +33,104 @@ const defaultOptions = {
     rowsPerPageOptions: [2, 4, 10],
     tableBodyHeight: "500px",
     tableBodyMaxHeight: "400px",
+
 };
 // <!-- ============ End Configure Option for DataTable ============ -->
 
 // <!-- ============ Start Render DataTable ============ -->
 // Define the DataTable component with config object as prop
 const DataTable = ({ config, options = defaultOptions, title }) => {
-  const { data, columns } = config; // Destructure data and columns from config
+    const { data, columns } = config; // Destructure data and columns from config
 
-  // Convert data object to array of arrays for MUIDataTable
-const formattedData = data.map((row, index) =>
-        Object.values(row).map((cell, cellIndex) => (
+    // Convert data object to array of arrays for MUIDataTable
+    // Keep the raw data for search functionality
+    const formattedData = data.map(row => Object.values(row));
+
+    // Modify column headers to render as h4 using Typography
+    // This is for custom styling of the column headers
+    const formattedColumns = columns.map((column, index) => ({
+        name: column.name,
+        label: (
             <Typography
-                key={`cell-${index}-${cellIndex}`} // Add a unique key prop
-                component="h5"
+                key={`column-${index}`} // Add a unique key prop
+                component="h4"
                 sx={{
-                fontSize: theme.typography.h5,
+                    fontSize: theme.typography.h4,
+                    fontWeight: theme.fontWeight.bold,
                 }}
             >
-                {cell}
+                {column.name}
             </Typography>
-        ))
-);
-// <!-- ============ End Render DataTable ============ -->
+        ),
+    }));
 
-// Modify column headers to render as h4 using Typography
-const formattedColumns = columns.map((column, index) => ({
-    name: column.name,
-    label: (
+    // Define a custom render function for the table body to include Typography styling
+    const customBodyRender = (value) => (
         <Typography
-        key={`column-${index}`} // Add a unique key prop
-        component="h4"
-        sx={{
-            fontSize: theme.typography.h4,
-            fontWeight: theme.fontWeight.bold,
-        }}
-    >
-        {column.name}
-        </Typography>
-    ),
-}));
-
-return (
-    <CacheProvider value={muiCache}>
-        <MUIDataTable
-        title={
-            <Typography
-            component="h3"
+            component="h5"
             sx={{
-                fontSize: theme.typography.h3,
-                fontWeight: theme.fontWeight.bold,
+                fontSize: theme.typography.h5,
             }}
         >
-            {title}
+            {value}
         </Typography>
-        }
-        data={formattedData}
-        columns={formattedColumns}
-        options={options}
-    />
-    </CacheProvider>
+    );
+
+    // Apply custom render function to each column
+    const finalColumns = columns.map((column, index) => ({
+        name: column.name,
+        label: (
+            <Typography
+                key={`column-${index}`} // Add a unique key prop
+                component="h4"
+                sx={{
+                    fontSize: theme.typography.h4,
+                    fontWeight: theme.fontWeight.bold,
+                }}
+            >
+                {column.name}
+            </Typography>
+        ),
+        options: {
+            customBodyRender, // Apply custom render function
+        },
+    }));
+
+    return (
+        <CacheProvider value={muiCache}>
+            <MUIDataTable
+                title={
+                    <Typography
+                        component="h3"
+                        sx={{
+                            fontSize: theme.typography.h3,
+                            fontWeight: theme.fontWeight.bold,
+                        }}
+                    >
+                        {title}
+                    </Typography>
+                }
+                data={formattedData}  // Pass raw data for search functionality
+                columns={finalColumns} // Use columns with custom render function
+                options={options}
+            />
+        </CacheProvider>
     );
 };
 // <!-- ============ End Render DataTable ============ -->
 
 // Add PropTypes validation for props
 DataTable.propTypes = {
-config: PropTypes.shape({
-    data: PropTypes.arrayOf(PropTypes.object).isRequired,
-    columns: PropTypes.arrayOf(
-    PropTypes.shape({
-        name: PropTypes.string.isRequired,
-    })
-    ).isRequired,
-}).isRequired,
-options: PropTypes.object,
-title: PropTypes.string.isRequired,
+    config: PropTypes.shape({
+        data: PropTypes.arrayOf(PropTypes.object).isRequired,
+        columns: PropTypes.arrayOf(
+            PropTypes.shape({
+                name: PropTypes.string.isRequired,
+            })
+        ).isRequired,
+    }).isRequired,
+    options: PropTypes.object,
+    title: PropTypes.string.isRequired,
 };
 
 export default DataTable;
