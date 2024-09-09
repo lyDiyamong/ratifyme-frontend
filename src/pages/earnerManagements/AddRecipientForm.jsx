@@ -47,6 +47,7 @@ const AddRecipientForm = () => {
                     boxShadow: theme.customShadows.default,
                     borderRadius: theme.customShape.section,
                     p: 3,
+                    mb: 3
                 }}
             >
                 {/* ============ Start Personal information Form ============ */}
