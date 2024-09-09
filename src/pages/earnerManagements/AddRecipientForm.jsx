@@ -42,9 +42,10 @@ const AddRecipientForm = () => {
                         sx={{
                             display: { md: "flex", xs: "block" },
                             justifyContent: "space-between",
+                            gap: 10
                         }}
                     >
-                        <Stack gap={1} sx={{ maxWidth: 500, width: "100%", pr: 2, pb: 2 }}>
+                        <Stack gap={1} sx={{ maxWidth: 500, width: "100%", pb: 2 }}>
                             <Typography variant="h3" fontWeight={theme.fontWeight.semiBold}>
                                 Personal information
                             </Typography>
@@ -54,7 +55,7 @@ const AddRecipientForm = () => {
                             </Typography>
                         </Stack>
 
-                        <Box sx={{ maxWidth: 600, width: "100%" }}>
+                        <Box sx={{ maxWidth: "100%", width: "100%" }}>
                             <Stack gap={2}>
                                 <FormInput
                                     name="firstName"
@@ -123,10 +124,11 @@ const AddRecipientForm = () => {
                     <Box
                         sx={{
                             display: { md: "flex", xs: "block" },
+                            gap: 10,
                             justifyContent: "space-between",
                         }}
                     >
-                        <Stack gap={1} sx={{ maxWidth: 500, width: "100%", pr: 2, pb: 2 }}>
+                        <Stack gap={1} sx={{ maxWidth: 500, width: "100%", pb: 2 }}>
                             <Typography variant="h3" fontWeight={theme.fontWeight.semiBold}>
                                 Address Information
                             </Typography>
@@ -136,7 +138,7 @@ const AddRecipientForm = () => {
                             </Typography>
                         </Stack>
 
-                        <Box sx={{ maxWidth: 600, width: "100%" }}>
+                        <Box sx={{ maxWidth: "100%", width: "100%" }}>
                             <Stack gap={2}>
                                 <Controller
                                     name="country"
@@ -176,19 +178,21 @@ const AddRecipientForm = () => {
                     </Box>
                 </Stack>
 
-                <Button
-                    type="submit"
-                    variant="contained"
-                    sx={{
-                        color: theme.palette.background.default,
-                        borderRadius: theme.customShape.btn,
-                        fontWeight: theme.fontWeight.bold,
-                        mt: 2,
-                        maxWidth: 150,
-                    }}
-                >
-                    Add Recipient
-                </Button>
+                <Stack alignItems={"end"}>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        sx={{
+                            color: theme.palette.background.default,
+                            borderRadius: theme.customShape.btn,
+                            fontWeight: theme.fontWeight.bold,
+                            mt: 2,
+                            maxWidth: 150,
+                        }}
+                    >
+                        Add Recipient
+                    </Button>
+                </Stack>
             </Stack>
         </DashboardContainer>
     );
