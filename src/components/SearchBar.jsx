@@ -71,6 +71,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchBar({ showButton = true, textInButton }) {
+    // ============ Start of search bar component ============ 
     return (
         <DashboardContainer>
             <Box sx={{ flexGrow: 1 }}>
@@ -130,5 +131,8 @@ export default function SearchBar({ showButton = true, textInButton }) {
                 </AppBar>
             </Box>
         </DashboardContainer>
+
+    // ============ End of search bar component ============ 
+
     );
 }
