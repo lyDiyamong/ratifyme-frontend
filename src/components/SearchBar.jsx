@@ -71,7 +71,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchBar({ showButton = true, textInButton }) {
-    // ============ Start of search bar component ============ 
+    // ============ Start of search bar component ============
     return (
         <DashboardContainer>
             <Box sx={{ flexGrow: 1 }}>
@@ -95,7 +95,13 @@ export default function SearchBar({ showButton = true, textInButton }) {
                         }}
                     >
                         {/* Search bar */}
-                        <Search sx={{ borderRadius: theme.customShape.input }}>
+                        <Search sx={{ 
+                            borderRadius: theme.customShape.input,
+                            backgroundColor: theme.palette.customColors.white,
+                            border: `1px solid ${theme.palette.divider}`,
+                            
+                            }}
+                            >
                             <SearchIconWrapper>
                                 <SearchIcon />
                             </SearchIconWrapper>
@@ -120,7 +126,7 @@ export default function SearchBar({ showButton = true, textInButton }) {
                                     width: { xs: "100%", sm: "auto" }, // Full width on mobile screens
                                     boxShadow: theme.customShadows.default,
                                     "&:hover": {
-                                        backgroundColor: theme.palette.primary.dark,
+                                        backgroundColor: theme.palette.selected,
                                     },
                                 }}
                             >
@@ -132,7 +138,6 @@ export default function SearchBar({ showButton = true, textInButton }) {
             </Box>
         </DashboardContainer>
 
-    // ============ End of search bar component ============ 
-
+        // ============ End of search bar component ============
     );
 }
