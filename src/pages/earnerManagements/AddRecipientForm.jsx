@@ -2,29 +2,34 @@ import { useForm, Controller } from "react-hook-form";
 import { Box, Typography, Button, Stack, TextField } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
-import FormInput from "../../components/FormInput";
+import Select from "react-select";
+import countryList from "react-select-country-list";
 import theme from "../../assets/themes";
 import DashboardContainer from "../../components/styles/DashboardContainer";
+import FormInput from "../../components/FormInput";
 
 const AddRecipientForm = () => {
-
     const { handleSubmit, control, reset } = useForm({
         defaultValues: {
             dateOfBirth: null,
+            country: "",
         },
     });
 
     const onSubmit = (data) => {
-        console.log(data); // Handle form submission logic here
-        reset(); // Reset the form after submission
+        console.log(data);
+        reset();
     };
+
+    const options = countryList().getData();
 
     return (
         <DashboardContainer>
-            <Box
+            <Stack
                 component="form"
                 onSubmit={handleSubmit(onSubmit)}
                 noValidate
+                gap={5}
                 sx={{
                     background: theme.palette.customColors.white,
                     boxShadow: theme.customShadows.default,
@@ -35,11 +40,11 @@ const AddRecipientForm = () => {
                 <Stack>
                     <Box
                         sx={{
-                            display: "flex",
+                            display: { md: "flex", xs: "block" },
                             justifyContent: "space-between",
                         }}
                     >
-                        <Stack gap={1} sx={{ maxWidth: 500, width: "100%", pr: 2 }}>
+                        <Stack gap={1} sx={{ maxWidth: 500, width: "100%", pr: 2, pb: 2 }}>
                             <Typography variant="h3" fontWeight={theme.fontWeight.semiBold}>
                                 Personal information
                             </Typography>
@@ -65,24 +70,21 @@ const AddRecipientForm = () => {
                                     type="text"
                                     required={true}
                                 />
-                                <LocalizationProvider dateAdapter={AdapterDayjs} sx={{
-                                            '& .MuiLocalizationProvider-root': {
-                                                borderRadius: "12px",
-                                            },
-                                            '& .MuiDatePicker-root': {
-                                                borderRadius: "12px",
-                                            },
-                                            '& MuiTextField-root': {
-                                                borderRadius: "12px",
-                                            },
-                                        }}>
+                                <LocalizationProvider
+                                    dateAdapter={AdapterDayjs}
+                                    sx={{
+                                        "& .MuiLocalizationProvider-root": {
+                                            borderRadius: "12px",
+                                        },
+                                        "& .MuiDatePicker-root": {
+                                            borderRadius: "12px",
+                                        },
+                                        "& MuiTextField-root": {
+                                            borderRadius: "12px",
+                                        },
+                                    }}
+                                >
                                     <Controller
-                                        sx={{
-                                            '& .MuiLocalizationProvider-root': {
-                                                borderRadius: "12px",
-                                            },
-                                            
-                                        }}
                                         name="dateOfBirth"
                                         control={control}
                                         render={({ field: { ref, ...rest } }) => (
@@ -116,6 +118,64 @@ const AddRecipientForm = () => {
                         </Box>
                     </Box>
                 </Stack>
+
+                <Stack>
+                    <Box
+                        sx={{
+                            display: { md: "flex", xs: "block" },
+                            justifyContent: "space-between",
+                        }}
+                    >
+                        <Stack gap={1} sx={{ maxWidth: 500, width: "100%", pr: 2, pb: 2 }}>
+                            <Typography variant="h3" fontWeight={theme.fontWeight.semiBold}>
+                                Address Information
+                            </Typography>
+                            <Typography variant="body1" color={theme.palette.text.disabled}>
+                                A clear statement capture essential information about learning and achievements by
+                                storing this metadata inside the badge image.
+                            </Typography>
+                        </Stack>
+
+                        <Box sx={{ maxWidth: 600, width: "100%" }}>
+                            <Stack gap={2}>
+                                <Controller
+                                    name="country"
+                                    control={control}
+                                    render={({ field: { onChange, onBlur, value, ref } }) => (
+                                        <Select
+                                            options={options}
+                                            onChange={onChange}
+                                            onBlur={onBlur}
+                                            value={options.find((option) => option.value === value)}
+                                            inputRef={ref}
+                                            placeholder="Select Country"
+                                            getOptionLabel={(option) => option.label}
+                                            getOptionValue={(option) => option.value}
+                                            styles={{
+                                                container: (base) => ({
+                                                    ...base,
+                                                    width: "100%",
+                                                }),
+                                                control: (base) => ({
+                                                    ...base,
+                                                    height: "56px",
+                                                    borderRadius: theme.customShape.input,
+                                                }),
+                                                menu: (base) => ({
+                                                    ...base,
+                                                    zIndex: 2,
+                                                }),
+                                            }}
+                                        />
+                                    )}
+                                />
+                                <FormInput name="cityState" label="City/State" control={control} type="text" />
+                                <FormInput name="district" label="District" control={control} type="text" />
+                            </Stack>
+                        </Box>
+                    </Box>
+                </Stack>
+
                 <Button
                     type="submit"
                     variant="contained"
@@ -123,12 +183,13 @@ const AddRecipientForm = () => {
                         color: theme.palette.background.default,
                         borderRadius: theme.customShape.btn,
                         fontWeight: theme.fontWeight.bold,
-                        mt: 2, // added margin top for spacing
+                        mt: 2,
+                        maxWidth: 150,
                     }}
                 >
                     Add Recipient
                 </Button>
-            </Box>
+            </Stack>
         </DashboardContainer>
     );
 };
