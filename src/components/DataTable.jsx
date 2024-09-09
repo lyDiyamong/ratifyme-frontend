@@ -5,16 +5,18 @@ import createCache from "@emotion/cache";
 
 // MUI import
 import MUIDataTable from "mui-datatables";
+import { Typography } from '@mui/material';
 
-// <!-- ============ Start Cache ============ -->
+// Custom Import
+import theme from "./../assets/themes/index";
+import PropTypes from "prop-types";
+
 // Create cache instance for MUI DataTable styles
 const muiCache = createCache({
     key: "mui-datatables",
-    prepend: true
+    prepend: true,
 });
-// <!-- ============ End Cache ============ -->
 
-// <!-- ============ Start Config Optiob for DataTable ============ -->
 // Define default options for the MUIDataTable
 const defaultOptions = {
     selectableRows: false,
@@ -29,127 +31,77 @@ const defaultOptions = {
     tableBodyHeight: "500px",
     tableBodyMaxHeight: "400px",
 };
-// <!-- ============ End Config Optiob for DataTable ============ -->
 
-// <!-- ============ Start DataTable ============ -->
 // Define the DataTable component with config object as prop
-const DataTable = ({ config, options = defaultOptions,title }) => {
-    const { data, columns } = config; // Destructure data and columns from config
+const DataTable = ({ config, options = defaultOptions, title }) => {
+  const { data, columns } = config; // Destructure data and columns from config
 
-    // Convert data object to array of arrays for MUIDataTable
-    const formattedData = data.map(row => Object.values(row));
+  // Convert data object to array of arrays for MUIDataTable
+const formattedData = data.map((row, index) =>
+        Object.values(row).map((cell, cellIndex) => (
+            <Typography
+                key={`cell-${index}-${cellIndex}`} // Add a unique key prop
+                component="h5"
+                sx={{
+                fontSize: theme.typography.h5,
+                }}
+            >
+                {cell}
+            </Typography>
+        ))
+);
 
-    // Convert columns object to array of strings for MUIDataTable
-    const formattedColumns = columns.map(column => column.name);
+// Modify column headers to render as h4 using Typography
+const formattedColumns = columns.map((column, index) => ({
+    name: column.name,
+    label: (
+        <Typography
+        key={`column-${index}`} // Add a unique key prop
+        component="h4"
+        sx={{
+            fontSize: theme.typography.h4,
+            fontWeight: theme.fontWeight.bold,
+        }}
+    >
+        {column.name}
+        </Typography>
+    ),
+}));
 
-    return (
-        <CacheProvider value={muiCache}>
-            <MUIDataTable
-                title={title}
-                data={formattedData}
-                columns={formattedColumns}
-                options={options}
-            />
-        </CacheProvider>
+return (
+    <CacheProvider value={muiCache}>
+        <MUIDataTable
+        title={
+            <Typography
+            component="h3"
+            sx={{
+                fontSize: theme.typography.h3,
+                fontWeight: theme.fontWeight.bold,
+            }}
+        >
+            {title}
+        </Typography>
+        }
+        data={formattedData}
+        columns={formattedColumns}
+        options={options}
+    />
+    </CacheProvider>
     );
 };
-// <!-- ============ End DataTable ============ -->
+
+// Add PropTypes validation for props
+DataTable.propTypes = {
+config: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.object).isRequired,
+    columns: PropTypes.arrayOf(
+    PropTypes.shape({
+        name: PropTypes.string.isRequired,
+    })
+    ).isRequired,
+}).isRequired,
+options: PropTypes.object,
+title: PropTypes.string.isRequired,
+};
 
 export default DataTable;
-
-
-// Usage
-
-// 1.import DataTable from "../../components/DataTable";
-// 2.Configt listDB for data detail
-// 3.import
-// 3.call tage <DataTable title={"title" config={listDB}}/>
-
-// Sample
-// const listDB = {
-//     data: [
-//         {   Id:         1,
-//             Name:       "Srey Pov",
-//             img:        "",
-//             Email:      "sreypov@mail.com",
-//             Badge:      "Fullstack",
-//             DOB:        "01/01/01",
-//             Position:   "Student",
-//             Action:     "View/Delete",
-//         },
-//         {   Id:         2,
-//             Name:       "Rotha",
-//             img:        "",
-//             Email:      "rotha@mail.com",
-//             Badge:      "Fullstack",
-//             DOB:        "01/01/01",
-//             Position:   "Student",
-//             Action:     "View/Delete"
-//         },
-//         {   Id:         3,
-//             Name:       "Ratanak",
-//             img:        "",
-//             Email:      "ratanak@mail.com",
-//             Badge:      "Fullstack",
-//             DOB:        "01/01/01",
-//             Position:   "Student",
-//             Action:     "View/Delete",
-//         },
-//         {   Id:         4,
-//             Name:       "Ya Mong",
-//             img:        "",
-//             Email:      "yamong@mail.com",
-//             Badge:      "Fullstack",
-//             DOB:        "01/01/01",
-//             Position:   "Student",
-//             Action:     "View/Delete",
-//         },
-//         {   Id:         5,
-//             Name:       "Malen",
-//             img:        "",
-//             Email:      "malen@mail.com",
-//             Badge:      "Fullstack",
-//             DOB:        "01/01/01",
-//             Position:   "Student",
-//             Action:     "View/Delete",
-//         },
-//         {   Id:         6,
-//             Name:       "lyhour",
-//             img:        "",
-//             Email:      "lyhour@mail.com",
-//             Badge:      "Fullstack",
-//             DOB:        "01/01/01",
-//             Position:   "Student",
-//             Action:     "View/Delete",
-//         },
-//         {   Id:         7,
-//             Name:       "bongthong",
-//             img:        "",
-//             Email:      "bongthong@mail.com",
-//             Badge:      "Fullstack",
-//             DOB:        "01/01/01",
-//             Position:   "Student",
-//             Action:     "View/Delete",
-//         },
-//         {   Id:         8,
-//             Name:       "chhunan",
-//             img:        "",
-//             Email:      "chhunan@mail.com",
-//             Badge:      "Fullstack",
-//             DOB:        "01/01/01",
-//             Position:   "Student",
-//             Action:     "View/Delete",
-//         },
-//     ],
-//     columns: [
-//         {   name:       "ID"},
-//         {   name:       "Name" },
-//         {   name:        "Image"},
-//         {   name:       "Email" },
-//         {   name:       "Badge" },
-//         {   name:       "Date of Birth" },
-//         {   name:       "Position" },
-//         {   name:       "Action" },
-//     ]
-// };
-// <DataTable title={"Earner List"} config={listDB} />

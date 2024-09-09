@@ -4,15 +4,16 @@ import React from "react";
 // Custom import
 import DataTable from "../../components/DataTable";
 import {listDB} from "./../../data/earnerData.js"
+import DashboardConatiner from "./../../components/styles/DashboardContainer.jsx"
 
 console.log(listDB);
 
 const EarnerManagement = () => {
 
     return (
-        <div>
+        <DashboardConatiner>
             <DataTable title={"Earner List"} config={listDB} />
-        </div>
+        </DashboardConatiner>
     );
 };
 
