@@ -14,7 +14,7 @@ import ChangePassword from "../../../assets/images/ChangePassword.svg";
 
 const ChangePasswordForm = () => {
     // Form controller
-    const { control, handleSubmit, setError } = useForm();
+    const { control, handleSubmit, setError, reset } = useForm();
 
     const onSubmit = (data) => {
         if (data.newPassword !== data.confirmPassword) {
@@ -24,6 +24,8 @@ const ChangePasswordForm = () => {
             });
         } else {
             console.log(data)
+
+            reset()
         }
     };
 
