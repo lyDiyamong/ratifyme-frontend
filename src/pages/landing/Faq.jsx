@@ -37,7 +37,7 @@ const Faq = () => {
                         fontSize: theme.typography.h1,
                         fontWeight: theme.fontWeight.bold,
                         textAlign: "center",
-                    }}
+                    }}t
                 >
                     Frequently Asked Questions
                 </Typography>
