@@ -37,8 +37,8 @@ const AddRecipientForm = () => {
 
     // Data static of the gender select
     const optionSelect = [
-        { value: "M", label: "Male" },
-        { value: "F", label: "Female" },
+        { value: 1, label: "Male" },
+        { value: 2, label: "Female" },
     ];
 
     return (
