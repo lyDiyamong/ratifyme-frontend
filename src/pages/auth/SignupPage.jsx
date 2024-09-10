@@ -10,14 +10,27 @@ import FormInput from "../../components/FormInput";
 import theme from "../../assets/themes";
 import LandingContainer from "../../components/styles/LandingContainer";
 import SignupImgSvg from "../../assets/images/Signup-illu.svg";
+import { useSignupMutation } from "../../store/api/auth/authApi";
 
 function SignupPage() {
     // form controller
     const { handleSubmit, control } = useForm();
 
+    // Use the RTK Query mutation hook
+    const [signUp, { isLoading, isSuccess, isError, error }] = useSignupMutation();
+
     // handle submission
-    const onSubmit = (data) => {
-        console.log(data);
+    const onSubmit = async (data) => {
+        try {
+            // Call the signUp mutation
+            const result = await signUp(data).unwrap(); // Unwrap result to handle errors
+
+            // Handle success response
+            console.log("Signup successful:", result);
+        } catch (err) {
+            // Handle error response
+            console.error("Error during signup:", err);
+        }
     };
 
     return (
@@ -40,8 +53,8 @@ function SignupPage() {
                             Sign up
                         </Typography>
                         <Typography>
-                            Let’s get started. Are you ready to be a part of our
-                            digital badge? Then boldly move forward with us.
+                            Let’s get started. Are you ready to be a part of our digital badge? Then boldly move forward
+                            with us.
                         </Typography>
                     </Box>
                     {/* Start form Container */}
@@ -63,21 +76,9 @@ function SignupPage() {
                             // Additional props if needed
                         />
                         {/* Email */}
-                        <FormInput
-                            label="Email"
-                            name="email"
-                            control={control}
-                            required={true}
-                            type="email"
-                        />
+                        <FormInput label="Email" name="email" control={control} required={true} type="email" />
                         {/* Password */}
-                        <FormInput
-                            label="Password"
-                            name="password"
-                            control={control}
-                            type="password"
-                            required={true}
-                        />
+                        <FormInput label="Password" name="password" control={control} type="password" required={true} />
                         {/* Confirm password */}
                         <FormInput
                             label="Confirm Password"
@@ -94,16 +95,14 @@ function SignupPage() {
                             sx={{
                                 color: theme.palette.background.default,
                                 borderRadius: theme.customShape.btn,
-                                fontWeight : theme.fontWeight.bold
+                                fontWeight: theme.fontWeight.bold,
                             }}
                         >
-                            Sign Up
+                            {isLoading ? "Signing Up..." : "Sign Up"}
                         </Button>
+                        {isError && <Typography color="error">{error?.data?.message || "Signup failed"}</Typography>}
                         {/* Text description */}
-                        <Typography
-                            textAlign="center"
-                            color={theme.palette.text.secondary}
-                        >
+                        <Typography textAlign="center" color={theme.palette.text.secondary}>
                             By signing up to create an account I accept{" "}
                             <Typography
                                 component="span"
@@ -125,29 +124,23 @@ function SignupPage() {
                                 Privacy Policy.
                             </Typography>
                         </Typography>
-                        <Typography
-                            textAlign="center"
-                            color={theme.palette.text.secondary}
-                        >
+                        <Typography textAlign="center" color={theme.palette.text.secondary}>
                             Already have an account?{" "}
                             <Link to="/login">
-                            <Typography
-                                component="span"
-                                sx={{
-                                    color: theme.palette.text.primary,
-                                    fontWeight: theme.fontWeight.semiBold,
-                                }}
-                            >
-                                Log in
-                            </Typography>{" "}
+                                <Typography
+                                    component="span"
+                                    sx={{
+                                        color: theme.palette.text.primary,
+                                        fontWeight: theme.fontWeight.semiBold,
+                                    }}
+                                >
+                                    Log in
+                                </Typography>{" "}
                             </Link>
                         </Typography>
-                        <Typography
-                            color={theme.palette.text.secondary}
-                            fontSize={theme.typography.body2}
-                        >
-                            Let’s get started. Are you ready to be a part of our
-                            digital badge? Then boldly move forward with us.
+                        <Typography color={theme.palette.text.secondary} fontSize={theme.typography.body2}>
+                            Let’s get started. Are you ready to be a part of our digital badge? Then boldly move forward
+                            with us.
                         </Typography>
                     </Box>
                     {/* End form container */}
