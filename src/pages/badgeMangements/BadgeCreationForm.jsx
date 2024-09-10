@@ -117,7 +117,7 @@ const BadgeCreationForm = () => {
         setTimeout(() => {
             console.log("Data submitted");
             setLoading(false);
-            
+
             reset();
             setUploadedImage(null);
         }, 1000);
