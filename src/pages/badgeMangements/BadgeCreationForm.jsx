@@ -1,122 +1,236 @@
-// React import
-import { useForm } from "react-hook-form";
-
-// MUI import
-import { Box, Typography, Button, Stack } from "@mui/material";
-
-// Custom import
+import React from "react";
+import { Box, Paper, Button, TextField, MobileStepper, Typography, Stack } from "@mui/material";
+import { useForm, Controller } from "react-hook-form";
+import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import theme from "../../assets/themes";
 import DashboardContainer from "../../components/styles/DashboardContainer";
-import FormInput from "../../components/FormInput";
-
 import ImageSelection from "./ImageSelection";
 
+const steps = [
+    {
+        description: "Core Elements :",
+        details:
+            "Badge templates must use square images in PNG format, with dimensions between 300x300.",
+        inputs: [
+            {
+                label: "Issuer*",
+                name: "issuer",
+                rules: { required: false },
+            },
+            {
+                label: "Criteria*",
+                name: "criteria",
+                rules: { required: false },
+            },
+            {
+                label: "Earning Criteria*",
+                name: "earningCriteria",
+                rules: { required: false },
+            },
+            {
+                label: "Duration",
+                name: "duration",
+                rules: { required: false },
+            },
+        ],
+    },
+    {
+        description: "Metadata of the Badge :",
+        details:
+            "A clear statement capture essential information about learning and achievements by storing this metadata inside the badge image.",
+        inputs: [
+            {
+                label: "Badge Name*",
+                name: "bagdeName",
+                rules: { required: false },
+            },
+            {
+                label: "Issued On*",
+                name: "issuedOn",
+                rules: { required: false },
+            },
+            {
+                label: "Valid Start",
+                name: "validStart",
+                rules: { required: false },
+            },
+            {
+                label: "Valid End",
+                name: "validEnd",
+                rules: { required: false },
+            },
+            {
+                label: "Badge Description",
+                name: "badgeDescription",
+                rules: { required: false },
+            },
+            {
+                label: "Tags / Language",
+                name: "tagsOrLanguage",
+                rules: { required: false },
+            },
+            {
+                label: "Achievement Type*",
+                name: "achievementType",
+                rules: { required: false },
+            },
+        ],
+    },
+    {
+        description: "Optional Elements :",
+        details:
+            "A optional statement of the badge. The specific elements required for an Open Badge may vary depending on the implementation and the preferences of the issuer",
+        inputs: [
+            {
+                label: "Expiration Date",
+                name: "expirationDate",
+                rules: { required: "Expiration Date is required" },
+            },
+            {
+                label: "Addition Links",
+                name: "additionLinks",
+                rules: { required: "Addition Links is required" },
+            },
+        ],
+    },
+];
+
 const BadgeCreationForm = () => {
-    // Start React-hook-form function
-    const { handleSubmit, control, reset } = useForm({
-        // Start Set to default
+    const [activeStep, setActiveStep] = React.useState(0);
+    const {
+        control,
+        handleSubmit,
+        trigger,
+        reset,
+        formState: { errors },
+    } = useForm({
         defaultValues: {
-            dateOfBirth: null,
-            country: "",
+            issuer: "",
+            criteria: "",
+            earningCriteria: "",
+            duration: "",
+            bagdeName: "",
+            issuedOn: "",
+            validStart: "",
+            validEnd: "",
+            badgeDescription: "",
+            tagsOrLanguage: "",
+            achievementType: "",
+            expirationDate: "",
+            additionLinks: "",
         },
     });
+    const maxSteps = steps.length;
 
-    // Start onSubmit function
+    const handleNext = async () => {
+        const isValid = await trigger();
+        if (isValid) {
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }
+    };
+
+    const handleBack = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    };
+
     const onSubmit = (data) => {
         console.log(data);
-        //Reset after success
         reset();
     };
 
     return (
-        // ============ Start ============
         <DashboardContainer>
             <Stack
                 component="form"
                 onSubmit={handleSubmit(onSubmit)}
                 noValidate
-                gap={5}
                 sx={{
                     boxShadow: theme.customShadows.default,
                     borderRadius: theme.customShape.section,
                     padding: "32px",
                     bgcolor: theme.palette.customColors.white,
-                    gap: 4,
+                    gap: 10,
                     mb: 3,
                 }}
             >
                 <ImageSelection />
-                {/* ============ Start Personal information Form ============ */}
-                <Stack>
-                    <Box
-                        sx={{
-                            display: { md: "flex", xs: "block" },
-                            justifyContent: "space-between",
-                            gap: 4,
-                        }}
-                    >
-                        {/* Start the Detail paragraph */}
-                        <Stack gap={1} sx={{ maxWidth: 500, width: "100%", pb: 2 }}>
+
+                <Box>
+                    <Stack direction="row" flexDirection={{ xss: "column", md: "row" }} sx={{ gap: 2, mb: 4 }}>
+                        <Stack gap={2}>
                             <Typography component="h3" variant="h3" fontWeight={theme.fontWeight.semiBold}>
-                                Core Elements :
+                                {steps[activeStep].description}
                             </Typography>
+
                             <Typography
-                                variant="body1`"
+                                variant="body1"
                                 sx={{
-                                    maxWidth: "400px",
+                                    maxWidth: "500px",
                                     width: "100%",
                                     color: theme.palette.text.disabled,
                                 }}
                             >
-                                A clear statement of the skills, knowledge, or abilities that a learner must demonstrate
-                                to earn the badge.
+                                {steps[activeStep].details}
                             </Typography>
                         </Stack>
-                        {/* End the Detail paragraph */}
 
-                        {/* Start the Input form field */}
                         <Box sx={{ maxWidth: "100%", width: "100%" }}>
-                            <Stack gap={2}>
-                                {/* Start First Name */}
-                                <FormInput
-                                    name="firstName"
-                                    label="First Name"
+                            {steps[activeStep].inputs.map((input, index) => (
+                                <Controller
+                                    key={`${input.name}-${index}`}
+                                    name={input.name}
                                     control={control}
-                                    type="text"
-                                    required={true}
+                                    rules={input.rules}
+                                    render={({ field }) => (
+                                        <TextField
+                                            {...field}
+                                            label={input.label}
+                                            fullWidth
+                                            margin="normal"
+                                            error={!!errors[input.name]}
+                                            helperText={errors[input.name]?.message}
+                                            borderRadius={theme.customShape.borderRadius}
+                                        />
+                                    )}
                                 />
-                                {/* Start Last Name */}
-                                <FormInput
-                                    name="lastName"
-                                    label="Last Name"
-                                    control={control}
-                                    type="text"
-                                    required={true}
-                                />
-                            </Stack>
-                        </Box>
-                        {/* End the Input form field */}
-                    </Box>
-                </Stack>
-                {/* ============ End Personal information Form ============ */}
+                            ))}
 
-                {/* Start Button Add Recipient */}
-                <Stack alignItems={"end"}>
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        sx={{
-                            color: theme.palette.background.default,
-                            borderRadius: theme.customShape.btn,
-                            fontWeight: theme.fontWeight.bold,
-                            mt: 2,
-                            maxWidth: 150,
-                        }}
-                    >
-                        Add Badge
-                    </Button>
-                </Stack>
-                {/* End Button Add Recipient */}
+                            {activeStep === maxSteps - 1 && (
+                                <Stack direction="row" sx={{ width: "100%", my: 2, justifyContent: "flex-end" }}>
+                                    <Button
+                                        type="submit"
+                                        variant="contained"
+                                        sx={{
+                                            borderRadius: theme.customShape.btn,
+                                            color: theme.palette.customColors.white,
+                                        }}
+                                    >
+                                        Submit
+                                    </Button>
+                                </Stack>
+                            )}
+                        </Box>
+                    </Stack>
+                    <MobileStepper
+                        variant="text"
+                        steps={maxSteps}
+                        position="static"
+                        activeStep={activeStep}
+                        nextButton={
+                            <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
+                                Next
+                                {theme.direction === "rtl" ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+                            </Button>
+                        }
+                        backButton={
+                            <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+                                {theme.direction === "rtl" ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+                                Back
+                            </Button>
+                        }
+                    />
+                </Box>
             </Stack>
         </DashboardContainer>
     );

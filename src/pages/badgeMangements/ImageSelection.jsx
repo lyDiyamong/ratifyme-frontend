@@ -46,13 +46,13 @@ function ImageSelection() {
     return (
         <Stack
             direction="row"
-            flexDirection={{ xs: "column-reverse", md: "row" }}
+            flexDirection={{ xss: "column-reverse", md: "row" }}
             sx={{ gap: 4, alignItems: "center" }}
         >
             <Box
                 border={`2px dashed ${theme.palette.cardBorder}`}
-                borderRadius="5px"
-                padding="30px"
+                borderRadius={theme.customShape.input}
+                padding={1}
                 display="flex"
                 flexDirection="column"
                 justifyContent="center"
@@ -87,6 +87,8 @@ function ImageSelection() {
                         height: "20%",
                         backgroundColor: "rgba(0, 0, 0, 0.3)",
                         zIndex: 2,
+                        MozBorderRadiusBottomright: theme.customShape.input,
+                        borderBottomLeftRadius: theme.customShape.input
                     }}
                 >
                     <IconButton sx={{ color: "white" }}>
