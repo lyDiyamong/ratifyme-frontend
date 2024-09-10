@@ -7,14 +7,15 @@ import countryList from "react-select-country-list";
 import { Box, Typography, Button, Stack, TextField } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday"; // Import calendar icon
 
 // Custom import
 import theme from "../../assets/themes";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import FormInput from "../../components/FormInput";
+import SelectForm from "../../components/SelectionForm";
 
 const AddRecipientForm = () => {
-
     // Start React-hook-form function
     const { handleSubmit, control, reset } = useForm({
         // Start Set to default
@@ -34,6 +35,12 @@ const AddRecipientForm = () => {
     // Start options function of country select library
     const options = countryList().getData();
 
+    // Data static of the gender select
+    const optionSelect = [
+        { value: "M", label: "Male" },
+        { value: "F", label: "Female" },
+    ];
+
     return (
         // ============ Start Add Recipient Form container ============
         <DashboardContainer>
@@ -47,7 +54,7 @@ const AddRecipientForm = () => {
                     boxShadow: theme.customShadows.default,
                     borderRadius: theme.customShape.section,
                     p: 3,
-                    mb: 3
+                    mb: 3,
                 }}
             >
                 {/* ============ Start Personal information Form ============ */}
@@ -56,7 +63,7 @@ const AddRecipientForm = () => {
                         sx={{
                             display: { md: "flex", xs: "block" },
                             justifyContent: "space-between",
-                            gap: 10
+                            gap: 10,
                         }}
                     >
                         {/* Start the Detail paragraph */}
@@ -90,38 +97,65 @@ const AddRecipientForm = () => {
                                     type="text"
                                     required={true}
                                 />
+
                                 {/* Start Selection DOB */}
-                                <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
-                                    sx={{
-                                        "& .MuiLocalizationProvider-root": {
-                                            borderRadius: "12px",
-                                        },
-                                        "& .MuiDatePicker-root": {
-                                            borderRadius: "12px",
-                                        },
-                                        "& MuiTextField-root": {
-                                            borderRadius: "12px",
-                                        },
-                                    }}
-                                >
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <Controller
                                         name="dateOfBirth"
                                         control={control}
-                                        render={({ field: { ref, ...rest } }) => (
+                                        render={({ field }) => (
                                             <DatePicker
                                                 label="Date of Birth"
                                                 openTo="year"
                                                 views={["year", "month", "day"]}
-                                                renderInput={(params) => <TextField {...params} />}
-                                                {...rest}
+                                                renderInput={(params) => (
+                                                    <TextField
+                                                        {...params}
+                                                        {...field}
+                                                        sx={{
+                                                            width: "100%", // Ensure the width is full
+                                                            maxWidth: "100%", // Limit the maximum width
+                                                            borderRadius: "12px", // Apply border-radius
+                                                            "& .MuiOutlinedInput-root": {
+                                                                borderRadius: "12px", // Ensure border-radius is applied
+                                                            },
+                                                            "& .MuiOutlinedInput-notchedOutline": {
+                                                                borderRadius: "12px", // Apply radius to the outline
+                                                            },
+                                                        }}
+                                                    />
+                                                )}
                                             />
                                         )}
                                     />
                                 </LocalizationProvider>
-                                {/* Start Phonet */}
-                                <FormInput name="phone" label="Phone" control={control} type="tel" required={false} />
-                                {/* Start Email */}
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        alignItems: "content",
+                                        gap: 2,
+                                    }}
+                                >
+                                    {/* Start selection gender */}
+                                    <SelectForm
+                                        control={control}
+                                        name="value"
+                                        label="Gender"
+                                        options={optionSelect}
+                                        required
+                                    />
+                                    {/* Start Phonet */}
+                                    <FormInput
+                                        name="phone"
+                                        label="Phone"
+                                        control={control}
+                                        type="tel"
+                                        required={false}
+                                    />
+                                    {/* Start Email */}
+                                </Box>
+
                                 <FormInput name="email" label="Email" control={control} type="email" required={true} />
                                 {/* Start Organization */}
                                 <FormInput
