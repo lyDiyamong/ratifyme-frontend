@@ -16,9 +16,6 @@ const Search = styled("div")(({ theme }) => ({
     position: "relative",
     borderRadius: theme.customShape.input,
     backgroundColor: alpha(theme.palette.common.black, 0.15),
-    "&:hover": {
-        backgroundColor: alpha(theme.palette.common.black, 0.25),
-    },
     marginRight: theme.spacing(2),
     marginLeft: 0,
     width: "100%",
@@ -95,13 +92,13 @@ export default function SearchBar({ showButton = true, textInButton }) {
                         }}
                     >
                         {/* Search bar */}
-                        <Search sx={{ 
-                            borderRadius: theme.customShape.input,
-                            backgroundColor: theme.palette.customColors.white,
-                            border: `1px solid ${theme.palette.divider}`,
-                            
+                        <Search
+                            sx={{
+                                borderRadius: theme.customShape.section,
+                                backgroundColor: theme.palette.customColors.white,
+                                border: `1px solid ${theme.palette.divider}`,
                             }}
-                            >
+                        >
                             <SearchIconWrapper>
                                 <SearchIcon />
                             </SearchIconWrapper>
@@ -121,13 +118,11 @@ export default function SearchBar({ showButton = true, textInButton }) {
                                     borderRadius: theme.customShape.btn,
                                     textTransform: "none",
                                     marginTop: { xs: theme.spacing(2), sm: 0 },
-                                    fontSize: { xs: "0.75rem", sm: "0.875rem", md: "1rem" }, // Adjust font size based on screen size
-                                    padding: { xs: theme.spacing(1, 2), sm: theme.spacing(1, 3) }, // Smaller padding on mobile
-                                    width: { xs: "100%", sm: "auto" }, // Full width on mobile screens
+                                    fontSize: { xs: "0.75rem", sm: "0.875rem", md: "1rem" },
+                                    padding: { xs: theme.spacing(1, 2), sm: theme.spacing(1, 3) },
+                                    width: { xs: "100%", sm: "auto" },
                                     boxShadow: theme.customShadows.default,
-                                    "&:hover": {
-                                        backgroundColor: theme.palette.selected,
-                                    },
+                                   
                                 }}
                             >
                                 {textInButton}
