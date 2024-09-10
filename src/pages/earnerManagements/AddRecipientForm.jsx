@@ -7,7 +7,7 @@ import countryList from "react-select-country-list";
 import { Box, Typography, Button, Stack, TextField } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday"; // Import calendar icon
+// import CalendarTodayIcon from "@mui/icons-material/CalendarToday"; // Import calendar icon
 
 // Custom import
 import theme from "../../assets/themes";
@@ -145,7 +145,7 @@ const AddRecipientForm = () => {
                                         options={optionSelect}
                                         required
                                     />
-                                    {/* Start Phonet */}
+                                    {/* Start Phone */}
                                     <FormInput
                                         name="phone"
                                         label="Phone"
