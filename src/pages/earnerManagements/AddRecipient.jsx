@@ -7,7 +7,9 @@ import AddRecipientForm from "./AddRecipientForm";
 
 const AddRecipient = () => {
     return <Stack gap={3}>
+        {/* Start page's title */}
         <PageTitle title="Add Recipient"/>
+        {/* Start Add Recipient input field form */}
         <AddRecipientForm />
     </Stack>;
 };
