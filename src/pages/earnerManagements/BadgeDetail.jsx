@@ -1,43 +1,38 @@
 import React from "react";
-
-import {Box, Typography, Stack } from "@mui/material"
-
-import theme from "../../assets/themes";
+import { Box, Typography, Grid } from "@mui/material";
 import PageSection from "./PageSection";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import { TitleData, DetailData } from "./DataBadgeDetialed";
-
-
 
 const BadgeDetail = () => {
     return (
         <DashboardContainer>
             <PageSection>
-                <Stack flexDirection={{ xs: "column", md: "row" }}>
-                    <Box sx={{m:2}}>
-                        {TitleData.items.map((item) => (
-                            <Typography
-                                key={item.id}
-                                variant="body1"
-                                sx={{textAlign: "right", }}>
-                                {item.id}
-                            </Typography>
-                        ))}
-                    </Box>
-                    <Box sx={{m:2}}>
-                        {DetailData.items.map((item) => (
-                            <Typography
-                                key={item.id}
-                                variant="body1"
-                                sx={{textAlign: "right", }}>
-                                {item.id}
-                            </Typography>
-                        ))}
-                    </Box>
-                </Stack>
+                <Grid container spacing={2}>
+                    {TitleData.items.map((item, index) => (
+                        <React.Fragment key={item.id}>
+                            <Grid item xs={4}>
+                                <Typography
+                                    variant="body1"
+                                    sx={{ textAlign: "right" }}
+                                >
+                                    {item.title}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography
+                                    variant="body1"
+                                    sx={{ textAlign: "left" }}
+                                >
+                                    {DetailData.items[index]?.Detail}
+                                </Typography>
+                            </Grid>
+                        </React.Fragment>
+                    ))}
+                </Grid>
             </PageSection>
         </DashboardContainer>
-    )
-}
+    );
+};
 
-export default BadgeDetail
+export default BadgeDetail;
