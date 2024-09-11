@@ -1,8 +1,14 @@
+// Import React
 import React from "react";
-import theme from "../../assets/themes";
+
+// Import MUI
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
+// Custom Import
+import theme from "../../assets/themes";
+
+// Tags Objects
 const Label = {
     tags: [
         { id: 1, tags: "Python" },
@@ -39,10 +45,14 @@ const Attributes = ({ items }) => (
     </Stack>
 );
 
+
+// Style Alignment for Details
 const textAlign = {
     textAlign: "left"
 };
 
+
+// Title Objects test
 const TitleData = {
     items: [
         { id: 1, title: 'Description' },
@@ -58,6 +68,7 @@ const TitleData = {
     ],
 };
 
+// Detailed Objects test
 const DetailData = {
     items: [
         {

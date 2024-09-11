@@ -1,9 +1,13 @@
+// Import React
 import React from 'react';
 
+// Import MUI
 import {Button} from "@mui/material"
 
+// Custom Import
 import theme from "../../assets/themes"
 
+// <!-- ============ Start AddButtun Style ============ -->
 const AddStyle = {
     bgcolor: theme.palette.primary.main,
     color: theme.palette.customColors.white,
@@ -12,13 +16,17 @@ const AddStyle = {
     fontWeight: theme.fontWeight.semiBold,
     borderRadius: theme.customShape.btn,
 }
+// <!-- ============ End AddButtun Style ============ -->
 
+// <!-- ============ Start IssueButtun Style ============ -->
 const IssueStyle = {
     width: "100%",
     fontSize: theme.typography.body3,
     fontWeight: theme.fontWeight.semiBold,
     borderRadius: theme.customShape.btn,
 }
+// <!-- ============ End IssueButtun Style ============ -->
+
 
 const BtnAddTo = () => {
     return (

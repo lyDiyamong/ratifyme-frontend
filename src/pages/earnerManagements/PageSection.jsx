@@ -1,9 +1,13 @@
+// Import React
 import React from "react"
 
+// Import MUI
 import { Stack } from "@mui/material"
 
+// Custom Import
 import theme from "../../assets/themes"
 
+// Section Style
 const sectionStyle = {
     boxShadow: theme.customShadows.default,
     borderRadius: theme.customShape.section,

@@ -8,7 +8,7 @@ import { BtnAddTo, BtnIssueTo } from "./BarnerButton";
 import PageSection from "./PageSection";
 
 const badgeInfo = {
-    justifyContent: "space-between",
+                        justifyContent: "space-between",
                         alignItems: "center",
                         padding: "32px",
 }
