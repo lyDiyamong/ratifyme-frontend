@@ -9,7 +9,7 @@ import BadgeCreationForm from "./BadgeCreationForm";
 const BadgeCreation = () => {
     return (
         <Stack gap={3}>
-            <PageTitle title="Add Recipient" />
+            <PageTitle title="BadgeCreation" />
             {/* <SearchBar showButton={false} textInButton=""/> */}
             <BadgeCreationForm />
         </Stack>

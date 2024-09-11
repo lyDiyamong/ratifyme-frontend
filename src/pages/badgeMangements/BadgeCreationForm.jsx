@@ -1,25 +1,44 @@
 // React import
 import React from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 // MUI import
-import { Box, Button, TextField, MobileStepper, Typography, Stack } from "@mui/material";
+import { Button, MobileStepper, Stack, Typography } from "@mui/material";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
-//Custom import 
+// Custom import
 import theme from "../../assets/themes";
+import CoreElementStep from "./CoreElementStep";
+import MetadataStep from "./MetadataStep";
+import OptionalStep from "./OptionalStep";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import ImageSelection from "./ImageSelection";
-import SelectForm from "../../components/SelectionForm";
-import { steps } from "../../data/BadgeCreationFormDate";
+
+// Static data for the steppers
+const steps = [
+    {
+        label: "Core Element :",
+        description:
+            "A clear statement of the skills, knowledge, or abilities that a learner must demonstrate to earn the badge.",
+    },
+    {
+        label: "Metadata of the Badge :",
+        description:
+            "A clear statement capture essential information about learning and achievements by storing this metadata inside the badge image.",
+    },
+    {
+        label: "Optional Elements :",
+        description:
+            "A optional statement of the badge. The specific elements required for an Open Badge may vary depending on the implementation and the preferences of the issuer.",
+    },
+];
 
 const BadgeCreationForm = () => {
-
     // Stepper useState
     const [activeStep, setActiveStep] = React.useState(0);
 
-    // Reat-hook-form function
+    // React-hook-form
     const {
         control,
         handleSubmit,
@@ -27,187 +46,135 @@ const BadgeCreationForm = () => {
         reset,
         formState: { errors },
     } = useForm({
-        // Set to default
         defaultValues: {
             issuer: "",
             criteria: "",
+            value: "",
             earningCriteria: "",
             duration: "",
-            bagdeName: "",
-            issuedOn: "",
-            validStart: "",
-            validEnd: "",
+
+            badgeName: "",
+            issuedOn: null,
+            startDate: null,
+            endDate: null,
             badgeDescription: "",
-            achievementType: "",
             tagsOrLanguage: "",
-            expirationDate: "",
-            additionLinks: "",
+            achievementType: "",
+
+            expirationDate: null,
+            additionLink: "",
         },
     });
 
-    // Max steps length
+    // Max of the steps
     const maxSteps = steps.length;
 
-    // Handle the next of Stepper
+    // Handle the next of stepper
     const handleNext = async () => {
         const isValid = await trigger();
         if (isValid) {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         }
     };
-    // Handle the back of Stepper
+
+    // Handle the back of stepper
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    // OnSubmit for the react-hook-form
+    // On Submit function
     const onSubmit = (data) => {
         console.log(data);
         reset();
     };
 
+    // Render Step content function
+    const renderStepContent = () => {
+        switch (activeStep) {
+            case 0:
+                return <CoreElementStep control={control} errors={errors} />;
+            case 1:
+                return <MetadataStep control={control} errors={errors} />;
+            case 2:
+                return <OptionalStep control={control} errors={errors} />;
+            default:
+                return null;
+        }
+    };
+
     return (
-        // ============ Start Badge Creation Form ============ 
+        // ============ Start Badge Creation Form ============
         <DashboardContainer>
             <Stack
-                component="form"
-                onSubmit={handleSubmit(onSubmit)}
-                noValidate
                 sx={{
+                    background: theme.palette.customColors.white,
                     boxShadow: theme.customShadows.default,
                     borderRadius: theme.customShape.section,
-                    padding: "32px",
-                    bgcolor: theme.palette.customColors.white,
-                    gap: 10,
+                    p: 3,
                     mb: 3,
+                    gap: 6,
                 }}
             >
-                {/* ============ Start Image Uplaod component ============  */}
+                {/* Image Upload Component */}
                 <ImageSelection />
-                {/* ============ End Image Uplaod component ============  */}
 
-                {/* ============ Start Creation Form ============  */}
-                <Box>
-                    {/* Start Form Container */}
-                    <Stack direction="row" flexDirection={{ xss: "column", md: "row" }} sx={{ gap: 2, mb: 4 }}>
-                        {/* Start Details info */}
+                {/* ============ Start Badge content ============ */}
+                <Stack>
+                    {/* Start Form Render*/}
+                    <Stack
+                        component="form"
+                        direction="row"
+                        flexDirection={{ xss: "column", md: "row" }}
+                        gap={{ xss: 1, md: 4 }}
+                        onSubmit={handleSubmit(onSubmit)}
+                        noValidate
+                    >
                         <Stack gap={2}>
                             <Typography component="h3" variant="h3" fontWeight={theme.fontWeight.semiBold}>
-                                {steps[activeStep].description}
+                                {steps[activeStep].label}
                             </Typography>
-
                             <Typography
-                                variant="body1"
+                                variant="body1`"
                                 sx={{
-                                    maxWidth: "500px",
+                                    maxWidth: 600,
                                     width: "100%",
                                     color: theme.palette.text.disabled,
                                 }}
                             >
-                                {steps[activeStep].details}
+                                {steps[activeStep].description}
                             </Typography>
                         </Stack>
 
-                        {/* Start Input form */}
-                        <Stack sx={{ maxWidth: "100%", width: "100%", gap: 2 }}>
-                            {steps[activeStep].inputs.map((input, index) => (
-                                input.component ? (
-                                    <Controller
-                                        key={`${input.name}-${index}`}
-                                        name={input.name}
-                                        control={control}
-                                        rules={input.rules}
-                                        render={({ field }) => (
-                                            // Selection options
-                                            <SelectForm
-                                                {...field}
-                                                fullWidth
-                                                margin="normal"
-                                                name={input.name}
-                                                control={control}
-                                                options={input.options}
-                                                label={input.label}
-                                                required={input.rules?.required}
-                                                InputLabelProps={{ sx: { color: theme.palette.text.primary } }}
-                                                sx={{
-                                                    "& .MuiInputLabel-root": {
-                                                        color: theme.palette.text.secondary,
-                                                    },
-                                                }}
-                                            />
-                                        )}
-                                    />
-                                ) : (
-                                    // Input field
-                                    <Controller
-                                        key={`${input.name}-${index}`}
-                                        name={input.name}
-                                        control={control}
-                                        rules={input.rules}
-                                        render={({ field }) => (
-                                            <TextField
-                                                {...field}
-                                                label={input.label}
-                                                fullWidth
-                                                error={!!errors[input.name]}
-                                                helperText={errors[input.name]?.message}
-                                                borderRadius={theme.customShape.borderRadius}
-                                                InputLabelProps={{ sx: { color: theme.palette.text.primary } }}
-                                                sx={{
-                                                    "& .MuiInputLabel-root": {
-                                                        color: theme.palette.text.secondary,
-                                                    },
-                                                }}
-                                            />
-                                        )}
-                                    />
-                                )
-                            ))}
-
-                            {activeStep === maxSteps - 1 && (
-                                // Submit button
-                                <Stack direction="row" sx={{ width: "100%", my: 2, justifyContent: "flex-end" }}>
-                                    <Button
-                                        type="submit"
-                                        variant="contained"
-                                        sx={{
-                                            borderRadius: theme.customShape.btn,
-                                            color: theme.palette.customColors.white,
-                                        }}
-                                    >
-                                        Submit
-                                    </Button>
-                                </Stack>
-                            )}
-                        </Stack>
+                        <Stack sx={{ maxWidth: "100%", width: "100%" }}>{renderStepContent()}</Stack>
                     </Stack>
-                    {/* End Form Container */}
+                    {/* End Form Render*/}
 
-                    {/* Start Stepper Section */}
+                    {/* Start Stepper section */}
                     <MobileStepper
                         variant="text"
                         steps={maxSteps}
                         position="static"
+                        sx={{ marginTop: 4 }}
                         activeStep={activeStep}
                         nextButton={
                             <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
                                 Next
-                                {theme.direction === "rtl" ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+                                <KeyboardArrowRight />
                             </Button>
                         }
                         backButton={
                             <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-                                {theme.direction === "rtl" ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+                                <KeyboardArrowLeft />
                                 Back
                             </Button>
                         }
                     />
-                    {/* End Stepper Section */}
-                </Box>
-                {/* ============ End Creation Form ============  */}
+                    {/* End Stepper section */}
+                </Stack>
+                {/* ============ Start Badge content ============ */}
             </Stack>
         </DashboardContainer>
-        // ============ End Badge Creation Form ============ 
+        // ============ End Badge Creation Form ============
     );
 };
 
