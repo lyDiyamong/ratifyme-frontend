@@ -8,7 +8,6 @@ import { styled } from "@mui/material/styles";
 import DashboardContainer from "./styles/DashboardContainer";
 import theme from "../assets/themes";
 
-
 // Styled tag component
 const Tag = styled(Typography)(({ theme }) => ({
     backgroundColor: theme.palette.primary.main,
@@ -37,13 +36,20 @@ const OrganizationLogo = styled(Avatar)(({ theme }) => ({
 }));
 
 export default function OrganizationCard({
-    tag = "ORGANIZATION", // Default tag
-    title = "Above & Beyond School", // Default title
-    description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", // Default description
-    logoUrl, // Organization logo URL
-    date, // Date in Mon DD, YYYY format
-    showFacebook = true, // Show or hide Facebook logo
-    showLinkedIn = true, // Show or hide LinkedIn logo
+    // Default tag
+    tag = "ORGANIZATION",
+    // Default title
+    title = "Above & Beyond School",
+    // Default description
+    description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    // Organization logo URL
+    logoUrl,
+    // Date in Mon DD, YYYY format
+    date,
+    // Show or hide Facebook logo
+    showFacebook = true,
+    // Show or hide LinkedIn logo
+    showLinkedIn = true,
 }) {
     return (
         // ============ Start organization card component ============
@@ -51,17 +57,20 @@ export default function OrganizationCard({
             <Card
                 sx={{
                     display: "flex",
-                    flexDirection: { xs: "column", md: "row" }, // Stack vertically on mobile, horizontally on larger screens
+                    // Stack vertically on mobile, horizontally on larger screens
+                    flexDirection: { xs: "column", md: "row" },
                     justifyContent: "space-between",
-                    padding: { xs: 2, md: 4 }, // Less padding on mobile
-                    marginTop: 2,
+                    padding: { xs: 2, md: 4 },
+                    marginTop: {xs: 2, md: 4, xl:5},
                     borderRadius: theme.customShape.section,
                     boxShadow: 3,
                     alignItems: "center",
                 }}
             >
                 {/* Content on left side */}
-                <Box sx={{ flex: 1, textAlign: { xs: "center", md: "left" } }}> {/* Center content on mobile */}
+                <Box sx={{ flex: 1, textAlign: { xs: "center", md: "left" } }}>
+                    {" "}
+                    {/* Center content on mobile */}
                     <CardContent>
                         {/* Tag */}
                         {tag && <Tag>{tag}</Tag>}
@@ -73,7 +82,7 @@ export default function OrganizationCard({
                                 gutterBottom
                                 sx={{
                                     fontWeight: theme.fontWeight.bold,
-                                    fontSize: { xs: "1.2rem", md: "1.5rem" }, // Adjust font size for mobile screen
+                                    fontSize: { xs: "1.2rem", md: "1.5rem" },
                                 }}
                             >
                                 {title}
@@ -89,7 +98,7 @@ export default function OrganizationCard({
                                     maxWidth: 600,
                                     width: "100%",
                                     fontWeight: theme.fontWeight.semiBold,
-                                    fontSize: { xs: "0.875rem", md: "1rem" }, // Adjust font size for mobile screen
+                                    fontSize: { xs: "0.875rem", md: "1rem" },
                                 }}
                             >
                                 {description}
@@ -99,11 +108,14 @@ export default function OrganizationCard({
                         {/* Social Icons style */}
                         <SocialIconWrapper
                             sx={{
-                                justifyContent: { xs: "center", md: "flex-start" }, // Center icons on mobile
+                                // Center icons on mobile
+                                justifyContent: { xs: "center", md: "flex-start" },
                             }}
                         >
-                            {showFacebook && <FacebookIcon sx={{ fontSize: { xs: 40, md: 50 } }} />} {/* Smaller icons on mobile */}
-                            {showLinkedIn && <LinkedInIcon sx={{ fontSize: { xs: 40, md: 50 } }} />} {/* Smaller icons on mobile */}
+                            {/* Smaller icons on mobile screen */}
+                            {showFacebook && <FacebookIcon sx={{ fontSize: { xs: 40, md: 50 } }} />}{" "}
+                            {/* Smaller icons on mobile screen */}
+                            {showLinkedIn && <LinkedInIcon sx={{ fontSize: { xs: 40, md: 50 } }} />}{" "}
                         </SocialIconWrapper>
                     </CardContent>
                 </Box>
@@ -112,7 +124,7 @@ export default function OrganizationCard({
                 <Box
                     sx={{
                         display: "flex",
-                        alignItems: { xs: "center", md: "flex-end" }, // Center content on mobile
+                        alignItems: { xs: "center", md: "flex-end" },
                         justifyContent: "flex-end",
                         flexDirection: "column",
                         padding: 2,
@@ -122,7 +134,8 @@ export default function OrganizationCard({
                     {logoUrl ? (
                         <OrganizationLogo src={logoUrl} alt={title} />
                     ) : (
-                        <OrganizationLogo>{title.charAt(0)}</OrganizationLogo> // Fallback to first letter if no logo
+                        // Fallback to first letter if no logo
+                        <OrganizationLogo>{title.charAt(0)}</OrganizationLogo>
                     )}
 
                     {/* Date style */}
@@ -132,7 +145,7 @@ export default function OrganizationCard({
                             color="text.secondary"
                             sx={{
                                 marginTop: { xs: 1, md: 2 },
-                                fontSize: { xs: "0.75rem", md: "0.875rem" }, // Smaller font on mobile
+                                fontSize: { xs: "0.75rem", md: "0.875rem" },
                             }}
                         >
                             {date}
@@ -143,6 +156,5 @@ export default function OrganizationCard({
         </DashboardContainer>
 
         // ============ End organization card component ============
-
     );
 }

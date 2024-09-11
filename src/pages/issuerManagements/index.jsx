@@ -1,6 +1,6 @@
-import React from "react";
+// Custom import
 import OrganizationCard from "../../components/OrganizationCard";
-import AnBSchoolLogo from "../../assets/icons/AnBSchoolLogo.svg"
+import AnBSchoolLogo from "../../assets/images/AnBSchoolLogo.svg"
 
 const IssuerManagement = () => {
     return (
