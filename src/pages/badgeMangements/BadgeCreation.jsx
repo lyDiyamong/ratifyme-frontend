@@ -10,7 +10,7 @@ const BadgeCreation = () => {
     return (
         <Stack gap={3}>
             <PageTitle title="Add Recipient" />
-            <SearchBar showButton={false} textInButton=""/>
+            {/* <SearchBar showButton={false} textInButton=""/> */}
             <BadgeCreationForm />
         </Stack>
     );

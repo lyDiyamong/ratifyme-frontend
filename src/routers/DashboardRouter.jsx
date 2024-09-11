@@ -28,6 +28,8 @@ const DashbaordRouter = () => {
                 <Route path="/mybackpacks" element={<BackpackManagement />} />
                 <Route path="/setting/account" element={<AccountManagement />} />
                 <Route path="/setting/privacy&security" element={<PrivacySecurityManagement />} />
+                <Route path="/management/eaners/add-recipient" element={<AddRecipient />} />
+                <Route path="/management/badges/badge-creation" element={<BadgeCreation />} />
             </Route>
         </Routes>
     );

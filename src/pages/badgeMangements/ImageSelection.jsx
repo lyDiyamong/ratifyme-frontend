@@ -63,7 +63,7 @@ function ImageSelection() {
                     src={
                         image
                             ? URL.createObjectURL(image)
-                            : "https://i.pinimg.com/originals/d3/24/2f/d3242f666654a5bc596ace902db5d602.png"
+                            : "https://www.freeiconspng.com/thumbs/photography-icon-png/photo-album-icon-png-14.png"
                     }
                     alt={image ? "upload badge image" : "Upload placeholder"}
                     style={{
@@ -115,8 +115,7 @@ function ImageSelection() {
                         color: theme.palette.text.disabled,
                     }}
                 >
-                    Badge templates must use square images in PNG format, with dimensions between 300x300 and 2048x2048
-                    pixels.
+                    Badge templates must use square images in PNG format, with dimensions between 300x300.
                 </Typography>
             </Stack>
         </Stack>

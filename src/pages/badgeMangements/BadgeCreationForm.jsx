@@ -6,12 +6,13 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import theme from "../../assets/themes";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import ImageSelection from "./ImageSelection";
+import SelectForm from "../../components/SelectionForm";
 
 const steps = [
     {
         description: "Core Elements :",
         details:
-            "Badge templates must use square images in PNG format, with dimensions between 300x300.",
+            "A clear statement of the skills, knowledge, or abilities that a learner must demonstrate to earn the badge.",
         inputs: [
             {
                 label: "Issuer*",
@@ -27,6 +28,29 @@ const steps = [
                 label: "Earning Criteria*",
                 name: "earningCriteria",
                 rules: { required: false },
+                component: SelectForm,
+                options: [
+                    { value: 'contentCreation', label: 'Content Creation' },
+                    { value: 'communityEngagement', label: 'Community Engagement' },
+                    { value: 'referrals', label: 'Referrals' },
+                    { value: 'skillDevelopment', label: 'Skill Development' },
+                    { value: 'partnershipAndCollaborations', label: 'Partnership and Collaborations' },
+                    { value: 'challengesAndCompetitions', label: 'Challenges and Competitions' },
+                    { value: 'eventParticipation', label: 'Event Participation' },
+                    { value: 'mentorshipPrograms', label: 'Mentorship Programs' },
+                    { value: 'projectSubmissions', label: 'Project Submissions' },
+                    { value: 'courseCompletion', label: 'Course Completion' },
+                    { value: 'betaTesting', label: 'Beta Testing' },
+                    { value: 'bugReporting', label: 'Bug Reporting' },
+                    { value: 'surveyParticipation', label: 'Survey Participation' },
+                    { value: 'productReviews', label: 'Product Reviews' },
+                    { value: 'socialMediaPromotion', label: 'Social Media Promotion' },
+                    { value: 'feedbackAndSuggestions', label: 'Feedback and Suggestions' },
+                    { value: 'platformModeration', label: 'Platform Moderation' },
+                    { value: 'openSourceContributions', label: 'Open Source Contributions' },
+                    { value: 'collaborativeResearch', label: 'Collaborative Research' },
+                    { value: 'hostingWebinarsOrWorkshops', label: 'Hosting Webinars or Workshops' }
+                ],
             },
             {
                 label: "Duration",
@@ -74,6 +98,29 @@ const steps = [
                 label: "Achievement Type*",
                 name: "achievementType",
                 rules: { required: false },
+                component: SelectForm,
+                options: [
+                    { value: 'topContributor', label: 'Top Contributor' },
+                    { value: 'communityLeader', label: 'Community Leader' },
+                    { value: 'referralMaster', label: 'Referral Master' },
+                    { value: 'skillMastery', label: 'Skill Mastery' },
+                    { value: 'collaborationExpert', label: 'Collaboration Expert' },
+                    { value: 'challengeChampion', label: 'Challenge Champion' },
+                    { value: 'eventOrganizer', label: 'Event Organizer' },
+                    { value: 'mentorOfTheMonth', label: 'Mentor of the Month' },
+                    { value: 'projectInnovator', label: 'Project Innovator' },
+                    { value: 'courseCompleter', label: 'Course Completer' },
+                    { value: 'bugHunter', label: 'Bug Hunter' },
+                    { value: 'betaTester', label: 'Beta Tester' },
+                    { value: 'surveyGuru', label: 'Survey Guru' },
+                    { value: 'productReviewer', label: 'Product Reviewer' },
+                    { value: 'socialMediaInfluencer', label: 'Social Media Influencer' },
+                    { value: 'feedbackSpecialist', label: 'Feedback Specialist' },
+                    { value: 'platformModerator', label: 'Platform Moderator' },
+                    { value: 'openSourceContributor', label: 'Open Source Contributor' },
+                    { value: 'researchPartner', label: 'Research Partner' },
+                    { value: 'webinarHost', label: 'Webinar Host' }
+                ],
             },
         ],
     },
@@ -177,23 +224,48 @@ const BadgeCreationForm = () => {
 
                         <Box sx={{ maxWidth: "100%", width: "100%" }}>
                             {steps[activeStep].inputs.map((input, index) => (
-                                <Controller
-                                    key={`${input.name}-${index}`}
-                                    name={input.name}
-                                    control={control}
-                                    rules={input.rules}
-                                    render={({ field }) => (
-                                        <TextField
-                                            {...field}
-                                            label={input.label}
-                                            fullWidth
-                                            margin="normal"
-                                            error={!!errors[input.name]}
-                                            helperText={errors[input.name]?.message}
-                                            borderRadius={theme.customShape.borderRadius}
-                                        />
-                                    )}
-                                />
+                                input.component ? (
+                                    <Controller
+                                        key={`${input.name}-${index}`}
+                                        name={input.name}
+                                        control={control}
+                                        rules={input.rules}
+                                        render={({ field }) => (
+                                            <SelectForm
+                                                {...field}
+                                                name={input.name}
+                                                control={control}
+                                                options={input.options}
+                                                label={input.label}
+                                                required={input.rules?.required}
+                                            />
+                                        )}
+                                    />
+                                ) : (
+                                    <Controller
+                                        key={`${input.name}-${index}`}
+                                        name={input.name}
+                                        control={control}
+                                        rules={input.rules}
+                                        render={({ field }) => (
+                                            <TextField
+                                                {...field}
+                                                label={input.label}
+                                                fullWidth
+                                                margin="normal"
+                                                error={!!errors[input.name]}
+                                                helperText={errors[input.name]?.message}
+                                                borderRadius={theme.customShape.borderRadius}
+                                                InputLabelProps={{ sx: { color: theme.palette.text.primary } }}
+                                                sx={{
+                                                    "& .MuiInputLabel-root": {
+                                                        color: theme.palette.text.secondary,
+                                                    },
+                                                }}
+                                            />
+                                        )}
+                                    />
+                                )
                             ))}
 
                             {activeStep === maxSteps - 1 && (
