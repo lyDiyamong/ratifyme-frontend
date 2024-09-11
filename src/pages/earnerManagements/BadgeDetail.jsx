@@ -8,7 +8,7 @@ const BadgeDetail = () => {
     return (
         <DashboardContainer>
             <PageSection>
-                <Grid container spacing={2}>
+                <Grid container spacing={3}>
                     {TitleData.items.map((item, index) => (
                         <React.Fragment key={item.id}>
                             <Grid item xs={4}>
