@@ -122,7 +122,7 @@ const theme = createTheme({
         default: "#E2E2E2 0px 4px 10px",
     },
     shape: {
-        borderRadius: 0, // Default borderRadius
+        borderRadius: "8px", // Default borderRadius
     },
     customShape: {
         input: "8px",
