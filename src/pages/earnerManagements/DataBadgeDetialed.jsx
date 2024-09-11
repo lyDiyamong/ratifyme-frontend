@@ -1,4 +1,45 @@
 import React from "react";
+import theme from "../../assets/themes";
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+
+const Label = {
+    tags: [
+        {
+            id: 1,
+            tags: "Python"
+        },
+        {
+            id: 2,
+            tags: "Python2"
+        },
+    ],
+    Attribures: [
+        {
+            id: 1,
+            tags: "APython"
+        },
+        {
+            id: 2,
+            tags: "APython2"
+        },
+    ],
+}
+
+// Component to render
+const Tags12 = ({ items }) => (
+    <Stack spacing={1}>
+        <Stack direction="row" spacing={1}>
+            {items.map((item) => (
+                <Chip key={item.id} label={item.tags} color="primary" />
+            ))}
+        </Stack>
+    </Stack>
+);
+
+const textAlign = {
+    textAlign: "left"
+};
 
 const TitleData = {
     items: [
@@ -18,56 +59,58 @@ const TitleData = {
 const DetailData = {
     items: [
         {   id: 1,
-            Lable: "",
-            sx: {}, // This will server as Detail Style Snice they have
+            Lable: "Description",
+            sx: {textAlign}, // This will server as Detail Style Snice they have
             Detail: 'This Certificate verifies that earner have delved into Data Analysis & Visualization and are familar with tools and techniques, such as Reporting, Forecasting indecators(KPIs) Tableau & PowerBI'
         },
         {   id: 2,
-            Lable: "",
-            sx: {},
+            Lable: "Issuer",
+            sx: {textAlign, fontWeight: theme.fontWeight.bold},
             Detail: 'Above & Beyond School'
         },
         {   id: 3,
-            Lable: "",
-            sx: {},
+            Lable: "Criteria",
+            sx: {textAlign, fontWeight: theme.fontWeight.bold},
             Detail: 'Data Analysis, Data Science'
         },
         {   id: 4,
-            Lable: "",
-            sx: {},
+            Lable: "Issued Date",
+            sx: {textAlign},
             Detail: 'Mon 19, Aug 2024'
         },
         {   id: 5,
-            Lable: "",
-            sx: {},
+            Lable: "Badge Expiry Date",
+            sx: {textAlign},
             Detail: 'Mon 19, Aug 2025'
         },
         {   id: 6,
-            Lable: "",
-            sx: {},
+            Lable: "Validation",
+            sx: {textAlign},
             Detail: 'Mon 10, Jun 2024 - Wed 10, Jul 2024'
         },
         {   id: 7,
-            Lable: "",
-            sx: {},
+            Lable: "Duration",
+            sx: {textAlign},
             Detail: '30 days'
         },
         {   id: 8,
-            Lable: "",
-            sx: {},
+            Lable: "Achievement Type",
+            sx: {textAlign, fontWeight: theme.fontWeight.bold},
             Detail: 'Certificate'
         },
         {   id: 9,
             Lable: "Tags",
-            sx: {},
-            Detail: 'Python, SQL, Pandas, Numpy'
+            sx: {textAlign},
+            Detail: 'Python, SQL, Pandas, Numpy',
+            ReactCode: <Tags12 items={Label.tags}/>  // Render component here
         },
         {   id: 10,
             Lable: "Attributes",
-            sx: {},
-            Detail: 'Python exam:63, SQL Exam:72, Forecasting:80'
+            sx: {textAlign},
+            Detail: 'Python exam:63, SQL Exam:72, Forecasting:80',
+            ReactCode: <Tags12 items={Label.Attribures}/>  // Render component here
         },
     ],
 };
 
-export {TitleData, DetailData}
+export {TitleData, DetailData};
