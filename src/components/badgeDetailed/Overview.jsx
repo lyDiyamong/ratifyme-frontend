@@ -35,11 +35,21 @@ const hello = () => {
                         component="img"
                         src={BadgeTest}
                         alt="greeting"
-                        sx={badgeImages}/>
+                        sx={badgeImages}
+                    />
                     <Box>
                         <Typography>
                             Web Fullstack Development
                         </Typography>
+                        <Typography>
+                            Issue to John Doe
+                        </Typography>
+                        <Stack
+                            spacing={5} direction="row"
+                        >
+                            <BtnAddTo />
+                            <BtnIssueTo />
+                        </Stack>
                         <Stack
                             spacing={5} direction="row"
                         >
@@ -48,11 +58,12 @@ const hello = () => {
                         </Stack>
                     </Box>
 
+
                 </Stack>
 
                 <Box>
                     <Typography>
-                        hi
+                        Issue By
                     </Typography>
                     <Box
                         component="img"
@@ -60,7 +71,7 @@ const hello = () => {
                         alt="greeting"
                         sx={badgeImages}/>
                     <Typography>
-                        hi
+                        Mon 19, Aug 2024
                     </Typography>
                 </Box>
 
