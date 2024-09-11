@@ -1,4 +1,4 @@
-// Import React
+// React library import
 import React from "react";
 
 // Import MUI
@@ -25,24 +25,20 @@ const Label = {
 
 // Component to render Tags
 const Tags = ({ items }) => (
-    <Stack spacing={1}>
-        <Stack direction="row" spacing={1}>
+        <Stack direction="row"  flexWrap="wrap">
             {items.map((item) => (
-                <Chip  key={item.id} label={item.tags} sx={{ color: theme.palette.customColors.white, bgcolor: theme.palette.primary.main }} />
+                <Chip  key={item.id} label={item.tags} sx={{ color: theme.palette.customColors.white, bgcolor: theme.palette.primary.main, ml: 1 }} />
             ))}
         </Stack>
-    </Stack>
 );
 
 // Component to render Attributes
 const Attributes = ({ items }) => (
-    <Stack spacing={1}>
-        <Stack direction="row" spacing={1}>
+        <Stack direction="row"  flexWrap="wrap">
             {items.map((item) => (
-                <Chip  key={item.id} label={item.tags} sx={{ color: theme.palette.primary.main, }} variant="outlined" />
+                <Chip  key={item.id} label={item.tags} sx={{ color: theme.palette.primary.main, ml: 1}} variant="outlined" />
             ))}
         </Stack>
-    </Stack>
 );
 
 

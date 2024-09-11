@@ -1,4 +1,4 @@
-// Import React
+// React library import
 import React from "react"
 
 // Import MUI

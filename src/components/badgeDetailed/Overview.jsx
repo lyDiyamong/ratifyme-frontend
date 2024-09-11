@@ -1,9 +1,12 @@
-// MUI component
+// React library import
+import React from "react";
+
+// MUI Import
 import { Box, Stack, Typography,} from "@mui/material";
 
-// Custom theme
+// Custom Import
 import BadgeTest from "../../assets/images/badgeTest.png";
-import DashboardContainer from "../../components/styles/DashboardContainer";
+import DashboardContainer from "../styles/DashboardContainer";
 import { BtnAddTo, BtnIssueTo } from "./BarnerButton";
 import PageSection from "./PageSection";
 
@@ -51,6 +54,11 @@ const hello = () => {
                     <Typography>
                         hi
                     </Typography>
+                    <Box
+                        component="img"
+                        src={BadgeTest}
+                        alt="greeting"
+                        sx={badgeImages}/>
                     <Typography>
                         hi
                     </Typography>

@@ -1,10 +1,10 @@
-// Import React
+// React library import
 import React from 'react';
 
-// Import MUI
+// MUI Import
 import {Button} from "@mui/material"
 
-// Custom Import
+// Custom import
 import theme from "../../assets/themes"
 
 // <!-- ============ Start AddButtun Style ============ -->

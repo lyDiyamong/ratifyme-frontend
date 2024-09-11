@@ -1,7 +1,7 @@
-// Import React
+// React library import
 import React from "react";
 
-// Import MUI
+// MUI Import
 import {
             Typography,
             Grid
@@ -9,11 +9,12 @@ import {
 
 // Custome Import
 import PageSection from "./PageSection";
-import DashboardContainer from "../../components/styles/DashboardContainer";
+import DashboardContainer from "../styles/DashboardContainer";
 import {
             TitleData,
             DetailData
-        } from "./DataBadgeDetailed";
+        } from "../../data/badgeDetail/DataBadgeDetailed";
+import theme from "../../assets/themes";
 
 // <!-- ============ Start BadgeDetail component ============ -->
 const BadgeDetail = () => {
@@ -21,25 +22,26 @@ const BadgeDetail = () => {
         <DashboardContainer>
             <PageSection>
 
-            {/* <!-- ============ Start container ============ --> */}
+            {/*  Start container  */}
                 <Grid container spacing={3}>
                     {TitleData.items.map((item, index) => (
 
-                        // <!-- ============ Start Fragment to save loop ============ --> */
+                        //  Start Fragment to save loop  */
                         <React.Fragment key={item.id}>
 
-                            {/* <!-- ============ Start Title Detail ============ --> */}
+                            {/*  Start Title Detail  */}
                             <Grid item xs={5} md={2}>
                                 <Typography
                                     variant="body1"
-                                    sx={{ textAlign: "right" }}
-                                >
+                                    sx={{   textAlign: "right",
+                                            fontWeight: theme.fontWeight.bold.h4,
+                                        }}>
                                     {item.title}
                                 </Typography>
                             </Grid>
-                            {/* <!-- ============ Start Title Detail ============ --> */}
+                            {/*  Start Title Detail  */}
 
-                            {/* <!-- ============ Start Detail ============ --> */}
+                            {/*  Start Detail  */}
                             <Grid item xs={7} md={9}>
                                 {DetailData.items[index]?.ReactCode ? (
                                     DetailData.items[index].ReactCode
@@ -52,10 +54,10 @@ const BadgeDetail = () => {
                                     </Typography>
                                 )}
                             </Grid>
-                            {/* <!-- ============ Start Detail ============ --> */}
+                            {/* Start Detail */}
 
                         </React.Fragment>
-                        // <!-- ============ Start Fragment to save loop ============ --> */
+                        //  Start Fragment to save loop  */
                     ))}
 
                 </Grid>
