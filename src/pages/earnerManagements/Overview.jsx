@@ -2,19 +2,10 @@
 import { Box, Stack, Typography,} from "@mui/material";
 
 // Custom theme
-import theme from "../../assets/themes";
 import BadgeTest from "../../assets/images/badgeTest.png";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import { BtnAddTo, BtnIssueTo } from "./BarnerButton";
-
-const sectionStyle = {
-    boxShadow: theme.customShadows.default,
-    borderRadius: theme.customShape.section,
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "32px",
-    bgcolor: theme.palette.customColors.white,
-}
+import PageSection from "./PageSection";
 
 const badgeInfo = {
     justifyContent: "space-between",
@@ -32,10 +23,7 @@ const hello = () => {
     return (
         // ============ Start Overview Section ============
         <DashboardContainer>
-            <Stack
-                component="section"
-                flexDirection={{ xs: "column", md: "row" }}
-                sx={sectionStyle}>
+            <PageSection>
                 <Stack
                     component="div"
                     flexDirection={{ xs: "column", md: "row" }}
@@ -68,7 +56,7 @@ const hello = () => {
                     </Typography>
                 </Box>
 
-            </Stack>
+            </PageSection>
         </DashboardContainer>
         // ============ End Overview Section ============
     );
