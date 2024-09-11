@@ -2,7 +2,7 @@ import React from "react";
 import { Typography, Grid } from "@mui/material";
 import PageSection from "./PageSection";
 import DashboardContainer from "../../components/styles/DashboardContainer";
-import { TitleData, DetailData } from "./DataBadgeDetialed";
+import { TitleData, DetailData } from "./DataBadgeDetailed";
 
 const BadgeDetail = () => {
     return (
@@ -11,7 +11,7 @@ const BadgeDetail = () => {
                 <Grid container spacing={3}>
                     {TitleData.items.map((item, index) => (
                         <React.Fragment key={item.id}>
-                            <Grid item xs={4}>
+                            <Grid item xs={5} md={2}>
                                 <Typography
                                     variant="body1"
                                     sx={{ textAlign: "right" }}
@@ -19,7 +19,7 @@ const BadgeDetail = () => {
                                     {item.title}
                                 </Typography>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={7} md={9}>
                                 {DetailData.items[index]?.ReactCode ? (
                                     DetailData.items[index].ReactCode
                                 ) : (
