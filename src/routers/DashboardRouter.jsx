@@ -41,7 +41,7 @@ const DashbaordRouter = () => {
                 <Route path="/mybackpacks" element={<BackpackManagement />} />
                 <Route path="/setting/account" element={<AccountManagement />} />
                 <Route path="/setting/privacy&security" element={<PrivacySecurityManagement />} />
-                
+
             </Route>
         </Routes>
     );
