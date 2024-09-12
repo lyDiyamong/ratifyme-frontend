@@ -1,10 +1,11 @@
 // Custom import
 import OrganizationCard from "../../components/OrganizationCard";
 import AnBSchoolLogo from "../../assets/images/AnBSchoolLogo.svg"
+import DashboardContainer from "../../components/styles/DashboardContainer";
 
 const IssuerManagement = () => {
     return (
-        <div>
+        <DashboardContainer>
 
             <OrganizationCard
                 tag="ORGANIZATION"
@@ -15,7 +16,7 @@ const IssuerManagement = () => {
                 showFacebook={true}
                 showLinkedIn={true}
             />
-        </div>
+        </DashboardContainer>
     );
 };
 

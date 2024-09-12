@@ -5,7 +5,6 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { styled } from "@mui/material/styles";
 
 // Custom import
-import DashboardContainer from "./styles/DashboardContainer";
 import theme from "../assets/themes";
 
 // Styled tag component
@@ -35,7 +34,7 @@ const OrganizationLogo = styled(Avatar)(({ theme }) => ({
     height: theme.spacing(10),
 }));
 
-export default function OrganizationCard({
+const OrganizationCard = ({
     // Default tag
     tag = "ORGANIZATION",
     // Default title
@@ -50,10 +49,11 @@ export default function OrganizationCard({
     showFacebook = true,
     // Show or hide LinkedIn logo
     showLinkedIn = true,
-}) {
+}) => {
     return (
-        // ============ Start organization card component ============
-        <DashboardContainer>
+
+        // ============ Start Organization Card ============ //
+        <Box>
             <Card
                 sx={{
                     display: "flex",
@@ -61,7 +61,7 @@ export default function OrganizationCard({
                     flexDirection: { xs: "column", md: "row" },
                     justifyContent: "space-between",
                     padding: { xs: 2, md: 4 },
-                    marginTop: {xs: 2, md: 4, xl:5},
+                    marginTop: { xs: 2, md: 4, xl: 5 },
                     borderRadius: theme.customShape.section,
                     boxShadow: 3,
                     alignItems: "center",
@@ -69,8 +69,6 @@ export default function OrganizationCard({
             >
                 {/* Content on left side */}
                 <Box sx={{ flex: 1, textAlign: { xs: "center", md: "left" } }}>
-                    {" "}
-                    {/* Center content on mobile */}
                     <CardContent>
                         {/* Tag */}
                         {tag && <Tag>{tag}</Tag>}
@@ -114,8 +112,7 @@ export default function OrganizationCard({
                         >
                             {/* Smaller icons on mobile screen */}
                             {showFacebook && <FacebookIcon sx={{ fontSize: { xs: 40, md: 50 } }} />}{" "}
-                            {/* Smaller icons on mobile screen */}
-                            {showLinkedIn && <LinkedInIcon sx={{ fontSize: { xs: 40, md: 50 } }} />}{" "}
+                            {showLinkedIn && <LinkedInIcon sx={{ fontSize: { xs: 40, md: 50 } }} />}
                         </SocialIconWrapper>
                     </CardContent>
                 </Box>
@@ -134,7 +131,6 @@ export default function OrganizationCard({
                     {logoUrl ? (
                         <OrganizationLogo src={logoUrl} alt={title} />
                     ) : (
-                        // Fallback to first letter if no logo
                         <OrganizationLogo>{title.charAt(0)}</OrganizationLogo>
                     )}
 
@@ -153,8 +149,11 @@ export default function OrganizationCard({
                     )}
                 </Box>
             </Card>
-        </DashboardContainer>
+        </Box>
 
-        // ============ End organization card component ============
+        // ============ End Organization Card ============ //
+
     );
-}
+};
+
+export default OrganizationCard;
