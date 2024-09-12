@@ -2,6 +2,9 @@ import React from "react";
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import theme from "../../assets/themes";
+import BadgeTest from "../../assets/images/badgeTest.png";
+import issuer from "../../assets/images/AnB.svg"
+
 
 // Component to render Tags
 const Tags = ({ items }) => (
@@ -27,7 +30,7 @@ const textAlign = {
 };
 
 // Define DetailData with static data for simplicity
-const tags1 = [
+const tags = [
     { id: 1, tags: "Python" },
     { id: 2, tags: "SQL" },
     { id: 3, tags: "Pandas" },
@@ -43,15 +46,15 @@ const attributes = [
 const DetailData = {
     Overview: [
         {
-            Bagdeimg: "",
+            BagdeImg: BadgeTest,
             BadgeTitle: "Data Analysis, Data Science",
-            IssuerLogo: "",
+            IssuerLogo: issuer,
             IssuedDate: "Mon 19, Aug 2025",
             Earner: "John Doe"
         }
     ],
-    tags1, // Reference the tags1 variable
-    Attributes: attributes, // Reference the attributes variable
+    tags, // Reference the tags1 variable
+    attributes, // Reference the attributes variable
 
     items: [
         {
@@ -107,7 +110,7 @@ const DetailData = {
             Lable: "Tags",
             sx: { textAlign },
             Detail: 'Python, SQL, Pandas, Numpy',
-            ReactCode: <Tags items={tags1} />  // Correct usage of Tags component
+            ReactCode: <Tags items={tags} />  // Correct usage of Tags component
         },
         {
             id: 10,

@@ -11,8 +11,9 @@ import theme from "../../assets/themes"
 const AddStyle = {
     bgcolor: theme.palette.primary.main,
     color: theme.palette.customColors.white,
-    width: "140%",
-    fontSize: theme.typography.body3,
+    width: "100%",
+    height: "35px",
+    fontSize: theme.typography.body2,
     fontWeight: theme.fontWeight.semiBold,
     borderRadius: theme.customShape.btn,
 }
@@ -20,8 +21,9 @@ const AddStyle = {
 
 // <!-- ============ Start IssueButtun Style ============ -->
 const IssueStyle = {
-    width: "100%",
-    fontSize: theme.typography.body3,
+    width: "75%",
+    height: "35px",
+    fontSize: theme.typography.body2,
     fontWeight: theme.fontWeight.semiBold,
     borderRadius: theme.customShape.btn,
 }
