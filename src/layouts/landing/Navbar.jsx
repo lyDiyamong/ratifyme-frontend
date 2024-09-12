@@ -1,6 +1,6 @@
 // React import
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // MUI import
 import { AppBar, Box, Toolbar, Button, Menu, MenuItem, Slide } from "@mui/material";
@@ -14,7 +14,7 @@ import VerifyMeLogo from "../../assets/images/VerifyME-Logo.svg";
 import LandingContainer from "../../components/styles/LandingContainer";
 
 // ============ Start Navbar scroll function ============
-function useHideOnScroll() {
+const useHideOnScroll = () => {
     // Custom hook for hiding the navbar on scroll down and showing on scroll up
     const [show, setShow] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
@@ -39,21 +39,31 @@ function useHideOnScroll() {
     }, [lastScrollY]);
 
     return show;
-}
+};
 // ============ End Navbar scroll function ============
 
 // ============ Start Burger modal function ============
-function Navbar() {
-    // Burger menu function
-    const [anchorEl, setAnchorEl] = useState(null);
-    const show = useHideOnScroll();
+const Navbar = () => {
+    //  menu function
+    const [signUpAnchorEl, setSignupAnchorEl] = useState(null);
+    const [navbarAnchorEl, setNavbarAnchorEl] = useState(null);
+    const navigate = useNavigate();
 
-    const handleMenu = (event) => {
+    const show = useHideOnScroll();
+    const openSignup = Boolean(signUpAnchorEl);
+    const openNavbarMenu = Boolean(navbarAnchorEl);
+
+    const handleMenuOpen = (event, setAnchorEl) => {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleClose = () => {
+    const handleMenuClose = (setAnchorEl) => {
         setAnchorEl(null);
+    };
+
+    const handleRoleSelect = (role) => {
+        handleMenuClose(setSignupAnchorEl);
+        navigate(`/signup?as=${role}`)
     };
     // ============ End Burger modal function ============
 
@@ -130,18 +140,31 @@ function Navbar() {
                                         Sign In
                                     </Button>
                                 </Link>
-                                <Link to="/signup">
-                                    <Button
-                                        variant="contained"
-                                        sx={{
-                                            borderRadius: theme.customShape.btn,
-                                            color: theme.palette.customColors.white,
-                                            fontWeight: theme.fontWeight.bold,
-                                        }}
-                                    >
-                                        Sign Up
-                                    </Button>
-                                </Link>
+                                <Button
+                                    variant="contained"
+                                    onClick={(event) => handleMenuOpen(event, setSignupAnchorEl)}
+                                    sx={{
+                                        borderRadius: theme.customShape.btn,
+                                        color: theme.palette.customColors.white,
+                                        fontWeight: theme.fontWeight.bold,
+                                    }}
+                                >
+                                    Signup
+                                </Button>
+
+                                <Menu
+                                    id="signup-menu"
+                                    anchorEl={signUpAnchorEl}
+                                    open={openSignup}
+                                    onClose={() => handleMenuClose(setSignupAnchorEl)}
+                                    MenuListProps={{
+                                        "aria-labelledby": "signup-button",
+                                    }}
+                                >
+                                    <MenuItem onClick={() => handleRoleSelect("institution")}>Institution</MenuItem>
+                                    <MenuItem onClick={() => handleRoleSelect("issuer")}>Issuer</MenuItem>
+                                    <MenuItem onClick={() => handleRoleSelect("earner")}>Earner</MenuItem>
+                                </Menu>
                             </Box>
                         </Box>
                         {/* ============ End Menu navbar ============ */}
@@ -152,7 +175,9 @@ function Navbar() {
                             <Button
                                 aria-controls="mobile-menu"
                                 aria-haspopup="true"
-                                onClick={handleMenu}
+                                onClick={(event) => {
+                                    handleMenuOpen(event, setNavbarAnchorEl);
+                                }}
                                 color="inherit"
                                 sx={buttonStyle}
                             >
@@ -162,7 +187,9 @@ function Navbar() {
                             {/* ============ Start Modal Responsive Menu ============ */}
                             <Menu
                                 id="mobile-menu"
-                                anchorEl={anchorEl}
+                                anchorEl={navbarAnchorEl}
+                                open={openNavbarMenu}
+                                onClose={() => handleMenuClose(setNavbarAnchorEl)}
                                 anchorOrigin={{
                                     vertical: "bottom",
                                     horizontal: "left",
@@ -172,8 +199,6 @@ function Navbar() {
                                     vertical: "top",
                                     horizontal: "left",
                                 }}
-                                open={Boolean(anchorEl)}
-                                onClose={handleClose}
                                 sx={{
                                     "& .MuiPaper-root": {
                                         borderRadius: theme.customShape.input,
@@ -182,21 +207,21 @@ function Navbar() {
                                     },
                                 }}
                             >
-                                <MenuItem onClick={handleClose}>
+                                <MenuItem onClick={() => handleMenuClose(setNavbarAnchorEl)}>
                                     <Link to="/price">
                                         <Button variant="text" sx={menuResItem}>
                                             Price
                                         </Button>
                                     </Link>
                                 </MenuItem>
-                                <MenuItem onClick={handleClose}>
+                                <MenuItem onClick={() => handleMenuClose(setNavbarAnchorEl)}>
                                     <Link to="/contactus">
                                         <Button variant="text" sx={menuResItem}>
                                             Contact Us
                                         </Button>
                                     </Link>
                                 </MenuItem>
-                                <MenuItem onClick={handleClose}>
+                                <MenuItem onClick={() => handleMenuClose(setNavbarAnchorEl)}>
                                     <Link to="/login">
                                         <Button
                                             variant="text"
@@ -210,7 +235,7 @@ function Navbar() {
                                         </Button>
                                     </Link>
                                 </MenuItem>
-                                <MenuItem onClick={handleClose}>
+                                <MenuItem onClick={() => handleMenuClose(setNavbarAnchorEl)}>
                                     <Link to="/signup">
                                         <Button
                                             variant="text"
@@ -234,6 +259,6 @@ function Navbar() {
         </Slide>
         // ============ End Navbar ============
     );
-}
+};
 
 export default Navbar;
