@@ -57,16 +57,17 @@ const Overview = () => {
                         sx={badgeImages}
                     />
                     <Box
-                        width="800px"
                         sx={{
                             textAlign: "left", // Ensures text alignment to left
                             display: "flex",
                             flexDirection: "column",
-                            justifyContent: "space-between" // Distributes space evenly between children
+                            justifyContent: "space-between",
+                            maxWidth: "800px",
+                            width: "100%" // Distributes space evenly between children
                         }}
                     >
                         <Box>
-                            <Typography variant="h3" sx={{ mt: 1 }}>
+                            <Typography variant="h3" sx={{ mt: 1, maxWidth:2 }}>
                                 {badge.BadgeTitle} {/* Display badge title */}
                             </Typography>
                             <Typography sx={{ mt: 1 }}>

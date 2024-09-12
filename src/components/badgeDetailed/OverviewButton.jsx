@@ -13,7 +13,7 @@ const AddStyle = {
     color: theme.palette.customColors.white,
     width: "100%",
     height: "35px",
-    fontSize: theme.typography.body2,
+    fontSize: theme.typography.body3,
     fontWeight: theme.fontWeight.semiBold,
     borderRadius: theme.customShape.btn,
 }
@@ -23,7 +23,7 @@ const AddStyle = {
 const IssueStyle = {
     width: "75%",
     height: "35px",
-    fontSize: theme.typography.body2,
+    fontSize: theme.typography.body3,
     fontWeight: theme.fontWeight.semiBold,
     borderRadius: theme.customShape.btn,
 }
