@@ -1,5 +1,5 @@
 // React import
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 // MUI import
@@ -37,6 +37,9 @@ const steps = [
 const BadgeCreationForm = () => {
     // Stepper useState
     const [activeStep, setActiveStep] = React.useState(0);
+
+    // State for storing image
+    const [uploadedImage, setUploadedImage] = useState(null);
 
     // React-hook-form
     const {
@@ -82,9 +85,9 @@ const BadgeCreationForm = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    // On Submit function
     const onSubmit = (data) => {
-        console.log(data);
+        // Log form data and image together when the form is submitted
+        console.log({ ...data, image: uploadedImage });
         reset();
     };
 
@@ -116,7 +119,7 @@ const BadgeCreationForm = () => {
                 }}
             >
                 {/* Image Upload Component */}
-                <ImageSelection />
+                <ImageSelection onImageSelect={(file) => setUploadedImage(file)} />
 
                 {/* ============ Start Badge content ============ */}
                 <Stack>
