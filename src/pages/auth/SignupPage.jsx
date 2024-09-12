@@ -42,7 +42,7 @@ const SignupPage = () => {
 
             // Handle success response
             console.log("Signup successful:", result);
-            navigate("/dashboard");
+            navigate('/dashboard')
         } catch (err) {
             // Handle error response
             console.error("Error during signup:", err);
