@@ -10,16 +10,41 @@ import theme from "../../assets/themes";
 import LandingContainer from "../../components/styles/LandingContainer";
 import SignupImgSvg from "../../assets/images/Signup-illu.svg";
 import { useSignupMutation } from "../../store/api/auth/authApi";
+import { useLocation, useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+
+const roleIdData = {
+    institution: 1,
+    issuer: 2,
+    earner: 3,
+};
 
 const SignupPage = () => {
+    const { search } = useLocation();
+    const navigate = useNavigate();
+    const [role, setRole] = useState("");
     const { handleSubmit, control } = useForm();
     const [signUp, { isLoading, isError, error }] = useSignupMutation();
 
+    useEffect(() => {
+        const queryRole = new URLSearchParams(search).get("as") || "";
+        setRole(queryRole);
+    }, [search]);
+
+    // handle submission
     const onSubmit = async (data) => {
+        const roleId = roleIdData[role] || 0; // Default to 0 if role is not found in mapping
+        const reqData = { ...data, roleId };
+
         try {
-            const result = await signUp(data).unwrap();
+            // Call the signUp mutation
+            const result = await signUp(reqData).unwrap(); // Unwrap result to handle errors
+
+            // Handle success response
             console.log("Signup successful:", result);
+            navigate("/dashboard");
         } catch (err) {
+            // Handle error response
             console.error("Error during signup:", err);
         }
     };
