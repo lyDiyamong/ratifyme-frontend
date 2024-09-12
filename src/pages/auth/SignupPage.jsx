@@ -9,14 +9,14 @@ import FormInput from "../../components/FormInput";
 import theme from "../../assets/themes";
 import LandingContainer from "../../components/styles/LandingContainer";
 import SignupImgSvg from "../../assets/images/Signup-illu.svg";
-import { useSignupMutation } from "../../store/api/auth/authApi";
-import { useLocation, useNavigate } from "react-router";
+import { useSignUpMutation } from "../../store/api/auth/authApi";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const roleIdData = {
-    institution: 1,
-    issuer: 2,
-    earner: 3,
+    institution: 2,
+    issuer: 3,
+    earner: 4,
 };
 
 const SignupPage = () => {
@@ -24,7 +24,7 @@ const SignupPage = () => {
     const navigate = useNavigate();
     const [role, setRole] = useState("");
     const { handleSubmit, control } = useForm();
-    const [signUp, { isLoading, isError, error }] = useSignupMutation();
+    const [signUp, { isLoading, isError, error }] = useSignUpMutation();
 
     useEffect(() => {
         const queryRole = new URLSearchParams(search).get("as") || "";
@@ -42,7 +42,7 @@ const SignupPage = () => {
 
             // Handle success response
             console.log("Signup successful:", result);
-            navigate('/dashboard')
+            navigate("/dashboard");
         } catch (err) {
             // Handle error response
             console.error("Error during signup:", err);
