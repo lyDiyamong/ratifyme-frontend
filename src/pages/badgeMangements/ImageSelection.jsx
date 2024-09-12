@@ -65,6 +65,7 @@ const ImageSelection = ({ onImageSelect }) => {
             sx={{ gap: 4, alignItems: "center" }}
         >
             <Box
+                onClick={handleClick}
                 border={`2px dashed ${theme.palette.cardBorder}`}
                 borderRadius={theme.customShape.input}
                 padding={1}
@@ -73,6 +74,9 @@ const ImageSelection = ({ onImageSelect }) => {
                 justifyContent="center"
                 alignItems="center"
                 position="relative"
+                sx={{
+                    cursor: "pointer",
+                }}
             >
                 {loading ? (
                     <CircularProgress />
@@ -90,10 +94,7 @@ const ImageSelection = ({ onImageSelect }) => {
                                 }}
                             />
                         ) : (
-                            <CloudDownloadIcon
-                                onClick={handleClick}
-                                style={{ fontSize: 40, color: theme.palette.text.secondary }}
-                            />
+                            <CloudDownloadIcon style={{ fontSize: 40, color: theme.palette.text.secondary }} />
                         )}
                         <input
                             id="image-upload-input"

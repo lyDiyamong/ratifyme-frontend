@@ -101,15 +101,17 @@ const BadgeCreationForm = () => {
 
     const onSubmit = (data) => {
         setLoading(true);
-        console.log("Submitting data", data);
+        // console.log("Submitting data", data);
+        console.log("Submitting data", { ...data, image: uploadedImage });
 
         // SetTimeout to see
         setTimeout(() => {
             console.log("Data submitted");
             setLoading(false);
+            
+            reset();
+            setUploadedImage(null);
         }, 2000);
-
-        reset();
     };
 
     const renderStepContent = () => {
