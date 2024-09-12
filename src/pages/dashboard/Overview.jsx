@@ -8,14 +8,15 @@ import Notification from "./Notification";
 const Overview = () => {
   
   return (
-      <DashboardContainer
+      <DashboardContainer gap={3}
           sx={{
               display: "flex",
-              gap: "32px",
+              gap:"24px",
               "@media (max-width:1350px)": {
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "flex-start"
+                alignItems: "flex-start",
+                gap: "24px"
                 
               },
           }}

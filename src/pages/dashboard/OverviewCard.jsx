@@ -16,14 +16,17 @@ const CardsList = () => {
                 gap: "32px",
                 maxWidth: "792px",
                 m: "0px",
-                "@media (max-width: 600px)": { px: "0", gap: "22px" },
+                px: "0px",
+                "@media (max-width:1350px)":{gap: "24px"},
+                "@media (min-width: 600px)": { px: "0"},
+                "@media (max-width: 600px)": { px: "0", gap: "16px" },
             }}
         >
             {cardContents.map((card) => (
                 <Card
                     key={card.id}
                     sx={{
-                        mb: 2,
+                        
                         width: 243,
                         height: 277,
                         display: "flex",
@@ -59,6 +62,7 @@ const CardsList = () => {
                             "@media (max-width: 600px)": { mx: "20px" },
                         }}
                     >
+                        
                         <Typography
                             variant="h1"
                             sx={{

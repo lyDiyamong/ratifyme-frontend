@@ -1,16 +1,16 @@
 //Mui import
 import { Box, Stack, Card, CardMedia, CardContent, Typography, Link } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+
 //Custom Import
 import { notiCardData } from "../../data/dashboardPage/cardNotification";
+import theme from "../../assets/themes";
 
-// ============ Start Notification Card Component ============ 
+
+// ============ Start Notification Card Component ============
 const Notification = () => {
-    const theme = useTheme();
-
     return (
+        //============ Start Card Container  ============
         <Box
-            maxWidth={500}
             sx={{
                 borderRadius: theme.customShape.card,
                 boxShadow: theme.customShadows.default,
@@ -18,25 +18,34 @@ const Notification = () => {
                 px: "20px",
                 pt: "12px",
                 maxHeight: "279px",
+                width: "100%",
+                maxWidth: "517px",
+                overflowY: "scroll",
+                scrollbarWidth: "none",
+                "@media (max-width: 1650px)": { minWidth: "300px" },
             }}
         >
+            {/*Start Title of Card Container */}
             <Typography variant="h6" sx={{ mb: "5px" }}>
                 Notification
             </Typography>
-            <Stack sx={{ justifyContent: "center" }}>
+            {/*End Title of Card Container */}
+
+            {/* ============ Start Card Wraper ============ */}
+            <Stack sx={{ justifyContent: "center", minWidth: "100px" }}>
                 {notiCardData.map((card) => (
                     <Card
                         key={card.id}
                         sx={{
                             mb: 2,
+                            width: "100%",
                             Width: 475,
-                            minWidth: "101px",
+                            minWidth: "100px",
                             height: 60,
                             display: "flex",
                             flexDirection: "row",
                             justifyContent: "space-between",
-
-                            borderRadius: "8px",
+                            borderRadius: theme.shape.borderRadius,
                         }}
                     >
                         <CardContent
@@ -46,7 +55,7 @@ const Notification = () => {
                                 flexDirection: "column",
                                 justifyContent: "center",
                                 alignContent: "center",
-                                width: "189px",
+                                width: "190px",
                             }}
                         >
                             <Box
@@ -71,15 +80,19 @@ const Notification = () => {
                                     }}
                                 />
                                 <Box component="div" sx={{ display: "flex", flexDirection: "column" }}>
+                                    {/* Start Company Name */}
                                     <Typography
                                         variant="body2"
                                         sx={{ width: "136px", "@media (max-width:480px)": { width: "100px" } }}
                                     >
                                         {card.name}
                                     </Typography>
+                                    {/* End Company Name */}
+                                    {/* Start Company Email */}
                                     <Typography variant="body3" sx={{ color: theme.palette.text.disabled }}>
                                         {card.email}
                                     </Typography>
+                                    {/* End Company Email */}
                                 </Box>
                             </Box>
                         </CardContent>
@@ -94,6 +107,7 @@ const Notification = () => {
                                 "@media (max-width:480px)": { gap: 1, px: "10px" },
                             }}
                         >
+                            {/* Start Date of Notification */}
                             <Typography
                                 variant="body3"
                                 sx={{
@@ -104,19 +118,30 @@ const Notification = () => {
                             >
                                 {card.date}
                             </Typography>
-                            <Typography variant="body3" sx={{ "@media (max-width:480px)": { display: "none" } }}>
+                            {/* End Date of Notification */}
+                            {/* Start Type of Notification */}
+                            <Typography variant="body3" sx={{ "@media (max-width:380px)": { display: "none" } }}>
                                 {card.type}
                             </Typography>
-                            <Link href="#view" underline="hover" sx={{ fontSize: theme.typography.body3 }}>
-                                {"View"}
+                            {/* End Type of Notification */}
+                            {/* Start Link to View Detail Notification */}
+                            <Link
+                                underline="hover"
+                                to="/view"
+                                sx={{ fontSize: theme.typography.body3, cursor: "pointer" }}
+                            >
+                                View
                             </Link>
+                            {/* End Link to View Detail Notification */}
                         </CardContent>
                     </Card>
                 ))}
             </Stack>
+            {/* ============ End Card Wraper ============ */}
         </Box>
+        //============ End Card Container  ============
     );
 };
 
 export default Notification;
-// ============ End Notification Card Component ============ 
+// ============ End Notification Card Component ============
