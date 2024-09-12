@@ -47,6 +47,7 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
     const theme = useTheme();
 
     const [active, setActive] = useState("");
+    const userRole = localStorage.getItem("roleId");
 
     useEffect(() => {
         setActive(pathname.substring(1));
@@ -127,8 +128,9 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
 
                     {/* ============ Start list of Sidebar ============ */}
                     <List>
-                        {sidebarItems.map(({ text, icon, dropdown, subItems, path, altText }) => {
-                            const lcText = text.toLowerCase();
+                        {sidebarItems.map(({ text, icon, dropdown, subItems, path, altText, roles }) => {
+                            if (roles && !roles.includes(userRole)) return null;
+                            const lcText = text.toLowerCase().replace(/\s+/g, '');
 
                             // ============ Start list item of sidebar when dropdown ============
                             if (dropdown) {
