@@ -1,71 +1,58 @@
-// React library import
 import React from "react";
-
-// Import MUI
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
-
-// Custom Import
 import theme from "../../assets/themes";
-
-// Tags Objects
-const Label = {
-    tags: [
-        { id: 1, tags: "Python" },
-        { id: 2, tags: "SQL" },
-        { id: 3, tags: "Pandas" },
-        { id: 4, tags: "Numpy" },
-    ],
-    Attributes: [
-        { id: 1, tags: "Python Exam: 63" },
-        { id: 2, tags: "SQL Exam: 72" },
-        { id: 3, tags: "Forecasting: 80" },
-    ],
-};
 
 // Component to render Tags
 const Tags = ({ items }) => (
-        <Stack direction="row"  flexWrap="wrap">
-            {items.map((item) => (
-                <Chip  key={item.id} label={item.tags} sx={{ color: theme.palette.customColors.white, bgcolor: theme.palette.primary.main, ml: 1 }} />
-            ))}
-        </Stack>
+    <Stack  direction="row" flexWrap="wrap">
+        {items.map((item) => (
+            <Chip  key={item.id} label={item.tags} sx={{ color: theme.palette.customColors.white, bgcolor: theme.palette.primary.main, ml: 0.5, mt: 0.5 }} />
+        ))}
+    </Stack>
 );
 
 // Component to render Attributes
 const Attributes = ({ items }) => (
-        <Stack direction="row"  flexWrap="wrap">
-            {items.map((item) => (
-                <Chip  key={item.id} label={item.tags} sx={{ color: theme.palette.primary.main, ml: 1}} variant="outlined" />
-            ))}
-        </Stack>
+    <Stack direction="row" flexWrap="wrap">
+        {items.map((item) => (
+            <Chip key={item.id} label={item.tags} sx={{ color: theme.palette.primary.main, ml: 0.5, mt: 0.5 }} variant="outlined" />
+        ))}
+    </Stack>
 );
-
 
 // Style Alignment for Details
 const textAlign = {
     textAlign: "left"
 };
 
+// Define DetailData with static data for simplicity
+const tags1 = [
+    { id: 1, tags: "Python" },
+    { id: 2, tags: "SQL" },
+    { id: 3, tags: "Pandas" },
+    { id: 4, tags: "Numpy" },
+];
 
-// Title Objects test
-const TitleData = {
-    items: [
-        { id: 1, title: 'Description' },
-        { id: 2, title: 'Issuer' },
-        { id: 3, title: 'Criteria' },
-        { id: 4, title: 'IssuedDate' },
-        { id: 5, title: 'BadgeExpiryDate' },
-        { id: 6, title: 'Validation' },
-        { id: 7, title: 'Duration' },
-        { id: 8, title: 'AchievementType' },
-        { id: 9, title: 'Tags' },
-        { id: 10, title: 'Attribute' },
-    ],
-};
+const attributes = [
+    { id: 1, tags: "Python Exam: 63" },
+    { id: 2, tags: "SQL Exam: 72" },
+    { id: 3, tags: "Forecasting: 80" },
+];
 
-// Detailed Objects test
 const DetailData = {
+    Overview: [
+        {
+            Bagdeimg: "",
+            BadgeTitle: "Data Analysis, Data Science",
+            IssuerLogo: "",
+            IssuedDate: "Mon 19, Aug 2025",
+            Earner: "John Doe"
+        }
+    ],
+    tags1, // Reference the tags1 variable
+    Attributes: attributes, // Reference the attributes variable
+
     items: [
         {
             id: 1,
@@ -120,16 +107,16 @@ const DetailData = {
             Lable: "Tags",
             sx: { textAlign },
             Detail: 'Python, SQL, Pandas, Numpy',
-            ReactCode: <Tags items={Label.tags} />  // Correct usage of Tags component
+            ReactCode: <Tags items={tags1} />  // Correct usage of Tags component
         },
         {
             id: 10,
             Lable: "Attributes",
             sx: { textAlign },
             Detail: 'Python exam: 63, SQL Exam: 72, Forecasting: 80',
-            ReactCode: <Attributes items={Label.Attributes} />  // Correct usage of Attributes component
+            ReactCode: <Attributes  items={attributes} />  // Correct usage of Attributes component
         },
     ],
 };
 
-export { TitleData, DetailData };
+export { DetailData };

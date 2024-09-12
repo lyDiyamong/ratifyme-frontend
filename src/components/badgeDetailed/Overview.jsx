@@ -34,7 +34,7 @@ const hello = () => {
                     <Box
                         component="img"
                         src={BadgeTest}
-                        alt="greeting"
+                        alt="Badge"
                         sx={badgeImages}
                     />
                     <Box>
@@ -68,7 +68,7 @@ const hello = () => {
                     <Box
                         component="img"
                         src={BadgeTest}
-                        alt="greeting"
+                        alt="Badge"
                         sx={badgeImages}/>
                     <Typography>
                         Mon 19, Aug 2024

@@ -11,7 +11,6 @@ import {
 import PageSection from "./PageSection";
 import DashboardContainer from "../styles/DashboardContainer";
 import {
-            TitleData,
             DetailData
         } from "../../data/badgeDetail/DataBadgeDetailed";
 import theme from "../../assets/themes";
@@ -24,7 +23,7 @@ const BadgeDetail = () => {
 
             {/*  Start container  */}
                 <Grid container spacing={3}>
-                    {TitleData.items.map((item, index) => (
+                    {DetailData.items.map((item, index) => (
 
                         //  Start Fragment to save loop  */
                         <React.Fragment key={item.id}>
@@ -34,9 +33,9 @@ const BadgeDetail = () => {
                                 <Typography
                                     variant="body1"
                                     sx={{   textAlign: "right",
-                                            fontWeight: theme.fontWeight.bold.h4,
+                                            fontWeight: theme.fontWeight.bold,
                                         }}>
-                                    {item.title}
+                                    {item.Lable}:
                                 </Typography>
                             </Grid>
                             {/*  Start Title Detail  */}
@@ -44,7 +43,7 @@ const BadgeDetail = () => {
                             {/*  Start Detail  */}
                             <Grid item xs={7} md={9}>
                                 {DetailData.items[index]?.ReactCode ? (
-                                    DetailData.items[index].ReactCode
+                                    <>{DetailData.items[index].ReactCode}</> // Ensure this is treated as JSX
                                 ) : (
                                     <Typography
                                         variant="body1"
