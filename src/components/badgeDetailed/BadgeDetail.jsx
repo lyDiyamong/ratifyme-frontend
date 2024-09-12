@@ -4,7 +4,8 @@ import React from "react";
 // MUI Import
 import {
             Typography,
-            Grid
+            Stack,
+            Box
         }   from    "@mui/material";
 
 // Custome Import
@@ -21,46 +22,55 @@ const BadgeDetail = () => {
             <PageSection >
 
             {/*  Start container  */}
-                <Grid container spacing={3} sx={{pt: 6, pb: 6}}>
-                    {DetailData.items.map((item, index) => (
+            <Stack gap={4} py={2}>
+                        {/* Iterate over DetailData.items and render content */}
+                        {DetailData.items.map((item, index) => (
+                            <Stack
+                                key={item.id} // Added unique key prop
+                                flexDirection="row"
+                                gap={2}
+                                sx={{
+                                    pl: "32px",
 
-                        //  Start Fragment to save loop  */
-                        <React.Fragment key={item.id}>
-
-                            {/*  Start Title Detail  */}
-                            <Grid item xs={5} md={2}>
+                                    width: "100%",
+                                    display: "flex",
+                                    flexDirection: { xs: "column", sm: "row" }, // Adjust direction based on screen size
+                                    justifyContent: "flex-start",
+                                }}
+                            >
                                 <Typography
                                     variant="body1"
-                                    sx={{   textAlign: "right",
-                                            fontWeight: theme.fontWeight.bold,
-                                        }}>
+                                    sx={{
+                                        textAlign: {md:"right"},
+                                        fontWeight: theme.fontWeight.bold,
+                                        width: "100%",
+                                        maxWidth: { xs: "25%", md: "150px" }, // Adjust width for responsiveness
+                                    }}
+                                >
                                     {item.Lable}:
                                 </Typography>
-                            </Grid>
-                            {/*  Start Title Detail  */}
-
-                            {/*  Start Detail  */}
-                            <Grid item xs={7} md={9}>
-                                {DetailData.items[index]?.ReactCode ? (
-                                    <>{DetailData.items[index].ReactCode}</> // Ensure this is treated as JSX
+                                {item.ReactCode ? (
+                                    <Stack sx={{ width: { xs: "100%", md: "75%" } }}>
+                                        {item.ReactCode} {/* Render as JSX */}
+                                    </Stack>
                                 ) : (
                                     <Typography
                                         variant="body1"
-                                        sx={DetailData.items[index].sx}
+                                        sx={{
+                                            width: { xs: "100%", md: "75%" }, // Adjust width for responsiveness
+                                            ...item.sx,
+                                        }}
                                     >
-                                        {DetailData.items[index]?.Detail}
+                                        {item.Detail}
                                     </Typography>
                                 )}
-                            </Grid>
-                            {/* Start Detail */}
-
-                        </React.Fragment>
-                        //  Start Fragment to save loop  */
-                    ))}
-
-                </Grid>
+                            </Stack>
+                        ))}
+                    </Stack>
                 {/* <!-- ============ Start container ============ --> */}
+                <Box>
 
+                </Box>
             </PageSection>
 
     );
