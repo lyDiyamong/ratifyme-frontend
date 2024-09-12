@@ -83,8 +83,8 @@ export default function SearchBar({ showButton = true, textInButton }) {
     };
 
     return (
-        <DashboardContainer>
-            <Box sx={{ flexGrow: 1 }}>
+        <Box>
+            <Box sx={{ flexGrow: 1 , marginTop: "20px" }}>
                 <AppBar
                     position="static"
                     sx={{
@@ -146,6 +146,6 @@ export default function SearchBar({ showButton = true, textInButton }) {
                 {/* Pass filteredData to BadgeListCard */}
                 <BadgeListCard badges={filteredData} />
             </Box>
-        </DashboardContainer>
+        </Box>
     );
 }
