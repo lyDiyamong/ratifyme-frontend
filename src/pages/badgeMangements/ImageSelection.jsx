@@ -1,24 +1,20 @@
-// React import
 import { useState, useRef } from "react";
 
-// MUI import
-import { Box, Typography, IconButton, Stack } from "@mui/material";
-import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import { Box, Typography, Stack, CircularProgress } from "@mui/material";
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 
-// Custom import
 import theme from "../../assets/themes";
 
 const ImageSelection = ({ onImageSelect }) => {
     const [image, setImage] = useState(null);
+    const [loading, setLoading] = useState(false);
     const hiddenFileInput = useRef(null);
 
-    // This function handles the image upload when the file is selected.
     const handleImageChange = (event) => {
-        // Fetches the first selected file.
+        // Start loading
+        setLoading(true);
         const file = event.target.files[0];
-        // Stores the name of the selected file.
         const imgname = event.target.files[0].name;
-        // FileReader is used to read the selected image file as a data URL.
         const reader = new FileReader();
 
         reader.readAsDataURL(file);
@@ -26,7 +22,6 @@ const ImageSelection = ({ onImageSelect }) => {
             const img = new Image();
             img.src = reader.result;
             img.onload = () => {
-                // Creates a canvas element to allow image manipulation.
                 const canvas = document.createElement("canvas");
                 const maxSize = Math.max(img.width, img.height);
                 canvas.width = maxSize;
@@ -34,7 +29,6 @@ const ImageSelection = ({ onImageSelect }) => {
                 const ctx = canvas.getContext("2d");
                 ctx.drawImage(img, (maxSize - img.width) / 2, (maxSize - img.height) / 2);
 
-                // This Converts the canvas content into a Blob (binary large object) with image data.
                 canvas.toBlob(
                     (blob) => {
                         const file = new File([blob], imgname, {
@@ -42,12 +36,17 @@ const ImageSelection = ({ onImageSelect }) => {
                             lastModified: Date.now(),
                         });
 
-                        // This Store the image file locally, but don't log it
                         setImage(file);
-                        // This Pass the file to parent form
                         onImageSelect(file);
+                        // setLoading(false); // Stop loading
+
+                        // SetTimeout to see Loading
+                        setTimeout(() => {
+                            const file = event.target.files[0];
+                            setImage(file);
+                            setLoading(false);
+                        }, 4000);
                     },
-                    //output format of the image JPEG
                     "image/jpeg",
                     0.8,
                 );
@@ -55,13 +54,11 @@ const ImageSelection = ({ onImageSelect }) => {
         };
     };
 
-    // This function triggers the hidden file input.
     const handleClick = () => {
         hiddenFileInput.current.click();
     };
 
     return (
-        // ============ Start the image selection form ============
         <Stack
             direction="row"
             flexDirection={{ xss: "column-reverse", md: "row" }}
@@ -77,77 +74,51 @@ const ImageSelection = ({ onImageSelect }) => {
                 alignItems="center"
                 position="relative"
             >
-                {/* Start image section */}
-                <img
-                    src={
-                        image
-                            // If image is selected, it generates a URL for preview.
-                            ? URL.createObjectURL(image)
-                            : "https://www.freeiconspng.com/thumbs/photography-icon-png/photo-album-icon-png-14.png"
-                    }
-                    // This Changes the alt text depending on whether image is selected.
-                    alt={image ? "upload badge image" : "Upload placeholder"}
-                    style={{
-                        width: "100%",
-                        maxWidth: "300px",
-                        borderRadius: theme.customShape.input,
-                        height: "auto",
-                    }}
-                />
-                {/* End image section */}
-
-                {/* Start the select section */}
-                <Box
-                    onClick={handleClick}
-                    sx={{
-                        position: "absolute",
-                        top: "90%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        width: "100%",
-                        height: "20%",
-                        backgroundColor: "rgba(0, 0, 0, 0.3)",
-                        zIndex: 2,
-                        MozBorderRadiusBottomright: theme.customShape.input,
-                        borderBottomLeftRadius: theme.customShape.input,
-                    }}
-                >
-                    <IconButton sx={{ color: "white" }}>
-                        <CameraAltIcon />
-                    </IconButton>
-                </Box>
-                <input
-                    id="image-upload-input"
-                    type="file"
-                    onChange={handleImageChange}
-                    ref={hiddenFileInput}
-                    style={{ display: "none" }}
-                />
-                {/* End the select section */}
+                {loading ? (
+                    <CircularProgress />
+                ) : (
+                    <>
+                        {image ? (
+                            <img
+                                src={URL.createObjectURL(image)}
+                                alt="Uploaded badge"
+                                style={{
+                                    width: "100%",
+                                    maxWidth: "300px",
+                                    borderRadius: theme.customShape.input,
+                                    height: "auto",
+                                }}
+                            />
+                        ) : (
+                            <CloudDownloadIcon
+                                onClick={handleClick}
+                                style={{ fontSize: 40, color: theme.palette.text.secondary }}
+                            />
+                        )}
+                        <input
+                            id="image-upload-input"
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                            ref={hiddenFileInput}
+                            style={{ display: "none" }}
+                        />
+                    </>
+                )}
             </Box>
 
-            {/* Start the details info */}
-            <Stack gap={2}>
-                <Typography component="h3" variant="h3" fontWeight={theme.fontWeight.semiBold}>
-                    Add an image
-                </Typography>
+            <Stack>
                 <Typography
-                    variant="body1`"
-                    sx={{
-                        maxWidth: "300px",
-                        width: "100%",
-                        color: theme.palette.text.disabled,
-                    }}
+                    variant="h6"
+                    sx={{ color: theme.palette.text.primary, fontWeight: theme.fontWeight.semiBold }}
                 >
-                    Badge templates must use square images in PNG format, with dimensions between 300x300.
+                    Upload Badge Image
+                </Typography>
+                <Typography variant="body1" sx={{ color: theme.palette.text.secondary }}>
+                    {image ? "Change your image" : "Choose an image"}
                 </Typography>
             </Stack>
-            {/* End the details info */}
         </Stack>
-        // ============ Start the image selection form ============
     );
 };
 

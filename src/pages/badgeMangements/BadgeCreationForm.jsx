@@ -1,13 +1,10 @@
-// React import
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-// MUI import
-import { Button, MobileStepper, Stack, Typography } from "@mui/material";
+import { Button, MobileStepper, Stack, Typography, CircularProgress, Box, Skeleton } from "@mui/material";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
-// Custom import
 import theme from "../../assets/themes";
 import CoreElementStep from "./CoreElementStep";
 import MetadataStep from "./MetadataStep";
@@ -15,7 +12,6 @@ import OptionalStep from "./OptionalStep";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import ImageSelection from "./ImageSelection";
 
-// Static data for the steppers
 const steps = [
     {
         label: "Core Element :",
@@ -35,13 +31,10 @@ const steps = [
 ];
 
 const BadgeCreationForm = () => {
-    // Stepper useState
     const [activeStep, setActiveStep] = React.useState(0);
-
-    // State for storing image
     const [uploadedImage, setUploadedImage] = useState(null);
+    const [loading, setLoading] = useState(false);
 
-    // React-hook-form
     const {
         control,
         handleSubmit,
@@ -69,29 +62,56 @@ const BadgeCreationForm = () => {
         },
     });
 
-    // Max of the steps
     const maxSteps = steps.length;
 
-    // Handle the next of stepper
+    // const handleNext = async () => {
+    //     // Start loading
+    //     setLoading(true);
+    //     const isValid = await trigger();
+    //     if (isValid) {
+    //         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    //     }
+    //     // Stop loading
+    //     setLoading(false);
+    // };
+
+    // const handleBack = () => {
+    //     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    // };
     const handleNext = async () => {
+         // Start loading
+        setLoading(true);
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+
         const isValid = await trigger();
         if (isValid) {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         }
+        // Stop loading
+        setLoading(false);
     };
 
-    // Handle the back of stepper
     const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+        setLoading(true);
+        setTimeout(() => {
+            setActiveStep((prevActiveStep) => prevActiveStep - 1);
+            setLoading(false);
+        }, 2000);
     };
 
     const onSubmit = (data) => {
-        // Log form data and image together when the form is submitted
-        console.log({ ...data, image: uploadedImage });
+        setLoading(true);
+        console.log("Submitting data", data);
+
+        // SetTimeout to see Loading
+        setTimeout(() => {
+            console.log("Data submitted");
+            setLoading(false);
+        }, 2000);
+
         reset();
     };
 
-    // Render Step content function
     const renderStepContent = () => {
         switch (activeStep) {
             case 0:
@@ -106,7 +126,6 @@ const BadgeCreationForm = () => {
     };
 
     return (
-        // ============ Start Badge Creation Form ============
         <DashboardContainer>
             <Stack
                 sx={{
@@ -118,12 +137,9 @@ const BadgeCreationForm = () => {
                     gap: 6,
                 }}
             >
-                {/* Image Upload Component */}
                 <ImageSelection onImageSelect={(file) => setUploadedImage(file)} />
 
-                {/* ============ Start Badge content ============ */}
                 <Stack>
-                    {/* Start Form Render*/}
                     <Stack
                         component="form"
                         direction="row"
@@ -132,27 +148,56 @@ const BadgeCreationForm = () => {
                         onSubmit={handleSubmit(onSubmit)}
                         noValidate
                     >
-                        <Stack gap={2}>
-                            <Typography component="h3" variant="h3" fontWeight={theme.fontWeight.semiBold}>
-                                {steps[activeStep].label}
-                            </Typography>
-                            <Typography
-                                variant="body1`"
-                                sx={{
-                                    maxWidth: 600,
-                                    width: "100%",
-                                    color: theme.palette.text.disabled,
-                                }}
-                            >
-                                {steps[activeStep].description}
-                            </Typography>
+                        {loading ? (
+                            <Stack spacing={1}>
+                                <Skeleton
+                                    variant="text"
+                                    animation="wave"
+                                    width={500}
+                                    height={60}
+                                    sx={{ display: { xss: "none", md: "block" } }}
+                                />
+                                <Skeleton variant="text" animation="wave" sx={{ fontSize: "1rem" }} />
+                                <Skeleton variant="text" animation="wave" sx={{ fontSize: "1rem" }} />
+                            </Stack>
+                        ) : (
+                            <Stack gap={2}>
+                                <Typography component="h3" variant="h3" fontWeight={theme.fontWeight.semiBold}>
+                                    {steps[activeStep].label}
+                                </Typography>
+                                <Typography
+                                    variant="body1`"
+                                    sx={{
+                                        maxWidth: 600,
+                                        width: "100%",
+                                        color: theme.palette.text.disabled,
+                                    }}
+                                >
+                                    {steps[activeStep].description}
+                                </Typography>
+                            </Stack>
+                        )}
+
+                        <Stack sx={{ maxWidth: "100%", width: "100%" }}>
+                            {loading ? (
+                                <Box
+                                    display="flex"
+                                    flexDirection="column"
+                                    justifyContent="center"
+                                    alignItems="center"
+                                    height="100%"
+                                >
+                                    <Skeleton animation="wave" width="100%" height={60} />
+                                    <Skeleton animation="wave" width="100%" height={60} />
+                                    <Skeleton animation="wave" width="100%" height={60} />
+                                    <Skeleton animation="wave" width="100%" height={60} />
+                                </Box>
+                            ) : (
+                                renderStepContent()
+                            )}
                         </Stack>
-
-                        <Stack sx={{ maxWidth: "100%", width: "100%" }}>{renderStepContent()}</Stack>
                     </Stack>
-                    {/* End Form Render*/}
 
-                    {/* Start Stepper section */}
                     <MobileStepper
                         variant="text"
                         steps={maxSteps}
@@ -161,23 +206,20 @@ const BadgeCreationForm = () => {
                         activeStep={activeStep}
                         nextButton={
                             <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
-                                Next
+                                {loading ? <CircularProgress size={24} /> : "Next"}
                                 <KeyboardArrowRight />
                             </Button>
                         }
                         backButton={
                             <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
                                 <KeyboardArrowLeft />
-                                Back
+                                {loading ? <CircularProgress size={24} /> : "Back"}
                             </Button>
                         }
                     />
-                    {/* End Stepper section */}
                 </Stack>
-                {/* ============ Start Badge content ============ */}
             </Stack>
         </DashboardContainer>
-        // ============ End Badge Creation Form ============
     );
 };
 
