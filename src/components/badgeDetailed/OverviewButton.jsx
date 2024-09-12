@@ -34,7 +34,7 @@ const BtnAddTo = () => {
     return (
         <Button variant="contained"
             sx={AddStyle}>
-            Add earner to earner
+            Add earner to badge
         </Button>
     )
 }

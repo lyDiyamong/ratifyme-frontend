@@ -13,7 +13,6 @@ const sectionStyle = {
     borderRadius: theme.customShape.section,
     justifyContent: "space-between",
     alignItems: "center",
-    padding: "32px",
     bgcolor: theme.palette.customColors.white,
 }
 

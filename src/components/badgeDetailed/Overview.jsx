@@ -6,7 +6,7 @@ import { Box, Stack, Typography } from "@mui/material";
 
 // Custom Import
 import DashboardContainer from "../styles/DashboardContainer";
-import { BtnAddTo, BtnIssueTo } from "./BarnerButton";
+import { BtnAddTo, BtnIssueTo } from "./OverviewButton";
 import PageSection from "./PageSection";
 import { DetailData } from "../../data/badgeDetail/DataBadgeDetailed";
 import facebookIcon from "./../../assets/icons/facebook.svg"
@@ -109,7 +109,6 @@ const Overview = () => {
                     id="1"
                     sx={{
                         padding: "10px",
-
                         mt: 3,
                         maxWidth: 220,
                         width: "100%",

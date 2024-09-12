@@ -9,7 +9,6 @@ import {
 
 // Custome Import
 import PageSection from "./PageSection";
-import DashboardContainer from "../styles/DashboardContainer";
 import {
             DetailData
         } from "../../data/badgeDetail/DataBadgeDetailed";
@@ -18,11 +17,11 @@ import theme from "../../assets/themes";
 // <!-- ============ Start BadgeDetail component ============ -->
 const BadgeDetail = () => {
     return (
-        <DashboardContainer>
-            <PageSection>
+
+            <PageSection >
 
             {/*  Start container  */}
-                <Grid container spacing={3}>
+                <Grid container spacing={3} sx={{pt: 6, pb: 6}}>
                     {DetailData.items.map((item, index) => (
 
                         //  Start Fragment to save loop  */
@@ -63,7 +62,7 @@ const BadgeDetail = () => {
                 {/* <!-- ============ Start container ============ --> */}
 
             </PageSection>
-        </DashboardContainer>
+
     );
 };
 // <!-- ============ End BadgeDetail component ============ -->
