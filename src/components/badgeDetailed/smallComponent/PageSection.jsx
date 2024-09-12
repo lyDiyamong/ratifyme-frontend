@@ -5,7 +5,7 @@ import React from "react"
 import { Stack } from "@mui/material"
 
 // Custom Import
-import theme from "../../assets/themes"
+import theme from "../../../assets/themes"
 
 // Section Style
 const sectionStyle = {
