@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-
 import { Button, MobileStepper, Stack, Typography, CircularProgress, Box, Skeleton } from "@mui/material";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
@@ -11,6 +10,7 @@ import MetadataStep from "./MetadataStep";
 import OptionalStep from "./OptionalStep";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import ImageSelection from "./ImageSelection";
+import { SpinLoading } from "../../components/SpinLoading";
 
 const steps = [
     {
@@ -31,7 +31,7 @@ const steps = [
 ];
 
 const BadgeCreationForm = () => {
-    const [activeStep, setActiveStep] = React.useState(0);
+    const [activeStep, setActiveStep] = useState(0);
     const [uploadedImage, setUploadedImage] = useState(null);
     const [loading, setLoading] = useState(false);
 
@@ -79,7 +79,7 @@ const BadgeCreationForm = () => {
     //     setActiveStep((prevActiveStep) => prevActiveStep - 1);
     // };
     const handleNext = async () => {
-         // Start loading
+        // Start loading
         setLoading(true);
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
@@ -103,7 +103,7 @@ const BadgeCreationForm = () => {
         setLoading(true);
         console.log("Submitting data", data);
 
-        // SetTimeout to see Loading
+        // SetTimeout to see
         setTimeout(() => {
             console.log("Data submitted");
             setLoading(false);
@@ -180,17 +180,8 @@ const BadgeCreationForm = () => {
 
                         <Stack sx={{ maxWidth: "100%", width: "100%" }}>
                             {loading ? (
-                                <Box
-                                    display="flex"
-                                    flexDirection="column"
-                                    justifyContent="center"
-                                    alignItems="center"
-                                    height="100%"
-                                >
-                                    <Skeleton animation="wave" width="100%" height={60} />
-                                    <Skeleton animation="wave" width="100%" height={60} />
-                                    <Skeleton animation="wave" width="100%" height={60} />
-                                    <Skeleton animation="wave" width="100%" height={60} />
+                                <Box display="flex" justifyContent="center" alignItems="center" height="100%">
+                                    <SpinLoading />
                                 </Box>
                             ) : (
                                 renderStepContent()

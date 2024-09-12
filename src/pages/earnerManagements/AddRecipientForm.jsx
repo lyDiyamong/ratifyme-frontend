@@ -1,10 +1,11 @@
 // React import
+import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
 import countryList from "react-select-country-list";
 
 // MUI import
-import { Box, Typography, Button, Stack, TextField } from "@mui/material";
+import { Box, Typography, Button, Stack, TextField, CircularProgress } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 // import CalendarTodayIcon from "@mui/icons-material/CalendarToday"; // Import calendar icon
@@ -16,6 +17,8 @@ import FormInput from "../../components/FormInput";
 import SelectForm from "../../components/SelectionForm";
 
 const AddRecipientForm = () => {
+    const [loading, setLoading] = useState(false);
+
     // Start React-hook-form function
     const { handleSubmit, control, reset } = useForm({
         // Start Set to default
@@ -27,7 +30,15 @@ const AddRecipientForm = () => {
 
     // Start onSubmit function
     const onSubmit = (data) => {
+        setLoading(true);
         console.log(data);
+
+        // SetTimeout to see Loading
+        setTimeout(() => {
+            console.log("Data submitted");
+            setLoading(false);
+        }, 2000);
+
         //Reset after success
         reset();
     };
@@ -87,7 +98,7 @@ const AddRecipientForm = () => {
                                     label="First Name"
                                     control={control}
                                     type="text"
-                                    required={true}
+                                    required={false}
                                 />
                                 {/* Start Last Name */}
                                 <FormInput
@@ -95,7 +106,7 @@ const AddRecipientForm = () => {
                                     label="Last Name"
                                     control={control}
                                     type="text"
-                                    required={true}
+                                    required={false}
                                 />
 
                                 {/* Start Selection DOB */}
@@ -143,7 +154,7 @@ const AddRecipientForm = () => {
                                         name="value"
                                         label="Gender"
                                         options={optionSelect}
-                                        required
+                                        required={false}
                                     />
                                     {/* Start Phone */}
                                     <FormInput
@@ -156,7 +167,7 @@ const AddRecipientForm = () => {
                                     {/* Start Email */}
                                 </Box>
 
-                                <FormInput name="email" label="Email" control={control} type="email" required={true} />
+                                <FormInput name="email" label="Email" control={control} type="email" required={false} />
                                 {/* Start Organization */}
                                 <FormInput
                                     name="organization"
@@ -260,7 +271,7 @@ const AddRecipientForm = () => {
                             maxWidth: 150,
                         }}
                     >
-                        Add Recipient
+                        {loading ? <CircularProgress color={theme.palette.customColors.white} size={24} /> : "Add Recipient"}
                     </Button>
                 </Stack>
                 {/* End Button Add Recipient */}
