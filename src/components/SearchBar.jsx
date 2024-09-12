@@ -1,5 +1,4 @@
-// MUI import
-import { useState } from "react"; // Make sure to import useState from React
+import { useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -11,7 +10,8 @@ import { Button } from "@mui/material";
 // Custom import
 import theme from "../assets/themes";
 import DashboardContainer from "./styles/DashboardContainer";
-import cardBadgeData from "../data/CardBadgeData"; // Make sure this is the correct path
+import cardBadgeData from "../data/CardBadgeData";
+import BadgeListCard from "./BadgeListCard";
 
 // Styled components
 const Search = styled("div")(({ theme }) => ({
@@ -35,7 +35,6 @@ const Search = styled("div")(({ theme }) => ({
     boxShadow: theme.customShadows.default,
 }));
 
-// Styled component for the wrapper containing the search icon to ensures the icon is centered and positioned correctly inside the search form
 const SearchIconWrapper = styled("div")(({ theme }) => ({
     padding: theme.spacing(0, 2),
     height: "100%",
@@ -46,7 +45,6 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
     justifyContent: "center",
 }));
 
-// Styled component for the input base used within the search bar
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: "inherit",
     "& .MuiInputBase-input": {
@@ -70,25 +68,20 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchBar({ showButton = true, textInButton }) {
-    const [searchQuery, setSearchQuery] = useState(""); // State for search query
-    const [filteredData, setFilteredData] = useState(cardBadgeData); // Filtered data state
+    const [searchQuery, setSearchQuery] = useState("");
+    const [filteredData, setFilteredData] = useState(cardBadgeData);
 
-    // Handle input changes and filter data
     const handleSearchChange = (event) => {
         const query = event.target.value.toLowerCase();
-        setSearchQuery(query); // Update the search query state
-        console.log("Search Query:", query); // Debugging: Log the query
-
+        setSearchQuery(query);
         const filtered = cardBadgeData.filter(
             (item) =>
                 item.title.toLowerCase().includes(query) ||
-                item.description.toLowerCase().includes(query)
+                item.institution.toLowerCase().includes(query)
         );
-        console.log("Filtered Data:", filtered); // Debugging: Log the filtered data
-        setFilteredData(filtered); // Update the filtered data
+        setFilteredData(filtered);
     };
 
-      // ============ Start of search bar component ============
     return (
         <DashboardContainer>
             <Box sx={{ flexGrow: 1 }}>
@@ -111,7 +104,6 @@ export default function SearchBar({ showButton = true, textInButton }) {
                             flexWrap: "wrap",
                         }}
                     >
-                        {/* Search bar */}
                         <Search
                             sx={{
                                 borderRadius: theme.customShape.section,
@@ -125,12 +117,11 @@ export default function SearchBar({ showButton = true, textInButton }) {
                             <StyledInputBase
                                 placeholder="Search for Badges..."
                                 inputProps={{ "aria-label": "search" }}
-                                value={searchQuery} // Bind the searchQuery state to the input value
-                                onChange={handleSearchChange} // Handle input changes
+                                value={searchQuery}
+                                onChange={handleSearchChange}
                             />
                         </Search>
 
-                        {/* Conditionally render the button */}
                         {showButton && (
                             <Button
                                 variant="contained"
@@ -152,22 +143,9 @@ export default function SearchBar({ showButton = true, textInButton }) {
                     </Toolbar>
                 </AppBar>
 
-                {/* Render filtered cards */}
-                <Box sx={{ mt: 2 }}>
-                    {filteredData.length > 0 ? (
-                        filteredData.map((item) => (
-                            <Box key={item.id} sx={{ mb: 2, border: "1px solid #ddd", p: 2 }}>
-                                <h3>{item.title}</h3>
-                                <p>{item.description}</p>
-                            </Box>
-                        ))
-                    ) : (
-                        <p>No results found</p>
-                    )}
-                </Box>
+                {/* Pass filteredData to BadgeListCard */}
+                <BadgeListCard badges={filteredData} />
             </Box>
         </DashboardContainer>
-
-        // ============ End of search bar component ============
     );
 }
