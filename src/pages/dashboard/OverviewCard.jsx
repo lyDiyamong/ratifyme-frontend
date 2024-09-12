@@ -4,11 +4,13 @@ import { useTheme } from "@mui/material/styles";
 //Custom Import
 import { cardContents } from "../../data/dashboardPage/cardOverviewData";
 
-// ============ Start Card Component ============
+
+// ============ Start Cards Component ============
 const CardsList = () => {
     const theme = useTheme();
 
     return (
+        //============ Start Cards Container  ============
         <Container
             sx={{
                 display: "flex",
@@ -21,7 +23,7 @@ const CardsList = () => {
                 "@media (min-width: 600px)": { px: "0"},
                 "@media (max-width: 600px)": { px: "0", gap: "16px" },
             }}
-        >
+        >{/* ============ Start Card Overview ============*/}
             {cardContents.map((card) => (
                 <Card
                     key={card.id}
@@ -40,7 +42,7 @@ const CardsList = () => {
                         "@media (max-width: 650px)": { height: "186px" },
                         "@media (max-width: 600px)": { height: "156px", width: "137px", minWidth: "60px" },
                     }}
-                >
+                >   {/* Image graph */}
                     <CardMedia
                         component="img"
                         height="100px"
@@ -62,7 +64,7 @@ const CardsList = () => {
                             "@media (max-width: 600px)": { mx: "20px" },
                         }}
                     >
-                        
+                        {/* Display Number Data */}
                         <Typography
                             variant="h1"
                             sx={{
@@ -85,6 +87,7 @@ const CardsList = () => {
                                 }}
                             ></Box>
                         </Typography>
+                        {/* Title Card */}
                         <Typography
                             variant="body2"
                             sx={{
@@ -95,11 +98,13 @@ const CardsList = () => {
                             {card.title}
                         </Typography>
                     </CardContent>
-                </Card>
+                </Card> 
             ))}
+            {/* ============ End Card Overview ============*/}
         </Container>
+        //============ Start Cards Container  ============
     );
 };
-// ============ End Card Component ============
+// ============ End Cards Component ============
 
 export default CardsList;

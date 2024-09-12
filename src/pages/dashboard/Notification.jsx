@@ -22,15 +22,13 @@ const Notification = () => {
                 maxWidth: "517px",
                 overflowY: "scroll",
                 scrollbarWidth: "none",
-                "@media (max-width: 1650px)": { minWidth: "300px" },
+                "@media (max-width: 1650px)": { minWidth: "200px" },
             }}
         >
-            {/*Start Title of Card Container */}
+            {/* Title of Card Container */}
             <Typography variant="h6" sx={{ mb: "5px" }}>
                 Notification
             </Typography>
-            {/*End Title of Card Container */}
-
             {/* ============ Start Card Wraper ============ */}
             <Stack sx={{ justifyContent: "center", minWidth: "100px" }}>
                 {notiCardData.map((card) => (
@@ -40,7 +38,7 @@ const Notification = () => {
                             mb: 2,
                             width: "100%",
                             Width: 475,
-                            minWidth: "100px",
+                            minWidth: "80px",
                             height: 60,
                             display: "flex",
                             flexDirection: "row",
@@ -55,7 +53,7 @@ const Notification = () => {
                                 flexDirection: "column",
                                 justifyContent: "center",
                                 alignContent: "center",
-                                width: "190px",
+                                minWidth: "100px",
                             }}
                         >
                             <Box
@@ -64,7 +62,8 @@ const Notification = () => {
                                     display: "flex",
                                     flexDirection: "row",
                                     gap: 1,
-                                    width: "170px",
+                                    width: "100%",
+
                                     "@media (max-width:480px)": { width: "140px" },
                                 }}
                             >
@@ -80,19 +79,17 @@ const Notification = () => {
                                     }}
                                 />
                                 <Box component="div" sx={{ display: "flex", flexDirection: "column" }}>
-                                    {/* Start Company Name */}
+                                    {/*  Company Name */}
                                     <Typography
                                         variant="body2"
-                                        sx={{ width: "136px", "@media (max-width:480px)": { width: "100px" } }}
+                                        sx={{ Width: "136px", "@media (max-width:480px)": { width: "100px" } }}
                                     >
                                         {card.name}
                                     </Typography>
-                                    {/* End Company Name */}
-                                    {/* Start Company Email */}
+                                    {/*  Company Email */}
                                     <Typography variant="body3" sx={{ color: theme.palette.text.disabled }}>
                                         {card.email}
                                     </Typography>
-                                    {/* End Company Email */}
                                 </Box>
                             </Box>
                         </CardContent>
@@ -107,7 +104,7 @@ const Notification = () => {
                                 "@media (max-width:480px)": { gap: 1, px: "10px" },
                             }}
                         >
-                            {/* Start Date of Notification */}
+                            {/* Date of Notification */}
                             <Typography
                                 variant="body3"
                                 sx={{
@@ -118,13 +115,13 @@ const Notification = () => {
                             >
                                 {card.date}
                             </Typography>
-                            {/* End Date of Notification */}
-                            {/* Start Type of Notification */}
+
+                            {/*  Type of Notification */}
                             <Typography variant="body3" sx={{ "@media (max-width:380px)": { display: "none" } }}>
                                 {card.type}
                             </Typography>
-                            {/* End Type of Notification */}
-                            {/* Start Link to View Detail Notification */}
+
+                            {/*  Link to View Detail Notification */}
                             <Link
                                 underline="hover"
                                 to="/view"
@@ -132,7 +129,6 @@ const Notification = () => {
                             >
                                 View
                             </Link>
-                            {/* End Link to View Detail Notification */}
                         </CardContent>
                     </Card>
                 ))}
