@@ -37,10 +37,6 @@ const InfoCard = ({ logoSrc, alt }) => {
         </Card>
     );
 };
-InfoCard.defaultProps = {
-    logoSrc: AnBLogoSvg,
-    alt: "logo",
-};
 
 const LogoCards = () => {
     return (
