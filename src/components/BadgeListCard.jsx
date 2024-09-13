@@ -55,8 +55,8 @@ const BadgeListCard = ({ badges = [] }) => {
     const currentBadges = badges.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
     return (
-        <Box>
-            <Typography variant="h6" sx={{ padding: 2 }}>
+        <Box my={3}>
+            <Typography variant="h6" sx={{ pb: 2 }}>
                 Total Badges: {badges.length}
             </Typography>
 
@@ -93,8 +93,8 @@ const BadgeListCard = ({ badges = [] }) => {
                         <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={badge.id}>
                             <Card
                                 sx={{
-                                    maxWidth: { xs: "100%", sm: 320, md: 340, lg: 350 },
-                                    height: { xs: "auto", md: 400 },
+                                    maxWidth: { xss: "100%", sm: 320, md: 340, lg: 350 },
+                                    height: { xss: "auto", md: 400 },
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "space-between",
@@ -122,7 +122,7 @@ const BadgeListCard = ({ badges = [] }) => {
                                             variant="h6"
                                             sx={{
                                                 fontSize: {
-                                                    xs: theme.typography.h5.fontSize,
+                                                    xss: theme.typography.h5.fontSize,
                                                     sm: theme.typography.h4.fontSize,
                                                 },
                                                 fontWeight: theme.fontWeight.bold,
@@ -142,7 +142,7 @@ const BadgeListCard = ({ badges = [] }) => {
                                                 paddingTop: 1,
                                                 color: theme.palette.text.disabled,
                                                 fontSize: {
-                                                    xs: theme.typography.h6.fontSize,
+                                                    xss: theme.typography.h6.fontSize,
                                                     md: theme.typography.h5.fontSize,
                                                 },
                                                 whiteSpace: "nowrap",
@@ -171,6 +171,7 @@ const BadgeListCard = ({ badges = [] }) => {
                                             padding: "6px 16px",
                                             borderRadius: theme.customShape.btn,
                                             textTransform: "none",
+                                            fontWeight: theme.fontWeight.bol
                                         }}
                                     >
                                         Visit
