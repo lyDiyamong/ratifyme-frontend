@@ -1,17 +1,22 @@
+// React import
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+
+// MUI import
 import { Button, MobileStepper, Stack, Typography, CircularProgress, Box, Skeleton } from "@mui/material";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
+// Custom import
 import theme from "../../assets/themes";
 import CoreElementStep from "./CoreElementStep";
 import MetadataStep from "./MetadataStep";
 import OptionalStep from "./OptionalStep";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import ImageSelection from "./ImageSelection";
-import { SpinLoading } from "../../components/SpinLoading";
+import { SpinLoading } from "../../components/loading/SpinLoading";
 
+// The data static of the description
 const steps = [
     {
         label: "Core Element :",
@@ -31,10 +36,14 @@ const steps = [
 ];
 
 const BadgeCreationForm = () => {
+    // Stepper
     const [activeStep, setActiveStep] = useState(0);
+    // Image upload
     const [uploadedImage, setUploadedImage] = useState(null);
+    // Slow loading
     const [loading, setLoading] = useState(false);
 
+    // React Hook Form
     const {
         control,
         handleSubmit,
@@ -81,7 +90,7 @@ const BadgeCreationForm = () => {
     const handleNext = async () => {
         // Start loading
         setLoading(true);
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         const isValid = await trigger();
         if (isValid) {
@@ -96,7 +105,7 @@ const BadgeCreationForm = () => {
         setTimeout(() => {
             setActiveStep((prevActiveStep) => prevActiveStep - 1);
             setLoading(false);
-        }, 2000);
+        }, 1000);
     };
 
     const onSubmit = (data) => {
@@ -111,7 +120,7 @@ const BadgeCreationForm = () => {
             
             reset();
             setUploadedImage(null);
-        }, 2000);
+        }, 1000);
     };
 
     const renderStepContent = () => {
@@ -128,6 +137,7 @@ const BadgeCreationForm = () => {
     };
 
     return (
+        // ============ Start the Badge Creation Form ============
         <DashboardContainer>
             <Stack
                 sx={{
@@ -139,8 +149,11 @@ const BadgeCreationForm = () => {
                     gap: 6,
                 }}
             >
+                {/* Start the Image Upload */}
                 <ImageSelection onImageSelect={(file) => setUploadedImage(file)} />
+                {/* End the Image Upload */}
 
+                {/* Start the input form */}
                 <Stack>
                     <Stack
                         component="form"
@@ -150,6 +163,7 @@ const BadgeCreationForm = () => {
                         onSubmit={handleSubmit(onSubmit)}
                         noValidate
                     >
+                        {/* Slow Loading of Description */}
                         {loading ? (
                             <Stack spacing={1}>
                                 <Skeleton
@@ -163,6 +177,7 @@ const BadgeCreationForm = () => {
                                 <Skeleton variant="text" animation="wave" sx={{ fontSize: "1rem" }} />
                             </Stack>
                         ) : (
+                            // Description of each form
                             <Stack gap={2}>
                                 <Typography component="h3" variant="h3" fontWeight={theme.fontWeight.semiBold}>
                                     {steps[activeStep].label}
@@ -181,16 +196,19 @@ const BadgeCreationForm = () => {
                         )}
 
                         <Stack sx={{ maxWidth: "100%", width: "100%" }}>
+                            {/* Slow Loading of form */}
                             {loading ? (
                                 <Box display="flex" justifyContent="center" alignItems="center" height="100%">
                                     <SpinLoading />
                                 </Box>
                             ) : (
+                                // Form input render
                                 renderStepContent()
                             )}
                         </Stack>
                     </Stack>
 
+                    {/* Start the Stepper */}
                     <MobileStepper
                         variant="text"
                         steps={maxSteps}
@@ -210,9 +228,12 @@ const BadgeCreationForm = () => {
                             </Button>
                         }
                     />
+                    {/* End the Stepper */}
                 </Stack>
+                {/* End the input form */}
             </Stack>
         </DashboardContainer>
+        // ============ End the Badge Creation Form ============
     );
 };
 

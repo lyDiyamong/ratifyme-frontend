@@ -1,9 +1,13 @@
+// React import
 import { useState, useRef } from "react";
 
-import { Box, Typography, Stack, CircularProgress } from "@mui/material";
+// MUI import
+import { Box, Typography, Stack } from "@mui/material";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 
+// Custom import
 import theme from "../../assets/themes";
+import UploadLoading from "../../components/loading/UploadLoading"
 
 const ImageSelection = ({ onImageSelect }) => {
     const [image, setImage] = useState(null);
@@ -59,11 +63,13 @@ const ImageSelection = ({ onImageSelect }) => {
     };
 
     return (
+        // ============ Start Image Selection component ============
         <Stack
             direction="row"
             flexDirection={{ xss: "column-reverse", md: "row" }}
             sx={{ gap: 4, alignItems: "center" }}
         >
+            {/* Start the image selection section */}
             <Box
                 onClick={handleClick}
                 border={`2px dashed ${theme.palette.cardBorder}`}
@@ -78,8 +84,9 @@ const ImageSelection = ({ onImageSelect }) => {
                     cursor: "pointer",
                 }}
             >
+                {/* Uploading Loading */}
                 {loading ? (
-                    <CircularProgress />
+                    <UploadLoading />
                 ) : (
                     <>
                         {image ? (
@@ -107,7 +114,9 @@ const ImageSelection = ({ onImageSelect }) => {
                     </>
                 )}
             </Box>
+            {/* End the image selection section */}
 
+            {/* Start Image info */}
             <Stack>
                 <Typography
                     variant="h6"
@@ -119,7 +128,9 @@ const ImageSelection = ({ onImageSelect }) => {
                     {image ? "Change your image" : "Choose an image"}
                 </Typography>
             </Stack>
+            {/* End Image info */}
         </Stack>
+        // ============ End Image Selection component ============
     );
 };
 
