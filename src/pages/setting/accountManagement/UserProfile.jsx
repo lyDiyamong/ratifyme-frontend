@@ -65,36 +65,16 @@ const UserProfile = () => {
                             </Button>
                         </Box>
                     </Stack>
-                    <Grid
-                        container
-                        sx={{ mt: "50px", justifyContent: "flex-start", columnGap: "22px", rowGap: "22px" }}
-                    >
-                        {ProfileData.map((info) => (
-                            <Grid
-                                key={info.id}
-                                direction={"row"}
-                                xs={12} 
-                                sm={6} 
-                                md={4} 
-                                lg={3}
-                                sx={{
-                                    gap: "12px",
-                                    height: "60px",
-                                    textAlign: "center",
-                                    display: "flex",
-                                    justifyContent: "flex-start",
-                                    alignItems: "flex-start",
-                                }}
-                            >
+                    <Grid container   sx={{ mt : "50px", justifyContent: "center"}}>
+                        {ProfileData.map((info,) => (
+                            <Grid key={info.id} direction sx={{ width: "200px", height: "50px", textAlign: "center", justifyContent: "center", alignItems: "center" }}>
                                 <Box component={"img"} src={info.icon}></Box>
-                                <Stack gap={"5px"} sx={{ textAlign: "left" }}>
-                                    <Box sx={{ fontSize: theme.typography.h5, fontWeight: theme.fontWeight.bold }}>
-                                        {info.title}
-                                    </Box>
-                                    <Box sx={{ fontSize: theme.typography.h6, fontWeight: theme.fontWeight.semiBold }}>
-                                        {info.content}
-                                    </Box>
-                                </Stack>
+                                <Box>
+                                    {info.title}
+                                </Box>
+                                <Box>
+                                    {info.content}
+                                </Box>
                             </Grid>
                         ))}
                     </Grid>
