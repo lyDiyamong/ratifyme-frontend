@@ -1,228 +1,190 @@
-// Custom import 
-import BadgeCardImg from "../assets/images/BadgeCard.svg";
+// Custom import
+import GoldBdage from "../assets/images/GoldBadge.svg";
+import DiamondBadge from "../assets/images/DiamondBadge.svg";
+import NatureBadge from "../assets/images/NatureBadge.svg";
 
-// The data below is just use for testing SearchBar component, you can remove it as need
+// Expanded badge data
 const cardBadgeData = [
     {
         id: 1,
-        title: "Web Development App EssentialshkaskfghaskhudfghuweihGUOHUHWEUGgwegsdgasdg",
-        institution: "CodeCraft Academy akjsfauhwietuqwuhigfwuweiwegwergqrwg",
-        imageUrl: BadgeCardImg,
+        title: "Fundamentals of Web Development",
+        institution: "Tech Academy",
+        imageUrl: GoldBdage,
     },
     {
         id: 2,
-        title: "Full-Stack Mastery uuuuuuuuuuuuuuuuuuuuuuuuuuu",
-        institution: "DevOps Institute",
-        imageUrl: BadgeCardImg,
+        title: "Full-Stack Web Development",
+        institution: "Web Dev Institute",
+        imageUrl: DiamondBadge,
     },
-    { 
+    {
         id: 3,
-        title: "Cloud Architecture", 
-        institution: "NextGen Cloud",
-        imageUrl: "https://via.placeholder.com/150" },    
-        {
-        id: 4,
-        title: "Advanced Data Science",
-        institution: "AI Research Labs",
-        imageUrl: BadgeCardImg,
+        title: "Cloud Infrastructure Architect",
+        institution: "Cloud Innovators",
+        imageUrl: NatureBadge,
     },
-    { 
-        id: 5, 
-        title: "Mobile App Development",
-        institution: "AppMasters",
-        imageUrl: "https://via.placeholder.com/150" },
+    {
+        id: 4,
+        title: "Advanced Data Analytics",
+        institution: "Data Science Hub",
+        imageUrl: GoldBdage,
+    },
+    {
+        id: 5,
+        title: "Mobile Application Development",
+        institution: "App Development Center",
+        imageUrl: DiamondBadge,
+    },
     {
         id: 6,
-        title: "Cybersecurity Expert",
-        institution: "CyberDefense Academy",
-        imageUrl: BadgeCardImg,
+        title: "Certified Cybersecurity Specialist",
+        institution: "Cybersecurity Institute",
+        imageUrl: NatureBadge,
     },
     {
         id: 7,
-        title: "AI Foundations",
-        institution: "Tech Innovators Inc.",
-        imageUrl: BadgeCardImg,
+        title: "AI Fundamentals",
+        institution: "Artificial Intelligence Lab",
+        imageUrl: GoldBdage,
     },
     {
         id: 8,
-        title: "Quantum Computing",
-        institution: "NextGen Solutions",
-        imageUrl: BadgeCardImg,
+        title: "Quantum Computing Principles",
+        institution: "Quantum Research Institute",
+        imageUrl: DiamondBadge,
     },
     {
         id: 9,
-        title: "Cybersecurity Basics",
-        institution: "CyberTech Labs",
-        imageUrl: BadgeCardImg,
+        title: "Introduction to Cybersecurity",
+        institution: "CyberTech Solutions",
+        imageUrl: NatureBadge,
     },
     {
         id: 10,
-        title: "Machine Learning Mastery",
-        institution: "Quantum Systems",
-        imageUrl: BadgeCardImg,
+        title: "Mastering Machine Learning",
+        institution: "Machine Learning Academy",
+        imageUrl: GoldBdage,
     },
     {
         id: 11,
-        title: "Blockchain Development",
-        institution: "Fusion Software",
-        imageUrl: BadgeCardImg,
+        title: "Blockchain Development Expert",
+        institution: "Blockchain Innovations",
+        imageUrl: DiamondBadge,
     },
     {
         id: 12,
-        title: "Cloud Infrastructure",
-        institution: "DataStream Technologies",
-        imageUrl: BadgeCardImg,
+        title: "Cloud Computing Essentials",
+        institution: "CloudTech Labs",
+        imageUrl: NatureBadge,
     },
-    { 
-        id: 13, 
-        title: "Big Data Analysis", 
-        institution: "CloudNet Corp", 
-        imageUrl: "https://via.placeholder.com/150" },
-    { 
-        id: 14, 
-        title: "AI for Robotics", 
-        institution: "AI Pioneers", 
-        imageUrl: "https://via.placeholder.com/150" },
+    {
+        id: 13,
+        title: "Big Data Analytics",
+        institution: "Big Data Institute",
+        imageUrl: GoldBdage,
+    },
+    {
+        id: 14,
+        title: "AI Applications in Robotics",
+        institution: "Robotics and AI Center",
+        imageUrl: DiamondBadge,
+    },
     {
         id: 15,
-        title: "Blockchain Security",
-        institution: "Blockchain Solutions",
-        imageUrl: BadgeCardImg,
+        title: "Blockchain Security Fundamentals",
+        institution: "Blockchain Security Experts",
+        imageUrl: NatureBadge,
     },
     {
         id: 16,
-        title: "Robotics Engineering",
-        institution: "Robotics Ventures",
-        imageUrl: BadgeCardImg,
+        title: "Robotics Engineering Basics",
+        institution: "Engineering Robotics School",
+        imageUrl: GoldBdage,
     },
     {
         id: 17,
-        title: "IoT Development",
-        institution: "SmartTech Labs",
-        imageUrl: "https://via.placeholder.com/150"
+        title: "Internet of Things (IoT) Development",
+        institution: "Smart Technologies Institute",
+        imageUrl: DiamondBadge,
     },
     {
         id: 18,
-        title: "Artificial Intelligence",
-        institution: "AI Horizon",
-        imageUrl: BadgeCardImg
+        title: "Artificial Intelligence in Practice",
+        institution: "AI Research Institute",
+        imageUrl: NatureBadge,
     },
     {
         id: 19,
-        title: "Advanced Machine Learning",
-        institution: "Deep Learning Institute",
-        imageUrl: "https://via.placeholder.com/150"
+        title: "Advanced Topics in Machine Learning",
+        institution: "Advanced ML Research Center",
+        imageUrl: GoldBdage,
     },
     {
         id: 20,
-        title: "Data Science Essentials",
-        institution: "DataPros Academy",
-        imageUrl: BadgeCardImg
+        title: "Introduction to Data Science",
+        institution: "Data Science Academy",
+        imageUrl: DiamondBadge,
     },
     {
         id: 21,
-        title: "Cloud Automation",
-        institution: "SkyTech Solutions",
-        imageUrl: "https://via.placeholder.com/150"
+        title: "Modern Web Design",
+        institution: "Design Institute",
+        imageUrl: NatureBadge,
     },
     {
         id: 22,
-        title: "Full-Stack JavaScript",
-        institution: "WebDev Experts",
-        imageUrl: BadgeCardImg
+        title: "Cybersecurity for Developers",
+        institution: "Secure Devs Hub",
+        imageUrl: GoldBdage,
     },
     {
         id: 23,
-        title: "Front-End Development",
-        institution: "DesignCraft Studios",
-        imageUrl: "https://via.placeholder.com/150"
+        title: "Advanced Cloud Solutions",
+        institution: "Cloud Solutions Lab",
+        imageUrl: DiamondBadge,
     },
     {
         id: 24,
-        title: "ReactJS Essentials",
-        institution: "React Masters",
-        imageUrl: BadgeCardImg
+        title: "Augmented Reality Development",
+        institution: "AR Innovations",
+        imageUrl: NatureBadge,
     },
     {
         id: 25,
-        title: "Python for Data Science",
-        institution: "Data Insights",
-        imageUrl: BadgeCardImg
+        title: "Data Visualization Techniques",
+        institution: "Visual Data Institute",
+        imageUrl: GoldBdage,
     },
     {
         id: 26,
-        title: "Cloud DevOps",
-        institution: "DevOps Pro",
-        imageUrl: "https://via.placeholder.com/150"
+        title: "Ethical Hacking Fundamentals",
+        institution: "Ethical Hacking School",
+        imageUrl: DiamondBadge,
     },
     {
         id: 27,
-        title: "Database Design",
-        institution: "DB Solutions",
-        imageUrl: BadgeCardImg
+        title: "Deep Learning Applications",
+        institution: "Deep Learning Center",
+        imageUrl: NatureBadge,
     },
     {
         id: 28,
-        title: "Mobile App Security",
-        institution: "SecureApps",
-        imageUrl: "https://via.placeholder.com/150"
+        title: "Robotic Process Automation",
+        institution: "Automation Academy",
+        imageUrl: GoldBdage,
     },
     {
         id: 29,
-        title: "Kubernetes Mastery",
-        institution: "Container Labs",
-        imageUrl: BadgeCardImg
+        title: "Introduction to DevOps",
+        institution: "DevOps Training Hub",
+        imageUrl: DiamondBadge,
     },
     {
         id: 30,
-        title: "Data Visualization",
-        institution: "VizTech Academy",
-        imageUrl: "https://via.placeholder.com/150"
+        title: "AI for Business Applications",
+        institution: "Business AI Solutions",
+        imageUrl: NatureBadge,
     },
-    {
-        id: 31,
-        title: "Serverless Architecture",
-        institution: "Serverless Innovators",
-        imageUrl: BadgeCardImg
-    },
-    {
-        id: 32,
-        title: "Web Application Security",
-        institution: "Secure Web Institute",
-        imageUrl: BadgeCardImg
-    },
-    {
-        id: 33,
-        title: "Docker Fundamentals",
-        institution: "Containerized Solutions",
-        imageUrl: "https://via.placeholder.com/150"
-    },
-    {
-        id: 34,
-        title: "DevOps Engineering",
-        institution: "NextGen DevOps",
-        imageUrl: BadgeCardImg
-    },
-    {
-        id: 35,
-        title: "Cloud Computing Essentials",
-        institution: "Cloud Pioneer Academy",
-        imageUrl: "https://via.placeholder.com/150"
-    },
-    {
-        id: 36,
-        title: "Software Testing",
-        institution: "TestPro Labs",
-        imageUrl: BadgeCardImg
-    },
-    {
-        id: 37,
-        title: "AI and Machine Learning",
-        institution: "AI Experts Academy",
-        imageUrl: "https://via.placeholder.com/150"
-    },
-    
-    
 ];
 
 export default cardBadgeData;
