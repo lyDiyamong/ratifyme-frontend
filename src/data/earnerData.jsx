@@ -1,20 +1,22 @@
-// earnerData.jsx
-
+// React library import
 import React from 'react';
+
+// MUI import
 import { Stack } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import IconButton from '@mui/material/IconButton';
-import { useTheme } from '@mui/material/styles';
 
-function ColorButtons() {
-    const theme = useTheme();
+// Custom import
+import theme from './../assets/themes/index'
 
+// <!-- ============ Start Action component ============ -->
+function ActionButtons() {
     // Handle button click and log the action to the console
     const handleClick = (action) => {
         console.log(`${action} button clicked`);
     };
-
+    // render button
     return (
         <Stack direction="row" spacing={2}>
             <IconButton onClick={() => handleClick('view')} aria-label="view">
@@ -26,6 +28,7 @@ function ColorButtons() {
         </Stack>
     );
 }
+// <!-- ============ End Action component ============ -->
 
 const columns = [
     {
@@ -60,7 +63,7 @@ const columns = [
     },
     {
         name: 'Action',
-        cell: () => <ColorButtons />, // Render the buttons in the 'Action' column
+        cell: () => <ActionButtons />, // Render the buttons in the 'Action' column
     },
 ];
 
