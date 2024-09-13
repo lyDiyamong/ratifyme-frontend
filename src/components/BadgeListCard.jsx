@@ -184,4 +184,4 @@ export default function BadgeListCard({ badges = [] }) {
     );
 };
 
-export default BadgeListCard;
+

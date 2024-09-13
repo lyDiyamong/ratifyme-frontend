@@ -151,7 +151,7 @@ export default function SearchBar({ showButton = true, textInButton }) {
                 }}
             >
                 <BadgeListCard badges={filteredData} />
-            </Box>
-        </Box>
+            </DashboardContainer>
+        </Stack>
     );
 }
