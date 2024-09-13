@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { Button } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 
 // Custom import
 import theme from "../assets/themes";
@@ -75,16 +75,14 @@ export default function SearchBar({ showButton = true, textInButton }) {
         const query = event.target.value.toLowerCase();
         setSearchQuery(query);
         const filtered = cardBadgeData.filter(
-            (item) =>
-                item.title.toLowerCase().includes(query) ||
-                item.institution.toLowerCase().includes(query)
+            (item) => item.title.toLowerCase().includes(query) || item.institution.toLowerCase().includes(query),
         );
         setFilteredData(filtered);
     };
 
     return (
-        <Box>
-            <Box sx={{ flexGrow: 1 , marginTop: "20px" }}>
+        <Stack gap={4}>
+            <Box sx={{ flexGrow: 1, marginTop: "20px" }}>
                 <AppBar
                     position="static"
                     sx={{
@@ -142,10 +140,18 @@ export default function SearchBar({ showButton = true, textInButton }) {
                         )}
                     </Toolbar>
                 </AppBar>
-
-                {/* Pass filteredData to BadgeListCard */}
-                <BadgeListCard badges={filteredData} />
             </Box>
-        </Box>
+            {/* Pass filteredData to BadgeListCard */}
+            <DashboardContainer
+                sx={{
+                    backgroundColor: theme.palette.customColors.white,
+                    borderRadius: theme.customShape.section,
+                    border: theme.palette.cardBorder,
+                    boxShadow: theme.customShadows.default,
+                }}
+            >
+                <BadgeListCard badges={filteredData} />
+            </DashboardContainer>
+        </Stack>
     );
 }

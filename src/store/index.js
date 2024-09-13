@@ -1,12 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { setupListeners } from "@reduxjs/toolkit/query";
+import { authApi } from "./api/auth/authApi";
+import { badgeApi } from "./api/badgeManagement/badgeApi";
 
 const store = configureStore({
     reducer: {
-        
+        [authApi.reducerPath]: authApi.reducer,
+        [badgeApi.reducerPath]: badgeApi.reducer,
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(authApi.middleware).concat(badgeApi.middleware),
 });
-setupListeners(store.dispatch);
 
 export default store;

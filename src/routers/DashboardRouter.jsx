@@ -12,6 +12,7 @@ import AccountManagement from "../pages/setting/accountManagement";
 import PrivacySecurityManagement from "../pages/setting/privacyManagement";
 import BackpackManagement from "../pages/backpackManagement";
 import AddRecipient from "../pages/earnerManagements/AddRecipient";
+import BadgeCreation from "../pages/badgeMangements/BadgeCreation";
 
 const DashbaordRouter = () => {
     return (
@@ -28,6 +29,7 @@ const DashbaordRouter = () => {
                 <Route path="/setting/account" element={<AccountManagement />} />
                 <Route path="/setting/privacy&security" element={<PrivacySecurityManagement />} />
                 <Route path="/management/eaners/add-recipient" element={<AddRecipient />} />
+                <Route path="/management/badges/badge-creation" element={<BadgeCreation />} />
             </Route>
         </Routes>
     );
