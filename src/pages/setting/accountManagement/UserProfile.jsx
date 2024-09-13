@@ -24,7 +24,7 @@ const UserProfile = () => {
                     bgcolor: theme.palette.customColors.white,
                 }}
             >
-                <Container sx={{ position: "relative", p: "0", width: "250px", }}>
+                <Container sx={{ position: "relative", p: "0", width: "250px" }}>
                     <Box
                         component="img"
                         src={EarnerProfileSvg}
@@ -35,7 +35,7 @@ const UserProfile = () => {
                         <Box component="img" alt="icon" src={PhotoIconSvg}></Box>
                     </IconButton>
                 </Container>
-                <Container sx={{ p: "0","@media (min-width: 600px)" : {padding: "0px",}}}>
+                <Container sx={{ p: "0", "@media (min-width: 600px)": { padding: "0px" } }}>
                     <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
                         <Stack gap={"22px"} sx={{ p: "0px" }}>
                             <Typography sx={{ fontSize: theme.typography.h4, fontWeight: theme.fontWeight.semiBold }}>
@@ -65,16 +65,36 @@ const UserProfile = () => {
                             </Button>
                         </Box>
                     </Stack>
-                    <Grid container   sx={{ mt : "50px", justifyContent: "center"}}>
-                        {ProfileData.map((info,) => (
-                            <Grid key={info.id} direction sx={{ width: "200px", height: "50px", textAlign: "center", justifyContent: "center", alignItems: "center" }}>
+                    <Grid
+                        container
+                        sx={{ mt: "50px", justifyContent: "flex-start", columnGap: "22px", rowGap: "22px" }}
+                    >
+                        {ProfileData.map((info) => (
+                            <Grid
+                                key={info.id}
+                                direction={"row"}
+                                xs={12} 
+                                sm={6} 
+                                md={4} 
+                                lg={3}
+                                sx={{
+                                    gap: "12px",
+                                    height: "60px",
+                                    textAlign: "center",
+                                    display: "flex",
+                                    justifyContent: "flex-start",
+                                    alignItems: "flex-start",
+                                }}
+                            >
                                 <Box component={"img"} src={info.icon}></Box>
-                                <Box>
-                                    {info.title}
-                                </Box>
-                                <Box>
-                                    {info.content}
-                                </Box>
+                                <Stack gap={"5px"} sx={{ textAlign: "left" }}>
+                                    <Box sx={{ fontSize: theme.typography.h5, fontWeight: theme.fontWeight.bold }}>
+                                        {info.title}
+                                    </Box>
+                                    <Box sx={{ fontSize: theme.typography.h6, fontWeight: theme.fontWeight.semiBold }}>
+                                        {info.content}
+                                    </Box>
+                                </Stack>
                             </Grid>
                         ))}
                     </Grid>
