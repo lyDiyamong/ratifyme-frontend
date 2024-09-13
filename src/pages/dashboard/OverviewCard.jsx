@@ -43,7 +43,7 @@ const CardsList = () => {
                         backgroundColor: theme.palette.customColors.white,
                     }}
                 >
-                    {" "}
+                    
                     {/* Image graph */}
                     <CardMedia
                         component="img"
