@@ -8,7 +8,7 @@ const Dashboard = () => {
         <Stack gap={3}>
             <PageTitle title="Dashboard"/>
             <Greeting userName="John Smith"/>
-            <Overview />
+            <Overview  />
         </Stack>
     );
 };

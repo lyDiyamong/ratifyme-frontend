@@ -11,7 +11,7 @@ const CardsList = () => {
 
     return (
         //============ Start Cards Container  ============
-        <Container
+        <Container 
             sx={{
                 display: "flex",
                 flexDirection: "row",
@@ -19,30 +19,33 @@ const CardsList = () => {
                 maxWidth: "792px",
                 m: "0px",
                 px: "0px",
-                "@media (max-width:1350px)":{gap: "24px"},
-                "@media (min-width: 600px)": { px: "0"},
+                
+                "@media (min-width: 600px)": { px: "0" },
                 "@media (max-width: 600px)": { px: "0", gap: "16px" },
             }}
-        >{/* ============ Start Card Overview ============*/}
+        >
+            {/* ============ Start Card Overview ============*/}
             {cardContents.map((card) => (
                 <Card
                     key={card.id}
                     sx={{
-                        
-                        width: 243,
-                        height: 277,
+                        maxWidth: "100%", 
+                        width: "100%", 
+                        flexBasis: "245px",
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "flex-start",
                         gap: "2px",
                         borderRadius: theme.customShape.card,
                         boxShadow: theme.customShadows.default,
-                        minWidth: "137px",
 
+                        "@media (max-width: 1600px)": { minWidth: "180px" },
                         "@media (max-width: 650px)": { height: "186px" },
                         "@media (max-width: 600px)": { height: "156px", width: "137px", minWidth: "60px" },
                     }}
-                >   {/* Image graph */}
+                >
+                    {" "}
+                    {/* Image graph */}
                     <CardMedia
                         component="img"
                         height="100px"
@@ -51,11 +54,11 @@ const CardsList = () => {
                             display: "flex",
                             m: "32px",
                             width: "100px",
+                            "@media (max-width:1532px)": { minWidth: "20px" },
                             "@media (max-width: 650px)": { width: "76px", m: "20px", mb: "12px", minWidth: "10px" },
                             "@media (max-width: 600px)": { width: "56px", m: "18px", mb: "12px" },
                         }}
                     />
-
                     <CardContent
                         sx={{
                             p: "0",
@@ -98,7 +101,7 @@ const CardsList = () => {
                             {card.title}
                         </Typography>
                     </CardContent>
-                </Card> 
+                </Card>
             ))}
             {/* ============ End Card Overview ============*/}
         </Container>
