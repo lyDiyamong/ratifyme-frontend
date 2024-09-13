@@ -7,8 +7,8 @@ import DashboardContainer from "../../components/styles/DashboardContainer";
 const BadgeManagement = () => {
     return (
         <DashboardContainer>
-            <PageTitle title="Bagde Management " />
-            <SearchBar showButton={true} textInButton="+ Add Recipient"/>
+            <PageTitle title="Badge Management " />
+            <SearchBar showButton={true} textInButton="Add Badge"/>
         </DashboardContainer>
     );
 };

@@ -1,3 +1,6 @@
+// React import
+import { useState, useEffect } from "react";
+
 // MUI import
 import {
     Grid,
@@ -13,11 +16,10 @@ import {
 } from "@mui/material";
 
 // Custom import
-import { useState, useEffect } from "react";
 import theme from "../assets/themes";
 import StatusCode from "../assets/images/NoData.svg";
 
-export default function BadgeListCard({ badges = [] }) {
+const BadgeListCard = ({ badges = [] }) => {
     // Current page number
     const [page, setPage] = useState(1);
     // Items per page, defaults to 6 for medium screens
@@ -53,107 +55,136 @@ export default function BadgeListCard({ badges = [] }) {
     const currentBadges = badges.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
     return (
-        // ============ Start badge card list ============
-        <Box>
-            <Typography variant="h6" sx={{ marginTop: 2, padding: 1 }}>
+        <Box my={3}>
+            <Typography variant="h6" sx={{ pb: 2 }}>
                 Total Badges: {badges.length}
             </Typography>
 
-            <Grid container spacing={2}>
-                {currentBadges.map((badge) => (
-                    <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={badge.id}>
-                        <Card
-                            sx={{
-                                maxWidth: { xs: "100%", sm: 320, md: 340, lg: 350 },
-                                height: { xs: "auto", md: 400 },
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "space-between",
-                                boxShadow: theme.customShadows.default,
-                                borderRadius: theme.shape.borderRadius,
-                                padding: 1.5,
-                                transition: "transform 0.3s ease",
-                                "&:hover": {
-                                    transform: "scale(1.02)",
-                                },
-                            }}
-                        >
-                            <CardMedia
-                                component="img"
-                                height="200"
-                                image={badge.imageUrl}
-                                alt={badge.title}
+            {badges.length === 0 ? (
+                // This Show placeholder image and message if no badges
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        padding: 4,
+                    }}
+                >
+                    <CardMedia
+                        component="img"
+                        image={StatusCode}
+                        alt="No badges found"
+                        sx={{ objectFit: "cover", maxWidth: 400, width: "100%" }}
+                    />
+                    <Typography
+                        variant="h6"
+                        sx={{
+                            marginTop: 2,
+                            textAlign: "center",
+                            color: theme.palette.text.secondary,
+                        }}
+                    >
+                        No badges available
+                    </Typography>
+                </Box>
+            ) : (
+                <Grid container spacing={2}>
+                    {currentBadges.map((badge) => (
+                        <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={badge.id}>
+                            <Card
                                 sx={{
-                                    objectFit: "cover",
-                                }}
-                            />
-                            <CardContent>
-                                <Stack>
-                                    <Typography
-                                        variant="h6"
-                                        sx={{
-                                            fontSize: {
-                                                xs: theme.typography.h5.fontSize,
-                                                sm: theme.typography.h4.fontSize,
-                                            },
-                                            fontWeight: theme.fontWeight.bold,
-                                            display: "-webkit-box",
-                                            WebkitLineClamp: 2,
-                                            WebkitBoxOrient: "vertical",
-                                            overflow: "hidden",
-                                            textOverflow: "ellipsis",
-                                            wordWrap: "break-word",
-                                        }}
-                                    >
-                                        {badge.title}
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        sx={{
-                                            paddingTop: 1,
-                                            color: theme.palette.text.disabled,
-                                            fontSize: {
-                                                xs: theme.typography.h6.fontSize,
-                                                md: theme.typography.h5.fontSize,
-                                            },
-                                            whiteSpace: "nowrap",
-                                            overflow: "hidden",
-                                            textOverflow: "ellipsis",
-                                            wordWrap: "break-word",
-                                        }}
-                                    >
-                                        {badge.institution}
-                                    </Typography>
-                                </Stack>
-                            </CardContent>
-
-                            {/*  Visit button  */}
-                            <Box
-                                sx={{
+                                    maxWidth: { xss: "100%", sm: 320, md: 340, lg: 350 },
+                                    height: { xss: "auto", md: 400 },
                                     display: "flex",
-                                    justifyContent: "flex-end",
-                                    padding: 1,
+                                    flexDirection: "column",
+                                    justifyContent: "space-between",
+                                    boxShadow: theme.customShadows.default,
+                                    borderRadius: theme.shape.borderRadius,
+                                    padding: 1.5,
+                                    transition: "transform 0.3s ease",
+                                    "&:hover": {
+                                        transform: "scale(1.02)",
+                                    },
                                 }}
                             >
-                                <Button
+                                <CardMedia
+                                    component="img"
+                                    height="200"
+                                    image={badge.imageUrl}
+                                    alt={badge.title}
                                     sx={{
-                                        color: theme.palette.customColors.white,
-                                        backgroundColor: theme.palette.primary.main,
-                                        padding: "6px 16px",
-                                        borderRadius: theme.customShape.btn,
-                                        textTransform: "none",
+                                        objectFit: "cover",
+                                    }}
+                                />
+                                <CardContent>
+                                    <Stack>
+                                        <Typography
+                                            variant="h6"
+                                            sx={{
+                                                fontSize: {
+                                                    xss: theme.typography.h5.fontSize,
+                                                    sm: theme.typography.h4.fontSize,
+                                                },
+                                                fontWeight: theme.fontWeight.bold,
+                                                display: "-webkit-box",
+                                                WebkitLineClamp: 2,
+                                                WebkitBoxOrient: "vertical",
+                                                overflow: "hidden",
+                                                textOverflow: "ellipsis",
+                                                wordWrap: "break-word",
+                                            }}
+                                        >
+                                            {badge.title}
+                                        </Typography>
+                                        <Typography
+                                            variant="body2"
+                                            sx={{
+                                                paddingTop: 1,
+                                                color: theme.palette.text.disabled,
+                                                fontSize: {
+                                                    xss: theme.typography.h6.fontSize,
+                                                    md: theme.typography.h5.fontSize,
+                                                },
+                                                whiteSpace: "nowrap",
+                                                overflow: "hidden",
+                                                textOverflow: "ellipsis",
+                                                wordWrap: "break-word",
+                                            }}
+                                        >
+                                            {badge.institution}
+                                        </Typography>
+                                    </Stack>
+                                </CardContent>
+
+                                {/*  Visit button  */}
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        justifyContent: "flex-end",
+                                        padding: 1,
                                     }}
                                 >
-                                    Visit
-                                </Button>
-                            </Box>
-                        </Card>
-                    </Grid>
-                ))}
-            </Grid>
+                                    <Button
+                                        sx={{
+                                            color: theme.palette.customColors.white,
+                                            backgroundColor: theme.palette.primary.main,
+                                            padding: "6px 16px",
+                                            borderRadius: theme.customShape.btn,
+                                            textTransform: "none",
+                                            fontWeight: theme.fontWeight.bol,
+                                        }}
+                                    >
+                                        Visit
+                                    </Button>
+                                </Box>
+                            </Card>
+                        </Grid>
+                    ))}
+                </Grid>
+            )}
 
             {/* Pagination */}
-            {pageCount > 1 && (
+            {pageCount > 1 && badges.length > 0 && (
                 <Box
                     sx={{
                         display: "flex",
@@ -180,8 +211,7 @@ export default function BadgeListCard({ badges = [] }) {
                 </Box>
             )}
         </Box>
-        // ============ End badge card list ============
     );
 };
 
-
+export default BadgeListCard;
