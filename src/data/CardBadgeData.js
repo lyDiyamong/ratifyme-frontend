@@ -1,3 +1,4 @@
+// The data below is just use for testing SearchBar component, you can remove it as need
 // Custom import
 import GoldBdage from "../assets/images/GoldBadge.svg";
 import DiamondBadge from "../assets/images/DiamondBadge.svg";
@@ -7,16 +8,24 @@ import NatureBadge from "../assets/images/NatureBadge.svg";
 const cardBadgeData = [
     {
         id: 1,
+        title: "Web Development EssentialshkaskfghaskhudfghuweihGUOHUHWEUG",
+        institution: "CodeCraft Academy",
+        imageUrl: "https://via.placeholder.com/150",
         title: "Fundamentals of Web Development",
         institution: "Tech Academy",
         imageUrl: GoldBdage,
     },
     {
         id: 2,
+        title: "Full-Stack Mastery uuuuuuuuuuuuuuuuuuuuuuuuuuu",
+        institution: "DevOps Institute",
+        imageUrl: "https://via.placeholder.com/150",
         title: "Full-Stack Web Development",
         institution: "Web Dev Institute",
         imageUrl: DiamondBadge,
     },
+    { id: 3, title: "Cloud Architecture", institution: "NextGen Cloud", imageUrl: "https://via.placeholder.com/150" },
+    {
     {
         id: 3,
         title: "Cloud Infrastructure Architect",
@@ -25,10 +34,14 @@ const cardBadgeData = [
     },
     {
         id: 4,
+        title: "Advanced Data Science",
+        institution: "AI Research Labs",
+        imageUrl: "https://via.placeholder.com/150",
         title: "Advanced Data Analytics",
         institution: "Data Science Hub",
         imageUrl: GoldBdage,
     },
+    { id: 5, title: "Mobile App Development", institution: "AppMasters", imageUrl: "https://via.placeholder.com/150" },
     {
         id: 5,
         title: "Mobile Application Development",
@@ -37,46 +50,69 @@ const cardBadgeData = [
     },
     {
         id: 6,
+        title: "Cybersecurity Expert",
+        institution: "CyberDefense Academy",
+        imageUrl: "https://via.placeholder.com/150",
         title: "Certified Cybersecurity Specialist",
         institution: "Cybersecurity Institute",
         imageUrl: NatureBadge,
     },
     {
         id: 7,
+        title: "AI Foundations",
+        institution: "Tech Innovators Inc.",
+        imageUrl: "https://via.placeholder.com/150",
         title: "AI Fundamentals",
         institution: "Artificial Intelligence Lab",
         imageUrl: GoldBdage,
     },
     {
         id: 8,
+        title: "Quantum Computing",
+        institution: "NextGen Solutions",
+        imageUrl: "https://via.placeholder.com/150",
         title: "Quantum Computing Principles",
         institution: "Quantum Research Institute",
         imageUrl: DiamondBadge,
     },
     {
         id: 9,
+        title: "Cybersecurity Basics",
+        institution: "CyberTech Labs",
+        imageUrl: "https://via.placeholder.com/150",
         title: "Introduction to Cybersecurity",
         institution: "CyberTech Solutions",
         imageUrl: NatureBadge,
     },
     {
         id: 10,
+        title: "Machine Learning Mastery",
+        institution: "Quantum Systems",
+        imageUrl: "https://via.placeholder.com/150",
         title: "Mastering Machine Learning",
         institution: "Machine Learning Academy",
         imageUrl: GoldBdage,
     },
     {
         id: 11,
+        title: "Blockchain Development",
+        institution: "Fusion Software",
+        imageUrl: "https://via.placeholder.com/150",
         title: "Blockchain Development Expert",
         institution: "Blockchain Innovations",
         imageUrl: DiamondBadge,
     },
     {
         id: 12,
+        title: "Cloud Infrastructure",
+        institution: "DataStream Technologies",
+        imageUrl: "https://via.placeholder.com/150",
         title: "Cloud Computing Essentials",
         institution: "CloudTech Labs",
         imageUrl: NatureBadge,
     },
+    { id: 13, title: "Big Data Analysis", institution: "CloudNet Corp", imageUrl: "https://via.placeholder.com/150" },
+    { id: 14, title: "AI for Robotics", institution: "AI Pioneers", imageUrl: "https://via.placeholder.com/150" },
     {
         id: 13,
         title: "Big Data Analytics",
@@ -91,6 +127,9 @@ const cardBadgeData = [
     },
     {
         id: 15,
+        title: "Blockchain Security",
+        institution: "Blockchain Solutions",
+        imageUrl: "https://via.placeholder.com/150",
         title: "Blockchain Security Fundamentals",
         institution: "Blockchain Security Experts",
         imageUrl: NatureBadge,
