@@ -10,21 +10,29 @@ import { Box } from '@mui/material';
 const sortIcon = <ArrowDownward />;
 const selectProps = { indeterminate: isIndeterminate => isIndeterminate };
 
+ 
 
 const EarnerDataTable = ({props}) => {
     return (    <DashboardContainer>
-                    <Box sx={{ bgcolor: theme.palette.primary.main, px:5 }}>
-                        <DataTable
-                            title="Movie List"
-                            columns={columns}
-                            data={data}
-                            pagination
-                            selectableRowsComponent={Checkbox}
-                            selectableRowsComponentProps={selectProps}
-                            sortIcon={sortIcon}
-                            dense
-                            {...props}
-                        />
+                    <Box sx={{  boxShadow: theme.customShadows.default,
+                                borderRadius: theme.customShape.section,
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                bgcolor: theme.palette.customColors.white,
+                    }}>
+                        <Box sx={{ px:5 }}>
+                            <DataTable
+                                title="Movie List"
+                                columns={columns}
+                                data={data}
+                                pagination
+                                selectableRowsComponent={Checkbox}
+                                selectableRowsComponentProps={selectProps}
+                                sortIcon={sortIcon}
+                                dense
+                                {...props}
+                            />
+                        </Box>
                     </Box>
                 </DashboardContainer>
     )
