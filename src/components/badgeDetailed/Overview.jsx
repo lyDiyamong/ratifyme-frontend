@@ -6,8 +6,8 @@ import { Box, Stack, Typography } from "@mui/material";
 
 // Custom Import
 import DashboardContainer from "../styles/DashboardContainer";
-import { BtnAddTo, BtnIssueTo } from "./OverviewButton";
-import PageSection from "./PageSection";
+import { BtnAddTo, BtnIssueTo } from "./smallComponent/OverviewButton";
+import PageSection from "./smallComponent/PageSection";
 import { DetailData } from "../../data/badgeDetail/DataBadgeDetailed";
 import facebookIcon from "./../../assets/icons/facebook.svg"
 import linkedIcon from "./../../assets/icons/linkedin.svg"

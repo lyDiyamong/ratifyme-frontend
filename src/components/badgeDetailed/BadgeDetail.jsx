@@ -9,7 +9,7 @@ import {
         }   from    "@mui/material";
 
 // Custome Import
-import PageSection from "./PageSection";
+import PageSection from "./smallComponent/PageSection";
 import {
             DetailData
         } from "../../data/badgeDetail/DataBadgeDetailed";
