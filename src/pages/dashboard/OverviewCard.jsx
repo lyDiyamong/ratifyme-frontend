@@ -19,7 +19,6 @@ const CardsList = () => {
                 maxWidth: "792px",
                 m: "0px",
                 px: "0px",
-                
                 "@media (min-width: 600px)": { px: "0" },
                 "@media (max-width: 600px)": { px: "0", gap: "16px" },
             }}
