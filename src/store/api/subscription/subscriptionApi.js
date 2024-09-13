@@ -7,7 +7,7 @@ export const subscriptionApi = createApi({
   }),
   endpoints: (builder) => ({
     getServicePlan: builder.query({
-      query: () => "/subscriptions/servicePlans",
+      query: () => "/subscriptions/servicePlan",
     }),
   }),
 });

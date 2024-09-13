@@ -28,7 +28,7 @@ const PriceCard = ({ item }) => {
                         fontFamily: theme.typography.fontFamily,
                     }}
                 >
-                    {item.priceDuration}
+                    {item.name}
                 </Typography>
                 <Typography
                     sx={{
@@ -39,7 +39,7 @@ const PriceCard = ({ item }) => {
                         fontFamily: theme.typography.fontFamily,
                     }}
                 >
-                    {item.duration}
+                    {item.duration} months
                 </Typography>
             </Box>
             <Typography
@@ -51,7 +51,7 @@ const PriceCard = ({ item }) => {
             >
                 $ {item.price}
             </Typography>
-            <CheckoutButton id={item.productId} />
+            <CheckoutButton id={item.id} />
         </Paper>
     );
 };

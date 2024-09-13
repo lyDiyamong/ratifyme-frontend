@@ -2,11 +2,8 @@
 // serviceTable
 import PriceCard from "../../components/PriceCard";
 import { priceTemplate } from "./priceData";
+// // Fetching data from Api
 
-// function that render each price card for each plan
-const renderPriceCard = priceTemplate.map((item, index) => {
-    return <PriceCard key={index} item={item} />;
-});
 
 // datas that store service plan as static
 // when some data have value of 1 , it is a placeholder for
@@ -14,9 +11,9 @@ const renderPriceCard = priceTemplate.map((item, index) => {
 export const serviceRows = [
     {
         name: "",
-        three_monthPlan: renderPriceCard[0],
-        six_monthPlan: renderPriceCard[1],
-        twelve_monthPlan: renderPriceCard[2],
+        three_monthPlan: null,
+        six_monthPlan: null,
+        twelve_monthPlan: null,
     },
     {
         name: "Create Badge",
