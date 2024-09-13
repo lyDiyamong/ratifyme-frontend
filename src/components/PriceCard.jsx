@@ -3,6 +3,7 @@ import { Box, Paper, Typography, Button } from "@mui/material";
 
 // Custom import
 import theme from "../assets/themes";
+import CheckoutButton from "./CheckoutButton";
 
 const PriceCard = ({ item }) => {
     return (
@@ -16,7 +17,7 @@ const PriceCard = ({ item }) => {
                 gap: 5,
                 borderRadius: theme.customShape.section,
                 px: 2,
-                boxShadow: theme.customShadows.default
+                boxShadow: theme.customShadows.default,
             }}
         >
             <Box>
@@ -50,18 +51,7 @@ const PriceCard = ({ item }) => {
             >
                 $ {item.price}
             </Typography>
-            <Button
-                sx={{
-                    bgcolor: theme.palette.primary.main,
-                    color: theme.palette.customColors.white,
-                    width: "100%",
-                    fontSize: theme.typography.body1,
-                    fontWeight: theme.fontWeight.semiBold,
-                    borderRadius: theme.customShape.btn,
-                }}
-            >
-                Subscribe
-            </Button>
+            <CheckoutButton id={item.productId} />
         </Paper>
     );
 };
