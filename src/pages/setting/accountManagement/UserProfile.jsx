@@ -7,6 +7,7 @@ import theme from "../../../assets/themes/index"
 import EarnerProfileSvg from "../../../assets/images/EarnerProfile.svg"
 import PhotoIconSvg from "../../../assets/icons/Photo Icon.svg"
 import RoleIconSvg from "../../../assets/icons/Role.svg"
+import { ProfileData } from "../../../data/setting/UserProfileDatat"
 
 
 
@@ -65,9 +66,15 @@ const UserProfile = () => {
                         </Box>
                     </Stack>
                     <Grid container   sx={{ mt : "50px", justifyContent: "center"}}>
-                        {Array.from(Array(6)).map((_, index) => (
-                            <Grid key={index} sx={{ width: "200px", height: "50px", textAlign: "center", justifyContent: "center", alignItems: "center" }}>
-                                Info
+                        {ProfileData.map((info,) => (
+                            <Grid key={info.id} direction sx={{ width: "200px", height: "50px", textAlign: "center", justifyContent: "center", alignItems: "center" }}>
+                                <Box component={"img"} src={info.icon}></Box>
+                                <Box>
+                                    {info.title}
+                                </Box>
+                                <Box>
+                                    {info.content}
+                                </Box>
                             </Grid>
                         ))}
                     </Grid>
