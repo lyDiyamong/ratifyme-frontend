@@ -1,136 +1,33 @@
-// React Library import
-import React from "react";
-import { CacheProvider } from "@emotion/react";
-import createCache from "@emotion/cache";
+import React from 'react'
+import DataTable from 'react-data-table-component';
+import DashboardContainer from './styles/DashboardContainer';
+import {columns, data} from './../data/earnerData'
+import Checkbox from '@material-ui/core/Checkbox';
+import ArrowDownward from '@material-ui/icons/ArrowDownward';
+import theme from './../assets/themes/index'
+import { Box } from '@mui/material';
 
-// MUI import
-import MUIDataTable from "mui-datatables";
-import { Typography } from '@mui/material';
+const sortIcon = <ArrowDownward />;
+const selectProps = { indeterminate: isIndeterminate => isIndeterminate };
 
-// Custom Import
-import theme from "./../assets/themes/index";
-import PropTypes from "prop-types";
 
-// <!-- ============ Start Cached Component ============ -->
-// Create cache instance for MUI DataTable styles
-const muiCache = createCache({
-    key: "mui-datatables",
-    prepend: true,
-});
-// <!-- ============ End Cached Component ============ -->
+const EarnerDataTable = ({props}) => {
+    return (    <DashboardContainer>
+                    <Box sx={{ bgcolor: theme.palette.primary.main, px:5 }}>
+                        <DataTable
+                            title="Movie List"
+                            columns={columns}
+                            data={data}
+                            pagination
+                            selectableRowsComponent={Checkbox}
+                            selectableRowsComponentProps={selectProps}
+                            sortIcon={sortIcon}
+                            dense
+                            {...props}
+                        />
+                    </Box>
+                </DashboardContainer>
+    )
+}
 
-// <!-- ============ Start Configure Option for DataTable ============ -->
-// Define default options for the MUIDataTable
-const defaultOptions = {
-    selectableRows: false,
-    responsive: "scroll",
-    search: true,
-    download: true,
-    print: true,
-    viewColumns: true,
-    filter: true,
-    filterType: "dropdown",
-    rowsPerPageOptions: [2, 4, 10],
-    tableBodyHeight: "500px",
-    tableBodyMaxHeight: "400px",
-
-};
-// <!-- ============ End Configure Option for DataTable ============ -->
-
-// <!-- ============ Start Render DataTable ============ -->
-// Define the DataTable component with config object as prop
-const DataTable = ({ config, options = defaultOptions, title }) => {
-    const { data, columns } = config; // Destructure data and columns from config
-
-    // Convert data object to array of arrays for MUIDataTable
-    // Keep the raw data for search functionality
-    const formattedData = data.map(row => Object.values(row));
-
-    // Modify column headers to render as h4 using Typography
-    // This is for custom styling of the column headers
-    const formattedColumns = columns.map((column, index) => ({
-        name: column.name,
-        label: (
-            <Typography
-                key={`column-${index}`} // Add a unique key prop
-                component="h4"
-                sx={{
-                    fontSize: theme.typography.h4,
-                    fontWeight: theme.fontWeight.bold,
-                }}
-            >
-                {column.name}
-            </Typography>
-        ),
-    }));
-
-    // Define a custom render function for the table body to include Typography styling
-    const customBodyRender = (value) => (
-        <Typography
-            component="h5"
-            sx={{
-                fontSize: theme.typography.h5,
-            }}
-        >
-            {value}
-        </Typography>
-    );
-
-    // Apply custom render function to each column
-    const finalColumns = columns.map((column, index) => ({
-        name: column.name,
-        label: (
-            <Typography
-                key={`column-${index}`} // Add a unique key prop
-                component="h4"
-                sx={{
-                    fontSize: theme.typography.h4,
-                    fontWeight: theme.fontWeight.bold,
-                }}
-            >
-                {column.name}
-            </Typography>
-        ),
-        options: {
-            customBodyRender, // Apply custom render function
-        },
-    }));
-
-    return (
-        <CacheProvider value={muiCache}>
-            <MUIDataTable
-                title={
-                    <Typography
-                        component="h3"
-                        sx={{
-                            fontSize: theme.typography.h3,
-                            fontWeight: theme.fontWeight.bold,
-                        }}
-                    >
-                        {title}
-                    </Typography>
-                }
-                data={formattedData}  // Pass raw data for search functionality
-                columns={finalColumns} // Use columns with custom render function
-                options={options}
-            />
-        </CacheProvider>
-    );
-};
-// <!-- ============ End Render DataTable ============ -->
-
-// Add PropTypes validation for props
-DataTable.propTypes = {
-    config: PropTypes.shape({
-        data: PropTypes.arrayOf(PropTypes.object).isRequired,
-        columns: PropTypes.arrayOf(
-            PropTypes.shape({
-                name: PropTypes.string.isRequired,
-            })
-        ).isRequired,
-    }).isRequired,
-    options: PropTypes.object,
-    title: PropTypes.string.isRequired,
-};
-
-export default DataTable;
+export default EarnerDataTable;
