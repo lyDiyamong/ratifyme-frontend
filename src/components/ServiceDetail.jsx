@@ -59,7 +59,7 @@ const ServiceDetail = () => {
     // Start rendering row by map method
     const renderedRows = rows.map((row, index) => (
         <Grid
-            spacing={0}
+            spacing={1}
             container
             key={index}
             sx={{
@@ -70,13 +70,13 @@ const ServiceDetail = () => {
             <Grid item xs={3} sx={{ m: 0 }}>
                 {row.name}
             </Grid>
-            <Grid item xs={3} sx={{ textAlign: "center", verticalAlign: "center", p: 0 }}>
+            <Grid item xs={3} sx={{ textAlign: "center", verticalAlign: "center" }}>
                 {row.three_monthPlan === 1 ? checkIcon : row.three_monthPlan}
             </Grid>
-            <Grid item xs={3} sx={{ textAlign: "center", verticalAlign: "center", p: 0 }}>
+            <Grid item xs={3} sx={{ textAlign: "center", verticalAlign: "center" }}>
                 {row.six_monthPlan === 1 ? checkIcon : row.six_monthPlan}
             </Grid>
-            <Grid item xs={3} sx={{ textAlign: "center", verticalAlign: "center", p: 0 }}>
+            <Grid item xs={3} sx={{ textAlign: "center", verticalAlign: "center" }}>
                 {row.twelve_monthPlan === 1 ? checkIcon : row.twelve_monthPlan}
             </Grid>
         </Grid>
