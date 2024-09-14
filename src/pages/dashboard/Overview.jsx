@@ -1,31 +1,24 @@
-
 //Custom Import
-import CardsList from "./OverviewCard"
+import CardsList from "./OverviewCard";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import Notification from "./Notification";
+import { Grid } from "@mui/material";
 
-// ============ Start Overview Seciton ============ 
+// ============ Start Overview Seciton ============
 const Overview = () => {
-  
-  return (
-      <DashboardContainer 
-          sx={{
-              display: "flex",
-              gap: "32px",
-              pt: "8px",
-              "@media (max-width:1350px)": {
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                 
-              },
-          }}
-      >
-          <CardsList />
-          <Notification />
-      </DashboardContainer>
-  );
+    return (
+        <DashboardContainer sx={{pb: 4}}>
+            <Grid container spacing={4}>
+                <Grid item sm={12} xs={12} md={12} xss={12} xl={7}>
+                    <CardsList />
+                </Grid>
+                <Grid item sm={12} xs={12} md={12} xss={12} xl={5}>
+                    <Notification />
+                </Grid>
+            </Grid>
+        </DashboardContainer>
+    );
 };
-  
+
 export default Overview;
-// ============ End Overview Seciton ============ 
+// ============ End Overview Seciton ============

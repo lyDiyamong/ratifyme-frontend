@@ -6,6 +6,7 @@ import Toolbar from "@mui/material/Toolbar";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { Button, Stack } from "@mui/material";
+import { Link } from "react-router-dom";
 
 // Custom import
 import theme from "../assets/themes";
@@ -121,22 +122,25 @@ export default function SearchBar({ showButton = true, textInButton }) {
                         </Search>
 
                         {showButton && (
-                            <Button
-                                variant="contained"
-                                sx={{
-                                    backgroundColor: theme.palette.primary.main,
-                                    color: theme.palette.primary.light,
-                                    borderRadius: theme.customShape.btn,
-                                    textTransform: "none",
-                                    marginTop: { xs: theme.spacing(2), sm: 0 },
-                                    fontSize: { xs: "0.75rem", sm: "0.875rem", md: "1rem" },
-                                    padding: { xs: theme.spacing(1, 2), sm: theme.spacing(1, 3) },
-                                    width: { xs: "100%", sm: "auto" },
-                                    boxShadow: theme.customShadows.default,
-                                }}
-                            >
-                                {textInButton}
-                            </Button>
+                            <Link to="/management/badges/badge-creation">
+                                <Button
+                                    variant="contained"
+                                    sx={{
+                                        backgroundColor: theme.palette.primary.main,
+                                        color: theme.palette.customColors.white,
+                                        borderRadius: theme.customShape.btn,
+                                        textTransform: "none",
+                                        marginTop: { xs: theme.spacing(2), sm: 0 },
+                                        fontSize: { xs: "0.75rem", sm: "0.875rem", md: "1rem" },
+                                        padding: { xs: theme.spacing(1, 2), sm: theme.spacing(1, 3) },
+                                        width: { xs: "100%", sm: "auto" },
+                                        boxShadow: theme.customShadows.default,
+                                        fontWeight: theme.fontWeight.bold,
+                                    }}
+                                >
+                                    {textInButton}
+                                </Button>
+                            </Link>
                         )}
                     </Toolbar>
                 </AppBar>
