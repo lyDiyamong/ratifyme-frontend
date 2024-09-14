@@ -1,81 +1,65 @@
 //MUI Import
-import { Container, Card, CardMedia, CardContent, Typography, Box } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { CardMedia, Typography, Box } from "@mui/material";
+
 //Custom Import
 import { cardContents } from "../../data/dashboardPage/cardOverviewData";
-
+import theme from "../../assets/themes";
 
 // ============ Start Cards Component ============
 const CardsList = () => {
-    const theme = useTheme();
 
     return (
         //============ Start Cards Container  ============
-        <Container 
+        <Box
             sx={{
                 display: "flex",
-                flexDirection: "row",
-                gap: "32px",
-                maxWidth: "792px",
-                m: "0px",
-                px: "0px",
-                "@media (min-width: 600px)": { px: "0" },
-                "@media (max-width: 600px)": { px: "0", gap: "16px" },
+                gap: 3,
+                flexDirection: {
+                    sm: "row",
+                    xss: "column",
+                },
             }}
         >
             {/* ============ Start Card Overview ============*/}
             {cardContents.map((card) => (
-                <Card
+                <Box
                     key={card.id}
                     sx={{
-                        maxWidth: "100%", 
-                        width: "100%", 
-                        flexBasis: "245px",
+                        flex: 1,
+                        p: 3,
+                        py: 5,
                         display: "flex",
-                        flexDirection: "column",
-                        alignItems: "flex-start",
-                        gap: "2px",
+                        gap: 2,
+                        flexDirection: {
+                            sm: "column",
+                            xss: "row",
+                        },
+                        alignItems: {
+                            sm: "flex-start",
+                            xss: "center",
+                        },
                         borderRadius: theme.customShape.card,
                         boxShadow: theme.customShadows.default,
-
-                        "@media (max-width: 1600px)": { minWidth: "180px" },
-                        "@media (max-width: 650px)": { height: "186px" },
-                        "@media (max-width: 600px)": { height: "156px", width: "137px", minWidth: "60px" },
+                        backgroundColor: theme.palette.customColors.white,
                     }}
                 >
                     {" "}
                     {/* Image graph */}
                     <CardMedia
                         component="img"
-                        height="100px"
                         image={card.image}
                         sx={{
-                            display: "flex",
-                            m: "32px",
-                            width: "100px",
-                            "@media (max-width:1532px)": { minWidth: "20px" },
-                            "@media (max-width: 650px)": { width: "76px", m: "20px", mb: "12px", minWidth: "10px" },
-                            "@media (max-width: 600px)": { width: "56px", m: "18px", mb: "12px" },
+                            maxWidth: 100,
+                            width: "100%",
                         }}
                     />
-                    <CardContent
-                        sx={{
-                            p: "0",
-                            mx: "32px",
-                            "@media (max-width: 650px)": { mx: "22px" },
-                            "@media (max-width: 600px)": { mx: "20px" },
-                        }}
-                    >
+                    <Box>
                         {/* Display Number Data */}
                         <Typography
-                            variant="h1"
+                            variant="h2"
                             sx={{
                                 color: theme.palette.text.disabled,
                                 fontWeight: theme.fontWeight.semiBold,
-                                "@media (max-width: 650px)": {
-                                    fontSize: theme.typography.h2,
-                                    fontWeight: theme.fontWeight.semiBold,
-                                },
                             }}
                         >
                             {card.value}
@@ -85,9 +69,8 @@ const CardsList = () => {
                                 sx={{
                                     mb: "22px",
                                     "@media (max-width: 650px)": { mb: "12px" },
-                                    "@media (max-width: 400px)": { display: "none" },
                                 }}
-                            ></Box>
+                            />
                         </Typography>
                         {/* Title Card */}
                         <Typography
@@ -99,11 +82,11 @@ const CardsList = () => {
                         >
                             {card.title}
                         </Typography>
-                    </CardContent>
-                </Card>
+                    </Box>
+                </Box>
             ))}
             {/* ============ End Card Overview ============*/}
-        </Container>
+        </Box>
         //============ Start Cards Container  ============
     );
 };

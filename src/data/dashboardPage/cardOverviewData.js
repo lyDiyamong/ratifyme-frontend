@@ -13,14 +13,14 @@ export const cardContents =[
         image: blueGraphSvg,
         title: "Total Issuer",
         icon: blueArrowSvg,
-        value: 12
+        value: 222
     },
     {
         id: 2,
         image: purpleGraphSvg,
         title: "Total Earner",
         icon: purpleArrowSvg,
-        value: 123   
+        value: 222   
     },
     {
         id: 3,
