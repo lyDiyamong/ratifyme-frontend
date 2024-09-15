@@ -22,14 +22,17 @@ export const sidebarItems = [
             {
                 text: "Badges",
                 path: "/management/badges",
+                roles: [1, 2, 3],
             },
             {
                 text: "Issuers",
                 path: "/management/issuers",
+                roles: [1, 2],
             },
             {
                 text: "Earners",
                 path: "/management/eaners",
+                roles: [1, 2, 3],
             },
         ],
     },
@@ -41,12 +44,12 @@ export const sidebarItems = [
             {
                 text: "Service Plans",
                 path: "/sales/servicePlan",
-                roles: ["admin"],
+                roles: [1, 2],
             },
             {
                 text: "Billing and Invoice",
                 path: "/sales/billing&invoice",
-                roles: ["admin"],
+                roles: [1, 2],
             },
         ],
     },
@@ -55,13 +58,14 @@ export const sidebarItems = [
         icon: ReportIconSvg,
         path: "/reports",
         altText: "Reports icon",
+        roles: [1],
     },
     {
         text: "My Backpacks",
         icon: BackpackIconSvg,
         path: "/mybackpacks",
         altText: "Backpack icon",
-        roles: ["earner"],
+        roles: [4],
     },
     {
         text: "Settings",
