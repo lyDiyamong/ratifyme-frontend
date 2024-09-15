@@ -6,9 +6,14 @@ import { Box, Button, CircularProgress } from "@mui/material";
 import theme from "../assets/themes";
 import axios from "axios";
 
-// Make sure to use your own public key from Stripe
+// Public key from Stripe
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
+/**
+ *
+ * @param {*} { id } : id of the servicePlan
+ * @return {*}
+ */
 const CheckoutButton = ({ id }) => {
     const [loading, setLoading] = useState(false);
 
@@ -20,13 +25,15 @@ const CheckoutButton = ({ id }) => {
             const response = await axios.post(`${import.meta.env.VITE_BASE_API}/subscriptions/subscribe/${id}`, {
                 servicePlanId: id,
             });
+            // Get the session id for checking out
             const { sessionId } = await response.data;
 
             const stripe = await stripePromise;
+            // Redirect to the checkout session page
             const { error } = await stripe.redirectToCheckout({ sessionId });
 
             if (error) {
-                console.error("Error redirecting to Checkout:", error);
+                console.error("Can't redirecting to checkout session page");
             }
         } catch (error) {
             console.error("Error:", error);
@@ -48,7 +55,11 @@ const CheckoutButton = ({ id }) => {
                 borderRadius: theme.customShape.btn,
             }}
         >
-            {loading ? <CircularProgress size={24} color="white" /> : "Subscribe"}
+            {loading ? (
+                <CircularProgress size={theme.typography.h3} color={theme.palette.customColors.white} />
+            ) : (
+                "Subscribe"
+            )}
         </Button>
     );
 };
