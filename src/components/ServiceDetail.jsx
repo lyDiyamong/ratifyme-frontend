@@ -23,7 +23,7 @@ const ServiceDetail = () => {
 
     // Handle loading and error states
     if (isLoading) return <div>Loading...</div>;
-    if (error) return <div>Error fetching service plans</div>;
+    if (error) return <div>{error.error}</div>;
 
     const servicePlans = data?.data;
 
@@ -37,7 +37,6 @@ const ServiceDetail = () => {
     rows[0].six_monthPlan = renderPriceCards[1] || null;
     rows[0].twelve_monthPlan = renderPriceCards[2] || null;
 
-    // call useTheme to use config style
     const checkIcon = (
         <Box display="flex" justifyContent="center">
             <TaskAltIcon
