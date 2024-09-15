@@ -2,7 +2,7 @@
 import React from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
-import { Box, Button, CircularProgress } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import theme from "../assets/themes";
 import axios from "axios";
 
@@ -56,7 +56,7 @@ const CheckoutButton = ({ id }) => {
             }}
         >
             {loading ? (
-                <CircularProgress size={theme.typography.h3} color={theme.palette.customColors.white} />
+                <CircularProgress size={24} color={theme.palette.customColors.white} />
             ) : (
                 "Subscribe"
             )}
