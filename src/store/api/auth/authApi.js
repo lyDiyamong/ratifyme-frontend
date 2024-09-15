@@ -3,7 +3,39 @@ import { clearAuthState, setAuthState } from "../../slices/globalSlices";
 
 export const authApi = createApi({
     reducerPath: "authApi",
-    baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_SERVER_BASE_URL, credentials: "include" }),
+    // baseQuery: fetchBaseQuery({
+    //     baseUrl: import.meta.env.VITE_SERVER_BASE_URL,
+    //     credentials: "include",
+    //     prepareHeaders: (headers, { getState }) => {
+    //         const token = getState().global.token;
+    //         if (token) {
+    //             headers.set("Authorization", `Bearer ${token}`);
+    //         }
+    //         return headers;
+    //     },
+        
+    // }),
+
+    
+    // Handle global errors, especially token expiration
+    baseQuery: async (args, api, extraOptions) => {
+        const baseQuery = fetchBaseQuery({
+            baseUrl: import.meta.env.VITE_SERVER_BASE_URL,
+            credentials: "include",
+        });
+
+        try {
+            return await baseQuery(args, api, extraOptions);
+        } catch (error) {
+            if (error.status === 401) {
+                // Handle token expiration or unauthorized access
+                api.dispatch(clearAuthState());
+                window.location.href = "/login"; // Redirect to login page
+                return { error: { status: 401, data: "Unauthorized" } };
+            }
+            throw error;
+        }
+    },
     endpoints: (builder) => ({
         signUp: builder.mutation({
             query: (data) => ({
@@ -28,7 +60,7 @@ export const authApi = createApi({
                         setAuthState({
                             userInfo: data.user,
                             token: data.token,
-                            isAuthenticated: true
+                            isAuthenticated: true,
                         }),
                     );
                     // Fetch user info to ensure authentication is verified
@@ -64,6 +96,8 @@ export const authApi = createApi({
                     );
                 } catch (err) {
                     console.error("CheckAuth failed:", err);
+                    // Clear auth state on error (e.g., token invalid/expired)
+                    dispatch(clearAuthState());
                 }
             },
         }),
@@ -73,12 +107,8 @@ export const authApi = createApi({
                 url: "/auth/logout",
                 method: "POST",
             }),
-            refetchOnReconnect: false,
-            refetchOnFocus: false,
-            refetchOnMountOrArgChange: false,
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 await queryFulfilled;
-
                 // Clear authentication state on successful logout
                 dispatch(clearAuthState());
             },
