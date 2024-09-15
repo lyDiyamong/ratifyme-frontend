@@ -4,7 +4,7 @@ import { Box, useMediaQuery } from "@mui/material";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import theme from "../../assets/themes";
-import { useSelector } from "react-redux";
+import { useCheckAuthQuery } from "../../store/api/auth/authApi";
 
 const DashboardLayout = () => {
     // Determine if the screen size is large (desktop)
@@ -12,7 +12,9 @@ const DashboardLayout = () => {
 
     // State to manage whether the sidebar is open or closed
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-    const userId = useSelector((state) => state.global.userId);
+
+    const { data } = useCheckAuthQuery();
+    const user = data?.user || {};
 
     // Effect to automatically open or close the sidebar based on screen size
     useEffect(() => {
@@ -24,16 +26,21 @@ const DashboardLayout = () => {
         <Box display={isDesktop ? "flex" : "block"}>
             {/* Sidebar component */}
             <Sidebar
+                user={user}
                 isDesktop={isDesktop}
                 drawerWidth="270px"
                 isSidebarOpen={isSidebarOpen}
                 setIsSidebarOpen={setIsSidebarOpen}
-            />
+                />
 
             {/* Main content area */}
             <Box flexGrow={1}>
                 {/* Header component */}
-                <Header isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+                <Header 
+                    user={user}
+                    isSidebarOpen={isSidebarOpen} 
+                    setIsSidebarOpen={setIsSidebarOpen} 
+                />
                 {/* Outlet for rendering child routes */}
                 <Outlet />
             </Box>

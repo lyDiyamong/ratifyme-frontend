@@ -20,16 +20,17 @@ import DashboardContainer from "../../components/styles/DashboardContainer";
 const headerIcons = [<NotificationsNoneOutlined />, <AccountCircleOutlined />, <SettingsOutlined />];
 
 /**
+ * Header component for the application.
  *
- *
- * @param {boolean} isSidebarOpen - prop to check action of sidebar
- * @param {boolean} setIsSidebarOpen - prop to set action of sidebar
+ * @param {object} user - Current user object
+ * @param {boolean} isSidebarOpen - Indicates if the sidebar is open
+ * @param {function} setIsSidebarOpen - Function to toggle the sidebar
  * @return {JSX.Element} Render Header component
  */
 const Header = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
     const theme = useTheme();
-    const dispatch = useDispatch();
     const isTablet = useMediaQuery(theme.breakpoints.up("md"));
+
     return (
         // ============ Start Appbar ============
         <DashboardContainer>
