@@ -1,5 +1,7 @@
 // React library import
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux"
 
 // MUI import
 import { Box, Grid, Typography, Button } from "@mui/material";
@@ -10,10 +12,11 @@ import theme from "../../assets/themes";
 import LandingContainer from "../../components/styles/LandingContainer";
 import LoginImgSvg from "../../assets/images/Login-illu.svg";
 import { useSignInMutation } from "../../store/api/auth/authApi";
-import { useNavigate } from "react-router-dom";
+;
 
 const LoginPage = () => {
     const [signIn, { isLoading, isError, error }] = useSignInMutation();
+    const dispatch = useDispatch();
 
     const navigate = useNavigate();
     // Form controller
@@ -28,6 +31,7 @@ const LoginPage = () => {
         try {
             const result = await signIn(data).unwrap(); // Fixed the data structure
             const roleId = result.user.roleId;
+            console.log(roleId)
 
             navigate("/dashboard"); // Redirect user after successful sign in
         } catch (error) {
@@ -111,3 +115,5 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+

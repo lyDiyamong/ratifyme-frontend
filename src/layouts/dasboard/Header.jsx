@@ -1,5 +1,6 @@
 // React library import
 import React from "react";
+import { useDispatch } from "react-redux";
 
 // MUI import
 import { AppBar, IconButton, InputBase, Toolbar, useMediaQuery } from "@mui/material";
@@ -25,8 +26,9 @@ const headerIcons = [<NotificationsNoneOutlined />, <AccountCircleOutlined />, <
  * @param {boolean} setIsSidebarOpen - prop to set action of sidebar
  * @return {JSX.Element} Render Header component
  */
-const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
+const Header = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
     const theme = useTheme();
+    const dispatch = useDispatch();
     const isTablet = useMediaQuery(theme.breakpoints.up("md"));
     return (
         // ============ Start Appbar ============
