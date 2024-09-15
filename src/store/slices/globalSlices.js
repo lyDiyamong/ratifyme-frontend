@@ -13,22 +13,23 @@ export const globalSlice = createSlice({
     name: "global",
     initialState,
     reducers: {
-        setUser: (state, action) => {
-            state.userInfo = action.payload.userInfo;
-            state.token = action.payload.token;
-            state.userId = action.payload.userInfo?.id;
-            state.role = action.payload.userInfo?.role;
+        setAuthState: (state, action) => {
+            const { userId, userInfo, token, role } = action.payload;
+            state.userId = userId;
+            state.userInfo = userInfo;
+            state.token = token;
             state.isAuthenticated = true;
+            state.role = role;
         },
-        logout: (state) => {
+        clearAuthState: (state) => {
+            state.userId = null;
             state.userInfo = null;
             state.token = null;
-            state.userId = null;
-            state.role = null;
             state.isAuthenticated = false;
+            state.role = null;
         },
     },
 });
 
-export const { setUser, logout } = globalSlice.actions;
+export const { setAuthState, clearAuthState } = globalSlice.actions;
 export default globalSlice.reducer;
