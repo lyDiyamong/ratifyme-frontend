@@ -1,8 +1,7 @@
 import React from "react";
 import DataTable from "react-data-table-component";
 import { Box, IconButton, Stack, Checkbox } from "@mui/material";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import MenuSelection from "./MenuSelection";
 import ArrowDownward from "@mui/icons-material/ArrowDownward";
 import DashboardContainer from "./styles/DashboardContainer";
 import theme from "./../assets/themes/index";
@@ -15,20 +14,6 @@ const customStyle = {
             fontSize: "12px",
         },
     },
-};
-
-// Action buttons for the table
-const ActionButtons = ({ onActionClick }) => {
-    return (
-        <Stack direction="row" spacing={2}>
-            <IconButton onClick={() => onActionClick("view")} aria-label="view">
-                <VisibilityIcon sx={{ color: theme.palette.primary.main }} />
-            </IconButton>
-            <IconButton onClick={() => onActionClick("delete")} aria-label="delete">
-                <DeleteForeverIcon sx={{ color: theme.palette.customColors.red400 }} />
-            </IconButton>
-        </Stack>
-    );
 };
 
 /**
@@ -81,7 +66,7 @@ const TableCustom = ({ data = [], columns = [], sortIcon = false, actions = fals
               ...(columns.length > 0 ? columns : defaultColumns),
               {
                   name: "Action",
-                  cell: () => <ActionButtons onActionClick={onActionClick} />,
+                  cell: () => <MenuSelection />,
               },
           ]
         : columns.length > 0
