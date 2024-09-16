@@ -1,56 +1,74 @@
-//MUI Import 
+//MUI Import
 import { Box, Container, Stack, IconButton, Grid, Typography, Button } from "@mui/material";
-import EditIcon from '@mui/icons-material/Edit';
-//Custom Import 
-import DashboardContainer from "../../../components/styles/DashboardContainer"
-import theme from "../../../assets/themes/index"
-import EarnerProfileSvg from "../../../assets/images/EarnerProfile.svg"
-import PhotoIconSvg from "../../../assets/icons/Photo Icon.svg"
-import RoleIconSvg from "../../../assets/icons/Role.svg"
-import { ProfileData } from "../../../data/setting/UserProfileDatat"
+import EditIcon from "@mui/icons-material/Edit";
+//Custom Import
+import DashboardContainer from "../../../components/styles/DashboardContainer";
+import theme from "../../../assets/themes/index";
+import PhotoIconSvg from "../../../assets/icons/Photo Icon.svg";
+import RoleIconSvg from "../../../assets/icons/Role.svg";
+import { ProfileInfoData } from "../../../data/setting/UserProfileData";
+import { ProfileIdentityData } from "../../../data/setting/UserProfileData";
+import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
 
-
-
+//============ Start User Profile Component ============
 const UserProfile = () => {
     return (
         <DashboardContainer>
+            {/*============ Start  User Data Container "Card"  ============*/}
             <Stack
-                direction="row"
+                direction={{ sm: "column", md: "row" }}
+                justifyContent={"flex-start"}
                 spacing={2}
                 sx={{
                     boxShadow: theme.customShadows.default,
                     borderRadius: theme.customShape.section,
-                    p: "32px",
+                    p: { xss: "24px", sm: "32px" },
                     bgcolor: theme.palette.customColors.white,
                 }}
             >
-                <Container sx={{ position: "relative", p: "0", width: "250px" }}>
-                    <Box
-                        component="img"
-                        src={EarnerProfileSvg}
-                        alt="person"
-                        sx={{ minWidth: "100px", maxWidth: "200px", position: "relative" }}
-                    ></Box>
-                    <IconButton aria-label="custom-button" sx={{ position: "absolute", bottom: "15px", left: "180px" }}>
-                        <Box component="img" alt="icon" src={PhotoIconSvg}></Box>
-                    </IconButton>
+                {/*============ Start Image Profile User Data ============*/}
+                <Container sx={{ p: "0", width: "250px", marginRight: "280px", marginLeft: "18px" }}>
+                    <Box sx={{ position: "relative" }}>
+                        {/*Profile Image */}
+                        <Box
+                            component="img"
+                            src={ProfileIdentityData.profilepic || DefaultProfileSvg}
+                            alt="person"
+                            sx={{ width: { xss: "100px", sm: "200px" }, position: "relative" }}
+                        ></Box>
+                        {/* Input Image Button */}
+                        <IconButton
+                            aria-label="custom-button"
+                            sx={{
+                                position: "absolute",
+                                bottom: { xss: "3px", sm: "15px" },
+                                left: { xss: "70px", sm: "160px" },
+                            }}
+                        >
+                            <Box component="img" alt="icon" src={PhotoIconSvg}></Box>
+                        </IconButton>
+                    </Box>
                 </Container>
-                <Container sx={{ p: "0", "@media (min-width: 600px)": { padding: "0px" } }}>
+                {/*============ End Image Profile User Data ============*/}
+                <Container >
+                    {/*============ Start Upper User Data ============*/}
                     <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
                         <Stack gap={"22px"} sx={{ p: "0px" }}>
+                            {/* User Name Data */}
                             <Typography sx={{ fontSize: theme.typography.h4, fontWeight: theme.fontWeight.semiBold }}>
-                                John Smith
+                                {ProfileIdentityData.username}
                             </Typography>
                             <Box component={"div"} sx={{ display: "flex", gap: 1 }}>
                                 <Box component={"img"} src={RoleIconSvg} sx={{ width: "24px" }}></Box>
+                                {/* User Role Data */}
                                 <Typography
                                     sx={{ fontSize: theme.typography.h5, fontWeight: theme.fontWeight.semiBold }}
                                 >
-                                    Student
+                                    {ProfileIdentityData.role}
                                 </Typography>
                             </Box>
                         </Stack>
-                        <Box component={"div"}>
+                        <Box component={"div"} sx={{ mt: { xss: "30px", sm: "0" } }}>
                             <Button
                                 variant="contained"
                                 startIcon={<EditIcon />}
@@ -65,23 +83,54 @@ const UserProfile = () => {
                             </Button>
                         </Box>
                     </Stack>
-                    <Grid container   sx={{ mt : "50px", justifyContent: "center"}}>
-                        {ProfileData.map((info,) => (
-                            <Grid key={info.id} direction sx={{ width: "200px", height: "50px", textAlign: "center", justifyContent: "center", alignItems: "center" }}>
+                    {/*============ End Upper User Data ============*/}
+                    {/*============ Start Grid User Data ============*/}
+                    <Grid
+                        container
+                        sx={{
+                            mt: "50px",
+                            justifyContent: "flex-start",
+                            columnGap: { xs: "22px", sm: "32px" },
+                            rowGap: { xs: "22px", sm: "32px" },
+                        }}
+                    >
+                        {ProfileInfoData.map((info) => (
+                            <Grid
+                                key={info.id}
+                                direction={"row"}
+                                xs={4}
+                                sm={4}
+                                md={4}
+                                lg={3}
+                                sx={{
+                                    gap: "12px",
+                                    minWidth: { xs: "170px", sm: "200px" },
+                                    "@media(max-width: 480px)": { minWidth: "145px", height: "35px" },
+                                    height: "60px",
+                                    textAlign: "center",
+                                    display: "flex",
+                                    justifyContent: "flex-start",
+                                    alignItems: "flex-start",
+                                }}
+                            >
                                 <Box component={"img"} src={info.icon}></Box>
-                                <Box>
-                                    {info.title}
-                                </Box>
-                                <Box>
-                                    {info.content}
-                                </Box>
+                                <Stack gap={"5px"} sx={{ textAlign: "left" }}>
+                                    <Box sx={{ fontSize: theme.typography.h6, fontWeight: theme.fontWeight.bold }}>
+                                        {info.title}
+                                    </Box>
+                                    <Box sx={{ fontSize: theme.typography.h6, fontWeight: theme.fontWeight.semiBold }}>
+                                        {info.content}
+                                    </Box>
+                                </Stack>
                             </Grid>
                         ))}
                     </Grid>
+                    {/*============ End Grid User Data ============*/}
                 </Container>
             </Stack>
+            {/*============ End User Data Container "Card"  ============*/}
         </DashboardContainer>
     );
 };
-
+//============ End User Profile Component ============
 export default UserProfile;

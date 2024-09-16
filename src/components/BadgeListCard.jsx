@@ -169,4 +169,4 @@ const BadgeListCard = () => {
     );
 };
 
-export default BadgeListCard;
+
