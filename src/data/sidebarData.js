@@ -1,7 +1,7 @@
 import DashboardIconSvg from "../assets/icons/dashboard.svg";
 import ManagementIconSvg from "../assets/icons/management.svg";
 import SaleIconSvg from "../assets/icons/sales.svg";
-import BackpackIconSvg from "../assets/icons/backpack.svg"
+import BackpackIconSvg from "../assets/icons/backpack.svg";
 import ReportIconSvg from "../assets/icons/report.svg";
 import SettingIconSvg from "../assets/icons/setting.svg";
 import LogoutIconSvg from "../assets/icons/logout.svg";
@@ -22,14 +22,17 @@ export const sidebarItems = [
             {
                 text: "Badges",
                 path: "/management/badges",
+                roles: [1, 2, 3],
             },
             {
                 text: "Issuers",
                 path: "/management/issuers",
+                roles: [1, 2],
             },
             {
                 text: "Earners",
                 path: "/management/eaners",
+                roles: [1, 2, 3],
             },
         ],
     },
@@ -41,10 +44,12 @@ export const sidebarItems = [
             {
                 text: "Service Plans",
                 path: "/sales/servicePlan",
+                roles: [1, 2],
             },
             {
                 text: "Billing and Invoice",
                 path: "/sales/billing&invoice",
+                roles: [1, 2],
             },
         ],
     },
@@ -53,12 +58,14 @@ export const sidebarItems = [
         icon: ReportIconSvg,
         path: "/reports",
         altText: "Reports icon",
+        roles: [1],
     },
     {
-        text: "My Backpack",
+        text: "My Backpacks",
         icon: BackpackIconSvg,
         path: "/mybackpacks",
         altText: "Backpack icon",
+        roles: [4],
     },
     {
         text: "Settings",

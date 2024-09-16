@@ -33,20 +33,22 @@ import { sidebarItems } from "../../data/sidebarData";
 const iconStyles = { width: "20px", height: "20px" };
 
 /**
+ * Sidebar component for navigation.
  *
- *
- * @param {number} drawerWidth  - The width of sidebar
- * @param {boolean} drawerWidth  - The prop to check the action of sidebar
- * @param {boolean} setIsSidebarOpen  - The prop to set the action of sidebar
- * @param {boolean} isDesktop  - The prop to check screen size
+ * @param {object} user - Current user object
+ * @param {number} drawerWidth - The width of the sidebar
+ * @param {boolean} isSidebarOpen - Whether the sidebar is open
+ * @param {function} setIsSidebarOpen - Function to set the sidebar state
+ * @param {boolean} isDesktop - Whether the view is for desktop
  * @return {JSX.Element}
  */
-const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) => {
+const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) => {
     const { pathname } = useLocation();
     const navigate = useNavigate();
     const theme = useTheme();
 
     const [active, setActive] = useState("");
+    const roleId = user.roleId;
 
     useEffect(() => {
         setActive(pathname.substring(1));
@@ -78,6 +80,15 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
 
     // Determine the Drawer variant based on isDesktop and isSidebarOpen
     const drawerVariant = isDesktop ? (isSidebarOpen ? "persistent" : "temporary") : "temporary";
+
+    // Filter sidebar items based on roleId
+    const filteredSidebarItems = sidebarItems
+        .filter(({ roles = [] }) => !roles.length || roles.includes(roleId))
+        .map((item) => ({
+            ...item,
+            subItems: item.subItems?.filter((subItem) => !subItem.roles || subItem.roles.includes(roleId)),
+        }))
+        .filter((item) => item.subItems?.length > 0 || !item.dropdown); // Only keep items with subItems or without dropdown
 
     return (
         <Box component="nav">
@@ -127,8 +138,9 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
 
                     {/* ============ Start list of Sidebar ============ */}
                     <List>
-                        {sidebarItems.map(({ text, icon, dropdown, subItems, path, altText }) => {
-                            const lcText = text.toLowerCase();
+                        {filteredSidebarItems.map(({ text, icon, dropdown, subItems, path, altText }) => {
+                            // if (roles && !roles.includes(userRole)) return null;
+                            const lcText = text.toLowerCase().replace(/\s+/g, "");
 
                             // ============ Start list item of sidebar when dropdown ============
                             if (dropdown) {

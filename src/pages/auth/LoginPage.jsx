@@ -1,5 +1,6 @@
 // React library import
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 // MUI import
 import { Box, Grid, Typography, Button } from "@mui/material";
@@ -9,14 +10,27 @@ import FormInput from "../../components/FormInput";
 import theme from "../../assets/themes";
 import LandingContainer from "../../components/styles/LandingContainer";
 import LoginImgSvg from "../../assets/images/Login-illu.svg";
-
+import { useSignInMutation } from "../../store/api/auth/authApi";
 const LoginPage = () => {
+    const [signIn, { isLoading, isError, error }] = useSignInMutation();
+
+    const navigate = useNavigate();
     // Form controller
-    const { handleSubmit, control, formState:{errors} } = useForm();
+    const {
+        handleSubmit,
+        control,
+        formState: { errors },
+    } = useForm();
 
     // Submit handler
-    const onSubmit = (data) => {
-        console.log(data);
+    const onSubmit = async (data) => {
+        try {
+            const result = await signIn(data).unwrap(); // Fixed the data structure
+
+            navigate("/dashboard"); // Redirect user after successful sign in
+        } catch (error) {
+            console.error("Error during sign in:", error.message || error); // Improved error handling
+        }
     };
 
     return (
@@ -55,21 +69,9 @@ const LoginPage = () => {
                         noValidate
                     >
                         {/* Email */}
-                        <FormInput
-                            name="email"
-                            type="email"
-                            control={control}
-                            label="Email"
-                            required={true}
-                        />
+                        <FormInput name="email" type="email" control={control} label="Email" required={true} />
                         {/* Password */}
-                        <FormInput
-                            name="password"
-                            control={control}
-                            label="Password"
-                            type="password"
-                            required={true}
-                        />
+                        <FormInput name="password" control={control} label="Password" type="password" required={true} />
                         {/* Submit button */}
                         <Button
                             fullWidth
@@ -83,9 +85,7 @@ const LoginPage = () => {
                         >
                             Sign in
                         </Button>
-                        <Typography color={theme.palette.text.primary}>
-                            Forgot Password?
-                        </Typography>
+                        <Typography color={theme.palette.text.primary}>Forgot Password?</Typography>
                     </Box>
                     {/* End form container */}
                 </Grid>
