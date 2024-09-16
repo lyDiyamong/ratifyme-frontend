@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 // API configuration
 export const badgeApi = createApi({
     reducerPath: "badgeApi",
-    baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_SERVER_URL }),
+    baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_SERVER_BASE_URL }),
     tagTypes: ["Badge"],
     endpoints: (builder) => ({
         // Fetch badges

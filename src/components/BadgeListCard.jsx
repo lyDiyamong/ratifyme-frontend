@@ -18,8 +18,18 @@ import {
 // Custom import
 import theme from "../assets/themes";
 import StatusCode from "../assets/images/NoData.svg";
+import GoldBadge from "../assets/images/DiamondBadge.svg";
+import { useFetchBadgeQuery } from "../store/api/badgeManagement/badgeApi";
 
 const BadgeListCard = ({ badges = [] }) => {
+    const { data, isLoading, isError, isSuccess } = useFetchBadgeQuery();
+    const response = data?.data || 2;
+    for (let i = 0; i < response.length; i++) {
+        if (badges.includes(response[i]) === false) {
+            badges.push(response[i]);
+        }
+    }
+    console.log(badges);
     // Current page number
     const [page, setPage] = useState(1);
     // Items per page, defaults to 6 for medium screens
@@ -110,8 +120,8 @@ const BadgeListCard = ({ badges = [] }) => {
                                 <CardMedia
                                     component="img"
                                     height="200"
-                                    image={badge.imageUrl}
-                                    alt={badge.title}
+                                    image={GoldBadge}
+                                    alt={badge.name}
                                     sx={{
                                         objectFit: "cover",
                                     }}
@@ -134,7 +144,7 @@ const BadgeListCard = ({ badges = [] }) => {
                                                 wordWrap: "break-word",
                                             }}
                                         >
-                                            {badge.title}
+                                            {badge.name}
                                         </Typography>
                                         <Typography
                                             variant="body2"
@@ -151,7 +161,7 @@ const BadgeListCard = ({ badges = [] }) => {
                                                 wordWrap: "break-word",
                                             }}
                                         >
-                                            {badge.institution}
+                                            {badge?.Issuer?.Institution.name}
                                         </Typography>
                                     </Stack>
                                 </CardContent>
