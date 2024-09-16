@@ -34,7 +34,7 @@ const DashbaordRouter = () => {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/management/badges" element={<BadgeManagement />} />
                 <Route path="/management/issuers" element={<IssuerManagement />} />
-                <Route path="/management/eaners" element={<EarnerManagement />} />
+                <Route path="/management/earners" element={<EarnerManagement />} />
                 <Route path="/sales/servicePlan" element={<ServicePlanManagement />} />
                 <Route path="/sales/billing&invoice" element={<BillingInvoiceManagement />} />
                 <Route path="/reports" element={<Report />} />

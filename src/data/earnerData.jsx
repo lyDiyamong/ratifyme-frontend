@@ -10,62 +10,62 @@ import IconButton from '@mui/material/IconButton';
 // Custom import
 import theme from './../assets/themes/index'
 
-// <!-- ============ Start Action component ============ -->
-function ActionButtons() {
-    // Handle button click and log the action to the console
-    const handleClick = (action) => {
-        console.log(`${action} button clicked`);
-    };
-    // render button
-    return (
-        <Stack direction="row" spacing={2}>
-            <IconButton onClick={() => handleClick('view')} aria-label="view">
-                <VisibilityIcon sx={{ color: theme.palette.primary.main }} />
-            </IconButton>
-            <IconButton onClick={() => handleClick('delete')} aria-label="delete">
-                <DeleteForeverIcon sx={{ color: theme.palette.customColors.red400 }} />
-            </IconButton>
-        </Stack>
-    );
-}
-// <!-- ============ End Action component ============ -->
+// // <!-- ============ Start Action component ============ -->
+// function ActionButtons() {
+//     // Handle button click and log the action to the console
+//     const handleClick = (action) => {
+//         console.log(`${action} button clicked`);
+//     };
+//     // render button
+//     return (
+//         <Stack direction="row" spacing={2}>
+//             <IconButton onClick={() => handleClick('view')} aria-label="view">
+//                 <VisibilityIcon sx={{ color: theme.palette.primary.main }} />
+//             </IconButton>
+//             <IconButton onClick={() => handleClick('delete')} aria-label="delete">
+//                 <DeleteForeverIcon sx={{ color: theme.palette.customColors.red400 }} />
+//             </IconButton>
+//         </Stack>
+//     );
+// }
+// // <!-- ============ End Action component ============ -->
 
-const columns = [
-    {
-        name: 'ID',
-        selector: row => row.id,
-        sortable: true,
-    },
-    {
-        name: 'Name',
-        selector: row => row.name,
-        sortable: true,
-    },
-    {
-        name: 'Email',
-        selector: row => row.email,
-        sortable: true,
-    },
-    {
-        name: 'Badge',
-        selector: row => row.badge,
-        sortable: true,
-    },
-    {
-        name: 'Year',
-        selector: row => row.year,
-        sortable: true,
-    },
-    {
-        name: 'Position',
-        selector: row => row.position,
-        sortable: true,
-    },
-    {
-        name: 'Action',
-        cell: () => <ActionButtons />, // Render the buttons in the 'Action' column
-    },
-];
+// const columns = [
+//     {
+//         name: 'ID',
+//         selector: row => row.id,
+//         sortable: true,
+//     },
+//     {
+//         name: 'Name',
+//         selector: row => row.name,
+//         sortable: true,
+//     },
+//     {
+//         name: 'Email',
+//         selector: row => row.email,
+//         sortable: true,
+//     },
+//     {
+//         name: 'Badge',
+//         selector: row => row.badge,
+//         sortable: true,
+//     },
+//     {
+//         name: 'Year',
+//         selector: row => row.year,
+//         sortable: true,
+//     },
+//     {
+//         name: 'Position',
+//         selector: row => row.position,
+//         sortable: true,
+//     },
+//     {
+//         name: 'Action',
+//         cell: () => <ActionButtons />, // Render the buttons in the 'Action' column
+//     },
+// ];
 
 const data = [
     {
@@ -135,4 +135,4 @@ const data = [
 ];
 
 // Export the columns and data
-export { columns, data };
+export { data };
