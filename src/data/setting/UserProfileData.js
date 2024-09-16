@@ -5,10 +5,17 @@ import EmailSvg from "../../assets/icons/Email.svg";
 import OrganizationSvg from "../../assets/icons/Organization.svg";
 import EducationSvg from "../../assets/icons/Education.svg";
 import CountrySvg from "../../assets/icons/Country.svg";
+import EarnerProfileSvg from "../../assets/images/EarnerProfile.svg"
 
-
-
-export const ProfileData = [
+//Identity User Profile Data
+export const ProfileIdentityData = 
+{
+    profilepic: EarnerProfileSvg,
+    username: "John Smith",
+    role: "Student",
+}
+//Grid User Profile Data
+export const ProfileInfoData = [
     {
         id: 1,
         icon: PhoneNumberSvg,
