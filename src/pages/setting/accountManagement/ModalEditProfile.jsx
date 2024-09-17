@@ -7,13 +7,12 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Paper } from "@mui/material";
+import { Paper, TextField } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 //Custom Import
 import FormInput from "../../../components/FormInput";
 import SelectForm from "../../../components/SelectionForm";
-
 import theme from "../../../assets/themes/index";
 
 
@@ -21,20 +20,19 @@ const CustomPaper = (props) => <Paper {...props} sx={{ borderRadius: "16px" }} /
 
 //============ Start Modal Popup Component ============
 const EditProfileModal = ({ open, onClose }) => {
-    // const { control, handleSubmit } = useForm();
-        // Start React-hook-form function
-        const { handleSubmit, control, reset } = useForm({
-            // Start Set to default
-            defaultValues: {
-                dateOfBirth: null,
-                country: "",
-            },
-        });
+    
+    // React-hook-form function
+    const { handleSubmit, control, reset } = useForm({
+        //  Set to default
+        defaultValues: {
+            dateOfBirth: null,
+            country: "",
+        },
+    });
     const onSubmit = (data) => {
         console.log(data);
-        reset()
+        reset();
     };
-
 
     //Ocupation Data
     const optionOcupation = [
@@ -43,12 +41,18 @@ const EditProfileModal = ({ open, onClose }) => {
     ];
 
     return (
-        <Dialog open={open} onClose={onClose} PaperComponent={CustomPaper} component="form"
-        onSubmit={handleSubmit(onSubmit)}>
-            <DialogTitle sx={{ padding: "20px" }}>Edit Your Profile</DialogTitle>
+        <Dialog
+            open={open}
+            onClose={onClose}
+            PaperComponent={CustomPaper}
+            component="form"
+            onSubmit={handleSubmit(onSubmit)}
+        >
+            <DialogTitle sx={{ padding: "20px", fontSize: theme.typography.h4, fontWeight: theme.fontWeight.semiBold }}>
+                Edit Your Profile
+            </DialogTitle>
             <DialogContent>
                 <Box
-                    
                     sx={{
                         mt: 2,
                         width: { xs: "280px", sm: "420px", md: "500px" },
@@ -57,7 +61,7 @@ const EditProfileModal = ({ open, onClose }) => {
                         rowGap: "16px",
                     }}
                     noValidate
-                >   
+                >
                     {/*Input Form First Name */}
                     <FormInput name="firstName" label="First Name" control={control} type="text" required />
 
@@ -78,35 +82,35 @@ const EditProfileModal = ({ open, onClose }) => {
 
                     {/*Selection Date Input Birth Date */}
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    <Controller
-                                        name="dateOfBirth"
-                                        control={control}
-                                        render={({ field }) => (
-                                            <DatePicker
-                                                label="Date of Birth"
-                                                openTo="year"
-                                                views={["year", "month", "day"]}
-                                                renderInput={(params) => (
-                                                    <TextField
-                                                        {...params}
-                                                        {...field}
-                                                        sx={{
-                                                            width: "100%", // Ensure the width is full
-                                                            maxWidth: "100%", // Limit the maximum width
-                                                            borderRadius: "12px", // Apply border-radius
-                                                            "& .MuiOutlinedInput-root": {
-                                                                borderRadius: "12px", // Ensure border-radius is applied
-                                                            },
-                                                            "& .MuiOutlinedInput-notchedOutline": {
-                                                                borderRadius: "12px", // Apply radius to the outline
-                                                            },
-                                                        }}
-                                                    />
-                                                )}
-                                            />
-                                        )}
-                                    />
-                                </LocalizationProvider>
+                        <Controller
+                            name="dateOfBirth"
+                            control={control}
+                            render={({ field }) => (
+                                <DatePicker
+                                    label="Date of Birth"
+                                    openTo="year"
+                                    views={["year", "month", "day"]}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            {...field}
+                                            sx={{
+                                                width: "100%", 
+                                                maxWidth: "100%",
+                                                borderRadius: "12px",
+                                                "& .MuiOutlinedInput-root": {
+                                                    borderRadius: "12px",
+                                                },
+                                                "& .MuiOutlinedInput-notchedOutline": {
+                                                    borderRadius: "12px", 
+                                                },
+                                            }}
+                                        />
+                                    )}
+                                />
+                            )}
+                        />
+                    </LocalizationProvider>
 
                     {/*Input Form Email Address */}
                     <FormInput name="email" label="Email Address" control={control} type="email" required />
@@ -118,10 +122,9 @@ const EditProfileModal = ({ open, onClose }) => {
                     <FormInput name="organization" label="Organization" control={control} type="text" required />
                 </Box>
             </DialogContent>
-            
+
             {/*Button Container*/}
             <DialogActions sx={{ pb: "30px", pr: "30px" }}>
-
                 {/* Cancel Button*/}
                 <Button
                     onClick={onClose}
