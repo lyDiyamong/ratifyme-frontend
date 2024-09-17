@@ -10,6 +10,7 @@ import {
     Box,
     Grid,
     Divider,
+    Container
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import {
@@ -21,19 +22,19 @@ import {
     BusinessCenter as BusinessCenterIcon,
 } from "@mui/icons-material";
 
-//The getValue function is a utility function designed to retrieve the value from a nested object using a string-based path.
+// The getValue function is a utility function designed to retrieve the value from a nested object using a string-based path.
 const getValue = (obj, keyPath) => {
     return keyPath.split(".").reduce((o, k) => (o || {})[k], obj);
 };
 
 // ============ Start Profile Modal ============ 
-// Thsi modal is handle on display model when click on view button in table list
+// This modal handles displaying profile information when clicking the view button in the table list
 const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey, details }) => {
     return (
         <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
             <Box display="flex" justifyContent="space-between" alignItems="center" p={2}>
                 <DialogTitle>Personal Information</DialogTitle>
-                <IconButton onClick={onClose}>
+                <IconButton onClick={onClose} aria-label="Close">
                     <CloseIcon />
                 </IconButton>
             </Box>
@@ -49,14 +50,14 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
                     <Typography variant="h4" mt={2}>
                         {getValue(item, nameKey) || "N/A"}
                     </Typography>
-                    <Typography variant="body1">
-                        <Box display="flex" alignItems="center" mt={1}>
-                            <BusinessCenterIcon sx={{ mr: 1 }} fontSize="small" />{" "}
-                            <Typography component="h2" sx={{ textTransform: "capitalize" }}>
+                    <Box mt={1}>
+                        <Stack direction="row" alignItems="center" spacing={1}>
+                            <BusinessCenterIcon sx={{ mr: 1 }} fontSize="small" />
+                            <Typography variant="body1" sx={{ textTransform: "capitalize" }}>
                                 {getValue(item, roleKey) || "No role"}
                             </Typography>
-                        </Box>
-                    </Typography>
+                        </Stack>
+                    </Box>
                 </Stack>
 
                 <Divider sx={{ mb: 4 }} />
@@ -69,8 +70,7 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
                                 <Box component="span">{icon}</Box>
                                 <Typography variant="body2">{label}</Typography>
                             </Stack>
-
-                            <Typography variant="body3" color="textSecondary">
+                            <Typography variant="body2" color="textSecondary">
                                 {getValue(item, valueKey) || "N/A"}
                             </Typography>
                         </Grid>
@@ -88,13 +88,6 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
             </DialogContent>
         </Dialog>
     );
-};
-
-ProfileModal.defaultProps = {
-    avatarKey: "profileImage",
-    nameKey: "username",
-    roleKey: "role",
-    desKey: "boi",
 };
 
 export default ProfileModal;
