@@ -1,6 +1,8 @@
-//React Import
+// React Imports
+import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-//MUI Import
+
+// MUI Imports
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -10,34 +12,67 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Paper, TextField } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
-//Custom Import
+// Custom Imports
 import FormInput from "../../../components/FormInput";
 import SelectForm from "../../../components/SelectionForm";
+import { useUpdateUserProfileMutation } from "../../../store/api/users/userInfoProfileApi";
 import theme from "../../../assets/themes/index";
-
+import { SpinLoading } from "../../../components/loading/SpinLoading";
 
 const CustomPaper = (props) => <Paper {...props} sx={{ borderRadius: "16px" }} />;
 
-//============ Start Modal Popup Component ============
-const EditProfileModal = ({ open, onClose }) => {
-    
-    // React-hook-form function
+const EditProfileModal = ({ open, userData, onClose }) => {
     const { handleSubmit, control, reset } = useForm({
-        //  Set to default
         defaultValues: {
             dateOfBirth: null,
             country: "",
+            firstName: "",
+            lastName: "",
+            phoneNumber: "",
+            organization: "",
+            occupation: "",
+            email: "",
+            Gender: "",
         },
     });
-    const onSubmit = (data) => {
-        console.log(data);
-        reset();
+
+    const [updateUserProfile, { isLoading, isError }] = useUpdateUserProfileMutation();
+
+    useEffect(() => {
+        if (userData) {
+            reset({
+                firstName: userData.firstName || "",
+                lastName: userData.lastName || "",
+                phoneNumber: userData.phoneNumber || "",
+                email: userData.email || "",
+                dateOfBirth: userData.dateOfBirth || null,
+                nationality: userData.nationality || "",
+                Gender: userData.Gender.id || "",
+            });
+        }
+    }, [userData, open, reset]);
+
+    const onSubmit = async (data) => {
+        console.log("Date of Birth:", data.dateOfBirth);
+        const updatedData = {
+            ...data,
+            dateOfBirth: data.dateOfBirth,
+            genderId: Number(data.Gender),
+        };
+
+        try {
+            await updateUserProfile({ id: userData.id, data: updatedData }).unwrap();
+            onClose();
+        } catch (error) {
+            console.error("Failed to update profile: ", error);
+        } finally {
+            reset();
+        }
     };
 
-    //Ocupation Data
-    const optionOcupation = [
-        { value: "student", label: "Student" },
-        { value: "employee", label: "Employee" },
+    const optionSelect = [
+        { value: 1, label: "male" },
+        { value: 2, label: "female" },
     ];
 
     return (
@@ -47,11 +82,14 @@ const EditProfileModal = ({ open, onClose }) => {
             PaperComponent={CustomPaper}
             component="form"
             onSubmit={handleSubmit(onSubmit)}
+            noValidate
         >
             <DialogTitle sx={{ padding: "20px", fontSize: theme.typography.h4, fontWeight: theme.fontWeight.semiBold }}>
-                Edit Your Profile
+                Personal Information
             </DialogTitle>
             <DialogContent>
+                {/* {isLoading && <SpinLoading size={40} />} */}
+                {isError && <p style={{ color: "red" }}>Error updating profile. Please try again.</p>}
                 <Box
                     sx={{
                         mt: 2,
@@ -62,25 +100,10 @@ const EditProfileModal = ({ open, onClose }) => {
                     }}
                     noValidate
                 >
-                    {/*Input Form First Name */}
                     <FormInput name="firstName" label="First Name" control={control} type="text" required />
-
-                    {/*Input Form Last Name */}
                     <FormInput name="lastName" label="Last Name" control={control} type="text" required />
-
-                    {/*Selection Input Form Occupation */}
-                    <SelectForm
-                        name="occupation"
-                        label="Occupation"
-                        options={optionOcupation}
-                        control={control}
-                        required={false}
-                    />
-
-                    {/*Input Form Phone Number */}
-                    <FormInput name="phoneNumber" label="Phone Number" control={control} type="text" required />
-
-                    {/*Selection Date Input Birth Date */}
+                    <FormInput name="phoneNumber" label="Phone Number" control={control} type="text" />
+                    <FormInput name="email" label="Email Address" control={control} type="email" />
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <Controller
                             name="dateOfBirth"
@@ -90,20 +113,16 @@ const EditProfileModal = ({ open, onClose }) => {
                                     label="Date of Birth"
                                     openTo="year"
                                     views={["year", "month", "day"]}
+                                    onChange={(newValue) => {
+                                        field.onChange(newValue);
+                                    }}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
                                             {...field}
                                             sx={{
-                                                width: "100%", 
-                                                maxWidth: "100%",
+                                                width: "100%",
                                                 borderRadius: "12px",
-                                                "& .MuiOutlinedInput-root": {
-                                                    borderRadius: "12px",
-                                                },
-                                                "& .MuiOutlinedInput-notchedOutline": {
-                                                    borderRadius: "12px", 
-                                                },
                                             }}
                                         />
                                     )}
@@ -111,50 +130,28 @@ const EditProfileModal = ({ open, onClose }) => {
                             )}
                         />
                     </LocalizationProvider>
-
-                    {/*Input Form Email Address */}
-                    <FormInput name="email" label="Email Address" control={control} type="email" required />
-
-                    {/*Input Form Country */}
-                    <FormInput name="country" label="Country" control={control} type="text" required />
-
-                    {/*Input Form Organization */}
-                    <FormInput name="organization" label="Organization" control={control} type="text" required />
+                    <SelectForm
+                        control={control}
+                        name="Gender"
+                        label="Gender"
+                        options={optionSelect}
+                        required={false}
+                    />
+                    <FormInput name="nationality" label="Nationality" control={control} type="text" />
                 </Box>
             </DialogContent>
-
-            {/*Button Container*/}
-            <DialogActions sx={{ pb: "30px", pr: "30px" }}>
-                {/* Cancel Button*/}
-                <Button
-                    onClick={onClose}
-                    sx={{
-                        color: theme.palette.primary.dark,
-                        borderRadius: theme.customShape.btn,
-                        textTransform: "none",
-                    }}
-                >
-                    Cancel
-                </Button>
-
-                {/* Save Button*/}
+            <DialogActions sx={{ pb: "20px", pr: "20px" }}>
+                <Button onClick={onClose}>Cancel</Button>
                 <Button
                     type="submit"
                     variant="contained"
-                    onClick={onClose}
-                    sx={{
-                        color: theme.palette.customColors.white,
-                        bgcolor: theme.palette.primary.main,
-                        borderRadius: theme.customShape.btn,
-                        textTransform: "none",
-                    }}
+                    sx={{ color: theme.palette.customColors.white, borderRadius: theme.customShape.btn }}
                 >
-                    Save
+                    {isLoading ? <SpinLoading size={20} /> : "Save"}
                 </Button>
             </DialogActions>
         </Dialog>
     );
 };
-//============ End Modal Popup Component ============
 
 export default EditProfileModal;

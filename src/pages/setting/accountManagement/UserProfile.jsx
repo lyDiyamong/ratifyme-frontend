@@ -3,21 +3,21 @@ import { useEffect, useState } from "react";
 //MUI Import
 import { Box, Container, Stack, IconButton, Typography, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import {
-    Phone,
-    Email,
-    Cake,
-    ApartmentRounded,
-    SchoolRounded,
-    PublicRounded,
-    PersonRemoveRounded,
-} from "@mui/icons-material";
+import { PersonRemoveRounded } from "@mui/icons-material";
 //Custom Import
 import theme from "../../../assets/themes/index";
 import PhotoIconSvg from "../../../assets/icons/Photo Icon.svg";
 import RoleIconSvg from "../../../assets/icons/Role.svg";
 import ProfileInfo from "./ProfileInfo";
-import { ProfileInfoData } from "../../../data/setting/UserProfileData";
+import BirthDateIcon from "../../../assets/icons/DateOfBirth.svg";
+import CountryIcon from "../../../assets/icons/Country.svg";
+import EmailIcon from "../../../assets/icons/Email.svg";
+import OrganizationIcon from "../../../assets/icons/Organization.svg";
+import PhoneIcon from "../../../assets/icons/Phone.svg";
+import GenderIcon from "../../../assets/icons/Gender.svg";
+import EducationIcon from "../../../assets/icons/Education.svg";
+
+// import { ProfileInfoData } from "../../../data/setting/UserProfileData";
 import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
 import EditProfileModal from "./ModalEditProfile";
 import {
@@ -26,6 +26,8 @@ import {
     useUploadUserPfMutation,
 } from "../../../store/api/users/userInfoProfileApi";
 import { useCheckAuthQuery } from "../../../store/api/auth/authApi";
+import MakeSureModal from "../../../components/MakeSureModal";
+import { borderColor, color } from "@mui/system";
 
 //============ Start User Profile Component ============
 const UserProfile = () => {
@@ -34,17 +36,19 @@ const UserProfile = () => {
     const userId = user.user.id;
 
     const [open, setOpen] = useState(false);
-    const [updateImage, setUpdateImage] = useState(null);
+    const [updateImage, setUpdateImage] = useState(DefaultProfileSvg);
 
     // Fetch data
-    const { data :info, isLoading, isError } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
+    const { data: info, isLoading, isError } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
     const userData = info?.data;
-    console.log(userData)
+    console.log(userData);
 
     const [updateImg] = useUploadUserPfMutation();
     const [deleteImg] = useDeleteUserPfMutation();
 
     const handleClickOpen = () => {
+        console.log("User ID:", userData?.id);
+        console.log("Date of birth:", userData.dateOfBirth);
         setOpen(true);
     };
 
@@ -81,6 +85,8 @@ const UserProfile = () => {
     useEffect(() => {
         if (userData?.profileImage) {
             setUpdateImage(userData?.profileImage);
+        } else {
+            setUpdateImage(DefaultProfileSvg);
         }
     }, [userData?.profileImage]);
 
@@ -89,7 +95,7 @@ const UserProfile = () => {
             {/*============ Start User Data Container "Card" ============*/}
             <Stack
                 direction={{ sm: "column", md: "row" }}
-                justifyContent={"flex-start"}
+                justifyContent={"center"}
                 spacing={2}
                 sx={{
                     boxShadow: theme.customShadows.default,
@@ -111,6 +117,7 @@ const UserProfile = () => {
                                 borderRadius: "100%",
                                 objectFit: "cover",
                                 height: { xss: "100px", sm: "200px" },
+                                border: `solid 1px ${theme.palette.cardBorder}`,
                             }}
                         ></Box>
 
@@ -142,11 +149,12 @@ const UserProfile = () => {
 
                 <Container>
                     {/*============ Start Upper User Data ============*/}
-                    <Stack direction={{ xs: "row", xss: "column" }} sx={{ justifyContent: "space-between", gap: 1 }}>
+                    <Stack direction={{ sm: "row", xss: "column" }} sx={{ justifyContent: "space-between", gap: 1 }}>
                         <Stack sx={{ p: "0px", gap: 2 }}>
                             {/* User Name Data */}
                             <Typography sx={{ fontSize: theme.typography.h4, fontWeight: theme.fontWeight.bold }}>
-                                {userData?.username}
+                                {/* {userData?.username} */}
+                                {`${userData?.firstName || ""} ${userData?.lastName || ""}`}
                             </Typography>
                             <Box sx={{ display: "flex", gap: 1 }}>
                                 <Box component="img" src={RoleIconSvg} sx={{ width: "24px" }} />
@@ -158,9 +166,9 @@ const UserProfile = () => {
                             </Box>
                         </Stack>
                         <Stack
-                            sx={{ mt: { xss: "30px", sm: "0" }, gap: 1, flexDirection: { sm: "column", xss: "row" } }}
+                            sx={{ mt: { xss: "30px", sm: "0" }, gap: 1, flexDirection: { sm: "column", xs: "row" } }}
                         >
-                            {/* Edit Button */}
+                            {/* Edit profile Button */}
                             <Button
                                 variant="contained"
                                 onClick={handleClickOpen}
@@ -174,103 +182,79 @@ const UserProfile = () => {
                             >
                                 <EditIcon />
                             </Button>
-                            <EditProfileModal open={open} onClose={handleClose} />
+                            {/* Edit profile modal */}
+                            <EditProfileModal open={open} onClose={handleClose} userData={userData} />
+
                             {/* Delete profile button */}
-                            <Button
-                                variant="outlined"
-                                color="error"
-                                onClick={handleDeleteImage}
-                                sx={{
-                                    borderRadius: theme.customShape.btn,
-                                    textTransform: "none",
-                                    maxWidth: 30,
+                            <MakeSureModal
+                                openBtnSx={{
+                                    color: theme.palette.customColors.red300,
+                                    borderColor: theme.palette.customColors.red300,
+                                    "&:hover": {
+                                        backgroundColor: theme.palette.action.error,
+                                    },
                                 }}
-                            >
-                                <PersonRemoveRounded />
-                            </Button>
+                                icon={<PersonRemoveRounded />}
+                                variant="outlined"
+                                title="Remove Your Profile Image?"
+                                message="This will remove your profile picture from the application and set it to the default picture. You can also add a new one later! 👋"
+                                agreeBtn={
+                                    <Button
+                                        sx={{
+                                            color: theme.palette.customColors.red300,
+                                            borderRadius: theme.customShape.btn,
+                                            "&:hover": {
+                                                color: theme.palette.customColors.red300,
+                                                backgroundColor: theme.palette.action.error,
+                                            },
+                                        }}
+                                    >
+                                        Remove profile
+                                    </Button>
+                                }
+                                onAgree={handleDeleteImage}
+                            />
                         </Stack>
                     </Stack>
                     {/*============ End Upper User Data ============*/}
 
-                    {/*============ Start Grid User Data ============*/}
-                    {/* <Grid
-                        container
-                        sx={{
-                            mt: "50px",
-                            justifyContent: "flex-start",
-                            columnGap: { xss: "22px", sm: "32px" },
-                            rowGap: { xss: "22px", sm: "32px" },
-                        }}
-                    >
-                        {ProfileInfoData.map((info) => (
-                            <Grid
-                                item
-                                key={info.id}
-                                direction={"row"}
-                                xs={4}
-                                sm={4}
-                                md={4}
-                                lg={3}
-                                sx={{
-                                    gap: "12px",
-                                    minWidth: { xs: "170px", sm: "200px" },
-                                    "@media(max-width: 480px)": { minWidth: "145px", height: "35px" },
-                                    height: "60px",
-                                    textAlign: "center",
-                                    display: "flex",
-                                    justifyContent: "flex-start",
-                                    alignItems: "flex-start",
-                                }}
-                            >
-                                <Box component={"img"} src={info.icon}></Box>
-                                <Stack gap={"5px"} sx={{ textAlign: "left" }}>
-                                    <Box sx={{ fontSize: theme.typography.h6, fontWeight: theme.fontWeight.bold }}>
-                                        {info.title}
-                                    </Box>
-                                    <Box sx={{ fontSize: theme.typography.h6, fontWeight: theme.fontWeight.semiBold }}>
-                                        {info.content}
-                                    </Box>
-                                </Stack>
-                            </Grid>
-                        ))}
-                    </Grid> */}
-
+                    {/*============ Start User Data ============*/}
                     <ProfileInfo
                         item={userData}
                         details={[
                             {
-                                icon: <Phone fontSize="medium" />,
+                                icon: <Box component="img" src={PhoneIcon} alt="Phone Icon" />,
                                 label: "Phone",
                                 valueKey: "phoneNumber",
                             },
                             {
-                                icon: <Email fontSize="medium" />,
+                                icon: <Box component="img" src={EmailIcon} alt="Email Icon" />,
                                 label: "Email",
                                 valueKey: "email",
                             },
                             {
-                                icon: <Cake fontSize="medium" />,
+                                icon: <Box component="img" src={BirthDateIcon} alt="Date of Birth Icon" />,
                                 label: "Date of Birth",
                                 valueKey: "dateOfBirth",
                             },
                             {
-                                icon: <ApartmentRounded fontSize="medium" />,
-                                label: "Organization",
-                                valueKey: "org",
+                                icon: <Box component="img" src={GenderIcon} alt="Gender Icon" />,
+                                label: "Gender",
+                                valueKey: "Gender.name",
                             },
                             {
-                                icon: <SchoolRounded fontSize="medium" />,
+                                icon: <Box component="img" src={EducationIcon} alt="Education Icon" />,
                                 label: "Education",
                                 valueKey: "edu",
                             },
                             {
-                                icon: <PublicRounded fontSize="medium" />,
+                                icon: <Box component="img" src={CountryIcon} alt="Nationality Icon" />,
                                 label: "Nationality",
                                 valueKey: "nationality",
                             },
                         ]}
                     />
-                    {/*============ End Grid User Data ============*/}
+                    {/*============ End User Data ============*/}
                 </Container>
             </Stack>
             {/*============ End User Data Container "Card"  ============*/}
