@@ -10,8 +10,15 @@ export const earnerApi = createApi({
                 url: "/earners",
                 method: "GET",
             })
+        }),
+
+        fetchEarnerById: builder.query({
+            query: (id) => ({
+                url: `/earners/${id}`,
+                method: "GET"
+            })
         })
     }),
 });
 
-export const { useFetchEarnerQuery } = earnerApi;
+export const { useFetchEarnerQuery, useFetchEarnerByIdQuery } = earnerApi;
