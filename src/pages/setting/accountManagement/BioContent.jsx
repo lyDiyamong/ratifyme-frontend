@@ -6,8 +6,10 @@ import { TextField, Box, Typography } from "@mui/material";
 import DashboardContainer from "../../../components/styles/DashboardContainer";
 import theme from "../../../assets/themes";
 
+
 //============ Start Bio input Editable Field Component ============
 const BioContent = () => {
+    
     const [value, setValue] = useState("Share more about yourself");
     const [isEditing, setIsEditing] = useState(false);
 
@@ -30,6 +32,7 @@ const BioContent = () => {
                     p: { xss: "20px", sm: "24px" },
                     bgcolor: theme.palette.customColors.white,
                 }}>
+
                 {/* Title */}
                 <Typography
                     sx={{
