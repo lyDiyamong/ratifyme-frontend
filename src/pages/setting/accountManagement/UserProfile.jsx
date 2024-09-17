@@ -1,5 +1,6 @@
 //MUI Import
 import { Box, Container, Stack, IconButton, Grid, Typography, Button } from "@mui/material";
+<<<<<<< HEAD
 import EditIcon from "@mui/icons-material/Edit";
 //Custom Import
 import DashboardContainer from "../../../components/styles/DashboardContainer";
@@ -9,6 +10,18 @@ import RoleIconSvg from "../../../assets/icons/Role.svg";
 import { ProfileInfoData } from "../../../data/setting/UserProfileData";
 import { ProfileIdentityData } from "../../../data/setting/UserProfileData";
 import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
+=======
+import EditIcon from '@mui/icons-material/Edit';
+//Custom Import 
+import DashboardContainer from "../../../components/styles/DashboardContainer"
+import theme from "../../../assets/themes/index"
+import EarnerProfileSvg from "../../../assets/images/EarnerProfile.svg"
+import PhotoIconSvg from "../../../assets/icons/Photo Icon.svg"
+import RoleIconSvg from "../../../assets/icons/Role.svg"
+import { ProfileData } from "../../../data/setting/UserProfileDatat"
+
+
+>>>>>>> 490861a (add(24-UserProfile): add icon image)
 
 //============ Start User Profile Component ============
 const UserProfile = () => {
@@ -83,6 +96,7 @@ const UserProfile = () => {
                             </Button>
                         </Box>
                     </Stack>
+<<<<<<< HEAD
                     {/*============ End Upper User Data ============*/}
                     {/*============ Start Grid User Data ============*/}
                     <Grid
@@ -122,6 +136,18 @@ const UserProfile = () => {
                                         {info.content}
                                     </Box>
                                 </Stack>
+=======
+                    <Grid container   sx={{ mt : "50px", justifyContent: "center"}}>
+                        {ProfileData.map((info,) => (
+                            <Grid key={info.id} direction sx={{ width: "200px", height: "50px", textAlign: "center", justifyContent: "center", alignItems: "center" }}>
+                                <Box component={"img"} src={info.icon}></Box>
+                                <Box>
+                                    {info.title}
+                                </Box>
+                                <Box>
+                                    {info.content}
+                                </Box>
+>>>>>>> 490861a (add(24-UserProfile): add icon image)
                             </Grid>
                         ))}
                     </Grid>
