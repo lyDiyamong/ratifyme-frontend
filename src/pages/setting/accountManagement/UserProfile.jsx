@@ -23,10 +23,12 @@ import { ProfileData } from "../../../data/setting/UserProfileDatat"
 
 >>>>>>> 490861a (add(24-UserProfile): add icon image)
 
+
 //============ Start User Profile Component ============
 const UserProfile = () => {
     return (
         <DashboardContainer>
+
             {/*============ Start  User Data Container "Card"  ============*/}
             <Stack
                 direction={{ sm: "column", md: "row" }}
@@ -42,6 +44,7 @@ const UserProfile = () => {
                 {/*============ Start Image Profile User Data ============*/}
                 <Container sx={{ p: "0", width: "250px", marginRight: "280px", marginLeft: "18px" }}>
                     <Box sx={{ position: "relative" }}>
+
                         {/*Profile Image */}
                         <Box
                             component="img"
@@ -49,6 +52,7 @@ const UserProfile = () => {
                             alt="person"
                             sx={{ width: { xss: "100px", sm: "200px" }, position: "relative" }}
                         ></Box>
+
                         {/* Input Image Button */}
                         <IconButton
                             aria-label="custom-button"
@@ -62,17 +66,21 @@ const UserProfile = () => {
                         </IconButton>
                     </Box>
                 </Container>
+
                 {/*============ End Image Profile User Data ============*/}
                 <Container >
+
                     {/*============ Start Upper User Data ============*/}
                     <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
                         <Stack gap={"22px"} sx={{ p: "0px" }}>
+
                             {/* User Name Data */}
                             <Typography sx={{ fontSize: theme.typography.h4, fontWeight: theme.fontWeight.semiBold }}>
                                 {ProfileIdentityData.username}
                             </Typography>
                             <Box component={"div"} sx={{ display: "flex", gap: 1 }}>
                                 <Box component={"img"} src={RoleIconSvg} sx={{ width: "24px" }}></Box>
+
                                 {/* User Role Data */}
                                 <Typography
                                     sx={{ fontSize: theme.typography.h5, fontWeight: theme.fontWeight.semiBold }}
@@ -82,6 +90,8 @@ const UserProfile = () => {
                             </Box>
                         </Stack>
                         <Box component={"div"} sx={{ mt: { xss: "30px", sm: "0" } }}>
+                            
+                            {/* Edit Button */}
                             <Button
                                 variant="contained"
                                 startIcon={<EditIcon />}
@@ -98,6 +108,7 @@ const UserProfile = () => {
                     </Stack>
 <<<<<<< HEAD
                     {/*============ End Upper User Data ============*/}
+
                     {/*============ Start Grid User Data ============*/}
                     <Grid
                         container
@@ -153,8 +164,10 @@ const UserProfile = () => {
                     </Grid>
                     {/*============ End Grid User Data ============*/}
                 </Container>
+
             </Stack>
             {/*============ End User Data Container "Card"  ============*/}
+
         </DashboardContainer>
     );
 };
