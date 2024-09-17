@@ -13,10 +13,10 @@ export const authApi = createApi({
     //         }
     //         return headers;
     //     },
-        
+
     // }),
 
-    
+
     // Handle global errors, especially token expiration
     baseQuery: async (args, api, extraOptions) => {
         const baseQuery = fetchBaseQuery({

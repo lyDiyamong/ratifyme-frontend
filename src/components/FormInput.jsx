@@ -27,7 +27,6 @@ const FormInput = ({
     control,
     type = "text",
     required = false,
-    icon,
     validationRules = {},
     ...rest
 }) => {
