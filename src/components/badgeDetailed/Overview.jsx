@@ -2,16 +2,14 @@
 import React from "react";
 
 // MUI Import
-import { Box, Stack, Typography } from "@mui/material";
-
+import { Box, Stack, Typography} from "@mui/material";
+import IconButton from '@mui/material/IconButton';
 // Custom Import
 import DashboardContainer from "../styles/DashboardContainer";
-import { BtnAddTo, BtnIssueTo } from "./smallComponent/OverviewButton";
+import  OverviewButton  from "./smallComponent/OverviewButton";
 import PageSection from "./smallComponent/PageSection";
-import { DetailData } from "../../data/badgeDetail/DataBadgeDetailed";
 import facebookIcon from "./../../assets/icons/facebook.svg"
 import linkedIcon from "./../../assets/icons/linkedin.svg"
-
 
 const badgeInfo = {
     padding: "32px",
@@ -36,11 +34,11 @@ const Logo = {
     mt: 1
 };
 
-const Overview = () => {
+const Overview = ({btnstatus,data}) => {
     // Destructure the data for easier access
-    const { Overview } = DetailData;
+    const { Overview } = data;
     const badge = Overview[0]; // Assuming there's only one badge in the Overview array
-
+    console.log(data);
     return (
         // ============ Start Overview Section ============
         <DashboardContainer>
@@ -67,27 +65,14 @@ const Overview = () => {
                         }}
                     >
                         <Box>
-                            <Typography variant="h3" sx={{ mt: 1, maxWidth:2 }}>
+                            <Typography variant="h3" sx={{ mt: 1 }}>
                                 {badge.BadgeTitle} {/* Display badge title */}
                             </Typography>
                             <Typography sx={{ mt: 1 }}>
                                 Issued to: {badge.Earner} {/* Display earner */}
                             </Typography>
                         </Box>
-                        <Stack
-                            component="div"
-                            spacing={0.5}
-                            direction="row"
-                            sx={{
-                                mt: 1,
-                                justifyContent: "space-between", // Space between buttons
-                                maxWidth: "350px",
-                                width: "100%" // Ensure Stack takes full width of the parent Box
-                            }}
-                        >
-                            <BtnAddTo />
-                            <BtnIssueTo />
-                        </Stack>
+                        <OverviewButton btnstatus={btnstatus} />
                         <Stack
                             component="div"
                             spacing={0.5}
@@ -98,12 +83,25 @@ const Overview = () => {
                                 width: "100%" // Ensure Stack takes full width of the parent Box
                             }}
                         >
-                            <Box component="img" src={facebookIcon} />
-                            <Box component="img" src={linkedIcon} />
+                            <IconButton
+                                aria-label="Facebook"
+                                onClick={() => console.log('Facebook clicked')}
+                                sx={{ color: 'blue' }}
+                            >
+                                <Box component="img" src={facebookIcon} alt="Facebook" />
+                            </IconButton>
+                            <IconButton
+                                aria-label="LinkedIn"
+                                onClick={() => console.log('LinkedIn clicked')}
+                                sx={{ color: 'blue' }}
+                            >
+                                <Box component="img" src={linkedIcon} alt="LinkedIn" />
+                            </IconButton>
                         </Stack>
                     </Box>
 
                 </Stack>
+
 
                 <Box
                     component="div"
