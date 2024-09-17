@@ -1,3 +1,5 @@
+//React Import
+import  { useState } from 'react';
 //MUI Import
 import { Box, Container, Stack, IconButton, Grid, Typography, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
@@ -9,13 +11,22 @@ import RoleIconSvg from "../../../assets/icons/Role.svg";
 import { ProfileInfoData } from "../../../data/setting/UserProfileData";
 import { ProfileIdentityData } from "../../../data/setting/UserProfileData";
 import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
+import EditProfileModal from "./ModalEditProfile"
 
 
 //============ Start User Profile Component ============
 const UserProfile = () => {
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
     return (
         <DashboardContainer>
-
             {/*============ Start  User Data Container "Card"  ============*/}
             <Stack
                 direction={{ sm: "column", md: "row" }}
@@ -31,7 +42,6 @@ const UserProfile = () => {
                 {/*============ Start Image Profile User Data ============*/}
                 <Container sx={{ p: "0", width: "250px", marginRight: "280px", marginLeft: "18px" }}>
                     <Box sx={{ position: "relative" }}>
-
                         {/*Profile Image */}
                         <Box
                             component="img"
@@ -55,12 +65,10 @@ const UserProfile = () => {
                 </Container>
 
                 {/*============ End Image Profile User Data ============*/}
-                <Container >
-
+                <Container>
                     {/*============ Start Upper User Data ============*/}
                     <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
                         <Stack gap={"22px"} sx={{ p: "0px" }}>
-
                             {/* User Name Data */}
                             <Typography sx={{ fontSize: theme.typography.h4, fontWeight: theme.fontWeight.semiBold }}>
                                 {ProfileIdentityData.username}
@@ -77,10 +85,10 @@ const UserProfile = () => {
                             </Box>
                         </Stack>
                         <Box component={"div"} sx={{ mt: { xss: "30px", sm: "0" } }}>
-                            
                             {/* Edit Button */}
                             <Button
                                 variant="contained"
+                                onClick={handleClickOpen}
                                 startIcon={<EditIcon />}
                                 sx={{
                                     color: theme.palette.customColors.white,
@@ -91,6 +99,7 @@ const UserProfile = () => {
                             >
                                 Edit
                             </Button>
+                            <EditProfileModal open={open} onClose={handleClose} />
                         </Box>
                     </Stack>
                     {/*============ End Upper User Data ============*/}
@@ -138,10 +147,8 @@ const UserProfile = () => {
                     </Grid>
                     {/*============ End Grid User Data ============*/}
                 </Container>
-
             </Stack>
             {/*============ End User Data Container "Card"  ============*/}
-
         </DashboardContainer>
     );
 };
