@@ -31,7 +31,7 @@ export const sidebarItems = [
             },
             {
                 text: "Earners",
-                path: "/management/eaners",
+                path: "/management/earners",
                 roles: [1, 2, 3],
             },
         ],
