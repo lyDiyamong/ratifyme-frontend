@@ -19,11 +19,20 @@ import {
 import theme from "../assets/themes";
 import StatusCode from "../assets/images/NoData.svg";
 import GoldBadge from "../assets/images/DiamondBadge.svg";
-import { useFetchBadgeQuery } from "../store/api/badgeManagement/badgeApi";
+import { useFetchBadgesByIssuerQuery } from "../store/api/badgeManagement/badgeApi";
+import { useCheckAuthQuery } from "../store/api/auth/authApi";
 
 const BadgeListCard = () => {
-    const { data, isLoading, isError, isSuccess } = useFetchBadgeQuery();
+    const { data: users } = useCheckAuthQuery();
+    const { data, isLoading, isError } = useFetchBadgesByIssuerQuery();
     const badges = data?.data || [];
+    const userId = users?.user.id;
+
+    // filter by userId so each issuer that has different userId
+    // see other badge list card
+    const checkBadge = badges.filter((badge) => {
+        return badge.Issuer.userId === userId;
+    });
 
     // State management for pagination
     const [page, setPage] = useState(1);
@@ -39,8 +48,8 @@ const BadgeListCard = () => {
     }, [isLargeScreen, isMediumScreen]);
 
     // Pagination handling
-    const pageCount = Math.ceil(badges.length / itemsPerPage);
-    const currentBadges = badges.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+    const pageCount = Math.ceil(checkBadge.length / itemsPerPage);
+    const currentBadges = checkBadge.slice((page - 1) * itemsPerPage, page * itemsPerPage);
     const handleChangePage = (_, value) => setPage(value);
 
     if (isLoading) return <Typography>Loading...</Typography>;
@@ -49,10 +58,10 @@ const BadgeListCard = () => {
     return (
         <Box my={3}>
             <Typography variant="h6" sx={{ pb: 2 }}>
-                Total Badges: {badges.length}
+                Total Badges: {checkBadge.length}
             </Typography>
 
-            {badges.length === 0 ? (
+            {checkBadge.length === 0 ? (
                 <Box display="flex" flexDirection="column" alignItems="center" p={4}>
                     <CardMedia
                         component="img"

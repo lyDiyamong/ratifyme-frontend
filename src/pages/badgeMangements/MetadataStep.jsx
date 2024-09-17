@@ -5,6 +5,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 // Custom imports
 import SelectForm from "../../components/SelectionForm";
+import MultiSelectForm from "../../components/MultiSelectionForm";
 import FormInput from "../../components/FormInput";
 import DateSelectionForm from "../../components/DateSelectionForm";
 
@@ -26,20 +27,6 @@ const MetadataStep = ({ control }) => {
     ];
 
     // Data static of Option Achievement Type
-    const optionAchievementType = [
-        { value: "contentCreation", label: "Content Creation" },
-        { value: "communityEngagement", label: "Community Engagement" },
-        { value: "referrals", label: "Referrals" },
-        { value: "skillDevelopment", label: "Skill Development" },
-        { value: "partnershipAndCollaborations", label: "Partnership and Collaborations" },
-        { value: "challengesAndCompetitions", label: "Challenges and Competitions" },
-        { value: "eventParticipation", label: "Event Participation" },
-        { value: "mentorshipPrograms", label: "Mentorship Programs" },
-        { value: "projectSubmissions", label: "Project Submissions" },
-        { value: "courseCompletion", label: "Course Completion" },
-        { value: "betaTesting", label: "Beta Testing" },
-    ];
-
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Stack gap={2}>
@@ -63,7 +50,7 @@ const MetadataStep = ({ control }) => {
                 />
 
                 {/* Tags / Language */}
-                <SelectForm
+                <MultiSelectForm
                     name="tagsOrLanguage"
                     label="Tags / Language"
                     options={optionLanguage}
@@ -71,14 +58,14 @@ const MetadataStep = ({ control }) => {
                     required={false}
                 />
 
-                {/* Achievement Type */}
-                <SelectForm
+                {/* Achievement Type
+                <MultiSelectForm
                     name="achievementType"
                     label="Achievement Type*"
                     options={optionAchievementType}
                     control={control}
                     required={false}
-                />
+                /> */}
             </Stack>
         </LocalizationProvider>
     );
