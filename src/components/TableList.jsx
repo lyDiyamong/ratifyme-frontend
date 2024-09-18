@@ -36,11 +36,10 @@ const customTable = {
  * @param {Array} [columns=[]] - Column configurations for the table. If not provided, default columns are used.
  * @param {boolean} [sortIcon=false] - If true, shows a sort icon in the table header. Defaults to false.
  * @param {boolean} [actions=false] - If true, adds an "Action" column with buttons for actions like view or delete.
- * @param {function} [onActionClick=() => {}] - Callback function that handles action button clicks.
  * @returns {JSX.Element} A Material-UI styled DataTable component.
  */
 // ============ Start Table Custom Button ============
-const TableCustom = ({title='', data = [], columns = [], sortIcon = false, actions = false, onActionClick = () => {} }) => {
+const TableCustom = ({title='', data = [], columns = [], sortIcon = false, actions = false}) => {
     // Default columns if not provided
     const defaultColumns = [
         {

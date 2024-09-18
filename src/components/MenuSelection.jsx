@@ -3,6 +3,14 @@ import { Menu, IconButton, Box } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ReusableButton from "./DataTableButton";
 
+/**
+ * MenuSelection Component
+ *
+ * @param {function} props.onView - Callback function to be called when the "View" option is clicked.
+ * @param {function} props.onDelete - Callback function to be called when the "Delete" option is clicked.
+ *
+ * @returns {JSX.Element} The rendered MenuSelection component.
+ */
 export default function MenuSelection({ onView, onDelete }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -14,7 +22,7 @@ export default function MenuSelection({ onView, onDelete }) {
     };
 
     return (
-        <div>
+        <Box>
             <IconButton
                 aria-label="more"
                 id="long-button"
@@ -37,7 +45,7 @@ export default function MenuSelection({ onView, onDelete }) {
                 slotProps={{
                     paper: {
                         style: {
-                            width: "16ch",
+                            width: "8ch",
                         },
                     },
                 }}
@@ -46,12 +54,11 @@ export default function MenuSelection({ onView, onDelete }) {
                     display="flex"
                     flexDirection="column"
                     width="100%"
-                    sx={{ padding: 0 }} // Remove padding from the Box
                 >
                     <ReusableButton label="View" onClick={onView} fullWidth />
                     <ReusableButton label="Delete" onClick={onDelete} fullWidth />
                 </Box>
             </Menu>
-        </div>
+        </Box>
     );
 }

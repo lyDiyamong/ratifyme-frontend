@@ -12,6 +12,12 @@ const getCurrentDate = () => {
     return today.toLocaleDateString("en-US", options);
 };
 
+/**
+ * DateSelectionForm Component
+ *
+ * @param {string} title - The name title of the page
+ * @returns {JSX.Element} The rendered PageTitle component.
+ */
 const PageTitle = ({ title }) => {
     return (
         // ============ Start Page Title ============
