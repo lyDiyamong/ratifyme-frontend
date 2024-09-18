@@ -1,6 +1,4 @@
 // MUI Import 
-import { Box, Typography, CircularProgress } from "@mui/material";
-import ProfileModal from "../../components/ProfileModal";
 import {
     Phone as PhoneIcon,
     Email as EmailIcon,
@@ -9,6 +7,9 @@ import {
     Public as PublicIcon,
     BusinessCenter as BusinessCenterIcon,
 } from "@mui/icons-material";
+
+// Custom Import
+import ProfileModal from "../../components/ProfileModal";
 
 // Fetching Data Import
 import { useFetchEarnerByIdQuery } from "../../store/api/earnerManagement/earnerApis";
@@ -21,6 +22,7 @@ const ProfileEarnerModal = ({ open, onClose, userId }) => {
     const earner = data?.data;
 
     return (
+        // Call Profile Modal
         <ProfileModal
             open={open}
             onClose={onClose}
@@ -46,16 +48,8 @@ const ProfileEarnerModal = ({ open, onClose, userId }) => {
                 { icon: <PublicIcon fontSize="small" />, label: "Country", valueKey: "User.nationality" },
             ]}
         >
-            {isLoading && (
-                <Box display="flex" justifyContent="center" alignItems="center" height="100%">
-                    <CircularProgress />
-                </Box>
-            )}
-            {isError && (
-                <Box display="flex" justifyContent="center" alignItems="center" height="100%">
-                    <Typography color="error">Error fetching data</Typography>
-                </Box>
-            )}
+            {isLoading && <p>Loading...</p>}
+            {isError && <p>Error fetching data</p>}
         </ProfileModal>
     );
 };

@@ -6,19 +6,29 @@ export const earnerApi = createApi({
     tagTypes: ["Earner"],
     endpoints: (builder) => ({
         fetchEarner: builder.query({
-            query: ()=>({
+            query: () => ({
                 url: "/earners",
                 method: "GET",
-            })
+            }),
+            providesTags : ['Earner']
         }),
 
         fetchEarnerById: builder.query({
             query: (id) => ({
                 url: `/earners/${id}`,
-                method: "GET"
-            })
-        })
+                method: "GET",
+            }),
+            providesTags : ['Earner']
+        }),
+
+        deleteEarnerById: builder.mutation({
+            query: (id) => ({
+                url: `/earners/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags : ['Earner']
+        }),
     }),
 });
 
-export const { useFetchEarnerQuery, useFetchEarnerByIdQuery } = earnerApi;
+export const { useFetchEarnerQuery, useFetchEarnerByIdQuery, useDeleteEarnerByIdMutation} = earnerApi;
