@@ -32,7 +32,7 @@ const SignupPage = () => {
     const [role, setRole] = useState("");
     const [signUp, { isLoading, isError, error }] = useSignUpMutation();
     const [activeStep, setActiveStep] = useState(0);
-
+    
     useEffect(() => {
         const queryRole = new URLSearchParams(search).get("as") || "";
         setRole(queryRole);
@@ -73,7 +73,9 @@ const SignupPage = () => {
         };
         try {
             const result = await signUp(reqData).unwrap();
-            navigate("/dashboard");
+            if (roleId === 2) {
+                navigate("/company-info");
+            }
         } catch (err) {
             console.error("Error during signup:", err);
         }
@@ -233,10 +235,18 @@ const SignupPage = () => {
                         ))}
                     </Stepper>
                     <FormProvider {...methods}>
-                        <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 4 }}>
+                        <Box
+                            component="form"
+                            onSubmit={handleSubmit(onSubmit)}
+                            sx={{ mt: 4 }}
+                        >
                             {handleStepContent(activeStep)}
                             <Stack direction="row" justifyContent="space-between" sx={{ mt: 4 }}>
-                                <Button disabled={activeStep === 0} onClick={handleBack} variant="outlined">
+                                <Button
+                                    disabled={activeStep === 0}
+                                    onClick={handleBack}
+                                    variant="outlined"
+                                >
                                     Back
                                 </Button>
                                 <Button
