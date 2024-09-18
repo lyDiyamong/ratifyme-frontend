@@ -7,7 +7,6 @@ import ArrowDownward from "@mui/icons-material/ArrowDownward";
 
 // Custom Import
 import MenuSelection from "./TableAction/MenuSelection";
-import DashboardContainer from "./styles/DashboardContainer";
 import theme from "../assets/themes/index";
 
 /**
@@ -30,8 +29,18 @@ const customTable = {
     },
 };
 
+/**
+ * 
+ * @param {string} [title=""] - The title of the table. Displayed at the top of the table.
+ * @param {Array} [data=[]] - The data to be displayed in the table. Each object in the array represents a row.
+ * @param {Array} [columns=[]] - Column configurations for the table. If not provided, default columns are used.
+ * @param {boolean} [sortIcon=false] - If true, shows a sort icon in the table header. Defaults to false.
+ * @param {boolean} [actions=false] - If true, adds an "Action" column with buttons for actions like view or delete.
+ * @param {function} [onActionClick=() => {}] - Callback function that handles action button clicks. 
+ * @returns {JSX.Element} A Material-UI styled DataTable component.
+ */
 // ============ Start Table Custom Button ============ 
-const TableCustom = ({ data = [], columns = [], sortIcon = false, actions = false, onActionClick = () => {} }) => {
+const TableCustom = ({title='', data = [], columns = [], sortIcon = false, actions = false, onActionClick = () => {} }) => {
     // Default columns if not provided
     const defaultColumns = [
         {
@@ -80,8 +89,7 @@ const TableCustom = ({ data = [], columns = [], sortIcon = false, actions = fals
         : defaultColumns;
 
     return (
-        <DashboardContainer>
-            <Box
+            <Box component="section"
                 sx={{
                     boxShadow: theme.customShadows.default,
                     borderRadius: theme.customShape.section,
@@ -94,7 +102,7 @@ const TableCustom = ({ data = [], columns = [], sortIcon = false, actions = fals
             >
                 <DataTable
                     // DataTable Config
-                    title="Earner List"
+                    title={title}
                     columns={dynamicColumns}
                     data={data}
                     pagination
@@ -104,7 +112,6 @@ const TableCustom = ({ data = [], columns = [], sortIcon = false, actions = fals
                     customStyles={customTable}
                 />
             </Box>
-        </DashboardContainer>
     );
 };
 

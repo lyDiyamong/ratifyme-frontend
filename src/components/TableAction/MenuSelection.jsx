@@ -1,38 +1,32 @@
-// React Libray
-import * as React from "react"; 
+// React Library
+import * as React from "react";
 
 // MUI Import
-import { Menu, IconButton, Box } from "@mui/material";
+import { Box, Menu, IconButton } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 // Custom Import
-import ActionButton from "./DataTableButton";
+import ActionButton from "./DataTableActionButton";
 
 // ============ Start Menu Selection ============
-
-// It is the menu selection that will show three dots in the data table component for wrapping two button such as view and delete
-const MenuSelection = ({ onView, onDelete }) => {
-    // For achhorEl is working on open and close menu selection. It means that when we set to null the menu selection not open
+const MenuSelection = ({ onView, onDelete, userId }) => {
+    // Open and Close Modal
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
-    // This function is working on position the menu relative to the main element.
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
-    //Close menu selection
     const handleClose = () => {
         setAnchorEl(null);
     };
-
-    // It works when user click on view button
+    // View data
     const handleView = () => {
         onView();
         handleClose();
     };
-
-    //It works when user click on delete button
+    // Delete data
     const handleDelete = () => {
         onDelete();
         handleClose();
@@ -40,7 +34,6 @@ const MenuSelection = ({ onView, onDelete }) => {
 
     return (
         <div>
-            {/* Three dots Icon */}
             <IconButton
                 aria-label="more"
                 id="long-button"
@@ -51,13 +44,9 @@ const MenuSelection = ({ onView, onDelete }) => {
             >
                 <MoreVertIcon fontSize="small" />
             </IconButton>
-            {/* Wrap View and Delete Button */}
             <Menu
                 id="long-menu"
-                MenuListProps={{
-                    // we use MenuListProps because of Menu can't apply style directly
-                    sx: { padding: 0 },
-                }}
+                MenuListProps={{ sx: { padding: 0 } }}
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
@@ -80,4 +69,3 @@ const MenuSelection = ({ onView, onDelete }) => {
 
 export default MenuSelection;
 // ============ End Menu Selection ============
-

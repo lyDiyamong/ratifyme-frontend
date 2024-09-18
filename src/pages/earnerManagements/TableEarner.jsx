@@ -4,17 +4,17 @@ import { Box, Typography, CircularProgress } from "@mui/material";
 // Custom Import
 import TableCustom from "../../components/TableList";
 import MenuSelection from "../../components/TableAction/MenuSelection";
-import FormatYear from "../../utils/dateFormat";
+import FormatYear from "../../utils/fomatYear";
 
 // Fetching Data Import
 import { useFetchEarnerQuery } from "../../store/api/earnerManagement/earnerApis";
 
 // ============ Start Table Earner Modal Custom Button ============
-const TableEarner = ({ onView, onDelete }) => {
+const TableEarner = ({ onView, onDelete, userId }) => {
     const { data: response, isLoading, isError } = useFetchEarnerQuery();
     const earnerData = response?.data;
 
-    // It is going to receive all fetching data from backend then pass into their column
+
     const earnerColumns = [
         {
             name: "ID",
@@ -38,12 +38,17 @@ const TableEarner = ({ onView, onDelete }) => {
         },
         {
             name: "Academic Year",
-            selector: (row) => <FormatYear dateString={row.AcademicBackground.academicYear} />,
+            selector: (row) => FormatYear(row.AcademicBackground.academicYear),
             sortable: true,
         },
         {
             name: "Action",
-            selector: (row) => <MenuSelection onView={() => onView(row.id)} onDelete={onDelete} />,
+            selector: (row) => (
+                <MenuSelection
+                    onView={() => onView(row.id)}
+                    onDelete={() => onDelete(row.id)}
+                />
+            ),
         },
     ];
 
@@ -54,12 +59,11 @@ const TableEarner = ({ onView, onDelete }) => {
             ) : isError ? (
                 <Typography color="error">Error fetching data</Typography>
             ) : (
-                <TableCustom data={earnerData} columns={earnerColumns} />
+                <TableCustom title="Earner List" data={earnerData} columns={earnerColumns} />
             )}
         </Box>
     );
 };
 
 export default TableEarner;
-
 // ============ End Table Earner Modal Custom Button ============
