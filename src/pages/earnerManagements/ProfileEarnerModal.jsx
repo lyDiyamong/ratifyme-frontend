@@ -14,6 +14,21 @@ import ProfileModal from "../../components/ProfileModal";
 // Fetching Data Import
 import { useFetchEarnerByIdQuery } from "../../store/api/earnerManagement/earnerApis";
 
+/**
+ * ProfileEarnerModal Component
+ *
+ * This component is responsible for displaying detailed profile information about a specific earner 
+ * in a modal using the `ProfileModal` component. It fetches data based on the `userId` and displays 
+ * personal details such as phone, email, organization, and more.
+ *
+ * @param {boolean} open - Controls whether the modal is open or closed.
+ * @param {function} onClose - Callback function to close the modal.
+ * @param {string|null} userId - The ID of the user to fetch data for. If null, the modal doesn't fetch any data.
+ *
+ * @returns {JSX.Element} A modal component displaying earner profile information.
+ */
+
+
 // ============ Start Profile Earner Modal Custom Button ============
 const ProfileEarnerModal = ({ open, onClose, userId }) => {
     // Prevent the API query from running if userId is null or undefined
