@@ -32,7 +32,6 @@ const SelectForm = ({ name, control, options, label, required }) => {
         // The value will be an array of selected values
         field.onChange(value);
     };
-
     return (
         <FormControl fullWidth error={!!error}>
             <InputLabel id={`${name}-label`}>{label}</InputLabel>
@@ -59,8 +58,8 @@ const SelectForm = ({ name, control, options, label, required }) => {
             >
                 {/* Render options for the select input */}
                 {options.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                        {option.label}
+                    <MenuItem key={option.name} value={option.name}>
+                        {option.name}
                     </MenuItem>
                 ))}
             </Select>
