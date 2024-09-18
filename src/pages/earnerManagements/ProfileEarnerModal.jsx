@@ -1,4 +1,5 @@
 // MUI Import 
+import { Box, Typography, CircularProgress } from "@mui/material";
 import ProfileModal from "../../components/ProfileModal";
 import {
     Phone as PhoneIcon,
@@ -14,7 +15,8 @@ import { useFetchEarnerByIdQuery } from "../../store/api/earnerManagement/earner
 
 // ============ Start Profile Earner Modal Custom Button ============
 const ProfileEarnerModal = ({ open, onClose, userId }) => {
-    const { data, isLoading, isError } = useFetchEarnerByIdQuery(userId);
+    // Prevent the API query from running if userId is null or undefined
+    const { data, isLoading, isError } = useFetchEarnerByIdQuery(userId, { skip: !userId });
 
     const earner = data?.data;
 
@@ -43,7 +45,18 @@ const ProfileEarnerModal = ({ open, onClose, userId }) => {
                 },
                 { icon: <PublicIcon fontSize="small" />, label: "Country", valueKey: "User.nationality" },
             ]}
-        />
+        >
+            {isLoading && (
+                <Box display="flex" justifyContent="center" alignItems="center" height="100%">
+                    <CircularProgress />
+                </Box>
+            )}
+            {isError && (
+                <Box display="flex" justifyContent="center" alignItems="center" height="100%">
+                    <Typography color="error">Error fetching data</Typography>
+                </Box>
+            )}
+        </ProfileModal>
     );
 };
 
