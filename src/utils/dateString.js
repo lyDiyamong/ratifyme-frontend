@@ -1,13 +1,10 @@
 import dayjs from "dayjs";
 
-const FormatDate = (dateString) => {
+const FormatYear = ({ dateString }) => {
+    // Check if dateString is valid and format the year
+    const year = dayjs(dateString).isValid() ? dayjs(dateString).format("YYYY") : "Invalid Date";
 
-    // Check if the dateString is valid
-    if (!dayjs(dateString).isValid()) {
-        return "Invalid Date";
-    }
-
-    // Format the date to "DD/MM/YYYY"
-    return dayjs(dateString).format("DD/MM/YYYY");
+    return year; // Use span for simpler display
 };
-export default FormatDate
+
+export default FormatYear;
