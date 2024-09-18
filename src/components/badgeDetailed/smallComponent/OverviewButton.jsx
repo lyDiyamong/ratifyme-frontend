@@ -13,10 +13,20 @@ const AddStyle = {
     color: theme.palette.customColors.white,
     width: "100%",
     height: "35px",
-    fontSize: theme.typography.body3,
+    fontSize: theme.typography.body2,
     fontWeight: theme.fontWeight.semiBold,
     borderRadius: theme.customShape.btn,
 };
+const DeleteStyle = {
+    bgcolor: theme.palette.customColors.red400,
+    color: theme.palette.customColors.white,
+    width: "100%",
+    height: "35px",
+    fontSize: theme.typography.body2,
+    fontWeight: theme.fontWeight.semiBold,
+    borderRadius: theme.customShape.btn,
+};
+
 const IssueStyle = {
     width: "75%",
     height: "35px",
@@ -24,6 +34,7 @@ const IssueStyle = {
     fontWeight: theme.fontWeight.semiBold,
     borderRadius: theme.customShape.btn,
 };
+
 const BtnAddTo = ({btnaction}) => {
     const handleClick = () => {
         console.log("Add earner to badge clicked");
@@ -39,6 +50,7 @@ const BtnAddTo = ({btnaction}) => {
         </Button>
     );
 };
+
 
 const BtnIssueTo = ({btnaction}) => {
     const handleClick = () => {
@@ -62,13 +74,17 @@ const AdminButton = ({btnaction}) => {
     const ApproveButton = () => {
         if (isApproved) {
             return (
-                <Button variant='contained' sx={{borderRadius: theme.customShape.btn, color: theme.palette.customColors.black, fontSize: theme.typography.body1,}} disabled>
+                <Button variant='contained' sx={{   borderRadius: theme.customShape.btn,
+                                                    color: theme.palette.customColors.black,
+                                                    fontSize: theme.typography.body1,}} disabled>
                     Approved
                 </Button>
             );
         } else {
             return (
-                <Button variant='contained' sx={{borderRadius: theme.customShape.btn, color: theme.palette.customColors.white, fontSize: theme.typography.body1,}} onClick={() => {
+                <Button variant='contained' sx={{   borderRadius: theme.customShape.btn,
+                                                    color: theme.palette.customColors.white,
+                                                    fontSize: theme.typography.body1,}} onClick={() => {
                     setIsApproved(true);
                     console.log("Approved");
                 }}>

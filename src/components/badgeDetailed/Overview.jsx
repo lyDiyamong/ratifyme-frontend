@@ -38,7 +38,6 @@ const Overview = ({btnstatus,data}) => {
     // Destructure the data for easier access
     const { Overview } = data;
     const badge = Overview[0]; // Assuming there's only one badge in the Overview array
-    console.log(data);
     return (
         // ============ Start Overview Section ============
         <DashboardContainer>
@@ -112,7 +111,8 @@ const Overview = ({btnstatus,data}) => {
                         maxWidth: 220,
                         width: "100%",
                         minWidth: 190, // Ensure the box does not shrink below this width
-                        boxSizing: 'border-box', // Ensure padding and border are included in the width calculation
+                        boxSizing: 'border-box',
+                        pr:10 // Ensure padding and border are included in the width calculation
                     }}
                 >
                     <Typography sx={{ mb: 1 }}>
