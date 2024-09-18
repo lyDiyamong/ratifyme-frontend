@@ -51,24 +51,6 @@ export const badgeApi = createApi({
                 }
             },
         }),
-        fetchBadgeByIssuer: builder.query({
-            query: (id) => ({
-                url: `/issuers/badgeClasses?issuerId=${id}`,
-                method: "GET",
-            }),
-            // transformResponse: (response) => ({
-            //     data: response.data.map((item) => ({
-            //         ...item,
-            //         issuedOn: new Date(item.issuedOn).toISOString(), // Convert dates to ISO string
-            //         startDate: new Date(item.startDate).toISOString(),
-            //         endDate: new Date(item.endDate).toISOString(),
-            //     })),
-            // }),
-            providesTags: (result) =>
-                result?.data
-                    ? [...result.data.map(({ id }) => ({ type: "Badge", id })), { type: "Badge", id: "LIST" }]
-                    : [{ type: "Badge", id: "LIST" }],
-        }),
     }),
 });
 
