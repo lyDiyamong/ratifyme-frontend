@@ -1,10 +1,13 @@
-// CheckoutButton.js (Frontend)
-import React from "react";
+// React import
+import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
+
+// Mui import
 import { Button, CircularProgress } from "@mui/material";
+
+// Custom import
 import theme from "../assets/themes";
-import axios from "axios";
 
 // Public key from Stripe
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
