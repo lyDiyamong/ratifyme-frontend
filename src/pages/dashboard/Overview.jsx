@@ -2,12 +2,12 @@
 import CardsList from "./OverviewCard";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import Notification from "./Notification";
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 
 // ============ Start Overview Seciton ============
 const Overview = () => {
     return (
-        <DashboardContainer sx={{pb: 4}}>
+        <Box sx={{pb: 4}}>
             <Grid container spacing={4}>
                 <Grid item sm={12} xs={12} md={12} xss={12} xl={7}>
                     <CardsList />
@@ -16,7 +16,7 @@ const Overview = () => {
                     <Notification />
                 </Grid>
             </Grid>
-        </DashboardContainer>
+        </Box>
     );
 };
 

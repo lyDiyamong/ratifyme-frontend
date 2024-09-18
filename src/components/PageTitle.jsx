@@ -1,9 +1,9 @@
 // MUI import
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 // Custom import
 import theme from "../assets/themes";
-import DashboardContainer from "./styles/DashboardContainer";
+
 
 // Start current date function
 const getCurrentDate = () => {
@@ -15,12 +15,11 @@ const getCurrentDate = () => {
 const PageTitle = ({ title }) => {
     return (
         // ============ Start Page Title ============
-        <DashboardContainer
+        <Box
             sx={{
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                p: {md:3},
                 marginTop: 2,
                 bgcolor: theme.palette.background.default,
             }}
@@ -41,7 +40,7 @@ const PageTitle = ({ title }) => {
             <Typography variant="body2" sx={{ color: theme.palette.customColors.gray300 }}>
                 {getCurrentDate()}
             </Typography>
-        </DashboardContainer>
+        </Box>
         // ============ End Page Title ============
     );
 };

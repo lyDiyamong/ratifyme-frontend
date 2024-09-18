@@ -2,14 +2,16 @@ import Greeting from "./Greeting";
 import PageTitle from "../../components/PageTitle";
 import { Stack } from "@mui/material";
 import Overview from "./Overview";
+import DashboardContainer from "../../components/styles/DashboardContainer";
 
 const Dashboard = () => {
     return (
-        <Stack gap={3}>
+        <DashboardContainer sx={{display : "flex", gap:3, flexDirection: "column"}} >
+            
             <PageTitle title="Dashboard"/>
             <Greeting userName="John Smith"/>
             <Overview  />
-        </Stack>
+        </DashboardContainer>
     );
 };
 
