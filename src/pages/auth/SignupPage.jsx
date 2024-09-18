@@ -53,7 +53,18 @@ const SignupPage = () => {
     const onSubmit = async (data) => {
         // Only accessing roleId, no state updates here
         const roleId = roleIdData[role] || 0;
-        const reqData = { ...data, roleId };
+        const reqData = {
+            userData: {
+                ...data,
+                roleId,
+            },
+            addressData: {
+                street: data.street,
+                city: data.city,
+                postalCode: data.postalCode,
+                country: data.country,
+            },
+        };
         try {
             const result = await signUp(reqData).unwrap();
             navigate("/dashboard");
@@ -166,7 +177,7 @@ const SignupPage = () => {
                                     render={({ field: { onChange, onBlur, value, ref } }) => (
                                         <Select
                                             options={options}
-                                            onChange={onChange}
+                                            onChange={(selectedOption) => onChange(selectedOption.value)}
                                             onBlur={onBlur}
                                             value={options.find((option) => option.value === value)}
                                             inputRef={ref}
