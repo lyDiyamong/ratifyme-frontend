@@ -16,9 +16,10 @@ const getCurrentDate = () => {
  * DateSelectionForm Component
  *
  * @param {string} title - The name title of the page
+ * @param {Object} sx - Additional style mui
  * @returns {JSX.Element} The rendered PageTitle component.
  */
-const PageTitle = ({ title }) => {
+const PageTitle = ({ title, sx }) => {
     return (
         // ============ Start Page Title ============
         <Box
@@ -28,6 +29,7 @@ const PageTitle = ({ title }) => {
                 alignItems: "center",
                 marginTop: 2,
                 bgcolor: theme.palette.background.default,
+                ...sx
             }}
         >
             {/* Start Page Title */}
