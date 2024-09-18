@@ -11,8 +11,8 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 /**
  *
- * @param {*} { id } : id of the servicePlan
- * @return {*}
+ * @param {Number} id  : id of the servicePlan
+ * @return {JSX.Element} : Checkout button for stripe only
  */
 const CheckoutButton = ({ id }) => {
     const [loading, setLoading] = useState(false);
@@ -22,7 +22,7 @@ const CheckoutButton = ({ id }) => {
 
         try {
             // Create a Checkout Session
-            const response = await axios.post(`${import.meta.env.VITE_BASE_API}/subscriptions/subscribe/${id}`, {
+            const response = await axios.post(`${import.meta.env.VITE_SERVER_BASE_URL}/subscriptions/subscribe/${id}`, {
                 servicePlanId: id,
             });
             // Get the session id for checking out
@@ -55,11 +55,7 @@ const CheckoutButton = ({ id }) => {
                 borderRadius: theme.customShape.btn,
             }}
         >
-            {loading ? (
-                <CircularProgress size={24} color={theme.palette.customColors.white} />
-            ) : (
-                "Subscribe"
-            )}
+            {loading ? <CircularProgress size={24} color={theme.palette.customColors.white} /> : "Subscribe"}
         </Button>
     );
 };
