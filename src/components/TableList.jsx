@@ -30,16 +30,16 @@ const customTable = {
 };
 
 /**
- * 
+ *
  * @param {string} [title=""] - The title of the table. Displayed at the top of the table.
  * @param {Array} [data=[]] - The data to be displayed in the table. Each object in the array represents a row.
  * @param {Array} [columns=[]] - Column configurations for the table. If not provided, default columns are used.
  * @param {boolean} [sortIcon=false] - If true, shows a sort icon in the table header. Defaults to false.
  * @param {boolean} [actions=false] - If true, adds an "Action" column with buttons for actions like view or delete.
- * @param {function} [onActionClick=() => {}] - Callback function that handles action button clicks. 
+ * @param {function} [onActionClick=() => {}] - Callback function that handles action button clicks.
  * @returns {JSX.Element} A Material-UI styled DataTable component.
  */
-// ============ Start Table Custom Button ============ 
+// ============ Start Table Custom Button ============
 const TableCustom = ({title='', data = [], columns = [], sortIcon = false, actions = false, onActionClick = () => {} }) => {
     // Default columns if not provided
     const defaultColumns = [
@@ -98,6 +98,7 @@ const TableCustom = ({title='', data = [], columns = [], sortIcon = false, actio
                     bgcolor: theme.palette.customColors.white,
                     px: 2,
                     py: 2,
+                    mt : 4
                 }}
             >
                 <DataTable
@@ -117,4 +118,4 @@ const TableCustom = ({title='', data = [], columns = [], sortIcon = false, actio
 
 export default TableCustom;
 
-// ============ End Table Custom Button ============ 
+// ============ End Table Custom Button ============

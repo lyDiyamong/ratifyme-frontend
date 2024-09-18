@@ -4,7 +4,7 @@ import { useGetSubscritptionQuery } from "../../store/api/subscription/subscript
 import { Box } from "@mui/material";
 
 // Custom import
-import TableCustom from "../../components/DataTable";
+import TableCustom from "../../components/TableList";
 import MenuSelection from "../../components/MenuSelection";
 import FormatDate from "../../utils/dateString";
 import DashboardContainer from "../../components/styles/DashboardContainer";
@@ -26,12 +26,17 @@ const BillingInvoiceManagement = () => {
     const defaultColumns = [
         {
             name: "Organization Name",
-            selector: (row) => row.Institution.name,
+            selector: (row) => row.Institution?.name,
             sortable: true,
         },
         {
             name: "Email Address",
-            selector: (row) => row.Institution.email,
+            selector: (row) => row.Institution?.email,
+            sortable: true,
+        },
+        {
+            name: "Subscription Plan",
+            selector: (row) => row.ServicePlan?.name,
             sortable: true,
         },
         {
@@ -47,8 +52,8 @@ const BillingInvoiceManagement = () => {
 
     return (
         <DashboardContainer>
-            <PageTitle title="Billing and Invoice " />
-            <TableCustom data={subscriptions} columns={defaultColumns} />
+            <PageTitle title="Billing and Invoice" />
+            <TableCustom title="Billing and Invoice" data={subscriptions} columns={defaultColumns} />
         </DashboardContainer>
     );
 };
