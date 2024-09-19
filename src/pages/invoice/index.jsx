@@ -19,7 +19,7 @@ const InvoiceManagement = () => {
 
     const { data: response } = useGetSubInstitutionQuery(institutionId);
 
-    const institutionData = response.data
+    const institutionData = response?.data
 
     const handleView = () => {
         console.log("View action triggered");
@@ -55,12 +55,12 @@ const InvoiceManagement = () => {
             selector: (row) => FormatDate(row.endDate),
             sortable: true,
         },
-        // {
-        //     name: "Action",
-        //     selector: ({ institutionId }) => (
-        //         <MenuSelection onView={() => handleView(institutionId)} onDelete={handleDelete} />
-        //     ),
-        // },
+        {
+            name: "Action",
+            selector: ({ institutionId }) => (
+                <MenuSelection onView={() => handleView(institutionId)} onDelete={handleDelete} />
+            ),
+        },
     ];
 
     return (
