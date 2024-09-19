@@ -1,29 +1,33 @@
-import { useGetSubscritptionQuery } from "../../store/api/subscription/subscriptionApi";
+// React import
+import { useNavigate } from "react-router";
 
 // Mui import
-import { Box } from "@mui/material";
 
 // Custom import
 import TableCustom from "../../components/TableList";
-import MenuSelection from "../../components/MenuSelection";
+import MenuSelection from "../../components/TableAction/MenuSelection";
 import FormatDate from "../../utils/dateString";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import PageTitle from "../../components/PageTitle";
 
+// Api import
+import { useGetSubscritptionQuery } from "../../store/api/subscription/subscriptionApi";
+
 const BillingInvoiceManagement = () => {
-    const { data : response, isLoading, isError } = useGetSubscritptionQuery();
+    const navigate = useNavigate();
+    const { data: response, isLoading, isError } = useGetSubscritptionQuery();
     const subscriptions = response?.data;
     console.log(subscriptions);
 
-    const handleView = () => {
-        console.log("View action triggered");
+    const handleView = (institutionId) => {
+        navigate(`/sales/invoice?institutionId=${institutionId}`);
     };
 
     const handleDelete = () => {
         console.log("Delete action triggered");
     };
 
-    const defaultColumns = [
+    const columns = [
         {
             name: "Organization Name",
             selector: (row) => row.Institution?.name,
@@ -46,14 +50,16 @@ const BillingInvoiceManagement = () => {
         },
         {
             name: "Action",
-            selector: () => <MenuSelection onView={handleView} onDelete={handleDelete} />,
+            selector: ({ institutionId }) => (
+                <MenuSelection onView={() => handleView(institutionId)} onDelete={handleDelete} />
+            ),
         },
     ];
 
     return (
         <DashboardContainer>
             <PageTitle title="Billing and Invoice" />
-            <TableCustom title="Billing and Invoice" data={subscriptions} columns={defaultColumns} />
+            <TableCustom title="Billing and Invoice" data={subscriptions} columns={columns} />
         </DashboardContainer>
     );
 };
