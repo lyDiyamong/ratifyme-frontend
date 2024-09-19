@@ -14,8 +14,11 @@ export const subscriptionApi = createApi({
         // Subscriptions Api
         getSubscritption : builder.query({
             query : () => "/subscriptions"
+        }),
+        getSubInstitution : builder.query({
+            query : (id) => `/subscriptions?institutionId=${id}`
         })
     }),
 });
 
-export const { useGetServicePlanQuery, useGetSubscritptionQuery } = subscriptionApi;
+export const { useGetServicePlanQuery, useGetSubscritptionQuery, useGetSubInstitutionQuery } = subscriptionApi;
