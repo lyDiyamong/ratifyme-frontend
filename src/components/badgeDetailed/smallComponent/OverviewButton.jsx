@@ -8,6 +8,10 @@ import { Box, Button, Stack } from "@mui/material";
 // Custom import
 import theme from "../../../assets/themes";
 
+
+
+
+
 const AddStyle = {
     bgcolor: theme.palette.primary.main,
     color: theme.palette.customColors.white,
@@ -101,6 +105,39 @@ const AdminButton = ({btnaction}) => {
     );
 };
 
+const EarnerButton = ({btnaction}) => {
+    const [isApproved, setIsApproved] = useState(false);
+
+    const ApproveButton = () => {
+        if (isApproved) {
+            return (
+                <Button variant='contained' sx={{   borderRadius: theme.customShape.btn,
+                                                    color: theme.palette.customColors.black,
+                                                    fontSize: theme.typography.body1,}} disabled>
+                    Claimed
+                </Button>
+            );
+        } else {
+            return (
+                <Button variant='contained' sx={{   borderRadius: theme.customShape.btn,
+                                                    color: theme.palette.customColors.white,
+                                                    fontSize: theme.typography.body1,}} onClick={() => {
+                    setIsApproved(true);
+                    console.log("Approved");
+                }}>
+                    Claim Badge
+                </Button>
+            );
+        }
+    };
+
+    return (
+        <Box>
+            <ApproveButton />
+        </Box>
+    );
+};
+
 
 const IssuerButton = ({btnaction}) => {
     return (
@@ -121,12 +158,23 @@ const IssuerButton = ({btnaction}) => {
     );
 };
 
-
+/**
+ * OverviewButton Component
+ *
+ * A reusable button component that displays different buttons
+ * based on the status of the user (Admin, Issuer, Earner).
+ *
+ * @param {string} btnstatus - The status of the user (e.g., 'Admin', 'Issuer', 'Earner').
+ * @param {function} btnaction - The action to trigger on button click.
+ * @returns {JSX.Element} The rendered OverviewButton component.
+ */
 const OverviewButton = ({ btnstatus, btnaction }) => {
     if (btnstatus === 'Admin') {
-        return <AdminButton />;
+        return <AdminButton btnaction={btnaction} />;
     } else if (btnstatus === 'Issuer') {
-        return <IssuerButton />;
+        return <IssuerButton btnaction={btnaction} />;
+    } else if (btnstatus === 'Earner') {
+        return <EarnerButton btnaction={btnaction} />;
     } else {
         // Handle unexpected status values or provide a default component
         return <p>Invalid status</p>;

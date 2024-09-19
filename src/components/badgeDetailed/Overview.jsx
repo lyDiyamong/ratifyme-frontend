@@ -6,7 +6,7 @@ import { Box, Stack, Typography} from "@mui/material";
 import IconButton from '@mui/material/IconButton';
 // Custom Import
 import DashboardContainer from "../styles/DashboardContainer";
-import  OverviewButton  from "./smallComponent/OverviewButton";
+import OverviewButton  from "./smallComponent/OverviewButton";
 import PageSection from "./smallComponent/PageSection";
 import facebookIcon from "./../../assets/icons/facebook.svg"
 import linkedIcon from "./../../assets/icons/linkedin.svg"
@@ -33,6 +33,20 @@ const Logo = {
     maxHeight: 150,
     mt: 1
 };
+
+/**
+ * Overview Component
+ *
+ * A reusable Overview component that displays different buttons
+ *
+ * Please modify button action in here "./smallComponent/OverviewButton" as button component is called <OverviewButton />
+ *
+ * based on the status of the user (Admin, Issuer, Earner).
+ *
+ * @param {string} btnstatus - The status of the user (e.g., 'Admin', 'Issuer', 'Earner').
+ * @param {function} btnaction - The action to trigger on button click.
+ * @returns {JSX.Element} The rendered Overview component.
+ */
 
 const Overview = ({btnstatus,data}) => {
     // Destructure the data for easier access
