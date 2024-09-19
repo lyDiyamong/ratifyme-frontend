@@ -8,6 +8,18 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 // Custom Import
 import ActionButton from "./DataTableActionButton";
 
+/**
+ * MenuSelection Component
+ *
+ * @param {function} onView - Callback function triggered when the "View" button is clicked.
+ * @param {function} onDelete - Callback function triggered when the "Delete" button is clicked.
+ * @param {string} userId - The ID of the user for which the menu actions are being performed.
+ *
+ * @returns {JSX.Element} A dropdown menu that provides options for viewing or deleting a row, 
+ * using Material-UI components.
+ */
+
+
 // ============ Start Menu Selection ============
 const MenuSelection = ({ onView, onDelete, userId }) => {
     // Open and Close Modal

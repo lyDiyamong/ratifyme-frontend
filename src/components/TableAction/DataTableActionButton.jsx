@@ -1,6 +1,16 @@
 // MUI Import
 import Button from "@mui/material/Button";
 
+/**
+ * ActionButton Component
+ *
+ * @param {string} label - The text to be displayed on the button.
+ * @param {function} onClick - The function to be called when the button is clicked.
+ *
+ * @returns {JSX.Element} A reusable Material-UI Button component with custom styles.
+ */
+
+
 // ============ Start Action Button ============ 
 // This button is a reusable component that receives two props
 const ActionButton = ({ label, onClick }) => {
