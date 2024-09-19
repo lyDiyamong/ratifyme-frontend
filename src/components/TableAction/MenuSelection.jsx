@@ -1,5 +1,5 @@
 // React Library
-import * as React from "react";
+import { useState } from "react";
 
 // MUI Import
 import { Box, Menu, IconButton } from "@mui/material";
@@ -7,23 +7,18 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 // Custom Import
 import ActionButton from "./DataTableActionButton";
-
 /**
  * MenuSelection Component
  *
- * @param {function} onView - Callback function triggered when the "View" button is clicked.
- * @param {function} onDelete - Callback function triggered when the "Delete" button is clicked.
- * @param {string} userId - The ID of the user for which the menu actions are being performed.
+ * @param {function} onView - Callback function to be called when the "View" option is clicked.
+ * @param {function} onDelete - Callback function to be called when the "Delete" option is clicked.
  *
- * @returns {JSX.Element} A dropdown menu that provides options for viewing or deleting a row, 
- * using Material-UI components.
+ * @returns {JSX.Element} The rendered MenuSelection component.
  */
-
-
 // ============ Start Menu Selection ============
-const MenuSelection = ({ onView, onDelete, userId }) => {
+const MenuSelection = ({ onView, onDelete }) => {
     // Open and Close Modal
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
     const handleClick = (event) => {
@@ -45,7 +40,7 @@ const MenuSelection = ({ onView, onDelete, userId }) => {
     };
 
     return (
-        <div>
+        <Box>
             <IconButton
                 aria-label="more"
                 id="long-button"
@@ -65,7 +60,7 @@ const MenuSelection = ({ onView, onDelete, userId }) => {
                 slotProps={{
                     paper: {
                         style: {
-                            width: "128px",
+                            width: "8ch",
                         },
                     },
                 }}
@@ -75,7 +70,7 @@ const MenuSelection = ({ onView, onDelete, userId }) => {
                     <ActionButton label="Delete" onClick={handleDelete} fullWidth />
                 </Box>
             </Menu>
-        </div>
+        </Box>
     );
 };
 
