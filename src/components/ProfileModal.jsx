@@ -10,17 +10,23 @@ import {
     Box,
     Grid,
     Divider,
-    Container
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import {
-    Phone as PhoneIcon,
-    Email as EmailIcon,
-    Cake as CakeIcon,
-    School as SchoolIcon,
-    Public as PublicIcon,
-    BusinessCenter as BusinessCenterIcon,
-} from "@mui/icons-material";
+
+/**
+ * ProfileModal Component
+ * 
+ * @param {boolean} open - Controls whether the modal is open or closed.
+ * @param {function} onClose - Function to handle closing the modal.
+ * @param {object} item - The data object representing the user's profile.
+ * @param {string} avatarKey - The key path to the user's avatar image in the `item` object.
+ * @param {string} nameKey - The key path to the user's name in the `item` object.
+ * @param {string} roleKey - The key path to the user's role in the `item` object.
+ * @param {string} desKey - The key path to the user's description or bio in the `item` object.
+ * @param {Array} details - An array of detail objects, where each object contains an icon, label, and valueKey for displaying additional profile information.
+ * 
+ * @returns {JSX.Element} A Material-UI styled Dialog component displaying user profile information with avatar, name, role, bio, and additional details.
+*/
 
 // The getValue function is a utility function designed to retrieve the value from a nested object using a string-based path.
 const getValue = (obj, keyPath) => {
@@ -52,7 +58,6 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
                     </Typography>
                     <Box mt={1}>
                         <Stack direction="row" alignItems="center" spacing={1}>
-                            <BusinessCenterIcon sx={{ mr: 1 }} fontSize="small" />
                             <Typography variant="body1" sx={{ textTransform: "capitalize" }}>
                                 {getValue(item, roleKey) || "No role"}
                             </Typography>
@@ -92,4 +97,3 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
 
 export default ProfileModal;
 // ============ End Profile Modal ============
-
