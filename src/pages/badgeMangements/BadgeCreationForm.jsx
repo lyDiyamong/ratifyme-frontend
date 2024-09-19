@@ -15,6 +15,9 @@ import OptionalStep from "./OptionalStep";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import ImageSelection from "./ImageSelection";
 import { SpinLoading } from "../../components/loading/SpinLoading";
+import { useCreateBadgeMutation, useFetchBadgesByIssuerQuery } from "../../store/api/badgeManagement/badgeApi";
+import { useCheckAuthQuery } from "../../store/api/auth/authApi";
+import { useNavigate } from "react-router-dom";
 
 // The data static of the description
 const steps = [
@@ -36,12 +39,30 @@ const steps = [
 ];
 
 const BadgeCreationForm = () => {
+    const navigate = useNavigate()
     // Stepper
     const [activeStep, setActiveStep] = useState(0);
     // Image upload
     const [uploadedImage, setUploadedImage] = useState(null);
     // Slow loading
     const [loading, setLoading] = useState(false);
+
+    const { data: badge } = useFetchBadgesByIssuerQuery();
+    const [createBadge] = useCreateBadgeMutation();
+    const { data: user } = useCheckAuthQuery();
+    const userId = user?.user?.id;
+    let issuerId;
+
+    // Check if badge data exists and iterate through it
+    if (badge?.data) {
+        badge.data.forEach((badge) => {
+            if (badge.Issuer && badge.Issuer.userId === userId) {
+                issuerId = badge.Issuer.id;
+            }
+        });
+    }
+
+    console.log(userId, issuerId);
 
     // React Hook Form
     const {
@@ -108,19 +129,40 @@ const BadgeCreationForm = () => {
         }, 1000);
     };
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         setLoading(true);
-        // console.log("Submitting data", data);
-        console.log("Submitting data", { ...data, image: uploadedImage });
 
-        // SetTimeout to see
-        setTimeout(() => {
-            console.log("Data submitted");
-            setLoading(false);
+        // Construct the badge object from the form data
+        const badge = {
+            name: data.badgeName,
+            description: data.badgeDescription,
+            startedDate: data.startDate?.toISOString(),
+            expiredDate: data.endDate?.toISOString(),
+            issuerId: issuerId,
+            Achievements:
+                data.Achievements?.map((achievement) => ({
+                    achievementTypeId: achievement.id,
+                    status: "ToDo",
+                    AchievementType: { name: achievement.name },
+                })) || [],
+            Criterias: data.narrative ? [{ narrative: data.narrative }] : [],
+        };
 
+        try {
+            // Call your mutation function to create the badge
+            await createBadge(badge).unwrap();
+            console.log("Badge successfully created");
+
+            // Reset form and image state
             reset();
             setUploadedImage(null);
-        }, 1000);
+            navigate('/management/badges')
+        
+        } catch (error) {
+            console.error("Error creating badge:", error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const renderStepContent = () => {

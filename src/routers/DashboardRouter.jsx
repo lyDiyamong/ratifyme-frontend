@@ -15,7 +15,7 @@ import PrivacySecurityManagement from "../pages/setting/privacyManagement";
 import BackpackManagement from "../pages/backpackManagement";
 import NotFoundPage from "../pages/NotFoundPage";
 import InvoiceManagement from "../pages/invoice";
-
+import BadgeCreation from "../pages/badgeMangements/BadgeCreation";
 
 const userRole = "earner";
 const DashbaordRouter = () => {
@@ -43,7 +43,7 @@ const DashbaordRouter = () => {
                 <Route path="/mybackpacks" element={<BackpackManagement />} />
                 <Route path="/setting/account" element={<AccountManagement />} />
                 <Route path="/setting/privacy&security" element={<PrivacySecurityManagement />} />
-
+                <Route path="/management/badges/badge-creation" element={<BadgeCreation />} />
             </Route>
         </Routes>
     );

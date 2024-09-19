@@ -4,6 +4,9 @@ import { badgeApi } from "./api/badgeManagement/badgeApi";
 import { earnerApi } from "./api/earnerManagement/earnerApis";
 import { subscriptionApi } from "./api/subscription/subscriptionApi";
 
+import { achievementTypeApi } from "./api/achievements/achievementTypeApi";
+import { criteriaApi } from "./api/badgeManagement/criteriaApi";
+import { achievementApi } from "./api/achievements/achievementApi";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import gloableReducer from "./slices/globalSlices";
 
@@ -14,6 +17,9 @@ const store = configureStore({
         [badgeApi.reducerPath]: badgeApi.reducer,
         [earnerApi.reducerPath]: earnerApi.reducer,
         [subscriptionApi.reducerPath]: subscriptionApi.reducer,
+        [achievementTypeApi.reducerPath]: achievementTypeApi.reducer,
+        [achievementApi.reducerPath]: achievementApi.reducer,
+        [criteriaApi.reducerPath]: criteriaApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
@@ -21,6 +27,9 @@ const store = configureStore({
             badgeApi.middleware,
             earnerApi.middleware,
             subscriptionApi.middleware,
+            achievementTypeApi.middleware,
+            achievementApi.middleware,
+            criteriaApi.middleware,
         ),
 });
 setupListeners(store.dispatch);
