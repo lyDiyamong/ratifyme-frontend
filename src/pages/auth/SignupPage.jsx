@@ -2,7 +2,7 @@
 import { useForm } from "react-hook-form";
 
 // MUI import
-import { Box, Grid, Typography, Button } from "@mui/material";
+import { Box, Grid, Typography, Button, FormControl } from "@mui/material";
 
 // Custom import
 import FormInput from "../../components/FormInput";
@@ -12,12 +12,20 @@ import SignupImgSvg from "../../assets/images/Signup-illu.svg";
 import { useSignUpMutation } from "../../store/api/auth/authApi";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import DateSelectionForm from "../../components/DateSelectionForm";
+import SelectForm from "../../components/SelectionForm";
 
 const roleIdData = {
     institution: 2,
     issuer: 3,
     earner: 4,
 };
+
+// Data static of the gender select
+const optionSelect = [
+    { value: 1, label: "Male" },
+    { value: 2, label: "Female" },
+];
 
 const SignupPage = () => {
     const { search } = useLocation();
@@ -31,20 +39,14 @@ const SignupPage = () => {
         setRole(queryRole);
     }, [search]);
 
-    // handle submission
     const onSubmit = async (data) => {
-        const roleId = roleIdData[role] || 0; // Default to 0 if role is not found in mapping
+        // Only accessing roleId, no state updates here
+        const roleId = roleIdData[role] || 0;
         const reqData = { ...data, roleId };
-
         try {
-            // Call the signUp mutation
-            const result = await signUp(reqData).unwrap(); // Unwrap result to handle errors
-
-            // Handle success response
-            console.log("Signup successful:", result);
+            const result = await signUp(reqData).unwrap();
             navigate("/dashboard");
         } catch (err) {
-            // Handle error response
             console.error("Error during signup:", err);
         }
     };
@@ -53,18 +55,22 @@ const SignupPage = () => {
         <LandingContainer sx={{ my: 6 }}>
             <Grid container spacing={4}>
                 <Grid item xs={12} md={4} order={{ xs: 2, md: 1 }}>
+                    {/* Start signup title  */}
                     <Box mb={5}>
                         <Typography
                             component="h4"
                             sx={{ fontSize: theme.typography.h2, fontWeight: theme.fontWeight.bold, lineHeight: 2 }}
                         >
-                            Sign up
+                            Sign up as {role}
                         </Typography>
                         <Typography>
                             Let’s get started. Are you ready to be a part of our digital badge? Then boldly move forward
                             with us.
                         </Typography>
                     </Box>
+                    {/* End signup title  */}
+
+                    {/* Start signup form  */}
                     <Box
                         component="form"
                         onSubmit={handleSubmit(onSubmit)}
@@ -73,10 +79,10 @@ const SignupPage = () => {
                         gap={3}
                         noValidate
                     >
+                        <FormInput name="firstname" label="First Name" control={control} type="text" required={true} />
+                        <FormInput name="lastname" label="Last Name" control={control} type="text" required={true} />
                         <FormInput name="username" label="Username" control={control} type="text" required={true} />
-                        {/* <FormInput name="firstname" label="Firstname" control={control} type="text" required={true} /> */}
-                        {/* <FormInput name="lastname" label="Lastname" control={control} type="text" required={true} /> */}
-                        <FormInput label="Email" name="email" control={control} required={true} type="email" />
+                        <FormInput name="email" label="Email" control={control} type="email" required={true} />
                         <FormInput
                             label="Phone Number"
                             name="phoneNumber"
@@ -84,6 +90,17 @@ const SignupPage = () => {
                             required={true}
                             type="text"
                         />
+                        {/* Gender  */}
+                        <SelectForm
+                            control={control}
+                            name="genderId"
+                            label="Gender"
+                            options={optionSelect}
+                            required={false}
+                        />
+
+                        {/* DOB  */}
+                        <DateSelectionForm control={control} name="dateOfBirth" label="Date of Birth" />
                         <FormInput label="Password" name="password" control={control} type="password" required={true} />
                         <FormInput
                             label="Confirm Password"
@@ -138,6 +155,7 @@ const SignupPage = () => {
                             with us.
                         </Typography>
                     </Box>
+                    {/* End signup form  */}
                 </Grid>
                 <Grid item xs={12} md={8} order={{ xs: 1, md: 2 }}>
                     <Box component="img" sx={{ width: "100%" }} alt="illustration" src={SignupImgSvg} />
