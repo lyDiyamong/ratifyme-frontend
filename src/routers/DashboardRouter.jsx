@@ -14,6 +14,7 @@ import AccountManagement from "../pages/setting/accountManagement";
 import PrivacySecurityManagement from "../pages/setting/privacyManagement";
 import BackpackManagement from "../pages/backpackManagement";
 import NotFoundPage from "../pages/NotFoundPage";
+import InvoiceManagement from "../pages/invoice";
 
 
 const userRole = "earner";
@@ -37,6 +38,7 @@ const DashbaordRouter = () => {
                 <Route path="/management/earners" element={<EarnerManagement />} />
                 <Route path="/sales/servicePlan" element={<ServicePlanManagement />} />
                 <Route path="/sales/billing&invoice" element={<BillingInvoiceManagement />} />
+                <Route path="/sales/invoice" element={<InvoiceManagement />} />
                 <Route path="/reports" element={<Report />} />
                 <Route path="/mybackpacks" element={<BackpackManagement />} />
                 <Route path="/setting/account" element={<AccountManagement />} />
