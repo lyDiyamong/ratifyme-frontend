@@ -4,6 +4,7 @@ import { TextField } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import theme from "../assets/themes";
 
 /**
  * DateSelectionForm Component
@@ -25,6 +26,7 @@ const DateSelectionForm = ({ control, name, label }) => {
                         label={label}
                         value={field.value || null} // Ensures the value is always controlled
                         onChange={(newValue) => field.onChange(newValue)} // Handle date change
+                        sx={{ width: "100%" }}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
