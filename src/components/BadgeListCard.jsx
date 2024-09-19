@@ -26,12 +26,15 @@ const BadgeListCard = () => {
     const { data: users } = useCheckAuthQuery();
     const { data, isLoading, isError } = useFetchBadgesByIssuerQuery();
     const badges = data?.data || [];
-    const userId = users?.user.id;
+    const userId = users?.user?.id;
 
     // filter by userId so each issuer that has different userId
     // see other badge list card
     const checkBadge = badges.filter((badge) => {
-        return badge.Issuer.userId === userId;
+        if (badge.Issuer) {
+            return badge.Issuer.userId === userId;
+        }
+        return false;
     });
 
     // State management for pagination

@@ -7,7 +7,6 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import MultiSelectForm from "../../components/MultiSelectionForm";
 import FormInput from "../../components/FormInput";
 import { useFetchAchievementTypeQuery } from "../../store/api/achievements/achievementTypeApi";
-import { useCreateCriteriaMutation } from "../../store/api/badgeManagement/criteriaApi";
 
 const CoreElementStep = ({ control }) => {
     // Data static of the earning criteria select

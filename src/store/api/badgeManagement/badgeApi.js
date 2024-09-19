@@ -28,7 +28,7 @@ export const badgeApi = createApi({
         // Create a new badge
         createBadge: builder.mutation({
             query: (badge) => ({
-                url: "/issuers/badgeClasses",
+                url: "issuers/badgeClasses/addBadge",
                 method: "POST",
                 body: badge,
             }),
