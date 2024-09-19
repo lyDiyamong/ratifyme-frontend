@@ -9,16 +9,6 @@ import ArrowDownward from "@mui/icons-material/ArrowDownward";
 import MenuSelection from "./TableAction/MenuSelection";
 import theme from "../assets/themes/index";
 
-/**
- * EarnerDataTable Component
- * @param {Array} data - Data to display in the table
- * @param {Array} columns - Column configurations
- * @param {boolean} sortIcon - Show or hide sort icon
- * @param {boolean} actions - Enable or disable action buttons
- * @param {function} onActionClick - Function to handle action button clicks
- * @returns {JSX.Element}
- */
-
 // Custom styling for DataTable
 const customTable = {
     headCells: {
@@ -30,7 +20,8 @@ const customTable = {
 };
 
 /**
- *
+ * Table list Custom
+ * 
  * @param {string} [title=""] - The title of the table. Displayed at the top of the table.
  * @param {Array} [data=[]] - The data to be displayed in the table. Each object in the array represents a row.
  * @param {Array} [columns=[]] - Column configurations for the table. If not provided, default columns are used.
