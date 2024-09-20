@@ -49,7 +49,7 @@ const SignupOptionCard = ({ icon, title, description, onClick }) => (
             marginBottom: 2,
             padding: "14px 24px",
             ":hover": {
-                backgroundColor: theme.palette.action.hover
+                backgroundColor: theme.palette.action.hover,
             },
         }}
     >
@@ -72,7 +72,9 @@ const SignupOptPage = () => {
 
     // Handles role selection
     const handleRoleSelect = (role) => {
-        navigate(`/signup?as=${role.toLowerCase()}`);
+        navigate(
+            role === "Institution" ? `/signup?as=${role.toLowerCase()}` : `/join-invitation?as=${role.toLowerCase()}`,
+        );
     };
 
     return (
@@ -108,7 +110,6 @@ const SignupOptPage = () => {
                             onClick={() => handleRoleSelect(opt.title)}
                         />
                     ))}
-
                 </Grid>
 
                 {/* Image container */}
