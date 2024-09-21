@@ -67,10 +67,13 @@ const AddressFields = ({ control }) => (
 
 const SignupPage = () => {
     const { search } = useLocation();
+    const location = useLocation();
     const navigate = useNavigate();
     const [role, setRole] = useState("");
     const [signUp, { isLoading, isError, error }] = useSignUpMutation();
     const [activeStep, setActiveStep] = useState(0);
+    const { inviter } = location.state || {};
+    console.log("inviter from signup", inviter);
 
     const steps = {
         institution: ["General Information", "Address Information", "Account Setup", "Institution Information"],
@@ -108,7 +111,15 @@ const SignupPage = () => {
         const reqData = {
             userData: { ...data, roleId },
             addressData: { street: data.street, city: data.city, postalCode: data.postalCode, country: data.country },
+            issuerData: {},
         };
+
+        // Add institutionId to issuerData if inviter exists
+        if (inviter) {
+            reqData.issuerData = {
+                institutionId: inviter.id,
+            };
+        }
 
         if (roleId === roleIdData.institution) {
             reqData.institutionData = {
@@ -236,15 +247,15 @@ const SignupPage = () => {
                     <Stepper activeStep={activeStep}>
                         {steps[role]
                             ? steps[role].map((label, index) => (
-                                    <Step key={index}>
-                                        <StepLabel>{label}</StepLabel>
-                                    </Step>
-                                ))
+                                  <Step key={index}>
+                                      <StepLabel>{label}</StepLabel>
+                                  </Step>
+                              ))
                             : steps.default.map((label, index) => (
-                                    <Step key={index}>
-                                        <StepLabel>{label}</StepLabel>
-                                    </Step>
-                                ))}
+                                  <Step key={index}>
+                                      <StepLabel>{label}</StepLabel>
+                                  </Step>
+                              ))}
                     </Stepper>
                     <FormProvider {...methods}>
                         <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 4 }}>
