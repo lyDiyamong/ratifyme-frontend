@@ -2,7 +2,7 @@
 import DashboardContainer from "../../components/styles/DashboardContainer";
 
 // Custom Import
-import TableBadge from "./TableBadge";
+import TableBadge from "./TableReport";
 
 // ============ Start EarnerManagement ============
 const reportManagement = () => {
