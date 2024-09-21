@@ -7,6 +7,7 @@ import { subscriptionApi } from "./api/subscription/subscriptionApi";
 import { achievementTypeApi } from "./api/achievements/achievementTypeApi";
 import { criteriaApi } from "./api/badgeManagement/criteriaApi";
 import { achievementApi } from "./api/achievements/achievementApi";
+import { institutionStatApi} from "./api/reports/institutionStatApis"
 import { setupListeners } from "@reduxjs/toolkit/query";
 import gloableReducer from "./slices/globalSlices";
 
@@ -20,6 +21,8 @@ const store = configureStore({
         [achievementTypeApi.reducerPath]: achievementTypeApi.reducer,
         [achievementApi.reducerPath]: achievementApi.reducer,
         [criteriaApi.reducerPath]: criteriaApi.reducer,
+        [institutionStatApi.reducerPath]: institutionStatApi.reducer
+
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
@@ -30,6 +33,7 @@ const store = configureStore({
             achievementTypeApi.middleware,
             achievementApi.middleware,
             criteriaApi.middleware,
+            institutionStatApi.middleware
         ),
 });
 setupListeners(store.dispatch);
