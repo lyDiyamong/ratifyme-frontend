@@ -1,7 +1,17 @@
-import React from "react";
+// MUI Import
+import DashboardContainer from "../../components/styles/DashboardContainer";
 
-const Report = () => {
-    return <div>Report</div>;
+// Custom Import
+import TableBadge from "./TableBadge";
+
+// ============ Start EarnerManagement ============
+const reportManagement = () => {
+    return (
+        <DashboardContainer>
+            <TableBadge />
+        </DashboardContainer>
+    );
 };
 
-export default Report;
+export default reportManagement;
+// ============ End EarnerManagement ============
