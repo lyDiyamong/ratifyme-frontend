@@ -11,6 +11,7 @@ import theme from "../../assets/themes";
 import LandingContainer from "../../components/styles/LandingContainer";
 import LoginImgSvg from "../../assets/images/Login-illu.svg";
 import { useEffect, useState } from "react";
+import { useVerifyInvitationMutation } from "../../store/api/auth/verifyInvitationApi";
 
 const roleIdData = {
     institution: 2,
@@ -22,6 +23,7 @@ const CodeInvitationPage = () => {
     const { search } = useLocation();
     const [role, setRole] = useState("");
     const navigate = useNavigate();
+    const [verifyInvitation, { isLoading, isError, error }] = useVerifyInvitationMutation();
 
     useEffect(() => {
         const queryRole = new URLSearchParams(search).get("as") || "";
@@ -38,9 +40,17 @@ const CodeInvitationPage = () => {
     // Submit handler
     const onSubmit = async (data) => {
         try {
-            navigate('/signup')
+            const response = await verifyInvitation(data);
+
+            // Check if response is valid and contains inviter data
+            if (response?.data?.inviter) {
+                const inviterData = response.data.inviter;
+
+                navigate(`/signup?as=${role}`, { state: { inviter: inviterData } });
+                console.log("inviterData", inviterData);
+            }
         } catch (error) {
-            console.error("Error during sign in:", error.message || error); // Improved error handling
+            console.error("Verification failed:", error);
         }
     };
 
@@ -80,13 +90,19 @@ const CodeInvitationPage = () => {
                         noValidate
                     >
                         <FormInput
-                            name="institutionCode"
+                            name="inviterCode"
                             control={control}
                             label="Institution Code"
                             type="text"
                             required={true}
                         />
-                        <FormInput name="email" type="email" control={control} label="Email Address" required={true} />
+                        <FormInput
+                            name="inviteEmail"
+                            type="email"
+                            control={control}
+                            label="Email Address"
+                            required={true}
+                        />
                         {/* Submit button */}
                         <Button
                             fullWidth
@@ -104,6 +120,7 @@ const CodeInvitationPage = () => {
                     {/* End form container */}
                 </Grid>
                 {/* End signup section */}
+
                 {/* Image container */}
                 <Grid item xs={12} md={8} order={{ xs: 1, md: 2 }}>
                     <Box
