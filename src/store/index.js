@@ -12,6 +12,7 @@ import { infoApi } from "./api/users/userInfoProfileApi";
 import {institutionApi} from "./api/institutionManagement/institutionApi"
 import { verificationApi } from "./api/earnerManagement/verificationApi";
 
+import { institutionStatApi} from "./api/reports/institutionStatApis"
 import { setupListeners } from "@reduxjs/toolkit/query";
 import gloableReducer from "./slices/globalSlices";
 
