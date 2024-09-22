@@ -9,7 +9,8 @@ import FormatYear from "../../utils/formatDate";
 // Fetching Data Import
 import { useFetchInstitutionStatsQuery } from "../../store/api/reports/institutionStatApis";
 
-const TableBadge = () => {
+// ============ Start Table Report ============
+const TableReport = () => {
     const { data: response, isLoading, isError } = useFetchInstitutionStatsQuery();
     const badgeData = response?.data;
 
@@ -30,6 +31,13 @@ const TableBadge = () => {
             selector: (row) => 
                 row.Issuers.reduce((totalBadges, issuer) => 
                     totalBadges + (issuer.BadgeClasses?.length || 0), 0),
+            sortable: true,
+        },
+        {
+            name: "Total Earner",
+            selector: (row) => 
+                row.Issuers.reduce((totalEarners, issuer) => 
+                    totalEarners + (issuer.Earners?.length || 0), 0),
             sortable: true,
         },
         {
@@ -64,4 +72,4 @@ const TableBadge = () => {
     );
 };
 
-export default TableBadge;
+export default TableReport;

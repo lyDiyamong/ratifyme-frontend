@@ -2,16 +2,16 @@
 import DashboardContainer from "../../components/styles/DashboardContainer";
 
 // Custom Import
-import TableBadge from "./TableReport";
+import TableReport from "./TableReport";
 
-// ============ Start EarnerManagement ============
+// ============ Start Report Page ============
 const reportManagement = () => {
     return (
         <DashboardContainer>
-            <TableBadge />
+            <TableReport />
         </DashboardContainer>
     );
 };
 
 export default reportManagement;
-// ============ End EarnerManagement ============
+// ============ End Report Page ============
