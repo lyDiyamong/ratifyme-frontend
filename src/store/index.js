@@ -12,6 +12,7 @@ import { infoApi } from "./api/users/userInfoProfileApi";
 
 import { setupListeners } from "@reduxjs/toolkit/query";
 import gloableReducer from "./slices/globalSlices";
+import { userApi } from "./api/users/userProfileApi";
 
 const store = configureStore({
     reducer: {
