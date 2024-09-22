@@ -72,8 +72,7 @@ const SignupPage = () => {
     const [role, setRole] = useState("");
     const [signUp, { isLoading, isError, error }] = useSignUpMutation();
     const [activeStep, setActiveStep] = useState(0);
-    const { inviter } = location.state || {};
-    console.log("inviter from signup", inviter);
+    const { inviter, guest } = location.state || {};
 
     const steps = {
         institution: ["General Information", "Address Information", "Account Setup", "Institution Information"],
@@ -92,7 +91,7 @@ const SignupPage = () => {
             dateOfBirth: null,
             genderId: "",
             username: "",
-            email: "",
+            email: guest?.inviteEmail || "",
             password: "",
             passwordConfirm: "",
             country: "",
@@ -104,20 +103,31 @@ const SignupPage = () => {
         },
     });
 
-    const { handleSubmit, control } = methods;
+    const { handleSubmit, control, setValue } = methods;
+
+    useEffect(() => {
+        if (guest && guest.inviteEmail && role !== "institution") {
+            setValue("email", guest.inviteEmail);
+        }
+    }, [guest, role, setValue]);
 
     const onSubmit = async (data) => {
         const roleId = roleIdData[role] || 0;
         const reqData = {
-            userData: { ...data, roleId },
+            userData: { ...data, roleId, email: guest ? guest.inviteEmail : data.email },
             addressData: { street: data.street, city: data.city, postalCode: data.postalCode, country: data.country },
             issuerData: {},
+            earnerData: {},
         };
 
         // Add institutionId to issuerData if inviter exists
         if (inviter) {
             reqData.issuerData = {
                 institutionId: inviter.id,
+            };
+
+            reqData.earnerData = {
+                issuerId: inviter.id,
             };
         }
 
@@ -184,7 +194,14 @@ const SignupPage = () => {
                                 <FormInput name="phoneNumber" label="Phone Number" control={control} required />
                             </Grid>
                             <Grid item xs={12} sm={6}>
-                                <FormInput name="email" label="Email" control={control} required />
+                                <FormInput
+                                    name="email"
+                                    label="Email"
+                                    control={control}
+                                    required
+                                    disabled={role !== "institution"}
+                                    defaultValue={guest?.inviteEmail || ""}
+                                />
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <FormInput

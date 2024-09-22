@@ -40,14 +40,19 @@ const CodeInvitationPage = () => {
     // Submit handler
     const onSubmit = async (data) => {
         try {
-            const response = await verifyInvitation(data);
+            const response = await verifyInvitation({ data, role });
 
             // Check if response is valid and contains inviter data
-            if (response?.data?.inviter) {
+            if (response?.data) {
                 const inviterData = response.data.inviter;
-
-                navigate(`/signup?as=${role}`, { state: { inviter: inviterData } });
+                const guestData = response.data.guest;
+                const userData = response.data.user;
                 console.log("inviterData", inviterData);
+                if (userData === null) {
+                    navigate(`/signup?as=${role}`, { state: { inviter: inviterData, guest: guestData } });
+                } else {
+                    navigate(`/login`);
+                }
             }
         } catch (error) {
             console.error("Verification failed:", error);
@@ -80,6 +85,7 @@ const CodeInvitationPage = () => {
                             Log In your account to manage your company!
                         </Typography>
                     </Box>
+
                     {/* Start form container */}
                     <Box
                         component="form"
