@@ -6,8 +6,8 @@ export const verifyInvitationApi = createApi({
     baseQuery: createBaseQuery(),
     endpoints: (builder) => ({
         verifyInvitation: builder.mutation({
-            query: (data) => ({
-                url: '/users/verifyInvitation/verifyAsIssuer',
+            query: ({data, role}) => ({
+                url: `/users/verifyInvitation?as=${role}`,
                 method: 'POST',
                 body: data,
             }),
