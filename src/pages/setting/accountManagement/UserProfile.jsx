@@ -1,22 +1,36 @@
 //React Import
-import  { useState } from 'react';
+import { useEffect, useState } from "react";
 //MUI Import
 import { Box, Container, Stack, IconButton, Grid, Typography, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete"; // Import Delete icon
 //Custom Import
 import DashboardContainer from "../../../components/styles/DashboardContainer";
 import theme from "../../../assets/themes/index";
 import PhotoIconSvg from "../../../assets/icons/Photo Icon.svg";
 import RoleIconSvg from "../../../assets/icons/Role.svg";
 import { ProfileInfoData } from "../../../data/setting/UserProfileData";
-import { ProfileIdentityData } from "../../../data/setting/UserProfileData";
 import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
-import EditProfileModal from "./ModalEditProfile"
-
+import EditProfileModal from "./ModalEditProfile";
+import {
+    useFetchUserQuery,
+    useUploadUserPfMutation,
+    useDeleteUserPfMutation,
+} from "../../../store/api/users/userProfileApi";
 
 //============ Start User Profile Component ============
 const UserProfile = () => {
     const [open, setOpen] = useState(false);
+    const { data: response } = useFetchUserQuery(13);
+    const user = response?.data;
+    const [updateImage, setUpdateImage] = useState(null);
+
+    useEffect(() => {
+        setUpdateImage(user?.profileImage);
+    }, [user]);
+
+    const [updateImg] = useUploadUserPfMutation();
+    const [deleteImg] = useDeleteUserPfMutation();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -25,9 +39,39 @@ const UserProfile = () => {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const handleFileChange = async (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const formData = new FormData();
+            formData.append("image", file);
+
+            try {
+                const result = await updateImg({ id: 13, data: formData }).unwrap();
+                setUpdateImage(result?.data?.profileImage);
+                console.log("Image updated successfully:", result?.data?.profileImage);
+            } catch (error) {
+                console.error("Error uploading image:", error);
+            }
+        }
+        event.target.value = "";
+    };
+
+    // Handle delete image
+    const handleDeleteImage = async () => {
+        try {
+            await deleteImg({ id: 13 }).unwrap();
+            // Reset the image state
+            setUpdateImage(null);
+            console.log("Image deleted successfully");
+        } catch (error) {
+            console.error("Error deleting image:", error);
+        }
+    };
+
     return (
         <DashboardContainer>
-            {/*============ Start  User Data Container "Card"  ============*/}
+            {/*============ Start User Data Container "Card" ============*/}
             <Stack
                 direction={{ sm: "column", md: "row" }}
                 justifyContent={"flex-start"}
@@ -40,47 +84,61 @@ const UserProfile = () => {
                 }}
             >
                 {/*============ Start Image Profile User Data ============*/}
-                <Container sx={{ p: "0", width: "250px", marginRight: "280px", marginLeft: "18px" }}>
+                <Box>
                     <Box sx={{ position: "relative" }}>
-                        {/*Profile Image */}
+                        {/* Profile Image */}
                         <Box
                             component="img"
-                            src={ProfileIdentityData.profilepic || DefaultProfileSvg}
+                            src={updateImage || DefaultProfileSvg}
                             alt="person"
-                            sx={{ width: { xss: "100px", sm: "200px" }, position: "relative" }}
+                            sx={{
+                                width: { xss: "100px", sm: "200px" },
+                                borderRadius: "100%",
+                                objectFit: "cover",
+                                height: { xss: "100px", sm: "200px" },
+                            }}
                         ></Box>
 
                         {/* Input Image Button */}
-                        <IconButton
-                            aria-label="custom-button"
-                            sx={{
-                                position: "absolute",
-                                bottom: { xss: "3px", sm: "15px" },
-                                left: { xss: "70px", sm: "160px" },
-                            }}
-                        >
-                            <Box component="img" alt="icon" src={PhotoIconSvg}></Box>
-                        </IconButton>
-                    </Box>
-                </Container>
+                        <input
+                            type="file"
+                            id="icon-button-photo"
+                            style={{ display: "none" }}
+                            onChange={handleFileChange}
+                        />
 
+                        {/* Label linked to the file input */}
+                        <label htmlFor="icon-button-photo">
+                            <IconButton
+                                aria-label="upload"
+                                component="span"
+                                sx={{
+                                    position: "absolute",
+                                    bottom: { xss: "3px", sm: "15px" },
+                                    left: { xss: "70px", sm: "160px" },
+                                }}
+                            >
+                                <Box component="img" alt="Upload Icon" src={PhotoIconSvg} />
+                            </IconButton>
+                        </label>
+                    </Box>
+                </Box>
                 {/*============ End Image Profile User Data ============*/}
+
                 <Container>
                     {/*============ Start Upper User Data ============*/}
                     <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
                         <Stack gap={"22px"} sx={{ p: "0px" }}>
                             {/* User Name Data */}
                             <Typography sx={{ fontSize: theme.typography.h4, fontWeight: theme.fontWeight.semiBold }}>
-                                {ProfileIdentityData.username}
+                                {user?.username}
                             </Typography>
-                            <Box component={"div"} sx={{ display: "flex", gap: 1 }}>
-                                <Box component={"img"} src={RoleIconSvg} sx={{ width: "24px" }}></Box>
-
-                                {/* User Role Data */}
+                            <Box sx={{ display: "flex", gap: 1 }}>
+                                <Box component="img" src={RoleIconSvg} sx={{ width: "24px" }} />
                                 <Typography
                                     sx={{ fontSize: theme.typography.h5, fontWeight: theme.fontWeight.semiBold }}
                                 >
-                                    {ProfileIdentityData.role}
+                                    {/* {profileData?.role} */}
                                 </Typography>
                             </Box>
                         </Stack>
@@ -100,6 +158,21 @@ const UserProfile = () => {
                                 Edit
                             </Button>
                             <EditProfileModal open={open} onClose={handleClose} />
+                            {/* Delete Button */}
+                            <Button
+                                variant="contained"
+                                onClick={handleDeleteImage}
+                                startIcon={<DeleteIcon />}
+                                sx={{
+                                    color: theme.palette.customColors.white,
+                                    bgcolor: theme.palette.error.main,
+                                    borderRadius: theme.customShape.btn,
+                                    textTransform: "none",
+                                    ml: 1,
+                                }}
+                            >
+                                Delete Image
+                            </Button>
                         </Box>
                     </Stack>
                     {/*============ End Upper User Data ============*/}
@@ -110,12 +183,13 @@ const UserProfile = () => {
                         sx={{
                             mt: "50px",
                             justifyContent: "flex-start",
-                            columnGap: { xs: "22px", sm: "32px" },
-                            rowGap: { xs: "22px", sm: "32px" },
+                            columnGap: { xss: "22px", sm: "32px" },
+                            rowGap: { xss: "22px", sm: "32px" },
                         }}
                     >
                         {ProfileInfoData.map((info) => (
                             <Grid
+                                item
                                 key={info.id}
                                 direction={"row"}
                                 xs={4}
