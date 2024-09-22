@@ -30,12 +30,12 @@ const BillingInvoiceManagement = () => {
     const columns = [
         {
             name: "Organization Name",
-            selector: (row) => row.Institution?.name,
+            selector: (row) => row.Institution?.institutionName,
             sortable: true,
         },
         {
             name: "Email Address",
-            selector: (row) => row.Institution?.email,
+            selector: (row) => row.Institution?.institutionEmail,
             sortable: true,
         },
         {

@@ -32,7 +32,7 @@ const InvoiceManagement = () => {
     const columns = [
         {
             name: "Organization Name",
-            selector: (row) => row.Institution?.name,
+            selector: (row) => row.Institution?.institutionName,
             sortable: true,
         },
         {
