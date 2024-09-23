@@ -15,6 +15,7 @@ import NotFoundPage from "../pages/NotFoundPage";
 import InvoiceManagement from "../pages/invoice";
 import BadgeCreation from "../pages/badgeMangements/BadgeCreation";
 import AddRecipient from "../pages/earnerManagements/AddRecipient";
+import BadgeDetail from "../pages/badgeMangements/BadgeDetail";
 
 const DashbaordRouter = () => {
     return (
@@ -31,10 +32,11 @@ const DashbaordRouter = () => {
                 <Route path="/mybackpacks" element={<BackpackManagement />} />
                 <Route path="/setting/account" element={<AccountManagement />} />
                 <Route path="/setting/privacy&security" element={<PrivacySecurityManagement />} />
-                <Route path="/management/badges/badge-creation" element={<BadgeCreation />} />
                 <Route path="/management/eaners/add-earners" element={<AddRecipient />} />
                 {/* <Route path="/unauthorized" element={<UnauthorizedPage />} />
                 <Route path="*" element={<NotFoundPage />} /> */}
+                <Route path="/management/badges/badgecreation" element={<BadgeCreation />} />
+                <Route path="/management/badges/badgeDetail/:id" element={<BadgeDetail />} />
             </Route>
         </Routes>
     );
