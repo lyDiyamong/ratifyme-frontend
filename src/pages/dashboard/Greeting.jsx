@@ -4,9 +4,17 @@ import { Box, Stack, Typography } from "@mui/material";
 // Custom theme
 import theme from "../../assets/themes";
 import GreetingIconSvg from "../../assets/images/Greeting-illu.svg";
-import DashboardContainer from "../../components/styles/DashboardContainer";
 
-const Greeting = ({ userName }) => {
+//Fetching Data
+import { useCheckAuthQuery } from "../../store/api/auth/authApi";
+import { useFetchInfoUserByIdQuery } from "../../store/api/users/userInfoProfileApi";
+
+const Greeting = () => {
+    const { data: user } = useCheckAuthQuery();
+    const userId = user.user.id;
+
+    const { data: info, isLoading, isError } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
+    const userData = info?.data;
     return (
         // ============ Start Greeting Section ============
 
@@ -32,10 +40,13 @@ const Greeting = ({ userName }) => {
                         fontWeight: theme.fontWeight.semiBold,
                     }}
                 >
-                    Welcome back, {userName}
+                   Welcome back, {userData?.firstName || "No"} {userData?.lastName || "Name"} 👋
+
                 </Typography>
                 <Typography sx={{ fontSize: theme.typography.body2 }}>
-                    You’ve complete 82% of your badges this week! Keep it up, we will help with global standard!
+                Just wanted to say I’m really looking forward to working with you.
+                    
+                Let’s rock this!
                 </Typography>
             </Box>
             {/* End Text Container */}
