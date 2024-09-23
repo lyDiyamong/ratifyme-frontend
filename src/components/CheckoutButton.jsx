@@ -2,12 +2,17 @@
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 // Mui import
-import { Button, CircularProgress } from "@mui/material";
+import { Button } from "@mui/material";
 
 // Custom import
+import { SpinLoading } from "../components/loading/SpinLoading";
 import theme from "../assets/themes";
+
+// Api import
+import { useCheckAuthQuery } from "../store/api/auth/authApi";
 
 // Public key from Stripe
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
@@ -18,12 +23,18 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
  * @return {JSX.Element} : Checkout button for stripe only
  */
 const CheckoutButton = ({ id }) => {
+    const { data: user } = useCheckAuthQuery();
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
+    // Handle redirecting
     const handleClick = async (id) => {
         setLoading(true);
 
         try {
+            // Redirect to signup when there's no user
+            if (!user) return navigate("/signup");
+
             // Create a Checkout Session
             const response = await axios.post(`${import.meta.env.VITE_SERVER_BASE_URL}/subscriptions/subscribe/${id}`, {
                 servicePlanId: id,
@@ -58,7 +69,7 @@ const CheckoutButton = ({ id }) => {
                 borderRadius: theme.customShape.btn,
             }}
         >
-            {loading ? <CircularProgress size={24} color={theme.palette.customColors.white} /> : "Subscribe"}
+            {loading ? <SpinLoading color={theme.palette.customColors.white} size={24} /> : "Subscribe"}
         </Button>
     );
 };

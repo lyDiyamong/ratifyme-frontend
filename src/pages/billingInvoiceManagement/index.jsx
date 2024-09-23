@@ -9,6 +9,8 @@ import MenuSelection from "../../components/TableAction/MenuSelection";
 import FormatDate from "../../utils/dateString";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import PageTitle from "../../components/PageTitle";
+import SkeletonLoading from "../../components/loading/SkeletonLoading";
+
 
 // Api import
 import { useGetSubscritptionQuery } from "../../store/api/subscription/subscriptionApi";
@@ -23,19 +25,15 @@ const BillingInvoiceManagement = () => {
         navigate(`/sales/invoice?institutionId=${institutionId}`);
     };
 
-    const handleDelete = () => {
-        console.log("Delete action triggered");
-    };
-
     const columns = [
         {
             name: "Organization Name",
-            selector: (row) => row.Institution?.name,
+            selector: (row) => row.Institution?.institutionName,
             sortable: true,
         },
         {
             name: "Email Address",
-            selector: (row) => row.Institution?.email,
+            selector: (row) => row.Institution?.institutionEmail,
             sortable: true,
         },
         {
@@ -51,7 +49,7 @@ const BillingInvoiceManagement = () => {
         {
             name: "Action",
             selector: ({ institutionId }) => (
-                <MenuSelection onView={() => handleView(institutionId)} onDelete={handleDelete} />
+                <MenuSelection onView={() => handleView(institutionId)} />
             ),
         },
     ];
@@ -59,7 +57,7 @@ const BillingInvoiceManagement = () => {
     return (
         <DashboardContainer>
             <PageTitle title="Billing and Invoice" />
-            <TableCustom title="Billing and Invoice" data={subscriptions} columns={columns} />
+            {isLoading ? <SkeletonLoading num={5} /> :<TableCustom title="Billing and Invoice" data={subscriptions} columns={columns} />}
         </DashboardContainer>
     );
 };

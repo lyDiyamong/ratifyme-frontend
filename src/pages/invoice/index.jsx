@@ -1,38 +1,46 @@
 // React import
 import { useLocation } from "react-router-dom";
 
+// MUI import
+import { Box, Typography, Skeleton } from "@mui/material";
+
 // Custom import
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import TableCustom from "../../components/TableList";
 import FormatDate from "../../utils/dateString";
 import PageTitle from "../../components/PageTitle";
-import MenuSelection from "../../components/TableAction/MenuSelection";
 
 // API import
 import { useGetSubInstitutionQuery } from "../../store/api/subscription/subscriptionApi";
+import theme from "../../assets/themes";
+import SkeletonLoading from "../../components/loading/SkeletonLoading";
+import AlertMessage from "../../components/alert/AlertMessage";
 
 const InvoiceManagement = () => {
+    // Get query for requesting
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const institutionId = queryParams.get("institutionId");
 
+    // Fetching data
+    const { data: response, isLoading, isError } = useGetSubInstitutionQuery(institutionId);
+    const institutionData = response?.data;
+    // console.log(institutionData);
+    // console.log(institutionId);
+    if (isError) return <Box>Haha</Box>;
 
-    const { data: response } = useGetSubInstitutionQuery(institutionId);
-
-    const institutionData = response?.data
-
-    const handleView = () => {
-        console.log("View action triggered");
-    };
-
-    const handleDelete = () => {
-        console.log("Delete action triggered");
-    };
+    // Total paid price
+    const price = 0;
+    const totalPaid =
+        response &&
+        institutionData.reduce((accumulator, current) => {
+            return accumulator + parseFloat(current.ServicePlan.price);
+        }, price);
 
     const columns = [
         {
             name: "Organization Name",
-            selector: (row) => row.Institution?.name,
+            selector: (row) => row.Institution?.institutionName,
             sortable: true,
         },
         {
@@ -55,20 +63,42 @@ const InvoiceManagement = () => {
             selector: (row) => FormatDate(row.endDate),
             sortable: true,
         },
-        {
-            name: "Action",
-            selector: ({ institutionId }) => (
-                <MenuSelection onView={() => handleView(institutionId)} onDelete={handleDelete} />
-            ),
-        },
     ];
 
     return (
+        // ============ Start login container ============
         <DashboardContainer>
+            {/* Page Title */}
             <PageTitle title="Invoice" />
-            <TableCustom title="Invoice" data={institutionData} columns={columns} />
-            {/* <TableCustom title="Billing and Invoice" data={institutionData} columns={columnss} /> */}
+            {/* <AlertMessage variant="error">Login succesfully</AlertMessage> */}
+
+            {/* Table Data */}
+            {isLoading ? (
+                <SkeletonLoading num={5} />
+            ) : (
+                <TableCustom title="Invoice" data={institutionData} columns={columns}></TableCustom>
+            )}
+            <Box
+                sx={{
+                    width: "100%",
+                    mt: 2,
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    bgcolor: theme.palette.secondary.dark,
+                    p: [4, 2],
+                }}
+            >
+                <Box>
+                    <Typography variant="h4" color={theme.palette.customColors.white}>
+                        Total Paid : ${response && totalPaid.toFixed(2)}
+                    </Typography>
+                </Box>
+            </Box>
+            {/* Start total price container */}
+
+            {/* End total price container */}
         </DashboardContainer>
+        // ============ End login container ============
     );
 };
 

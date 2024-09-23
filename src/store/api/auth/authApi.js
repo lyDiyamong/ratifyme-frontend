@@ -1,41 +1,37 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { clearAuthState, setAuthState } from "../../slices/globalSlices";
+import { createBaseQuery } from "../../../utils/baseQuery";
+import { handleAuthSuccess } from "../../../utils/authHelpers";
 
 export const authApi = createApi({
     reducerPath: "authApi",
-    // baseQuery: fetchBaseQuery({
-    //     baseUrl: import.meta.env.VITE_SERVER_BASE_URL,
-    //     credentials: "include",
-    //     prepareHeaders: (headers, { getState }) => {
-    //         const token = getState().global.token;
-    //         if (token) {
-    //             headers.set("Authorization", `Bearer ${token}`);
-    //         }
-    //         return headers;
-    //     },
-
-    // }),
-
-
-    // Handle global errors, especially token expiration
     baseQuery: async (args, api, extraOptions) => {
-        const baseQuery = fetchBaseQuery({
-            baseUrl: import.meta.env.VITE_SERVER_BASE_URL,
-            credentials: "include",
-        });
+        const baseQuery = createBaseQuery();
 
         try {
             return await baseQuery(args, api, extraOptions);
         } catch (error) {
             if (error.status === 401) {
-                // Handle token expiration or unauthorized access
                 api.dispatch(clearAuthState());
-                window.location.href = "/login"; // Redirect to login page
+                window.location.href = "/login";
                 return { error: { status: 401, data: "Unauthorized" } };
             }
+
+            // Handle other status codes or network errors here
+            if (error.status === 500) {
+                // Handle server errors
+                return { error: { status: 500, data: "Server Error" } };
+            }
+
+            // Handle network or unknown errors
+            if (!error.status) {
+                return { error: { status: "NETWORK_ERROR", data: "Network Error" } };
+            }
+
             throw error;
         }
     },
+
     endpoints: (builder) => ({
         signUp: builder.mutation({
             query: (data) => ({
@@ -43,6 +39,9 @@ export const authApi = createApi({
                 method: "POST",
                 body: data,
             }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                await handleAuthSuccess(dispatch, queryFulfilled);
+            },
         }),
 
         signIn: builder.mutation({
@@ -52,22 +51,8 @@ export const authApi = createApi({
                 body: data,
             }),
 
-            // handle the sign-in success response
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                try {
-                    const { data } = await queryFulfilled;
-                    dispatch(
-                        setAuthState({
-                            userInfo: data.user,
-                            token: data.token,
-                            isAuthenticated: true,
-                        }),
-                    );
-                    // Fetch user info to ensure authentication is verified
-                    dispatch(authApi.endpoints.checkAuth.initiate());
-                } catch (err) {
-                    console.error("Sign-in failed:", err);
-                }
+                await handleAuthSuccess(dispatch, queryFulfilled);
             },
         }),
 
@@ -80,12 +65,6 @@ export const authApi = createApi({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    // Debug
-                    // console.log("CheckAuth Response Data:", data);
-                    // console.log("User ID:", data.user.id);
-                    // console.log("User Info:", data.user);
-                    // console.log("Token:", data.token);
-                    // console.log("Role:", data.user.roleId);
                     dispatch(
                         setAuthState({
                             userId: data.user.id,

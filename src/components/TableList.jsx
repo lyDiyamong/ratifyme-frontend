@@ -21,7 +21,7 @@ const customTable = {
 
 /**
  * Table list Custom
- * 
+ *
  * @param {string} [title=""] - The title of the table. Displayed at the top of the table.
  * @param {Array} [data=[]] - The data to be displayed in the table. Each object in the array represents a row.
  * @param {Array} [columns=[]] - Column configurations for the table. If not provided, default columns are used.
@@ -30,7 +30,7 @@ const customTable = {
  * @returns {JSX.Element} A Material-UI styled DataTable component.
  */
 // ============ Start Table Custom Button ============
-const TableCustom = ({title='', data = [], columns = [], sortIcon = false, actions = false}) => {
+const TableCustom = ({title='', data = [], columns = [], sortIcon = false, actions = false, children}) => {
     // Default columns if not provided
     const defaultColumns = [
         {
@@ -102,6 +102,7 @@ const TableCustom = ({title='', data = [], columns = [], sortIcon = false, actio
                     dense
                     customStyles={customTable}
                 />
+                {children}
             </Box>
     );
 };

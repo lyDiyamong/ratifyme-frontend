@@ -1,12 +1,12 @@
 // React library import
 // ServiceDetail Code
 import { useState } from "react";
-import { useGetServicePlanQuery } from "../store/api/subscription/subscriptionApi";
+
 
 
 // MUI library import
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
-import { Box, Grid, Tabs, Tab, useMediaQuery } from "@mui/material";
+import { Box, Grid, Tabs, Tab, useMediaQuery, Typography } from "@mui/material";
 
 // Custom import
 import ServiceDetailMobile from "./ServiceDetailMobile";
@@ -14,16 +14,21 @@ import { serviceRows as rows } from "../data/pricePage/serviceTable";
 import theme from "../assets/themes";
 import PriceCard from "./PriceCard";
 
+// Api import
+import { useGetServicePlanQuery } from "../store/api/subscription/subscriptionApi";
+
+
 const ServiceDetail = () => {
     // Fetching data from API
+
     const { data, isLoading, error } = useGetServicePlanQuery();
     const [value, setValue] = useState(0);
     // Start tab section when screen below medium size
     const isMediumScreen = useMediaQuery(theme.breakpoints.down(theme.breakpoints.values.md));
 
     // Handle loading and error states
-    if (isLoading) return <div>Loading...</div>;
-    if (error) return <div>{error.error}</div>;
+    if (isLoading) return <Typography>Loading...</Typography>;
+    if (error) return <Typography color="error">{error.error}</Typography>;
 
     const servicePlans = data?.data;
 

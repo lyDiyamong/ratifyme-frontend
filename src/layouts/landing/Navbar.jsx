@@ -50,7 +50,6 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     const show = useHideOnScroll();
-    const openSignup = Boolean(signUpAnchorEl);
     const openNavbarMenu = Boolean(navbarAnchorEl);
 
     const handleMenuOpen = (event, setAnchorEl) => {
@@ -61,10 +60,6 @@ const Navbar = () => {
         setAnchorEl(null);
     };
 
-    const handleRoleSelect = (role) => {
-        handleMenuClose(setSignupAnchorEl);
-        navigate(`/signup?as=${role}`)
-    };
     // ============ End Burger modal function ============
 
     // ============ Start config style ============
@@ -140,31 +135,19 @@ const Navbar = () => {
                                         Sign In
                                     </Button>
                                 </Link>
-                                <Button
-                                    variant="contained"
-                                    onClick={(event) => handleMenuOpen(event, setSignupAnchorEl)}
-                                    sx={{
-                                        borderRadius: theme.customShape.btn,
-                                        color: theme.palette.customColors.white,
-                                        fontWeight: theme.fontWeight.bold,
-                                    }}
-                                >
-                                    Signup
-                                </Button>
+                                <Link to="/get-started">
+                                    <Button
+                                        variant="contained"
+                                        sx={{
+                                            borderRadius: theme.customShape.btn,
+                                            color: theme.palette.customColors.white,
+                                            fontWeight: theme.fontWeight.bold,
+                                        }}
+                                    >
+                                        Sign Up
+                                    </Button>
+                                </Link>
 
-                                <Menu
-                                    id="signup-menu"
-                                    anchorEl={signUpAnchorEl}
-                                    open={openSignup}
-                                    onClose={() => handleMenuClose(setSignupAnchorEl)}
-                                    MenuListProps={{
-                                        "aria-labelledby": "signup-button",
-                                    }}
-                                >
-                                    <MenuItem onClick={() => handleRoleSelect("institution")}>Institution</MenuItem>
-                                    <MenuItem onClick={() => handleRoleSelect("issuer")}>Issuer</MenuItem>
-                                    <MenuItem onClick={() => handleRoleSelect("earner")}>Earner</MenuItem>
-                                </Menu>
                             </Box>
                         </Box>
                         {/* ============ End Menu navbar ============ */}
