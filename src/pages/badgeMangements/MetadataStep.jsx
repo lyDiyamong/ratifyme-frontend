@@ -12,18 +12,18 @@ import DateSelectionForm from "../../components/DateSelectionForm";
 const MetadataStep = ({ control }) => {
     // Data static of Option Language
     const optionLanguage = [
-        { value: "contentCreation", label: "JavaScript" },
-        { value: "ReactJs", label: "React Js" },
-        { value: "NodeJs", label: "Node Js" },
-        { value: "python", label: "Python" },
-        { value: "typescript", label: "TypeScript" },
-        { value: "htmlCss", label: "HTML & CSS" },
-        { value: "angular", label: "Angular" },
-        { value: "vueJs", label: "Vue Js" },
-        { value: "ruby", label: "Ruby" },
-        { value: "php", label: "PHP" },
-        { value: "java", label: "Java" },
-        { value: "golang", label: "Go" },
+        { name: "JavaScript", label: "JavaScript" },
+        { name: "ReactJs", label: "React Js" },
+        { name: "NodeJs", label: "Node Js" },
+        { name: "python", label: "Python" },
+        { name: "typescript", label: "TypeScript" },
+        { name: "htmlCss", label: "HTML & CSS" },
+        { name: "angular", label: "Angular" },
+        { name: "vueJs", label: "Vue Js" },
+        { name: "ruby", label: "Ruby" },
+        { name: "php", label: "PHP" },
+        { name: "java", label: "Java" },
+        { name: "golang", label: "Go" },
     ];
 
     // Data static of Option Achievement Type
