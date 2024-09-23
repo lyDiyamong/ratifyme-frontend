@@ -17,7 +17,7 @@ const TableReport = () => {
     const { data: response, isLoading, isError } = useFetchInstitutionStatsQuery();
     const reportData = response?.data;
 
-    //Search query state for filtering report data
+    // Search query state for filtering report data
     const [searchQuery, setSearchQuery] = useState("");
 
     // Report Columns
@@ -46,23 +46,24 @@ const TableReport = () => {
         },
     ];
 
-    // FilterReport Data = reportData?.
-    const filterReportData = reportData?.filter((report) =>
-        report.institutionName.toLowerCase().includes(searchQuery),
-    );
+    // Filter data based on the search query
+    const filterReportData =
+        reportData?.filter(
+            (report) =>
+                report?.institutionName?.toLowerCase().includes(searchQuery.toLowerCase()) // Handle null or undefined institutionName
+        ) || [];
 
     return (
         <Box>
             <SearchBarCustom onSearch={setSearchQuery} />
-            
             {isLoading ? (
                 <CircularProgress />
             ) : isError ? (
                 <Typography color="error">Error fetching data</Typography>
-            ) : filterReportData && filterReportData.length > 0 ? (
+            ) : filterReportData.length > 0 ? (
                 <TableCustom title="Report List" data={filterReportData} columns={reportColumns} />
             ) : (
-                // Display this section if no report match the search query
+                // Display this section if no report matches the search query
                 <NoRecordData />
             )}
         </Box>
