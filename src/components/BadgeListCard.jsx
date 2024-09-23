@@ -1,5 +1,5 @@
-// React import
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 // MUI import
 import {
@@ -19,24 +19,10 @@ import {
 import theme from "../assets/themes";
 import StatusCode from "../assets/images/NoData.svg";
 import GoldBadge from "../assets/images/DiamondBadge.svg";
-import { useFetchBadgesByIssuerQuery } from "../store/api/badgeManagement/badgeApi";
-import { useCheckAuthQuery } from "../store/api/auth/authApi";
+import BadgeDetail from "../pages/badgeMangements/BadgeDetail";
 
-const BadgeListCard = () => {
-    const { data: users } = useCheckAuthQuery();
-    const { data, isLoading, isError } = useFetchBadgesByIssuerQuery();
-    const badges = data?.data || [];
-    const userId = users?.user?.id;
-
-    // filter by userId so each issuer that has different userId
-    // see other badge list card
-    const checkBadge = badges.filter((badge) => {
-        if (badge.Issuer) {
-            return badge.Issuer.userId === userId;
-        }
-        return false;
-    });
-
+const BadgeListCard = ({ badges, onView }) => {
+    const navigate = useNavigate();
     // State management for pagination
     const [page, setPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(6);
@@ -51,20 +37,23 @@ const BadgeListCard = () => {
     }, [isLargeScreen, isMediumScreen]);
 
     // Pagination handling
-    const pageCount = Math.ceil(checkBadge.length / itemsPerPage);
-    const currentBadges = checkBadge.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+    const pageCount = Math.ceil(badges.length / itemsPerPage);
+    const currentBadges = badges.slice((page - 1) * itemsPerPage, page * itemsPerPage);
     const handleChangePage = (_, value) => setPage(value);
 
-    if (isLoading) return <Typography>Loading...</Typography>;
-    if (isError) return <Typography>Error loading badges</Typography>;
+    const handleView = (id) => {
+        // Log the badge ID
+        console.log("Badge ID passed to onView:", id);
+        onView(id);
+    };
 
     return (
         <Box my={3}>
             <Typography variant="h6" sx={{ pb: 2 }}>
-                Total Badges: {checkBadge.length}
+                Total Badges: {badges.length}
             </Typography>
 
-            {checkBadge.length === 0 ? (
+            {badges.length === 0 ? (
                 <Box display="flex" flexDirection="column" alignItems="center" p={4}>
                     <CardMedia
                         component="img"
@@ -137,6 +126,7 @@ const BadgeListCard = () => {
                                             fontWeight: theme.fontWeight.bold,
                                             borderRadius: theme.customShape.btn,
                                         }}
+                                        onClick={() => handleView(badge.id || badge._id)}
                                     >
                                         Visit
                                     </Button>
