@@ -58,7 +58,7 @@ export const sidebarItems = [
         icon: ReportIconSvg,
         path: "/reports",
         altText: "Reports icon",
-        roles: [1],
+        roles: [1, 2],
     },
     {
         text: "My Backpacks",

@@ -34,14 +34,14 @@ const ProfileEarnerModal = ({ open, onClose, userId }) => {
     // Prevent the API query from running if userId is null or undefined
     const { data, isLoading, isError } = useFetchEarnerByIdQuery(userId, { skip: !userId });
 
-    const earner = data?.data;
+    const earnerData = data?.data;
 
     return (
         // Call Profile Modal
         <ProfileModal
             open={open}
             onClose={onClose}
-            item={earner}
+            item={earnerData}
             avatarKey="User.profileImage"
             nameKey="User.username"
             roleKey="User.Role.name"

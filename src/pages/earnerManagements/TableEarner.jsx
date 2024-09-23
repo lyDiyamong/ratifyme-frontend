@@ -1,112 +1,115 @@
-// MUI Import
-import { Box, Typography, CircularProgress } from "@mui/material";
+// React Library
 import { useState } from "react";
 
+// MUI Import
+import { Box, Typography, CircularProgress } from "@mui/material";
+
 // Custom Import
+import SearchBarTest from "../../components/SearchBarCustom";
 import TableCustom from "../../components/TableList";
 import MenuSelection from "../../components/TableAction/MenuSelection";
-import FormatYear from "../../utils/fomatYear";
+import FormatYear from "../../utils/formatDate";
 import ProfileEarnerModal from "./ProfileEarnerModal";
 
 // Fetching Data Import
-import {
-  useFetchEarnerQuery,
-  useDeleteEarnerByIdMutation
-} from "../../store/api/earnerManagement/earnerApis";
+import { useFetchEarnerQuery, useDeleteEarnerByIdMutation } from "../../store/api/earnerManagement/earnerApis";
 
 // ============ Start Table Earner Modal Custom Button ============
 const TableEarner = () => {
-  const { data: response, isLoading, isError } = useFetchEarnerQuery();
-  const [deleteEarner] = useDeleteEarnerByIdMutation();
+    const { data: response, isLoading, isError } = useFetchEarnerQuery();
+    const [deleteEarner] = useDeleteEarnerByIdMutation();
 
-  // State for handling modal
-  const [selectedUserId, setSelectedUserId] = useState(null);
-  const [openModal, setOpenModal] = useState(false);
+    // State for handling modal
+    const [selectedUserId, setSelectedUserId] = useState(null);
+    const [openModal, setOpenModal] = useState(false);
 
-  const earnerData = response?.data;
+    // Search query state for filtering earner data
+    const [searchQuery, setSearchQuery] = useState("");
 
-  // Handle View (open the modal)
-  const handleView = (userId) => {
-    setSelectedUserId(userId);
-    setOpenModal(true);
-  };
+    const earnerData = response?.data;
 
-  // Handle Close Modal
-  const handleCloseModal = () => {
-    setOpenModal(false);
-    setSelectedUserId(null);
-  };
+    // Handle View (open the modal)
+    const handleView = (userId) => {
+        setSelectedUserId(userId);
+        setOpenModal(true);
+    };
 
-  // Handle Delete row in table
-  const handleDelete = async (userId) => {
-    try {
-      await deleteEarner(userId).unwrap();
-    } catch (err) {
-      console.error("Failed to delete:", err);
-    }
-  };
+    // Handle Close Modal
+    const handleCloseModal = () => {
+        setOpenModal(false);
+        setSelectedUserId(null);
+    };
 
-  // Define the columns including the action column
-  const earnerColumns = [
-    {
-      name: "ID",
-      selector: (row) => row.id,
-      sortable: true
-    },
-    {
-      name: "Name",
-      selector: (row) => row.User.username,
-      sortable: true
-    },
-    {
-      name: "Email",
-      selector: (row) => row.User.email,
-      sortable: true
-    },
-    {
-      name: "Badge",
-      selector: (row) => row.Achievement.BadgeClass.name,
-      sortable: true
-    },
-    {
-      name: "Academic Year",
-      selector: (row) => FormatYear(row.AcademicBackground.academicYear),
-      sortable: true
-    },
-    {
-      name: "Action",
-      selector: (row) => (
-        <MenuSelection
-          onView={() => handleView(row.id)}
-          onDelete={() => handleDelete(row.id)}
-        />
-      )
-    }
-  ];
+    // Handle Delete row in table
+    const handleDelete = async (userId) => {
+        try {
+            await deleteEarner(userId).unwrap();
+        } catch (err) {
+            console.error("Failed to delete:", err);
+        }
+    };
 
-  return (
-    <Box>
-      {/* Modal for Viewing Profile */}
-      <ProfileEarnerModal
-        open={openModal}
-        onClose={handleCloseModal}
-        userId={selectedUserId}
-      />
+    // Define the columns including the action column
+    const earnerColumns = [
+        {
+            name: "ID",
+            selector: (row) => row.id,
+            sortable: true,
+        },
+        {
+            name: "Name",
+            selector: (row) => row.User.username,
+            sortable: true,
+        },
+        {
+            name: "Email",
+            selector: (row) => row.User.email,
+            sortable: true,
+        },
+        {
+            name: "Badge",
+            selector: (row) => row.Achievement.BadgeClass.name,
+            sortable: true,
+        },
+        {
+            name: "Academic Year",
+            selector: (row) => FormatYear({ dateString: row.AcademicBackground?.academicYear }),
+            sortable: true,
+        },
+        {
+            name: "Action",
+            selector: (row) => (
+                <MenuSelection onView={() => handleView(row.id)} onDelete={() => handleDelete(row.id)} />
+            ),
+        },
+    ];
 
-      {/* Table Data Rendering */}
-      {isLoading ? (
-        <CircularProgress />
-      ) : isError ? (
-        <Typography color="error">Error fetching data</Typography>
-      ) : (
-        <TableCustom
-          title="Earner List"
-          data={earnerData}
-          columns={earnerColumns}
-        />
-      )}
-    </Box>
-  );
+    // Filter data based on the search query
+    const filteredEarnerData = earnerData?.filter(
+        (earner) =>
+            earner.User.username.toLowerCase().includes(searchQuery) ||
+            earner.User.email.toLowerCase().includes(searchQuery) ||
+            earner.Achievement.BadgeClass.name.toLowerCase().includes(searchQuery),
+    );
+
+    return (
+        <Box>
+            {/* Search Bar */}
+            <SearchBarTest onSearch={setSearchQuery} />
+
+            {/* Modal for Viewing Profile */}
+            <ProfileEarnerModal open={openModal} onClose={handleCloseModal} userId={selectedUserId} />
+
+            {/* Table Data Rendering */}
+            {isLoading ? (
+                <CircularProgress />
+            ) : isError ? (
+                <Typography color="error">Error fetching data</Typography>
+            ) : (
+                <TableCustom title="Earner List" data={filteredEarnerData} columns={earnerColumns} />
+            )}
+        </Box>
+    );
 };
 
 export default TableEarner;
