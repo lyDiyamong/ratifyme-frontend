@@ -1,33 +1,39 @@
 // React import
 import { useLocation } from "react-router-dom";
 
+// MUI import
+import { Box, Typography, Skeleton } from "@mui/material";
+
 // Custom import
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import TableCustom from "../../components/TableList";
 import FormatDate from "../../utils/dateString";
 import PageTitle from "../../components/PageTitle";
-import MenuSelection from "../../components/TableAction/MenuSelection";
 
 // API import
 import { useGetSubInstitutionQuery } from "../../store/api/subscription/subscriptionApi";
+import theme from "../../assets/themes";
 
 const InvoiceManagement = () => {
+    // Get query for requesting
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const institutionId = queryParams.get("institutionId");
 
 
-    const { data: response } = useGetSubInstitutionQuery(institutionId);
+    // Fetching data
+    const { data: response, isLoading } = useGetSubInstitutionQuery(institutionId);
+    const institutionData = response?.data;
+    console.log(institutionData);
 
-    const institutionData = response?.data
 
-    const handleView = () => {
-        console.log("View action triggered");
-    };
+    // Total paid price
+    const price = 0;
+    const totalPaid = institutionData.reduce((accumulator, current) => {
+        return accumulator + parseFloat(current.ServicePlan.price);
+    }, price);
 
-    const handleDelete = () => {
-        console.log("Delete action triggered");
-    };
+    console.log(totalPaid.toFixed(2));
 
     const columns = [
         {
@@ -55,20 +61,36 @@ const InvoiceManagement = () => {
             selector: (row) => FormatDate(row.endDate),
             sortable: true,
         },
-        {
-            name: "Action",
-            selector: ({ institutionId }) => (
-                <MenuSelection onView={() => handleView(institutionId)} onDelete={handleDelete} />
-            ),
-        },
     ];
 
     return (
+        // ============ Start login container ============
         <DashboardContainer>
+            {/* Page Title */}
             <PageTitle title="Invoice" />
-            <TableCustom title="Invoice" data={institutionData} columns={columns} />
-            {/* <TableCustom title="Billing and Invoice" data={institutionData} columns={columnss} /> */}
+
+            {/* Table Data */}
+            {<TableCustom title="Invoice" data={institutionData} columns={columns} />}
+
+            {/* Start total price container */}
+            <Box
+                sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    bgcolor: theme.palette.primary.main,
+                    p: [4, 2],
+                }}
+            >
+                <Box>
+                    <Typography variant="h4" color={theme.palette.customColors.white}>
+                        Total Paid : ${totalPaid.toFixed(2)}
+                    </Typography>
+                </Box>
+            </Box>
+            {/* End total price container */}
         </DashboardContainer>
+        // ============ End login container ============
     );
 };
 

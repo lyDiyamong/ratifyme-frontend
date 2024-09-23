@@ -25,9 +25,7 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 const CheckoutButton = ({ id }) => {
     const { data: user } = useCheckAuthQuery();
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate()
-
-    console.log(user);
+    const navigate = useNavigate();
 
     // Handle redirecting
     const handleClick = async (id) => {
@@ -35,7 +33,7 @@ const CheckoutButton = ({ id }) => {
 
         try {
             // Redirect to signup when there's no user
-            if(!user) return navigate("/signup")
+            if (!user) return navigate("/signup");
 
             // Create a Checkout Session
             const response = await axios.post(`${import.meta.env.VITE_SERVER_BASE_URL}/subscriptions/subscribe/${id}`, {
@@ -43,7 +41,6 @@ const CheckoutButton = ({ id }) => {
             });
             // Get the session id for checking out
             const { sessionId } = await response.data;
-
 
             const stripe = await stripePromise;
             // Redirect to the checkout session page
