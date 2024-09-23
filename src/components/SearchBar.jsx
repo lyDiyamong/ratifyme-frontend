@@ -12,7 +12,6 @@ import { Link } from "react-router-dom";
 import theme from "../assets/themes";
 import DashboardContainer from "./styles/DashboardContainer";
 import cardBadgeData from "../data/CardBadgeData";
-import BadgeListCard from "./BadgeListCard";
 
 // Styled components
 const Search = styled("div")(({ theme }) => ({
@@ -68,7 +67,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function SearchBar({ showButton = true, textInButton }) {
+export default function SearchBar({ showButton = true, textInButton, children }) {
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredData, setFilteredData] = useState(cardBadgeData);
 
@@ -122,7 +121,7 @@ export default function SearchBar({ showButton = true, textInButton }) {
                         </Search>
 
                         {showButton && (
-                            <Link to="/management/badges/badge-creation">
+                            <Link to="/management/badges/badgecreation">
                                 <Button
                                     variant="contained"
                                     sx={{
@@ -145,7 +144,6 @@ export default function SearchBar({ showButton = true, textInButton }) {
                     </Toolbar>
                 </AppBar>
             </Box>
-            {/* Pass filteredData to BadgeListCard */}
             <DashboardContainer
                 sx={{
                     backgroundColor: theme.palette.customColors.white,
@@ -154,7 +152,7 @@ export default function SearchBar({ showButton = true, textInButton }) {
                     boxShadow: theme.customShadows.default,
                 }}
             >
-                <BadgeListCard badges={filteredData} />
+                {children}
             </DashboardContainer>
         </Stack>
     );
