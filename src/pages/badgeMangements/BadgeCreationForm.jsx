@@ -1,5 +1,5 @@
 // React import
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 // MUI import
@@ -12,11 +12,11 @@ import theme from "../../assets/themes";
 import CoreElementStep from "./CoreElementStep";
 import MetadataStep from "./MetadataStep";
 import OptionalStep from "./OptionalStep";
-import DashboardContainer from "../../components/styles/DashboardContainer";
 import ImageSelection from "./ImageSelection";
 import { SpinLoading } from "../../components/loading/SpinLoading";
 import { useCreateBadgeMutation, useFetchBadgesByIssuerQuery } from "../../store/api/badgeManagement/badgeApi";
 import { useCheckAuthQuery } from "../../store/api/auth/authApi";
+import { useFetchAchievementTypeQuery } from "../../store/api/achievements/achievementTypeApi";
 import { useNavigate } from "react-router-dom";
 
 // The data static of the description
@@ -39,7 +39,7 @@ const steps = [
 ];
 
 const BadgeCreationForm = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     // Stepper
     const [activeStep, setActiveStep] = useState(0);
     // Image upload
@@ -50,17 +50,27 @@ const BadgeCreationForm = () => {
     const { data: badge } = useFetchBadgesByIssuerQuery();
     const [createBadge] = useCreateBadgeMutation();
     const { data: user } = useCheckAuthQuery();
+    const { data: achievementType } = useFetchAchievementTypeQuery();
+
+    const allAchievementTypes = achievementType?.data || [];
     const userId = user?.user?.id;
+    const userName = user?.user?.username;
+    console.log(userName);
     let issuerId;
 
     // Check if badge data exists and iterate through it
-    if (badge?.data) {
-        badge.data.forEach((badge) => {
-            if (badge.Issuer && badge.Issuer.userId === userId) {
-                issuerId = badge.Issuer.id;
-            }
-        });
+    issuerId = badge?.data?.find((badge) => badge.Issuer?.userId === userId)?.Issuer?.id || null;
+    if (!issuerId) {
+        console.error("Issuer ID not found.");
     }
+
+    // Check if there is no username in issuer
+    // useEffect(() => {
+    //     reset({
+    //         issuer: userName || "",
+    //         // Other fields...
+    //     });
+    // }, [userName, reset]);
 
     console.log(userId, issuerId);
 
@@ -73,7 +83,7 @@ const BadgeCreationForm = () => {
         formState: { errors },
     } = useForm({
         defaultValues: {
-            issuer: "",
+            issuer: userName || "",
             criteria: "",
             value: "",
             earningCriteria: "",
@@ -94,20 +104,6 @@ const BadgeCreationForm = () => {
 
     const maxSteps = steps.length;
 
-    // const handleNext = async () => {
-    //     // Start loading
-    //     setLoading(true);
-    //     const isValid = await trigger();
-    //     if (isValid) {
-    //         setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    //     }
-    //     // Stop loading
-    //     setLoading(false);
-    // };
-
-    // const handleBack = () => {
-    //     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    // };
     const handleNext = async () => {
         // Start loading
         setLoading(true);
@@ -131,22 +127,32 @@ const BadgeCreationForm = () => {
 
     const onSubmit = async (data) => {
         setLoading(true);
-
+        console.log(data);
         // Construct the badge object from the form data
         const badge = {
             name: data.badgeName,
             description: data.badgeDescription,
-            startedDate: data.startDate?.toISOString(),
-            expiredDate: data.endDate?.toISOString(),
+            tags: data.tagsOrLanguage.join(","),
+            startedDate: data.startDate ? data.startDate.toISOString() : null,
+            expiredDate: data.endDate ? data.endDate.toISOString() : null,
             issuerId: issuerId,
             Achievements:
-                data.Achievements?.map((achievement) => ({
-                    achievementTypeId: achievement.id,
-                    status: "ToDo",
-                    AchievementType: { name: achievement.name },
-                })) || [],
+                data.AchievementTypes?.map((achievementName) => {
+                    const achievementType = allAchievementTypes.find((type) => type.name === achievementName);
+                    if (!achievementType) {
+                        console.error(`Achievement type not found for ${achievementName}`);
+                        return null;
+                    }
+                    return {
+                        achievementTypeId: achievementType?.id,
+                        status: "ToDo",
+                        AchievementType: { name: achievementName },
+                    };
+                }).filter(Boolean) || [],
+
             Criterias: data.narrative ? [{ narrative: data.narrative }] : [],
         };
+        console.log(badge);
 
         try {
             // Call your mutation function to create the badge
@@ -156,8 +162,7 @@ const BadgeCreationForm = () => {
             // Reset form and image state
             reset();
             setUploadedImage(null);
-            navigate('/management/badges')
-        
+            navigate("/management/badges");
         } catch (error) {
             console.error("Error creating badge:", error);
         } finally {
@@ -180,101 +185,99 @@ const BadgeCreationForm = () => {
 
     return (
         // ============ Start the Badge Creation Form ============
-        <DashboardContainer>
-            <Stack
-                sx={{
-                    background: theme.palette.customColors.white,
-                    boxShadow: theme.customShadows.default,
-                    borderRadius: theme.customShape.section,
-                    p: 3,
-                    mb: 3,
-                    gap: 6,
-                }}
-            >
-                {/* Start the Image Upload */}
-                <ImageSelection onImageSelect={(file) => setUploadedImage(file)} />
-                {/* End the Image Upload */}
+        <Stack
+            sx={{
+                background: theme.palette.customColors.white,
+                boxShadow: theme.customShadows.default,
+                borderRadius: theme.customShape.section,
+                p: 3,
+                mb: 3,
+                gap: 6,
+            }}
+        >
+            {/* Start the Image Upload */}
+            <ImageSelection onImageSelect={(file) => setUploadedImage(file)} />
+            {/* End the Image Upload */}
 
-                {/* Start the input form */}
-                <Stack>
-                    <Stack
-                        component="form"
-                        direction="row"
-                        flexDirection={{ xss: "column", md: "row" }}
-                        gap={{ xss: 1, md: 4 }}
-                        onSubmit={handleSubmit(onSubmit)}
-                        noValidate
-                    >
-                        {/* Slow Loading of Description */}
-                        {loading ? (
-                            <Stack spacing={1}>
-                                <Skeleton
-                                    variant="text"
-                                    animation="wave"
-                                    width={500}
-                                    height={60}
-                                    sx={{ display: { xss: "none", md: "block" } }}
-                                />
-                                <Skeleton variant="text" animation="wave" sx={{ fontSize: "1rem" }} />
-                                <Skeleton variant="text" animation="wave" sx={{ fontSize: "1rem" }} />
-                            </Stack>
-                        ) : (
-                            // Description of each form
-                            <Stack gap={2}>
-                                <Typography component="h3" variant="h3" fontWeight={theme.fontWeight.semiBold}>
-                                    {steps[activeStep].label}
-                                </Typography>
-                                <Typography
-                                    variant="body1`"
-                                    sx={{
-                                        maxWidth: 600,
-                                        width: "100%",
-                                        color: theme.palette.text.disabled,
-                                    }}
-                                >
-                                    {steps[activeStep].description}
-                                </Typography>
-                            </Stack>
-                        )}
-
-                        <Stack sx={{ maxWidth: "100%", width: "100%" }}>
-                            {/* Slow Loading of form */}
-                            {loading ? (
-                                <Box display="flex" justifyContent="center" alignItems="center" height="100%">
-                                    <SpinLoading />
-                                </Box>
-                            ) : (
-                                // Form input render
-                                renderStepContent()
-                            )}
+            {/* Start the input form */}
+            <Stack>
+                <Stack
+                    component="form"
+                    direction="row"
+                    flexDirection={{ xss: "column", md: "row" }}
+                    gap={{ xss: 1, md: 4 }}
+                    onSubmit={handleSubmit(onSubmit)}
+                    noValidate
+                >
+                    {/* Slow Loading of Description */}
+                    {loading ? (
+                        <Stack spacing={1}>
+                            <Skeleton
+                                variant="text"
+                                animation="wave"
+                                width={500}
+                                height={60}
+                                sx={{ display: { xss: "none", md: "block" } }}
+                            />
+                            <Skeleton variant="text" animation="wave" sx={{ fontSize: "1rem" }} />
+                            <Skeleton variant="text" animation="wave" sx={{ fontSize: "1rem" }} />
                         </Stack>
-                    </Stack>
+                    ) : (
+                        // Description of each form
+                        <Stack gap={2}>
+                            <Typography component="h3" variant="h3" fontWeight={theme.fontWeight.semiBold}>
+                                {steps[activeStep].label}
+                            </Typography>
+                            <Typography
+                                variant="body1`"
+                                sx={{
+                                    maxWidth: 600,
+                                    width: "100%",
+                                    color: theme.palette.text.disabled,
+                                }}
+                            >
+                                {steps[activeStep].description}
+                            </Typography>
+                        </Stack>
+                    )}
 
-                    {/* Start the Stepper */}
-                    <MobileStepper
-                        variant="text"
-                        steps={maxSteps}
-                        position="static"
-                        sx={{ marginTop: 4 }}
-                        activeStep={activeStep}
-                        nextButton={
-                            <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
-                                {loading ? <CircularProgress size={24} /> : "Next"}
-                                <KeyboardArrowRight />
-                            </Button>
-                        }
-                        backButton={
-                            <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-                                <KeyboardArrowLeft />
-                                {loading ? <CircularProgress size={24} /> : "Back"}
-                            </Button>
-                        }
-                    />
-                    {/* End the Stepper */}
+                    <Stack sx={{ maxWidth: "100%", width: "100%" }}>
+                        {/* Slow Loading of form */}
+                        {loading ? (
+                            <Box display="flex" justifyContent="center" alignItems="center" height="100%">
+                                <SpinLoading />
+                            </Box>
+                        ) : (
+                            // Form input render
+                            renderStepContent()
+                        )}
+                    </Stack>
                 </Stack>
-                {/* End the input form */}
+
+                {/* Start the Stepper */}
+                <MobileStepper
+                    variant="text"
+                    steps={maxSteps}
+                    position="static"
+                    sx={{ marginTop: 4 }}
+                    activeStep={activeStep}
+                    nextButton={
+                        <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
+                            {loading ? <CircularProgress size={24} /> : "Next"}
+                            <KeyboardArrowRight />
+                        </Button>
+                    }
+                    backButton={
+                        <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+                            <KeyboardArrowLeft />
+                            {loading ? <CircularProgress size={24} /> : "Back"}
+                        </Button>
+                    }
+                />
+                {/* End the Stepper */}
             </Stack>
-        </DashboardContainer>
+            {/* End the input form */}
+        </Stack>
         // ============ End the Badge Creation Form ============
     );
 };
