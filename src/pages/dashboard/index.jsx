@@ -6,12 +6,11 @@ import IssuerCard from "./IssuerCard";
 
 const Dashboard = () => {
     return (
-        <DashboardContainer sx={{display : "flex", gap:3, flexDirection: "column"}} >
-            
-            <PageTitle title="Dashboard"/>
-            <Greeting userName="John Smith"/>
-            <Overview  />
-            <IssuerCard />
+        <DashboardContainer sx={{ display: "flex", gap: 3, flexDirection: "column" }}>
+            <PageTitle title="Dashboard" />
+            <Greeting userName="John Smith" />
+            <Overview />
+            {/* <IssuerCard /> */}
         </DashboardContainer>
     );
 };
