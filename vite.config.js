@@ -7,5 +7,11 @@ export default defineConfig({
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-
+  optimizeDeps: {
+    exclude: [
+      'chunk-L2FICHKX.js',
+      'chunk-QMM7ELEV.js',
+      'chunk-YL7LKWCF.js'
+    ]
+  }
 })
