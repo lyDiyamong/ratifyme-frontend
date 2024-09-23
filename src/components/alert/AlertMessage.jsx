@@ -1,16 +1,16 @@
-// React import
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
-// MUI import
-import Alert from "@mui/material/Alert";
+// Mui import
+import { Box, Alert } from "@mui/material";
 
 /**
  *
- * @param {String}  variant variant of alert message (["success", "info", "warning", "error"])
- * @param {String}  children message
- * @return {JSX.Element} The rendered AlertMessage component.
+ * @param {String} variant - variant of alert message (["success", "info", "warning", "error"])
+ * @param {JSX.Element} children - content of the alert
+ * @return {JSX.Element} rendered AlertMessage component
  */
-const AlertMessage = ({ variant = "success", children }) => {
+const AlertMessage = ({ variant, children }) => {
     const [visible, setVisible] = useState(true);
 
     useEffect(() => {
@@ -22,12 +22,25 @@ const AlertMessage = ({ variant = "success", children }) => {
         // Cleanup timer on component unmount
         return () => clearTimeout(timer);
     }, []);
-    // Not rendering if not visible
+
     if (!visible) return null;
-    return (
-        <>
-            <Alert severity={variant}>{children}</Alert>
-        </>
+
+    return createPortal(
+        <Box
+            sx={{
+                position: "absolute",
+
+                top: 20,
+                left: "50%",
+                transform: "translateX(-50%)",
+                zIndex: 1000,
+            }}
+        >
+            <Alert severity={variant} sx={{ px: 2 }}>
+                {children}
+            </Alert>
+        </Box>,
+        document.body,
     );
 };
 
