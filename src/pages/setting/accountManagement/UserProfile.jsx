@@ -1,33 +1,45 @@
 //React Import
 import { useEffect, useState } from "react";
 //MUI Import
-import { Box, Container, Stack, IconButton, Grid, Typography, Button } from "@mui/material";
+import { Box, Container, Stack, IconButton, Typography, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete"; // Import Delete icon
+import {
+    Phone,
+    Email,
+    Cake,
+    ApartmentRounded,
+    SchoolRounded,
+    PublicRounded,
+    PersonRemoveRounded,
+} from "@mui/icons-material";
 //Custom Import
-import DashboardContainer from "../../../components/styles/DashboardContainer";
 import theme from "../../../assets/themes/index";
 import PhotoIconSvg from "../../../assets/icons/Photo Icon.svg";
 import RoleIconSvg from "../../../assets/icons/Role.svg";
+import ProfileInfo from "./ProfileInfo";
 import { ProfileInfoData } from "../../../data/setting/UserProfileData";
 import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
 import EditProfileModal from "./ModalEditProfile";
 import {
-    useFetchUserQuery,
-    useUploadUserPfMutation,
+    useFetchInfoUserByIdQuery,
     useDeleteUserPfMutation,
-} from "../../../store/api/users/userProfileApi";
+    useUploadUserPfMutation,
+} from "../../../store/api/users/userInfoProfileApi";
+import { useCheckAuthQuery } from "../../../store/api/auth/authApi";
 
 //============ Start User Profile Component ============
 const UserProfile = () => {
+    const { data: user } = useCheckAuthQuery();
+
+    const userId = user.user.id;
+
     const [open, setOpen] = useState(false);
-    const { data: response } = useFetchUserQuery(13);
-    const user = response?.data;
     const [updateImage, setUpdateImage] = useState(null);
 
-    useEffect(() => {
-        setUpdateImage(user?.profileImage);
-    }, [user]);
+    // Fetch data
+    const { data :info, isLoading, isError } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
+    const userData = info?.data;
+    console.log(userData)
 
     const [updateImg] = useUploadUserPfMutation();
     const [deleteImg] = useDeleteUserPfMutation();
@@ -47,9 +59,8 @@ const UserProfile = () => {
             formData.append("image", file);
 
             try {
-                const result = await updateImg({ id: 13, data: formData }).unwrap();
-                setUpdateImage(result?.data?.profileImage);
-                console.log("Image updated successfully:", result?.data?.profileImage);
+                const result = await updateImg({ id: userId, data: formData }).unwrap();
+                setUpdateImage(result?.record.profileImage);
             } catch (error) {
                 console.error("Error uploading image:", error);
             }
@@ -60,17 +71,21 @@ const UserProfile = () => {
     // Handle delete image
     const handleDeleteImage = async () => {
         try {
-            await deleteImg({ id: 13 }).unwrap();
+            await deleteImg({ id: userId }).unwrap();
             // Reset the image state
             setUpdateImage(null);
-            console.log("Image deleted successfully");
         } catch (error) {
             console.error("Error deleting image:", error);
         }
     };
+    useEffect(() => {
+        if (userData?.profileImage) {
+            setUpdateImage(userData?.profileImage);
+        }
+    }, [userData?.profileImage]);
 
     return (
-        <DashboardContainer>
+        <Box>
             {/*============ Start User Data Container "Card" ============*/}
             <Stack
                 direction={{ sm: "column", md: "row" }}
@@ -127,58 +142,58 @@ const UserProfile = () => {
 
                 <Container>
                     {/*============ Start Upper User Data ============*/}
-                    <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
-                        <Stack gap={"22px"} sx={{ p: "0px" }}>
+                    <Stack direction={{ xs: "row", xss: "column" }} sx={{ justifyContent: "space-between", gap: 1 }}>
+                        <Stack sx={{ p: "0px", gap: 2 }}>
                             {/* User Name Data */}
-                            <Typography sx={{ fontSize: theme.typography.h4, fontWeight: theme.fontWeight.semiBold }}>
-                                {user?.username}
+                            <Typography sx={{ fontSize: theme.typography.h4, fontWeight: theme.fontWeight.bold }}>
+                                {userData?.username}
                             </Typography>
                             <Box sx={{ display: "flex", gap: 1 }}>
                                 <Box component="img" src={RoleIconSvg} sx={{ width: "24px" }} />
                                 <Typography
                                     sx={{ fontSize: theme.typography.h5, fontWeight: theme.fontWeight.semiBold }}
                                 >
-                                    {/* {profileData?.role} */}
+                                    {userData?.Role?.name || "N/A"}
                                 </Typography>
                             </Box>
                         </Stack>
-                        <Box component={"div"} sx={{ mt: { xss: "30px", sm: "0" } }}>
+                        <Stack
+                            sx={{ mt: { xss: "30px", sm: "0" }, gap: 1, flexDirection: { sm: "column", xss: "row" } }}
+                        >
                             {/* Edit Button */}
                             <Button
                                 variant="contained"
                                 onClick={handleClickOpen}
-                                startIcon={<EditIcon />}
                                 sx={{
                                     color: theme.palette.customColors.white,
                                     bgcolor: theme.palette.primary.main,
                                     borderRadius: theme.customShape.btn,
+                                    maxWidth: 30,
                                     textTransform: "none",
                                 }}
                             >
-                                Edit
+                                <EditIcon />
                             </Button>
                             <EditProfileModal open={open} onClose={handleClose} />
-                            {/* Delete Button */}
+                            {/* Delete profile button */}
                             <Button
-                                variant="contained"
+                                variant="outlined"
+                                color="error"
                                 onClick={handleDeleteImage}
-                                startIcon={<DeleteIcon />}
                                 sx={{
-                                    color: theme.palette.customColors.white,
-                                    bgcolor: theme.palette.error.main,
                                     borderRadius: theme.customShape.btn,
                                     textTransform: "none",
-                                    ml: 1,
+                                    maxWidth: 30,
                                 }}
                             >
-                                Delete Image
+                                <PersonRemoveRounded />
                             </Button>
-                        </Box>
+                        </Stack>
                     </Stack>
                     {/*============ End Upper User Data ============*/}
 
                     {/*============ Start Grid User Data ============*/}
-                    <Grid
+                    {/* <Grid
                         container
                         sx={{
                             mt: "50px",
@@ -218,12 +233,48 @@ const UserProfile = () => {
                                 </Stack>
                             </Grid>
                         ))}
-                    </Grid>
+                    </Grid> */}
+
+                    <ProfileInfo
+                        item={userData}
+                        details={[
+                            {
+                                icon: <Phone fontSize="medium" />,
+                                label: "Phone",
+                                valueKey: "phoneNumber",
+                            },
+                            {
+                                icon: <Email fontSize="medium" />,
+                                label: "Email",
+                                valueKey: "email",
+                            },
+                            {
+                                icon: <Cake fontSize="medium" />,
+                                label: "Date of Birth",
+                                valueKey: "dateOfBirth",
+                            },
+                            {
+                                icon: <ApartmentRounded fontSize="medium" />,
+                                label: "Organization",
+                                valueKey: "org",
+                            },
+                            {
+                                icon: <SchoolRounded fontSize="medium" />,
+                                label: "Education",
+                                valueKey: "edu",
+                            },
+                            {
+                                icon: <PublicRounded fontSize="medium" />,
+                                label: "Nationality",
+                                valueKey: "nationality",
+                            },
+                        ]}
+                    />
                     {/*============ End Grid User Data ============*/}
                 </Container>
             </Stack>
             {/*============ End User Data Container "Card"  ============*/}
-        </DashboardContainer>
+        </Box>
     );
 };
 //============ End User Profile Component ============

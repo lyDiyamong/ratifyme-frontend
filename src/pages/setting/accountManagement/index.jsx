@@ -1,17 +1,16 @@
-//MUI Import 
-import { Stack } from "@mui/material";
 // Custom import
 import PageTitle from "../../../components/PageTitle";
+import DashboardContainer from "../../../components/styles/DashboardContainer";
 import UserProfile from "./UserProfile"
 import BioContent from "./BioContent"
 
 const AccountManagement = () => {
     return (
-        <Stack gap={3} >
+        <DashboardContainer sx={{display : "flex", gap:3, flexDirection: "column", mb: 3}} >
             <PageTitle title="Profile" />
             <UserProfile />
             <BioContent />
-        </Stack>
+        </DashboardContainer>
     );
 };
 

@@ -3,7 +3,6 @@ import  { useState } from 'react';
 //Mui Import 
 import { TextField, Box, Typography } from "@mui/material";
 //Custom Import
-import DashboardContainer from "../../../components/styles/DashboardContainer";
 import theme from "../../../assets/themes";
 
 
@@ -24,7 +23,7 @@ const BioContent = () => {
     };
 
     return (
-        <DashboardContainer>
+        <Box>
             <Box
                 sx={{
                     boxShadow: theme.customShadows.default,
@@ -82,7 +81,7 @@ const BioContent = () => {
                     )}
                 </Box>
             </Box>
-        </DashboardContainer>
+        </Box>
     );
 };
 //============ End Bio input Editable Field Component ============
