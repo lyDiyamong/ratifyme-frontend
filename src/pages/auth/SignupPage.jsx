@@ -258,7 +258,16 @@ const SignupPage = () => {
         <LandingContainer sx={{ my: 6 }}>
             <Grid container spacing={4}>
                 <Grid item xs={12} md={role === "institution" ? 12 : 6}>
-                    <Typography variant="h4" mb={4}>
+                    <Typography
+                        variant="h4"
+                        mb={4}
+                        component="h4"
+                        sx={{
+                            fontSize: theme.typography.h3,
+                            fontWeight: theme.fontWeight.bold,
+                            lineHeight: 2,
+                        }}
+                    >
                         Sign up as {role}
                     </Typography>
                     <Stepper activeStep={activeStep}>
