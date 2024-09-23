@@ -3,16 +3,18 @@ import { Stack } from "@mui/material";
 
 // Custom import
 import PageTitle from "../../components/PageTitle";
-import SearchBar from "../../components/SearchBar";
+import DashboardContainer from "../../components/styles/DashboardContainer";
 import BadgeCreationForm from "./BadgeCreationForm";
 
 const BadgeCreation = () => {
     return (
-        <Stack gap={3}>
-            <PageTitle title="BadgeCreation" />
-            {/* <SearchBar showButton={false} textInButton=""/> */}
-            <BadgeCreationForm />
-        </Stack>
+        <DashboardContainer sx={{ pb: 4 }}>
+            <Stack gap={3}>
+                <PageTitle title="BadgeCreation" />
+                {/* <SearchBar showButton={false} textInButton=""/> */}
+                <BadgeCreationForm />
+            </Stack>
+        </DashboardContainer>
     );
 };
 
