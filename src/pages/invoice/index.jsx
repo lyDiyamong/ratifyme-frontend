@@ -14,6 +14,7 @@ import PageTitle from "../../components/PageTitle";
 import { useGetSubInstitutionQuery } from "../../store/api/subscription/subscriptionApi";
 import theme from "../../assets/themes";
 import SkeletonLoading from "../../components/loading/SkeletonLoading";
+import AlertMessage from "../../components/alert/AlertMessage";
 
 const InvoiceManagement = () => {
     // Get query for requesting
@@ -21,22 +22,20 @@ const InvoiceManagement = () => {
     const queryParams = new URLSearchParams(location.search);
     const institutionId = queryParams.get("institutionId");
 
-
-
     // Fetching data
     const { data: response, isLoading, isError } = useGetSubInstitutionQuery(institutionId);
     const institutionData = response?.data;
-    console.log(institutionData);
+    // console.log(institutionData);
     // console.log(institutionId);
-    if(isError) return <Box>Haha</Box>
-
+    if (isError) return <Box>Haha</Box>;
 
     // Total paid price
     const price = 0;
-    const totalPaid = response && institutionData.reduce((accumulator, current) => {
-        return accumulator + parseFloat(current.ServicePlan.price);
-    }, price);
-
+    const totalPaid =
+        response &&
+        institutionData.reduce((accumulator, current) => {
+            return accumulator + parseFloat(current.ServicePlan.price);
+        }, price);
 
     const columns = [
         {
@@ -71,17 +70,21 @@ const InvoiceManagement = () => {
         <DashboardContainer>
             {/* Page Title */}
             <PageTitle title="Invoice" />
+            {/* <AlertMessage variant="error">Login succesfully</AlertMessage> */}
 
             {/* Table Data */}
-            { isLoading ? <SkeletonLoading num={5} /> : <TableCustom title="Invoice" data={institutionData} columns={columns} />}
-
-            {/* Start total price container */}
+            {isLoading ? (
+                <SkeletonLoading num={5} />
+            ) : (
+                <TableCustom title="Invoice" data={institutionData} columns={columns}></TableCustom>
+            )}
             <Box
                 sx={{
                     width: "100%",
+                    mt: 2,
                     display: "flex",
                     justifyContent: "flex-end",
-                    bgcolor: theme.palette.primary.main,
+                    bgcolor: theme.palette.secondary.dark,
                     p: [4, 2],
                 }}
             >
@@ -91,6 +94,8 @@ const InvoiceManagement = () => {
                     </Typography>
                 </Box>
             </Box>
+            {/* Start total price container */}
+
             {/* End total price container */}
         </DashboardContainer>
         // ============ End login container ============
