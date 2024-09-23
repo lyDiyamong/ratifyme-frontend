@@ -13,6 +13,7 @@ import PageTitle from "../../components/PageTitle";
 // API import
 import { useGetSubInstitutionQuery } from "../../store/api/subscription/subscriptionApi";
 import theme from "../../assets/themes";
+import SkeletonLoading from "../../components/loading/SkeletonLoading";
 
 const InvoiceManagement = () => {
     // Get query for requesting
@@ -21,19 +22,21 @@ const InvoiceManagement = () => {
     const institutionId = queryParams.get("institutionId");
 
 
+
     // Fetching data
-    const { data: response, isLoading } = useGetSubInstitutionQuery(institutionId);
+    const { data: response, isLoading, isError } = useGetSubInstitutionQuery(institutionId);
     const institutionData = response?.data;
     console.log(institutionData);
+    // console.log(institutionId);
+    if(isError) return <Box>Haha</Box>
 
 
     // Total paid price
     const price = 0;
-    const totalPaid = institutionData.reduce((accumulator, current) => {
+    const totalPaid = response && institutionData.reduce((accumulator, current) => {
         return accumulator + parseFloat(current.ServicePlan.price);
     }, price);
 
-    console.log(totalPaid.toFixed(2));
 
     const columns = [
         {
@@ -66,6 +69,7 @@ const InvoiceManagement = () => {
     return (
         // ============ Start login container ============
         <DashboardContainer>
+            <SkeletonLoading />
             {/* Page Title */}
             <PageTitle title="Invoice" />
 
@@ -84,7 +88,7 @@ const InvoiceManagement = () => {
             >
                 <Box>
                     <Typography variant="h4" color={theme.palette.customColors.white}>
-                        Total Paid : ${totalPaid.toFixed(2)}
+                        Total Paid : ${response && totalPaid.toFixed(2)}
                     </Typography>
                 </Box>
             </Box>
