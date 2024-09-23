@@ -69,12 +69,11 @@ const InvoiceManagement = () => {
     return (
         // ============ Start login container ============
         <DashboardContainer>
-            <SkeletonLoading />
             {/* Page Title */}
             <PageTitle title="Invoice" />
 
             {/* Table Data */}
-            {<TableCustom title="Invoice" data={institutionData} columns={columns} />}
+            { isLoading ? <SkeletonLoading num={5} /> : <TableCustom title="Invoice" data={institutionData} columns={columns} />}
 
             {/* Start total price container */}
             <Box
