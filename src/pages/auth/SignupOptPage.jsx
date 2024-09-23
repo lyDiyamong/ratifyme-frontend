@@ -1,32 +1,33 @@
 // React library import
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // MUI import
 import { Box, Grid, Typography, Button, Card, CardContent, CardMedia } from "@mui/material";
-import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 
 // Custom import
 import theme from "../../assets/themes";
 import LandingContainer from "../../components/styles/LandingContainer";
 import LoginImgSvg from "../../assets/images/Login-illu.svg";
+import SchoolImage from "../../assets/images/school.png";
+import IssuerImage from "../../assets/images/teach.png";
+import EarnerImage from "../../assets/images/badge.png";
 
 // Signup options data
 const signupOptsData = [
     {
-        icon: <AccountBalanceIcon />,
+        image: SchoolImage,
         title: "Institution",
         description:
             "Sign up as an institution to manage badge issuance, track performance, and create verifiable credentials for your learners.",
     },
     {
-        icon: <AccountBalanceIcon />,
+        image: IssuerImage,
         title: "Issuer",
         description:
             "Sign up as an issuer to create, award, and manage badges for achievements, certifications, and skills recognition.",
     },
     {
-        icon: <AccountBalanceIcon />,
+        image: EarnerImage,
         title: "Earner",
         description:
             "Sign up as an earner to collect and showcase digital badges for your skills and achievements, and share them with employers.",
@@ -34,18 +35,17 @@ const signupOptsData = [
 ];
 
 // Card component for signup options
-const SignupOptionCard = ({ icon, title, description, onClick }) => (
+const SignupOptionCard = ({ image, title, description, onClick }) => (
     <Card
-        onClick={onClick} // Pass the onClick as a reference, not by calling it immediately
+        onClick={onClick} 
         sx={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             cursor: "pointer",
-            backgroundColor: theme.palette.customColors.white,
+            backgroundColor: theme.palette.augmentColor.white,
             borderRadius: theme.customShape.card,
-            boxShadow:
-                "rgba(14, 63, 126, 0.04) 0px 0px 0px 1px, rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.04) 0px 6px 6px -3px, rgba(14, 63, 126, 0.04) 0px 12px 12px -6px, rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;",
+            boxShadow: "rgba(3, 102, 214, 0.3) 0px 0px 0px 2px;",
             marginBottom: 2,
             padding: "14px 24px",
             ":hover": {
@@ -53,7 +53,12 @@ const SignupOptionCard = ({ icon, title, description, onClick }) => (
             },
         }}
     >
-        <CardMedia component={() => icon} sx={{ width: 80 }} alt={`${title} role`} />
+        <CardMedia
+            component="img"
+            image={image}
+            alt={`${title} image`}
+            sx={{ width: 80, height: 80, marginRight: 2 }}
+        />
         <Box sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
             <CardContent>
                 <Typography component="div" variant="h4">
@@ -83,14 +88,14 @@ const SignupOptPage = () => {
             {/* Grid container */}
             <Grid container spacing={4}>
                 {/* Signup options section */}
-                <Grid item xs={12} md={6} order={{ xs: 2, md: 1 }}>
+                <Grid item xs={12} md={10} order={{ xs: 2, md: 1 }}>
                     <Box mb={5}>
                         <Typography
                             component="h1"
                             sx={{
-                                fontSize: theme.typography.h1,
+                                fontSize: theme.typography.h2,
                                 fontWeight: theme.fontWeight.bold,
-                                lineHeight: 1.5,
+                                lineHeight: 1.7,
                             }}
                         >
                             How do you want to use RatifyMe?
@@ -104,7 +109,7 @@ const SignupOptPage = () => {
                     {signupOptsData.map((opt, index) => (
                         <SignupOptionCard
                             key={index}
-                            icon={opt.icon}
+                            image={opt.image}
                             title={opt.title}
                             description={opt.description}
                             onClick={() => handleRoleSelect(opt.title)}
@@ -112,17 +117,6 @@ const SignupOptPage = () => {
                     ))}
                 </Grid>
 
-                {/* Image container */}
-                <Grid item xs={12} md={4} order={{ xs: 1, md: 2 }}>
-                    <Box
-                        component="img"
-                        sx={{
-                            width: "100%",
-                        }}
-                        alt="illustration"
-                        src={LoginImgSvg}
-                    />
-                </Grid>
             </Grid>
             {/* End grid container */}
         </LandingContainer>
