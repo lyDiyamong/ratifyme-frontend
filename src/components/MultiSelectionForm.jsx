@@ -32,6 +32,7 @@ const SelectForm = ({ name, control, options, label, required }) => {
         // The value will be an array of selected values
         field.onChange(value);
     };
+
     return (
         <FormControl fullWidth error={!!error}>
             <InputLabel id={`${name}-label`}>{label}</InputLabel>
@@ -52,6 +53,8 @@ const SelectForm = ({ name, control, options, label, required }) => {
                     PaperProps: {
                         sx: {
                             borderRadius: theme.customShape.input,
+                            maxHeight: 48 * 7 + 8, // Limit to 7 visible items (assuming ~48px height each)
+                            overflowY: "auto", // Enable vertical scrolling
                         },
                     },
                 }}
