@@ -1,8 +1,8 @@
 import Greeting from "./Greeting";
 import PageTitle from "../../components/PageTitle";
-import { Stack } from "@mui/material";
 import Overview from "./Overview";
 import DashboardContainer from "../../components/styles/DashboardContainer";
+import IssuerCard from "./IssuerCard";
 
 const Dashboard = () => {
     return (
@@ -11,6 +11,7 @@ const Dashboard = () => {
             <PageTitle title="Dashboard"/>
             <Greeting userName="John Smith"/>
             <Overview  />
+            <IssuerCard />
         </DashboardContainer>
     );
 };
