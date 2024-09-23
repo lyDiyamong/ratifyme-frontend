@@ -1,11 +1,6 @@
-// React library import
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
-
-// MUI import
-import { Box, Grid, Typography, Button } from "@mui/material";
-
-// Custom import
+import { Box, Grid, Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import FormInput from "../../components/FormInput";
 import theme from "../../assets/themes";
 import LandingContainer from "../../components/styles/LandingContainer";
@@ -13,41 +8,33 @@ import LoginImgSvg from "../../assets/images/Login-illu.svg";
 import { useEffect, useState } from "react";
 import { useVerifyInvitationMutation } from "../../store/api/auth/verifyInvitationApi";
 
-const roleIdData = {
-    institution: 2,
-    issuer: 3,
-    earner: 4,
-};
-
 const CodeInvitationPage = () => {
     const { search } = useLocation();
     const [role, setRole] = useState("");
     const navigate = useNavigate();
     const [verifyInvitation, { isLoading, isError, error }] = useVerifyInvitationMutation();
+    const [openErrorDialog, setOpenErrorDialog] = useState(false);
 
     useEffect(() => {
         const queryRole = new URLSearchParams(search).get("as") || "";
         setRole(queryRole);
     }, [search]);
 
-    // Form controller
     const {
         handleSubmit,
         control,
         formState: { errors },
     } = useForm();
 
-    // Submit handler
     const onSubmit = async (data) => {
         try {
             const response = await verifyInvitation({ data, role });
 
-            // Check if response is valid and contains inviter data
             if (response?.data) {
                 const inviterData = response.data.inviter;
                 const guestData = response.data.guest;
                 const userData = response.data.user;
-                console.log("inviterData", inviterData);
+
                 if (userData === null) {
                     navigate(`/signup?as=${role}`, { state: { inviter: inviterData, guest: guestData } });
                 } else {
@@ -59,12 +46,19 @@ const CodeInvitationPage = () => {
         }
     };
 
+    useEffect(() => {
+        if (isError) {
+            setOpenErrorDialog(true); // Open the dialog when there's an error
+        }
+    }, [isError]);
+
+    const handleCloseErrorDialog = () => {
+        setOpenErrorDialog(false);
+    };
+
     return (
-        // ============ Start login container ============
         <LandingContainer sx={{ my: 6 }}>
-            {/* Start grid container */}
             <Grid container spacing={4}>
-                {/* Start login section */}
                 <Grid item xs={12} md={4} order={{ xs: 2, md: 1 }}>
                     <Box mb={5}>
                         <Typography
@@ -77,16 +71,11 @@ const CodeInvitationPage = () => {
                         >
                             Verify the invitation
                         </Typography>
-                        <Typography
-                            sx={{
-                                color: theme.palette.text.secondary,
-                            }}
-                        >
-                            Log In your account to manage your company!
+                        <Typography sx={{ color: theme.palette.text.secondary }}>
+                            Log in to your account to manage your company!
                         </Typography>
                     </Box>
 
-                    {/* Start form container */}
                     <Box
                         component="form"
                         onSubmit={handleSubmit(onSubmit)}
@@ -98,7 +87,7 @@ const CodeInvitationPage = () => {
                         <FormInput
                             name="inviterCode"
                             control={control}
-                            label="Institution Code"
+                            label={role === "issuer" ? "Institution Code" : "Issuer Code"}
                             type="text"
                             required={true}
                         />
@@ -109,7 +98,6 @@ const CodeInvitationPage = () => {
                             label="Email Address"
                             required={true}
                         />
-                        {/* Submit button */}
                         <Button
                             fullWidth
                             variant="contained"
@@ -119,15 +107,13 @@ const CodeInvitationPage = () => {
                                 borderRadius: theme.customShape.btn,
                                 fontWeight: theme.fontWeight.bold,
                             }}
+                            disabled={isLoading}
                         >
-                            Verify
+                            {isLoading ? "Verifying..." : "Verify"}
                         </Button>
                     </Box>
-                    {/* End form container */}
                 </Grid>
-                {/* End signup section */}
 
-                {/* Image container */}
                 <Grid item xs={12} md={8} order={{ xs: 1, md: 2 }}>
                     <Box
                         component="img"
@@ -139,9 +125,25 @@ const CodeInvitationPage = () => {
                     />
                 </Grid>
             </Grid>
-            {/* End grid container */}
+            {/* Error Dialog */}
+            <Dialog open={openErrorDialog} onClose={handleCloseErrorDialog} maxWidth='lg'>
+                <DialogTitle>Verification Failed</DialogTitle>
+                <DialogContent>
+                    <Typography variant="body1">
+                        {error?.data?.message ||
+                            "There was an issue with verifying your invitation. Please try again or log in."}
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => navigate(`/login`)} variant="contained" color="primary">
+                        Go to Login
+                    </Button>
+                    <Button onClick={handleCloseErrorDialog} variant="outlined">
+                        Close
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </LandingContainer>
-        // ============ End login container ============
     );
 };
 
