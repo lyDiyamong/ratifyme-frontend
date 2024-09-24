@@ -1,8 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import DashboardLayout from "../layouts/dasboard";
-import routesConfig from "./RoutesConfig";
-import ProtectedRoute from "./protectRoutes";
 import Dashboard from "../pages/dashboard";
 import BadgeManagement from "../pages/badgeMangements";
 import EarnerManagement from "../pages/earnerManagements";
@@ -16,24 +14,12 @@ import BackpackManagement from "../pages/backpackManagement";
 import NotFoundPage from "../pages/NotFoundPage";
 import InvoiceManagement from "../pages/invoice";
 import BadgeCreation from "../pages/badgeMangements/BadgeCreation";
-import AddRecipient from '../pages/earnerManagements/AddRecipient'
+import AddRecipient from "../pages/earnerManagements/AddRecipient";
 
-
-const userRole = "earner";
 const DashbaordRouter = () => {
     return (
         <Routes>
             <Route element={<DashboardLayout />}>
-                {/* {routesConfig.map(({ path, component: Component, roles }) => (
-                    <Route
-                        key={path}
-                        path={path}
-                        element={<ProtectedRoute element={<Component />} role={userRole} allowedRoles={roles} />}
-                    />
-                ))} */}
-                {/* <Route path="/unauthorized" element={<UnauthorizedPage />} />
-                <Route path="*" element={<NotFoundPage />} /> */}
-
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/management/badges" element={<BadgeManagement />} />
                 <Route path="/management/issuers" element={<IssuerManagement />} />
@@ -47,7 +33,8 @@ const DashbaordRouter = () => {
                 <Route path="/setting/privacy&security" element={<PrivacySecurityManagement />} />
                 <Route path="/management/badges/badge-creation" element={<BadgeCreation />} />
                 <Route path="/management/eaners/add-earners" element={<AddRecipient />} />
-                
+                {/* <Route path="/unauthorized" element={<UnauthorizedPage />} />
+                <Route path="*" element={<NotFoundPage />} /> */}
             </Route>
         </Routes>
     );
