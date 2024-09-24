@@ -37,7 +37,7 @@ const CheckoutButton = ({ id }) => {
 
             // Create a Checkout Session
             const response = await axios.post(`${import.meta.env.VITE_SERVER_BASE_URL}/subscriptions/subscribe/${id}`, {
-                servicePlanId: id,
+                userId: user.user.id,
             });
             // Get the session id for checking out
             const { sessionId } = await response.data;
