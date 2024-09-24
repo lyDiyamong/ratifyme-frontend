@@ -53,27 +53,27 @@ const TableEarner = () => {
     const earnerColumns = [
         {
             name: "ID",
-            selector: (row) => row.id,
+            selector: (row) => row.id || 'N/A',
             sortable: true,
         },
         {
             name: "Name",
-            selector: (row) => row.User.username,
+            selector: (row) => row.User?.username || 'N/A',
             sortable: true,
         },
         {
             name: "Email",
-            selector: (row) => row.User.email,
+            selector: (row) => row.User?.email || 'N/A',
             sortable: true,
         },
         {
             name: "Badge",
-            selector: (row) => row.Achievement.BadgeClass.name,
+            selector: (row) => row.Achievement?.BadgeClass?.name || 'N/A',
             sortable: true,
         },
         {
             name: "Academic Year",
-            selector: (row) => FormatYear({ dateString: row.AcademicBackground?.academicYear }),
+            selector: (row) => FormatYear({ dateString: row.AcademicBackground?.academicYear }) || 'N/A',
             sortable: true,
         },
         {
