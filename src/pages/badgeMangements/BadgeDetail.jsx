@@ -21,7 +21,7 @@ const BadgeDetail = () => {
             break;
         }
         case 3: {
-            role = "earner";
+            role = "issuer";
             break;
         }
         case 4: {
