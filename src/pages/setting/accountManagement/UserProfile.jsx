@@ -101,7 +101,7 @@ const UserProfile = () => {
             {/*============ Start User Data Container "Card" ============*/}
             <Stack
                 direction={{ sm: "column", md: "row" }}
-                justifyContent={"flex-start"}
+                justifyContent={"center"}
                 spacing={2}
                 sx={{
                     boxShadow: theme.customShadows.default,
@@ -174,7 +174,7 @@ const UserProfile = () => {
                         <Stack
                             sx={{ mt: { xss: "30px", sm: "0" }, gap: 1, flexDirection: { sm: "column", xs: "row" } }}
                         >
-                            {/* Edit Button */}
+                            {/* Edit profile Button */}
                             <Button
                                 variant="contained"
                                 onClick={handleClickOpen}
@@ -188,7 +188,10 @@ const UserProfile = () => {
                             >
                                 <EditIcon />
                             </Button>
+
+                            {/* Edit profile modal */}
                             <EditProfileModal open={open} onClose={handleClose} userData={userData} />
+                            
                             {/* Delete profile button */}
                             <Button
                                 variant="outlined"

@@ -1,7 +1,6 @@
 // React Imports
 import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import dayjs from 'dayjs';
 
 // MUI Imports
 import Box from "@mui/material/Box";
@@ -33,7 +32,7 @@ const EditProfileModal = ({ open, userData, onClose }) => {
             organization: "",
             occupation: "",
             email: "",
-            Gender: "", // Ensure this is included in default values
+            Gender: "",
         },
     });
 
@@ -54,10 +53,10 @@ const EditProfileModal = ({ open, userData, onClose }) => {
     }, [userData, open, reset]);
 
     const onSubmit = async (data) => {
-        console.log('Date of Birth:', data.dateOfBirth);
+        console.log("Date of Birth:", data.dateOfBirth);
         const updatedData = {
             ...data,
-            dateOfBirth: data.dateOfBirth ? data.dateOfBirth.format("YYYY-MM-DD") : null,
+            dateOfBirth: data.dateOfBirth,
             genderId: Number(data.Gender),
         };
 
@@ -67,7 +66,7 @@ const EditProfileModal = ({ open, userData, onClose }) => {
         } catch (error) {
             console.error("Failed to update profile: ", error);
         } finally {
-            reset(); // Reset the form on completion
+            reset();
         }
     };
 
@@ -86,10 +85,10 @@ const EditProfileModal = ({ open, userData, onClose }) => {
             noValidate
         >
             <DialogTitle sx={{ padding: "20px", fontSize: theme.typography.h4, fontWeight: theme.fontWeight.semiBold }}>
-                Edit Your Profile
+                Personal Information
             </DialogTitle>
             <DialogContent>
-                {isLoading && <SpinLoading size={40} />} {/* Full modal loading spinner */}
+                {/* {isLoading && <SpinLoading size={40} />} */}
                 {isError && <p style={{ color: "red" }}>Error updating profile. Please try again.</p>}
                 <Box
                     sx={{
@@ -101,8 +100,8 @@ const EditProfileModal = ({ open, userData, onClose }) => {
                     }}
                     noValidate
                 >
-                    <FormInput name="firstName" label="First Name" control={control} type="text" />
-                    <FormInput name="lastName" label="Last Name" control={control} type="text" />
+                    <FormInput name="firstName" label="First Name" control={control} type="text" required />
+                    <FormInput name="lastName" label="Last Name" control={control} type="text" required />
                     <FormInput name="phoneNumber" label="Phone Number" control={control} type="text" />
                     <FormInput name="email" label="Email Address" control={control} type="email" />
                     <LocalizationProvider dateAdapter={AdapterDayjs}>

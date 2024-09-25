@@ -1,35 +1,45 @@
 // React library import
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
 
 // MUI import
-import { AppBar, IconButton, InputBase, Toolbar, useMediaQuery } from "@mui/material";
-import {
-    Menu as MenuIcon,
-    Search,
-    SettingsOutlined,
-    NotificationsNoneOutlined,
-    AccountCircleOutlined,
-} from "@mui/icons-material";
+import { AppBar, IconButton, InputBase, Toolbar, useMediaQuery, Box } from "@mui/material";
+import { Menu as MenuIcon, Search, SettingsOutlined, NotificationsNoneOutlined } from "@mui/icons-material";
 import { useTheme } from "@emotion/react";
 
 // Custom Import
 import FlexBetween from "../../components/styles/FlexBetween";
 import DashboardContainer from "../../components/styles/DashboardContainer";
-// Header icons
-const headerIcons = [<NotificationsNoneOutlined />, <AccountCircleOutlined />, <SettingsOutlined />];
+import { useCheckAuthQuery } from "../../store/api/auth/authApi";
+import DefaultProfileSvg from "../../assets/images/DefaultProfile.svg";
 
-/**
- * Header component for the application.
- *
- * @param {object} user - Current user object
- * @param {boolean} isSidebarOpen - Indicates if the sidebar is open
- * @param {function} setIsSidebarOpen - Function to toggle the sidebar
- * @return {JSX.Element} Render Header component
- */
-const Header = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
+const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const theme = useTheme();
     const isTablet = useMediaQuery(theme.breakpoints.up("md"));
+
+    // Fetch user data using the query
+    const { data: userData } = useCheckAuthQuery();
+    const [profileImage, setProfileImage] = useState(DefaultProfileSvg);
+
+    // Update profile image on user data change
+    useEffect(() => {
+        if (userData.user.profileImage) {
+            setProfileImage(userData.user.profileImage);
+        } else {
+            setProfileImage(DefaultProfileSvg);
+        }
+    }, [userData]);
+
+    // Header icons
+    const headerIcons = [
+        <NotificationsNoneOutlined />,
+        <Box
+            component="img"
+            src={userData.user.profileImage || DefaultProfileSvg}
+            alt="Profile Icon"
+            style={{ borderRadius: "50%", width: "24px", height: "24px" }}
+        />,
+        <SettingsOutlined />,
+    ];
 
     return (
         // ============ Start Appbar ============
@@ -42,7 +52,7 @@ const Header = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
                     paddingTop: "10px",
                 }}
             >
-                <Toolbar disableGutters        sx={{ justifyContent: "space-between", px: 0 }}>
+                <Toolbar disableGutters sx={{ justifyContent: "space-between", px: 0 }}>
                     {/* Start left side */}
                     <FlexBetween>
                         {!isSidebarOpen && (
