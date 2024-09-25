@@ -2,15 +2,16 @@
 import { useState } from "react";
 
 // MUI Import
-import { Box, Typography, CircularProgress } from "@mui/material";
+import { Box, Typography, CircularProgress, CardMedia } from "@mui/material";
 
 // Custom Import
-import SearchBarTest from "../../components/SearchBarCustom";
+
+import SearchBarCustom from "../../components/SearchBarCustom";
 import TableCustom from "../../components/TableList";
 import MenuSelection from "../../components/TableAction/MenuSelection";
 import FormatYear from "../../utils/formatDate";
 import ProfileEarnerModal from "./ProfileEarnerModal";
-
+import NoRecordData from "../../components/NoRecordData";
 // Fetching Data Import
 import { useFetchEarnerQuery, useDeleteEarnerByIdMutation } from "../../store/api/earnerManagement/earnerApis";
 
@@ -73,7 +74,7 @@ const TableEarner = () => {
         },
         {
             name: "Academic Year",
-            selector: (row) => FormatYear({ dateString: row.AcademicBackground?.academicYear }) || 'N/A',
+            selector: (row) => FormatYear(row.AcademicBackground?.academicYear) || "N/A",
             sortable: true,
         },
         {
@@ -95,7 +96,7 @@ const TableEarner = () => {
     return (
         <Box>
             {/* Search Bar */}
-            <SearchBarTest onSearch={setSearchQuery} />
+            <SearchBarCustom onSearch={setSearchQuery} />
 
             {/* Modal for Viewing Profile */}
             <ProfileEarnerModal open={openModal} onClose={handleCloseModal} userId={selectedUserId} />
@@ -105,8 +106,11 @@ const TableEarner = () => {
                 <CircularProgress />
             ) : isError ? (
                 <Typography color="error">Error fetching data</Typography>
-            ) : (
+            ) : filteredEarnerData && filteredEarnerData.length > 0 ? (
                 <TableCustom title="Earner List" data={filteredEarnerData} columns={earnerColumns} />
+            ) : (
+                // Display this section if no earners match the search query
+                <NoRecordData/>
             )}
         </Box>
     );

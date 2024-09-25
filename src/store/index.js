@@ -8,6 +8,8 @@ import { criteriaApi } from "./api/badgeManagement/criteriaApi";
 import { achievementApi } from "./api/achievements/achievementApi";
 import { institutionStatApi} from "./api/reports/institutionStatApis"
 import { verifyInvitationApi } from "./api/auth/verifyInvitationApi";
+import { infoApi } from "./api/users/userInfoProfileApi";
+
 import { setupListeners } from "@reduxjs/toolkit/query";
 import gloableReducer from "./slices/globalSlices";
 
@@ -23,6 +25,9 @@ const store = configureStore({
         [criteriaApi.reducerPath]: criteriaApi.reducer,
         [institutionStatApi.reducerPath]: institutionStatApi.reducer,
         [verifyInvitationApi.reducerPath]: verifyInvitationApi.reducer,
+        [infoApi.reducerPath]: infoApi.reducer,
+        [institutionStatApi.reducerPath]: institutionStatApi.reducer
+
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
@@ -35,6 +40,8 @@ const store = configureStore({
             criteriaApi.middleware,
             institutionStatApi.middleware,
             verifyInvitationApi.middleware,
+            infoApi.middleware,
+            institutionStatApi.middleware
         ),
 });
 setupListeners(store.dispatch);

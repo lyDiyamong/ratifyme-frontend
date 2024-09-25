@@ -1,15 +1,34 @@
-//MUI Import
-import { CardMedia, Typography, Box } from "@mui/material";
+// React Library
+import { useEffect, useState } from "react";
+
+// MUI Import
+import { Box, Typography, CircularProgress } from "@mui/material";
 
 //Custom Import
-import { cardContents } from "../../data/dashboardPage/cardOverviewData";
+import { createCardContent } from "./OverviewCardFetch";
 import theme from "../../assets/themes";
 
-// ============ Start Cards Component ============
+// Fetching Data
+import { useFetchInstitutionStatsQuery } from "../../store/api/reports/institutionStatApis";
+import { useCheckAuthQuery } from "../../store/api/auth/authApi";
+
+// =========== Start Overview Card ===========
 const CardsList = () => {
+    const { data: response, isLoading, isError } = useFetchInstitutionStatsQuery();
+    const { data: user } = useCheckAuthQuery();
+    const [cardContents, setCardContents] = useState([]);
+
+    useEffect(() => {
+        if (response && user?.user?.roleId) {
+            const cardData = createCardContent(user.user.roleId, response.data, user.user.id);
+            setCardContents(cardData);
+        }
+    }, [response, user]);
+
+    if (isLoading) return <CircularProgress />;
+    if (isError) return <Typography color="error">Error fetching data</Typography>;
 
     return (
-        //============ Start Cards Container  ============
         <Box
             sx={{
                 display: "flex",
@@ -20,10 +39,9 @@ const CardsList = () => {
                 },
             }}
         >
-            {/* ============ Start Card Overview ============*/}
-            {cardContents.map((card) => (
+            {cardContents.map(({ title, image, icon, value }, index) => (
                 <Box
-                    key={card.id}
+                    key={title || index}
                     sx={{
                         flex: 1,
                         p: 3,
@@ -43,53 +61,25 @@ const CardsList = () => {
                         backgroundColor: theme.palette.customColors.white,
                     }}
                 >
-                    {" "}
-                    {/* Image graph */}
-                    <CardMedia
-                        component="img"
-                        image={card.image}
-                        sx={{
-                            maxWidth: 100,
-                            width: "100%",
-                        }}
-                    />
+                    <img src={image} style={{ maxWidth: 100, width: "100%" }} alt={title} />
                     <Box>
-                        {/* Display Number Data */}
                         <Typography
                             variant="h2"
-                            sx={{
-                                color: theme.palette.text.disabled,
-                                fontWeight: theme.fontWeight.semiBold,
-                            }}
+                            sx={{ color: theme.palette.text.disabled, fontWeight: theme.fontWeight.semiBold }}
                         >
-                            {card.value}
-                            <Box
-                                component="img"
-                                src={card.icon}
-                                sx={{
-                                    mb: "22px",
-                                    "@media (max-width: 650px)": { mb: "12px" },
-                                }}
-                            />
+                            {value}
+                            <img src={icon} alt={`${title} icon`} style={{ marginBottom: "16px" }} />
                         </Typography>
-                        {/* Title Card */}
-                        <Typography
-                            variant="body2"
-                            sx={{
-                                color: theme.palette.text.primary,
-                                "@media (max-width: 600px)": { fontSize: theme.typography.body3 },
-                            }}
-                        >
-                            {card.title}
+
+                        <Typography variant="body3" sx={{ color: theme.palette.text.primary }}>
+                            {title}
                         </Typography>
                     </Box>
                 </Box>
             ))}
-            {/* ============ End Card Overview ============*/}
         </Box>
-        //============ Start Cards Container  ============
     );
 };
-// ============ End Cards Component ============
 
 export default CardsList;
+// =========== End Overview Card ===========
