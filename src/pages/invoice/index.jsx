@@ -2,7 +2,7 @@
 import { useLocation } from "react-router-dom";
 
 // MUI import
-import { Box, Typography, Skeleton } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 // Custom import
 import DashboardContainer from "../../components/styles/DashboardContainer";
@@ -25,9 +25,6 @@ const InvoiceManagement = () => {
     // Fetching data
     const { data: response, isLoading, isError } = useGetSubInstitutionQuery(institutionId);
     const institutionData = response?.data;
-    // console.log(institutionData);
-    // console.log(institutionId);
-    if (isError) return <Box>Haha</Box>;
 
     // Total paid price
     const price = 0;
@@ -68,6 +65,7 @@ const InvoiceManagement = () => {
     return (
         // ============ Start login container ============
         <DashboardContainer>
+            {isError && <AlertMessage variant="error" >Error fetching data</AlertMessage>}
             {/* Page Title */}
             <PageTitle title="Invoice" />
             {/* <AlertMessage variant="error">Login succesfully</AlertMessage> */}
