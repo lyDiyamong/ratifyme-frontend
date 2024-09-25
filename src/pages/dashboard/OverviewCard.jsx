@@ -2,61 +2,28 @@
 import { useEffect, useState } from "react";
 
 // MUI Import
-import { Box, Typography, CircularProgress, CardMedia } from "@mui/material";
+import { Box, Typography, CircularProgress } from "@mui/material";
 
-// Custom Import
-import blueGraphSvg from "../../assets/images/bluegraph.svg";
-import purpleGraphSvg from "../../assets/images/purplegraph.svg";
-import yellowGraphSvg from "../../assets/images/yellowgraph.svg";
-import blueArrowSvg from "../../assets/icons/bluearrow.svg";
-import purpleArrowSvg from "../../assets/icons/purplearrow.svg";
-import yellowgraphArrowSvg from "../../assets/icons/yellowarrow.svg";
+//Custom Import
+import { createCardContent } from "./OverviewCardFetch";
+import theme from "../../assets/themes";
 
 // Fetching Data
 import { useFetchInstitutionStatsQuery } from "../../store/api/reports/institutionStatApis";
-import theme from "../../assets/themes";
+import { useCheckAuthQuery } from "../../store/api/auth/authApi";
 
-// ============ Start card list dashboard ============
-const createCardContent = (totalInstitutions, totalIssuers, totalEarners) => [
-    {
-        image: blueGraphSvg,
-        title: "Total Institution",
-        icon: blueArrowSvg,
-        value: totalInstitutions,
-    },
-    {
-        image: purpleGraphSvg,
-        title: "Total Issuer",
-        icon: purpleArrowSvg,
-        value: totalIssuers,
-    },
-    {
-        image: yellowGraphSvg,
-        title: "Total Earner",
-        icon: yellowgraphArrowSvg,
-        value: totalEarners,
-    },
-];
-
-// Cards Component
+// =========== Start Overview Card ===========
 const CardsList = () => {
     const { data: response, isLoading, isError } = useFetchInstitutionStatsQuery();
+    const { data: user } = useCheckAuthQuery();
     const [cardContents, setCardContents] = useState([]);
 
     useEffect(() => {
-        if (response) {
-            const totalInstitutions = response.data.length;
-            const totalIssuers = response.data.reduce((total, institution) => total + institution.Issuers.length, 0);
-            const totalEarners = response.data.reduce(
-                (total, institution) =>
-                    total +
-                    institution.Issuers.reduce((issuerTotal, issuer) => issuerTotal + (issuer.Earners?.length || 0), 0),
-                0,
-            );
-
-            setCardContents(createCardContent(totalInstitutions, totalIssuers, totalEarners));
+        if (response && user?.user?.roleId) {
+            const cardData = createCardContent(user.user.roleId, response.data, user.user.id);
+            setCardContents(cardData);
         }
-    }, [response]);
+    }, [response, user]);
 
     if (isLoading) return <CircularProgress />;
     if (isError) return <Typography color="error">Error fetching data</Typography>;
@@ -72,9 +39,9 @@ const CardsList = () => {
                 },
             }}
         >
-            {cardContents.map(({ id, image, title, icon, value }) => (
+            {cardContents.map(({ title, image, icon, value }, index) => (
                 <Box
-                    key={id}
+                    key={title || index}
                     sx={{
                         flex: 1,
                         p: 3,
@@ -94,14 +61,14 @@ const CardsList = () => {
                         backgroundColor: theme.palette.customColors.white,
                     }}
                 >
-                    <CardMedia component="img" image={image} sx={{ maxWidth: 100, width: "100%" }} />
+                    <img src={image} style={{ maxWidth: 100, width: "100%" }} alt={title} />
                     <Box>
                         <Typography
                             variant="h2"
                             sx={{ color: theme.palette.text.disabled, fontWeight: theme.fontWeight.semiBold }}
                         >
                             {value}
-                            <Box component="img" src={icon} sx={{ mb: { xs: "24px", xss: "16px" } }} />
+                            <img src={icon} alt={`${title} icon`} style={{ marginBottom: "16px" }} />
                         </Typography>
 
                         <Typography variant="body3" sx={{ color: theme.palette.text.primary }}>
@@ -115,4 +82,4 @@ const CardsList = () => {
 };
 
 export default CardsList;
-// ============ End card list dashboard ============
+// =========== End Overview Card ===========
