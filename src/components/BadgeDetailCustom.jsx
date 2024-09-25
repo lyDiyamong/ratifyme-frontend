@@ -1,34 +1,79 @@
 // React Import
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 // MUI Import
-import { Box, Grid, Typography, Button, Tabs, Tab, Chip, Stack } from "@mui/material";
+import { Box, Grid, Typography, Button, Tabs, Tab, Chip, Stack, useMediaQuery } from "@mui/material";
 import theme from "../assets/themes";
 import goldBadge from "../assets/images/GoldBadge.svg";
 
 // Custom Import
-import IssuerBadgeButton from "./IssuerBadgeButton";
-import IssueToEarnerButton from "./IssueToEarnerButton";
+import IssuerBadgeButton from "../pages/badgeMangements/IssuerBadgeButton";
+import IssueToEarnerButton from "../pages/badgeMangements/IssueToEarnerButton";
 import ClaimBadgeButton from "./ClaimBadgeButton";
 
 const BadgeDetailCustom = ({ badge, userRole }) => {
-    const [value, setValue] = useState(0);
+    // define breakpoint of the screen
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down(theme.breakpoints.values.sm));
 
+    // function that will change the value when select tab
+    const [value, setValue] = useState(0);
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    const {
+        handleSubmit,
+        control,
+        formState: { errors },
+    } = useForm();
+
+    // assign variable from props that has fetch value
     const result = badge?.data;
     console.log(result);
 
+    // assign variables for date
     const createdAt = result?.createdAt ? result.createdAt.split("T")[0] : "N/A";
     const expiredDate = result?.expiredDate ? result.expiredDate.split("T")[0] : "N/A";
 
+    // convert duration from milli second into date
     const durationInMs = result?.duration || 0;
     const days = durationInMs / (1000 * 60 * 60 * 24);
-    const hours = Math.floor((durationInMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) || 0;
+
     // Define role-based access for tab content
-    const hasDescriptionAccess = ["admin", "issuer", "earner"].includes(userRole);
-    const hasEarnerListAccess = ["admin", "issuer"].includes(userRole);
+    const hasAccessEarner = ["issuer", "earner"].includes(userRole);
+    const hasAccess = ["issuer"].includes(userRole);
+
+    // State for handling selected emails
+    const [selectedEmails, setSelectedEmails] = useState([]);
+
+    // Handler to get emails from IssuerBadgeButton
+    const handleGetEmails = (emails) => {
+        setSelectedEmails(emails);
+    };
+
+    console.log(selectedEmails);
+    // Define sub-component to use in tab content
+    const DetailItem = ({ label, value, isSmallScreen }) => (
+        <Stack sx={{ flexDirection: isSmallScreen ? "column" : "row", gap: 2 }}>
+            <Typography
+                sx={{
+                    fontSize: theme.typography.h6,
+                    fontWeight: theme.fontWeight.bold,
+                    width: isSmallScreen ? "100%" : "180px",
+                }}
+                color={theme.palette.text.primary}
+            >
+                {label}:
+            </Typography>
+            <Typography
+                sx={{ fontSize: theme.typography.body1, width: isSmallScreen ? "100%" : "500px" }}
+                color={theme.palette.text.secondary}
+            >
+                {value}
+            </Typography>
+        </Stack>
+    );
 
     return (
         // ============ Start Badge Detail ============
@@ -85,7 +130,7 @@ const BadgeDetailCustom = ({ badge, userRole }) => {
                         <Grid item>
                             {userRole === "issuer" ? (
                                 <Box sx={{ marginTop: 2, display: "flex", gap: 1 }}>
-                                    <IssuerBadgeButton />
+                                    <IssuerBadgeButton onGetEmail={handleGetEmails} control={control} />
                                     <IssueToEarnerButton />
                                 </Box>
                             ) : (
@@ -102,44 +147,53 @@ const BadgeDetailCustom = ({ badge, userRole }) => {
                 value={value}
                 onChange={handleChange}
                 sx={{
-                    borderColor: theme.palette.divider,
-                    boxShadow: theme.customShadows.default,
-                    borderRadius: theme.customShape.card,
-                    height: "100%",
+                    width: "100%",
                     display: "flex",
                     justifyContent: "space-between",
+                    gap: 1,
                 }}
                 TabIndicatorProps={{ style: { display: "none" } }}
             >
-                {hasDescriptionAccess && (
+                {hasAccess && (
                     <Tab
                         label="Description"
                         sx={{
-                            p: 0,
-                            flexGrow: 1,
+                            width: "50%",
                             textAlign: "center",
-                            height: "100%",
-                            justifyContent: "center",
+                            color: theme.palette.text.disabled,
+                            border: `2px solid ${theme.palette.customColors.gray200}`,
                             "&.Mui-selected": {
-                                color: theme.palette.primary.main,
+                                backgroundColor: theme.palette.primary.main,
+                                color: theme.palette.customColors.white,
+                                border: 0,
                             },
+                            borderRadius: theme.customShape.card,
+                            fontSize: theme.typography.h5,
+                            fontWeight: theme.fontWeight.bold,
                         }}
                     />
                 )}
-                {hasEarnerListAccess && (
+                {hasAccess && (
                     <Tab
                         label="Earner List"
                         sx={{
-                            flexGrow: 1,
-                            height: "100%",
-                            display: "flex",
+                            width: "50%",
+                            textAlign: "center",
+                            color: theme.palette.text.disabled,
+                            border: `2px solid ${theme.palette.customColors.gray200}`,
                             "&.Mui-selected": {
-                                color: theme.palette.primary.main,
+                                backgroundColor: theme.palette.primary.main,
+                                color: theme.palette.customColors.white,
+                                border: 0,
                             },
+                            borderRadius: theme.customShape.card,
+                            fontSize: theme.typography.h5,
+                            fontWeight: theme.fontWeight.bold,
                         }}
                     />
                 )}
             </Tabs>
+
             {/* End Tabs */}
 
             {/* Start Tab Content */}
@@ -149,193 +203,87 @@ const BadgeDetailCustom = ({ badge, userRole }) => {
                     padding: 2,
                     boxShadow: theme.customShadows.default,
                     borderRadius: theme.customShape.card,
-                    height: "35rem",
+                    height: "auto",
+                    overflow: "hidden",
+                    maxWidth: "100%",
                 }}
             >
-                {hasDescriptionAccess && value === 0 && (
+                {hasAccessEarner && value === 0 && (
                     <Box>
-                        {/* Badge Details */}
                         <Box
                             sx={{
                                 display: "flex",
-                                flexDirection: "row",
+                                flexDirection: isSmallScreen ? "column" : "row",
                                 justifyContent: "space-between",
-                                alignItems: "center",
-                                textAlign: "right",
-                                margin: 3,
-                                gap: 1,
+                                alignItems: "flex-start",
+                                margin: isSmallScreen ? 1 : 3,
+                                gap: isSmallScreen ? 2 : 1,
+                                flexWrap: "wrap",
                             }}
                         >
-                            {/* Left Column */}
                             <Box
                                 sx={{
                                     display: "flex",
                                     flexDirection: "column",
-                                    justifyContent: "flex-start", // Align items to the top of the column
-                                    gap: 5,
+                                    gap: 3,
                                     flex: 1,
-                                    // maxWidth: 200,
+                                    width: "100%",
                                 }}
                             >
-                                <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 2, width: 640 }}>
-                                    <Typography
-                                        sx={{
-                                            fontSize: theme.typography.h5,
-                                            fontWeight: theme.fontWeight.bold,
-                                            marginRight: 10,
-                                        }} // Increased font size
-                                        color={theme.palette.text.primary}
-                                    >
-                                        Description :
-                                    </Typography>
-                                    <Typography
-                                        sx={{ fontSize: theme.typography.body1, fontWeight: theme.fontWeight.semiBold }} // Increased font size
-                                        color={theme.palette.text.secondary}
-                                    >
-                                        {result.description || "No description available"}
-                                    </Typography>
-                                </Stack>
-
-                                <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 2, width: 640 }}>
-                                    <Typography
-                                        sx={{
-                                            fontSize: theme.typography.h5,
-                                            fontWeight: theme.fontWeight.bold,
-                                            marginRight: 10,
-                                        }} // Increased font size
-                                        color={theme.palette.text.primary}
-                                    >
-                                        Issued By :
-                                    </Typography>
-                                    <Typography
-                                        sx={{ fontSize: theme.typography.body1, fontWeight: theme.fontWeight.semiBold }} // Increased font size
-                                        color={theme.palette.text.secondary}
-                                    >
-                                        {result.Issuer?.User?.username || "Unknown Issuer"}
-                                    </Typography>
-                                </Stack>
-
-                                <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 2, width: 640 }}>
-                                    <Typography
-                                        sx={{
-                                            marginRight: 10,
-                                            fontSize: theme.typography.h5,
-                                            fontWeight: theme.fontWeight.bold,
-                                        }} // Increased font size
-                                        color={theme.palette.text.primary}
-                                    >
-                                        Criteria :
-                                    </Typography>
-                                    <Typography
-                                        sx={{ fontSize: theme.typography.body1, fontWeight: theme.fontWeight.semiBold }} // Increased font size
-                                        color={theme.palette.text.secondary}
-                                    >
-                                        {result.Criterias?.length
+                                <DetailItem
+                                    label="Description"
+                                    value={result.description || "No description available"}
+                                    isSmallScreen={isSmallScreen}
+                                />
+                                <DetailItem
+                                    label="Issuer"
+                                    value={result.Issuer?.User?.username || "Unknown Issuer"}
+                                    isSmallScreen={isSmallScreen}
+                                />
+                                <DetailItem
+                                    label="Criteria"
+                                    value={
+                                        result.Criterias?.length
                                             ? result.Criterias.map((item, index) => (
                                                   <Typography component="span" key={index}>
                                                       {item.narrative}
                                                   </Typography>
                                               ))
-                                            : "No criteria provided"}
-                                    </Typography>
-                                </Stack>
-
-                                <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 2, width: 640 }}>
-                                    <Typography
-                                        sx={{
-                                            fontSize: theme.typography.h5,
-                                            fontWeight: theme.fontWeight.bold,
-                                            marginRight: 10,
-                                        }} // Increased font size
-                                        color={theme.palette.text.primary}
-                                    >
-                                        Issued Date :
-                                    </Typography>
-                                    <Typography
-                                        sx={{ fontSize: theme.typography.body1, fontWeight: theme.fontWeight.semiBold }} // Increased font size
-                                        color={theme.palette.text.secondary}
-                                    >
-                                        {result.createdAt ? result.createdAt.split("T")[0] : "N/A"}
-                                    </Typography>
-                                </Stack>
-
-                                <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 2, width: 640 }}>
-                                    <Typography
-                                        sx={{
-                                            fontSize: theme.typography.h5,
-                                            fontWeight: theme.fontWeight.bold,
-                                            marginRight: 10,
-                                        }} // Increased font size
-                                        color={theme.palette.text.primary}
-                                    >
-                                        Expiry Date :
-                                    </Typography>
-                                    <Typography
-                                        sx={{ fontSize: theme.typography.body1, fontWeight: theme.fontWeight.semiBold }} // Increased font size
-                                        color={theme.palette.text.secondary}
-                                    >
-                                        {expiredDate || "No expiry date"}
-                                    </Typography>
-                                </Stack>
-
-                                <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 2, width: 640 }}>
-                                    <Typography
-                                        sx={{
-                                            fontSize: theme.typography.h5,
-                                            fontWeight: theme.fontWeight.bold,
-                                            marginRight: 10,
-                                        }} // Increased font size
-                                        color={theme.palette.text.primary}
-                                    >
-                                        Duration :
-                                    </Typography>
-                                    <Typography
-                                        sx={{ fontSize: theme.typography.body1, fontWeight: theme.fontWeight.semiBold }} // Increased font size
-                                        color={theme.palette.text.secondary}
-                                    >
-                                        {days ? `${days} days` : "No duration available"}
-                                    </Typography>
-                                </Stack>
-
-                                <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 2, width: 640 }}>
-                                    <Typography
-                                        sx={{
-                                            fontSize: theme.typography.h5,
-                                            fontWeight: theme.fontWeight.bold,
-                                        }} // Increased font size
-                                        color={theme.palette.text.primary}
-                                    >
-                                        Achievement Type :
-                                    </Typography>
-                                    <Typography
-                                        sx={{ fontSize: theme.typography.body1, fontWeight: theme.fontWeight.semiBold }} // Increased font size
-                                        color={theme.palette.text.secondary}
-                                    >
-                                        {result.Achievements?.length
-                                            ? result.Achievements?.map(
+                                            : "No criteria provided"
+                                    }
+                                    isSmallScreen={isSmallScreen}
+                                />
+                                <DetailItem
+                                    label="Issued Date"
+                                    value={result.createdAt ? result.createdAt.split("T")[0] : "N/A"}
+                                    isSmallScreen={isSmallScreen}
+                                />
+                                <DetailItem
+                                    label="Badge’s Expiry Date"
+                                    value={expiredDate || "No expiry date"}
+                                    isSmallScreen={isSmallScreen}
+                                />
+                                <DetailItem
+                                    label="Duration"
+                                    value={days ? `${days} days` : "No duration available"}
+                                    isSmallScreen={isSmallScreen}
+                                />
+                                <DetailItem
+                                    label="Achievement Type"
+                                    value={
+                                        result.Achievements?.length
+                                            ? result.Achievements.map(
                                                   (achievement) => achievement.AchievementType?.name,
                                               ).join(", ")
-                                            : "No achievement type available"}
-                                    </Typography>
-                                </Stack>
-
-                                <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 2, width: 640 }}>
-                                    <Typography
-                                        sx={{
-                                            fontSize: theme.typography.h5,
-                                            fontWeight: theme.fontWeight.bold,
-                                            marginRight: 10,
-                                        }}
-                                        color={theme.palette.text.primary}
-                                    >
-                                        Tags:
-                                    </Typography>
-                                    <Typography
-                                        sx={{ fontSize: theme.typography.body1, fontWeight: theme.fontWeight.semiBold }} // Increased font size
-                                        color={theme.palette.text.secondary}
-                                    >
-                                        {result?.tags
-                                            ? result?.tags.split(",").map((tag, index) => (
+                                            : "No achievement type available"
+                                    }
+                                    isSmallScreen={isSmallScreen}
+                                />
+                                <DetailItem
+                                    label="Tags"
+                                    value={
+                                        result?.tags
+                                            ? result.tags.split(",").map((tag, index) => (
                                                   <Chip
                                                       key={index}
                                                       label={tag}
@@ -346,24 +294,26 @@ const BadgeDetailCustom = ({ badge, userRole }) => {
                                                       }}
                                                   />
                                               ))
-                                            : "No tags"}
-                                    </Typography>
-                                </Stack>
+                                            : "No tags"
+                                    }
+                                    isSmallScreen={isSmallScreen}
+                                />
                             </Box>
                         </Box>
                     </Box>
                 )}
 
-                {hasEarnerListAccess && value === 1 && (
+                {hasAccess && value === 1 && (
                     <Box>
-                        {/* Earner List Tab */}
-                        <Typography sx={{ fontSize: theme.typography.body2 }} color={theme.palette.text.primary}>
-                            Earner List
-                        </Typography>
-                        {/* Add your earner list code here */}
+                        {selectedEmails.map((item, index) => (
+                            <Box key={index} sx={{ py: 1 }}>
+                                {item}
+                            </Box>
+                        ))}
                     </Box>
                 )}
             </Box>
+
             {/* End Tab Content */}
 
             {/* Start Footer (Delete Badge Button) */}
