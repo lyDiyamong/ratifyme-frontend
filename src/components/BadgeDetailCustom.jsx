@@ -12,7 +12,7 @@ import IssuerBadgeButton from "../pages/badgeMangements/IssuerBadgeButton";
 import IssueToEarnerButton from "../pages/badgeMangements/IssueToEarnerButton";
 import ClaimBadgeButton from "./ClaimBadgeButton";
 
-const BadgeDetailCustom = ({ badge, userRole }) => {
+const BadgeDetailCustom = ({ badge, userRole, issuerId }) => {
     // define breakpoint of the screen
     const isSmallScreen = useMediaQuery(theme.breakpoints.down(theme.breakpoints.values.sm));
 
@@ -130,7 +130,11 @@ const BadgeDetailCustom = ({ badge, userRole }) => {
                         <Grid item>
                             {userRole === "issuer" ? (
                                 <Box sx={{ marginTop: 2, display: "flex", gap: 1 }}>
-                                    <IssuerBadgeButton onGetEmail={handleGetEmails} control={control} />
+                                    <IssuerBadgeButton
+                                        onGetEmail={handleGetEmails}
+                                        control={control}
+                                        issuerId={issuerId}
+                                    />
                                     <IssueToEarnerButton />
                                 </Box>
                             ) : (
