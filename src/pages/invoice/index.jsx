@@ -7,7 +7,7 @@ import { Box, Typography, Skeleton } from "@mui/material";
 // Custom import
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import TableCustom from "../../components/TableList";
-import FormatDate from "../../utils/dateString";
+import FormatDate from "../../utils/formatDate";
 import PageTitle from "../../components/PageTitle";
 
 // API import
