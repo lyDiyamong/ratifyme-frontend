@@ -19,8 +19,16 @@ import theme from "../assets/themes";
  * @param {string} message - The message displayed in the modal.
  * @param {JSX.Element} agreeBtn - A custom button to confirm the action; if not provided, a default button is used.
  * @param {function} onAgree - A callback function to execute when the user confirms their action.
+ *
+ * How to use
+ * <MakeSureModal
+    title="Issue badge to your earners?"
+    message="Are you sure you want to issue this badge to the recipients? Preview the badge details before issuing it."
+    agreeBtn={<Button>Submit</Button>}
+    onAgree={() => console.log("Submit action triggered")}
+/>
  */
-export default function MakeSureModal({ openBtn, openBtnSx, title, message, agreeBtn, onAgree }) {
+export default function MakeSureModal({ openBtn, icon, variant, openBtnSx, title, message, agreeBtn, onAgree }) {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -42,7 +50,8 @@ export default function MakeSureModal({ openBtn, openBtnSx, title, message, agre
         <>
             {/* Open modal button */}
             <Button
-                variant="contained"
+                startIcon={icon}
+                variant={variant}
                 onClick={handleClickOpen}
                 sx={{ borderRadius: theme.customShape.btn, color: theme.palette.customColors.white, ...openBtnSx }}
             >
@@ -63,6 +72,7 @@ export default function MakeSureModal({ openBtn, openBtnSx, title, message, agre
                         variant="text"
                         sx={{
                             borderRadius: theme.customShape.btn,
+                            color: theme.palette.text.primary
                         }}
                         onClick={handleClose}
                     >
