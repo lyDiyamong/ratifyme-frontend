@@ -14,18 +14,20 @@ import theme from "../assets/themes";
  * @param {Array} options - An array of option objects for the select input. Each object should have `value` and `label` properties.
  * @param {string} label - The label for the select input field.
  * @param {boolean} required - A boolean indicating if the field is required.
+ * @param {Function} onChange - A function for getting value to email
  */
-const SelectForm = ({ name, control, options, label, required }) => {
+const SelectForm = ({ name, control, options, label, required, onChange }) => {
     const validationEmailRules = { required: required ? `${label} is required` : false };
     const {
         field,
         fieldState: { error },
     } = useController({ name, control, rules: validationEmailRules });
 
-    // This Handle the change event and update the value in react-hook-form
+    // Handle the change event and update the value in react-hook-form
     const handleChange = (event) => {
-        // This Update react-hook-form with the new value
+        // Update form state
         field.onChange(event.target.value);
+        if (onChange) onChange(event.target.value);
     };
 
     return (
@@ -40,7 +42,7 @@ const SelectForm = ({ name, control, options, label, required }) => {
                 id={`${name}-select`}
                 value={field.value || ""}
                 label={label}
-                onChange={handleChange}
+                onChange={handleChange}     
                 onBlur={field.onBlur}
                 inputProps={{ "aria-required": required }}
                 MenuProps={{
@@ -51,17 +53,14 @@ const SelectForm = ({ name, control, options, label, required }) => {
                     },
                 }}
             >
-                {/* Start Render options for the select input */}
+                {/* Render options for the select input */}
                 {options.map((option) => (
-                    <MenuItem
-                        key={option.value}
-                        value={option.value}
-                    >
-                        {option.label}
+                    <MenuItem key={option.id} value={option.email}>
+                        {option.email}
                     </MenuItem>
                 ))}
             </Select>
-            {/* Start Display validation error message if any */}
+            {/* Display validation error message if any */}
             {error && <FormHelperText>{error.message}</FormHelperText>}
         </FormControl>
     );
