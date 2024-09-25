@@ -7,7 +7,10 @@ const ClaimBadgeButton = () => {
             sx={{
                 backgroundColor: theme.palette.primary.main,
                 color: theme.palette.customColors.white,
-                fontFamily: theme.typography.fontFamily,
+                fontSize: theme.typography.body1,
+                fontWeight: theme.fontWeight.bold,
+                borderRadius: theme.customShape.btn,
+                px: 3,
             }}
         >
             Claim Badge
