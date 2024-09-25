@@ -12,7 +12,7 @@ export const infoApi = createApi({
                 url: "/users",
                 method: "GET",
             }),
-            providesTags: ["User"],
+            providesTags : ['User']
         }),
 
         fetchInfoUserById: builder.query({
