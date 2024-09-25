@@ -3,15 +3,7 @@ import { useEffect, useState } from "react";
 //MUI Import
 import { Box, Container, Stack, IconButton, Typography, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import {
-    Phone,
-    Email,
-    Cake,
-    SchoolRounded,
-    PublicRounded,
-    PersonRemoveRounded,
-    PermContactCalendarRounded,
-} from "@mui/icons-material";
+import { PersonRemoveRounded } from "@mui/icons-material";
 //Custom Import
 import theme from "../../../assets/themes/index";
 import PhotoIconSvg from "../../../assets/icons/Photo Icon.svg";
@@ -34,6 +26,8 @@ import {
     useUploadUserPfMutation,
 } from "../../../store/api/users/userInfoProfileApi";
 import { useCheckAuthQuery } from "../../../store/api/auth/authApi";
+import MakeSureModal from "../../../components/MakeSureModal";
+import { borderColor, color } from "@mui/system";
 
 //============ Start User Profile Component ============
 const UserProfile = () => {
@@ -188,23 +182,38 @@ const UserProfile = () => {
                             >
                                 <EditIcon />
                             </Button>
-
                             {/* Edit profile modal */}
                             <EditProfileModal open={open} onClose={handleClose} userData={userData} />
                             
                             {/* Delete profile button */}
-                            <Button
-                                variant="outlined"
-                                color="error"
-                                onClick={handleDeleteImage}
-                                sx={{
-                                    borderRadius: theme.customShape.btn,
-                                    textTransform: "none",
-                                    maxWidth: 30,
+                            <MakeSureModal
+                                openBtnSx={{
+                                    color: theme.palette.customColors.red300,
+                                    borderColor: theme.palette.customColors.red300,
+                                    "&:hover": {
+                                        backgroundColor: theme.palette.action.error,
+                                    },
                                 }}
-                            >
-                                <PersonRemoveRounded />
-                            </Button>
+                                icon={<PersonRemoveRounded />}
+                                variant="outlined"
+                                title="Remove Your Profile Image?"
+                                message="This will remove your profile picture from the application and set it to the default picture. You can also add a new one later! 👋"
+                                agreeBtn={
+                                    <Button
+                                        sx={{
+                                            color: theme.palette.customColors.red300,
+                                            borderRadius: theme.customShape.btn,
+                                            "&:hover": {
+                                                color: theme.palette.customColors.red300,
+                                                backgroundColor: theme.palette.action.error,
+                                            },
+                                        }}
+                                    >
+                                        Remove profile
+                                    </Button>
+                                }
+                                onAgree={handleDeleteImage}
+                            />
                         </Stack>
                     </Stack>
                     {/*============ End Upper User Data ============*/}
