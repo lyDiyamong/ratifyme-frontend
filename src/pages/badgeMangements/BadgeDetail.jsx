@@ -39,7 +39,7 @@ const BadgeDetail = () => {
 
     return (
         <DashboardContainer sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
-            <BadgeDetailCustom badge={oneBadge} userRole={role} />
+            <BadgeDetailCustom badge={oneBadge} userRole={role} issuerId={oneBadge?.data?.issuerId || ""} />
         </DashboardContainer>
     );
 };
