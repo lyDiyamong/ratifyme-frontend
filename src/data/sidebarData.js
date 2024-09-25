@@ -25,6 +25,11 @@ export const sidebarItems = [
                 roles: [1, 2, 3],
             },
             {
+                text: "Institutions",
+                path: "/management/institutions",
+                roles: [1],
+            },
+            {
                 text: "Issuers",
                 path: "/management/issuers",
                 roles: [1, 2],
