@@ -6,7 +6,7 @@ import { subscriptionApi } from "./api/subscription/subscriptionApi";
 import { achievementTypeApi } from "./api/achievements/achievementTypeApi";
 import { criteriaApi } from "./api/badgeManagement/criteriaApi";
 import { achievementApi } from "./api/achievements/achievementApi";
-import { institutionStatApi} from "./api/reports/institutionStatApis"
+import { institutionStatApi } from "./api/reports/institutionStatApis";
 import { verifyInvitationApi } from "./api/auth/verifyInvitationApi";
 import { infoApi } from "./api/users/userInfoProfileApi";
 

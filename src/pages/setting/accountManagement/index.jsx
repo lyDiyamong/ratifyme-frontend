@@ -7,7 +7,7 @@ import BioContent from "./BioContent"
 const AccountManagement = () => {
     return (
         <DashboardContainer sx={{display : "flex", gap:3, flexDirection: "column", mb: 3}} >
-            <PageTitle title="Profile" />
+            <PageTitle title="Personal Information" />
             <UserProfile />
             <BioContent />
         </DashboardContainer>

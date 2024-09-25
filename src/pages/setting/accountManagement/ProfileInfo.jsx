@@ -1,6 +1,6 @@
 import { Box, Grid, Stack, Typography } from "@mui/material";
 
-import FormatYear from "../../../utils/fomatYear"
+import FormatDate from "../../../utils/dateString";
 import theme from "../../../assets/themes";
 
 /**
@@ -59,15 +59,10 @@ const ProfileInfo = ({ details, item }) => {
                         <Typography sx={{ fontSize: theme.typography.h5, fontWeight: theme.fontWeight.semiBold }}>
                             {label}
                         </Typography>
-                        {/* <Typography sx={{ fontSize: theme.typography.h6, color: theme.palette.text.disabled }}>
-                            {getValue(item, valueKey) || "N/A"}
-                        </Typography> */}
                         <Typography sx={{ fontSize: theme.typography.h6, color: theme.palette.text.disabled }}>
-                            {label === "Date of Birth" ? (
-                                <FormatYear dateString={getValue(item, valueKey)} />
-                            ) : (
-                                getValue(item, valueKey) || "N/A"
-                            )}
+                            {label === "Date of Birth" || label === "Plan expired Date"
+                                ? FormatDate(getValue(item, valueKey))
+                                : getValue(item, valueKey) || "N/A"}
                         </Typography>
                     </Stack>
                 </Grid>
