@@ -9,6 +9,9 @@ export const institutionApi = createApi({
         getInstitution: builder.query({
             query: () => "/institutions",
         }),
+        getInstitutionById: builder.query({
+            query: (id) => `/institutions/${id}`,
+        }),
     }),
 });
-export const { useGetInstitutionQuery } = institutionApi;
+export const { useGetInstitutionQuery, useGetInstitutionByIdQuery } = institutionApi;

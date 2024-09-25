@@ -1,4 +1,5 @@
 // React import
+import { useState } from "react";
 import { useNavigate } from "react-router";
 
 // Mui import
@@ -15,15 +16,24 @@ import AlertMessage from "../../components/alert/AlertMessage";
 // Api import
 import { useGetSubscritptionQuery } from "../../store/api/subscription/subscriptionApi";
 
+
 const BillingInvoiceManagement = () => {
+    // Error state hook
+    const [errorMessage, setErrorMessage] = useState("");
+
+    // Navigate hook
     const navigate = useNavigate();
+
+    // Api fetching hook
     const { data: response, isLoading, isError } = useGetSubscritptionQuery();
     const subscriptions = response?.data;
 
+    // Handling view for another page
     const handleView = (institutionId) => {
         navigate(`/sales/invoice?institutionId=${institutionId}`);
     };
 
+    // Data columns
     const columns = [
         {
             name: "Organization Name",
@@ -51,10 +61,15 @@ const BillingInvoiceManagement = () => {
         },
     ];
 
+    // Error handling
+    if (isError) {
+        setErrorMessage("There was an error fetching subscription data. Please try again later.");
+    }
+
     return (
         // ============ Start BillingInvoiceManagement ============
         <DashboardContainer>
-            {isError && <AlertMessage variant="error" >Error fetching data</AlertMessage>}
+            {errorMessage && <AlertMessage variant="error">{errorMessage}</AlertMessage>}
             {/* Page title */}
             <PageTitle title="Billing and Invoice" />
             {isLoading ? (

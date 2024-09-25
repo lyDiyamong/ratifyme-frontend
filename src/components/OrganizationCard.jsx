@@ -33,7 +33,21 @@ const OrganizationLogo = styled(Avatar)(({ theme }) => ({
     width: theme.spacing(10),
     height: theme.spacing(10),
 }));
-
+/**
+ * OrganizationCard Component
+ *
+ * A card component that displays information about an organization, including its logo,
+ * title, description, social media links, and date.
+ *
+ * @param {string} [tag="ORGANIZATION"] - The tag to display on the card.
+ * @param {string} [title="Above & Beyond School"] - The title of the organization.
+ * @param {string} [description="Lorem ipsum dolor sit amet, consectetur adipiscing elit."] - A brief description of the organization.
+ * @param {string} [logoUrl] - The URL of the organization's logo image.
+ * @param {string} [date] - The date associated with the organization in "Mon DD, YYYY" format.
+ * @param {boolean} [showFacebook=true] - Flag to show or hide the Facebook icon.
+ * @param {boolean} [showLinkedIn=true] - Flag to show or hide the LinkedIn icon.
+ * @returns {JSX.Element} A styled card displaying organization details.
+ */
 const OrganizationCard = ({
     // Default tag
     tag = "ORGANIZATION",
