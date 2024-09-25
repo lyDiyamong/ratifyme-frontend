@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import theme from "../assets/themes";
+import theme from "../../assets/themes";
 
 const IssueToEarnerButton = () => {
     return (
@@ -7,10 +7,13 @@ const IssueToEarnerButton = () => {
             sx={{
                 backgroundColor: theme.palette.primary.main,
                 color: theme.palette.customColors.white,
-                fontFamily: theme.typography.fontFamily,
+                fontSize: theme.typography.body1,
+                fontWeight: theme.fontWeight.bold,
+                borderRadius: theme.customShape.btn,
+                px: 3,
             }}
         >
-            Add earner to badge
+            Send Issue
         </Button>
     );
 };
