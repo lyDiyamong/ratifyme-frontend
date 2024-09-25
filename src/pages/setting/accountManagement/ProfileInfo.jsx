@@ -1,4 +1,6 @@
 import { Box, Grid, Stack, Typography } from "@mui/material";
+
+import FormatYear from "../../../utils/fomatYear"
 import theme from "../../../assets/themes";
 
 /**
@@ -14,6 +16,10 @@ import theme from "../../../assets/themes";
 
 // Utility function to get value from nested objects based on a string key path
 const getValue = (obj, keyPath) => {
+    if (!keyPath || typeof keyPath !== "string") {
+        return "N/A"; // Default value if keyPath is undefined
+    }
+
     return keyPath.split(".").reduce((o, k) => (o || {})[k], obj);
 };
 
@@ -50,11 +56,18 @@ const ProfileInfo = ({ details, item }) => {
                 >
                     <Box component="span">{icon}</Box>
                     <Stack gap={"5px"} sx={{ textAlign: "left" }}>
-                        <Typography sx={{ fontSize: theme.typography.h5, fontWeight: theme.fontWeight.bold }}>
+                        <Typography sx={{ fontSize: theme.typography.h5, fontWeight: theme.fontWeight.semiBold }}>
                             {label}
                         </Typography>
-                        <Typography sx={{ fontSize: theme.typography.h6 }}>
+                        {/* <Typography sx={{ fontSize: theme.typography.h6, color: theme.palette.text.disabled }}>
                             {getValue(item, valueKey) || "N/A"}
+                        </Typography> */}
+                        <Typography sx={{ fontSize: theme.typography.h6, color: theme.palette.text.disabled }}>
+                            {label === "Date of Birth" ? (
+                                <FormatYear dateString={getValue(item, valueKey)} />
+                            ) : (
+                                getValue(item, valueKey) || "N/A"
+                            )}
                         </Typography>
                     </Stack>
                 </Grid>

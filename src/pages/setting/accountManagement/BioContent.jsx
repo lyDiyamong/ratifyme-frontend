@@ -1,16 +1,24 @@
-//React Import 
-import  { useState } from 'react';
-//Mui Import 
+//React Import
+import { useState } from "react";
+//Mui Import
 import { TextField, Box, Typography } from "@mui/material";
 //Custom Import
 import theme from "../../../assets/themes";
-
+import { useCheckAuthQuery } from "../../../store/api/auth/authApi";
+import { useFetchInfoUserByIdQuery } from "../../../store/api/users/userInfoProfileApi";
 
 //============ Start Bio input Editable Field Component ============
 const BioContent = () => {
-    
+    const { data: user } = useCheckAuthQuery();
+
+    const userId = user.user.id;
+
     const [value, setValue] = useState("Share more about yourself");
     const [isEditing, setIsEditing] = useState(false);
+
+    // Fetch data
+    const { data: info, isLoading, isError } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
+    const userBio = info?.data.bio;
 
     const handleKeyDown = (e) => {
         if (e.key === "Enter") {
@@ -30,8 +38,8 @@ const BioContent = () => {
                     borderRadius: theme.customShape.section,
                     p: { xss: "20px", sm: "24px" },
                     bgcolor: theme.palette.customColors.white,
-                }}>
-
+                }}
+            >
                 {/* Title */}
                 <Typography
                     sx={{
@@ -44,7 +52,7 @@ const BioContent = () => {
                 </Typography>
                 <Box
                     sx={{
-                        height: "100px",
+                        // height: "100px",
                         display: "flex",
                         alignItems: "flex-start",
                         gap: 2,
@@ -57,13 +65,12 @@ const BioContent = () => {
                         <TextField
                             onClick={handleTextClick}
                             style={{ cursor: "pointer" }}
-                            width={"100%"}
                             value={value}
                             onChange={(e) => setValue(e.target.value)}
                             onKeyDown={handleKeyDown}
                             variant="outlined"
                             autoFocus
-                            sx={{ color: theme.palette.text.disabled }}
+                            sx={{ color: theme.palette.text.disabled, maxWidth: 500, width: '100%' }}
                         />
                     ) : (
                         <span
@@ -76,7 +83,7 @@ const BioContent = () => {
                                         : theme.palette.text.primary,
                             }}
                         >
-                            {value}
+                            {userBio}
                         </span>
                     )}
                 </Box>

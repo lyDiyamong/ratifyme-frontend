@@ -12,7 +12,7 @@ export const infoApi = createApi({
                 url: "/users",
                 method: "GET",
             }),
-            providesTags : ['User']
+            providesTags: ["User"],
         }),
 
         fetchInfoUserById: builder.query({
@@ -36,8 +36,22 @@ export const infoApi = createApi({
                 method: "DELETE",
             }),
             // invalidatesTags: ["User"],
-        })
+        }),
+        updateUserProfile: builder.mutation({
+            query: ({ id, data }) => ({
+                url: `/users/${id}`,
+                method: "PATCH",
+                body: data,
+            }),
+            invalidatesTags: ["User"],
+        }),
     }),
 });
 
-export const { useFetchInfoUserQuery, useFetchInfoUserByIdQuery, useDeleteUserPfMutation, useUploadUserPfMutation } = infoApi;
+export const {
+    useFetchInfoUserQuery,
+    useFetchInfoUserByIdQuery,
+    useDeleteUserPfMutation,
+    useUploadUserPfMutation,
+    useUpdateUserProfileMutation,
+} = infoApi;
