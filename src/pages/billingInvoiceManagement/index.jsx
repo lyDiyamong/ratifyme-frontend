@@ -11,15 +11,16 @@ import DashboardContainer from "../../components/styles/DashboardContainer";
 import PageTitle from "../../components/PageTitle";
 import SkeletonLoading from "../../components/loading/SkeletonLoading";
 
-
 // Api import
 import { useGetSubscritptionQuery } from "../../store/api/subscription/subscriptionApi";
+import MakeSureModal from "../../components/MakeSureModal";
+import { Button } from "@mui/material";
+import theme from "../../assets/themes";
 
 const BillingInvoiceManagement = () => {
     const navigate = useNavigate();
     const { data: response, isLoading, isError } = useGetSubscritptionQuery();
     const subscriptions = response?.data;
-    console.log(subscriptions);
 
     const handleView = (institutionId) => {
         navigate(`/sales/invoice?institutionId=${institutionId}`);
@@ -48,17 +49,23 @@ const BillingInvoiceManagement = () => {
         },
         {
             name: "Action",
-            selector: ({ institutionId }) => (
-                <MenuSelection onView={() => handleView(institutionId)} />
-            ),
+            selector: ({ institutionId }) => <MenuSelection onView={() => handleView(institutionId)} />,
         },
     ];
 
     return (
+        // ============ Start BillingInvoiceManagement ============
         <DashboardContainer>
+            {/* Page title */}
             <PageTitle title="Billing and Invoice" />
-            {isLoading ? <SkeletonLoading num={5} /> :<TableCustom title="Billing and Invoice" data={subscriptions} columns={columns} />}
+            {isLoading ? (
+                <SkeletonLoading num={5} />
+            ) : (
+                // Billing and Invoice Table
+                <TableCustom title="Billing and Invoice" data={subscriptions} columns={columns} />
+            )}
         </DashboardContainer>
+        // ============ End BillingInvoiceManagement ============
     );
 };
 
