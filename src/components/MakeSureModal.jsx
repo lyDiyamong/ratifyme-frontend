@@ -2,10 +2,19 @@
 import { cloneElement, useState } from "react";
 
 // MUI import
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Typography,
+} from "@mui/material";
 
 // Custom import
 import theme from "../assets/themes";
+import { Box } from "@mui/system";
 
 /**
  * MakeSureModal Component
@@ -50,17 +59,22 @@ export default function MakeSureModal({ openBtn, icon, variant, openBtnSx, title
         <>
             {/* Open modal button */}
             <Button
-                startIcon={icon}
+                // startIcon={icon}
                 variant={variant}
                 onClick={handleClickOpen}
                 sx={{ borderRadius: theme.customShape.btn, color: theme.palette.customColors.white, ...openBtnSx }}
             >
+                <Box sx={{ display: "flex", justifyContent: "center" }}>{icon}</Box>
                 {openBtn}
             </Button>
             {/* Start MakeSureModal */}
             <Dialog open={isOpen} onClose={handleClose} aria-labelledby="responsive-dialog-title">
                 {/* Modal title */}
-                <DialogTitle id="responsive-dialog-title">{title}</DialogTitle>
+                <DialogTitle id="responsive-dialog-title">
+                    <Typography variant="h4" fontWeight={theme.fontWeight.semiBold}>
+                        {title}
+                    </Typography>
+                </DialogTitle>
                 {/* Modal message */}
                 <DialogContent>
                     <DialogContentText>{message}</DialogContentText>
@@ -72,7 +86,7 @@ export default function MakeSureModal({ openBtn, icon, variant, openBtnSx, title
                         variant="text"
                         sx={{
                             borderRadius: theme.customShape.btn,
-                            color: theme.palette.text.primary
+                            color: theme.palette.text.primary,
                         }}
                         onClick={handleClose}
                     >

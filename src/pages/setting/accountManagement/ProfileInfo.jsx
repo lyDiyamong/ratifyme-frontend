@@ -1,6 +1,6 @@
 import { Box, Grid, Stack, Typography } from "@mui/material";
 
-import FormatDate from "../../../utils/dateString";
+import FormatDate from "../../../utils/formatDate";
 import theme from "../../../assets/themes";
 
 /**

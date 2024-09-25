@@ -47,6 +47,7 @@ const theme = createTheme({
         action: {
             hover: "#E5F3FF",
             selected: "#C7E4FF",
+            error: "#FFF2F2",
         },
     },
     typography: {
