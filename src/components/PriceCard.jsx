@@ -5,7 +5,7 @@ import { Box, Paper, Typography, Button } from "@mui/material";
 import theme from "../assets/themes";
 import CheckoutButton from "./CheckoutButton";
 
-const PriceCard = ({ item }) => {
+const PriceCard = ({ item, button }) => {
     return (
         <Paper
             sx={{
@@ -51,7 +51,7 @@ const PriceCard = ({ item }) => {
             >
                 $ {item.price}
             </Typography>
-            <CheckoutButton id={item.id} />
+            {button && <CheckoutButton id={item.id} />}
         </Paper>
     );
 };

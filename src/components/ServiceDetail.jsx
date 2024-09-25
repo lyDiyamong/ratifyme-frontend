@@ -2,8 +2,6 @@
 // ServiceDetail Code
 import { useState } from "react";
 
-
-
 // MUI library import
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import { Box, Grid, Tabs, Tab, useMediaQuery, Typography } from "@mui/material";
@@ -17,8 +15,7 @@ import PriceCard from "./PriceCard";
 // Api import
 import { useGetServicePlanQuery } from "../store/api/subscription/subscriptionApi";
 
-
-const ServiceDetail = () => {
+const ServiceDetail = ({ button }) => {
     // Fetching data from API
 
     const { data, isLoading, error } = useGetServicePlanQuery();
@@ -33,9 +30,7 @@ const ServiceDetail = () => {
     const servicePlans = data?.data;
 
     // Function that renders each price card for each plan
-    const renderPriceCards = servicePlans.map((item, index) => (
-        <PriceCard key={index} item={item} />
-    ));
+    const renderPriceCards = servicePlans.map((item, index) => <PriceCard key={index} item={item} button={button} />);
 
     // Update the first row of serviceRows with dynamic data
     rows[0].three_monthPlan = renderPriceCards[0] || null;
@@ -68,7 +63,8 @@ const ServiceDetail = () => {
             key={index}
             sx={{
                 backgroundColor: index % 2 !== 0 ? theme.palette.primary.light : theme.palette.customColors.white,
-                py: 2, px: 1
+                py: 2,
+                px: 1,
             }}
         >
             <Grid item xs={3} sx={{ m: 0 }}>
