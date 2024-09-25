@@ -74,7 +74,7 @@ const TableEarner = () => {
         },
         {
             name: "Academic Year",
-            selector: (row) => FormatYear({ dateString: row.AcademicBackground?.academicYear }) || 'N/A',
+            selector: (row) => FormatYear(row.AcademicBackground?.academicYear) || "N/A",
             sortable: true,
         },
         {
