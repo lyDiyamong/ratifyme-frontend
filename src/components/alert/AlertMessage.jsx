@@ -10,14 +10,14 @@ import { Box, Alert } from "@mui/material";
  * @param {JSX.Element} children - content of the alert
  * @return {JSX.Element} rendered AlertMessage component
  */
-const AlertMessage = ({ variant, children }) => {
+function AlertMessage({ variant, children }) {
     const [visible, setVisible] = useState(true);
 
     useEffect(() => {
         // Set a timer to hide the alert after 2 seconds
         const timer = setTimeout(() => {
             setVisible(false);
-        }, 2000);
+        }, 3000);
 
         // Cleanup timer on component unmount
         return () => clearTimeout(timer);
@@ -42,6 +42,6 @@ const AlertMessage = ({ variant, children }) => {
         </Box>,
         document.body,
     );
-};
+}
 
 export default AlertMessage;

@@ -10,6 +10,7 @@ import FormatDate from "../../utils/formatDate";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import PageTitle from "../../components/PageTitle";
 import SkeletonLoading from "../../components/loading/SkeletonLoading";
+import AlertMessage from "../../components/alert/AlertMessage";
 
 // Api import
 import { useGetSubscritptionQuery } from "../../store/api/subscription/subscriptionApi";
@@ -53,6 +54,7 @@ const BillingInvoiceManagement = () => {
     return (
         // ============ Start BillingInvoiceManagement ============
         <DashboardContainer>
+            {isError && <AlertMessage variant="error" >Error fetching data</AlertMessage>}
             {/* Page title */}
             <PageTitle title="Billing and Invoice" />
             {isLoading ? (
