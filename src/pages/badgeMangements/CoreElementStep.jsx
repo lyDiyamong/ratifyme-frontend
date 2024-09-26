@@ -17,16 +17,13 @@ const CoreElementStep = ({ control }) => {
             <Stack gap={2}>
                 {/* Issuer */}
                 <FormInput
+                    disabled
                     name="issuer"
                     label="Issuer*"
                     control={control}
                     type="text"
                     required={false}
-                    slotProps={{
-                        input: {
-                            readOnly: true,
-                        },
-                    }}
+                    //      
                 />
 
                 {/* Criteria */}
