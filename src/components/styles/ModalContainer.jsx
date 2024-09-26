@@ -11,15 +11,20 @@ const ModalContainer = ({ open, onClose, title, options, control, onGetEmail }) 
 
     // Handle option selection and add to the list
     const handleSelect = (selectedOption) => {
-        // Check if the selected option is already in the list to avoid duplicates
-        if (!list.includes(selectedOption)) {
-            setList((prevList) => [...prevList, selectedOption]);
+        const selectedEmail = fetchOptions.find((option) => option.value === selectedOption)?.label;
+
+        // Check if the selected email is already in the list to avoid duplicates
+        if (selectedEmail && !list.includes(selectedEmail)) {
+            setList((prevList) => [...prevList, selectedEmail]);
         }
     };
+
     const handleSave = () => {
         onGetEmail(list);
         onClose();
     };
+    const fetchOptions = options?.map((element) => ({ value: element.id, label: element.email })) || [];
+
     return (
         <Dialog
             open={open}
@@ -45,7 +50,7 @@ const ModalContainer = ({ open, onClose, title, options, control, onGetEmail }) 
                         name="email"
                         label="Email"
                         control={control}
-                        options={options}
+                        options={fetchOptions}
                         required={false}
                         onChange={handleSelect}
                     />
