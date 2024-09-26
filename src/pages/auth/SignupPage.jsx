@@ -481,11 +481,7 @@ const SignupPage = () => {
                         <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 4 }}>
                             {renderStepContent(activeStep)}
                             <Stack direction="row" justifyContent="space-between" sx={{ mt: 4 }}>
-                                <Button
-                                    disabled={activeStep === 0}
-                                    onClick={handleBack}
-                                    variant="outlined"
-                                >
+                                <Button disabled={activeStep === 0} onClick={handleBack} variant="outlined">
                                     Back
                                 </Button>
                                 <Button

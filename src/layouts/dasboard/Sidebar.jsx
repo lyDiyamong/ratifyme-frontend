@@ -28,6 +28,7 @@ import { useTheme } from "@emotion/react";
 import FlexBetween from "../../components/styles/FlexBetween";
 import LogoIconSvg from "../../assets/icons/logo.svg";
 import { sidebarItems } from "../../data/sidebarData";
+import { useSelector } from "react-redux";
 
 // Icon Style Constant
 const iconStyles = { width: "20px", height: "20px" };
@@ -42,13 +43,13 @@ const iconStyles = { width: "20px", height: "20px" };
  * @param {boolean} isDesktop - Whether the view is for desktop
  * @return {JSX.Element}
  */
-const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) => {
+const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) => {
     const { pathname } = useLocation();
     const navigate = useNavigate();
     const theme = useTheme();
 
     const [active, setActive] = useState("");
-    const roleId = user.roleId;
+    const { roleId } = useSelector((state) => state.global);
 
     useEffect(() => {
         setActive(pathname.substring(1));
