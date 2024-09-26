@@ -8,6 +8,7 @@ import { Box, Typography, CircularProgress } from "@mui/material";
 import SearchBarCustom from "../../components/SearchBarCustom";
 import TableCustom from "../../components/TableList";
 import NoRecordData from "../../components/NoRecordData";
+import ReportChart from "./TableChart";
 
 // Fetching Data Import
 import { useFetchInstitutionStatsQuery } from "../../store/api/reports/institutionStatApis";
@@ -120,7 +121,10 @@ const TableReport = () => {
             ) : isError ? (
                 <Typography color="error">Error fetching data</Typography>
             ) : filteredData.length > 0 ? (
-                <TableCustom title="Report List" data={filteredData} columns={reportColumns} />
+                <>
+                    <ReportChart />
+                    <TableCustom title="Report List" data={filteredData} columns={reportColumns} />
+                </>
             ) : (
                 // Display this section if no report matches the search query
                 <NoRecordData />
