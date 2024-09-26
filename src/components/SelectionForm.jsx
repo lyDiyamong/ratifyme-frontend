@@ -42,7 +42,7 @@ const SelectForm = ({ name, control, options, label, required, onChange }) => {
                 id={`${name}-select`}
                 value={field.value || ""}
                 label={label}
-                onChange={handleChange}     
+                onChange={handleChange}
                 onBlur={field.onBlur}
                 inputProps={{ "aria-required": required }}
                 MenuProps={{
@@ -55,8 +55,8 @@ const SelectForm = ({ name, control, options, label, required, onChange }) => {
             >
                 {/* Render options for the select input */}
                 {options.map((option) => (
-                    <MenuItem key={option.id} value={option.email}>
-                        {option.email}
+                    <MenuItem key={option.id} value={option.value}>
+                        {option.label}
                     </MenuItem>
                 ))}
             </Select>
