@@ -2,6 +2,7 @@
 import OrganizationCard from "../../components/OrganizationCard";
 import AnBSchoolLogo from "../../assets/images/AnBSchoolLogo.svg"
 import DashboardContainer from "../../components/styles/DashboardContainer";
+import InviteIssuerPage from "./InviteIssuerPage";
 
 const IssuerManagement = () => {
     return (
@@ -16,6 +17,7 @@ const IssuerManagement = () => {
                 showFacebook={true}
                 showLinkedIn={true}
             />
+            <InviteIssuerPage />
         </DashboardContainer>
     );
 };

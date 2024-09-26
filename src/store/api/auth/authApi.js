@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { clearAuthState, setAuthState } from "../../slices/globalSlices";
 import { createBaseQuery } from "../../../utils/baseQuery";
 import { handleAuthSuccess } from "../../../utils/authHelpers";
@@ -65,12 +65,26 @@ export const authApi = createApi({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
+
+                    // Extract currentUser and userId safely
+                    const currentUser = data?.user?.currentUser;
+                    const userId = currentUser?.id;
+                    const roleId = currentUser?.roleId;
+                    const addressData = data?.user?.addressData;
+                    const institutionData = data?.user?.institutionData;
+                    const issuerData = data?.user?.issuerData;
+                    const earnerData = data?.user?.earnerData;
+
                     dispatch(
                         setAuthState({
-                            userId: data.user.id,
-                            userInfo: data.user,
+                            userId,
+                            userInfo: currentUser,
                             isAuthenticated: true,
-                            role: data.user.roleId,
+                            roleId,
+                            addressData,
+                            institutionData,
+                            issuerData,
+                            earnerData,
                         }),
                     );
                 } catch (err) {

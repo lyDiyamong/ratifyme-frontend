@@ -1,4 +1,3 @@
-// utils/authHelpers.js
 import { setAuthState } from "../store/slices/globalSlices";
 import { authApi } from "../store/api/auth/authApi";
 
@@ -18,4 +17,3 @@ export const handleAuthSuccess = async (dispatch, queryFulfilled) => {
         console.error("Authentication failed:", err);
     }
 };
-
