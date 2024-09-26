@@ -58,19 +58,7 @@ const BadgeCreationForm = () => {
     console.log(userName);
     let issuerId;
 
-    // Check if badge data exists and iterate through it
-    issuerId = badge?.data?.find((badge) => badge.Issuer?.userId === userId)?.Issuer?.id || null;
-    if (!issuerId) {
-        console.error("Issuer ID not found.");
-    }
-
-    // Check if there is no username in issuer
-    // useEffect(() => {
-    //     reset({
-    //         issuer: userName || "",
-    //         // Other fields...
-    //     });
-    // }, [userName, reset]);
+    console.log(user);
 
     console.log(userId, issuerId);
 
