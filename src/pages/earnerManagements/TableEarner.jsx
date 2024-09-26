@@ -93,6 +93,11 @@ const TableEarner = () => {
             sortable: true,
         },
         {
+            name: "Date Of Birth",
+            selector: (row) => FormatYear(row.User?.dateOfBirth) || "N/A",
+            sortable: true,
+        },
+        {
             name: "Badge",
             selector: (row) => row.Achievement?.BadgeClass?.name || "N/A",
             sortable: true,
