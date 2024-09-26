@@ -13,7 +13,7 @@ import ProfileModal from "../../components/ProfileModal";
 
 // Fetching Data Import
 import { useFetchEarnerByIdQuery } from "../../store/api/earnerManagement/earnerApis";
-
+import FormatDate from "../../utils/formatDate";
 /**
  * ProfileEarnerModal Component
  *
@@ -32,9 +32,20 @@ import { useFetchEarnerByIdQuery } from "../../store/api/earnerManagement/earner
 // ============ Start Profile Earner Modal Custom Button ============
 const ProfileEarnerModal = ({ open, onClose, userId }) => {
     // Prevent the API query from running if userId is null or undefined
-    const { data, isLoading, isError } = useFetchEarnerByIdQuery(userId, { skip: !userId });
+    const { data: user, isLoading, isError } = useFetchEarnerByIdQuery(userId, { skip: !userId });
 
-    const earnerData = data?.data;
+    let earnerData = user?.data;
+
+    // Preprocess the dateOfBirth by formatting it
+    if (earnerData && earnerData.User && earnerData.User.dateOfBirth) {
+        earnerData = {
+            ...earnerData,
+            User: {
+                ...earnerData.User,
+                formattedDateOfBirth: FormatDate(earnerData.User.dateOfBirth),
+            }
+        };
+    }
 
     return (
         // Call Profile Modal
@@ -48,7 +59,7 @@ const ProfileEarnerModal = ({ open, onClose, userId }) => {
             desKey="User.bio"
             details={[
                 { icon: <PhoneIcon fontSize="small" />, label: "Phone", valueKey: "User.phoneNumber" },
-                { icon: <CakeIcon fontSize="small" />, label: "Date of Birth", valueKey: "User.dob" },
+                { icon: <CakeIcon fontSize="small" />, label: "Date of Birth", valueKey: "User.formattedDateOfBirth" },
                 { icon: <EmailIcon fontSize="small" />, label: "Email", valueKey: "User.email" },
                 {
                     icon: <BusinessCenterIcon fontSize="small" />,
@@ -68,6 +79,5 @@ const ProfileEarnerModal = ({ open, onClose, userId }) => {
         </ProfileModal>
     );
 };
-
 export default ProfileEarnerModal;
 // ============ End Profile Earner Modal Custom Button ============
