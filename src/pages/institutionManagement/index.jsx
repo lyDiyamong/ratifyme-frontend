@@ -48,7 +48,7 @@ const InstitutionManagement = () => {
                 <SkeletonLoading num={5} />
             ) : (
                 // Billing and Invoice Table
-                <TableCustom title="Billing and Invoice" data={institutions} columns={columns} />
+                <TableCustom title="Issuer List" data={institutions} columns={columns} />
             )}
         </DashboardContainer>
         // ============ End InstitutionManagement ============

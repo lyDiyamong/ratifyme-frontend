@@ -9,6 +9,7 @@ import AlertMessage from "../../components/alert/AlertMessage";
 
 // Api import
 import { useGetInstitutionByIdQuery } from "../../store/api/institutionManagement/institutionApi";
+import BadgeListCard from "../../components/BadgeListCard";
 
 function InstitutionDetail() {
     // Error state hook
@@ -35,6 +36,8 @@ function InstitutionDetail() {
                 description={institution?.institutionBio}
                 logoUrl={institution?.User.profileImage}
             />
+            {/* Badge List */}
+            <BadgeListCard />
         </DashboardContainer>
         // ============ End InstitutionDetail ============
     );
