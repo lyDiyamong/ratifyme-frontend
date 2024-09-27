@@ -7,19 +7,11 @@ export const badgeApi = createApi({
     tagTypes: ["Badge"],
     endpoints: (builder) => ({
         // Fetch badges by issuerId
-        fetchBadgesByIssuer: builder.query({
+        fetchBadges: builder.query({
             query: () => ({
                 url: `/issuers/badgeClasses`,
                 method: "GET",
             }),
-            // transformResponse: (response) => ({
-            //     data: response.data.map((item) => ({
-            //         ...item,
-            //         issuedOn: new Date(item.issuedOn).toISOString(), // Convert dates to ISO string
-            //         startDate: new Date(item.startDate).toISOString(),
-            //         endDate: new Date(item.endDate).toISOString(),
-            //     })),
-            // }),
             providesTags: (result) =>
                 result?.data
                     ? [...result.data.map(({ id }) => ({ type: "Badge", id })), { type: "Badge", id: "LIST" }]
@@ -58,7 +50,29 @@ export const badgeApi = createApi({
                 method: "GET",
             }),
         }),
+
+        // fetch badge for each institution
+        fetchBadgesByInstitutions: builder.query({
+            query: (id) => ({
+                url: `institutions/${id}`,
+                method: "GET",
+            }),
+        }),
+
+        // fetch badge for each institution
+        fetchBadgesByIssuer: builder.query({
+            query: (id) => ({
+                url: `issuers/${id}`,
+                method: "GET",
+            }),
+        }),
     }),
 });
 
-export const { useCreateBadgeMutation, useFetchBadgesByIssuerQuery, useFetchOneBadgeQuery } = badgeApi;
+export const {
+    useCreateBadgeMutation,
+    useFetchBadgesByIssuerQuery,
+    useFetchOneBadgeQuery,
+    useFetchBadgesByInstitutionsQuery,
+    useFetchBadgesQuery,
+} = badgeApi;
