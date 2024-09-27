@@ -52,7 +52,7 @@ const AccountManagement = () => {
                     >
                         Go to Settings
                     </Button>
-                    <ProfileSetting/>
+                    <ProfileSetting />
                 </Stack>
             )}
         </DashboardContainer>
