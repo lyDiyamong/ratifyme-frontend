@@ -1,3 +1,4 @@
+import { green } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
@@ -22,6 +23,9 @@ const theme = createTheme({
         },
         background: {
             default: "#F9FBFF", // bg-primary
+            secondary: "#F5F7F8",
+            success: "#E7F0DC",
+            error: "#FFEADD",
         },
         divider: "#E2E2E2", // border-primary
         customColors: {
@@ -32,6 +36,8 @@ const theme = createTheme({
             green100: "#B3E4B0", // SP-Green-100
             green200: "#0BA800", // SP-Green-200
             green300: "#B3E4B0", // SP-Green-300
+            green400: "#0B9710", // SP-Green-400
+            green500: "#F4F7ED", // SP-Green-500
             red100: "#ffc1c1", // SP-Red-100
             red200: "#ff3838", // SP-Red-200
             red300: "#E63232", // SP-Red-300
