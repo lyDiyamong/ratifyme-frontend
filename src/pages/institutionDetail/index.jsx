@@ -6,6 +6,8 @@ import { useParams } from "react-router";
 import OrganizationCard from "../../components/OrganizationCard";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import AlertMessage from "../../components/alert/AlertMessage";
+import { SpinLoading } from "../../components/loading/SpinLoading";
+
 
 // Api import
 import { useGetInstitutionByIdQuery } from "../../store/api/institutionManagement/institutionApi";
@@ -26,7 +28,7 @@ function InstitutionDetail() {
     const institution = response?.data;
 
     // Api fetching badges hook
-    const { data: badges } = useFetchBadgesByIssuerQuery();
+    const { data: badges, isLoading : badgesLoading } = useFetchBadgesByIssuerQuery();
     console.log(badges?.data || {});
     // Error handling
     if (isError) {
@@ -56,7 +58,8 @@ function InstitutionDetail() {
                     mt: 4,
                 }}
             >
-                {/* <BadgeListCard badges={badges?.data} /> */}
+
+                { badgesLoading  ?  <SpinLoading /> :  <BadgeListCard badges={badges?.data} />}
             </Box>
         </DashboardContainer>
         // ============ End InstitutionDetail ============

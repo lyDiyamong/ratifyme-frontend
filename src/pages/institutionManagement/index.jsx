@@ -8,6 +8,7 @@ import PageTitle from "../../components/PageTitle";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import TableCustom from "../../components/TableCustom";
 import MenuSelection from "../../components/TableAction/MenuSelection";
+import FormatDate from "../../utils/formatDate";
 
 // Api import
 import { useGetInstitutionQuery } from "../../store/api/institutionManagement/institutionApi";
@@ -31,6 +32,16 @@ const InstitutionManagement = () => {
         {
             name: "Email Address",
             selector: (row) => row?.institutionEmail || "N/A",
+            sortable: true,
+        },
+        {
+            name: "Code",
+            selector: (row) => row?.code,
+            sortable: true,
+        },
+        {
+            name: "Register Date",
+            selector: (row) => FormatDate(row?.createdAt),
             sortable: true,
         },
         {
