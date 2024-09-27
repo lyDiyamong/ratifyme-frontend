@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 // Mui import
 
 // Custom import
-import TableCustom from "../../components/TableList";
+import TableCustom from "../../components/TableCustom";
 import MenuSelection from "../../components/TableAction/MenuSelection";
 import FormatDate from "../../utils/formatDate";
 import DashboardContainer from "../../components/styles/DashboardContainer";

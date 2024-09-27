@@ -6,7 +6,7 @@ import { Box, Typography } from "@mui/material";
 
 // Custom import
 import DashboardContainer from "../../components/styles/DashboardContainer";
-import TableCustom from "../../components/TableList";
+import TableCustom from "../../components/TableCustom";
 import FormatDate from "../../utils/formatDate";
 import PageTitle from "../../components/PageTitle";
 
