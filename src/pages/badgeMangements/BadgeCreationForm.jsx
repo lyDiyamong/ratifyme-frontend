@@ -1,6 +1,8 @@
 // React import
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 // MUI import
 import { Button, MobileStepper, Stack, Typography, CircularProgress, Box, Skeleton } from "@mui/material";
@@ -17,7 +19,6 @@ import { SpinLoading } from "../../components/loading/SpinLoading";
 import { useCreateBadgeMutation, useFetchBadgesByIssuerQuery } from "../../store/api/badgeManagement/badgeApi";
 import { useCheckAuthQuery } from "../../store/api/auth/authApi";
 import { useFetchAchievementTypeQuery } from "../../store/api/achievements/achievementTypeApi";
-import { useNavigate } from "react-router-dom";
 
 // The data static of the description
 const steps = [
@@ -53,14 +54,8 @@ const BadgeCreationForm = () => {
     const { data: achievementType } = useFetchAchievementTypeQuery();
 
     const allAchievementTypes = achievementType?.data || [];
-    const userId = user?.user?.id;
-    const userName = user?.user?.username;
-    console.log(userName);
-    let issuerId;
-
-    console.log(user);
-
-    console.log(userId, issuerId);
+    const { issuerData } = useSelector((state) => state.global);
+    const userName = `${issuerData.User.firstName} ${issuerData.User.lastName}`;
 
     // React Hook Form
     const {
@@ -123,7 +118,7 @@ const BadgeCreationForm = () => {
             tags: data.tagsOrLanguage.join(","),
             startedDate: data.startDate ? data.startDate.toISOString() : null,
             expiredDate: data.endDate ? data.endDate.toISOString() : null,
-            issuerId: issuerId,
+            issuerId: issuerData.id,
             Achievements:
                 data.AchievementTypes?.map((achievementName) => {
                     const achievementType = allAchievementTypes.find((type) => type.name === achievementName);
@@ -133,7 +128,6 @@ const BadgeCreationForm = () => {
                     }
                     return {
                         achievementTypeId: achievementType?.id,
-                        status: "ToDo",
                         AchievementType: { name: achievementName },
                     };
                 }).filter(Boolean) || [],
