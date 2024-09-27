@@ -12,20 +12,16 @@ import ReportChart from "./TableChart";
 
 // Fetching Data Import
 import { useFetchInstitutionStatsQuery } from "../../store/api/reports/institutionStatApis";
-import { useCheckAuthQuery } from "../../store/api/auth/authApi";
+import { useSelector } from "react-redux";
 
 // ============ Start Table Report ============
 const TableReport = () => {
-    const { data: user } = useCheckAuthQuery();
+    const {userId, roleId} = useSelector((state)=> state.global)
     const { data: response, isLoading, isError } = useFetchInstitutionStatsQuery();
     const reportData = response?.data;
 
     // State for handling search query
     const [searchQuery, setSearchQuery] = useState("");
-
-    // Check the user's role
-    const roleId = user?.user?.roleId;
-    const userID = user?.user?.id;
 
     // Filter report data based on the user's role
     let filteredReportData;
@@ -35,7 +31,7 @@ const TableReport = () => {
         filteredReportData = reportData; // Admin sees all reports
     } else if (roleId === 2) {
         // Institution Owner
-        filteredReportData = reportData?.filter((report) => report.userId === userID);
+        filteredReportData = reportData?.filter((report) => report.userId === userId);
     }
 
     // Filter data based on the search query
