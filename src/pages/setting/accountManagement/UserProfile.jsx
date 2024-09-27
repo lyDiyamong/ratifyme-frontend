@@ -17,18 +17,19 @@ import {
     useDeleteUserPfMutation,
     useUploadUserPfMutation,
 } from "../../../store/api/users/userInfoProfileApi";
-import { useCheckAuthQuery } from "../../../store/api/auth/authApi";
 import BioContent from "./BioContent";
+import { useSelector } from "react-redux";
 
 //============ Start User Profile Component ============
 const UserProfile = () => {
-    const { data: user } = useCheckAuthQuery();
-    const userId = user.user.id;
+    // const { data: user } = useCheckAuthQuery();
+    const {userId} = useSelector((state) => state.global)
+
     const [open, setOpen] = useState(false);
     const [updateImage, setUpdateImage] = useState(DefaultProfileSvg);
     const { data: info, isLoading, isError } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
     const userData = info?.data;
-    console.log(userData);
+    console.log('userData:', userData);
 
     const [updateImg] = useUploadUserPfMutation();
     const [deleteImg] = useDeleteUserPfMutation();

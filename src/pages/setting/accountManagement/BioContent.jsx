@@ -6,14 +6,13 @@ import { TextField, Box, Typography, Avatar, Button, Stack, Divider } from "@mui
 
 // Custom import
 import theme from "../../../assets/themes";
-import { useCheckAuthQuery } from "../../../store/api/auth/authApi";
 import { useFetchInfoUserByIdQuery, useUpdateUserProfileMutation } from "../../../store/api/users/userInfoProfileApi";
 import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
 import { GridCheckCircleIcon } from "@mui/x-data-grid";
+import { useSelector } from "react-redux";
 
 const BioContent = () => {
-    const { data: user } = useCheckAuthQuery();
-    const userId = user?.user?.id;
+    const { userId } = useSelector((state) => state.global);
 
     const [bio, setBio] = useState("");
     const [isEditing, setIsEditing] = useState(false);
