@@ -17,7 +17,7 @@ const BioContent = () => {
 
     const [bio, setBio] = useState("");
     const [isEditing, setIsEditing] = useState(false);
-    const [originalBio, setOriginalBio] = useState(bio); // Store original bio
+    const [originalBio, setOriginalBio] = useState(bio);
     const [profileImage, setProfileImage] = useState(DefaultProfileSvg);
 
     // Fetch user data and bio
@@ -184,12 +184,6 @@ const BioContent = () => {
                         </Stack>
                     </Box>
                 )}
-
-                {/* {!isEditing && (
-                <Typography maxWidth={600} width="100%" textAlign="center">
-                    {userBio || "No Bio yet! 💥"}
-                </Typography>
-            )} */}
             </Stack>
 
             <Stack
@@ -198,7 +192,6 @@ const BioContent = () => {
                     borderRadius: theme.customShape.section,
                     p: { xss: "20px", sm: "24px" },
                     bgcolor: theme.palette.customColors.white,
-                    // alignItems: "center",
                     gap: 3,
                 }}
             >
@@ -208,7 +201,6 @@ const BioContent = () => {
                         alignItems: "center",
                         width: "100%",
                         gap: 2,
-                        // justifyContent: "space-between",
                     }}
                 >
                     <Typography
@@ -236,11 +228,7 @@ const BioContent = () => {
                         Status
                     </Button>
                 </Stack>
-                {!isEditing && (
-                    <Typography  width="100%">
-                        {userBio || "There is no Bio yet! 💥"}
-                    </Typography>
-                )}
+                {!isEditing && <Typography width="100%">{userBio || "There is no Bio yet! 💥"}</Typography>}
             </Stack>
         </Stack>
     );
