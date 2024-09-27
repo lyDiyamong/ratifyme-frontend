@@ -2,19 +2,20 @@
 import { useEffect, useState } from "react";
 
 // MUI import
-import { TextField, Box, Typography, Avatar, Button, Stack } from "@mui/material";
+import { TextField, Box, Typography, Avatar, Button, Stack, Divider } from "@mui/material";
 
 // Custom import
 import theme from "../../../assets/themes";
 import { useCheckAuthQuery } from "../../../store/api/auth/authApi";
 import { useFetchInfoUserByIdQuery, useUpdateUserProfileMutation } from "../../../store/api/users/userInfoProfileApi";
 import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
+import { GridCheckCircleIcon } from "@mui/x-data-grid";
 
 const BioContent = () => {
     const { data: user } = useCheckAuthQuery();
     const userId = user?.user?.id;
 
-    const [bio, setBio] = useState("Share more about yourself");
+    const [bio, setBio] = useState("");
     const [isEditing, setIsEditing] = useState(false);
     const [originalBio, setOriginalBio] = useState(bio); // Store original bio
     const [profileImage, setProfileImage] = useState(DefaultProfileSvg);
@@ -76,116 +77,171 @@ const BioContent = () => {
     };
 
     return (
-        <Stack
-            sx={{
-                boxShadow: theme.customShadows.default,
-                borderRadius: theme.customShape.section,
-                p: { xss: "20px", sm: "24px" },
-                bgcolor: theme.palette.customColors.white,
-                alignItems: "center",
-                gap: 3,
-            }}
-        >
-            <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
-                <Typography
-                    sx={{
-                        fontSize: theme.typography.h5,
-                        fontWeight: theme.fontWeight.semiBold,
-                    }}
+        <Stack gap={3}>
+            <Stack
+                sx={{
+                    boxShadow: theme.customShadows.default,
+                    borderRadius: theme.customShape.section,
+                    p: { xss: "20px", sm: "24px" },
+                    bgcolor: theme.palette.customColors.white,
+                    alignItems: "center",
+                    gap: 3,
+                }}
+            >
+                <Stack
+                    sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: "100%" }}
                 >
-                    Bio Summary
-                </Typography>
-            </Stack>
+                    <Typography
+                        sx={{
+                            fontSize: theme.typography.h4,
+                            fontWeight: theme.fontWeight.semiBold,
+                        }}
+                    >
+                        Bio Summary
+                    </Typography>
+                </Stack>
 
-            <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 2, width: "100%" }}>
-                {/* Start Profile Status */}
-                <Avatar alt="User Avatar" src={profileImage} sx={{ width: 40, height: 40 }} />
+                <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 2, width: "100%" }}>
+                    {/* Start Profile Status */}
+                    <Avatar alt="User Avatar" src={profileImage} sx={{ width: 40, height: 40 }} />
 
-                {/* Start Editable Text Field */}
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "flex-start",
-                        gap: 2,
-                        borderRadius: theme.customShape.btn,
-                        flexGrow: 1,
-                        // border: `1px solid ${theme.palette.divider}`,
-                        backgroundColor: theme.palette.background.secondary,
-                        px: 3,
-                        py: 2,
-                        width: "100%",
-                    }}
-                    onClick={handleTextClick}
-                >
-                    {isEditing ? (
-                        <TextField
-                            value={bio}
-                            onChange={(e) => setBio(e.target.value)}
-                            onKeyDown={handleKeyDown}
-                            variant="outlined"
-                            autoFocus
-                            fullWidth
-                            InputProps={{
-                                sx: {
-                                    border: "none",
-                                    "& fieldset": { border: "none" },
-                                    outline: "none",
-                                },
-                            }}
-                        />
-                    ) : (
-                        <Typography
-                            sx={{
-                                color: theme.palette.text.secondary,
-                                fontSize: "16px",
-                                width: "100%",
-                            }}
-                        >
-                            What is on your mind?
-                        </Typography>
-                    )}
-                </Box>
-            </Stack>
+                    {/* Start Editable Text Field */}
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "flex-start",
+                            gap: 2,
+                            borderRadius: theme.customShape.btn,
+                            flexGrow: 1,
+                            cursor: "pointer",
+                            backgroundColor: theme.palette.background.secondary,
+                            px: 3,
+                            py: 2,
+                            width: "100%",
+                        }}
+                        onClick={handleTextClick}
+                    >
+                        {isEditing ? (
+                            <TextField
+                                value={bio}
+                                onChange={(e) => setBio(e.target.value)}
+                                onKeyDown={handleKeyDown}
+                                variant="outlined"
+                                autoFocus
+                                fullWidth
+                                InputProps={{
+                                    sx: {
+                                        border: "none",
+                                        "& fieldset": { border: "none" },
+                                        outline: "none",
+                                    },
+                                }}
+                            />
+                        ) : (
+                            <Typography
+                                sx={{
+                                    color: theme.palette.text.secondary,
+                                    fontSize: "16px",
+                                    width: "100%",
+                                }}
+                            >
+                                What is on your mind?
+                            </Typography>
+                        )}
+                    </Box>
+                </Stack>
 
-            {/* Start Save and Cancel Buttons */}
-            {isEditing && (
-                <Box sx={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
-                    <Stack direction="row" gap={1}>
-                        <Button
-                            onClick={handleSubmit}
-                            disabled={isLoading}
-                            sx={{
-                                bgcolor: theme.palette.primary.main,
-                                color: theme.palette.customColors.white,
-                                borderRadius: theme.customShape.btn,
-                                "&:hover": {
-                                    bgcolor: theme.palette.primary.dark,
-                                },
-                            }}
-                        >
-                            {isLoading ? "Saving..." : "Save Bio"}
-                        </Button>
-                        <Button
-                            variant="text"
-                            onClick={handleCancel}
-                            sx={{
-                                borderRadius: theme.customShape.btn,
-                                "&:hover": {
-                                    bgcolor: theme.palette.background.default,
-                                },
-                            }}
-                        >
-                            Cancel
-                        </Button>
-                    </Stack>
-                </Box>
-            )}
+                {/* Start Save and Cancel Buttons */}
+                {isEditing && (
+                    <Box sx={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
+                        <Stack direction="row" gap={1}>
+                            <Button
+                                onClick={handleSubmit}
+                                disabled={isLoading}
+                                sx={{
+                                    bgcolor: theme.palette.primary.main,
+                                    color: theme.palette.customColors.white,
+                                    borderRadius: theme.customShape.btn,
+                                    "&:hover": {
+                                        bgcolor: theme.palette.primary.dark,
+                                    },
+                                }}
+                            >
+                                {isLoading ? "Saving..." : "Save Bio"}
+                            </Button>
+                            <Button
+                                variant="text"
+                                onClick={handleCancel}
+                                sx={{
+                                    borderRadius: theme.customShape.btn,
+                                    "&:hover": {
+                                        bgcolor: theme.palette.background.default,
+                                    },
+                                }}
+                            >
+                                Cancel
+                            </Button>
+                        </Stack>
+                    </Box>
+                )}
 
-            {!isEditing && (
+                {/* {!isEditing && (
                 <Typography maxWidth={600} width="100%" textAlign="center">
                     {userBio || "No Bio yet! 💥"}
                 </Typography>
-            )}
+            )} */}
+            </Stack>
+
+            <Stack
+                sx={{
+                    boxShadow: theme.customShadows.default,
+                    borderRadius: theme.customShape.section,
+                    p: { xss: "20px", sm: "24px" },
+                    bgcolor: theme.palette.customColors.white,
+                    // alignItems: "center",
+                    gap: 3,
+                }}
+            >
+                <Stack
+                    sx={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        width: "100%",
+                        gap: 2,
+                        // justifyContent: "space-between",
+                    }}
+                >
+                    <Typography
+                        sx={{
+                            fontSize: theme.typography.h4,
+                            fontWeight: theme.fontWeight.semiBold,
+                        }}
+                    >
+                        About Me
+                    </Typography>
+
+                    <Button
+                        startIcon={<GridCheckCircleIcon />}
+                        sx={{
+                            fontSize: theme.typography.h5,
+                            fontWeight: theme.fontWeight.semiBold,
+                            backgroundColor: userBio ? theme.palette.customColors.green500 : theme.palette.action.error,
+                            p: 1,
+                            px: 2,
+                            borderRadius: theme.customShape.section,
+                            color: userBio ? theme.palette.customColors.green200 : theme.palette.customColors.red200,
+                            textTransform: "none",
+                        }}
+                    >
+                        Status
+                    </Button>
+                </Stack>
+                {!isEditing && (
+                    <Typography maxWidth={600} width="100%">
+                        {userBio || "There is no Bio yet! 💥"}
+                    </Typography>
+                )}
+            </Stack>
         </Stack>
     );
 };
