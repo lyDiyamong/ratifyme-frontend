@@ -13,6 +13,7 @@ import {institutionApi} from "./api/institutionManagement/institutionApi"
 
 import { setupListeners } from "@reduxjs/toolkit/query";
 import gloableReducer from "./slices/globalSlices";
+import { userApi } from "./api/users/userProfileApi";
 
 const store = configureStore({
     reducer: {
