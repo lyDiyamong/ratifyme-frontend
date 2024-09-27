@@ -1,4 +1,4 @@
-import React from 'react';
+//MUI Import
 import { Bar } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
@@ -20,61 +20,63 @@ ChartJS.register(
     Legend
 );
 
+// Testing data
 const data = {
-    labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], // Your x-axis labels
+    labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
     datasets: [
         {
-            label: 'Quarterly Quarter', // First set of data
-            data: [750, 250, 500, 750, 500, 750, 500, 750, 500, 750], // Example data for the first bar
-            backgroundColor: 'rgba(54, 162, 235, 0.6)', // Bar color
+            label: 'Quarterly Quarter',
+            data: [750, 250, 500, 750, 500, 750, 500, 750, 500, 750], 
+            backgroundColor: 'rgba(54, 162, 235, 0.6)',
         },
         {
-            label: 'Midyear Membership', // Second set of data
+            label: 'Midyear Membership',
             data: [500, 750, 300, 400, 500, 600, 700, 800, 500, 600],
-            backgroundColor: 'rgba(75, 192, 192, 0.6)', // Bar color
+            backgroundColor: 'rgba(75, 192, 192, 0.6)',
         },
         {
-            label: 'Annual Advantage', // Third set of data
+            label: 'Annual Advantage',
             data: [300, 400, 500, 600, 700, 800, 900, 300, 400, 500],
-            backgroundColor: 'rgba(255, 159, 64, 0.6)', // Bar color
+            backgroundColor: 'rgba(255, 159, 64, 0.6)',
         },
     ],
 };
 
 const options = {
     responsive: true,
-    maintainAspectRatio: false, // Allows full control over width and height
+    maintainAspectRatio: false,
     plugins: {
         legend: {
-            position: 'right', // Position of the legend
+            position: 'right',
         },
         title: {
             display: true,
-            text: 'Sale Report', // Title of the chart
+            text: 'Sale Report',
         },
     },
     scales: {
         x: {
             type: 'category',
-            barPercentage: 0.7, // Controls the width of the bars (increase this for bigger bars)
-            categoryPercentage: 0.7, // Controls the space between bars (reduce this for wider bars)
+            barPercentage: 0.7,
+            categoryPercentage: 0.7,
         },
         y: {
-            beginAtZero: true, // y-axis starts at 0
+            beginAtZero: true,
             title: {
                 display: true,
-                text: '$(thousands)', // y-axis label
+                text: '$(thousands)',
             },
         },
     },
 };
 
+// =========== Start Report Bar Graph ============
 const ReportChart = () => {
     return (
         <div
             style={{
-                width: '100%', // Full width
-                height: '500px', // Fixed height
+                width: '100%',
+                height: '500px',
                 padding: '20px',
                 backgroundColor: 'white',
                 borderRadius: '10px',
@@ -86,3 +88,4 @@ const ReportChart = () => {
 };
 
 export default ReportChart;
+// =========== End Report Bar Graph ============
