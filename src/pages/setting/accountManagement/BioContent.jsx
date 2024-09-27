@@ -237,7 +237,7 @@ const BioContent = () => {
                     </Button>
                 </Stack>
                 {!isEditing && (
-                    <Typography maxWidth={600} width="100%">
+                    <Typography  width="100%">
                         {userBio || "There is no Bio yet! 💥"}
                     </Typography>
                 )}
