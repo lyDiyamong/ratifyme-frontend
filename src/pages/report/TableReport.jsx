@@ -6,7 +6,7 @@ import { Box, Typography, CircularProgress } from "@mui/material";
 
 // Custom Import
 import SearchBarCustom from "../../components/SearchBarCustom";
-import TableCustom from "../../components/TableList";
+import TableCustom from "../../components/TableCustom";
 import NoRecordData from "../../components/NoRecordData";
 import ReportChart from "./TableChart";
 
@@ -16,7 +16,7 @@ import { useSelector } from "react-redux";
 
 // ============ Start Table Report ============
 const TableReport = () => {
-    const {userId, roleId} = useSelector((state)=> state.global)
+    const { userId, roleId } = useSelector((state) => state.global);
     const { data: response, isLoading, isError } = useFetchInstitutionStatsQuery();
     const reportData = response?.data;
 
@@ -46,17 +46,17 @@ const TableReport = () => {
             ? [
                   {
                       name: "ID",
-                      selector: (row) => row.id,
+                      selector: (row) => row.id || "N/A",
                       sortable: true,
                   },
                   {
                       name: "Organization Name",
-                      selector: (row) => row.institutionName,
+                      selector: (row) => row.institutionName || "N/A",
                       sortable: true,
                   },
                   {
                       name: "Total Issuer",
-                      selector: (row) => row.Issuers.length,
+                      selector: (row) => row.Issuers.length || 0,
                       sortable: true,
                   },
                   {
@@ -78,18 +78,19 @@ const TableReport = () => {
             : [
                   {
                       name: "Issuer ID",
-                      selector: (row) => row.Issuers.map((issuer) => issuer.id).join(", "),
+                      selector: (row) => row.Issuers.map((issuer) => issuer.id).join(", ") || "N/A",
                       sortable: true,
                   },
                   {
                       name: "Issuer Name",
                       selector: (row) =>
-                          row.Issuers.map((issuer) => `${issuer.User.firstName} ${issuer.User.lastName}`).join(", "),
+                          row.Issuers.map((issuer) => `${issuer.User.firstName} ${issuer.User.lastName}`).join(", ") ||
+                          "N/A",
                       sortable: true,
                   },
                   {
                       name: "Issuer Email",
-                      selector: (row) => row.Issuers.map((issuer) => issuer.User.email),
+                      selector: (row) => row.Issuers.map((issuer) => issuer.User.email) || "N/A",
                       sortable: true,
                   },
                   {

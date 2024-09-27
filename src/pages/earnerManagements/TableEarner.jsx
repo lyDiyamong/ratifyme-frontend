@@ -6,7 +6,7 @@ import { Box, Typography, CircularProgress } from "@mui/material";
 
 // Custom Import
 import SearchBarCustom from "../../components/SearchBarCustom";
-import TableCustom from "../../components/TableList";
+import TableCustom from "../../components/TableCustom";
 import MenuSelection from "../../components/TableAction/MenuSelection";
 import FormatYear from "../../utils/formatDate";
 import ProfileEarnerModal from "./ProfileEarnerModal";
@@ -31,7 +31,7 @@ const TableEarner = () => {
 
     // Earner data fetched from the API
     const earnerData = response?.data;
-   
+
     // Display earner in the earner table by the specific role , role = 1 (Admin), role = 2 (institutionOwner), role = 3 (issuer)
     let filteredEarnerData;
 

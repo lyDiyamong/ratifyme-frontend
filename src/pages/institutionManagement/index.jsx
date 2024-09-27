@@ -6,7 +6,7 @@ import AlertMessage from "../../components/alert/AlertMessage";
 import SkeletonLoading from "../../components/loading/SkeletonLoading";
 import PageTitle from "../../components/PageTitle";
 import DashboardContainer from "../../components/styles/DashboardContainer";
-import TableCustom from "../../components/TableList";
+import TableCustom from "../../components/TableCustom";
 import MenuSelection from "../../components/TableAction/MenuSelection";
 
 // Api import
@@ -19,18 +19,18 @@ const InstitutionManagement = () => {
     console.log(institutions);
 
     const handleView = (institutionId) => {
-        navigate(`/management/institutions/${institutionId}`)
+        navigate(`/management/institutions/${institutionId}`);
     };
 
     const columns = [
         {
             name: "Organization Name",
-            selector: (row) => row?.institutionName,
+            selector: (row) => row?.institutionName || "N/A",
             sortable: true,
         },
         {
             name: "Email Address",
-            selector: (row) => row?.institutionEmail,
+            selector: (row) => row?.institutionEmail || "N/A",
             sortable: true,
         },
         {
