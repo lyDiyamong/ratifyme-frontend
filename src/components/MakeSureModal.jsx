@@ -69,37 +69,39 @@ export default function MakeSureModal({ openBtn, icon, variant, openBtnSx, title
             </Button>
             {/* Start MakeSureModal */}
             <Dialog open={isOpen} onClose={handleClose} aria-labelledby="responsive-dialog-title">
-                {/* Modal title */}
-                <DialogTitle id="responsive-dialog-title">
-                    <Typography variant="h4" fontWeight={theme.fontWeight.semiBold}>
-                        {title}
-                    </Typography>
-                </DialogTitle>
-                {/* Modal message */}
-                <DialogContent>
-                    <DialogContentText>{message}</DialogContentText>
-                </DialogContent>
-                {/* Modal action button */}
-                <DialogActions>
-                    {/* Cancel closing button */}
-                    <Button
-                        variant="text"
-                        sx={{
-                            borderRadius: theme.customShape.btn,
-                            color: theme.palette.text.primary,
-                        }}
-                        onClick={handleClose}
-                    >
-                        Cancel
-                        {/* Agree Button */}
-                    </Button>
-                    {agreeBtn ? (
-                        // Ensures that your custom button (agreeBtn) gets the handleAgree function attached to its onClick event
-                        cloneElement(agreeBtn, { onClick: handleAgree })
-                    ) : (
-                        <Button onClick={handleAgree}>Agree</Button>
-                    )}
-                </DialogActions>
+                <Box padding={2}>
+                    {/* Modal title */}
+                    <DialogTitle id="responsive-dialog-title">
+                        <Typography variant="h4" fontWeight={theme.fontWeight.semiBold}>
+                            {title}
+                        </Typography>
+                    </DialogTitle>
+                    {/* Modal message */}
+                    <DialogContent>
+                        <DialogContentText>{message}</DialogContentText>
+                    </DialogContent>
+                    {/* Modal action button */}
+                    <DialogActions>
+                        {/* Cancel closing button */}
+                        <Button
+                            variant="text"
+                            sx={{
+                                borderRadius: theme.customShape.btn,
+                                color: theme.palette.text.primary,
+                            }}
+                            onClick={handleClose}
+                        >
+                            Cancel
+                            {/* Agree Button */}
+                        </Button>
+                        {agreeBtn ? (
+                            // Ensures that your custom button (agreeBtn) gets the handleAgree function attached to its onClick event
+                            cloneElement(agreeBtn, { onClick: handleAgree })
+                        ) : (
+                            <Button onClick={handleAgree}>Agree</Button>
+                        )}
+                    </DialogActions>
+                </Box>
             </Dialog>
             {/* End MakeSureModal */}
         </>

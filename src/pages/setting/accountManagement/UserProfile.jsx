@@ -1,23 +1,15 @@
 //React Import
 import { useEffect, useState } from "react";
 //MUI Import
-import { Box, Container, Stack, IconButton, Typography, Button } from "@mui/material";
+import { Box, Stack, IconButton, Typography, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import { PersonRemoveRounded } from "@mui/icons-material";
+import { Menu, MenuItem } from "@mui/material";
+import { AssignmentIndOutlined, CameraAltRounded, MoreHorizRounded } from "@mui/icons-material";
 //Custom Import
 import theme from "../../../assets/themes/index";
-import PhotoIconSvg from "../../../assets/icons/Photo Icon.svg";
-import RoleIconSvg from "../../../assets/icons/Role.svg";
 import ProfileInfo from "./ProfileInfo";
-import BirthDateIcon from "../../../assets/icons/DateOfBirth.svg";
-import CountryIcon from "../../../assets/icons/Country.svg";
-import EmailIcon from "../../../assets/icons/Email.svg";
-import OrganizationIcon from "../../../assets/icons/Organization.svg";
-import PhoneIcon from "../../../assets/icons/Phone.svg";
-import GenderIcon from "../../../assets/icons/Gender.svg";
-import EducationIcon from "../../../assets/icons/Education.svg";
-
-// import { ProfileInfoData } from "../../../data/setting/UserProfileData";
+// Import the config function
+import { getProfileInfo } from "../../../data/setting/profileInfoData";
 import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
 import EditProfileModal from "./ModalEditProfile";
 import {
@@ -25,35 +17,41 @@ import {
     useDeleteUserPfMutation,
     useUploadUserPfMutation,
 } from "../../../store/api/users/userInfoProfileApi";
-import { useCheckAuthQuery } from "../../../store/api/auth/authApi";
-import MakeSureModal from "../../../components/MakeSureModal";
-import { borderColor, color } from "@mui/system";
+import BioContent from "./BioContent";
+import { useSelector } from "react-redux";
 
 //============ Start User Profile Component ============
 const UserProfile = () => {
-    const { data: user } = useCheckAuthQuery();
-
-    const userId = user.user.id;
+    // const { data: user } = useCheckAuthQuery();
+    const {userId} = useSelector((state) => state.global)
 
     const [open, setOpen] = useState(false);
     const [updateImage, setUpdateImage] = useState(DefaultProfileSvg);
-
-    // Fetch data
     const { data: info, isLoading, isError } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
     const userData = info?.data;
-    console.log(userData);
+    console.log('userData:', userData);
 
     const [updateImg] = useUploadUserPfMutation();
     const [deleteImg] = useDeleteUserPfMutation();
 
     const handleClickOpen = () => {
-        console.log("User ID:", userData?.id);
-        console.log("Date of birth:", userData.dateOfBirth);
         setOpen(true);
     };
 
     const handleClose = () => {
         setOpen(false);
+    };
+
+    // Inside the UserProfile component
+    const [anchorEl, setAnchorEl] = useState(null);
+    const isMenuOpen = Boolean(anchorEl);
+
+    const handleMoreClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleCloseMoreMenu = () => {
+        setAnchorEl(null);
     };
 
     const handleFileChange = async (event) => {
@@ -76,12 +74,12 @@ const UserProfile = () => {
     const handleDeleteImage = async () => {
         try {
             await deleteImg({ id: userId }).unwrap();
-            // Reset the image state
             setUpdateImage(null);
         } catch (error) {
             console.error("Error deleting image:", error);
         }
     };
+
     useEffect(() => {
         if (userData?.profileImage) {
             setUpdateImage(userData?.profileImage);
@@ -91,12 +89,192 @@ const UserProfile = () => {
     }, [userData?.profileImage]);
 
     return (
-        <Box>
-            {/*============ Start User Data Container "Card" ============*/}
+        <Stack gap={3}>
             <Stack
                 direction={{ sm: "column", md: "row" }}
-                justifyContent={"center"}
-                spacing={2}
+                gap={4}
+                sx={{
+                    boxShadow: theme.customShadows.default,
+                    borderRadius: theme.customShape.section,
+                    p: { xss: "24px", sm: "32px" },
+                    bgcolor: theme.palette.customColors.white,
+                    justifyContent: "space-between",
+                    alignItems: { md: "end", xss: "center" },
+                }}
+            >
+                <Stack direction={{ sm: "column", md: "row" }} gap={3} alignItems="center">
+                    <Box
+                        sx={{
+                            position: "relative",
+                            width: "150px",
+                            height: "150px",
+                            borderRadius: "100%",
+                            overflow: "hidden",
+                            "&:hover .hover-overlay": {
+                                visibility: "visible",
+                                opacity: 1,
+                            },
+                        }}
+                    >
+                        <Box
+                            component="img"
+                            src={updateImage || DefaultProfileSvg}
+                            alt="person"
+                            sx={{
+                                width: "100%",
+                                height: "100%",
+                                borderRadius: "100%",
+                                objectFit: "cover",
+                                display: "block",
+                            }}
+                        />
+
+                        <Box
+                            className="hover-overlay"
+                            sx={{
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                width: "100%",
+                                height: "100%",
+                                borderRadius: "100%",
+                                bgcolor: "rgba(0, 0, 0, 0.6)",
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                visibility: "hidden",
+                                opacity: 0,
+                                transition: "visibility 0.2s, opacity 0.3s ease-in-out",
+                                cursor: "pointer",
+                            }}
+                        >
+                            <input
+                                type="file"
+                                id="icon-button-photo"
+                                style={{ display: "none" }}
+                                onChange={handleFileChange}
+                            />
+                            <label htmlFor="icon-button-photo">
+                                <IconButton
+                                    aria-label="upload"
+                                    component="span"
+                                    sx={{
+                                        color: theme.palette.customColors.white,
+                                    }}
+                                >
+                                    <CameraAltRounded />
+                                </IconButton>
+                            </label>
+                            <Typography variant="body3" color={theme.palette.customColors.white}>
+                                Update Profile
+                            </Typography>
+                        </Box>
+                    </Box>
+
+                    <Stack sx={{ alignItems: { md: "start", xss: "center" }, gap: 1 }}>
+                        <Typography sx={{ fontSize: theme.typography.h4, fontWeight: theme.fontWeight.semiBold }}>
+                            {`${userData?.firstName || ""} ${userData?.lastName || ""}`}
+                        </Typography>
+
+                        <Typography
+                            sx={{
+                                fontSize: theme.typography.h5,
+                                color: theme.palette.text.disabled,
+                            }}
+                        >
+                            @ {userData?.username || "N/A"}
+                        </Typography>
+
+                        <Box
+                            sx={{
+                                bgcolor: theme.palette.action.hover,
+                                color: theme.palette.primary.main,
+                                p: 1,
+                                px: 2,
+                                borderRadius: theme.customShape.section,
+                                display: "flex",
+                                justifyContent: "center",
+                                gap: 1,
+                                alignItems: "center",
+                            }}
+                        >
+                            <AssignmentIndOutlined sx={{ color: theme.palette.primary.main }} />
+                            <Typography sx={{ fontSize: theme.typography.h5, color: theme.palette.primary.main }}>
+                                {userData?.Role?.name || "N/A"}
+                            </Typography>
+                        </Box>
+                    </Stack>
+                </Stack>
+
+                <Stack flexDirection="row" gap={1}>
+                    <Button
+                        onClick={handleClickOpen}
+                        onChange={handleFileChange}
+                        sx={{
+                            backgroundColor: theme.palette.primary.main,
+                            color: theme.palette.customColors.white,
+                            borderRadius: theme.customShape.btn,
+                            cursor: "pointer",
+                            px: 2,
+                            transition: "background-color 0.3s ease",
+                            "&:hover": {
+                                bgcolor: theme.palette.primary.dark,
+                            },
+                        }}
+                        startIcon={<EditIcon />}
+                    >
+                        Edit Profile
+                    </Button>
+                    <MoreHorizRounded
+                        sx={{
+                            bgcolor: theme.palette.grey[200],
+                            color: theme.palette.text.primary,
+                            borderRadius: theme.customShape.input,
+                            p: 1,
+                            fontSize: "36px",
+                            cursor: "pointer",
+                            transition: "background-color 0.3s ease",
+                            width: 40,
+                            "&:hover": {
+                                bgcolor: theme.palette.grey[300],
+                            },
+                        }}
+                        onClick={handleMoreClick}
+                    />
+                    <Menu
+                        anchorEl={anchorEl}
+                        open={isMenuOpen}
+                        onClose={handleCloseMoreMenu}
+                        anchorOrigin={{
+                            vertical: "bottom",
+                            horizontal: "left",
+                        }}
+                        transformOrigin={{
+                            vertical: "top",
+                            horizontal: "right",
+                        }}
+                        PaperProps={{
+                            sx: {
+                                mt: 1,
+                                boxShadow: theme.customShadows.default,
+                            },
+                        }}
+                    >
+                        <MenuItem>Update Profile</MenuItem>
+                        <MenuItem onClick={handleDeleteImage} onChange={handleClose}>
+                            Remove Profile
+                        </MenuItem>
+                    </Menu>
+                    <EditProfileModal open={open} onClose={handleClose} userData={userData} />
+                </Stack>
+            </Stack>
+
+            <BioContent />
+
+            <Stack
+                flexDirection="row"
+                alignItems="start"
                 sx={{
                     boxShadow: theme.customShadows.default,
                     borderRadius: theme.customShape.section,
@@ -104,162 +282,23 @@ const UserProfile = () => {
                     bgcolor: theme.palette.customColors.white,
                 }}
             >
-                {/*============ Start Image Profile User Data ============*/}
-                <Box>
-                    <Box sx={{ position: "relative" }}>
-                        {/* Profile Image */}
-                        <Box
-                            component="img"
-                            src={updateImage || DefaultProfileSvg}
-                            alt="person"
-                            sx={{
-                                width: { xss: "100px", sm: "200px" },
-                                borderRadius: "100%",
-                                objectFit: "cover",
-                                height: { xss: "100px", sm: "200px" },
-                                border: `solid 1px ${theme.palette.cardBorder}`,
-                            }}
-                        ></Box>
-
-                        {/* Input Image Button */}
-                        <input
-                            type="file"
-                            id="icon-button-photo"
-                            style={{ display: "none" }}
-                            onChange={handleFileChange}
-                        />
-
-                        {/* Label linked to the file input */}
-                        <label htmlFor="icon-button-photo">
-                            <IconButton
-                                aria-label="upload"
-                                component="span"
-                                sx={{
-                                    position: "absolute",
-                                    bottom: { xss: "3px", sm: "15px" },
-                                    left: { xss: "70px", sm: "160px" },
-                                }}
-                            >
-                                <Box component="img" alt="Upload Icon" src={PhotoIconSvg} />
-                            </IconButton>
-                        </label>
+                <Stack direction="column" justifyContent={"center"} width="100%">
+                    <Box>
+                        <Typography variant="h4" sx={{ fontWeight: theme.fontWeight.semiBold, mb: 1 }}>
+                            Personal Information
+                        </Typography>
+                        <Typography variant="body2" sx={{ color: theme.palette.text.disabled }}>
+                            Your personal information is crucial for us to provide you with tailored services.
+                        </Typography>
                     </Box>
-                </Box>
-                {/*============ End Image Profile User Data ============*/}
 
-                <Container>
-                    {/*============ Start Upper User Data ============*/}
-                    <Stack direction={{ sm: "row", xss: "column" }} sx={{ justifyContent: "space-between", gap: 1 }}>
-                        <Stack sx={{ p: "0px", gap: 2 }}>
-                            {/* User Name Data */}
-                            <Typography sx={{ fontSize: theme.typography.h4, fontWeight: theme.fontWeight.bold }}>
-                                {/* {userData?.username} */}
-                                {`${userData?.firstName || ""} ${userData?.lastName || ""}`}
-                            </Typography>
-                            <Box sx={{ display: "flex", gap: 1 }}>
-                                <Box component="img" src={RoleIconSvg} sx={{ width: "24px" }} />
-                                <Typography
-                                    sx={{ fontSize: theme.typography.h5, fontWeight: theme.fontWeight.semiBold }}
-                                >
-                                    {userData?.Role?.name || "N/A"}
-                                </Typography>
-                            </Box>
-                        </Stack>
-                        <Stack
-                            sx={{ mt: { xss: "30px", sm: "0" }, gap: 1, flexDirection: { sm: "column", xs: "row" } }}
-                        >
-                            {/* Edit profile Button */}
-                            <Button
-                                variant="contained"
-                                onClick={handleClickOpen}
-                                sx={{
-                                    color: theme.palette.customColors.white,
-                                    bgcolor: theme.palette.primary.main,
-                                    borderRadius: theme.customShape.btn,
-                                    maxWidth: 30,
-                                    textTransform: "none",
-                                }}
-                            >
-                                <EditIcon />
-                            </Button>
-                            {/* Edit profile modal */}
-                            <EditProfileModal open={open} onClose={handleClose} userData={userData} />
-
-                            {/* Delete profile button */}
-                            <MakeSureModal
-                                openBtnSx={{
-                                    color: theme.palette.customColors.red300,
-                                    borderColor: theme.palette.customColors.red300,
-                                    "&:hover": {
-                                        backgroundColor: theme.palette.action.error,
-                                    },
-                                }}
-                                icon={<PersonRemoveRounded />}
-                                variant="outlined"
-                                title="Remove Your Profile Image?"
-                                message="This will remove your profile picture from the application and set it to the default picture. You can also add a new one later! 👋"
-                                agreeBtn={
-                                    <Button
-                                        sx={{
-                                            color: theme.palette.customColors.red300,
-                                            borderRadius: theme.customShape.btn,
-                                            "&:hover": {
-                                                color: theme.palette.customColors.red300,
-                                                backgroundColor: theme.palette.action.error,
-                                            },
-                                        }}
-                                    >
-                                        Remove profile
-                                    </Button>
-                                }
-                                onAgree={handleDeleteImage}
-                            />
-                        </Stack>
+                    <Stack justifyContent={"center"} alignItems="start" width="100%">
+                        <ProfileInfo item={userData} details={getProfileInfo(userData?.Role?.name)} />
                     </Stack>
-                    {/*============ End Upper User Data ============*/}
-
-                    {/*============ Start User Data ============*/}
-                    <ProfileInfo
-                        item={userData}
-                        details={[
-                            {
-                                icon: <Box component="img" src={PhoneIcon} alt="Phone Icon" />,
-                                label: "Phone",
-                                valueKey: "phoneNumber",
-                            },
-                            {
-                                icon: <Box component="img" src={EmailIcon} alt="Email Icon" />,
-                                label: "Email",
-                                valueKey: "email",
-                            },
-                            {
-                                icon: <Box component="img" src={BirthDateIcon} alt="Date of Birth Icon" />,
-                                label: "Date of Birth",
-                                valueKey: "dateOfBirth",
-                            },
-                            {
-                                icon: <Box component="img" src={GenderIcon} alt="Gender Icon" />,
-                                label: "Gender",
-                                valueKey: "Gender.name",
-                            },
-                            {
-                                icon: <Box component="img" src={EducationIcon} alt="Education Icon" />,
-                                label: "Education",
-                                valueKey: "edu",
-                            },
-                            {
-                                icon: <Box component="img" src={CountryIcon} alt="Nationality Icon" />,
-                                label: "Nationality",
-                                valueKey: "nationality",
-                            },
-                        ]}
-                    />
-                    {/*============ End User Data ============*/}
-                </Container>
+                </Stack>
             </Stack>
-            {/*============ End User Data Container "Card"  ============*/}
-        </Box>
+        </Stack>
     );
 };
-//============ End User Profile Component ============
+
 export default UserProfile;
