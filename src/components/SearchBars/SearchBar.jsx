@@ -13,7 +13,7 @@ const SearchBarIssuer = ({ onSearch }) => {
 
     const handleSearch = (query) => {
         setSearchQuery(query);
-        onSearch(query); // Pass the query up to the parent component
+        onSearch(query);
     };
 
     return (
