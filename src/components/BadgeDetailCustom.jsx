@@ -152,7 +152,7 @@ const BadgeDetailCustom = ({ badge, userRole, issuerId }) => {
                 onChange={handleChange}
                 sx={{
                     width: "100%",
-                    display: "flex",
+                    display: hasAccess ? "flex" : "none",
                     justifyContent: "space-between",
                     gap: 1,
                 }}
