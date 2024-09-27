@@ -1,13 +1,22 @@
+// React Library
+import { useState } from "react";
+
 // MUI Import
 import DashboardContainer from "../../components/styles/DashboardContainer";
 
 // Custom Import
 import TableReport from "./TableReport";
+import SearchBar from "../../components/SearchBars/SearchBar";
+import TableChart from "./TableChart";
+
 // ============ Start Report Page ============
 const reportManagement = () => {
+    const [searchQuery, setSearchQuery] = useState("")
     return (
         <DashboardContainer>
-            <TableReport />
+            <SearchBar onSearch={setSearchQuery} />
+            <TableChart />
+            <TableReport searchQuery={searchQuery} />
         </DashboardContainer>
     );
 };
