@@ -76,10 +76,11 @@ const ReportChart = () => {
         <div
             style={{
                 width: '100%',
-                height: '500px',
+                height: '300px',
                 padding: '20px',
                 backgroundColor: 'white',
                 borderRadius: '10px',
+                marginTop: "32px"
             }}
         >
             <Bar data={data} options={options} />

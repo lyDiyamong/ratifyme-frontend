@@ -5,7 +5,6 @@ import { useState } from "react";
 import { Box, Typography, CircularProgress } from "@mui/material";
 
 // Custom Import
-import SearchBarCustom from "../../components/SearchBarCustom";
 import TableCustom from "../../components/TableCustom";
 import MenuSelection from "../../components/TableAction/MenuSelection";
 import FormatYear from "../../utils/formatDate";
@@ -17,7 +16,7 @@ import { useFetchEarnerQuery, useDeleteEarnerByIdMutation } from "../../store/ap
 import { useSelector } from "react-redux";
 
 // ============ Start Table Earner Modal ============
-const TableEarner = () => {
+const TableEarner = ({searchQuery}) => {
     const { data: response, isLoading, isError } = useFetchEarnerQuery();
     const { roleId, userId } = useSelector((state) => state.global);
     const [deleteEarner] = useDeleteEarnerByIdMutation();
@@ -27,7 +26,7 @@ const TableEarner = () => {
     const [openModal, setOpenModal] = useState(false);
 
     // Search query state for filtering earner data
-    const [searchQuery, setSearchQuery] = useState("");
+    // const [searchQuery, setSearchQuery] = useState("");
 
     // Earner data fetched from the API
     const earnerData = response?.data;
@@ -111,8 +110,6 @@ const TableEarner = () => {
 
     return (
         <Box>
-            {/* Search Bar */}
-            <SearchBarCustom onSearch={setSearchQuery} />
 
             {/* Modal for Viewing Profile */}
             <ProfileEarnerModal open={openModal} onClose={handleCloseModal} userId={selectedUserId} />

@@ -1,27 +1,21 @@
-// React Library
-import { useState } from "react";
-
 // MUI Import
 import { Box, Typography, CircularProgress } from "@mui/material";
 
 // Custom Import
-import SearchBarCustom from "../../components/SearchBarCustom";
 import TableCustom from "../../components/TableCustom";
 import NoRecordData from "../../components/NoRecordData";
-import ReportChart from "./TableChart";
 
 // Fetching Data Import
 import { useFetchInstitutionStatsQuery } from "../../store/api/reports/institutionStatApis";
 import { useSelector } from "react-redux";
 
 // ============ Start Table Report ============
-const TableReport = () => {
+const TableReport = ({searchQuery}) => {
     const { userId, roleId } = useSelector((state) => state.global);
     const { data: response, isLoading, isError } = useFetchInstitutionStatsQuery();
     const reportData = response?.data;
 
-    // State for handling search query
-    const [searchQuery, setSearchQuery] = useState("");
+    
 
     // Filter report data based on the user's role
     let filteredReportData;
@@ -36,9 +30,15 @@ const TableReport = () => {
 
     // Filter data based on the search query
     const filteredData =
-        filteredReportData?.filter((report) =>
-            report?.institutionName?.toLowerCase().includes(searchQuery.toLowerCase()),
-        ) || [];
+        filteredReportData?.filter((report) => {
+            const institutionNameMatch = report?.institutionName?.toLowerCase().includes(searchQuery.toLowerCase());
+
+            const issuerNameMatch = report?.Issuers?.some((issuer) =>
+                `${issuer.User.firstName} ${issuer.User.lastName}`.toLowerCase().includes(searchQuery.toLowerCase()),
+            );
+
+            return institutionNameMatch || issuerNameMatch;
+        }) || [];
 
     // Report Columns
     const reportColumns =
@@ -112,14 +112,12 @@ const TableReport = () => {
 
     return (
         <Box>
-            <SearchBarCustom onSearch={setSearchQuery} />
             {isLoading ? (
                 <CircularProgress />
             ) : isError ? (
                 <Typography color="error">Error fetching data</Typography>
             ) : filteredData.length > 0 ? (
                 <>
-                    <ReportChart />
                     <TableCustom title="Report List" data={filteredData} columns={reportColumns} />
                 </>
             ) : (

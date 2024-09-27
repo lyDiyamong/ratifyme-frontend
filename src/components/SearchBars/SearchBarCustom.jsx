@@ -2,7 +2,7 @@ import { useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import { AppBar, Box, Toolbar, InputBase } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import theme from "../assets/themes";
+import theme from "../../assets/themes";
 
 // Styled components
 const Search = styled("div")(({ theme }) => ({
@@ -58,7 +58,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const SearchBar = ({ onSearch }) => {
+const SearchBarCustom = ({ onSearch }) => {
     const [searchQuery, setSearchQuery] = useState("");
 
     const handleSearchChange = (event) => {
@@ -113,4 +113,4 @@ const SearchBar = ({ onSearch }) => {
     );
 };
 
-export default SearchBar;
+export default SearchBarCustom;
