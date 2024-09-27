@@ -14,12 +14,12 @@ import NoRecordData from "../../components/NoRecordData";
 
 // Fetching Data Import
 import { useFetchEarnerQuery, useDeleteEarnerByIdMutation } from "../../store/api/earnerManagement/earnerApis";
-import { useCheckAuthQuery } from "../../store/api/auth/authApi";
+import { useSelector } from "react-redux";
 
 // ============ Start Table Earner Modal ============
 const TableEarner = () => {
-    const { data: user } = useCheckAuthQuery();
     const { data: response, isLoading, isError } = useFetchEarnerQuery();
+    const { roleId, userId } = useSelector((state) => state.global);
     const [deleteEarner] = useDeleteEarnerByIdMutation();
 
     // State for handling modal
@@ -31,22 +31,16 @@ const TableEarner = () => {
 
     // Earner data fetched from the API
     const earnerData = response?.data;
-
-    //Check auth for the specific role
-    const roleId = user?.user?.roleId;
-
-    //Receive the userID
-    const { id: userID } = user.user;
-
+   
     // Display earner in the earner table by the specific role , role = 1 (Admin), role = 2 (institutionOwner), role = 3 (issuer)
     let filteredEarnerData;
 
     if (roleId === 1) {
         filteredEarnerData = earnerData;
     } else if (roleId === 2) {
-        filteredEarnerData = earnerData?.filter((earner) => earner.Issuer?.Institution?.userId === userID);
+        filteredEarnerData = earnerData?.filter((earner) => earner.Issuer?.Institution?.userId === userId);
     } else if (roleId === 3) {
-        filteredEarnerData = earnerData?.filter((earner) => earner.Issuer?.userId === userID);
+        filteredEarnerData = earnerData?.filter((earner) => earner.Issuer?.userId === userId);
     }
 
     // Further filter based on the search query (optional)
