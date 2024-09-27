@@ -35,32 +35,32 @@ const TableCustom = ({title='', data = [], columns = [], sortIcon = false, actio
     const defaultColumns = [
         {
             name: "ID",
-            selector: (row) => row.id,
+            selector: (row) => row.id || "N/A",
             sortable: true,
         },
         {
             name: "Name",
-            selector: (row) => row.name,
+            selector: (row) => row.name || "N/A",
             sortable: true,
         },
         {
             name: "Email",
-            selector: (row) => row.email,
+            selector: (row) => row.email || "N/A",
             sortable: true,
         },
         {
             name: "Badge",
-            selector: (row) => row.badge,
+            selector: (row) => row.badge || "N/A",
             sortable: true,
         },
         {
             name: "Year",
-            selector: (row) => row.year,
+            selector: (row) => row.year || "N/A",
             sortable: true,
         },
         {
             name: "Position",
-            selector: (row) => row.position,
+            selector: (row) => row.position || "N/A",
             sortable: true,
         },
     ];

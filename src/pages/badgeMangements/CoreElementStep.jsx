@@ -11,12 +11,20 @@ import { useFetchAchievementTypeQuery } from "../../store/api/achievements/achie
 const CoreElementStep = ({ control }) => {
     // Data static of the earning criteria select
     const { data: achievementType } = useFetchAchievementTypeQuery();
-    
+
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Stack gap={2}>
                 {/* Issuer */}
-                <FormInput name="issuer" label="Issuer*" control={control} type="text" required={false} />
+                <FormInput
+                    disabled
+                    name="issuer"
+                    label="Issuer*"
+                    control={control}
+                    type="text"
+                    required={false}
+                    //      
+                />
 
                 {/* Criteria */}
                 <FormInput name="narrative" label="Criteria" control={control} type="text" required={false} />

@@ -12,6 +12,7 @@ import LinearProgress, { linearProgressClasses } from "@mui/material/LinearProgr
  *
  * @param {string} Form <SpinLoading /> - Just import and then write this Element down
  * @param {string} Custom custom your own color just write <SpinLoading color="red" />
+ * @param {string} Custom custom you own size, just to write <SpinLoading size={20} />
  */
 
 // Styled LinearProgress component
@@ -27,7 +28,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     },
 }));
 
-const SpinLoading = ({ color = "#1a90ff", ...props }) => {
+const SpinLoading = ({ color = "#1a90ff", size = 40, ...props }) => {
     return (
         <Box sx={{ position: "relative" }}>
             <CircularProgress
@@ -36,7 +37,7 @@ const SpinLoading = ({ color = "#1a90ff", ...props }) => {
                     color: (theme) =>
                         theme.palette.mode === "dark" ? theme.palette.grey[800] : theme.palette.grey[200],
                 }}
-                size={40}
+                size={size}
                 thickness={4}
                 value={100}
                 {...props}
@@ -54,7 +55,7 @@ const SpinLoading = ({ color = "#1a90ff", ...props }) => {
                         strokeLinecap: "round",
                     },
                 }}
-                size={40}
+                size={size}
                 thickness={4}
                 {...props}
             />

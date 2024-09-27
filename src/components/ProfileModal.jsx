@@ -59,7 +59,7 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
                     <Box mt={1}>
                         <Stack direction="row" alignItems="center" spacing={1}>
                             <Typography variant="body1" sx={{ textTransform: "capitalize" }}>
-                                {getValue(item, roleKey) || "No role"}
+                                {getValue(item, roleKey) || "N/A"}
                             </Typography>
                         </Stack>
                     </Box>

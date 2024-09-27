@@ -6,16 +6,17 @@ import theme from "../../assets/themes";
 import GreetingIconSvg from "../../assets/images/Greeting-illu.svg";
 
 // Fetching Data
-import { useCheckAuthQuery } from "../../store/api/auth/authApi";
 import { useFetchInfoUserByIdQuery } from "../../store/api/users/userInfoProfileApi";
+import { useSelector } from "react-redux";
 
 // ============ Start Greeting Section ============
 const Greeting = () => {
-    const { data: user } = useCheckAuthQuery();
-    const userId = user?.user?.id;
+    const {userId} = useSelector((state)=> state.global)
 
     const { data: info, isLoading, isError } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
+    
     const userData = info?.data;
+    console.log("usserDatasdjfkasjf", userData);
 
     return (
         <Stack

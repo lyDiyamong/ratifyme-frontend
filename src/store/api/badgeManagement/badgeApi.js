@@ -51,7 +51,14 @@ export const badgeApi = createApi({
                 }
             },
         }),
+        // fetch one data for one badge class
+        fetchOneBadge: builder.query({
+            query: (id) => ({
+                url: `issuers/badgeClasses/${id}`,
+                method: "GET",
+            }),
+        }),
     }),
 });
 
-export const { useCreateBadgeMutation, useFetchBadgesByIssuerQuery } = badgeApi;
+export const { useCreateBadgeMutation, useFetchBadgesByIssuerQuery, useFetchOneBadgeQuery } = badgeApi;

@@ -54,7 +54,7 @@ const PricePage = () => {
 
                 {/* Box refer to container of card */}
                 <Box sx={{ width: "100%" }}>
-                    <ServiceDetail />
+                    <ServiceDetail button />
                 </Box>
             </Paper>
         </LandingContainer>

@@ -10,20 +10,22 @@ import theme from "../../assets/themes";
 
 // Fetching Data
 import { useFetchInstitutionStatsQuery } from "../../store/api/reports/institutionStatApis";
-import { useCheckAuthQuery } from "../../store/api/auth/authApi";
+import { useSelector } from "react-redux";
 
 // =========== Start Overview Card ===========
 const CardsList = () => {
     const { data: response, isLoading, isError } = useFetchInstitutionStatsQuery();
-    const { data: user } = useCheckAuthQuery();
+    const { userId, roleId } = useSelector((state) => state.global);
     const [cardContents, setCardContents] = useState([]);
 
+    console.log(response);
+
     useEffect(() => {
-        if (response && user?.user?.roleId) {
-            const cardData = createCardContent(user.user.roleId, response.data, user.user.id);
+        if (response && roleId) {
+            const cardData = createCardContent(roleId, response.data, userId);
             setCardContents(cardData);
         }
-    }, [response, user]);
+    }, [response, userId]);
 
     if (isLoading) return <CircularProgress />;
     if (isError) return <Typography color="error">Error fetching data</Typography>;
