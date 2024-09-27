@@ -1,4 +1,7 @@
+// MUI Import
 import { Box, CardMedia, Typography } from "@mui/material";
+
+// Custom Import
 import StatusCode from "../assets/images/NoData.svg";
 
 const NoRecordData = () => {
