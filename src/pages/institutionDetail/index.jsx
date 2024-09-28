@@ -31,8 +31,8 @@ function InstitutionDetail() {
 
     // Api fetching badges hook
     const { data: badgesIntsti, isLoading: badgesLoading } = useFetchBadgesByInstitutionsQuery(institutionId);
-    console.log(badgesIntsti?.data?.Issuers);
 
+    // Fetching badgeclass from institution api
     // Using flatMap to iterating to array in array
     const badges = badgesIntsti?.data?.Issuers?.flatMap((badge) => badge?.BadgeClasses);
 

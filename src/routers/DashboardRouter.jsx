@@ -18,6 +18,7 @@ import AddRecipient from "../pages/earnerManagements/AddRecipient";
 import BadgeDetail from "../pages/badgeMangements/BadgeDetail";
 import InstitutionManagement from "../pages/institutionManagement";
 import InstitutionDetail from "../pages/institutionDetail";
+import IssuerDetail from "../pages/issuerDetail";
 
 const DashbaordRouter = () => {
     return (
@@ -37,6 +38,7 @@ const DashbaordRouter = () => {
                 <Route path="/management/eaners/add-earners" element={<AddRecipient />} />
                 <Route path="/management/institutions" element={<InstitutionManagement />} />
                 <Route path="/management/institutions/:institutionId" element={<InstitutionDetail />} />
+                <Route path="/management/issuer/:issuerId" element={<IssuerDetail />} />
                 {/* <Route path="/unauthorized" element={<UnauthorizedPage />} />
                 <Route path="*" element={<NotFoundPage />} /> */}
                 <Route path="/management/badges/badgecreation" element={<BadgeCreation />} />
