@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+// React library import
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+
+// MUI import
 import {
     Button,
     Dialog,
@@ -17,26 +20,55 @@ import {
     Divider,
     Stack,
     Box,
+    Chip,
 } from "@mui/material";
-import { Close } from "@mui/icons-material";
+import { CheckCircle, Close, ErrorOutline } from "@mui/icons-material";
+
+// Custom import
 import theme from "../../assets/themes";
 import FormInput from "../../components/FormInput";
-import { useInviteIssuerMutation } from "../../store/api/userManagement/inviteUserApi";
+import { useFetchAllInvitedUserQuery, useInviteIssuerMutation } from "../../store/api/userManagement/inviteUserApi";
 
-const members = [
-    { email: "bukunmi@gmail.com" },
-    { email: "chinedu@gmail.com" },
-    { email: "abubakar@gmail.com" },
-    { email: "ademola@gmail.com" },
-    { email: "idowu@gmail.com" },
-    { email: "mary@gmail.com" },
-];
+const statusChipColor = (status) => {
+    if (status === true) {
+        return {
+            label: "Accepted",
+            color: theme.palette.customColors.green300,
+            backgroundColor: theme.palette.customColors.green100,
+            icon: <CheckCircle fontSize="small" color={theme.palette.customColors.green300} />,
+        };
+    }
+
+    return {
+        label: "Pending", // Label for pending status
+        color: theme.palette.customColors.orange300, // Custom background color
+        backgroundColor: theme.palette.customColors.orange100,
+        icon: <ErrorOutline fontSize="small" color={theme.palette.customColors.orange200} />,
+    };
+};
 
 const InviteIssuerPage = () => {
     const [open, setOpen] = useState(false);
     const { institutionData } = useSelector((state) => state.global);
     const institutionId = institutionData?.id;
     const [inviteIssuer] = useInviteIssuerMutation(institutionId);
+    const { data: invitedUserData } = useFetchAllInvitedUserQuery();
+    const [invitedIssuers, setInvitedIssuers] = useState([]);
+
+    useEffect(() => {
+        if (invitedUserData) {
+            const filteredIssuers =
+                invitedUserData.data?.filter(
+                    (user) => user.roleId === 3 && user.inviterCode === institutionData.code,
+                ) || [];
+            // Sort by createdAt in descending order
+            const sortedIssuers = filteredIssuers.sort(
+                (issuerA, issuerB) => new Date(issuerB.createdAt) - new Date(issuerA.createdAt),
+            );
+
+            setInvitedIssuers(sortedIssuers);
+        }
+    }, [invitedUserData, institutionData]);
 
     const handleClose = () => {
         setOpen(false);
@@ -45,12 +77,28 @@ const InviteIssuerPage = () => {
     const {
         handleSubmit,
         control,
+        reset,
         formState: { errors },
     } = useForm();
 
     const onSubmit = async (data) => {
         try {
-            await inviteIssuer({ institutionId, email: data.email });
+            // Send invitation
+            const newIssuer = await inviteIssuer({ institutionId, email: data.email }).unwrap();
+
+            // Immediately update the local state with the new invited issuer
+            setInvitedIssuers((prev) =>
+                [
+                    {
+                        inviteEmail: newIssuer.inviteEmail || data.email,
+                        status: false,
+                        createdAt: new Date().toISOString(),
+                    },
+                    ...prev, // Keep existing issuers
+                ].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+            );
+
+            reset();
         } catch (error) {
             console.error("Error sending invitation", error);
         }
@@ -61,12 +109,31 @@ const InviteIssuerPage = () => {
             <Button variant="outlined" onClick={() => setOpen(true)}>
                 Invite Issuer
             </Button>
-            <Dialog open={open} onClose={handleClose} fullWidth>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                fullWidth
+                // sx={{
+                //     display: "flex",
+                //     alignItems: "center",
+                //     justifyContent: "center",
+                //     width: '100%'
+                // }}
+                // PaperProps={{
+                //     sx: {
+                //         height: "60%",
+                //         maxHeight: "80vh",
+                //         overflowY: "auto",
+                //         display: "flex",
+                //         alignItems: "center",
+                //         width: "100%",
+                //     },
+                // }}
+            >
                 <DialogTitle>
                     <Typography variant="h4" sx={{ lineHeight: 2 }}>
                         Invite Issuer
                     </Typography>
-
                     <IconButton
                         aria-label="close"
                         onClick={handleClose}
@@ -78,7 +145,6 @@ const InviteIssuerPage = () => {
                 <Divider />
                 <DialogContent>
                     <Stack>
-                        {/* Invite user section */}
                         <Box
                             component="form"
                             display="flex"
@@ -87,7 +153,6 @@ const InviteIssuerPage = () => {
                             noValidate
                             onSubmit={handleSubmit(onSubmit)}
                         >
-                            {/* Email */}
                             <FormInput
                                 name="email"
                                 type="email"
@@ -95,14 +160,9 @@ const InviteIssuerPage = () => {
                                 label="Invite issuer by email"
                                 required={true}
                             />
-
                             {errors.email && (
-                                <Typography color="error">
-                                    {errors.email.message || "Invalid email address"}
-                                </Typography>
+                                <Typography color="error">{errors.email.message || "Invalid email address"}</Typography>
                             )}
-
-                            {/* Submit Button */}
                             <Button
                                 variant="contained"
                                 type="submit"
@@ -119,19 +179,44 @@ const InviteIssuerPage = () => {
                         </Box>
                     </Stack>
 
-                    {/* Members list */}
                     <Typography variant="subtitle1" sx={{ mt: 2 }}>
-                        {members.length} Members
+                        {invitedIssuers.length} Members
                     </Typography>
                     <List>
-                        {members.map((member, index) => (
-                            <ListItem key={index}>
-                                <ListItemAvatar>
-                                    <Avatar key={index}></Avatar>
-                                </ListItemAvatar>
-                                <ListItemText primary={member.email} />
-                            </ListItem>
-                        ))}
+                        {invitedIssuers.map((issuer, index) => {
+                            const email = issuer.inviteEmail || "";
+                            const status = issuer.status || "unknown";
+                            const { label, color, backgroundColor, icon } = statusChipColor(status);
+                            return (
+                                <ListItem
+                                    key={index}
+                                    sx={{ backgroundColor: status === "pending" ? "#f5f5f5" : "transparent" }}
+                                >
+                                    <ListItemAvatar>
+                                        <Avatar>{email.charAt(0).toUpperCase() || "?"}</Avatar>
+                                    </ListItemAvatar>
+                                    <Box sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
+                                        <ListItemText primary={email || "Unknown User"} />
+                                        <Typography variant="body2" color="textSecondary">
+                                            {status === true
+                                                ? `Accepted on ${issuer.updatedAt}`
+                                                : `Pending on ${issuer.createdAt}`}
+                                        </Typography>
+                                    </Box>
+                                    <Chip
+                                        label={label}
+                                        icon={icon}
+                                        size="small"
+                                        sx={{
+                                            ml: 2,
+                                            backgroundColor: backgroundColor,
+                                            color: color,
+                                            borderRadius: theme.customShape.section,
+                                        }}
+                                    />
+                                </ListItem>
+                            );
+                        })}
                     </List>
                 </DialogContent>
                 <DialogActions>
