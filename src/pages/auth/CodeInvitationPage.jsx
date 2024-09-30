@@ -6,7 +6,7 @@ import theme from "../../assets/themes";
 import LandingContainer from "../../components/styles/LandingContainer";
 import LoginImgSvg from "../../assets/images/Login-illu.svg";
 import { useEffect, useState } from "react";
-import { useVerifyInvitationMutation } from "../../store/api/auth/verifyInvitationApi";
+import { useVerifyInvitationMutation } from "../../store/api/userManagement/verifyInvitationApi";
 
 const CodeInvitationPage = () => {
     const { search } = useLocation();

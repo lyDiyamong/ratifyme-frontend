@@ -13,8 +13,8 @@ const IssuerManagement = () => {
     const [searchQuery, setSearchQuery] = useState("");
     return (
         <DashboardContainer>
-            <SearchBar onSearch={setSearchQuery} />
-            <OrganizationCard
+            {/* <SearchBar onSearch={setSearchQuery} /> */}
+            {/* <OrganizationCard
                 tag="ORGANIZATION"
                 title="Above & Beyond School"
                 description="Above & Beyond School students go through the learning path by following the core courses, the recommended courses,and the capstone project. Other than these, they can access +20,000 contents in the A&B LMS to sharpen specific skills."
@@ -22,7 +22,7 @@ const IssuerManagement = () => {
                 date="Mon 19, Aug 2024"
                 showFacebook={true}
                 showLinkedIn={true}
-            />
+            /> */}
             <InviteIssuerPage />
             <TableIssuer searchQuery={searchQuery} />
         </DashboardContainer>

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import {
     Button,
     Dialog,
@@ -21,7 +22,6 @@ import { Close } from "@mui/icons-material";
 import theme from "../../assets/themes";
 import FormInput from "../../components/FormInput";
 import { useInviteIssuerMutation } from "../../store/api/userManagement/inviteUserApi";
-import { useSelector } from "react-redux";
 
 const members = [
     { email: "bukunmi@gmail.com" },
@@ -34,8 +34,9 @@ const members = [
 
 const InviteIssuerPage = () => {
     const [open, setOpen] = useState(false);
-    const userId = useSelector((state) => state.global.userId);
-
+    const { institutionData } = useSelector((state) => state.global);
+    const institutionId = institutionData?.id;
+    const [inviteIssuer] = useInviteIssuerMutation(institutionId);
 
     const handleClose = () => {
         setOpen(false);
@@ -47,6 +48,14 @@ const InviteIssuerPage = () => {
         formState: { errors },
     } = useForm();
 
+    const onSubmit = async (data) => {
+        try {
+            await inviteIssuer({ institutionId, email: data.email });
+        } catch (error) {
+            console.error("Error sending invitation", error);
+        }
+    };
+
     return (
         <div>
             <Button variant="outlined" onClick={() => setOpen(true)}>
@@ -54,14 +63,7 @@ const InviteIssuerPage = () => {
             </Button>
             <Dialog open={open} onClose={handleClose} fullWidth>
                 <DialogTitle>
-                    <Typography
-                        component="h4"
-                        sx={{
-                            fontSize: theme.typography.h4,
-                            fontWeight: theme.fontWeight.bold,
-                            lineHeight: 2,
-                        }}
-                    >
+                    <Typography variant="h4" sx={{ lineHeight: 2 }}>
                         Invite Issuer
                     </Typography>
 
@@ -77,7 +79,14 @@ const InviteIssuerPage = () => {
                 <DialogContent>
                     <Stack>
                         {/* Invite user section */}
-                        <Box component="form" display="flex" flexDirection="column" gap={2} noValidate>
+                        <Box
+                            component="form"
+                            display="flex"
+                            flexDirection="column"
+                            gap={2}
+                            noValidate
+                            onSubmit={handleSubmit(onSubmit)}
+                        >
                             {/* Email */}
                             <FormInput
                                 name="email"
@@ -86,30 +95,39 @@ const InviteIssuerPage = () => {
                                 label="Invite issuer by email"
                                 required={true}
                             />
+
+                            {errors.email && (
+                                <Typography color="error">
+                                    {errors.email.message || "Invalid email address"}
+                                </Typography>
+                            )}
+
+                            {/* Submit Button */}
+                            <Button
+                                variant="contained"
+                                type="submit"
+                                sx={{
+                                    mt: 1,
+                                    mb: 2,
+                                    color: theme.palette.background.default,
+                                    borderRadius: theme.customShape.btn,
+                                    fontWeight: theme.fontWeight.bold,
+                                }}
+                            >
+                                Invite
+                            </Button>
                         </Box>
-                        <Button
-                            variant="contained"
-                            sx={{
-                                mt: 1,
-                                mb: 2,
-                                color: theme.palette.background.default,
-                                borderRadius: theme.customShape.btn,
-                                fontWeight: theme.fontWeight.bold,
-                            }}
-                        >
-                            Invite
-                        </Button>
                     </Stack>
 
                     {/* Members list */}
                     <Typography variant="subtitle1" sx={{ mt: 2 }}>
-                        8 Members
+                        {members.length} Members
                     </Typography>
                     <List>
                         {members.map((member, index) => (
                             <ListItem key={index}>
                                 <ListItemAvatar>
-                                    <Avatar></Avatar>
+                                    <Avatar key={index}></Avatar>
                                 </ListItemAvatar>
                                 <ListItemText primary={member.email} />
                             </ListItem>

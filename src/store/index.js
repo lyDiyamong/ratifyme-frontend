@@ -7,7 +7,7 @@ import { achievementTypeApi } from "./api/achievements/achievementTypeApi";
 import { criteriaApi } from "./api/badgeManagement/criteriaApi";
 import { achievementApi } from "./api/achievements/achievementApi";
 import { institutionStatApi } from "./api/reports/institutionStatApis";
-import { verifyInvitationApi } from "./api/auth/verifyInvitationApi";
+import { verifyInvitationApi } from "./api/userManagement/verifyInvitationApi";
 import { infoApi } from "./api/users/userInfoProfileApi";
 import {institutionApi} from "./api/institutionManagement/institutionApi"
 import { verificationApi } from "./api/earnerManagement/verificationApi";
