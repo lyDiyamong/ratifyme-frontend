@@ -9,8 +9,9 @@ import { achievementApi } from "./api/achievements/achievementApi";
 import { institutionStatApi } from "./api/reports/institutionStatApis";
 import { verifyInvitationApi } from "./api/userManagement/verifyInvitationApi";
 import { infoApi } from "./api/users/userInfoProfileApi";
-import {institutionApi} from "./api/institutionManagement/institutionApi"
 import { verificationApi } from "./api/earnerManagement/verificationApi";
+import { institutionApi } from "./api/institutionManagement/institutionApi";
+import { inviteUserApi } from "./api/userManagement/inviteUserApi";
 
 import { setupListeners } from "@reduxjs/toolkit/query";
 import gloableReducer from "./slices/globalSlices";
@@ -30,7 +31,9 @@ const store = configureStore({
         [infoApi.reducerPath]: infoApi.reducer,
         [institutionStatApi.reducerPath]: institutionStatApi.reducer,
         [institutionApi.reducerPath] : institutionApi.reducer,
-        [verificationApi.reducerPath] : verificationApi.reducer
+        [verificationApi.reducerPath] : verificationApi.reducer,
+
+        [inviteUserApi.reducerPath]: inviteUserApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
@@ -46,7 +49,8 @@ const store = configureStore({
             infoApi.middleware,
             institutionStatApi.middleware,
             institutionApi.middleware,
-            verificationApi.middleware
+            verificationApi.middleware,
+            inviteUserApi.middleware,
         ),
 });
 setupListeners(store.dispatch);

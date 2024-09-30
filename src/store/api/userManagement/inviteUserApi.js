@@ -12,7 +12,15 @@ const inviteUserApi = createApi({
                 body: data,
             }),
         }),
+        fetchAllInvitedUser: builder.query({
+            query: () => ({
+                url: "users/codeInvitation/invitedUser",
+                method: "GET",
+            }),
+        }),
     }),
 });
 
-export const { useInviteIssuerMutation } = inviteUserApi;
+// Export both the API instance and hooks
+export const { useInviteIssuerMutation, useFetchAllInvitedUserQuery } = inviteUserApi;
+export { inviteUserApi };
