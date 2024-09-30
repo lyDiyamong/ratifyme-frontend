@@ -135,7 +135,7 @@ const BadgeDetailCustom = ({ badge, userRole, issuerId }) => {
                                         control={control}
                                         issuerId={issuerId}
                                     />
-                                    <IssueToEarnerButton />
+                                    <IssueToEarnerButton emails={selectedEmails} badgeId={result?.id || []} />
                                 </Box>
                             ) : (
                                 <ClaimBadgeButton />

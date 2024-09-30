@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import BadgeDetailCustom from "../../components/BadgeDetailCustom";
 import DashboardContainer from "../../components/styles/DashboardContainer";
@@ -9,8 +10,8 @@ const BadgeDetail = () => {
     const { id } = useParams();
     // Fetch badge by ID
     const { data: oneBadge, isLoading, isError } = useFetchOneBadgeQuery(id);
-
-    let role = oneBadge?.data?.Issuer?.User?.roleId;
+    const { roleId } = useSelector((state) => state.global);
+    let role = roleId;
     switch (role) {
         case 1: {
             role = "admin";
