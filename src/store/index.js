@@ -12,6 +12,7 @@ import { infoApi } from "./api/users/userInfoProfileApi";
 import { verificationApi } from "./api/earnerManagement/verificationApi";
 import { institutionApi } from "./api/institutionManagement/institutionApi";
 import { inviteUserApi } from "./api/userManagement/inviteUserApi";
+import { verificationApi } from "./api/earnerManagement/verificationApi";
 
 import { setupListeners } from "@reduxjs/toolkit/query";
 import gloableReducer from "./slices/globalSlices";
@@ -34,6 +35,7 @@ const store = configureStore({
         [verificationApi.reducerPath] : verificationApi.reducer,
 
         [inviteUserApi.reducerPath]: inviteUserApi.reducer,
+        [verificationApi.reducerPath] : verificationApi.reducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
@@ -51,6 +53,7 @@ const store = configureStore({
             institutionApi.middleware,
             verificationApi.middleware,
             inviteUserApi.middleware,
+            verificationApi.middleware
         ),
 });
 setupListeners(store.dispatch);
