@@ -58,7 +58,6 @@ const ServiceDetail = ({ button }) => {
     // Start rendering row by map method
     const renderedRows = rows.map((row, index) => (
         <Grid
-            spacing={1}
             container
             key={index}
             sx={{

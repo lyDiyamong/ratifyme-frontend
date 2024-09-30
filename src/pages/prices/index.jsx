@@ -5,8 +5,23 @@ import { Box, Paper, Typography } from "@mui/material";
 import ServiceDetail from "../../components/ServiceDetail";
 import LandingContainer from "../../components/styles/LandingContainer";
 import theme from "../../assets/themes";
+import { useCheckAuthQuery } from "../../store/api/auth/authApi";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 const PricePage = () => {
+    const { data, error, isLoading } = useCheckAuthQuery();
+    const user = data?.user || {};
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!isLoading) {
+            if (!user) {
+                navigate("/signup");
+            }
+        }
+    }, [isLoading, error, user, navigate]);
+
     return (
         // ============ Start servicePlanSection ============
         <LandingContainer>
@@ -41,15 +56,12 @@ const PricePage = () => {
                         fontSize: theme.typography.body1,
                     }}
                 >
-                    Our Digital Badge Service offers a comprehensive solution
-                    for recognizing and showcasing achievements in a digital
-                    format. Ideal for educational institutions, professional
-                    organizations, and corporate training programs, our service
-                    allows you to create, manage, and distribute digital badges
-                    that are secure, verifiable, and easily shareable across
-                    social media platforms. Each badge is customizable, ensuring
-                    it reflects your brand identity while celebrating the
-                    recipient’s accomplishments.
+                    Our Digital Badge Service offers a comprehensive solution for recognizing and showcasing
+                    achievements in a digital format. Ideal for educational institutions, professional organizations,
+                    and corporate training programs, our service allows you to create, manage, and distribute digital
+                    badges that are secure, verifiable, and easily shareable across social media platforms. Each badge
+                    is customizable, ensuring it reflects your brand identity while celebrating the recipient’s
+                    accomplishments.
                 </Typography>
 
                 {/* Box refer to container of card */}
