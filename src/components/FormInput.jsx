@@ -21,7 +21,7 @@ import theme from "../assets/themes/index";
  * @param {...object} rest - Additional props to pass to the TextField component.
  * @returns {JSX.Element} The rendered FormInput component.
  */
-const FormInput = ({ label, name, control, type = "text", required = false, validationRules = {}, ...rest }) => {
+const FormInput = ({ label, name, control, type = "text", required = false, startIcon, validationRules = {}, ...rest }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     // Toggle password visibility
@@ -34,18 +34,6 @@ const FormInput = ({ label, name, control, type = "text", required = false, vali
         event.preventDefault();
     };
 
-    // Define a regex to disallow spaces and special characters
-    const noSpacesOrSpecialChars = {
-        validate: (value) => {
-            const regex = /^[a-zA-Z]+$/;
-            if (!regex.test(value)) {
-                return `${label} cannot contain spaces or special characters`;
-            }
-            return true;
-        },
-    };
-
-    // Define validation rules based on the input type and required prop
     const validationEmailRules = {
         required: required ? `${label} is required` : false,
         ...(type === "email" && {
@@ -54,16 +42,13 @@ const FormInput = ({ label, name, control, type = "text", required = false, vali
                 message: "Enter a valid email address",
             },
         }),
-        ...(name === "firstName" || name === "lastName" ? noSpacesOrSpecialChars : {}), // Apply to first and last name
     };
 
-    // Combine custom validation rules with email validation rules
     const combinedValidationRules = {
         ...validationEmailRules,
         ...validationRules,
     };
 
-    // Use useController to connect the input field with React Hook Form
     const {
         field,
         fieldState: { error },
@@ -80,7 +65,8 @@ const FormInput = ({ label, name, control, type = "text", required = false, vali
             fullWidth
             required={required}
             {...field}
-            type={type === "password" && !showPassword ? "password" : "text"}
+            // Update the type logic here to toggle between "text" and "password"
+            type={type === "password" ? (showPassword ? "text" : "password") : type}
             error={!!error}
             helperText={error ? error.message : null}
             sx={{
@@ -92,6 +78,11 @@ const FormInput = ({ label, name, control, type = "text", required = false, vali
                 },
             }}
             InputProps={{
+                startAdornment: startIcon && (
+                    <InputAdornment position="start">
+                        {startIcon}
+                    </InputAdornment>
+                ),
                 endAdornment: type === "password" && (
                     <InputAdornment position="end">
                         <IconButton onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword} edge="end">

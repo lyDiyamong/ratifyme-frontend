@@ -1,10 +1,10 @@
 // React library import
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
 
 // MUI import
-import { Box, Grid, Typography, Button, Checkbox, FormControlLabel, IconButton, Divider } from "@mui/material";
+import { Box, Typography, Button, Checkbox, FormControlLabel, IconButton, Divider } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import Google from "@mui/icons-material/Google";
@@ -12,17 +12,13 @@ import Google from "@mui/icons-material/Google";
 // Custom import
 import FormInput from "../../components/FormInput";
 import theme from "../../assets/themes";
-import LandingContainer from "../../components/styles/LandingContainer";
-import LoginImgSvg from "../../assets/images/Login-illu.svg";
-import BusinessStartupSvg from "../../assets/images/DrawKitDashbaord.svg";
-import DashboardSvg from "../../assets/images/FutureTechnology.svg";
 import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
 import { SpinLoading } from "../../components/loading/SpinLoading";
 import { useSignInMutation } from "../../store/api/auth/authApi";
 import { Stack } from "@mui/system";
-
-const images = [BusinessStartupSvg, DashboardSvg];
-const texts = ["Capturing Moments, Creating Memories", "Welcome to the Open Digital Bagde"];
+import LockOpenOutlined from "@mui/icons-material/LockOpenOutlined";
+import EmailOutlined from "@mui/icons-material/EmailOutlined";
+import OutletImageComponent from "./OutletImageTemplate";
 
 const LoginPage = () => {
     const [signIn, { isLoading, isError, error }] = useSignInMutation();
@@ -42,29 +38,16 @@ const LoginPage = () => {
     const onSubmit = async (data) => {
         try {
             setLoading(true);
-            const result = await signIn(data).unwrap(); // Unwraps the result if signIn is using RTK query
+            const result = await signIn(data).unwrap();
 
             navigate("/dashboard");
             reset();
         } catch (error) {
             console.error("Error during sign in:", error.message || error);
         } finally {
-            setLoading(false); // Ensure loading state is reset even if an error occurs
+            setLoading(false);
         }
     };
-
-    const [currentImage, setCurrentImage] = useState(0);
-    const [currentText, setCurrentText] = useState(0);
-
-    // Change background image and text
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentImage((prevImage) => (prevImage + 1) % images.length);
-            setCurrentText((prevText) => (prevText + 1) % texts.length);
-        }, 5000);
-
-        return () => clearInterval(interval);
-    }, []);
 
     return (
         // ============ Start login container ============
@@ -103,9 +86,23 @@ const LoginPage = () => {
 
                     <Stack spacing={2}>
                         {/* Email */}
-                        <FormInput name="email" type="email" control={control} label="Email" required={true} />
+                        <FormInput
+                            name="email"
+                            type="email"
+                            control={control}
+                            label="Email"
+                            required={true}
+                            startIcon={<EmailOutlined />}
+                        />
                         {/* Password */}
-                        <FormInput name="password" control={control} label="Password" type="password" required={true} />
+                        <FormInput
+                            name="password"
+                            control={control}
+                            label="Password"
+                            type="password"
+                            required={true}
+                            startIcon={<LockOpenOutlined />}
+                        />
                     </Stack>
 
                     <Stack
@@ -122,7 +119,7 @@ const LoginPage = () => {
                             <Typography
                                 component="a"
                                 href="#"
-                                variant="body2"
+                                variant="body1"
                                 color="primary"
                                 sx={{ textDecoration: "none" }}
                             >
@@ -196,60 +193,7 @@ const LoginPage = () => {
             </Box>
 
             {/* Left side with text */}
-            <Box
-                sx={{
-                    position: "relative",
-                    display: { xss: "none", sm: "none", md: "flex" },
-                    backgroundColor: theme.palette.action.selected,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    backgroundSize: "contain",
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
-                    height: "100vh",
-                    width: "50%",
-                }}
-            >
-                <Box
-                    flex={1}
-                    sx={{
-                        backgroundImage: `url(${images[currentImage]})`,
-                        backgroundColor: theme.palette.action.selected,
-                        backgroundSize: "contain",
-                        backgroundRepeat: "no-repeat",
-                        backgroundPosition: "center",
-                        height: "60vh",
-                        width: "100%",
-                    }}
-                />
-
-                <Typography
-                    variant="h4"
-                    sx={{
-                        position: "absolute",
-                        top: "95%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        color: theme.palette.text.primary,
-                        maxWidth: 200,
-                        animation: "fadeInOut 5s ease-in-out infinite",
-                        textAlign: "center",
-                    }}
-                >
-                    {texts[currentText]}
-                </Typography>
-
-                {/* Keyframes for the fade-in and fade-out animation */}
-                <style>
-                    {`
-                        @keyframes fadeInOut {
-                            0% { opacity: 0; }
-                            50% { opacity: 1; }
-                            100% { opacity: 0; }
-                        }
-                    `}
-                </style>
-            </Box>
+            <OutletImageComponent />
         </Box>
         // ============ End login container ============
     );
