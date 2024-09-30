@@ -27,7 +27,7 @@ export const badgeApi = createApi({
             invalidatesTags: [{ type: "Badge", id: "LIST" }],
             onQueryStarted: async (badge, { dispatch, queryFulfilled }) => {
                 const patchResult = dispatch(
-                    badgeApi.util.updateQueryData("fetchBadgesByIssuer", undefined, (draft) => {
+                    badgeApi.util.updateQueryData("fetchBadgesByIssuer", badge.issuerId, (draft) => {
                         if (draft.data) {
                             draft.data.push(badge);
                         } else {
@@ -43,28 +43,44 @@ export const badgeApi = createApi({
                 }
             },
         }),
-        // fetch one data for one badge class
+        // Fetch one data for one badge class
         fetchOneBadge: builder.query({
             query: (id) => ({
                 url: `issuers/badgeClasses/${id}`,
                 method: "GET",
             }),
+            providesTags: (result, error, id) => [{ type: "Badge", id }],
         }),
 
-        // fetch badge for each institution
+        // Fetch badge for each institution
         fetchBadgesByInstitutions: builder.query({
             query: (id) => ({
                 url: `institutions/${id}`,
                 method: "GET",
             }),
+            providesTags: (result) =>
+                result?.data
+                    ? [...result.data.map(({ id }) => ({ type: "Badge", id })), { type: "Badge", id: "LIST" }]
+                    : [{ type: "Badge", id: "LIST" }],
         }),
 
-        // fetch badge for each institution
+        // Fetch badge for each issuer
         fetchBadgesByIssuer: builder.query({
             query: (id) => ({
                 url: `issuers/${id}`,
                 method: "GET",
             }),
+        }),
+
+        fetchBadgeByEarner: builder.query({
+            query: (id) => ({
+                url: `/issuers/badgeClasses/earner/${id}`,
+                method: "GET",
+            }),
+            providesTags: (result, error, id) =>
+                result?.data
+                    ? [...result.data.map(({ id }) => ({ type: "Badge", id })), { type: "Badge", id }]
+                    : [{ type: "Badge", id }],
         }),
     }),
 });
@@ -75,4 +91,5 @@ export const {
     useFetchOneBadgeQuery,
     useFetchBadgesByInstitutionsQuery,
     useFetchBadgesQuery,
+    useFetchBadgeByEarnerQuery,
 } = badgeApi;
