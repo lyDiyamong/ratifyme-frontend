@@ -2,14 +2,18 @@
 import { useEffect, useState } from "react";
 
 // MUI import
-import { TextField, Box, Typography, Avatar, Button, Stack, Divider } from "@mui/material";
+import { TextField, Box, Typography, Avatar, Button, Stack, Divider, Chip } from "@mui/material";
 
 // Custom import
 import theme from "../../../assets/themes";
 import { useFetchInfoUserByIdQuery, useUpdateUserProfileMutation } from "../../../store/api/users/userInfoProfileApi";
 import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
+import MaleUserDefault from "../../../assets/images/MaleUser.svg";
+import FemaleUserDefault from "../../../assets/images/FemaleUser.svg";
+
 import { GridCheckCircleIcon } from "@mui/x-data-grid";
 import { useSelector } from "react-redux";
+import MoreMenu from "../../../components/MoreMenu";
 
 const BioContent = () => {
     const { userId } = useSelector((state) => state.global);
@@ -22,14 +26,20 @@ const BioContent = () => {
     // Fetch user data and bio
     const { data: info } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
     const userBio = info?.data?.bio || bio;
+    const gender = info?.data?.Gender?.name;
 
     // Update user bio mutation
     const [updateUserProfile, { isLoading }] = useUpdateUserProfileMutation();
 
     useEffect(() => {
+        // Set profile image based on gender
         if (info?.data?.profileImage && info.data.profileImage !== profileImage) {
             setProfileImage(info.data.profileImage);
-        } else if (!info?.data?.profileImage && profileImage !== DefaultProfileSvg) {
+        } else if (gender === "male") {
+            setProfileImage(MaleUserDefault);
+        } else if (gender === "female") {
+            setProfileImage(FemaleUserDefault);
+        } else {
             setProfileImage(DefaultProfileSvg);
         }
 
@@ -37,7 +47,7 @@ const BioContent = () => {
             setBio(info.data.bio);
             setOriginalBio(info.data.bio);
         }
-    }, [info]);
+    }, [info, gender]);
 
     // Handle edit mode
     const handleTextClick = () => {
@@ -75,6 +85,9 @@ const BioContent = () => {
         setIsEditing(false);
     };
 
+    // More Menu props
+    const menuItems = [{ label: "Update Bio", onClick: handleTextClick },];
+
     return (
         <Stack gap={3}>
             <Stack
@@ -88,16 +101,50 @@ const BioContent = () => {
                 }}
             >
                 <Stack
-                    sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: "100%" }}
+                    sx={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        width: "100%",
+                        // gap: 1,
+                    }}
                 >
-                    <Typography
+                    <Stack
                         sx={{
-                            fontSize: theme.typography.h4,
-                            fontWeight: theme.fontWeight.semiBold,
+                            flexDirection: { xs: "row", xss: "column" },
+                            alignItems: { xs: "center", xss: "start" },
+                            width: "100%",
+                            gap: 2,
                         }}
                     >
-                        Bio Summary
-                    </Typography>
+                        <Typography
+                            sx={{
+                                fontSize: theme.typography.h4,
+                                fontWeight: theme.fontWeight.semiBold,
+                            }}
+                        >
+                            About Me
+                        </Typography>
+
+                        <Chip
+                            icon={<GridCheckCircleIcon color={theme.palette.customColors.green300} />}
+                            label="Status"
+                            sx={{
+                                fontSize: theme.typography.h5,
+                                fontWeight: theme.fontWeight.semiBold,
+                                backgroundColor: userBio
+                                    ? theme.palette.customColors.green100
+                                    : theme.palette.action.error,
+                                py: 2.5,
+                                borderRadius: theme.customShape.section,
+                                color: userBio
+                                    ? theme.palette.customColors.green300
+                                    : theme.palette.customColors.red200,
+                                textTransform: "none",
+                            }}
+                        />
+                    </Stack>
+                    <MoreMenu menuItems={menuItems} />
                 </Stack>
 
                 <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 2, width: "100%" }}>
@@ -121,21 +168,33 @@ const BioContent = () => {
                         onClick={handleTextClick}
                     >
                         {isEditing ? (
-                            <TextField
-                                value={bio}
-                                onChange={(e) => setBio(e.target.value)}
-                                onKeyDown={handleKeyDown}
-                                variant="outlined"
-                                autoFocus
-                                fullWidth
-                                InputProps={{
-                                    sx: {
-                                        border: "none",
-                                        "& fieldset": { border: "none" },
-                                        outline: "none",
-                                    },
-                                }}
-                            />
+                            <Stack width="100%" px={1} alignItems="end">
+                                <TextField
+                                    value={bio}
+                                    onChange={(e) => {
+                                        // Update bio only if the length is less than or equal to 500
+                                        if (e.target.value.length <= 500) {
+                                            setBio(e.target.value);
+                                        }
+                                    }}
+                                    onKeyDown={handleKeyDown}
+                                    variant="outlined"
+                                    autoFocus
+                                    fullWidth
+                                    multiline
+                                    maxRows={4}
+                                    InputProps={{
+                                        sx: {
+                                            border: "none",
+                                            "& fieldset": { border: "none" },
+                                            outline: "none",
+                                        },
+                                    }}
+                                />
+                                <Typography
+                                    sx={{ color: theme.palette.text.secondary, px: 2 }}
+                                >{`${bio.length}/500 `}</Typography>
+                            </Stack>
                         ) : (
                             <Typography
                                 sx={{
@@ -144,11 +203,21 @@ const BioContent = () => {
                                     width: "100%",
                                 }}
                             >
-                                What is on your mind?
+                                Describe your thought!
                             </Typography>
                         )}
                     </Box>
                 </Stack>
+
+                <Typography
+                    sx={{
+                        color: theme.palette.text.secondary,
+                        fontSize: "16px",
+                        width: "100%",
+                    }}
+                >
+                    {userBio || "There is no bio yet!"}
+                </Typography>
 
                 {/* Start Save and Cancel Buttons */}
                 {isEditing && (
@@ -183,51 +252,6 @@ const BioContent = () => {
                         </Stack>
                     </Box>
                 )}
-            </Stack>
-
-            <Stack
-                sx={{
-                    boxShadow: theme.customShadows.default,
-                    borderRadius: theme.customShape.section,
-                    p: { xss: "20px", sm: "24px" },
-                    bgcolor: theme.palette.customColors.white,
-                    gap: 3,
-                }}
-            >
-                <Stack
-                    sx={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        width: "100%",
-                        gap: 2,
-                    }}
-                >
-                    <Typography
-                        sx={{
-                            fontSize: theme.typography.h4,
-                            fontWeight: theme.fontWeight.semiBold,
-                        }}
-                    >
-                        About Me
-                    </Typography>
-
-                    <Button
-                        startIcon={<GridCheckCircleIcon />}
-                        sx={{
-                            fontSize: theme.typography.h5,
-                            fontWeight: theme.fontWeight.semiBold,
-                            backgroundColor: userBio ? theme.palette.customColors.green500 : theme.palette.action.error,
-                            p: 1,
-                            px: 2,
-                            borderRadius: theme.customShape.section,
-                            color: userBio ? theme.palette.customColors.green200 : theme.palette.customColors.red200,
-                            textTransform: "none",
-                        }}
-                    >
-                        Status
-                    </Button>
-                </Stack>
-                {!isEditing && <Typography width="100%">{userBio || "There is no Bio yet! 💥"}</Typography>}
             </Stack>
         </Stack>
     );

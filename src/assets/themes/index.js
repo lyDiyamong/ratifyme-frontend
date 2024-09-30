@@ -33,11 +33,10 @@ const theme = createTheme({
             orange200: "#ffa929", // SP-Orange-200
             purple100: "#E2E2E2", // SP-Purple-100
             purple200: "#944cff", // SP-Purple-200
-            green100: "#B3E4B0", // SP-Green-100
-            green200: "#0BA800", // SP-Green-200
-            green300: "#B3E4B0", // SP-Green-300
+            green100: "#F4F7ED", // SP-Green-500
+            green200: "#B3E4B0", // SP-Green-100
+            green300: "#0BA800", // SP-Green-200
             green400: "#0B9710", // SP-Green-400
-            green500: "#F4F7ED", // SP-Green-500
             red100: "#ffc1c1", // SP-Red-100
             red200: "#ff3838", // SP-Red-200
             red300: "#E63232", // SP-Red-300

@@ -1,5 +1,5 @@
 // React library import
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 // MUI import
 import { AppBar, IconButton, InputBase, Toolbar, useMediaQuery, Box } from "@mui/material";
@@ -9,32 +9,47 @@ import { useTheme } from "@emotion/react";
 // Custom Import
 import FlexBetween from "../../components/styles/FlexBetween";
 import DashboardContainer from "../../components/styles/DashboardContainer";
-import { useCheckAuthQuery } from "../../store/api/auth/authApi";
 import DefaultProfileSvg from "../../assets/images/DefaultProfile.svg";
+import MaleUserDefault from "../../assets/images/MaleUser.svg";
+import FemaleUserDefault from "../../assets/images/FemaleUser.svg";
+import { useSelector } from "react-redux";
+import { useFetchInfoUserByIdQuery } from "../../store/api/users/userInfoProfileApi";
 
 const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const theme = useTheme();
     const isTablet = useMediaQuery(theme.breakpoints.up("md"));
 
     // Fetch user data using the query
-    const { data: userData } = useCheckAuthQuery();
+    const {userId} = useSelector((state) => state.global)
+    const {data: userData} = useFetchInfoUserByIdQuery(userId)
     const [profileImage, setProfileImage] = useState(DefaultProfileSvg);
+    const gender = userData?.data?.Gender?.name;
+    const imageProfile = userData?.data?.profileImage;
 
     // Update profile image on user data change
     useEffect(() => {
-        if (userData.user.profileImage) {
-            setProfileImage(userData.user.profileImage);
-        } else {
-            setProfileImage(DefaultProfileSvg);
+        if (userData) {
+            // Check if the user has a custom profile image
+            if (imageProfile) {
+                setProfileImage(imageProfile);
+            }
+            // Check gender to set default profile image
+            else if (gender && gender === "male") {
+                setProfileImage(MaleUserDefault);
+            } else if (gender && gender === "female") {
+                setProfileImage(FemaleUserDefault);
+            } else {
+                setProfileImage(DefaultProfileSvg);
+            }
         }
-    }, [userData]);
+    }, [ imageProfile]);
 
     // Header icons
     const headerIcons = [
         <NotificationsNoneOutlined />,
         <Box
             component="img"
-            src={userData.user.profileImage || DefaultProfileSvg}
+            src={profileImage}
             alt="Profile Icon"
             style={{ borderRadius: "50%", width: "24px", height: "24px" }}
         />,

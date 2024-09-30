@@ -6,11 +6,11 @@ import LandingContainer from "../../components/styles/LandingContainer";
 const AuthLayout = () => {
     return (
         <Box width="100%" height="100%">
-            <LandingContainer sx={{ my: 8 }}>
+            {/* <LandingContainer sx={{ my: 8 }}>
                 <Link to="/">
                     <Box component="img" src={LogoIconSvg} />
                 </Link>
-            </LandingContainer>
+            </LandingContainer> */}
             <Outlet />
         </Box>
     );

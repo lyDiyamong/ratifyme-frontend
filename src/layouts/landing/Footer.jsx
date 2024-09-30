@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 
 // Icons and Images import
-import VerifyMeLogo from "../../assets/images/VerifyME-Logo.svg";
+import RatifyMeLogo from "../../assets/icons/RatfiyME.svg";
 
 // Custom import
 import theme from "../../assets/themes";
@@ -66,8 +66,8 @@ const Footer = () => {
                                     sx={{
                                         width: 140,
                                     }}
-                                    alt="VerifyME Logo"
-                                    src={VerifyMeLogo}
+                                    alt="RatifyME Logo"
+                                    src={RatifyMeLogo}
                                 />
                             </Link>
 
@@ -80,7 +80,7 @@ const Footer = () => {
                                         marginBottom: "20px",
                                     }}
                                 >
-                                    {" VerifyME "}
+                                    {" RatifyME "}
                                 </Typography>{" "}
                                 by TechA is a digital credential network. We
                                 help the people speak a common language of
@@ -177,7 +177,7 @@ const Footer = () => {
                                         color: theme.palette.primary.main,
                                     }}
                                 >
-                                    {" VerifyME "}
+                                    {" RatifyME "}
                                 </Typography>{" "}
                                 revolution. Follow us on [Social media
                                 platforms] for updates and insights.
