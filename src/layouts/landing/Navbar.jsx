@@ -10,7 +10,7 @@ import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import theme from "../../assets/themes";
 
 //Images import
-import VerifyMeLogo from "../../assets/images/VerifyME-Logo.svg";
+import RatifyMeLogo from "../../assets/icons/RatfiyME.svg";
 import LandingContainer from "../../components/styles/LandingContainer";
 
 // ============ Start Navbar scroll function ============
@@ -97,7 +97,7 @@ const Navbar = () => {
                                         width: 120,
                                     }}
                                     alt="The house from the offer."
-                                    src={VerifyMeLogo}
+                                    src={RatifyMeLogo}
                                 />
                             </Link>
                         </Box>
