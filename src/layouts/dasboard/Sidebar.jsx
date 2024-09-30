@@ -26,7 +26,7 @@ import { useTheme } from "@emotion/react";
 
 // Custom import
 import FlexBetween from "../../components/styles/FlexBetween";
-import LogoIconSvg from "../../assets/icons/logo.svg";
+import LogoIconSvg from "../../assets/icons/RatfiyME.svg";
 import { sidebarItems } from "../../data/sidebarData";
 import { useSelector } from "react-redux";
 
@@ -119,7 +119,7 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
                         <FlexBetween>
                             {/* logo image  */}
                             <Box display="flex" alignItems="center" gap="0.5rem">
-                                <Box component="img" src={LogoIconSvg} alt="Brand Logo" />
+                                <Box component="img" src={LogoIconSvg} width={140} alt="Brand Logo" />
                             </Box>
 
                             {/* IconButton for open and close sidebar  */}
