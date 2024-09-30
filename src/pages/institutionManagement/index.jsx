@@ -1,5 +1,6 @@
 // React import
 import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
 
 // Custom import
 import AlertMessage from "../../components/alert/AlertMessage";
@@ -8,16 +9,23 @@ import PageTitle from "../../components/PageTitle";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import TableCustom from "../../components/TableCustom";
 import MenuSelection from "../../components/TableAction/MenuSelection";
+import FormatDate from "../../utils/formatDate";
 
 // Api import
 import { useGetInstitutionQuery } from "../../store/api/institutionManagement/institutionApi";
 
 const InstitutionManagement = () => {
-    const { data: response, isLoading, isError } = useGetInstitutionQuery();
-    const navigate = useNavigate();
+    // Fetching institutions hook
+    const { data: response, isLoading, isError, error } = useGetInstitutionQuery();
     const institutions = response?.data;
+    // Navigate hook
+    const navigate = useNavigate();
+
+    // Error state hook
+    const [errorMessage, setErrorMessage] = useState("");
     console.log(institutions);
 
+    // View institution profiles
     const handleView = (institutionId) => {
         navigate(`/management/institutions/${institutionId}`);
     };
@@ -34,14 +42,32 @@ const InstitutionManagement = () => {
             sortable: true,
         },
         {
+            name: "Code",
+            selector: (row) => row?.code || "N/A",
+            sortable: true,
+        },
+        {
+            name: "Register Date",
+            selector: (row) => FormatDate(row?.createdAt),
+            sortable: true,
+        },
+        {
             name: "Action",
             selector: ({ id }) => <MenuSelection onView={() => handleView(id)} />,
         },
     ];
+
+    // Error handling
+    useEffect(() => {
+        if (isError && error?.data?.message) {
+            setErrorMessage(error.data.message);
+        }
+    }, [isError, error]);
+    
     return (
         // ============ Start InstitutionManagement ============
         <DashboardContainer>
-            {isError && <AlertMessage variant="error">Error fetching data</AlertMessage>}
+            {isError && <AlertMessage variant="error">{errorMessage}</AlertMessage>}
             {/* Page title */}
             <PageTitle title="Institution Management" />
             {isLoading ? (

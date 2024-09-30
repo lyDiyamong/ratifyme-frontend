@@ -58,7 +58,7 @@ const ModalContainer = ({ open, onClose, title, options, control, onGetEmail }) 
                         <h4>Selected Emails:</h4>
                         <Box
                             sx={{
-                                maxHeight: "200px",
+                                height: "200px",
                                 overflowY: "auto",
                                 border: "1px solid #ccc",
                                 padding: "8px",

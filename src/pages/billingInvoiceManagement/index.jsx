@@ -1,5 +1,5 @@
 // React import
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 // Mui import
@@ -27,7 +27,7 @@ const BillingInvoiceManagement = () => {
     const navigate = useNavigate();
 
     // Api fetching hook
-    const { data: response, isLoading, isError } = useGetSubscritptionQuery();
+    const { data: response, isLoading, isError, error } = useGetSubscritptionQuery();
     const subscriptions = response?.data;
 
     // Handling view for another page
@@ -64,9 +64,11 @@ const BillingInvoiceManagement = () => {
     ];
 
     // Error handling
-    if (isError) {
-        setErrorMessage("There was an error fetching subscription data. Please try again later.");
-    }
+    useEffect(() => {
+        if (isError && error?.data?.message) {
+            setErrorMessage(error.data.message);
+        }
+    }, [isError, error]);
 
     return (
         // ============ Start BillingInvoiceManagement ============
