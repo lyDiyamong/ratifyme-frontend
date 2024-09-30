@@ -1,5 +1,4 @@
 // React import
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 // Mui import
