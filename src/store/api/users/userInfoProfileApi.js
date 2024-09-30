@@ -28,14 +28,14 @@ export const infoApi = createApi({
                 method: "PUT",
                 body: data,
             }),
-            // invalidatesTags: ["User"],
+            invalidatesTags: ["User"],
         }),
         deleteUserPf: builder.mutation({
             query: ({ id }) => ({
                 url: `/users/upload-profile-image/${id}`,
                 method: "DELETE",
             }),
-            // invalidatesTags: ["User"],
+            invalidatesTags: ["User"],
         }),
         updateUserProfile: builder.mutation({
             query: ({ id, data }) => ({
