@@ -11,6 +11,9 @@ import ProfileInfo from "./ProfileInfo";
 // Import the config function
 import { getProfileInfo } from "../../../data/setting/profileInfoData";
 import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
+import MaleUserDefault from "../../../assets/images/MaleUser.svg";
+import FemaleUserDefault from "../../../assets/images/FemaleUser.svg";
+
 import EditProfileModal from "./ModalEditProfile";
 import {
     useFetchInfoUserByIdQuery,
@@ -19,17 +22,17 @@ import {
 } from "../../../store/api/users/userInfoProfileApi";
 import BioContent from "./BioContent";
 import { useSelector } from "react-redux";
+import MoreMenu from "../../../components/MoreMenu";
 
 //============ Start User Profile Component ============
 const UserProfile = () => {
     // const { data: user } = useCheckAuthQuery();
-    const {userId} = useSelector((state) => state.global)
+    const { userId } = useSelector((state) => state.global);
 
     const [open, setOpen] = useState(false);
     const [updateImage, setUpdateImage] = useState(DefaultProfileSvg);
     const { data: info, isLoading, isError } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
     const userData = info?.data;
-    console.log('userData:', userData);
 
     const [updateImg] = useUploadUserPfMutation();
     const [deleteImg] = useDeleteUserPfMutation();
@@ -43,16 +46,16 @@ const UserProfile = () => {
     };
 
     // Inside the UserProfile component
-    const [anchorEl, setAnchorEl] = useState(null);
-    const isMenuOpen = Boolean(anchorEl);
+    // const [anchorEl, setAnchorEl] = useState(null);
+    // const isMenuOpen = Boolean(anchorEl);
 
-    const handleMoreClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
+    // const handleMoreClick = (event) => {
+    //     setAnchorEl(event.currentTarget);
+    // };
 
-    const handleCloseMoreMenu = () => {
-        setAnchorEl(null);
-    };
+    // const handleCloseMoreMenu = () => {
+    //     setAnchorEl(null);
+    // };
 
     const handleFileChange = async (event) => {
         const file = event.target.files[0];
@@ -84,9 +87,19 @@ const UserProfile = () => {
         if (userData?.profileImage) {
             setUpdateImage(userData?.profileImage);
         } else {
-            setUpdateImage(DefaultProfileSvg);
+            // Set based on gender if no profile image exists
+            if (userData?.Gender?.name === "male") {
+                setUpdateImage(MaleUserDefault);
+            } else if (userData?.Gender?.name === "female") {
+                setUpdateImage(FemaleUserDefault);
+            } else {
+                setUpdateImage(DefaultProfileSvg);
+            }
         }
-    }, [userData?.profileImage]);
+    }, [userData?.profileImage, userData?.Gender?.name]);
+
+    // More Menu props
+    const menuItems = [{ label: "Update Profile" }, { label: "Remove Profile", onClick: handleDeleteImage }];
 
     return (
         <Stack gap={3}>
@@ -118,7 +131,9 @@ const UserProfile = () => {
                     >
                         <Box
                             component="img"
-                            src={updateImage || DefaultProfileSvg}
+                            src={
+                                updateImage || (userData?.Gender?.name === "male" ? MaleUserDefault : FemaleUserDefault)
+                            }
                             alt="person"
                             sx={{
                                 width: "100%",
@@ -207,7 +222,8 @@ const UserProfile = () => {
                     </Stack>
                 </Stack>
 
-                <Stack flexDirection="row" gap={1}>
+                <Stack flexDirection="row" gap={1} alignItems="center" justifyContent="center">
+                    {/* Edit button */}
                     <Button
                         onClick={handleClickOpen}
                         onChange={handleFileChange}
@@ -226,46 +242,11 @@ const UserProfile = () => {
                     >
                         Edit Profile
                     </Button>
-                    <MoreHorizRounded
-                        sx={{
-                            bgcolor: theme.palette.grey[200],
-                            color: theme.palette.text.primary,
-                            borderRadius: theme.customShape.input,
-                            p: 1,
-                            fontSize: "36px",
-                            cursor: "pointer",
-                            transition: "background-color 0.3s ease",
-                            width: 40,
-                            "&:hover": {
-                                bgcolor: theme.palette.grey[300],
-                            },
-                        }}
-                        onClick={handleMoreClick}
-                    />
-                    <Menu
-                        anchorEl={anchorEl}
-                        open={isMenuOpen}
-                        onClose={handleCloseMoreMenu}
-                        anchorOrigin={{
-                            vertical: "bottom",
-                            horizontal: "left",
-                        }}
-                        transformOrigin={{
-                            vertical: "top",
-                            horizontal: "right",
-                        }}
-                        PaperProps={{
-                            sx: {
-                                mt: 1,
-                                boxShadow: theme.customShadows.default,
-                            },
-                        }}
-                    >
-                        <MenuItem>Update Profile</MenuItem>
-                        <MenuItem onClick={handleDeleteImage} onChange={handleClose}>
-                            Remove Profile
-                        </MenuItem>
-                    </Menu>
+
+                    {/* More Menu */}
+                    <MoreMenu menuItems={menuItems} />
+
+                    {/* Edit Modal popup */}
                     <EditProfileModal open={open} onClose={handleClose} userData={userData} />
                 </Stack>
             </Stack>
