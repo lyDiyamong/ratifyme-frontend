@@ -40,7 +40,20 @@ export const authApi = createApi({
                 body: data,
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                await handleAuthSuccess(dispatch, queryFulfilled);
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(
+                        setAuthState({
+                            userInfo: data.user.newUser,
+                            token: data.token,
+                            isAuthenticated: true,
+                        }),
+                    );
+                    // Fetch user info to ensure authentication is verified
+                    dispatch(authApi.endpoints.checkAuth.initiate());
+                } catch (err) {
+                    console.error("Authentication failed:", err);
+                }
             },
         }),
 
