@@ -18,6 +18,7 @@ const PriceCard = ({ item, button }) => {
                 borderRadius: theme.customShape.section,
                 px: 2,
                 boxShadow: theme.customShadows.default,
+                mx: 1
             }}
         >
             <Box>

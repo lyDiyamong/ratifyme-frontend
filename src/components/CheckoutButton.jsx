@@ -1,7 +1,7 @@
 // React import
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { useNavigate } from "react-router";
 
 // Mui import
@@ -12,7 +12,7 @@ import { SpinLoading } from "../components/loading/SpinLoading";
 import theme from "../assets/themes";
 
 // Api import
-import { useCheckAuthQuery } from "../store/api/auth/authApi";
+import { useSelector } from "react-redux";
 
 // Public key from Stripe
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
@@ -23,7 +23,7 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
  * @return {JSX.Element} : Checkout button for stripe only
  */
 const CheckoutButton = ({ id }) => {
-    const { data: user } = useCheckAuthQuery();
+    const { institutionData, userId } = useSelector((state) => state.global);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -33,12 +33,13 @@ const CheckoutButton = ({ id }) => {
 
         try {
             // Redirect to signup when there's no user
-            if (!user) return navigate("/signup");
+            if (!institutionData.id) return navigate("/signup?as=institution");
 
             // Create a Checkout Session
             const response = await axios.post(`${import.meta.env.VITE_SERVER_BASE_URL}/subscriptions/subscribe/${id}`, {
-                userId: user.user.id,
+                userId,
             });
+
             // Get the session id for checking out
             const { sessionId } = await response.data;
 
