@@ -11,7 +11,6 @@ import { verifyInvitationApi } from "./api/auth/verifyInvitationApi";
 import { infoApi } from "./api/users/userInfoProfileApi";
 import {institutionApi} from "./api/institutionManagement/institutionApi"
 
-import { institutionStatApi} from "./api/reports/institutionStatApis"
 import { setupListeners } from "@reduxjs/toolkit/query";
 import gloableReducer from "./slices/globalSlices";
 
