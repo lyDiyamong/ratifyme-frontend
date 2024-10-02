@@ -11,7 +11,7 @@ import DashboardContainer from "../../components/styles/DashboardContainer";
 import PageTitle from "../../components/PageTitle";
 import SkeletonLoading from "../../components/loading/SkeletonLoading";
 import AlertMessage from "../../components/alert/AlertMessage";
-import useError from "../../hooks/use-catchError";
+import useCatchStatus from "../../hooks/useCatchStatus";
 
 // Api import
 import { useGetSubscritptionQuery } from "../../store/api/subscription/subscriptionApi";
@@ -25,7 +25,7 @@ const BillingInvoiceManagement = () => {
     const subscriptions = response?.data;
 
     // Error custom hook
-    const errorHandling = useError(isError, error?.data?.message);
+    const errorHandling = useCatchStatus(isError, error?.data?.message);
 
     // Handling view for another page
     const handleView = (institutionId) => {

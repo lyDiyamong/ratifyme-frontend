@@ -9,7 +9,7 @@ import OrganizationCard from "../../components/OrganizationCard";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import AlertMessage from "../../components/alert/AlertMessage";
 import { SpinLoading } from "../../components/loading/SpinLoading";
-import useError from "../../hooks/use-catchError";
+import useCatchStatus from "../../hooks/useCatchStatus";
 
 // Api import
 import { useGetInstitutionByIdQuery } from "../../store/api/institutionManagement/institutionApi";
@@ -30,7 +30,9 @@ function InstitutionDetail() {
         isLoading: isInstitutionLoading,
         isError: isInstitutionError,
         error: institutionError,
+        isSuccess : institutionSuccess
     } = useGetInstitutionByIdQuery(institutionId);
+    const successHandling = useCatchStatus(institutionSuccess, institutionResponse?.message)
 
     const institution = institutionResponse?.data;
 
@@ -45,7 +47,7 @@ function InstitutionDetail() {
     const badges = badgesResponse?.data?.Issuers?.flatMap((badge) => badge?.BadgeClasses);
 
     // Dynamic error handler with custom hook
-    const errorHandling = useError(
+    const errorHandling = useCatchStatus(
         isInstitutionError || isBadgesError,
         institutionError?.data?.message || badgesError?.data?.message,
     );
@@ -59,6 +61,7 @@ function InstitutionDetail() {
         // ============ Start InstitutionDetail ============
         <DashboardContainer>
             {errorHandling && <AlertMessage variant="error">{errorHandling}</AlertMessage>}
+            {institutionSuccess && <AlertMessage variant="success">{successHandling}</AlertMessage>}
 
             {isInstitutionLoading ? (
                 <SpinLoading />
