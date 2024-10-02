@@ -10,7 +10,7 @@ import DashboardContainer from "../../components/styles/DashboardContainer";
 import TableCustom from "../../components/TableCustom";
 import MenuSelection from "../../components/TableAction/MenuSelection";
 import FormatDate from "../../utils/formatDate";
-import useError from "../../hooks/use-catchError";
+import useCatchStatus from "../../hooks/useCatchStatus";
 
 // Api import
 import { useGetInstitutionQuery } from "../../store/api/institutionManagement/institutionApi";
@@ -21,14 +21,14 @@ const InstitutionManagement = () => {
         data: institutionsResponse,
         isLoading: institutionsLoading,
         isError: institutionsIsError,
-        institutionsError,
+        error : institutionsError,
     } = useGetInstitutionQuery();
     const institutions = institutionsResponse?.data;
     // Navigate hook
     const navigate = useNavigate();
 
     // Error custom hook
-    const errorHandling = useError(institutionsIsError, institutionsError?.data?.message);
+    const errorHandling = useCatchStatus(institutionsIsError, institutionsError?.data?.message);
 
     // View institution profiles
     const handleView = (institutionId) => {
