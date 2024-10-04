@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import * as yup from "yup";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { Box, Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import FormInput from "../../components/FormInput";
@@ -12,6 +13,15 @@ import { Stack } from "@mui/system";
 import EmailOutlined from "@mui/icons-material/EmailOutlined";
 import OutletImageComponent from "./OutletImageTemplate";
 import TaskAltOutlined from "@mui/icons-material/TaskAltOutlined";
+
+const schema = yup.object({
+    email: yup.string().email("Invalid email").required("Email is required"),
+    verifyCode: yup
+        .string()
+        .matches(/^\d+$/, "Verification code must be numeric")
+        .length(6, "Verification code must be 6 digits")
+        .required("Verification code is required"),
+});
 
 const CodeInvitationPage = () => {
     const { search } = useLocation();
@@ -55,7 +65,7 @@ const CodeInvitationPage = () => {
 
     useEffect(() => {
         if (isError) {
-            setOpenErrorDialog(true); // Open the dialog when there's an error
+            setOpenErrorDialog(true);
         }
     }, [isError]);
 
@@ -112,6 +122,7 @@ const CodeInvitationPage = () => {
                             label={role === "issuer" ? "Institution Code" : "Issuer Code"}
                             type="text"
                             required={true}
+                            schema={schema.fields.verifyCode}
                         />
                         <FormInput
                             name="inviteEmail"
@@ -120,6 +131,7 @@ const CodeInvitationPage = () => {
                             control={control}
                             label="Email Address"
                             required={true}
+                            schema={schema.fields.email}
                         />
                         <Button
                             fullWidth
