@@ -21,7 +21,8 @@ import ArrowDownward from "@mui/icons-material/ArrowDownward";
 import MenuSelection from "./TableAction/MenuSelection";
 import theme from "../assets/themes/index";
 import AddIcon from "@mui/icons-material/Add";
-import { SearchOutlined } from "@mui/icons-material";
+import { FilterListOutlined, SearchOutlined } from "@mui/icons-material";
+import SwapVertIcon from "@mui/icons-material/SwapVert";
 
 // Custom styling for DataTable
 const customTableStyles = {
@@ -92,16 +93,36 @@ const TableCustom = ({
         >
             <Box
                 sx={{
-                    display: { xss: "none", sm: "block", md: "flex" },
+                    display: { sm: "block", md: "flex" },
                     justifyContent: "space-between",
                     alignItems: "center",
-                    mb: 2,
                 }}
             >
-                <Box>
-                    <Typography sx={{ fontSize: theme.typography.h3, fontWeight: theme.fontWeight.semiBold, mb: {sm: 2, md: 0}}}>
+                <Box sx={{ display: "flex", justifyContent: "space-between", alignContent: "center", mb: 3 }}>
+                    <Typography
+                        sx={{
+                            fontSize: theme.typography.h3,
+                            fontWeight: theme.fontWeight.semiBold,
+                        }}
+                    >
                         {title}
                     </Typography>
+
+                    {/* Add Button for responsive  */}
+                    <Button
+                        startIcon={<AddIcon />}
+                        variant="contained"
+                        onClick={onAddNew}
+                        sx={{
+                            display: { md: "none", sm: "flex" },
+                            color: theme.palette.customColors.white,
+                            fontWeight: theme.fontWeight.semiBold,
+                            borderRadius: theme.customShape.btn,
+                            textTransform: "none",
+                        }}
+                    >
+                        {addNewLabel}
+                    </Button>
                 </Box>
 
                 {/* Search, Filter, Sort Controls, and Add Button in one line */}
@@ -118,7 +139,6 @@ const TableCustom = ({
                         sx={{
                             display: "flex",
                             alignItems: "center",
-                            maxWidth: "400px",
                             width: "100%",
                         }}
                     >
@@ -128,7 +148,7 @@ const TableCustom = ({
                             placeholder="Search ..."
                             sx={{
                                 flexGrow: 1,
-                                minWidth: "250px",
+                                minWidth: { md: "250px", sm: "150px" },
                             }}
                             InputProps={{
                                 startAdornment: (
@@ -141,9 +161,20 @@ const TableCustom = ({
                     </Box>
 
                     {/* Filter By */}
-                    <FormControl sx={{ minWidth: 100 }} size="small">
-                        <InputLabel sx={{fontSize: '14px'}}>Filter by</InputLabel>
-                        <Select label="Filter by" onChange={(e) => onFilterChange(e.target.value)}>
+                    <FormControl sx={{ minWidth: { md: 100, sm: 80, xs: 60, xss: 40 } }} size="small">
+                        <InputLabel>
+                            {" "}
+                            <IconButton sx={{ display: { md: "none", sm: "flex" } }}>
+                                <FilterListOutlined sx={{fontSize: '24px'}} />
+                            </IconButton>
+                            <Typography
+                                sx={{ fontSize: "14px", display: { md: "flex", sm: "none", xs: "none", xss: "none" } }}
+                            >
+                                Filter by
+                            </Typography>
+                        </InputLabel>
+
+                        <Select label="Filter by" onChange={(e) => onFilterChange(e.target.value)} >
                             <MenuItem value="All">All</MenuItem>
                             <MenuItem value="Category1">Category 1</MenuItem>
                             <MenuItem value="Category2">Category 2</MenuItem>
@@ -151,8 +182,18 @@ const TableCustom = ({
                     </FormControl>
 
                     {/* Sort By */}
-                    <FormControl sx={{ minWidth: 100 }} size="small">
-                        <InputLabel sx={{fontSize: '14px'}}>Sort by</InputLabel>
+                    <FormControl sx={{ minWidth: { md: 100, sm: 80, xs: 60, xss: 40 } }} size="small">
+                        <InputLabel>
+                            {" "}
+                            <IconButton sx={{ display: { md: "none", sm: "flex" } }}>
+                                <SwapVertIcon sx={{fontSize: '24px'}}/>
+                            </IconButton>
+                            <Typography
+                                sx={{ fontSize: "14px", display: { md: "flex", sm: "none", xs: "none", xss: "none" } }}
+                            >
+                                Sort by
+                            </Typography>
+                        </InputLabel>
                         <Select label="Sort by" onChange={(e) => onSortChange(e.target.value)}>
                             <MenuItem value="Name">Name</MenuItem>
                             <MenuItem value="Year">Year</MenuItem>
@@ -166,11 +207,12 @@ const TableCustom = ({
                         variant="contained"
                         onClick={onAddNew}
                         sx={{
+                            display: { md: "flex", sm: "none", xs: "none", xss: "none" },
                             color: theme.palette.customColors.white,
                             fontWeight: theme.fontWeight.semiBold,
                             borderRadius: theme.customShape.btn,
                             textTransform: "none",
-                            width: '100%'
+                            width: "100%",
                         }}
                     >
                         {addNewLabel}
