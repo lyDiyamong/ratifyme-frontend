@@ -1,5 +1,5 @@
 // React Library
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // MUI Import
 import { Box, Typography, CircularProgress } from "@mui/material";
@@ -14,12 +14,35 @@ import NoRecordData from "../../components/NoRecordData";
 // Fetching Data Import
 import { useFetchEarnerQuery, useDeleteEarnerByIdMutation } from "../../store/api/earnerManagement/earnerApis";
 import { useSelector } from "react-redux";
+import InviteUserModal from "../../components/modals/InviteUserModal";
+import { useInviteEarnerMutation, useFetchAllInvitedUserQuery } from "../../store/api/userManagement/inviteUserApi";
 
 // ============ Start Table Earner Modal ============
-const TableEarner = ({searchQuery}) => {
+const TableEarner = ({ searchQuery }) => {
+    // State for controlling dialog
+    const [dialogOpen, setDialogOpen] = useState(false);
+
     const { data: response, isLoading, isError } = useFetchEarnerQuery();
-    const { roleId, userId } = useSelector((state) => state.global);
+    const { roleId, userId, issuerData } = useSelector((state) => state.global);
     const [deleteEarner] = useDeleteEarnerByIdMutation();
+    const issuerId = issuerData?.id;
+    const { data: invitedUserData } = useFetchAllInvitedUserQuery();
+    const [inviteEarner] = useInviteEarnerMutation();
+
+    // Local State for invited users
+    const [invitedEarners, setInvitedEarners] = useState([]);
+
+    // Load and filter invited users on mount
+    useEffect(() => {
+        if (invitedUserData && issuerData?.code) {
+            const filteredIssuers =
+                invitedUserData.data?.filter((user) => user.roleId === 4 && user.inviterCode === issuerData.code) || [];
+
+            const sortedIssuers = filteredIssuers.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+            setInvitedEarners(sortedIssuers);
+        }
+    }, [invitedUserData, issuerData]);
 
     // State for handling modal
     const [selectedUserId, setSelectedUserId] = useState(null);
@@ -68,6 +91,38 @@ const TableEarner = ({searchQuery}) => {
         }
     };
 
+    const handleInviteEarner = () => {
+        setDialogOpen(true);
+    };
+
+    const handleCloseDialog = () => {
+        setDialogOpen(false);
+    };
+
+    const handleInviteSubmit = async (data, reset) => {
+        try {
+            // Send invitation via API
+            const newEarner = await inviteEarner({ issuerId, email: data.email }).unwrap();
+
+            // Update local state with the new invited issuer
+            setInvitedEarners((prev) =>
+                [
+                    {
+                        inviteEmail: newEarner.inviteEmail || data.email,
+                        status: false,
+                        createdAt: new Date().toISOString(),
+                    },
+                    ...prev,
+                ].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+            );
+
+            reset();
+            setDialogOpen(false); // Close the dialog on success
+        } catch (error) {
+            console.error("Error sending invitation", error);
+        }
+    };
+
     // Define the columns including the action column
     const earnerColumns = [
         {
@@ -110,7 +165,6 @@ const TableEarner = ({searchQuery}) => {
 
     return (
         <Box>
-
             {/* Modal for Viewing Profile */}
             <ProfileEarnerModal open={openModal} onClose={handleCloseModal} userId={selectedUserId} />
 
@@ -119,12 +173,26 @@ const TableEarner = ({searchQuery}) => {
                 <CircularProgress />
             ) : isError ? (
                 <Typography color="error">Error fetching data</Typography>
-            ) : searchedEarnerData && searchedEarnerData.length > 0 ? (
-                <TableCustom title="Earner List" data={searchedEarnerData} columns={earnerColumns} />
             ) : (
-                // Display this section if no earners match the search query
-                <NoRecordData />
+                <TableCustom
+                    title="Earner List"
+                    data={searchedEarnerData}
+                    columns={earnerColumns}
+                    onAddNew={handleInviteEarner}
+                    addNewLabel="Invite Earner"
+                >
+                    {/* Display NoRecordData inside the table when no earners match the search query */}
+                    {searchedEarnerData?.length === 0 && <NoRecordData />}
+                </TableCustom>
             )}
+
+            {/* Invite Earner Modal */}
+            <InviteUserModal
+                open={dialogOpen}
+                handleClose={handleCloseDialog}
+                onSubmit={handleInviteSubmit}
+                invitedUsers={invitedEarners}
+            />
         </Box>
     );
 };
