@@ -32,7 +32,7 @@ const theme = createTheme({
             orange100: "#FFF6EA", // SP-Orange-100
             orange200: "#ffe4bd", // SP-Orange-100
             orange300: "#ffa929", // SP-Orange-200
-            orange400: "#C67700", // SP-Orange-200
+            orange400: "#FF9901", // SP-Orange-200
             purple100: "#E2E2E2", // SP-Purple-100
             purple200: "#944cff", // SP-Purple-200
             green100: "#F4F7ED", // SP-Green-500

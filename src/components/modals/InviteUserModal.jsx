@@ -23,7 +23,6 @@ import { Close, CheckCircle, ErrorOutline, DeleteOutline, RestartAltOutlined } f
 import theme from "../../assets/themes";
 import FormInput from "../../components/FormInput";
 import FormatDate from "../../utils/formatDate";
-import DeleteIcon from "@mui/icons-material/Delete";
 
 const statusChipColor = (status) => {
     if (status === true) {
@@ -37,7 +36,7 @@ const statusChipColor = (status) => {
 
     return {
         label: "Pending", // Label for pending status
-        color: theme.palette.customColors.orange300, // Custom background color
+        color: theme.palette.customColors.orange400, // Custom background color
         backgroundColor: theme.palette.customColors.orange100,
         icon: <ErrorOutline fontSize="small" color={theme.palette.customColors.orange200} />,
     };
@@ -119,7 +118,7 @@ const InviteUserModal = ({ open, handleClose, onSubmit, invitedUsers }) => {
                                 </ListItemAvatar>
                                 <Box sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
                                     <ListItemText primary={email || "Unknown User"} />
-                                    <Stack direction="row">
+                                    <Box sx={{ display: { md: "flex" } }}>
                                         <Typography variant="body2" color="textSecondary">
                                             {status === true
                                                 ? `Accepted: ${FormatDate(issuer.updatedAt)}`
@@ -130,22 +129,24 @@ const InviteUserModal = ({ open, handleClose, onSubmit, invitedUsers }) => {
                                             icon={icon}
                                             size="small"
                                             sx={{
-                                                ml: 2,
+                                                ml: { md: 2 },
                                                 backgroundColor: backgroundColor,
                                                 color: color,
                                                 borderRadius: theme.customShape.section,
                                             }}
                                         />
-                                    </Stack>
+                                    </Box>
                                 </Box>
                                 <Tooltip title="Resend Invitation">
                                     <IconButton aria-label="resend invitation">
-                                        <RestartAltOutlined />
+                                        <RestartAltOutlined
+                                            sx={{ fontSize: { sm: "18px", xs: "16px", xss: "14px" } }}
+                                        />
                                     </IconButton>
                                 </Tooltip>
                                 <Tooltip title="Delete">
                                     <IconButton aria-label="delete">
-                                        <DeleteOutline />
+                                        <DeleteOutline sx={{ fontSize: { sm: "18px", xs: "16px", xss: "14px" } }} />
                                     </IconButton>
                                 </Tooltip>
                             </ListItem>
