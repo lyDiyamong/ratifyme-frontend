@@ -6,16 +6,20 @@ import DashboardContainer from "../../components/styles/DashboardContainer";
 
 // Custom Import
 import TableEarner from "./TableEarner";
-import SearchBar from "../../components/SearchBars/SearchBar";
-import VerificationCheckUp from "./verificationCheckUp";
+// import SearchBar from "../../components/SearchBars/SearchBar";
+import PageTitle from "../../components/PageTitle";
 
 // ============ Start EarnerManagement ============
 const EarnerManagement = () => {
     const [searchQuery, setSearchQuery] = useState("");
     return (
         <DashboardContainer>
-            <SearchBar onSearch={setSearchQuery} />
-            <VerificationCheckUp  />
+            {/* <SearchBarIssuer onSearch={setSearchQuery} /> */}
+            {/* <SearchBar onSearch={setSearchQuery} /> */}
+            <PageTitle
+                title="Earner Managements"
+                subtitle="Manage earner accounts, invite new earners, and track their statuses all in one place."
+            />
             <TableEarner searchQuery={searchQuery} />
         </DashboardContainer>
     );
