@@ -19,9 +19,13 @@ import { Stack } from "@mui/system";
 import LockOpenOutlined from "@mui/icons-material/LockOpenOutlined";
 import EmailOutlined from "@mui/icons-material/EmailOutlined";
 import OutletImageComponent from "./OutletImageTemplate";
+import useCatchStatus from "../../hooks/useCatchStatus";
+import AlertMessage from "../../components/alert/AlertMessage";
 
 const LoginPage = () => {
-    const [signIn, { isLoading, isError, error }] = useSignInMutation();
+    const [signIn, { isLoading, isError, error, isSuccess, data }] = useSignInMutation();
+
+    const message = useCatchStatus(isError || isSuccess, isError ? error?.data?.message : data?.message);
 
     const navigate = useNavigate();
     // Form controller
@@ -38,12 +42,12 @@ const LoginPage = () => {
     const onSubmit = async (data) => {
         try {
             setLoading(true);
-            const result = await signIn(data).unwrap();
-
+            await signIn(data).unwrap();
             navigate("/dashboard");
             reset();
-        } catch (error) {
-            console.error("Error during sign in:", error.message || error);
+        } catch (err) {
+            // Handle exception if necessary, though RTK Query already manages error state
+            console.log(err?.data?.message);
         } finally {
             setLoading(false);
         }
@@ -51,7 +55,8 @@ const LoginPage = () => {
 
     return (
         // ============ Start login container ============
-        <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ height: "100vh", display: "flex" }}>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ height: "100vh", display: "flex" }} noValidate>
+            {message && <AlertMessage variant="error">{message}</AlertMessage>}
             {/* Right side with login form */}
             <Box
                 flexGrow={0}
