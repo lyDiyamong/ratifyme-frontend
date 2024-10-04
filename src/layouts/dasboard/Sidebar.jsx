@@ -29,6 +29,7 @@ import FlexBetween from "../../components/styles/FlexBetween";
 import LogoIconSvg from "../../assets/icons/RatfiyME.svg";
 import { sidebarItems } from "../../data/sidebarData";
 import { useSelector } from "react-redux";
+import { useLogoutMutation } from "../../store/api/auth/authApi";
 
 // Icon Style Constant
 const iconStyles = { width: "20px", height: "20px" };
@@ -47,6 +48,8 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
     const { pathname } = useLocation();
     const navigate = useNavigate();
     const theme = useTheme();
+
+    const [logout] = useLogoutMutation();
 
     const [active, setActive] = useState("");
     const { roleId } = useSelector((state) => state.global);
@@ -71,12 +74,19 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
     );
 
     const handleNavigation = useCallback(
-        (path) => {
-            setActive(path.substring(1));
-            navigate(path);
+        async (path) => {
+            if (path === "/logout") {
+                // Call logout API or handle logout logic
+                await logout().unwrap();
+                // Navigate to login page or clear session
+                navigate("/login");
+            } else {
+                setActive(path.substring(1));
+                navigate(path);
+            }
             if (!isDesktop) setIsSidebarOpen(false);
         },
-        [navigate],
+        [navigate, logout, setIsSidebarOpen, isDesktop],
     );
 
     // Determine the Drawer variant based on isDesktop and isSidebarOpen
