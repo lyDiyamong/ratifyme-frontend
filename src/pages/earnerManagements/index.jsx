@@ -8,7 +8,7 @@ import DashboardContainer from "../../components/styles/DashboardContainer";
 import TableEarner from "./TableEarner";
 // import SearchBar from "../../components/SearchBars/SearchBar";
 import PageTitle from "../../components/PageTitle";
-import VerificationsCheckUp from "./VerificationsCheckUp";
+import VerificationsCheckUp from "./Verifications";
 
 // ============ Start EarnerManagement ============
 const EarnerManagement = () => {
