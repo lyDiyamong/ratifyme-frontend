@@ -13,9 +13,6 @@ const NoRecordData = () => {
                 alt="No earners found"
                 sx={{ maxWidth: 400, width: "100%" }}
             />
-            <Typography variant="h6" mt={2} textAlign="center" color="text.secondary">
-                No earners found. Try adjusting your search criteria.
-            </Typography>
         </Box>
     );
 };
