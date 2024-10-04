@@ -1,127 +1,164 @@
+// React Library import
+import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+
 // MUI Import
 import { Box, Typography, CircularProgress } from "@mui/material";
 
 // Custom Import
 import TableCustom from "../../components/TableCustom";
 import NoRecordData from "../../components/NoRecordData";
-
-// Fetching Data Import
+import InviteUserModal from "../../components/modals/InviteUserModal";
 import { useFetchInstitutionStatsQuery } from "../../store/api/reports/institutionStatApis";
-import { useSelector } from "react-redux";
+import { useInviteIssuerMutation, useFetchAllInvitedUserQuery } from "../../store/api/userManagement/inviteUserApi";
 
-// =========== Start Table Issuer ===========
 const TableIssuer = ({ searchQuery }) => {
-    const { userId, roleId } = useSelector((state) => state.global);
+    // State for controlling dialog
+    const [dialogOpen, setDialogOpen] = useState(false);
+
+    // Global state for user info and institution info
+    const { userId, roleId, institutionData } = useSelector((state) => state.global);
+    const institutionId = institutionData?.id;
+
+    // API Queries
     const { data: response, isLoading, isError } = useFetchInstitutionStatsQuery();
+    const { data: invitedUserData } = useFetchAllInvitedUserQuery();
+    const [inviteIssuer] = useInviteIssuerMutation();
 
-    const issuerData = response?.data;
+    // Local State for invited users
+    const [invitedIssuers, setInvitedIssuers] = useState([]);
 
-    // Filter Issuer Data
-    let filteredIssuerData;
+    // Load and filter invited users on mount
+    useEffect(() => {
+        if (invitedUserData && institutionData?.code) {
+            const filteredIssuers =
+                invitedUserData.data?.filter(
+                    (user) => user.roleId === 3 && user.inviterCode === institutionData.code,
+                ) || [];
 
-    if (roleId === 1) {
-        filteredIssuerData = issuerData;
-    } else if (roleId === 2) {
-        filteredIssuerData = issuerData?.filter((issuer) => issuer.userId === userId);
-    }
+            const sortedIssuers = filteredIssuers.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-    // Flatten the data so that each issuer appears in its own row
-    const flattenedData = filteredIssuerData?.flatMap((institution) =>
-        institution.Issuers.map((issuer) => ({
-            institutionName: institution.institutionName,
-            issuerId: issuer.id,
-            issuerName: `${issuer.User.firstName} ${issuer.User.lastName}`,
-            issuerEmail: issuer.User.email,
-            totalBadges: issuer.BadgeClasses?.length || 0,
-            totalEarners: issuer.Earners?.length || 0,
-        }))
-    );
+            setInvitedIssuers(sortedIssuers);
+        }
+    }, [invitedUserData, institutionData]);
 
-    // Filter based on search query for both organization name and issuer name
-    const filteredData =
-        flattenedData?.filter((issuer) => {
-            const organizationMatch = issuer.institutionName?.toLowerCase().includes(searchQuery.toLowerCase());
-            const issuerMatch = issuer.issuerName?.toLowerCase().includes(searchQuery.toLowerCase());
-            return organizationMatch || issuerMatch;
-        }) || [];
+    // Filter Issuer Data based on role
+    const filterIssuerData = (issuerData) => {
+        if (roleId === 1) return issuerData; // Admin can view all
+        return issuerData?.filter((issuer) => issuer.userId === userId); // Other roles view own data
+    };
 
-    // Issuer Columns
-    const issuerColumns =
-        roleId === 1
-            ? [
-                  {
-                      name: "Organization Name",
-                      selector: (row) => row.institutionName || "N/A",
-                      sortable: true,
-                  },
-                  {
-                      name: "Issuer ID",
-                      selector: (row) => row.issuerId || "N/A",
-                      sortable: true,
-                  },
-                  {
-                      name: "Issuer Name",
-                      selector: (row) => row.issuerName || "N/A",
-                      sortable: true,
-                  },
-                  {
-                      name: "Issuer Email",
-                      selector: (row) => row.issuerEmail || "N/A",
-                      sortable: true,
-                  },
-                  {
-                      name: "Total Badge",
-                      selector: (row) => row.totalBadges,
-                      sortable: true,
-                  },
-                  {
-                      name: "Total Earner",
-                      selector: (row) => row.totalEarners,
-                      sortable: true,
-                  },
-              ]
-            : [
-                  {
-                      name: "Issuer ID",
-                      selector: (row) => row.issuerId || "N/A",
-                      sortable: true,
-                  },
-                  {
-                      name: "Issuer Name",
-                      selector: (row) => row.issuerName || "N/A",
-                      sortable: true,
-                  },
-                  {
-                      name: "Issuer Email",
-                      selector: (row) => row.issuerEmail || "N/A",
-                      sortable: true,
-                  },
-                  {
-                      name: "Total Badge",
-                      selector: (row) => row.totalBadges,
-                      sortable: true,
-                  },
-                  {
-                      name: "Total Earner",
-                      selector: (row) => row.totalEarners,
-                      sortable: true,
-                  },
-              ];
+    // Flatten data to render issuers
+    const flattenData = (filteredIssuerData) => {
+        return filteredIssuerData?.flatMap((institution) =>
+            institution.Issuers.map((issuer) => ({
+                institutionName: institution.institutionName,
+                issuerId: issuer.id,
+                issuerName: `${issuer.User.firstName} ${issuer.User.lastName}`,
+                issuerEmail: issuer.User.email,
+                totalBadges: issuer.BadgeClasses?.length || 0,
+                totalEarners: issuer.Earners?.length || 0,
+            })),
+        );
+    };
 
+    const handleInviteIssuer = () => {
+        setDialogOpen(true);
+    };
+
+    const handleCloseDialog = () => {
+        setDialogOpen(false);
+    };
+
+    const handleInviteSubmit = async (data, reset) => {
+        try {
+            // Send invitation via API
+            const newIssuer = await inviteIssuer({ institutionId, email: data.email }).unwrap();
+
+            // Update local state with the new invited issuer
+            setInvitedIssuers((prev) =>
+                [
+                    {
+                        inviteEmail: newIssuer.inviteEmail || data.email,
+                        status: false,
+                        createdAt: new Date().toISOString(),
+                    },
+                    ...prev,
+                ].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+            );
+
+            reset();
+            setDialogOpen(false); // Close the dialog on success
+        } catch (error) {
+            console.error("Error sending invitation", error);
+        }
+    };
+
+    // Filter based on search query for organization and issuer name
+    const searchFilteredData = (flattenedData) => {
+        return (
+            flattenedData?.filter((issuer) => {
+                const organizationMatch = issuer.institutionName?.toLowerCase().includes(searchQuery.toLowerCase());
+                const issuerMatch = issuer.issuerName?.toLowerCase().includes(searchQuery.toLowerCase());
+                return organizationMatch || issuerMatch;
+            }) || []
+        );
+    };
+
+    // Issuer Columns based on role
+    const getIssuerColumns = () => {
+        const commonColumns = [
+            { name: "Issuer ID", selector: (row) => row.issuerId || "N/A", sortable: true },
+            { name: "Issuer Name", selector: (row) => row.issuerName || "N/A", sortable: true },
+            { name: "Issuer Email", selector: (row) => row.issuerEmail || "N/A", sortable: true },
+            { name: "Total Badge", selector: (row) => row.totalBadges, sortable: true },
+            { name: "Total Earner", selector: (row) => row.totalEarners, sortable: true },
+        ];
+
+        // Admin has additional organization name column
+        if (roleId === 1) {
+            return [
+                { name: "Organization Name", selector: (row) => row.institutionName || "N/A", sortable: true },
+                ...commonColumns,
+            ];
+        }
+        return commonColumns;
+    };
+
+    // Flatten and filter data
+    const filteredIssuerData = filterIssuerData(response?.data);
+    const flattenedData = flattenData(filteredIssuerData);
+    const filteredData = searchFilteredData(flattenedData);
+
+    // Render Component
     return (
         <Box>
             {isLoading ? (
                 <CircularProgress />
             ) : isError ? (
                 <Typography color="error">Error fetching data</Typography>
-            ) : filteredData.length > 0 ? (
-                <TableCustom title="Issuer List" data={filteredData} columns={issuerColumns} />
             ) : (
-                <NoRecordData />
+                <TableCustom
+                    title="Issuer List"
+                    data={filteredData}
+                    columns={getIssuerColumns()}
+                    onAddNew={handleInviteIssuer}
+                    addNewLabel="Invite Issuer"
+                >
+                    {/* Show NoRecordData inside the table when there's no data */}
+                    {filteredData.length === 0 && <NoRecordData />}
+                </TableCustom>
             )}
+
+            {/* Invite Issuer Modal */}
+            <InviteUserModal
+                open={dialogOpen}
+                handleClose={handleCloseDialog}
+                onSubmit={handleInviteSubmit}
+                invitedUsers={invitedIssuers}
+            />
         </Box>
     );
 };
 
 export default TableIssuer;
-// =========== End Table Issuer ===========
