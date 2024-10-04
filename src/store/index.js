@@ -9,6 +9,7 @@ import { achievementApi } from "./api/achievements/achievementApi";
 import { institutionStatApi } from "./api/reports/institutionStatApis";
 import { verifyInvitationApi } from "./api/userManagement/verifyInvitationApi";
 import { infoApi } from "./api/users/userInfoProfileApi";
+import { verificationApi } from "./api/earnerManagement/verificationApi";
 import { institutionApi } from "./api/institutionManagement/institutionApi";
 import { inviteUserApi } from "./api/userManagement/inviteUserApi";
 
@@ -31,6 +32,9 @@ const store = configureStore({
         [institutionStatApi.reducerPath]: institutionStatApi.reducer,
         [institutionApi.reducerPath]: institutionApi.reducer,
         [inviteUserApi.reducerPath]: inviteUserApi.reducer,
+
+        [inviteUserApi.reducerPath]: inviteUserApi.reducer,
+        [verificationApi.reducerPath] : verificationApi.reducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
@@ -47,6 +51,7 @@ const store = configureStore({
             institutionStatApi.middleware,
             institutionApi.middleware,
             inviteUserApi.middleware,
+            verificationApi.middleware,
         ),
 });
 setupListeners(store.dispatch);
