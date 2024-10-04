@@ -32,7 +32,7 @@ const genderOptions = [
 // Address fields extracted for reuse
 const AddressFields = ({ control }) => (
     <>
-        <Grid item xs={12} sm={6}>
+        <Grid item xss={12} sm={12}>
             <Controller
                 name="country"
                 control={control}
@@ -68,7 +68,7 @@ const AddressFields = ({ control }) => (
                 )}
             />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xss={12} sm={12}>
             <FormInput
                 name="city"
                 label="City / State"
@@ -77,7 +77,7 @@ const AddressFields = ({ control }) => (
                 rules={{ required: "City is required" }}
             />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xss={12} sm={12}>
             <FormInput
                 name="street"
                 label="Street Address"
@@ -86,7 +86,7 @@ const AddressFields = ({ control }) => (
                 rules={{ required: "Street Address is required" }}
             />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xss={12} sm={12}>
             <FormInput
                 name="postalCode"
                 label="Postal Code"
@@ -253,9 +253,8 @@ const SignupPage = () => {
         }
 
         try {
-            const result = await signUp(reqData).unwrap();
-            console.log(result);
-            navigate("/dashboard");
+            await signUp(reqData).unwrap();
+            navigate(role === "institution" ? "/price" : "/dashboard");
         } catch (err) {
             console.error("Error during signup:", err);
         }
@@ -346,16 +345,16 @@ const SignupPage = () => {
                 return (
                     <Box>
                         <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xss={12} sm={12}>
                                 <FormInput name="firstName" label="First Name" control={control} required />
                             </Grid>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xss={12} sm={12}>
                                 <FormInput name="lastName" label="Last Name" control={control} required />
                             </Grid>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xss={12} sm={12}>
                                 <SelectForm name="genderId" label="Gender" options={genderOptions} control={control} />
                             </Grid>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xss={12} sm={12}>
                                 <DateSelectionForm control={control} name="dateOfBirth" label="Date of Birth" />
                             </Grid>
                         </Grid>
@@ -365,6 +364,7 @@ const SignupPage = () => {
                 return (
                     <Box>
                         <Grid container spacing={2}>
+                            {/* <Typography>Address Information</Typography> */}
                             <AddressFields control={control} />
                         </Grid>
                     </Box>
@@ -373,13 +373,14 @@ const SignupPage = () => {
                 return (
                     <Box>
                         <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
+                            {/* <Typography>Account Setup</Typography> */}
+                            <Grid item xss={12} sm={12}>
                                 <FormInput name="username" label="Username" control={control} required />
                             </Grid>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xss={12} sm={12}>
                                 <FormInput name="phoneNumber" label="Phone Number" control={control} required />
                             </Grid>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xss={12} sm={12}>
                                 <FormInput
                                     name="email"
                                     label="Email"
@@ -389,7 +390,7 @@ const SignupPage = () => {
                                     defaultValue={guest?.inviteEmail || ""}
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xss={12} sm={12}>
                                 <FormInput
                                     name="password"
                                     label="Password"
@@ -398,7 +399,7 @@ const SignupPage = () => {
                                     type="password"
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xss={12} sm={12}>
                                 <FormInput
                                     name="passwordConfirm"
                                     label="Confirm Password"
@@ -414,13 +415,14 @@ const SignupPage = () => {
                 return role === "institution" ? (
                     <Box>
                         <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
+                            {/* <Typography>Institution Information</Typography> */}
+                            <Grid item xss={12} sm={12}>
                                 <FormInput name="institutionName" label="Name" control={control} required />
                             </Grid>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xss={12} sm={12}>
                                 <FormInput name="institutionEmail" label="Email Address" control={control} required />
                             </Grid>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xss={12} sm={12}>
                                 <FormInput
                                     name="institutionPhoneNumber"
                                     label="Phone Number"
@@ -428,8 +430,8 @@ const SignupPage = () => {
                                     required
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <FormInput name="institutionWebsiteUrl" label="Website" control={control} required />
+                            <Grid item xss={12} sm={12}>
+                                <FormInput name="institutionWebsiteUrl" label="Website" control={control} />
                             </Grid>
                         </Grid>
                     </Box>
@@ -443,7 +445,7 @@ const SignupPage = () => {
     return (
         <LandingContainer sx={{ my: 6 }}>
             <Grid container spacing={4}>
-                <Grid item xs={12} md={role === "institution" ? 12 : 6}>
+                <Grid item xss={12} md={role === "institution" ? 12 : 6}>
                     <Typography
                         variant="h4"
                         mb={4}
@@ -500,7 +502,7 @@ const SignupPage = () => {
                                     {isLoading
                                         ? "Processing..."
                                         : activeStep === (steps[role]?.length - 1 || 2)
-                                        ? "Finish"
+                                        ? "Create Account"
                                         : "Next"}
                                 </Button>
                             </Stack>
@@ -513,7 +515,7 @@ const SignupPage = () => {
                     )}
                 </Grid>
                 {role !== "institution" && (
-                    <Grid item xs={12} md={6}>
+                    <Grid item xss={12} md={6}>
                         <Box component="img" src={SignupImgSvg} alt="Signup Illustration" sx={{ width: "100%" }} />
                     </Grid>
                 )}

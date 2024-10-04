@@ -1,12 +1,17 @@
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Box, Grid, Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+import { useLocation, useNavigate, Link } from "react-router-dom";
+import { Box, Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import FormInput from "../../components/FormInput";
 import theme from "../../assets/themes";
-import LandingContainer from "../../components/styles/LandingContainer";
-import LoginImgSvg from "../../assets/images/Login-illu.svg";
 import { useEffect, useState } from "react";
-import { useVerifyInvitationMutation } from "../../store/api/auth/verifyInvitationApi";
+import { useVerifyInvitationMutation } from "../../store/api/userManagement/verifyInvitationApi";
+
+// Custom import
+import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
+import { Stack } from "@mui/system";
+import EmailOutlined from "@mui/icons-material/EmailOutlined";
+import OutletImageComponent from "./OutletImageTemplate";
+import TaskAltOutlined from "@mui/icons-material/TaskAltOutlined";
 
 const CodeInvitationPage = () => {
     const { search } = useLocation();
@@ -14,6 +19,8 @@ const CodeInvitationPage = () => {
     const navigate = useNavigate();
     const [verifyInvitation, { isLoading, isError, error }] = useVerifyInvitationMutation();
     const [openErrorDialog, setOpenErrorDialog] = useState(false);
+
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const queryRole = new URLSearchParams(search).get("as") || "";
@@ -57,22 +64,36 @@ const CodeInvitationPage = () => {
     };
 
     return (
-        <LandingContainer sx={{ my: 6 }}>
-            <Grid container spacing={4}>
-                <Grid item xs={12} md={4} order={{ xs: 2, md: 1 }}>
-                    <Box mb={5}>
-                        <Typography
-                            component="h4"
-                            sx={{
-                                fontSize: theme.typography.h2,
-                                fontWeight: theme.fontWeight.bold,
-                                lineHeight: 2,
-                            }}
-                        >
-                            Verify the invitation
+        <Box sx={{ height: "100vh", display: "flex" }}>
+            {/* Right side with login form */}
+            <Box
+                flexGrow={0}
+                display="flex"
+                justifyContent="center"
+                sx={{
+                    borderRadius: theme.customShape.section,
+                    width: { md: "50%", xss: "100%" },
+                    mx: "auto",
+                    px: 4,
+                    backgroundColor: "transparent",
+                }}
+            >
+                <Stack width="100%" maxWidth="450px" gap={2}>
+                    <Link to="/">
+                        <Box
+                            component="img"
+                            src={RatifyMELogo}
+                            alt="Ratifyme Favicon"
+                            sx={{ width: 150, height: 150 }}
+                        />
+                    </Link>
+
+                    <Box my={3}>
+                        <Typography variant="h3" fontWeight={theme.fontWeight.semiBold} mb={1}>
+                            Welcome to RatifyME! 👋
                         </Typography>
-                        <Typography sx={{ color: theme.palette.text.secondary }}>
-                            Log in to your account to manage your company!
+                        <Typography variant="body2" color="text.secondary" mb={3}>
+                            Please verify your code through email.
                         </Typography>
                     </Box>
 
@@ -87,6 +108,7 @@ const CodeInvitationPage = () => {
                         <FormInput
                             name="inviterCode"
                             control={control}
+                            startIcon={<TaskAltOutlined />}
                             label={role === "issuer" ? "Institution Code" : "Issuer Code"}
                             type="text"
                             required={true}
@@ -94,6 +116,7 @@ const CodeInvitationPage = () => {
                         <FormInput
                             name="inviteEmail"
                             type="email"
+                            startIcon={<EmailOutlined />}
                             control={control}
                             label="Email Address"
                             required={true}
@@ -111,39 +134,39 @@ const CodeInvitationPage = () => {
                         >
                             {isLoading ? "Verifying..." : "Verify"}
                         </Button>
+                        <Dialog open={openErrorDialog} onClose={handleCloseErrorDialog} maxWidth="lg">
+                            <DialogTitle>Verification Failed</DialogTitle>
+                            <DialogContent>
+                                <Typography variant="body1">
+                                    {error?.data?.message ||
+                                        "There was an issue with verifying your invitation. Please try again or log in."}
+                                </Typography>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => navigate(`/login`)} variant="contained" color="primary">
+                                    Go to Login
+                                </Button>
+                                <Button onClick={handleCloseErrorDialog} variant="outlined">
+                                    Close
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                     </Box>
-                </Grid>
+                    <Box my={3}>
+                        <Typography variant="h3" fontWeight={theme.fontWeight.semiBold} mb={1}>
+                            Join via RatifyME
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" mb={3}>
+                            To join, please check your inbox (and spam folder) for a verification code sent as part of
+                            your Open Badge invitation. This code will be required to complete the login process.
+                        </Typography>
+                    </Box>
+                </Stack>
+            </Box>
 
-                <Grid item xs={12} md={8} order={{ xs: 1, md: 2 }}>
-                    <Box
-                        component="img"
-                        sx={{
-                            width: "100%",
-                        }}
-                        alt="illustration"
-                        src={LoginImgSvg}
-                    />
-                </Grid>
-            </Grid>
-            {/* Error Dialog */}
-            <Dialog open={openErrorDialog} onClose={handleCloseErrorDialog} maxWidth='lg'>
-                <DialogTitle>Verification Failed</DialogTitle>
-                <DialogContent>
-                    <Typography variant="body1">
-                        {error?.data?.message ||
-                            "There was an issue with verifying your invitation. Please try again or log in."}
-                    </Typography>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => navigate(`/login`)} variant="contained" color="primary">
-                        Go to Login
-                    </Button>
-                    <Button onClick={handleCloseErrorDialog} variant="outlined">
-                        Close
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </LandingContainer>
+            {/* Left side with text */}
+            <OutletImageComponent />
+        </Box>
     );
 };
 

@@ -75,7 +75,7 @@ const LoginPage = () => {
                         />
                     </Link>
 
-                    <Box>
+                    <Box my={3}>
                         <Typography variant="h3" fontWeight={theme.fontWeight.semiBold} mb={1}>
                             Welcome to RatifyME! 👋
                         </Typography>

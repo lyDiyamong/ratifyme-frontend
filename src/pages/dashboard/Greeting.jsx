@@ -16,7 +16,6 @@ const Greeting = () => {
     const { data: info, isLoading, isError } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
     
     const userData = info?.data;
-    console.log("usserDatasdjfkasjf", userData);
 
     return (
         <Stack

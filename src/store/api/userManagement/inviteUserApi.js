@@ -12,7 +12,22 @@ const inviteUserApi = createApi({
                 body: data,
             }),
         }),
+        inviteEarner: builder.mutation({
+            query: ({ issuerId, ...data }) => ({
+                url: `users/codeInvitation/inviteEarner/${issuerId}`,
+                method: "POST",
+                body: data,
+            }),
+        }),
+        fetchAllInvitedUser: builder.query({
+            query: () => ({
+                url: "users/codeInvitation/invitedUser",
+                method: "GET",
+            }),
+        }),
     }),
 });
 
-export const { useInviteIssuerMutation } = inviteUserApi;
+// Export both the API instance and hooks
+export const { useInviteIssuerMutation, useInviteEarnerMutation, useFetchAllInvitedUserQuery } = inviteUserApi;
+export { inviteUserApi };
