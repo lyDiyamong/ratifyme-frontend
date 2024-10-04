@@ -1,6 +1,6 @@
 // React import
 import { useNavigate } from "react-router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 // Custom import
 import AlertMessage from "../../components/alert/AlertMessage";
@@ -10,20 +10,25 @@ import DashboardContainer from "../../components/styles/DashboardContainer";
 import TableCustom from "../../components/TableCustom";
 import MenuSelection from "../../components/TableAction/MenuSelection";
 import FormatDate from "../../utils/formatDate";
+import useCatchStatus from "../../hooks/useCatchStatus";
 
 // Api import
 import { useGetInstitutionQuery } from "../../store/api/institutionManagement/institutionApi";
 
 const InstitutionManagement = () => {
     // Fetching institutions hook
-    const { data: response, isLoading, isError, error } = useGetInstitutionQuery();
-    const institutions = response?.data;
+    const {
+        data: institutionsResponse,
+        isLoading: institutionsLoading,
+        isError: institutionsIsError,
+        error : institutionsError,
+    } = useGetInstitutionQuery();
+    const institutions = institutionsResponse?.data;
     // Navigate hook
     const navigate = useNavigate();
 
-    // Error state hook
-    const [errorMessage, setErrorMessage] = useState("");
-    console.log(institutions);
+    // Error custom hook
+    const errorHandling = useCatchStatus(institutionsIsError, institutionsError?.data?.message);
 
     // View institution profiles
     const handleView = (institutionId) => {
@@ -57,20 +62,13 @@ const InstitutionManagement = () => {
         },
     ];
 
-    // Error handling
-    useEffect(() => {
-        if (isError && error?.data?.message) {
-            setErrorMessage(error.data.message);
-        }
-    }, [isError, error]);
-    
     return (
         // ============ Start InstitutionManagement ============
         <DashboardContainer>
-            {isError && <AlertMessage variant="error">{errorMessage}</AlertMessage>}
+            {errorHandling && <AlertMessage variant="error">{errorHandling}</AlertMessage>}
             {/* Page title */}
             <PageTitle title="Institution Management" />
-            {isLoading ? (
+            {institutionsLoading ? (
                 <SkeletonLoading num={5} />
             ) : (
                 // Billing and Invoice Table

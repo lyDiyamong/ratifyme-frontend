@@ -1,5 +1,4 @@
 // React import
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 // Mui import
@@ -12,23 +11,21 @@ import DashboardContainer from "../../components/styles/DashboardContainer";
 import PageTitle from "../../components/PageTitle";
 import SkeletonLoading from "../../components/loading/SkeletonLoading";
 import AlertMessage from "../../components/alert/AlertMessage";
+import useCatchStatus from "../../hooks/useCatchStatus";
 
 // Api import
 import { useGetSubscritptionQuery } from "../../store/api/subscription/subscriptionApi";
-import MakeSureModal from "../../components/MakeSureModal";
-import { Button } from "@mui/material";
-import theme from "../../assets/themes";
 
 const BillingInvoiceManagement = () => {
-    // Error state hook
-    const [errorMessage, setErrorMessage] = useState("");
-
     // Navigate hook
     const navigate = useNavigate();
 
     // Api fetching hook
     const { data: response, isLoading, isError, error } = useGetSubscritptionQuery();
     const subscriptions = response?.data;
+
+    // Error custom hook
+    const errorHandling = useCatchStatus(isError, error?.data?.message);
 
     // Handling view for another page
     const handleView = (institutionId) => {
@@ -63,17 +60,10 @@ const BillingInvoiceManagement = () => {
         },
     ];
 
-    // Error handling
-    useEffect(() => {
-        if (isError && error?.data?.message) {
-            setErrorMessage(error.data.message);
-        }
-    }, [isError, error]);
-
     return (
         // ============ Start BillingInvoiceManagement ============
         <DashboardContainer>
-            {errorMessage && <AlertMessage variant="error">{errorMessage}</AlertMessage>}
+            {errorHandling && <AlertMessage variant="error">{errorHandling}</AlertMessage>}
             {/* Page title */}
             <PageTitle title="Billing and Invoice" />
             {isLoading ? (

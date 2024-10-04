@@ -1,59 +1,78 @@
 // React import
-import { useState } from "react";
 import { useParams, useNavigate } from "react-router";
+
+// MUI import
+import { Box } from "@mui/material";
 
 // Custom import
 import OrganizationCard from "../../components/OrganizationCard";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import AlertMessage from "../../components/alert/AlertMessage";
 import { SpinLoading } from "../../components/loading/SpinLoading";
+import useCatchStatus from "../../hooks/useCatchStatus";
 
 // Api import
 import { useGetInstitutionByIdQuery } from "../../store/api/institutionManagement/institutionApi";
 import BadgeListCard from "../../components/BadgeListCard";
 import theme from "../../assets/themes";
-import { Box } from "@mui/material";
 import { useFetchBadgesByInstitutionsQuery } from "../../store/api/badgeManagement/badgeApi";
 
 function InstitutionDetail() {
-    // Error state hook
-    const [errorMessage, setErrorMessage] = useState("");
-
     // Navigation hook
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
-    // Get the instituion id hook
+    // Get the institution id hook
     const { institutionId } = useParams();
 
     // Api fetching institution hook
-    const { data: response, isLoading, isError } = useGetInstitutionByIdQuery(institutionId);
-    const institution = response?.data;
+    const {
+        data: institutionResponse,
+        isLoading: isInstitutionLoading,
+        isError: isInstitutionError,
+        error: institutionError,
+        isSuccess : institutionSuccess
+    } = useGetInstitutionByIdQuery(institutionId);
+    const successHandling = useCatchStatus(institutionSuccess, institutionResponse?.message)
+
+    const institution = institutionResponse?.data;
 
     // Api fetching badges hook
-    const { data: badgesIntsti, isLoading: badgesLoading } = useFetchBadgesByInstitutionsQuery(institutionId);
+    const {
+        data: badgesResponse,
+        isLoading: isBadgesLoading,
+        isError: isBadgesError,
+        error: badgesError,
+    } = useFetchBadgesByInstitutionsQuery(institutionId);
 
-    // Fetching badgeclass from institution api
-    // Using flatMap to iterating to array in array
-    const badges = badgesIntsti?.data?.Issuers?.flatMap((badge) => badge?.BadgeClasses);
+    const badges = badgesResponse?.data?.Issuers?.flatMap((badge) => badge?.BadgeClasses);
 
+    // Dynamic error handler with custom hook
+    const errorHandling = useCatchStatus(
+        isInstitutionError || isBadgesError,
+        institutionError?.data?.message || badgesError?.data?.message,
+    );
+
+    // Badge view handler
     const handleView = (id) => {
         navigate(`/management/badges/badgeDetail/${id}`);
     };
 
-    // Error handling
-    if (isError) {
-        setErrorMessage("There was an error fetching subscription data. Please try again later.");
-    }
     return (
         // ============ Start InstitutionDetail ============
         <DashboardContainer>
-            {errorMessage && <AlertMessage variant="error">{errorMessage}</AlertMessage>}
-            {/* Organiztion Card */}
-            <OrganizationCard
-                title={institution?.institutionName}
-                description={institution?.institutionBio}
-                logoUrl={institution?.User.profileImage}
-            />
+            {errorHandling && <AlertMessage variant="error">{errorHandling}</AlertMessage>}
+            {institutionSuccess && <AlertMessage variant="success">{successHandling}</AlertMessage>}
+
+            {isInstitutionLoading ? (
+                <SpinLoading />
+            ) : (
+                <OrganizationCard
+                    title={institution?.institutionName}
+                    description={institution?.institutionBio}
+                    logoUrl={institution?.User.profileImage}
+                />
+            )}
+
             {/* Badge List */}
             <Box
                 component="section"
@@ -68,7 +87,7 @@ function InstitutionDetail() {
                     mt: 4,
                 }}
             >
-                {badgesLoading ? <SpinLoading /> : <BadgeListCard badges={badges} onView={handleView} />}
+                {isBadgesLoading ? <SpinLoading /> : <BadgeListCard badges={badges} onView={handleView} />}
             </Box>
         </DashboardContainer>
         // ============ End InstitutionDetail ============
