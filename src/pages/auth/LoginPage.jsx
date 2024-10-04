@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
+import * as yup from "yup";
 
 // MUI import
 import { Box, Typography, Button, Checkbox, FormControlLabel, IconButton, Divider } from "@mui/material";
@@ -21,6 +22,11 @@ import EmailOutlined from "@mui/icons-material/EmailOutlined";
 import OutletImageComponent from "./OutletImageTemplate";
 import useCatchStatus from "../../hooks/useCatchStatus";
 import AlertMessage from "../../components/alert/AlertMessage";
+
+const schema = yup.object({
+    email: yup.string().email("Invalid email").required("Email is required"),
+    password: yup.string().min(6, "Password too short").required("Password is required"),
+});
 
 const LoginPage = () => {
     const [signIn, { isLoading, isError, error, isSuccess, data }] = useSignInMutation();
@@ -98,6 +104,7 @@ const LoginPage = () => {
                             label="Email"
                             required={true}
                             startIcon={<EmailOutlined />}
+                            schema={schema.fields.email}
                         />
                         {/* Password */}
                         <FormInput
@@ -107,6 +114,7 @@ const LoginPage = () => {
                             type="password"
                             required={true}
                             startIcon={<LockOpenOutlined />}
+                            schema={schema.fields.password}
                         />
                     </Stack>
 
