@@ -2,13 +2,26 @@
 import DataTable from "react-data-table-component";
 
 // MUI Imports
-import { Box, Checkbox, TextField, MenuItem, Select, InputLabel, FormControl, Button, Typography } from "@mui/material";
+import {
+    Box,
+    Checkbox,
+    TextField,
+    MenuItem,
+    Select,
+    InputLabel,
+    FormControl,
+    Button,
+    Typography,
+    IconButton,
+    InputAdornment,
+} from "@mui/material";
 import ArrowDownward from "@mui/icons-material/ArrowDownward";
 
 // Custom Imports
 import MenuSelection from "./TableAction/MenuSelection";
 import theme from "../assets/themes/index";
 import AddIcon from "@mui/icons-material/Add";
+import { SearchOutlined } from "@mui/icons-material";
 
 // Custom styling for DataTable
 const customTableStyles = {
@@ -79,14 +92,14 @@ const TableCustom = ({
         >
             <Box
                 sx={{
-                    display: "flex",
+                    display: { xss: "none", sm: "block", md: "flex" },
                     justifyContent: "space-between",
                     alignItems: "center",
                     mb: 2,
                 }}
             >
                 <Box>
-                    <Typography sx={{ fontSize: theme.typography.h3, fontWeight: theme.fontWeight.semiBold }}>
+                    <Typography sx={{ fontSize: theme.typography.h3, fontWeight: theme.fontWeight.semiBold, mb: {sm: 2, md: 0}}}>
                         {title}
                     </Typography>
                 </Box>
@@ -101,17 +114,35 @@ const TableCustom = ({
                     }}
                 >
                     {/* Search Bar */}
-                    <TextField
-                        variant="outlined"
-                        size="small"
-                        placeholder="Search ..."
-                        onChange={(e) => onSearch(e.target.value)}
-                        sx={{ flexGrow: 1, minWidth: "250px" }}
-                    />
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            maxWidth: "400px",
+                            width: "100%",
+                        }}
+                    >
+                        <TextField
+                            variant="outlined"
+                            size="small"
+                            placeholder="Search ..."
+                            sx={{
+                                flexGrow: 1,
+                                minWidth: "250px",
+                            }}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <SearchOutlined />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    </Box>
 
                     {/* Filter By */}
-                    <FormControl sx={{ minWidth: 120 }} size="small">
-                        <InputLabel>Filter by</InputLabel>
+                    <FormControl sx={{ minWidth: 100 }} size="small">
+                        <InputLabel sx={{fontSize: '14px'}}>Filter by</InputLabel>
                         <Select label="Filter by" onChange={(e) => onFilterChange(e.target.value)}>
                             <MenuItem value="All">All</MenuItem>
                             <MenuItem value="Category1">Category 1</MenuItem>
@@ -120,8 +151,8 @@ const TableCustom = ({
                     </FormControl>
 
                     {/* Sort By */}
-                    <FormControl sx={{ minWidth: 120 }} size="small">
-                        <InputLabel>Sort by</InputLabel>
+                    <FormControl sx={{ minWidth: 100 }} size="small">
+                        <InputLabel sx={{fontSize: '14px'}}>Sort by</InputLabel>
                         <Select label="Sort by" onChange={(e) => onSortChange(e.target.value)}>
                             <MenuItem value="Name">Name</MenuItem>
                             <MenuItem value="Year">Year</MenuItem>
@@ -139,6 +170,7 @@ const TableCustom = ({
                             fontWeight: theme.fontWeight.semiBold,
                             borderRadius: theme.customShape.btn,
                             textTransform: "none",
+                            width: '100%'
                         }}
                     >
                         {addNewLabel}
