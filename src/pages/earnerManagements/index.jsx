@@ -8,6 +8,7 @@ import DashboardContainer from "../../components/styles/DashboardContainer";
 import TableEarner from "./TableEarner";
 // import SearchBar from "../../components/SearchBars/SearchBar";
 import PageTitle from "../../components/PageTitle";
+import VerificationsCheckUp from "./VerificationsCheckUp";
 
 // ============ Start EarnerManagement ============
 const EarnerManagement = () => {
@@ -20,6 +21,8 @@ const EarnerManagement = () => {
                 title="Earner Managements"
                 subtitle="Manage earner accounts, invite new earners, and track their statuses all in one place."
             />
+            <SearchBar onSearch={setSearchQuery} />
+            <VerificationsCheckUp  />
             <TableEarner searchQuery={searchQuery} />
         </DashboardContainer>
     );

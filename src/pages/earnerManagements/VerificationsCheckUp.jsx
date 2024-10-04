@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Button } from "@mui/material";
 
 //Custom import
-import VerificationModal from "../../components/verificationModal";
+import VerificationModal from "../../components/VerificationModals";
 
 //=========== Start VerifyCheckUp ===========
 const VerificationCheckUp = () => {
