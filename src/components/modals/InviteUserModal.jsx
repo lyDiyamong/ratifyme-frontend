@@ -140,13 +140,25 @@ const InviteUserModal = ({ open, handleClose, onSubmit, invitedUsers }) => {
                                 <Tooltip title="Resend Invitation">
                                     <IconButton aria-label="resend invitation">
                                         <RestartAltOutlined
-                                            sx={{ fontSize: { sm: "18px", xs: "16px", xss: "14px" } }}
+                                            sx={{
+                                                fontSize: {
+                                                    xs: "22px",
+                                                    sm: "24px",
+                                                },
+                                            }}
                                         />
                                     </IconButton>
                                 </Tooltip>
                                 <Tooltip title="Delete">
                                     <IconButton aria-label="delete">
-                                        <DeleteOutline sx={{ fontSize: { sm: "18px", xs: "16px", xss: "14px" } }} />
+                                        <DeleteOutline
+                                            sx={{
+                                                fontSize: {
+                                                    xs: "22px",
+                                                    sm: "24px",
+                                                },
+                                            }}
+                                        />
                                     </IconButton>
                                 </Tooltip>
                             </ListItem>
