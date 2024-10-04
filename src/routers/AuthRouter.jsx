@@ -7,6 +7,7 @@ import SignupPage from "../pages/auth/SignupPage";
 import LoginPage from "../pages/auth/LoginPage";
 import SignupOptPage from "../pages/auth/SignupOptPage";
 import CodeInvitationPage from "../pages/auth/CodeInvitationPage";
+import ForgotPasswordPage from "../pages/auth/ForgotPasswordPage";
 
 const AuthRouter = () => {
     return (
@@ -16,6 +17,7 @@ const AuthRouter = () => {
                 <Route path="/get-started" element={<SignupOptPage />} />
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/forgot-password" element={<ForgotPasswordPage />} />
                 <Route />
             </Route>
         </Routes>
