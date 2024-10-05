@@ -7,10 +7,10 @@ export const achievementApi = createApi({
     endpoints: (builder) => ({
         sendBadge: builder.mutation({
             query: ({ id, earners }) => ({
-                url: `/issuers/${id}/assignEarners`, 
+                url: `/issuers/${id}/assignEarners`,
                 method: "PATCH",
                 body: {
-                    earnerIds: earners, 
+                    earnerIds: earners,
                 },
             }),
             invalidatesTags: [{ type: "Achievement", id: "LIST" }],
