@@ -82,6 +82,16 @@ export const badgeApi = createApi({
                     ? [...result.data.map(({ id }) => ({ type: "Badge", id })), { type: "Badge", id }]
                     : [{ type: "Badge", id }],
         }),
+        fetchClaimBadgeByEarner: builder.query({
+            query: (id) => ({
+                url: `/issuers/badgeClasses/claim/${id}`,
+                method: "GET",
+            }),
+            providesTags: (result, error, id) =>
+                result?.data
+                    ? [...result.data.map(({ id }) => ({ type: "Badge", id })), { type: "Badge", id }]
+                    : [{ type: "Badge", id }],
+        }),
     }),
 });
 
@@ -92,4 +102,5 @@ export const {
     useFetchBadgesByInstitutionsQuery,
     useFetchBadgesQuery,
     useFetchBadgeByEarnerQuery,
+    useFetchClaimBadgeByEarnerQuery,
 } = badgeApi;

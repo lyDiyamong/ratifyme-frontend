@@ -10,7 +10,7 @@ export const earnerApi = createApi({
                 url: "/earners",
                 method: "GET",
             }),
-            providesTags : ['Earner']
+            providesTags: ["Earner"],
         }),
 
         fetchEarnerById: builder.query({
@@ -18,17 +18,27 @@ export const earnerApi = createApi({
                 url: `/earners/${id}`,
                 method: "GET",
             }),
-            providesTags : ['Earner']
+            providesTags: ["Earner"],
         }),
 
         deleteEarnerById: builder.mutation({
             query: (id) => ({
                 url: `/earners/${id}`,
-                method: 'DELETE',
+                method: "DELETE",
             }),
-            invalidatesTags : ['Earner']
+            invalidatesTags: ["Earner"],
+        }),
+
+        claimBadge: builder.mutation({
+            query: ({ achievementId, badgeClassId, status }) => ({
+                url: `/earners/achievement/${achievementId}`,
+                method: "PATCH",
+                body: { badgeClassId, status },
+            }),
+            invalidatesTags: ["Earner"],
         }),
     }),
 });
 
-export const { useFetchEarnerQuery, useFetchEarnerByIdQuery, useDeleteEarnerByIdMutation} = earnerApi;
+export const { useFetchEarnerQuery, useFetchEarnerByIdQuery, useDeleteEarnerByIdMutation, useClaimBadgeMutation } =
+    earnerApi;
