@@ -124,7 +124,7 @@ const profileInfoConfig = {
         {
             icon: EducationIcon,
             label: "Education",
-            valueKey: "education",
+            valueKey: "AcademicBackground.Institution.name",
         },
         {
             icon: CountryIcon,

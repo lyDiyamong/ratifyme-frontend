@@ -170,7 +170,7 @@ const LoginPage = () => {
                         </IconButton>
                         <IconButton
                             sx={{
-                                color: theme.palette.customColors.orange200,
+                                color: theme.palette.customColors.orange300,
                                 backgroundColor: theme.palette.background.error,
                                 borderRadius: theme.customShape.input,
                             }}

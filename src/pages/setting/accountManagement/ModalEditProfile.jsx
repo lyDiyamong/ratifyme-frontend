@@ -1,6 +1,7 @@
 // React Imports
 import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
+import dayjs from "dayjs";
 
 // MUI Imports
 import Box from "@mui/material/Box";
@@ -45,7 +46,8 @@ const EditProfileModal = ({ open, userData, onClose }) => {
                 lastName: userData.lastName || "",
                 phoneNumber: userData.phoneNumber || "",
                 email: userData.email || "",
-                dateOfBirth: userData.dateOfBirth || null,
+                // dateOfBirth: userData.dateOfBirth || null,
+                dateOfBirth: userData.dateOfBirth ? dayjs(userData.dateOfBirth) : null,
                 nationality: userData.nationality || "",
                 Gender: userData.Gender.id || "",
             });
@@ -113,6 +115,7 @@ const EditProfileModal = ({ open, userData, onClose }) => {
                                     label="Date of Birth"
                                     openTo="year"
                                     views={["year", "month", "day"]}
+                                    value={field.value}
                                     onChange={(newValue) => {
                                         field.onChange(newValue);
                                     }}

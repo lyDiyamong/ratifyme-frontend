@@ -23,6 +23,7 @@ import {
 import BioContent from "./BioContent";
 import { useSelector } from "react-redux";
 import MoreMenu from "../../../components/MoreMenu";
+import { da } from "date-fns/locale";
 
 //============ Start User Profile Component ============
 const UserProfile = () => {
@@ -33,6 +34,9 @@ const UserProfile = () => {
     const [updateImage, setUpdateImage] = useState(DefaultProfileSvg);
     const { data: info, isLoading, isError } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
     const userData = info?.data;
+    console.log('dataaaa:', info)
+
+    console.log(userData)
 
     const [updateImg] = useUploadUserPfMutation();
     const [deleteImg] = useDeleteUserPfMutation();

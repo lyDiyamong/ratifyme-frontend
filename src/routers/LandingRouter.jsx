@@ -3,6 +3,7 @@ import LandingLayout from "../layouts/landing";
 import HomePage from "../pages/landing/index";
 import ContactUsPage from './../pages/contactus'
 import PricePage from "../pages/prices/index";
+import Formdemo from "../components/auth/testConfirm";
 
 const LandingRouter = () => {
     return (
@@ -11,6 +12,7 @@ const LandingRouter = () => {
                 <Route path="/" element={<HomePage />}/>
                 <Route path="/price" element={<PricePage />} />
                 <Route path="/contactus" element={<ContactUsPage />} />
+                <Route path="/testconfirm" element={<Formdemo />} />
             </Route>
         </Routes>
     );
