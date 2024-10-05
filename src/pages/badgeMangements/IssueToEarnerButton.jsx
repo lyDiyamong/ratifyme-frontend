@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { Button } from "@mui/material";
 import theme from "../../assets/themes";
 
@@ -6,15 +5,12 @@ import { useSendBadgeMutation } from "../../store/api/achievements/achievementAp
 import { useFetchEarnerQuery } from "../../store/api/earnerManagement/earnerApis";
 
 const IssueToEarnerButton = ({ emails, badgeId }) => {
-    const [sendBadge, { error, isLoading }] = useSendBadgeMutation();
+    const [sendBadge, { isLoading }] = useSendBadgeMutation();
     const { data: earner } = useFetchEarnerQuery();
-    const { userInfo } = useSelector((state) => state.global);
 
     // Ensure earnerIds is always an array
     const earnerIds =
         earner?.data?.filter((earner) => emails.includes(earner.User.email))?.map((earner) => earner.id) || [];
-
-    console.log(earnerIds, badgeId);
 
     const handleSendBadge = async () => {
         if (earnerIds.length > 0) {

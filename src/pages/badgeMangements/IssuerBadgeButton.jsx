@@ -15,7 +15,6 @@ const IssuerBadgeButton = ({ onGetEmail, control, issuerId }) => {
             return user?.User;
         });
 
-    console.log(emailOptions);
     return (
         <>
             <Button
