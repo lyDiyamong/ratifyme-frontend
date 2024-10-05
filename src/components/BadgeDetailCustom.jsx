@@ -12,7 +12,7 @@ import IssuerBadgeButton from "../pages/badgeMangements/IssuerBadgeButton";
 import IssueToEarnerButton from "../pages/badgeMangements/IssueToEarnerButton";
 import ClaimBadgeButton from "./ClaimBadgeButton";
 
-const BadgeDetailCustom = ({ badge, userRole, issuerId }) => {
+const BadgeDetailCustom = ({ badge, userRole, activeUserId }) => {
     // define breakpoint of the screen
     const isSmallScreen = useMediaQuery(theme.breakpoints.down(theme.breakpoints.values.sm));
 
@@ -21,16 +21,13 @@ const BadgeDetailCustom = ({ badge, userRole, issuerId }) => {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-
-    const {
-        handleSubmit,
-        control,
-        formState: { errors },
-    } = useForm();
+    const { control } = useForm();
 
     // assign variable from props that has fetch value
     const result = badge?.data;
-    console.log(result);
+    console.log(activeUserId.id);
+
+    const status = result?.Achievements[0]?.status;
 
     // assign variables for date
     const createdAt = result?.createdAt ? result.createdAt.split("T")[0] : "N/A";
@@ -52,7 +49,6 @@ const BadgeDetailCustom = ({ badge, userRole, issuerId }) => {
         setSelectedEmails(emails);
     };
 
-    console.log(selectedEmails);
     // Define sub-component to use in tab content
     const DetailItem = ({ label, value, isSmallScreen }) => (
         <Stack sx={{ flexDirection: isSmallScreen ? "column" : "row", gap: 2 }}>
@@ -133,12 +129,16 @@ const BadgeDetailCustom = ({ badge, userRole, issuerId }) => {
                                     <IssuerBadgeButton
                                         onGetEmail={handleGetEmails}
                                         control={control}
-                                        issuerId={issuerId}
+                                        issuerId={activeUserId.id}
                                     />
                                     <IssueToEarnerButton emails={selectedEmails} badgeId={result?.id || []} />
                                 </Box>
                             ) : (
-                                <ClaimBadgeButton />
+                                <ClaimBadgeButton
+                                    badgeClassId={result?.id || ""}
+                                    earnerId={activeUserId.id}
+                                    status={status}
+                                />
                             )}
                         </Grid>
                     </Grid>

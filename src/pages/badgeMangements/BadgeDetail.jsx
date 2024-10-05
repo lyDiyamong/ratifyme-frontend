@@ -10,8 +10,9 @@ const BadgeDetail = () => {
     const { id } = useParams();
     // Fetch badge by ID
     const { data: oneBadge, isLoading, isError } = useFetchOneBadgeQuery(id);
-    const { roleId } = useSelector((state) => state.global);
+    const { roleId, issuerData, earnerData } = useSelector((state) => state.global);
     let role = roleId;
+    let activeUserId;
     switch (role) {
         case 1: {
             role = "admin";
@@ -23,10 +24,12 @@ const BadgeDetail = () => {
         }
         case 3: {
             role = "issuer";
+            activeUserId = issuerData;
             break;
         }
         case 4: {
             role = "earner";
+            activeUserId = earnerData;
             break;
         }
     }
@@ -40,7 +43,7 @@ const BadgeDetail = () => {
 
     return (
         <DashboardContainer sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
-            <BadgeDetailCustom badge={oneBadge} userRole={role} issuerId={oneBadge?.data?.issuerId || ""} />
+            <BadgeDetailCustom badge={oneBadge} userRole={role} activeUserId={activeUserId} />
         </DashboardContainer>
     );
 };

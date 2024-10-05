@@ -19,10 +19,8 @@ import {
 import theme from "../assets/themes";
 import StatusCode from "../assets/images/NoData.svg";
 import GoldBadge from "../assets/images/DiamondBadge.svg";
-import BadgeDetail from "../pages/badgeMangements/BadgeDetail";
 
-const BadgeListCard = ({ badges=[], onView }) => {
-    const navigate = useNavigate();
+const BadgeListCard = ({ badges, onView }) => {
     // State management for pagination
     const [page, setPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(6);
