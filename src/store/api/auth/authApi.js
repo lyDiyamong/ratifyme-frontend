@@ -108,18 +108,6 @@ export const authApi = createApi({
             },
         }),
 
-        // logout: builder.mutation({
-        //     query: () => ({
-        //         url: "/auth/logout",
-        //         method: "POST",
-        //     }),
-        //     async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        //         await queryFulfilled;
-        //         // Clear authentication state on successful logout
-        //         dispatch(clearAuthState());
-        //     },
-        // }),
-
         logout: builder.mutation({
             query: () => ({
                 url: "/auth/logout",
@@ -131,14 +119,42 @@ export const authApi = createApi({
                     // Clear authentication state on successful logout
                     dispatch(clearAuthState());
 
-                    // Optionally, you can reset the checkAuth cache (and any related API caches)
+                    // Reset the checkAuth cache (and any related API caches)
                     dispatch(authApi.util.resetApiState());
                 } catch (err) {
                     console.error("Logout failed:", err);
                 }
             },
         }),
+
+        forgotPassword: builder.mutation({
+            query: (data) => ({
+                url: "/auth/forgotPassword",
+                method: "POST",
+                body: data,
+            }),
+        }),
+
+        verifyResetToken: builder.query({
+            query: (token) => `auth/verifyResetToken/${token}`,
+        }),
+
+        resetPassword: builder.mutation({
+            query: ({ token, ...data }) => ({
+                url: `/auth/resetPassword/${token}`,
+                method: "PATCH",
+                body: data,
+            }),
+        }),
     }),
 });
 
-export const { useCheckAuthQuery, useSignUpMutation, useSignInMutation, useLogoutMutation } = authApi;
+export const {
+    useCheckAuthQuery,
+    useSignUpMutation,
+    useSignInMutation,
+    useForgotPasswordMutation,
+    useVerifyResetTokenQuery,
+    useResetPasswordMutation,
+    useLogoutMutation,
+} = authApi;

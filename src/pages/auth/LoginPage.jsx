@@ -132,13 +132,18 @@ const LoginPage = () => {
                             control={<Checkbox />}
                             label="Remember Me"
                         />
-                        <Link>
+                        <Link to="/forgot-password">
                             <Typography
                                 component="a"
                                 href="#"
                                 variant="body1"
                                 color="primary"
-                                sx={{ textDecoration: "none" }}
+                                sx={{
+                                    textDecoration: "none",
+                                    "&:hover": {
+                                        color: theme.palette.primary.dark,
+                                    },
+                                }}
                             >
                                 Forgot password?
                             </Typography>

@@ -8,6 +8,8 @@ import LoginPage from "../pages/auth/LoginPage";
 import SignupOptPage from "../pages/auth/SignupOptPage";
 import CodeInvitationPage from "../pages/auth/CodeInvitationPage";
 import ForgotPasswordPage from "../pages/auth/ForgotPasswordPage";
+import ForgotPasswordSentPage from "../pages/auth/ForgotPasswordSentPage";
+import ResetPasswordPage from "../pages/auth/ResetPasswordPage";
 
 const AuthRouter = () => {
     return (
@@ -18,6 +20,8 @@ const AuthRouter = () => {
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+                <Route path="/forgot-password-sent" element={<ForgotPasswordSentPage />} />
+                <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
                 <Route />
             </Route>
         </Routes>
