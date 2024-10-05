@@ -2,26 +2,30 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
+import * as yup from "yup";
 
 // MUI import
-import { Box, Typography, Button, Checkbox, FormControlLabel, IconButton, Divider } from "@mui/material";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import Google from "@mui/icons-material/Google";
+import { Box, Typography, Button } from "@mui/material";
 
 // Custom import
 import FormInput from "../../components/FormInput";
 import theme from "../../assets/themes";
 import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
 import { SpinLoading } from "../../components/loading/SpinLoading";
-import { useSignInMutation } from "../../store/api/auth/authApi";
 import { Stack } from "@mui/system";
-import LockOpenOutlined from "@mui/icons-material/LockOpenOutlined";
 import EmailOutlined from "@mui/icons-material/EmailOutlined";
-import OutletImageComponent from "./OutletImageTemplate";
+import { ArrowBackOutlined } from "@mui/icons-material";
+import { useForgotPasswordMutation } from "../../store/api/auth/authApi";
+
+const schema = yup.object({
+    email: yup
+        .string()
+        .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email format")
+        .required("Email is required"),
+});
 
 const ForgotPasswordPage = () => {
-    const [signIn, { isLoading, isError, error }] = useSignInMutation();
+    const [fortgotPassword, { isLoading, isError, error }] = useForgotPasswordMutation();
 
     const navigate = useNavigate();
     // Form controller
@@ -29,38 +33,39 @@ const ForgotPasswordPage = () => {
         handleSubmit,
         control,
         formState: { errors },
-        reset,
-    } = useForm();
+    } = useForm({ mode: "onChange" });
 
     const [loading, setLoading] = useState(false);
 
     // Submit handler
     const onSubmit = async (data) => {
         try {
-            console.log('forgot password')
+            setLoading(true);
+            const result = await fortgotPassword(data).unwrap();
+            console.log(result);
+            navigate("/forgot-password-sent");
         } catch (error) {
-            console.error("Error during sign in:", error.message || error);
+            console.error("Error during set forgot password:", error.message || error);
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        // ============ Start login container ============
+        // ============ Start forgot password container ============
         <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ height: "100vh", display: "flex" }}>
             <Box
                 flexGrow={0}
                 display="flex"
                 justifyContent="center"
                 sx={{
-                    borderRadius: theme.customShape.section,
                     width: { md: "50%", xss: "100%" },
                     mx: "auto",
                     px: 4,
                     backgroundColor: "transparent",
                 }}
             >
-                <Stack width="100%" maxWidth="450px" gap={2}>
+                <Stack width="100%" maxWidth="500px" gap={2}>
                     <Link to="/">
                         <Box
                             component="img"
@@ -72,10 +77,10 @@ const ForgotPasswordPage = () => {
 
                     <Box my={3}>
                         <Typography variant="h3" fontWeight={theme.fontWeight.semiBold} mb={1}>
-                            Welcome to RatifyME! 👋
+                            Forgot Password?
                         </Typography>
-                        <Typography variant="body2" color="text.secondary" mb={3}>
-                            Please sign-in to your account and start the adventure.
+                        <Typography variant="body2" color="text.secondary" mb={2}>
+                            Don't worry! Fill in you email and we'll send you a link to reset your password.
                         </Typography>
                     </Box>
 
@@ -88,39 +93,8 @@ const ForgotPasswordPage = () => {
                             label="Email"
                             required={true}
                             startIcon={<EmailOutlined />}
+                            schema={schema.fields.email}
                         />
-                        {/* Password */}
-                        <FormInput
-                            name="password"
-                            control={control}
-                            label="Password"
-                            type="password"
-                            required={true}
-                            startIcon={<LockOpenOutlined />}
-                        />
-                    </Stack>
-
-                    <Stack
-                        flexDirection={{ xs: "row", xss: "column" }}
-                        alignItems={{ xs: "center", xss: "start" }}
-                        justifyContent="space-between"
-                    >
-                        <FormControlLabel
-                            sx={{ color: theme.palette.text.secondary }}
-                            control={<Checkbox />}
-                            label="Remember Me"
-                        />
-                        <Link>
-                            <Typography
-                                component="a"
-                                href="#"
-                                variant="body1"
-                                color="primary"
-                                sx={{ textDecoration: "none" }}
-                            >
-                                Forgot password?
-                            </Typography>
-                        </Link>
                     </Stack>
 
                     <Button
@@ -133,45 +107,31 @@ const ForgotPasswordPage = () => {
                             color: theme.palette.customColors.white,
                             fontWeight: theme.fontWeight.bold,
                             borderRadius: theme.customShape.btn,
+                            textTransform: "none",
                         }}
                     >
-                        {loading ? <SpinLoading size={24} /> : "Sign in"}
+                        {loading ? <SpinLoading size={24} /> : "Continue"}
                     </Button>
 
-                    <Divider sx={{ my: 4, color: theme.palette.text.secondary }}>Or</Divider>
-
-                    <Box display="flex" justifyContent="center" gap={1}>
-                        <IconButton
-                            sx={{
-                                color: theme.palette.primary.dark,
-                                backgroundColor: theme.palette.primary.light,
-                                borderRadius: theme.customShape.input,
-                            }}
-                        >
-                            <FacebookIcon />
-                        </IconButton>
-                        <IconButton
-                            sx={{
-                                color: theme.palette.customColors.orange200,
-                                backgroundColor: theme.palette.background.error,
-                                borderRadius: theme.customShape.input,
-                            }}
-                        >
-                            <Google />
-                        </IconButton>
-                        <IconButton
-                            sx={{
-                                color: theme.palette.secondary.light,
-                                backgroundColor: theme.palette.primary.light,
-                                borderRadius: theme.customShape.input,
-                            }}
-                        >
-                            <TwitterIcon />
-                        </IconButton>
+                    <Box>
+                        <Link to="/login">
+                            <Box display="flex" gap={1} alignItems="center" justifyContent="center" width="100%">
+                                <ArrowBackOutlined fontSize="32px" sx={{ color: theme.palette.primary.contrastText }} />
+                                <Typography
+                                    component="a"
+                                    href="#"
+                                    variant="body1"
+                                    color="primary"
+                                    sx={{ textDecoration: "none" }}
+                                >
+                                    Return to login
+                                </Typography>
+                            </Box>
+                        </Link>
                     </Box>
 
                     <Typography variant="body2" align="center" color="text.secondary" mt={2}>
-                        New on our platform?{" "}
+                        New to RatifyMe?{" "}
                         <Link to="/get-started">
                             <Typography
                                 component="a"
@@ -186,9 +146,8 @@ const ForgotPasswordPage = () => {
                     </Typography>
                 </Stack>
             </Box>
-
         </Box>
-        // ============ End login container ============
+        // ============ End forgot password container ============
     );
 };
 
