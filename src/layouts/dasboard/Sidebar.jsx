@@ -1,5 +1,5 @@
 // React library import
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 // MUI import
@@ -30,6 +30,7 @@ import LogoIconSvg from "../../assets/icons/RatfiyME.svg";
 import { sidebarItems } from "../../data/sidebarData";
 import { useSelector } from "react-redux";
 import { useLogoutMutation } from "../../store/api/auth/authApi";
+import AlertConfirmation from "../../components/alert/AlertConfirmation";
 
 // Icon Style Constant
 const iconStyles = { width: "20px", height: "20px" };
@@ -53,6 +54,7 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
 
     const [active, setActive] = useState("");
     const { roleId } = useSelector((state) => state.global);
+    const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
 
     useEffect(() => {
         setActive(pathname.substring(1));
@@ -74,19 +76,16 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
     );
 
     const handleNavigation = useCallback(
-        async (path) => {
+        (path) => {
             if (path === "/logout") {
-                // Call logout API or handle logout logic
-                await logout().unwrap();
-                // Navigate to login page or clear session
-                navigate("/login");
+                setIsLogoutDialogOpen(true); // Open the dialog instead of logging out directly
             } else {
                 setActive(path.substring(1));
                 navigate(path);
+                if (!isDesktop) setIsSidebarOpen(false);
             }
-            if (!isDesktop) setIsSidebarOpen(false);
         },
-        [navigate, logout, setIsSidebarOpen, isDesktop],
+        [navigate, setIsSidebarOpen, isDesktop],
     );
 
     // Determine the Drawer variant based on isDesktop and isSidebarOpen
@@ -307,6 +306,25 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
                     </FlexBetween>
                 </Box>
                 {/* End Sidebar footer  */}
+
+                {/* Logout Confirmation Dialog */}
+                <AlertConfirmation
+                    open={isLogoutDialogOpen}
+                    title="Confirm Logout"
+                    message="Are you sure you want to log out?"
+                    onClose={() => setIsLogoutDialogOpen(false)}
+                    onConfirm={async () => {
+                        await logout().unwrap();
+                        navigate("/login");
+                        setIsLogoutDialogOpen(false);
+                    }}
+                    confirmText="Logout"
+                    cancelText="Cancel"
+                    iconBgColor="#ffebee"
+                    iconColor={theme.palette.error.main}
+                    confirmButtonColor={theme.palette.error.main}
+                    confirmButtonColorHover={theme.palette.error.dark}
+                />
             </Drawer>
             {/* ============ End Drawer of Sidebar ============ */}
         </Box>
