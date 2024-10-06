@@ -31,7 +31,7 @@ const schema = yup.object({
 const LoginPage = () => {
     const [signIn, { isLoading, isError, error, isSuccess, data }] = useSignInMutation();
 
-    const message = useCatchStatus(isError || isSuccess, isError ? error?.data?.message : data?.message);
+    const [message, setMessage] = useCatchStatus(isError || isSuccess, isError ? error?.data?.message : data?.message);
 
     const navigate = useNavigate();
     // Form controller
@@ -62,7 +62,11 @@ const LoginPage = () => {
     return (
         // ============ Start login container ============
         <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ height: "100vh", display: "flex" }} noValidate>
-            {message && <AlertMessage variant="error" >{message}</AlertMessage>}
+            {message && (
+                <AlertMessage variant="error" onClose={() => setMessage("")}>
+                    {message}
+                </AlertMessage>
+            )}
             {/* Right side with login form */}
             <Box
                 flexGrow={0}
