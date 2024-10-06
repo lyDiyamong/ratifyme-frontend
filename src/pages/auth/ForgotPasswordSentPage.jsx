@@ -1,20 +1,20 @@
 // React library import
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // MUI import
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Stack } from "@mui/material";
+import { MailOutline } from "@mui/icons-material";
 
 // Custom import
 import theme from "../../assets/themes";
 import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
-import { Stack } from "@mui/system";
+import OutletImageComponent from "./OutletImageTemplate";
 
 const ForgotPasswordSentPage = () => {
     return (
         // ============ Start login container ============
         <Box component="div" sx={{ height: "100vh", display: "flex" }}>
+            {/* Right side with login form */}
             <Box
                 flexGrow={0}
                 display="flex"
@@ -36,21 +36,41 @@ const ForgotPasswordSentPage = () => {
                         />
                     </Link>
 
+                    <Box
+                        component="div"
+                        width={70}
+                        height={70}
+                        sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            backgroundColor: theme.palette.primary.light,
+                            borderRadius: theme.customShape.card,
+                        }}
+                    >
+                        <MailOutline sx={{ fontSize: "32px", color: theme.palette.primary.dark }} />
+                    </Box>
+
                     <Box my={3}>
                         <Typography variant="h3" fontWeight={theme.fontWeight.semiBold} mb={1}>
                             Check your email
                         </Typography>
-                        <Typography variant="body2" color="text.secondary" mb={2}>
-                            Thanks! If user@gmail.com matches an email, then we've sent you an email containing futher
-                            instructions for resetting your password.
+                        <Typography variant="body1" color="text.secondary" mb={2}>
+                            We've sent a password reset instruction link to user@gmail.com.
                         </Typography>
                         <Typography variant="body2" color="text.secondary" mb={2}>
                             If you haven't recieved an email in 5 minutes, check your spam, resend, or try a different
                             email.
                         </Typography>
+                        <Typography variant="body2" color="text.secondary" mb={2}>
+                            Didn't recieve the email? <Link to='/forgot-password'>Click to resent</Link>
+                        </Typography>
                     </Box>
                 </Stack>
             </Box>
+
+            {/* Left side with text */}
+            <OutletImageComponent />
         </Box>
         // ============ End login container ============
     );
