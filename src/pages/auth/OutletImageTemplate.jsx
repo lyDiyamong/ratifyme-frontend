@@ -5,7 +5,7 @@ import DashboardSvg from "../../assets/images/FutureTechnology.svg";
 import theme from "../../assets/themes";
 
 const images = [BusinessStartupSvg, DashboardSvg];
-const texts = ["Capturing Moments, Creating Memories", "Welcome to the Open Digital Badge"];
+const texts = ["Capturing Moments, Creating Memories", "Welcome to RatifyMe"];
 
 const OutletImageComponent = () => {
     const [currentImage, setCurrentImage] = useState(0);
