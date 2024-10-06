@@ -5,17 +5,19 @@ import { useNavigate, Link } from "react-router-dom";
 import * as yup from "yup";
 
 // MUI import
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, IconButton } from "@mui/material";
+import { ArrowBackOutlined, LockOutlined } from "@mui/icons-material";
+import { useForgotPasswordMutation } from "../../store/api/auth/authApi";
+import EmailOutlined from "@mui/icons-material/EmailOutlined";
 
 // Custom import
 import FormInput from "../../components/FormInput";
 import theme from "../../assets/themes";
 import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
 import { SpinLoading } from "../../components/loading/SpinLoading";
-import { Stack } from "@mui/system";
-import EmailOutlined from "@mui/icons-material/EmailOutlined";
-import { ArrowBackOutlined } from "@mui/icons-material";
-import { useForgotPasswordMutation } from "../../store/api/auth/authApi";
+import OutletImageComponent from "./OutletImageTemplate";
+import useCatchStatus from "../../hooks/useCatchStatus";
+import AlertMessage from "../../components/alert/AlertMessage";
 
 const schema = yup.object({
     email: yup
@@ -25,9 +27,13 @@ const schema = yup.object({
 });
 
 const ForgotPasswordPage = () => {
-    const [fortgotPassword, { isLoading, isError, error }] = useForgotPasswordMutation();
-
     const navigate = useNavigate();
+    const [fortgotPassword, { isLoading, isError: forgotPasswordIsError, error: forgotPasswordError }] =
+        useForgotPasswordMutation();
+
+    // Error Custom Hook
+    const errorHandling = useCatchStatus(forgotPasswordIsError, forgotPasswordError?.data?.message);
+
     // Form controller
     const {
         handleSubmit,
@@ -53,7 +59,10 @@ const ForgotPasswordPage = () => {
 
     return (
         // ============ Start forgot password container ============
-        <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ height: "100vh", display: "flex" }}>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ height: "100vh", display: "flex" }} noValidate>
+            {errorHandling && <AlertMessage variant="error">{errorHandling}</AlertMessage>}
+
+            {/* Right side with login form */}
             <Box
                 flexGrow={0}
                 display="flex"
@@ -75,11 +84,26 @@ const ForgotPasswordPage = () => {
                         />
                     </Link>
 
+                    <Box
+                        component="div"
+                        width={70}
+                        height={70}
+                        sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            backgroundColor: theme.palette.primary.light,
+                            borderRadius: theme.customShape.card,
+                        }}
+                    >
+                        <LockOutlined sx={{ fontSize: "32px", color: theme.palette.primary.dark }} />
+                    </Box>
+
                     <Box my={3}>
                         <Typography variant="h3" fontWeight={theme.fontWeight.semiBold} mb={1}>
                             Forgot Password?
                         </Typography>
-                        <Typography variant="body2" color="text.secondary" mb={2}>
+                        <Typography variant="body2" color="text.secondary">
                             Don't worry! Fill in you email and we'll send you a link to reset your password.
                         </Typography>
                     </Box>
@@ -94,6 +118,7 @@ const ForgotPasswordPage = () => {
                             required={true}
                             startIcon={<EmailOutlined />}
                             schema={schema.fields.email}
+                            placeholder = 'example@gmail.com'
                         />
                     </Stack>
 
@@ -146,6 +171,9 @@ const ForgotPasswordPage = () => {
                     </Typography>
                 </Stack>
             </Box>
+
+            {/* Left side with text */}
+            <OutletImageComponent />
         </Box>
         // ============ End forgot password container ============
     );
