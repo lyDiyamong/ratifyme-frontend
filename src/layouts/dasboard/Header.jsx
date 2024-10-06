@@ -20,8 +20,8 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const isTablet = useMediaQuery(theme.breakpoints.up("md"));
 
     // Fetch user data using the query
-    const {userId} = useSelector((state) => state.global)
-    const {data: userData} = useFetchInfoUserByIdQuery(userId)
+    const { userId } = useSelector((state) => state.global);
+    const { data: userData } = useFetchInfoUserByIdQuery(userId);
     const [profileImage, setProfileImage] = useState(DefaultProfileSvg);
     const gender = userData?.data?.Gender?.name;
     const imageProfile = userData?.data?.profileImage;
@@ -42,7 +42,7 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 setProfileImage(DefaultProfileSvg);
             }
         }
-    }, [ imageProfile]);
+    }, [imageProfile]);
 
     // Header icons
     const headerIcons = [
