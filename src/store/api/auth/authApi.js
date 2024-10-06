@@ -108,15 +108,34 @@ export const authApi = createApi({
             },
         }),
 
+        // logout: builder.mutation({
+        //     query: () => ({
+        //         url: "/auth/logout",
+        //         method: "POST",
+        //     }),
+        //     async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        //         await queryFulfilled;
+        //         // Clear authentication state on successful logout
+        //         dispatch(clearAuthState());
+        //     },
+        // }),
+
         logout: builder.mutation({
             query: () => ({
                 url: "/auth/logout",
                 method: "POST",
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                await queryFulfilled;
-                // Clear authentication state on successful logout
-                dispatch(clearAuthState());
+                try {
+                    await queryFulfilled;
+                    // Clear authentication state on successful logout
+                    dispatch(clearAuthState());
+
+                    // Optionally, you can reset the checkAuth cache (and any related API caches)
+                    dispatch(authApi.util.resetApiState());
+                } catch (err) {
+                    console.error("Logout failed:", err);
+                }
             },
         }),
     }),
