@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 //MUI Import
 import { Box, Stack, IconButton, Typography, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import { Menu, MenuItem } from "@mui/material";
-import { AssignmentIndOutlined, CameraAltRounded, MoreHorizRounded } from "@mui/icons-material";
+import { AssignmentIndOutlined, CameraAltRounded } from "@mui/icons-material";
 //Custom Import
 import theme from "../../../assets/themes/index";
 import ProfileInfo from "./ProfileInfo";
@@ -23,7 +22,7 @@ import {
 import BioContent from "./BioContent";
 import { useSelector } from "react-redux";
 import MoreMenu from "../../../components/MoreMenu";
-import { da } from "date-fns/locale";
+// import { da } from "date-fns/locale";
 
 //============ Start User Profile Component ============
 const UserProfile = () => {

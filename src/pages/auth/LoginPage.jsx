@@ -62,7 +62,7 @@ const LoginPage = () => {
     return (
         // ============ Start login container ============
         <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ height: "100vh", display: "flex" }} noValidate>
-            {message && <AlertMessage variant="error">{message}</AlertMessage>}
+            {message && <AlertMessage variant="error" >{message}</AlertMessage>}
             {/* Right side with login form */}
             <Box
                 flexGrow={0}

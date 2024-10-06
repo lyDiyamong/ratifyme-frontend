@@ -1,9 +1,7 @@
 // React library import
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Controller, useForm, FormProvider } from "react-hook-form";
-import Select from "react-select";
-import countryList from "react-select-country-list";
+import { useForm, FormProvider } from "react-hook-form";
 import * as yup from "yup";
 
 // MUI import
@@ -15,13 +13,12 @@ import theme from "../../assets/themes";
 import LandingContainer from "../../components/styles/LandingContainer";
 import SignupImgSvg from "../../assets/images/Signup-illu.svg";
 import { useSignUpMutation } from "../../store/api/auth/authApi";
-import DateSelectionForm from "../../components/DateSelectionForm";
-import SelectForm from "../../components/SelectionForm";
-import FormInput from "../../components/FormInput";
 import GeneralInfoFields from "../../components/auth/GeneralInfoFields";
 import AddressFields from "../../components/auth/AddressFields";
 import InstitutionInfoFields from "../../components/auth/InstitutionInfoFields";
 import AccountSetupFields from "../../components/auth/AccountSetupFields";
+import useCatchStatus from "../../hooks/useCatchStatus";
+import AlertMessage from "../../components/alert/AlertMessage";
 
 const schema = yup.object({
     firstName: yup
@@ -129,6 +126,7 @@ const SignupPage = () => {
     const navigate = useNavigate();
     const [role, setRole] = useState("");
     const [signUp, { isLoading, isError, error }] = useSignUpMutation();
+    const message = useCatchStatus(isError, error?.data?.message);
     const [activeStep, setActiveStep] = useState(0);
     const { inviter, guest } = location.state || {};
     const [fieldValues, setFieldValues] = useState({});
@@ -292,16 +290,6 @@ const SignupPage = () => {
                 newCompletion[activeStep] = true; // Set current step to complete
                 return newCompletion;
             });
-
-            // Clear specific fields if transitioning to Institution Information
-            // if (activeStep === 2 && role === "institution") {
-            //     setValue("username", "");
-            //     setValue("phoneNumber", "");
-            //     setValue("email", "");
-            //     setValue("password", "");
-            //     setValue("passwordConfirm", "");
-            // }
-
             setActiveStep((prevStep) => prevStep + 1);
         }
     };
@@ -328,6 +316,7 @@ const SignupPage = () => {
 
     return (
         <LandingContainer sx={{ my: 6 }}>
+            {message && <AlertMessage variant="error">{message}</AlertMessage>}
             <Grid container spacing={4}>
                 <Grid item xss={12} md={role === "institution" ? 12 : 6}>
                     <Typography
@@ -392,11 +381,6 @@ const SignupPage = () => {
                             </Stack>
                         </Box>
                     </FormProvider>
-                    {isError && (
-                        <Typography color="error" sx={{ mt: 2 }}>
-                            Error: {error.message}
-                        </Typography>
-                    )}
                 </Grid>
                 {role !== "institution" && (
                     <Grid item xss={12} md={6}>

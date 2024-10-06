@@ -3,12 +3,11 @@ import FormInput from "../FormInput";
 import { Controller } from "react-hook-form";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import PhoneNumberForm from "../PhoneNumberForm";
 
 const AccountSetupFields = ({ control, role, guest, schema }) => {
     const [passwordStrength, setPasswordStrength] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-
-    console.log(schema);
 
     const checkPasswordStrength = (password) => {
         let strength = 0;
@@ -51,7 +50,14 @@ const AccountSetupFields = ({ control, role, guest, schema }) => {
                 />
             </Grid>
             <Grid item xss={12} sm={12}>
-                <FormInput
+                {/* <FormInput
+                    name="phoneNumber"
+                    label="Phone Number"
+                    control={control}
+                    required
+                    schema={schema?.fields.postalCode}
+                /> */}
+                <PhoneNumberForm
                     name="phoneNumber"
                     label="Phone Number"
                     control={control}
@@ -116,7 +122,7 @@ const AccountSetupFields = ({ control, role, guest, schema }) => {
                     control={control}
                     required
                     type="password"
-                    schema={schema?.fields.passwordConfirm}
+                    // schema={schema?.fields.passwordConfirm}
                 />
             </Grid>
         </Grid>

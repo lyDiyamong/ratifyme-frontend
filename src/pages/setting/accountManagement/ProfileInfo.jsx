@@ -1,6 +1,8 @@
 import { Box, Stack, Typography } from "@mui/material";
 import FormatDate from "../../../utils/formatDate";
 import theme from "../../../assets/themes";
+import formatPhoneNumber from "../../../utils/formatPhoneNumber";
+import { useSelector } from "react-redux";
 
 /**
  * ProfileInfo Component
@@ -16,20 +18,27 @@ import theme from "../../../assets/themes";
 // Utility function to get value from nested objects based on a string key path
 const getValue = (obj, keyPath) => {
     if (!keyPath || typeof keyPath !== "string") {
-        return "N/A"; // Default value if keyPath is undefined
+        return "N/A";
     }
 
     return keyPath.split(".").reduce((o, k) => (o || {})[k], obj);
 };
 
 const ProfileInfo = ({ details, item }) => {
+    const { addressData } = useSelector((state) => state.global);
+    const countryCode = addressData?.country || "N/A";
+
     return (
         <Stack mt={5} spacing={3} justifyContent="start" width="100%">
             {details.map(({ icon, label, valueKey }, index) => {
-                const value =
-                    label === "Date of Birth" || label === "Plan expired Date"
-                        ? FormatDate(getValue(item, valueKey))
-                        : getValue(item, valueKey) || "N/A";
+                let value = getValue(item, valueKey) || "N/A";
+
+                // Format value based on specific labels
+                if (label === "Date of Birth" || label === "Plan expired Date") {
+                    value = FormatDate(value);
+                } else if (label === "Phone") {
+                    value = formatPhoneNumber(value, countryCode);
+                }
 
                 return (
                     <Stack key={index} direction="row" spacing={2} alignItems="center" sx={{ marginBottom: "16px" }}>

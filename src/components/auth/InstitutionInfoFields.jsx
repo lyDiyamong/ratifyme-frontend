@@ -1,10 +1,10 @@
 import { Grid } from "@mui/material";
 import FormInput from "../FormInput";
+import PhoneNumberForm from "../PhoneNumberForm";
 
 const InstitutionInfoFields = ({ control, schema }) => {
     return (
         <Grid container spacing={2}>
-            {/* <Typography>Institution Information</Typography> */}
             <Grid item xss={12} sm={12}>
                 <FormInput name="institutionName" label="Name" control={control} required />
             </Grid>
@@ -18,11 +18,12 @@ const InstitutionInfoFields = ({ control, schema }) => {
                 />
             </Grid>
             <Grid item xss={12} sm={12}>
-                <FormInput
+                <PhoneNumberForm
                     name="institutionPhoneNumber"
                     label="Phone Number"
                     control={control}
                     required
+                    schema={schema?.fields.postalCode}
                 />
             </Grid>
             <Grid item xss={12} sm={12}>
