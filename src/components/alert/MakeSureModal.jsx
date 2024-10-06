@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 
 // Custom import
-import theme from "../assets/themes";
+import theme from "../../assets/themes";
 import { Box } from "@mui/system";
 
 /**
