@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import * as yup from "yup";
 
 // MUI import
-import { Box, Typography, Button, IconButton } from "@mui/material";
+import { Box, Typography, Button, Stack } from "@mui/material";
 import { ArrowBackOutlined, LockOutlined } from "@mui/icons-material";
 import { useForgotPasswordMutation } from "../../store/api/auth/authApi";
 import EmailOutlined from "@mui/icons-material/EmailOutlined";
@@ -38,7 +38,6 @@ const ForgotPasswordPage = () => {
     const {
         handleSubmit,
         control,
-        formState: { errors },
     } = useForm({ mode: "onChange" });
 
     const [loading, setLoading] = useState(false);
@@ -47,8 +46,7 @@ const ForgotPasswordPage = () => {
     const onSubmit = async (data) => {
         try {
             setLoading(true);
-            const result = await fortgotPassword(data).unwrap();
-            console.log(result);
+            await fortgotPassword(data).unwrap();
             navigate("/forgot-password-sent");
         } catch (error) {
             console.error("Error during set forgot password:", error.message || error);
