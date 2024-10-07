@@ -62,7 +62,6 @@ const getValue = (obj, keyPath) => {
     return keyPath.split(".").reduce((o, k) => (o || {})[k], obj);
 };
 
-
 // ============ Start Profile Modal ============
 const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey, details }) => {
     return (
