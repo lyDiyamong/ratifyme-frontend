@@ -51,7 +51,7 @@ const ResetPasswordPage = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const { token } = useParams();
-    const [resetPassword, { isLoading, isError }] = useResetPasswordMutation();
+    const [resetPassword] = useResetPasswordMutation();
     
     const { data, error } = useVerifyResetTokenQuery(token, {
         skip: !token,
@@ -85,7 +85,7 @@ const ResetPasswordPage = () => {
         setLoading(true);
         try {
             await resetPassword({ token, ...data }).unwrap();
-            navigate("/dashboard");
+            navigate("/reset-password-success");
         } finally {
             setLoading(false);
         }
