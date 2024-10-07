@@ -1,3 +1,4 @@
+// React Import
 import { useState, useEffect } from "react";
 
 // MUI import
@@ -39,12 +40,11 @@ const BadgeListCard = ({ badges, onView }) => {
     const handleChangePage = (_, value) => setPage(value);
 
     const handleView = (id) => {
-        // Log the badge ID
-        console.log("Badge ID passed to onView:", id);
         onView(id);
     };
 
     return (
+        // ============ Start Badge List Card ============
         <Box my={3}>
             <Typography variant="h6" sx={{ pb: 2 }}>
                 Total Badges: {badges.length}
@@ -153,6 +153,7 @@ const BadgeListCard = ({ badges, onView }) => {
                 </Box>
             )}
         </Box>
+        // ============ End Badge List Card ============
     );
 };
 

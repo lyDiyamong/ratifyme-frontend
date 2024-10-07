@@ -1,6 +1,8 @@
+// MUI Import
 import { Button } from "@mui/material";
 import theme from "../../assets/themes";
 
+// Custom Import
 import { useSendBadgeMutation } from "../../store/api/achievements/achievementApi";
 import { useFetchEarnerQuery } from "../../store/api/earnerManagement/earnerApis";
 

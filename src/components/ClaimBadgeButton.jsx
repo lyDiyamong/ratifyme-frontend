@@ -1,5 +1,8 @@
+// MUI Import
 import { Button } from "@mui/material";
 import theme from "../assets/themes";
+
+// Custom Import
 import { useClaimBadgeMutation, useFetchStatusBadgeQuery } from "../store/api/earnerManagement/earnerApis";
 import { useEffect, useState } from "react";
 
@@ -32,6 +35,7 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
     };
 
     return (
+        // Start Claim Button
         <Button
             onClick={handleClaimBadge}
             disabled={claimed || isLoading}
@@ -50,6 +54,7 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
         >
             {isLoading ? "Claiming..." : claimed ? "Claimed" : "Claim Badge"}
         </Button>
+        // End Claim Button
     );
 };
 

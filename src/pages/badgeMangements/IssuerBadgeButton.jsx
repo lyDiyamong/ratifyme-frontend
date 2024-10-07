@@ -1,6 +1,11 @@
+// React Import
 import { useState } from "react";
+
+// MUI Import
 import { Button } from "@mui/material";
 import theme from "../../assets/themes";
+
+// Custom Import
 import ModalContainer from "../../components/styles/ModalContainer";
 import { useFetchEarnerQuery } from "../../store/api/earnerManagement/earnerApis";
 
@@ -17,6 +22,7 @@ const IssuerBadgeButton = ({ onGetEmail, control, issuerId }) => {
 
     return (
         <>
+            // Start Add Earner Button 
             <Button
                 onClick={() => setOpen(true)}
                 sx={{
@@ -38,6 +44,7 @@ const IssuerBadgeButton = ({ onGetEmail, control, issuerId }) => {
                 onGetEmail={onGetEmail}
                 control={control}
             />
+             // End Add Earner Button
         </>
     );
 };

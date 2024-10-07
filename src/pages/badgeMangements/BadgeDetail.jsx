@@ -1,8 +1,13 @@
+// React Import 
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+
+// MUI Import 
+import { Typography } from "@mui/material";
+
+// Custom Import 
 import BadgeDetailCustom from "../../components/BadgeDetailCustom";
 import DashboardContainer from "../../components/styles/DashboardContainer";
-import { Typography } from "@mui/material";
 import { useFetchOneBadgeQuery } from "../../store/api/badgeManagement/badgeApi";
 
 const BadgeDetail = () => {
