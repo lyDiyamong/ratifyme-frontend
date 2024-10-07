@@ -111,6 +111,7 @@ const LoginPage = () => {
                             required={true}
                             startIcon={<EmailOutlined />}
                             schema={schema.fields.email}
+                            placeholder="example@gmail.com"
                         />
                         {/* Password */}
                         <FormInput
