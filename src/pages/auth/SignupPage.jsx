@@ -6,7 +6,7 @@ import * as yup from "yup";
 
 // MUI import
 import { Box, Grid, Typography, Button, Stepper, Step, StepLabel, Stack, StepConnector } from "@mui/material";
-import { display, styled } from "@mui/system";
+import { styled } from "@mui/system";
 
 // Custom import
 import theme from "../../assets/themes";
@@ -111,7 +111,7 @@ const CustomConnector = styled(StepConnector)(({ theme }) => ({
 const CustomStepLabel = styled(StepLabel)(({ theme, ownerState }) => ({
     "& .MuiStepLabel-label": {
         color: ownerState.completed
-            ? theme.palette.success.main
+            ? theme.palette.primary.dark
             : ownerState.active
             ? theme.palette.primary.main
             : "#999",
@@ -120,10 +120,10 @@ const CustomStepLabel = styled(StepLabel)(({ theme, ownerState }) => ({
 
         // Handling responsive breakpoints
         [theme.breakpoints.up("md")]: {
-            display: "block", // Visible on small and larger screens
+            display: "block",
         },
         [theme.breakpoints.down("sm")]: {
-            display: "none", // Hidden on extra small screens
+            display: "none",
         },
     },
 }));
@@ -134,7 +134,6 @@ const SignupPage = () => {
     const navigate = useNavigate();
     const [role, setRole] = useState("");
     const [signUp, { isLoading, isError, error }] = useSignUpMutation();
-    // const message = useCatchStatus(isError, error?.data?.message);
     const [message, setMessage] = useCatchStatus(isError || isError, error?.data?.message);
     const [activeStep, setActiveStep] = useState(0);
     const { inviter, guest } = location.state || {};
@@ -142,8 +141,8 @@ const SignupPage = () => {
     const [stepCompletion, setStepCompletion] = useState([false, false, false, false]);
 
     const steps = {
-        institution: ["General Information", "Address Information", "Account Setup", "Institution Information"],
-        default: ["General Information", "Address Information", "Account Setup"],
+        institution: ["General Info", "Address Info", "Institution Info", "Account Setup"],
+        default: ["General Info", "Address Info", "Account Setup"],
     };
 
     useEffect(() => {
@@ -174,7 +173,7 @@ const SignupPage = () => {
         mode: "onChange",
     });
 
-    const { handleSubmit, control, trigger, setValue, reset } = methods;
+    const { handleSubmit, control, trigger, setValue } = methods;
 
     useEffect(() => {
         const queryRole = new URLSearchParams(search).get("as") || "";
@@ -243,16 +242,16 @@ const SignupPage = () => {
 
         // Specify which fields to validate based on the current step
         switch (activeStep) {
-            case 0: // Step 1: General Information
+            case 0: // Step 1: General Info
                 fieldsToValidate = ["firstName", "lastName", "genderId", "dateOfBirth"];
                 break;
-            case 1: // Step 2: Address Information
+            case 1: // Step 2: Address Info
                 fieldsToValidate = ["country", "city", "street", "postalCode"];
                 break;
             case 2: // Step 3: Account Setup
                 fieldsToValidate = ["username", "phoneNumber", "email", "password", "passwordConfirm"];
                 break;
-            case 3: // Step 4: Institution Information (if role === 'institution')
+            case 3: // Step 4: Institution Info (if role === 'institution')
                 if (role === "institution") {
                     fieldsToValidate = [
                         "institutionName",
@@ -296,7 +295,9 @@ const SignupPage = () => {
             // Mark current step as complete
             setStepCompletion((prev) => {
                 const newCompletion = [...prev];
-                newCompletion[activeStep] = true; // Set current step to complete
+
+                // Set current step to complete
+                newCompletion[activeStep] = true;
                 return newCompletion;
             });
             setActiveStep((prevStep) => prevStep + 1);
@@ -314,10 +315,16 @@ const SignupPage = () => {
             case 1:
                 return <AddressFields control={control} schema={schema} />;
             case 2:
-                return <AccountSetupFields control={control} role={role} guest={guest} schema={schema} />;
+                if (role === "institution") {
+                    return <InstitutionInfoFields control={control} schema={schema} />;
+                } else {
+                    return <AccountSetupFields control={control} role={role} guest={guest} schema={schema} />;
+                }
             case 3:
-                return role === "institution" ? <InstitutionInfoFields control={control} schema={schema} /> : null;
-
+                if (role === "institution") {
+                    return <AccountSetupFields control={control} role={role} guest={guest} schema={schema} />;
+                }
+                return null; // No step 3 for non-institution roles
             default:
                 return null;
         }

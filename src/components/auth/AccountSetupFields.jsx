@@ -40,10 +40,6 @@ const AccountSetupFields = ({ control, role, guest, schema }) => {
     return (
         <Stack gap={2}>
             {/* <Typography>Account Setup</Typography> */}
-            <FormInput name="username" label="Username" control={control} required schema={schema?.fields.username} />
-
-            <PhoneNumberForm name="phoneNumber" label="Phone Number" control={control} required />
-
             <FormInput
                 name="email"
                 label="Email"
@@ -53,6 +49,9 @@ const AccountSetupFields = ({ control, role, guest, schema }) => {
                 defaultValue={guest?.inviteEmail || ""}
                 schema={schema?.fields.email}
             />
+            <FormInput name="username" label="Username" control={control} required schema={schema?.fields.username} />
+
+            <PhoneNumberForm name="phoneNumber" label="Phone Number" control={control} required />
 
             {/* <FormInput
                     name="password"
