@@ -19,17 +19,18 @@ import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import DefaultProfile from "../assets/images/Malen.webp";
 import theme from "../assets/themes";
 
+// Style
 const StyledDialog = styled(Dialog)(({ theme }) => ({
     ".MuiPaper-root": {
         borderRadius: theme.shape.borderRadius * 2,
-        boxShadow: "0px 4px 24px rgba(0, 0, 0, 0.1)",
+        boxShadow: "0px 4px 24px rgba(0, 0, 0, 0.2)",
         backgroundColor: theme.palette.customColors.white,
     },
 }));
 
 const StyledCard = styled(Card)(({ theme }) => ({
     borderRadius: theme.shape.borderRadius * 2,
-    boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.08)",
+    boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.2)",
     padding: theme.spacing(3),
     marginBottom: theme.spacing(2),
     backgroundColor: theme.palette.customColors.white,
@@ -37,15 +38,30 @@ const StyledCard = styled(Card)(({ theme }) => ({
 
 const ProfileCard = styled(Card)(({ theme }) => ({
     borderRadius: theme.shape.borderRadius * 2,
-    boxShadow: "0px 4px 24px rgba(0, 0, 0, 0.15)",
+    boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.2)",
     padding: "20px",
     background: "linear-gradient(to bottom, #ffffff, #e0f7fa)",
     height: "100%",
 }));
 
+/**
+ * ProfileModal Component
+ *
+ * @param {boolean} open - Controls whether the modal is open or closed.
+ * @param {function} onClose - Function to handle closing the modal.
+ * @param {object} item - The data object representing the user's profile.
+ * @param {string} avatarKey - The key path to the user's avatar image in the item object.
+ * @param {string} nameKey - The key path to the user's name in the item object.
+ * @param {string} roleKey - The key path to the user's role in the item object.
+ * @param {string} desKey - The key path to the user's description or bio in the item object.
+ * @param {Array} details - An array of detail objects, where each object contains an icon, label, and valueKey for displaying additional profile information.
+ *
+ * @returns {JSX.Element} A Material-UI styled Dialog component displaying user profile information with avatar, name, role, bio, and additional details.
+ */
 const getValue = (obj, keyPath) => {
     return keyPath.split(".").reduce((o, k) => (o || {})[k], obj);
 };
+
 
 // ============ Start Profile Modal ============
 const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey, details }) => {
@@ -64,6 +80,7 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
             <DialogContent>
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={6} mb={2} sx={{ height: "full" }}>
+                        {/* Profile Card */}
                         <ProfileCard>
                             <Stack flexDirection="column" alignItems="center" mb={2} sx={{ height: "100%" }}>
                                 <Avatar
@@ -93,7 +110,7 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
                                         {getValue(item, roleKey) || "N/A"}
                                     </Typography>
                                 </Stack>
-                                <Typography variant="body2" color="textSecondary" mt={4}>
+                                <Typography variant="body2" mt={4} sx={{ color: theme.palette.customColors.gray500 }}>
                                     {getValue(item, desKey) || "No bio available"}
                                 </Typography>
                             </Stack>
@@ -101,37 +118,53 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
                     </Grid>
 
                     <Grid item xs={12} md={6}>
+                        {/* More Detaill */}
                         <StyledCard>
-                            <Typography variant="h6" fontWeight={600} mb={2}>
+                            <Typography
+                                variant="h6"
+                                mb={2}
+                                sx={{
+                                    fontWeight: theme.fontWeight.bold,
+                                }}
+                            >
                                 Additional Details
                             </Typography>
                             <Grid container spacing={2}>
                                 {details.map(({ icon, label, valueKey }, index) => (
                                     <Grid item xs={12} sm={6} key={index}>
-                                        <Stack direction="row" alignItems="center" spacing={1}>
+                                        <Stack direction="row" spacing={1}>
                                             {icon}
-                                            <Typography variant="body2">{label}</Typography>
+                                            <Stack>
+                                                <Typography variant="body2" sx={{ color: theme.palette.text.primary }}>
+                                                    {label}
+                                                </Typography>
+
+                                                <Typography
+                                                    variant="body3"
+                                                    sx={{ color: theme.palette.text.secondary }}
+                                                >
+                                                    {getValue(item, valueKey) || "N/A"}
+                                                </Typography>
+                                            </Stack>
                                         </Stack>
-                                        <Typography variant="body3" color="textSecondary">
-                                            {getValue(item, valueKey) || "N/A"}
-                                        </Typography>
                                     </Grid>
                                 ))}
                             </Grid>
                         </StyledCard>
 
+                        {/* Address */}
                         <StyledCard>
-                            <Typography variant="h6" fontWeight={600} mb={2}>
+                            <Typography variant="h6" mb={2} sx={{ fontWeight: theme.fontWeight.bold }}>
                                 Address
                             </Typography>
-                            <Typography variant="body3" color="textSecondary">
+                            <Typography variant="body3" sx={{ color: theme.palette.customColors.gray500 }}>
                                 {(() => {
                                     const addresses = getValue(item, "User.Addresses") || [];
                                     const address = addresses.length > 0 ? addresses[0] : {};
                                     return `Street: ${address.street || "N/A"}, 
                                             City: ${address.city || "N/A"}, 
-                                            Postal Code: ${address.postalCode || "N/A"}, 
-                                            Country: ${address.country || "N/A"}`;
+                                            Country: ${address.country || "N/A"},
+                                            Postal Code: ${address.postalCode || "N/A"}`;
                                 })()}
                             </Typography>
                         </StyledCard>
