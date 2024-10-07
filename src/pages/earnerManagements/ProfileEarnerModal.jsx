@@ -14,6 +14,7 @@ import FormatDate from "../../utils/formatDate";
 
 // Fetching Data Import
 import { useFetchEarnerByIdQuery } from "../../store/api/earnerManagement/earnerApis";
+
 /**
  * ProfileEarnerModal Component
  *
@@ -27,7 +28,6 @@ import { useFetchEarnerByIdQuery } from "../../store/api/earnerManagement/earner
  *
  * @returns {JSX.Element} A modal component displaying earner profile information.
  */
-
 
 // ============ Start Profile Earner Modal Custom Button ============
 const ProfileEarnerModal = ({ open, onClose, userId }) => {
