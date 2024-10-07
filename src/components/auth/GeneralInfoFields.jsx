@@ -1,11 +1,9 @@
-
-
 import { Grid } from "@mui/material";
 
 import DateSelectionForm from "../DateSelectionForm";
 import SelectForm from "../SelectionForm";
 import FormInput from "../FormInput";
-
+import { Stack } from "@mui/system";
 
 const GeneralInfoFields = ({ control, schema }) => {
     const genderOptions = [
@@ -14,20 +12,18 @@ const GeneralInfoFields = ({ control, schema }) => {
     ];
 
     return (
-        <Grid container spacing={2}>
-            <Grid item xss={12} sm={12}>
-                <FormInput name="firstName" label="First Name" control={control} required schema={schema?.fields.firstName} />
-            </Grid>
-            <Grid item xss={12} sm={12}>
-                <FormInput name="lastName" label="Last Name" control={control} required schema={schema?.fields.lastName} />
-            </Grid>
-            <Grid item xss={12} sm={12}>
-                <SelectForm name="genderId" label="Gender" options={genderOptions} control={control} />
-            </Grid>
-            <Grid item xss={12} sm={12}>
-                <DateSelectionForm control={control} name="dateOfBirth" label="Date of Birth" />
-            </Grid>
-        </Grid>
+        <Stack gap={2}>
+            <FormInput
+                name="firstName"
+                label="First Name"
+                control={control}
+                required
+                schema={schema?.fields.firstName}
+            />
+            <FormInput name="lastName" label="Last Name" control={control} required schema={schema?.fields.lastName} />
+            <SelectForm name="genderId" label="Gender" options={genderOptions} control={control} />
+            <DateSelectionForm control={control} name="dateOfBirth" label="Date of Birth" />
+        </Stack>
     );
 };
 

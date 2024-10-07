@@ -1,4 +1,4 @@
-import { Grid, TextField, Typography, Box, IconButton } from "@mui/material";
+import { Stack, TextField, IconButton } from "@mui/material";
 import FormInput from "../FormInput";
 import { Controller } from "react-hook-form";
 import { useState } from "react";
@@ -38,45 +38,23 @@ const AccountSetupFields = ({ control, role, guest, schema }) => {
         setShowPassword((prev) => !prev);
     };
     return (
-        <Grid container spacing={2}>
+        <Stack gap={2}>
             {/* <Typography>Account Setup</Typography> */}
-            <Grid item xss={12} sm={12}>
-                <FormInput
-                    name="username"
-                    label="Username"
-                    control={control}
-                    required
-                    schema={schema?.fields.username}
-                />
-            </Grid>
-            <Grid item xss={12} sm={12}>
-                {/* <FormInput
-                    name="phoneNumber"
-                    label="Phone Number"
-                    control={control}
-                    required
-                    schema={schema?.fields.postalCode}
-                /> */}
-                <PhoneNumberForm
-                    name="phoneNumber"
-                    label="Phone Number"
-                    control={control}
-                    required
-                />
-            </Grid>
-            <Grid item xss={12} sm={12}>
-                <FormInput
-                    name="email"
-                    label="Email"
-                    control={control}
-                    required
-                    disabled={role !== "institution"}
-                    defaultValue={guest?.inviteEmail || ""}
-                    schema={schema?.fields.email}
-                />
-            </Grid>
-            <Grid item xss={12} sm={12}>
-                {/* <FormInput
+            <FormInput name="username" label="Username" control={control} required schema={schema?.fields.username} />
+
+            <PhoneNumberForm name="phoneNumber" label="Phone Number" control={control} required />
+
+            <FormInput
+                name="email"
+                label="Email"
+                control={control}
+                required
+                disabled={role !== "institution"}
+                defaultValue={guest?.inviteEmail || ""}
+                schema={schema?.fields.email}
+            />
+
+            {/* <FormInput
                     name="password"
                     label="Password"
                     control={control}
@@ -84,47 +62,45 @@ const AccountSetupFields = ({ control, role, guest, schema }) => {
                     type="password"
                     schema={schema?.fields.password}
                 /> */}
-                
-                <Controller
-                    name="password"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField
-                            {...field}
-                            label="Password"
-                            type={showPassword ? "text" : "password"} // Toggle password visibility
-                            variant="outlined"
-                            required
-                            fullWidth
-                            onChange={(e) => handlePasswordChange(e, field.onChange)} // Pass the field's onChange
-                            helperText={`Password Strength: ${passwordStrength}`} // Display strength as helper text
-                            error={passwordStrength === "Low"} // Show error state if password strength is low // Pass the field's onChange
-                            InputProps={{
-                                endAdornment: (
-                                    <IconButton
-                                        onClick={handleTogglePasswordVisibility}
-                                        edge="end"
-                                        aria-label="toggle password visibility"
-                                    >
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                ),
-                            }}
-                        />
-                    )}
-                />
-            </Grid>
-            <Grid item xss={12} sm={12}>
-                <FormInput
-                    name="passwordConfirm"
-                    label="Confirm Password"
-                    control={control}
-                    required
-                    type="password"
-                    // schema={schema?.fields.passwordConfirm}
-                />
-            </Grid>
-        </Grid>
+
+            <Controller
+                name="password"
+                control={control}
+                render={({ field }) => (
+                    <TextField
+                        {...field}
+                        label="Password"
+                        type={showPassword ? "text" : "password"} // Toggle password visibility
+                        variant="outlined"
+                        required
+                        fullWidth
+                        onChange={(e) => handlePasswordChange(e, field.onChange)} // Pass the field's onChange
+                        helperText={`Password Strength: ${passwordStrength}`} // Display strength as helper text
+                        error={passwordStrength === "Low"} // Show error state if password strength is low // Pass the field's onChange
+                        InputProps={{
+                            endAdornment: (
+                                <IconButton
+                                    onClick={handleTogglePasswordVisibility}
+                                    edge="end"
+                                    aria-label="toggle password visibility"
+                                >
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            ),
+                        }}
+                    />
+                )}
+            />
+
+            <FormInput
+                name="passwordConfirm"
+                label="Confirm Password"
+                control={control}
+                required
+                type="password"
+                // schema={schema?.fields.passwordConfirm}
+            />
+        </Stack>
     );
 };
 
