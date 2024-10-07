@@ -1,4 +1,3 @@
-import { green } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
@@ -39,7 +38,7 @@ const theme = createTheme({
             green200: "#B3E4B0", // SP-Green-100
             green300: "#0BA800", // SP-Green-200
             green400: "#0B9710", // SP-Green-400
-            red100: "#ffc1c1", // SP-Red-100
+            red100: "#ffebee", // SP-Red-100
             red200: "#ff3838", // SP-Red-200
             red300: "#E63232", // SP-Red-300
             red400: "#CC2D2D", // SP-Red-400
