@@ -5,15 +5,17 @@ export const achievementApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_SERVER_BASE_URL }),
     tagTypes: ["Achievement"],
     endpoints: (builder) => ({
-        createAchievement: builder.mutation({
-            query: (achievement) => ({
-                url: "/issuers/achievements",
-                method: "POST",
-                body: achievement,
+        sendBadge: builder.mutation({
+            query: ({ id, earners }) => ({
+                url: `/issuers/${id}/assignEarners`,
+                method: "PATCH",
+                body: {
+                    earnerIds: earners,
+                },
             }),
             invalidatesTags: [{ type: "Achievement", id: "LIST" }],
         }),
     }),
 });
 
-export const { useCreateAchievementMutation } = achievementApi;
+export const { useSendBadgeMutation } = achievementApi;

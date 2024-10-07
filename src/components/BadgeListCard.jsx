@@ -1,5 +1,5 @@
+// React Import
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 // MUI import
 import {
@@ -19,10 +19,8 @@ import {
 import theme from "../assets/themes";
 import StatusCode from "../assets/images/NoData.svg";
 import GoldBadge from "../assets/images/DiamondBadge.svg";
-import BadgeDetail from "../pages/badgeMangements/BadgeDetail";
 
-const BadgeListCard = ({ badges=[], onView }) => {
-    const navigate = useNavigate();
+const BadgeListCard = ({ badges, onView }) => {
     // State management for pagination
     const [page, setPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(6);
@@ -42,12 +40,11 @@ const BadgeListCard = ({ badges=[], onView }) => {
     const handleChangePage = (_, value) => setPage(value);
 
     const handleView = (id) => {
-        // Log the badge ID
-        console.log("Badge ID passed to onView:", id);
         onView(id);
     };
 
     return (
+        // ============ Start Badge List Card ============
         <Box my={3}>
             <Typography variant="h6" sx={{ pb: 2 }}>
                 Total Badges: {badges.length}
@@ -156,6 +153,7 @@ const BadgeListCard = ({ badges=[], onView }) => {
                 </Box>
             )}
         </Box>
+        // ============ End Badge List Card ============
     );
 };
 

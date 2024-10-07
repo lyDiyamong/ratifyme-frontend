@@ -1,7 +1,11 @@
-import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Paper, Box } from "@mui/material";
-import theme from "../../assets/themes/index";
+// React Import
 import { useState } from "react";
 
+// MUI Import 
+import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Paper, Box } from "@mui/material";
+import theme from "../../assets/themes/index";
+
+// Custom Import
 import SelectForm from "../SelectionForm";
 
 const CustomPaper = (props) => <Paper {...props} sx={{ borderRadius: "16px" }} />;

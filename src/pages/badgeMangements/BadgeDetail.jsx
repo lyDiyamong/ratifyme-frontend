@@ -1,16 +1,25 @@
+// React Import 
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+
+// MUI Import 
+import { Typography } from "@mui/material";
+
+// Custom Import 
 import BadgeDetailCustom from "../../components/BadgeDetailCustom";
 import DashboardContainer from "../../components/styles/DashboardContainer";
-import { Typography } from "@mui/material";
 import { useFetchOneBadgeQuery } from "../../store/api/badgeManagement/badgeApi";
 
 const BadgeDetail = () => {
     // Fetch ID from the URL
     const { id } = useParams();
     // Fetch badge by ID
+    const { roleId, issuerData, earnerData } = useSelector((state) => state.global);
     const { data: oneBadge, isLoading, isError } = useFetchOneBadgeQuery(id);
 
-    let role = oneBadge?.data?.Issuer?.User?.roleId;
+    let role = roleId;
+    let activeUserId;
+
     switch (role) {
         case 1: {
             role = "admin";
@@ -22,10 +31,12 @@ const BadgeDetail = () => {
         }
         case 3: {
             role = "issuer";
+            activeUserId = issuerData;
             break;
         }
         case 4: {
             role = "earner";
+            activeUserId = earnerData;
             break;
         }
     }
@@ -39,7 +50,7 @@ const BadgeDetail = () => {
 
     return (
         <DashboardContainer sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
-            <BadgeDetailCustom badge={oneBadge} userRole={role} issuerId={oneBadge?.data?.issuerId || ""} />
+            <BadgeDetailCustom badge={oneBadge} userRole={role} activeUserId={activeUserId} />
         </DashboardContainer>
     );
 };
