@@ -2,61 +2,27 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm, FormProvider } from "react-hook-form";
-import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 // MUI import
-import { Box, Grid, Typography, Button, Stepper, Step, StepLabel, Stack, StepConnector } from "@mui/material";
-import { styled } from "@mui/system";
+import { Box, Typography, Button, Stepper, Step, Stack } from "@mui/material";
 
 // Custom import
 import theme from "../../assets/themes";
 import { useSignUpMutation } from "../../store/api/auth/authApi";
-import GeneralInfoFields from "../../components/auth/GeneralInfoFields";
-import AddressFields from "../../components/auth/AddressFields";
-import InstitutionInfoFields from "../../components/auth/InstitutionInfoFields";
-import AccountSetupFields from "../../components/auth/AccountSetupFields";
 import useCatchStatus from "../../hooks/useCatchStatus";
 import AlertMessage from "../../components/alert/AlertMessage";
-import OutletImageComponent from "./OutletImageTemplate";
 import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
+import { passwordSchema } from "../../utils/auth/passwordUtils";
+import { schema } from "../../utils/auth/fieldValidationSchema.js";
+import RenderStepSignupContent from "../../components/auth/RenderStepSignupContent.jsx";
+import { GetStepIcon, CustomConnector, CustomStepIcon, CustomStepLabel } from "../../components/auth/CustomSteppers.jsx";
+import PageLoading from "../../components/loading/PageLoading.jsx";
+import AuthOutletImage from "../../components/auth/AuthOutletImage.jsx";
 
-const schema = yup.object({
-    firstName: yup
-        .string()
-        .matches(/^[A-Za-z]+$/, "First name must contain only letters and no spaces")
-        .required("First name is required"),
-    lastName: yup
-        .string()
-        .matches(/^[A-Za-z]+$/, "Last name must contain only letters and no spaces")
-        .required("Last name is required"),
-    username: yup
-        .string()
-        .matches(
-            /^[a-zA-Z0-9._-]+$/,
-            "Username must not contain spaces and can only include letters, numbers, dots, underscores, and hyphens.",
-        )
-        .required("Username is required"),
-    email: yup
-        .string()
-        .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email format")
-        .required("Email is required"),
-    postalCode: yup
-        .string()
-        .matches(/^\d+$/, "Verification code must be numeric")
-        .required("Verification code is required"),
-    institutionName: yup
-        .string()
-        .matches(/^[A-Za-z\s]+$/, "Institution name must contains only characters")
-        .required("Institution name is required"),
-    institutionEmail: yup
-        .string()
-        .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email format")
-        .required("Email is required"),
-    url: yup.string().url("Invalid URL format").required("URL is required"),
-    phoneNumber: yup
-        .string()
-        .matches(/^\d+$/, "Phone number must contain only digits")
-        .required("Phone number is required"),
+const passwordSchemaName = passwordSchema({
+    passwordName: "password",
+    passwordConfirmName: "passwordConfirm",
 });
 
 const roleIdData = {
@@ -65,84 +31,24 @@ const roleIdData = {
     earner: 4,
 };
 
-const CustomStepIcon = styled("div")(({ theme, ownerState }) => ({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: 40,
-    height: 40,
-    borderRadius: "50%",
-    border: ownerState.completed
-        ? theme.palette.primary.main
-        : ownerState.active
-        ? theme.palette.primary.main
-        : "1px solid #e0e0e0",
-    backgroundColor: ownerState.completed
-        ? theme.palette.primary.main
-        : ownerState.active
-        ? theme.palette.primary.main
-        : "none",
-    color: ownerState.completed
-        ? theme.palette.customColors.white
-        : ownerState.active
-        ? theme.palette.customColors.white
-        : "#000",
-    position: "relative",
-}));
-
-// Custom connector to match the line style
-const CustomConnector = styled(StepConnector)(({ theme }) => ({
-    "&.MuiStepConnector-root": {
-        top: "25%",
-        position: "absolute",
-        transform: "translateY(-50%)",
-    },
-    "& .MuiStepConnector-line": {
-        borderColor: theme.palette.customColors.gray200,
-        top: "50%",
-        position: "absolute",
-        left: 0,
-        right: 0,
-        transform: "translateY(-50%)",
-    },
-}));
-
-// Modify StepLabel to add custom styling for active steps
-const CustomStepLabel = styled(StepLabel)(({ theme, ownerState }) => ({
-    "& .MuiStepLabel-label": {
-        color: ownerState.completed
-            ? theme.palette.primary.dark
-            : ownerState.active
-            ? theme.palette.primary.main
-            : "#999",
-        fontWeight: ownerState.active || ownerState.completed ? "bold" : "normal",
-        fontSize: "14px",
-
-        // Handling responsive breakpoints
-        [theme.breakpoints.up("md")]: {
-            display: "block",
-        },
-        [theme.breakpoints.down("sm")]: {
-            display: "none",
-        },
-    },
-}));
-
 const SignupPage = () => {
     const { search } = useLocation();
     const location = useLocation();
     const navigate = useNavigate();
     const [role, setRole] = useState("");
-    const [signUp, { isLoading, isError, error }] = useSignUpMutation();
-    const [message, setMessage] = useCatchStatus(isError || isError, error?.data?.message);
+    const [signUp, { isLoading, isError, error, isSuccess, data }] = useSignUpMutation();
     const [activeStep, setActiveStep] = useState(0);
     const { inviter, guest } = location.state || {};
     const [fieldValues, setFieldValues] = useState({});
-    const [stepCompletion, setStepCompletion] = useState([false, false, false, false]);
+    const [stepCompletion, setStepCompletion] = useState([false, false, false, false, false]);
 
+    const [message, setMessage] = useCatchStatus(isError || isSuccess, isError ? error?.data?.message : data?.message);
+
+    // Fallback steps in case role is not defined
     const steps = {
-        institution: ["General Info", "Address Info", "Institution Info", "Account Setup"],
-        default: ["General Info", "Address Info", "Account Setup"],
+        institution: ["General Info", "Address Info", "Institution Info", "Account Setup", "Password Setup"],
+        issuer: ["General Info", "Address Info", "Account Setup", "Password Setup"],
+        earner: ["General Info", "Address Info", "Account Setup", "Password Setup"],
     };
 
     useEffect(() => {
@@ -171,9 +77,10 @@ const SignupPage = () => {
             institutionWebsiteUrl: "",
         },
         mode: "onChange",
+        resolver: yupResolver(schema.concat(passwordSchemaName)),
     });
 
-    const { handleSubmit, control, trigger, setValue } = methods;
+    const { handleSubmit, control, trigger, setValue, watch } = methods;
 
     useEffect(() => {
         const queryRole = new URLSearchParams(search).get("as") || "";
@@ -183,42 +90,89 @@ const SignupPage = () => {
         }
     }, [guest, role, search, setValue]);
 
+    const handleNext = async () => {
+        let fieldsToValidate = [];
+
+        // Define which fields to validate for each step
+        switch (activeStep) {
+            case 0:
+                fieldsToValidate = ["firstName", "lastName", "genderId", "dateOfBirth"];
+                break;
+            case 1:
+                fieldsToValidate = ["country", "city", "street", "postalCode"];
+                break;
+            case 2:
+                if (role === "institution") {
+                    fieldsToValidate = ["institutionName", "institutionEmail", "institutionPhoneNumber", "institutionWebsiteUrl"];
+                } else {
+                    fieldsToValidate = ["username", "phoneNumber", "email"];
+                }
+                break;
+            case 3:
+                if (role === "institution") {
+                    fieldsToValidate = ["username", "phoneNumber", "email"];
+                } else {
+                    fieldsToValidate = ["password", "passwordConfirm"];
+                }
+                break;
+            case 4: // Only applicable to "institution"
+                fieldsToValidate = ["password", "passwordConfirm"];
+                break;
+            default:
+                fieldsToValidate = [];
+        }
+
+        const isStepValid = await trigger(fieldsToValidate);
+
+        if (isStepValid) {
+            const currentValues = methods.getValues();
+
+            setFieldValues(currentValues); // Save values
+
+            // Mark current step as completed
+            setStepCompletion((prev) => {
+                const newCompletion = [...prev];
+                newCompletion[activeStep] = true;
+                return newCompletion;
+            });
+
+            const totalSteps = role === "institution" ? 5 : 4;
+
+            // If it's the last step, submit the form
+            if (activeStep === totalSteps - 1) {
+                handleSubmit(onSubmit)();
+            } else {
+                setActiveStep((prevStep) => prevStep + 1);
+            }
+        }
+    };
+
     const onSubmit = async (data) => {
         const roleId = roleIdData[role] || 0;
 
-        // Restore any previously cleared values
-        const finalData = {
-            ...data,
-            username: data.username || fieldValues.username,
-            phoneNumber: data.phoneNumber || fieldValues.phoneNumber,
-            email: data.email || fieldValues.email,
-            password: data.password || fieldValues.password,
-            passwordConfirm: data.passwordConfirm || fieldValues.passwordConfirm,
-            institutionName: data.institutionName || fieldValues.institutionName,
-            institutionEmail: data.institutionEmail || fieldValues.institutionEmail,
-            institutionPhoneNumber: data.institutionPhoneNumber || fieldValues.institutionPhoneNumber,
-            institutionWebsiteUrl: data.institutionWebsiteUrl || fieldValues.institutionWebsiteUrl,
-        };
-
         const reqData = {
-            userData: { ...finalData, roleId, email: guest ? guest.inviteEmail : finalData.email },
+            userData: {
+                ...data,
+                roleId,
+                email: guest ? guest.inviteEmail : data.email,
+            },
             addressData: {
-                street: finalData.street,
-                city: finalData.city,
-                postalCode: finalData.postalCode,
-                country: finalData.country,
+                street: data.street,
+                city: data.city,
+                postalCode: data.postalCode,
+                country: data.country,
+            },
+            institutionData: {
+                institutionName: data.institutionName,
+                institutionEmail: data.institutionEmail,
+                institutionPhoneNumber: data.institutionPhoneNumber,
+                institutionWebsiteUrl: data.institutionWebsiteUrl,
             },
             issuerData: {},
             earnerData: {},
-            institutionData: {
-                institutionName: finalData.institutionName,
-                institutionEmail: finalData.institutionEmail,
-                institutionPhoneNumber: finalData.institutionPhoneNumber,
-                institutionWebsiteUrl: finalData.institutionWebsiteUrl,
-            },
         };
 
-        // Add institutionId to issuerData if inviter exists
+        // Add institutionId or IssuerId to issuerData if inviter exists
         if (inviter) {
             reqData.issuerData = {
                 institutionId: inviter.id,
@@ -231,76 +185,24 @@ const SignupPage = () => {
 
         try {
             await signUp(reqData).unwrap();
-            navigate(role === "institution" ? "/price" : "/dashboard");
+            navigate("/verify-email", { state: { email: data.email, roleId } });
         } catch (err) {
             console.error("Error during signup:", err);
         }
     };
 
-    const handleNext = async () => {
-        let fieldsToValidate = [];
-
-        // Specify which fields to validate based on the current step
-        switch (activeStep) {
-            case 0: // Step 1: General Info
-                fieldsToValidate = ["firstName", "lastName", "genderId", "dateOfBirth"];
-                break;
-            case 1: // Step 2: Address Info
-                fieldsToValidate = ["country", "city", "street", "postalCode"];
-                break;
-            case 2: // Step 3: Account Setup
-                fieldsToValidate = ["username", "phoneNumber", "email", "password", "passwordConfirm"];
-                break;
-            case 3: // Step 4: Institution Info (if role === 'institution')
-                if (role === "institution") {
-                    fieldsToValidate = [
-                        "institutionName",
-                        "institutionEmail",
-                        "institutionPhoneNumber",
-                        "institutionWebsiteUrl",
-                    ];
-                }
-                break;
-            default:
-                fieldsToValidate = [];
-        }
-
-        // Trigger validation
+    const handleSubmitLastStep = async () => {
+        const fieldsToValidate = ["password", "passwordConfirm"];
         const isStepValid = await trigger(fieldsToValidate);
 
         if (isStepValid) {
-            const currentValues = {
-                firstName: methods.getValues("firstName"),
-                lastName: methods.getValues("lastName"),
-                dateOfBirth: methods.getValues("dateOfBirth"),
-                genderId: methods.getValues("genderId"),
-                username: methods.getValues("username"),
-                phoneNumber: methods.getValues("phoneNumber"),
-                email: methods.getValues("email"),
-                password: methods.getValues("password"),
-                passwordConfirm: methods.getValues("passwordConfirm"),
-                country: methods.getValues("country"),
-                city: methods.getValues("city"),
-                street: methods.getValues("street"),
-                postalCode: methods.getValues("postalCode"),
-                institutionName: methods.getValues("institutionName"),
-                institutionEmail: methods.getValues("institutionEmail"),
-                institutionPhoneNumber: methods.getValues("institutionPhoneNumber"),
-                institutionWebsiteUrl: methods.getValues("institutionWebsiteUrl"),
-            };
+            const currentValues = methods.getValues();
 
-            // Store the values temporarily
-            setFieldValues(currentValues);
-
-            // Mark current step as complete
-            setStepCompletion((prev) => {
-                const newCompletion = [...prev];
-
-                // Set current step to complete
-                newCompletion[activeStep] = true;
-                return newCompletion;
-            });
-            setActiveStep((prevStep) => prevStep + 1);
+            try {
+                await onSubmit(currentValues);
+            } catch (err) {
+                console.error("Error during last step submission:", err);
+            }
         }
     };
 
@@ -308,130 +210,146 @@ const SignupPage = () => {
         setActiveStep((prevStep) => prevStep - 1);
     };
 
-    const renderStepContent = (step) => {
-        switch (step) {
-            case 0:
-                return <GeneralInfoFields control={control} schema={schema} />;
-            case 1:
-                return <AddressFields control={control} schema={schema} />;
-            case 2:
-                if (role === "institution") {
-                    return <InstitutionInfoFields control={control} schema={schema} />;
-                } else {
-                    return <AccountSetupFields control={control} role={role} guest={guest} schema={schema} />;
-                }
-            case 3:
-                if (role === "institution") {
-                    return <AccountSetupFields control={control} role={role} guest={guest} schema={schema} />;
-                }
-                return null; // No step 3 for non-institution roles
-            default:
-                return null;
-        }
-    };
-
     return (
-        <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ height: "100vh" }} noValidate>
-            {message && (
-                <AlertMessage variant="error" onClose={() => setMessage("")}>
-                    {message}
-                </AlertMessage>
-            )}
-            <Stack direction="row">
-                {/* Right side with login form */}
-                <Box
-                    flexGrow={0}
-                    display="flex"
-                    flexDirection="column"
-                    sx={{
-                        width: { md: "50%", xss: "100%" },
-                        maxWidth: "700px",
-                        mx: "auto",
-                        px: 4,
-                        backgroundColor: "transparent",
-                    }}
-                >
-                    <Link to="/">
-                        <Box
-                            component="img"
-                            src={RatifyMELogo}
-                            alt="Ratifyme Favicon"
-                            sx={{ width: 150, height: 150 }}
-                        />
-                    </Link>
-
-                    <Typography
-                        variant="h4"
-                        mb={4}
-                        component="h4"
+        <>
+            <PageLoading isLoading={isLoading} />
+            <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
+                {message && (
+                    <AlertMessage variant="error" onClose={() => setMessage("")}>
+                        {message}
+                    </AlertMessage>
+                )}
+                <Stack direction="row" sx={{height: {md: '100vh'}}}>
+                    {/* Right side with login form */}
+                    <Box
+                        display="flex"
+                        flexDirection="column"
                         sx={{
-                            fontSize: theme.typography.h2,
-                            fontWeight: theme.fontWeight.bold,
-                            lineHeight: 2,
+                            width: { md: "50%", xss: "100%" },
+                            px: 4,
+                            backgroundColor: theme.palette.customColors.white,
+                            
                         }}
                     >
-                        Sign up as {role}
-                    </Typography>
+                        <Box mx="auto" maxWidth='750px' width="100%">
+                            <Link to="/">
+                                <Box component="img" src={RatifyMELogo} alt="Ratifyme Favicon" sx={{ width: 150, height: 150 }} />
+                            </Link>
 
-                    <Stepper
-                        activeStep={activeStep}
-                        alternativeLabel
-                        connector={<CustomConnector />}
-                        sx={{ maxWidth: "700px", width: "100%" }}
-                    >
-                        {(steps[role] || steps.default).map((label, index) => (
-                            <Step key={label}>
-                                <CustomStepLabel
-                                    StepIconComponent={({ active }) => (
-                                        <CustomStepIcon ownerState={{ active, completed: stepCompletion[index] }}>
-                                            {index + 1}
-                                        </CustomStepIcon>
-                                    )}
-                                    ownerState={{
-                                        active: activeStep === index,
-                                        completed: stepCompletion[index],
-                                    }}
-                                >
-                                    {label}
-                                </CustomStepLabel>
-                            </Step>
-                        ))}
-                    </Stepper>
+                            <Box>
+                                <Typography variant="h2" fontWeight={theme.fontWeight.semiBold} mb={1}>
+                                    Create an account
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                    Signup now and unlock exclusive access!
+                                </Typography>
+                            </Box>
 
-                    <FormProvider {...methods}>
-                        <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 4 }}>
-                            {renderStepContent(activeStep)}
-                            <Stack direction="row" justifyContent="space-between" sx={{ mt: 4 }}>
-                                <Button disabled={activeStep === 0} onClick={handleBack} variant="outlined">
-                                    Back
-                                </Button>
-                                <Button
-                                    variant="contained"
-                                    sx={{
-                                        color: theme.palette.background.default,
-                                        fontWeight: theme.fontWeight.bold,
-                                    }}
-                                    onClick={
-                                        activeStep === (steps[role]?.length - 1 || 2)
-                                            ? handleSubmit(onSubmit)
-                                            : handleNext
-                                    }
-                                    disabled={isLoading}
-                                >
-                                    {isLoading
-                                        ? "Processing..."
-                                        : activeStep === (steps[role]?.length - 1 || 2)
-                                        ? "Create Account"
-                                        : "Next"}
-                                </Button>
+                            <Stepper
+                                activeStep={activeStep}
+                                alternativeLabel
+                                connector={(steps[role] || steps.default || []).map((_, index) => (
+                                    <CustomConnector key={index} ownerState={{ isCompleted: index < activeStep }} />
+                                ))}
+                                sx={{ my: {xss: 2, xs: 3, md: 5} }}
+                            >
+                                {(steps[role] || steps.default || []).map((label, index) => (
+                                    <Step key={label}>
+                                        <CustomStepLabel
+                                            StepIconComponent={({ active }) => (
+                                                <CustomStepIcon ownerState={{ active, completed: stepCompletion[index] }}>
+                                                    {GetStepIcon(label)}
+                                                </CustomStepIcon>
+                                            )}
+                                            ownerState={{
+                                                active: activeStep === index,
+                                                completed: stepCompletion[index],
+                                            }}
+                                        >
+                                            {label}
+                                        </CustomStepLabel>
+                                    </Step>
+                                ))}
+                            </Stepper>
+
+                            <Stack direction="row" >
+                                <FormProvider {...methods}>
+                                    <Box component="form"  width="100%" onSubmit={handleSubmit(onSubmit)}>
+                                        <RenderStepSignupContent
+                                            step={activeStep}
+                                            control={control}
+                                            role={role}
+                                            guest={guest}
+                                            watch={watch}
+                                        />
+
+                                        <Stack direction="row" justifyContent="space-between" sx={{ mt: 2, mb: 5 }}>
+                                            <Button
+                                                disabled={activeStep === 0}
+                                                onClick={handleBack}
+                                                variant="outlined"
+                                                sx={{
+                                                    color: theme.palette.primary.main,
+                                                    fontWeight: theme.fontWeight.bold,
+                                                    borderRadius: theme.customShape.btn,
+                                                    padding: "8px 48px",
+                                                    textTransform: "none",
+                                                }}
+                                            >
+                                                Back
+                                            </Button>
+                                            {activeStep < steps[role]?.length - 1 && (
+                                                <Button
+                                                    variant="contained"
+                                                    sx={{
+                                                        color: theme.palette.customColors.white,
+                                                        fontWeight: theme.fontWeight.bold,
+                                                        borderRadius: theme.customShape.btn,
+                                                        padding: "8px 48px",
+                                                        textTransform: "none",
+                                                    }}
+                                                    onClick={handleNext}
+                                                    disabled={isLoading}
+                                                >
+                                                    {isLoading ? "Processing..." : "Next"}
+                                                </Button>
+                                            )}
+
+                                            {activeStep === steps[role]?.length - 1 && (
+                                                <Button
+                                                    variant="contained"
+                                                    sx={{
+                                                        color: theme.palette.customColors.white,
+                                                        fontWeight: theme.fontWeight.bold,
+                                                        borderRadius: theme.customShape.btn,
+                                                        padding: "8px 48px",
+                                                        textTransform: "none",
+                                                    }}
+                                                    onClick={handleSubmitLastStep}
+                                                    disabled={isLoading}
+                                                >
+                                                    {isLoading ? "Processing..." : "Done"}
+                                                </Button>
+                                            )}
+                                        </Stack>
+                                    </Box>
+                                </FormProvider>
                             </Stack>
                         </Box>
-                    </FormProvider>
-                </Box>
+                    </Box>
 
-                <OutletImageComponent />
-            </Stack>
-        </Box>
+                    <AuthOutletImage
+                        backgroundColor="#071E3D"
+                        image={
+                            "https://images.pexels.com/photos/27809294/pexels-photo-27809294/free-photo-of-a-3d-model-of-a-ball-with-red-and-blue-lights.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                        }
+                        title1="Unlock your potential."
+                        title2="Let our digital badges celebrate your journey."
+                        description="Transform the future of education and employment by launching a digital credential business that empowers people to securely showcase their skills in a rapidly evolving world."
+                    />
+                </Stack>
+            </Box>
+        </>
     );
 };
 
