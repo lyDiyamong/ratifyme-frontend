@@ -21,14 +21,14 @@ const InstitutionManagement = () => {
         data: institutionsResponse,
         isLoading: institutionsLoading,
         isError: institutionsIsError,
-        error : institutionsError,
+        error: institutionsError,
     } = useGetInstitutionQuery();
     const institutions = institutionsResponse?.data;
     // Navigate hook
     const navigate = useNavigate();
 
     // Error custom hook
-    const errorHandling = useCatchStatus(institutionsIsError, institutionsError?.data?.message);
+    const [errorHandling, setErrorHandling] = useCatchStatus(institutionsIsError, institutionsError?.data?.message);
 
     // View institution profiles
     const handleView = (institutionId) => {
@@ -65,7 +65,11 @@ const InstitutionManagement = () => {
     return (
         // ============ Start InstitutionManagement ============
         <DashboardContainer>
-            {errorHandling && <AlertMessage variant="error">{errorHandling}</AlertMessage>}
+            {errorHandling && (
+                <AlertMessage variant="error" onClose={() => setErrorHandling("")}>
+                    {errorHandling}
+                </AlertMessage>
+            )}
             {/* Page title */}
             <PageTitle title="Institution Management" />
             {institutionsLoading ? (

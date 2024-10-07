@@ -62,7 +62,6 @@ const AccountSetupFields = ({ control, role, guest, schema }) => {
                     label="Phone Number"
                     control={control}
                     required
-                    schema={schema?.fields.postalCode}
                 />
             </Grid>
             <Grid item xss={12} sm={12}>

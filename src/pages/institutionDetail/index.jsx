@@ -32,7 +32,6 @@ function InstitutionDetail() {
         error: institutionError,
         isSuccess : institutionSuccess
     } = useGetInstitutionByIdQuery(institutionId);
-    const successHandling = useCatchStatus(institutionSuccess, institutionResponse?.message)
 
     const institution = institutionResponse?.data;
 
@@ -47,7 +46,7 @@ function InstitutionDetail() {
     const badges = badgesResponse?.data?.Issuers?.flatMap((badge) => badge?.BadgeClasses);
 
     // Dynamic error handler with custom hook
-    const errorHandling = useCatchStatus(
+    const [errorHandling, setErrorHandling] = useCatchStatus(
         isInstitutionError || isBadgesError,
         institutionError?.data?.message || badgesError?.data?.message,
     );
@@ -60,8 +59,11 @@ function InstitutionDetail() {
     return (
         // ============ Start InstitutionDetail ============
         <DashboardContainer>
-            {errorHandling && <AlertMessage variant="error">{errorHandling}</AlertMessage>}
-            {institutionSuccess && <AlertMessage variant="success">{successHandling}</AlertMessage>}
+            {errorHandling && (
+                <AlertMessage variant="error" onClose={() => setErrorHandling("")}>
+                    {errorHandling}
+                </AlertMessage>
+            )}
 
             {isInstitutionLoading ? (
                 <SpinLoading />

@@ -126,7 +126,8 @@ const SignupPage = () => {
     const navigate = useNavigate();
     const [role, setRole] = useState("");
     const [signUp, { isLoading, isError, error }] = useSignUpMutation();
-    const message = useCatchStatus(isError, error?.data?.message);
+    // const message = useCatchStatus(isError, error?.data?.message);
+    const [message, setMessage] = useCatchStatus(isError || isError, error?.data?.message);
     const [activeStep, setActiveStep] = useState(0);
     const { inviter, guest } = location.state || {};
     const [fieldValues, setFieldValues] = useState({});
@@ -316,7 +317,11 @@ const SignupPage = () => {
 
     return (
         <LandingContainer sx={{ my: 6 }}>
-            {message && <AlertMessage variant="error">{message}</AlertMessage>}
+            {message && (
+                <AlertMessage variant="error" onClose={() => setMessage("")}>
+                    {message}
+                </AlertMessage>
+            )}
             <Grid container spacing={4}>
                 <Grid item xss={12} md={role === "institution" ? 12 : 6}>
                     <Typography
