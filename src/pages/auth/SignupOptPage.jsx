@@ -1,76 +1,38 @@
-// React library import
-import { useNavigate } from "react-router-dom";
-
-// MUI import
-import { Box, Grid, Typography, Button, Card, CardContent, CardMedia } from "@mui/material";
-
-// Custom import
+import { Link, useNavigate } from "react-router-dom";
+import { Box, Stack, Typography } from "@mui/material";
 import theme from "../../assets/themes";
-import LandingContainer from "../../components/styles/LandingContainer";
-import LoginImgSvg from "../../assets/images/Login-illu.svg";
-import SchoolImage from "../../assets/images/school.png";
-import IssuerImage from "../../assets/images/teach.png";
-import EarnerImage from "../../assets/images/badge.png";
+import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
+import SignupOptionCard from "./SignupOptionCard";
+import OutletImageComponent from "./OutletImageTemplate";
+import IssuerImg from "../../assets/images/Issuer.png";
+import UniversifyImg from "../../assets/images/University.png";
+import CertificateImg from "../../assets/images/Certificate.png";
 
 // Signup options data
 const signupOptsData = [
     {
-        image: SchoolImage,
         title: "Institution",
         description:
             "Sign up as an institution to manage badge issuance, track performance, and create verifiable credentials for your learners.",
+        circleBg: theme.palette.primary.light,
+        icon: UniversifyImg,
+        iconWidth: '80px'
     },
     {
-        image: IssuerImage,
         title: "Issuer",
         description:
             "Sign up as an issuer to create, award, and manage badges for achievements, certifications, and skills recognition.",
+        circleBg: theme.palette.customColors.orange200,
+        icon: IssuerImg,
     },
     {
-        image: EarnerImage,
         title: "Earner",
         description:
             "Sign up as an earner to collect and showcase digital badges for your skills and achievements, and share them with employers.",
+        circleBg: theme.palette.customColors.green200,
+        icon: CertificateImg,
     },
 ];
-
-// Card component for signup options
-const SignupOptionCard = ({ image, title, description, onClick }) => (
-    <Card
-        onClick={onClick} 
-        sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            cursor: "pointer",
-            backgroundColor: theme.palette.augmentColor.white,
-            borderRadius: theme.customShape.card,
-            boxShadow: "rgba(3, 102, 214, 0.3) 0px 0px 0px 2px;",
-            marginBottom: 2,
-            padding: "14px 24px",
-            ":hover": {
-                backgroundColor: theme.palette.action.hover,
-            },
-        }}
-    >
-        <CardMedia
-            component="img"
-            image={image}
-            alt={`${title} image`}
-            sx={{ width: 80, height: 80, marginRight: 2 }}
-        />
-        <Box sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
-            <CardContent>
-                <Typography component="div" variant="h4">
-                    {title}
-                </Typography>
-                <Typography variant="subtitle1" component="div" sx={{ color: "text.secondary" }}>
-                    {description}
-                </Typography>
-            </CardContent>
-        </Box>
-    </Card>
-);
 
 const SignupOptPage = () => {
     const navigate = useNavigate();
@@ -83,24 +45,35 @@ const SignupOptPage = () => {
     };
 
     return (
-        // Start signup container
-        <LandingContainer sx={{ my: 6 }}>
-            {/* Grid container */}
-            <Grid container spacing={4}>
+        <Box sx={{ display: "flex" }}>
+            {/* Right side with login form */}
+            <Box
+                flexGrow={1}
+                display="flex"
+                justifyContent="center"
+                sx={{
+                    width: { md: "50%", xss: "100%" },
+                    mx: "auto",
+                    px: 4,
+                    backgroundColor: { sm: "inherit", xss: "inherit", md: "#fff" },
+                }}
+            >
                 {/* Signup options section */}
-                <Grid item xs={12} md={10} order={{ xs: 2, md: 1 }}>
-                    <Box mb={5}>
-                        <Typography
-                            component="h1"
-                            sx={{
-                                fontSize: theme.typography.h2,
-                                fontWeight: theme.fontWeight.bold,
-                                lineHeight: 1.7,
-                            }}
-                        >
+                <Stack width="100%" maxWidth="500px" gap={2} mb={{ sm: 4, xss: 4, md: 0 }}>
+                    <Link to="/">
+                        <Box
+                            component="img"
+                            src={RatifyMELogo}
+                            alt="Ratifyme Favicon"
+                            sx={{ width: 150, height: 150 }}
+                        />
+                    </Link>
+
+                    <Box>
+                        <Typography variant="h3" fontWeight={theme.fontWeight.semiBold} mb={1}>
                             How do you want to use RatifyMe?
                         </Typography>
-                        <Typography sx={{ color: theme.palette.text.secondary }}>
+                        <Typography variant="body2" color="text.secondary" mb={3}>
                             We’ll personalize your setup experience accordingly.
                         </Typography>
                     </Box>
@@ -109,18 +82,19 @@ const SignupOptPage = () => {
                     {signupOptsData.map((opt, index) => (
                         <SignupOptionCard
                             key={index}
-                            image={opt.image}
                             title={opt.title}
                             description={opt.description}
+                            circleBg={opt.circleBg}
+                            icon={opt.icon}
                             onClick={() => handleRoleSelect(opt.title)}
                         />
                     ))}
-                </Grid>
+                </Stack>
+            </Box>
 
-            </Grid>
-            {/* End grid container */}
-        </LandingContainer>
-        // End signup container
+            {/* Left side with text */}
+            <OutletImageComponent />
+        </Box>
     );
 };
 
