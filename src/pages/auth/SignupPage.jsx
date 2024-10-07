@@ -1,17 +1,15 @@
 // React library import
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm, FormProvider } from "react-hook-form";
 import * as yup from "yup";
 
 // MUI import
 import { Box, Grid, Typography, Button, Stepper, Step, StepLabel, Stack, StepConnector } from "@mui/material";
-import { styled } from "@mui/system";
+import { display, styled } from "@mui/system";
 
 // Custom import
 import theme from "../../assets/themes";
-import LandingContainer from "../../components/styles/LandingContainer";
-import SignupImgSvg from "../../assets/images/Signup-illu.svg";
 import { useSignUpMutation } from "../../store/api/auth/authApi";
 import GeneralInfoFields from "../../components/auth/GeneralInfoFields";
 import AddressFields from "../../components/auth/AddressFields";
@@ -19,6 +17,8 @@ import InstitutionInfoFields from "../../components/auth/InstitutionInfoFields";
 import AccountSetupFields from "../../components/auth/AccountSetupFields";
 import useCatchStatus from "../../hooks/useCatchStatus";
 import AlertMessage from "../../components/alert/AlertMessage";
+import OutletImageComponent from "./OutletImageTemplate";
+import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
 
 const schema = yup.object({
     firstName: yup
@@ -117,6 +117,14 @@ const CustomStepLabel = styled(StepLabel)(({ theme, ownerState }) => ({
             : "#999",
         fontWeight: ownerState.active || ownerState.completed ? "bold" : "normal",
         fontSize: "14px",
+
+        // Handling responsive breakpoints
+        [theme.breakpoints.up("md")]: {
+            display: "block", // Visible on small and larger screens
+        },
+        [theme.breakpoints.down("sm")]: {
+            display: "none", // Hidden on extra small screens
+        },
     },
 }));
 
@@ -316,14 +324,35 @@ const SignupPage = () => {
     };
 
     return (
-        <LandingContainer sx={{ my: 6 }}>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ height: "100vh" }} noValidate>
             {message && (
                 <AlertMessage variant="error" onClose={() => setMessage("")}>
                     {message}
                 </AlertMessage>
             )}
-            <Grid container spacing={4}>
-                <Grid item xss={12} md={role === "institution" ? 12 : 6}>
+            <Stack direction="row">
+                {/* Right side with login form */}
+                <Box
+                    flexGrow={0}
+                    display="flex"
+                    flexDirection="column"
+                    sx={{
+                        width: { md: "50%", xss: "100%" },
+                        maxWidth: "700px",
+                        mx: "auto",
+                        px: 4,
+                        backgroundColor: "transparent",
+                    }}
+                >
+                    <Link to="/">
+                        <Box
+                            component="img"
+                            src={RatifyMELogo}
+                            alt="Ratifyme Favicon"
+                            sx={{ width: 150, height: 150 }}
+                        />
+                    </Link>
+
                     <Typography
                         variant="h4"
                         mb={4}
@@ -337,7 +366,12 @@ const SignupPage = () => {
                         Sign up as {role}
                     </Typography>
 
-                    <Stepper activeStep={activeStep} alternativeLabel connector={<CustomConnector />}>
+                    <Stepper
+                        activeStep={activeStep}
+                        alternativeLabel
+                        connector={<CustomConnector />}
+                        sx={{ maxWidth: "700px", width: "100%" }}
+                    >
                         {(steps[role] || steps.default).map((label, index) => (
                             <Step key={label}>
                                 <CustomStepLabel
@@ -386,14 +420,11 @@ const SignupPage = () => {
                             </Stack>
                         </Box>
                     </FormProvider>
-                </Grid>
-                {role !== "institution" && (
-                    <Grid item xss={12} md={6}>
-                        <Box component="img" src={SignupImgSvg} alt="Signup Illustration" sx={{ width: "100%" }} />
-                    </Grid>
-                )}
-            </Grid>
-        </LandingContainer>
+                </Box>
+
+                <OutletImageComponent />
+            </Stack>
+        </Box>
     );
 };
 
