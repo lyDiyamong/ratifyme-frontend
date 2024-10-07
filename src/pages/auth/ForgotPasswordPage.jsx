@@ -45,7 +45,7 @@ const ForgotPasswordPage = () => {
 
         try {
             await fortgotPassword(data).unwrap();
-            navigate("/forgot-password-sent");
+            navigate("/forgot-password-sent", { state: { email: data.email } });
         } finally {
             setLoading(false);
         }
