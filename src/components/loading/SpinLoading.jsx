@@ -30,7 +30,16 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 const SpinLoading = ({ color = "#1a90ff", size = 40, ...props }) => {
     return (
-        <Box sx={{ position: "relative" }}>
+        <Box
+            sx={{
+                position: "relative",
+                padding: 0,
+                margin: 0,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+            }}
+        >
             <CircularProgress
                 variant="determinate"
                 sx={{
