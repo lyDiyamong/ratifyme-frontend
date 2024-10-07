@@ -24,5 +24,5 @@ export default function useCatchStatus(status, statusMessage, clearAfter = 5000)
         }
     }, [status, statusMessage, clearAfter]);
 
-    return message; // Return the clear function
+    return [message, setMessage]; 
 }
