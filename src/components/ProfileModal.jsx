@@ -19,6 +19,24 @@ import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import DefaultProfile from "../assets/images/Malen.webp";
 import theme from "../assets/themes";
 
+/**
+ * ProfileModal Component
+ *
+ * @param {boolean} open - Controls whether the modal is open or closed.
+ * @param {function} onClose - Function to handle closing the modal.
+ * @param {object} item - The data object representing the user's profile.
+ * @param {string} avatarKey - The key path to the user's avatar image in the item object.
+ * @param {string} nameKey - The key path to the user's name in the item object.
+ * @param {string} roleKey - The key path to the user's role in the item object.
+ * @param {string} desKey - The key path to the user's description or bio in the item object.
+ * @param {Array} details - An array of detail objects, where each object contains an icon, label, and valueKey for displaying additional profile information.
+ *
+ * @returns {JSX.Element} A Material-UI styled Dialog component displaying user profile information with avatar, name, role, bio, and additional details.
+ */
+const getValue = (obj, keyPath) => {
+    return keyPath.split(".").reduce((o, k) => (o || {})[k], obj);
+};
+
 // Style
 const StyledDialog = styled(Dialog)(({ theme }) => ({
     ".MuiPaper-root": {
@@ -44,24 +62,6 @@ const ProfileCard = styled(Card)(({ theme }) => ({
     height: "100%",
 }));
 
-/**
- * ProfileModal Component
- *
- * @param {boolean} open - Controls whether the modal is open or closed.
- * @param {function} onClose - Function to handle closing the modal.
- * @param {object} item - The data object representing the user's profile.
- * @param {string} avatarKey - The key path to the user's avatar image in the item object.
- * @param {string} nameKey - The key path to the user's name in the item object.
- * @param {string} roleKey - The key path to the user's role in the item object.
- * @param {string} desKey - The key path to the user's description or bio in the item object.
- * @param {Array} details - An array of detail objects, where each object contains an icon, label, and valueKey for displaying additional profile information.
- *
- * @returns {JSX.Element} A Material-UI styled Dialog component displaying user profile information with avatar, name, role, bio, and additional details.
- */
-const getValue = (obj, keyPath) => {
-    return keyPath.split(".").reduce((o, k) => (o || {})[k], obj);
-};
-
 // ============ Start Profile Modal ============
 const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey, details }) => {
     return (
@@ -76,6 +76,7 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
                 </IconButton>
             </Box>
 
+            {/* Card */}
             <DialogContent>
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={6} mb={2} sx={{ height: "full" }}>
@@ -92,7 +93,7 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
                                         boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
                                     }}
                                 />
-                                <Typography variant="h3" mt={2} fontWeight={700}>
+                                <Typography variant="h3" mt={2}sx={{fontWeight: theme.fontWeight.extraBold}}>
                                     {getValue(item, nameKey) || "N/A"}
                                 </Typography>
                                 <Stack direction="row" alignItems="center" spacing={1}>
