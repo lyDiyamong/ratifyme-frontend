@@ -1,6 +1,5 @@
 // src/data/profileInfoConfig.js
 import BirthDateIcon from "../../assets/icons/DateOfBirth.svg";
-import CountryIcon from "../../assets/icons/Country.svg";
 import EmailIcon from "../../assets/icons/Email.svg";
 import OrganizationIcon from "../../assets/icons/Organization.svg";
 import PhoneIcon from "../../assets/icons/Phone.svg";
@@ -21,14 +20,14 @@ const profileInfoConfig = {
             valueKey: "email",
         },
         {
-            icon: OrganizationIcon,
-            label: "OrganizationIcon",
-            valueKey: "OrganizationIcon",
+            icon: BirthDateIcon,
+            label: "Date of Birth",
+            valueKey: "dateOfBirth",
         },
         {
-            icon: CountryIcon,
-            label: "Nationality",
-            valueKey: "nationality",
+            icon: OrganizationIcon,
+            label: "Organization",
+            valueKey: "Organization",
         },
         {
             icon: Link,
@@ -48,14 +47,14 @@ const profileInfoConfig = {
             valueKey: "email",
         },
         {
-            icon: OrganizationIcon,
-            label: "OrganizationIcon",
-            valueKey: "OrganizationIcon",
+            icon: BirthDateIcon,
+            label: "Date of Birth",
+            valueKey: "dateOfBirth",
         },
         {
-            icon: CountryIcon,
-            label: "Nationality",
-            valueKey: "nationality",
+            icon: OrganizationIcon,
+            label: "Organization",
+            valueKey: "Organization",
         },
         {
             icon: Link,
@@ -86,13 +85,8 @@ const profileInfoConfig = {
         },
         {
             icon: OrganizationIcon,
-            label: "OrganizationIcon",
-            valueKey: "OrganizationIcon",
-        },
-        {
-            icon: CountryIcon,
-            label: "Nationality",
-            valueKey: "nationality",
+            label: "Organization",
+            valueKey: "Organization",
         },
         {
             icon: Link,
@@ -125,11 +119,6 @@ const profileInfoConfig = {
             icon: EducationIcon,
             label: "Education",
             valueKey: "AcademicBackground.Institution.name",
-        },
-        {
-            icon: CountryIcon,
-            label: "Nationality",
-            valueKey: "nationality",
         },
     ],
 };

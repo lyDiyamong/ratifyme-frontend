@@ -1,4 +1,3 @@
-// React Imports
 import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import dayjs from "dayjs";
@@ -19,6 +18,7 @@ import SelectForm from "../../../components/SelectionForm";
 import { useUpdateUserProfileMutation } from "../../../store/api/users/userInfoProfileApi";
 import theme from "../../../assets/themes/index";
 import { SpinLoading } from "../../../components/loading/SpinLoading";
+import PhoneNumberForm from "../../../components/PhoneNumberForm"; // Import the new phone number component
 
 const CustomPaper = (props) => <Paper {...props} sx={{ borderRadius: "16px" }} />;
 
@@ -29,6 +29,7 @@ const EditProfileModal = ({ open, userData, onClose }) => {
             country: "",
             firstName: "",
             lastName: "",
+            username: "",
             phoneNumber: "",
             organization: "",
             occupation: "",
@@ -44,18 +45,16 @@ const EditProfileModal = ({ open, userData, onClose }) => {
             reset({
                 firstName: userData.firstName || "",
                 lastName: userData.lastName || "",
+                username: userData.username || "",
                 phoneNumber: userData.phoneNumber || "",
                 email: userData.email || "",
-                // dateOfBirth: userData.dateOfBirth || null,
                 dateOfBirth: userData.dateOfBirth ? dayjs(userData.dateOfBirth) : null,
-                nationality: userData.nationality || "",
                 Gender: userData.Gender.id || "",
             });
         }
     }, [userData, open, reset]);
 
     const onSubmit = async (data) => {
-        console.log("Date of Birth:", data.dateOfBirth);
         const updatedData = {
             ...data,
             dateOfBirth: data.dateOfBirth,
@@ -90,7 +89,6 @@ const EditProfileModal = ({ open, userData, onClose }) => {
                 Personal Information
             </DialogTitle>
             <DialogContent>
-                {/* {isLoading && <SpinLoading size={40} />} */}
                 {isError && <p style={{ color: "red" }}>Error updating profile. Please try again.</p>}
                 <Box
                     sx={{
@@ -104,7 +102,11 @@ const EditProfileModal = ({ open, userData, onClose }) => {
                 >
                     <FormInput name="firstName" label="First Name" control={control} type="text" required />
                     <FormInput name="lastName" label="Last Name" control={control} type="text" required />
-                    <FormInput name="phoneNumber" label="Phone Number" control={control} type="text" />
+                    <FormInput name="username" label="Username" control={control} type="text" required />
+
+                    {/* Use PhoneNumberForm component here */}
+                    <PhoneNumberForm name="phoneNumber" label="Phone Number" control={control} required />
+
                     <FormInput name="email" label="Email Address" control={control} type="email" />
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <Controller
@@ -140,7 +142,6 @@ const EditProfileModal = ({ open, userData, onClose }) => {
                         options={optionSelect}
                         required={false}
                     />
-                    <FormInput name="nationality" label="Nationality" control={control} type="text" />
                 </Box>
             </DialogContent>
             <DialogActions sx={{ pb: "20px", pr: "20px" }}>

@@ -33,9 +33,6 @@ const UserProfile = () => {
     const [updateImage, setUpdateImage] = useState(DefaultProfileSvg);
     const { data: info, isLoading, isError } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
     const userData = info?.data;
-    console.log('dataaaa:', info)
-
-    console.log(userData)
 
     const [updateImg] = useUploadUserPfMutation();
     const [deleteImg] = useDeleteUserPfMutation();
@@ -102,7 +99,7 @@ const UserProfile = () => {
     }, [userData?.profileImage, userData?.Gender?.name]);
 
     // More Menu props
-    const menuItems = [{ label: "Update Profile" }, { label: "Remove Profile", onClick: handleDeleteImage }];
+    const menuItems = [{ label: "Remove Profile", onClick: handleDeleteImage }];
 
     return (
         <Stack gap={3}>

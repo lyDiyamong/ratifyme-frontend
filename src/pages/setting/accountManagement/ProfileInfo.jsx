@@ -18,7 +18,7 @@ import { useSelector } from "react-redux";
 // Utility function to get value from nested objects based on a string key path
 const getValue = (obj, keyPath) => {
     if (!keyPath || typeof keyPath !== "string") {
-        return "N/A";
+        return "N/A"; // Default value if keyPath is undefined
     }
 
     return keyPath.split(".").reduce((o, k) => (o || {})[k], obj);
@@ -37,7 +37,7 @@ const ProfileInfo = ({ details, item }) => {
                 if (label === "Date of Birth" || label === "Plan expired Date") {
                     value = FormatDate(value);
                 } else if (label === "Phone") {
-                    value = formatPhoneNumber(value, countryCode);
+                    value = formatPhoneNumber(value);
                 }
 
                 return (
