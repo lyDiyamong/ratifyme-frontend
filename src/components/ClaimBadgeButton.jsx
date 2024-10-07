@@ -1,36 +1,43 @@
 import { Button } from "@mui/material";
 import theme from "../assets/themes";
-import { useClaimBadgeMutation } from "../store/api/earnerManagement/earnerApis";
+import { useClaimBadgeMutation, useFetchStatusBadgeQuery } from "../store/api/earnerManagement/earnerApis";
 import { useEffect, useState } from "react";
 
-const ClaimBadgeButton = ({ earnerId, badgeClassId, status }) => {
-    const [claimBadge, { isLoading }, refetch] = useClaimBadgeMutation();
-    const [claimed, setClaimed] = useState(status); // Initialize based on incoming status
+const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
+    const { data: earnerBadge, refetch: refetchStatus } = useFetchStatusBadgeQuery({ id: earnerId });
+    const [claimBadge, { isLoading }] = useClaimBadgeMutation();
+
+    const statusAchievement = earnerBadge?.data[0]?.status;
+    const [claimed, setClaimed] = useState(statusAchievement);
 
     useEffect(() => {
-        setClaimed(status); // Update claimed state if status prop changes
-    }, [status]);
+        setClaimed(statusAchievement);
+    }, [statusAchievement]);
 
     const handleClaimBadge = async () => {
         try {
-            const response = await claimBadge({ earnerId, badgeClassId, status: true }).unwrap();
-            setClaimed(true); // Update state to reflect the badge has been claimed
-            console.log("Badge claimed successfully:", response);
-            refetch();
-            // Handle success (e.g., show a notification or update the UI)
+            setClaimed(statusAchievement);
+            await claimBadge({
+                earnerId,
+                achievementIds,
+                badgeClassId,
+                status: true,
+            }).unwrap();
+
+            console.log("Achievements updated successfully");
+            refetchStatus();
         } catch (error) {
             console.error("Failed to claim badge:", error);
-            // Handle error (e.g., show an error message)
         }
     };
 
     return (
         <Button
             onClick={handleClaimBadge}
-            disabled={claimed}
+            disabled={claimed || isLoading}
             sx={{
-                backgroundColor: theme.palette.primary.main,
-                color: theme.palette.customColors.white,
+                backgroundColor: claimed ? theme.palette.customColors.gray200 : theme.palette.primary.main,
+                color: claimed ? theme.palette.text.disabled : theme.palette.customColors.white,
                 fontSize: theme.typography.body1,
                 fontWeight: theme.fontWeight.bold,
                 borderRadius: theme.customShape.btn,
@@ -41,7 +48,7 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, status }) => {
                 },
             }}
         >
-            {claimed ? "Claimed" : "Claim Badge"}
+            {isLoading ? "Claiming..." : claimed ? "Claimed" : "Claim Badge"}
         </Button>
     );
 };
