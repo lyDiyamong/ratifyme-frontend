@@ -9,10 +9,12 @@ const BadgeDetail = () => {
     // Fetch ID from the URL
     const { id } = useParams();
     // Fetch badge by ID
-    const { data: oneBadge, isLoading, isError } = useFetchOneBadgeQuery(id);
     const { roleId, issuerData, earnerData } = useSelector((state) => state.global);
+    const { data: oneBadge, isLoading, isError } = useFetchOneBadgeQuery(id);
+
     let role = roleId;
     let activeUserId;
+
     switch (role) {
         case 1: {
             role = "admin";

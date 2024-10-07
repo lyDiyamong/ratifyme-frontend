@@ -21,13 +21,16 @@ const BadgeDetailCustom = ({ badge, userRole, activeUserId }) => {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
     const { control } = useForm();
 
     // assign variable from props that has fetch value
     const result = badge?.data;
-    console.log(activeUserId.id);
 
-    const status = result?.Achievements[0]?.status;
+    // assign variable to get achievement id to update
+    const achievement = result?.Achievements?.map((achievement) => {
+        return achievement.id;
+    });
 
     // assign variables for date
     const createdAt = result?.createdAt ? result.createdAt.split("T")[0] : "N/A";
@@ -136,8 +139,8 @@ const BadgeDetailCustom = ({ badge, userRole, activeUserId }) => {
                             ) : (
                                 <ClaimBadgeButton
                                     badgeClassId={result?.id || ""}
-                                    earnerId={activeUserId.id}
-                                    status={status}
+                                    earnerId={activeUserId.id || ""}
+                                    achievementIds={achievement}
                                 />
                             )}
                         </Grid>
