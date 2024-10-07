@@ -1,9 +1,8 @@
 // React library import
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Controller, useForm, FormProvider } from "react-hook-form";
-import Select from "react-select";
-import countryList from "react-select-country-list";
+import { useForm, FormProvider } from "react-hook-form";
+import * as yup from "yup";
 
 // MUI import
 import { Box, Grid, Typography, Button, Stepper, Step, StepLabel, Stack, StepConnector } from "@mui/material";
@@ -14,89 +13,57 @@ import theme from "../../assets/themes";
 import LandingContainer from "../../components/styles/LandingContainer";
 import SignupImgSvg from "../../assets/images/Signup-illu.svg";
 import { useSignUpMutation } from "../../store/api/auth/authApi";
-import DateSelectionForm from "../../components/DateSelectionForm";
-import SelectForm from "../../components/SelectionForm";
-import FormInput from "../../components/FormInput";
+import GeneralInfoFields from "../../components/auth/GeneralInfoFields";
+import AddressFields from "../../components/auth/AddressFields";
+import InstitutionInfoFields from "../../components/auth/InstitutionInfoFields";
+import AccountSetupFields from "../../components/auth/AccountSetupFields";
+import useCatchStatus from "../../hooks/useCatchStatus";
+import AlertMessage from "../../components/alert/AlertMessage";
+
+const schema = yup.object({
+    firstName: yup
+        .string()
+        .matches(/^[A-Za-z]+$/, "First name must contain only letters and no spaces")
+        .required("First name is required"),
+    lastName: yup
+        .string()
+        .matches(/^[A-Za-z]+$/, "Last name must contain only letters and no spaces")
+        .required("Last name is required"),
+    username: yup
+        .string()
+        .matches(
+            /^[a-zA-Z0-9._-]+$/,
+            "Username must not contain spaces and can only include letters, numbers, dots, underscores, and hyphens.",
+        )
+        .required("Username is required"),
+    email: yup
+        .string()
+        .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email format")
+        .required("Email is required"),
+    postalCode: yup
+        .string()
+        .matches(/^\d+$/, "Verification code must be numeric")
+        .required("Verification code is required"),
+    institutionName: yup
+        .string()
+        .matches(/^[A-Za-z\s]+$/, "Institution name must contains only characters")
+        .required("Institution name is required"),
+    institutionEmail: yup
+        .string()
+        .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email format")
+        .required("Email is required"),
+    url: yup.string().url("Invalid URL format").required("URL is required"),
+    phoneNumber: yup
+        .string()
+        .matches(/^\d+$/, "Phone number must contain only digits")
+        .required("Phone number is required"),
+});
 
 const roleIdData = {
     institution: 2,
     issuer: 3,
     earner: 4,
 };
-
-const genderOptions = [
-    { value: 1, label: "Male" },
-    { value: 2, label: "Female" },
-];
-
-// Address fields extracted for reuse
-const AddressFields = ({ control }) => (
-    <>
-        <Grid item xss={12} sm={12}>
-            <Controller
-                name="country"
-                control={control}
-                rules={{ required: "Country is required" }}
-                render={({ field: { onChange, onBlur, value, ref }, fieldState: { error } }) => (
-                    <>
-                        <Select
-                            options={countryList().getData()}
-                            onChange={(selectedOption) => onChange(selectedOption.value)}
-                            onBlur={onBlur}
-                            value={countryList()
-                                .getData()
-                                .find((option) => option.value === value)}
-                            inputRef={ref}
-                            placeholder="Select Country"
-                            styles={{
-                                container: (base) => ({ ...base, width: "100%" }),
-                                control: (base) => ({
-                                    ...base,
-                                    height: "56px",
-                                    borderRadius: theme.customShape.input,
-                                    background: "none",
-                                    zIndex: 1,
-                                }),
-                                menu: (base) => ({
-                                    ...base,
-                                    zIndex: 100, // Higher zIndex for the dropdown options
-                                }),
-                            }}
-                        />
-                        {error && <Typography color="error">{error.message}</Typography>}
-                    </>
-                )}
-            />
-        </Grid>
-        <Grid item xss={12} sm={12}>
-            <FormInput
-                name="city"
-                label="City / State"
-                control={control}
-                type="text"
-                rules={{ required: "City is required" }}
-            />
-        </Grid>
-        <Grid item xss={12} sm={12}>
-            <FormInput
-                name="street"
-                label="Street Address"
-                control={control}
-                type="text"
-                rules={{ required: "Street Address is required" }}
-            />
-        </Grid>
-        <Grid item xss={12} sm={12}>
-            <FormInput
-                name="postalCode"
-                label="Postal Code"
-                control={control}
-                type="text"
-                rules={{ required: "Postal Code is required" }}
-            />
-        </Grid>
-    </>
-);
 
 const CustomStepIcon = styled("div")(({ theme, ownerState }) => ({
     display: "flex",
@@ -159,6 +126,8 @@ const SignupPage = () => {
     const navigate = useNavigate();
     const [role, setRole] = useState("");
     const [signUp, { isLoading, isError, error }] = useSignUpMutation();
+    // const message = useCatchStatus(isError, error?.data?.message);
+    const [message, setMessage] = useCatchStatus(isError || isError, error?.data?.message);
     const [activeStep, setActiveStep] = useState(0);
     const { inviter, guest } = location.state || {};
     const [fieldValues, setFieldValues] = useState({});
@@ -194,6 +163,7 @@ const SignupPage = () => {
             institutionPhoneNumber: "",
             institutionWebsiteUrl: "",
         },
+        mode: "onChange",
     });
 
     const { handleSubmit, control, trigger, setValue, reset } = methods;
@@ -321,16 +291,6 @@ const SignupPage = () => {
                 newCompletion[activeStep] = true; // Set current step to complete
                 return newCompletion;
             });
-
-            // Clear specific fields if transitioning to Institution Information
-            if (activeStep === 2 && role === "institution") {
-                setValue("username", "");
-                setValue("phoneNumber", "");
-                setValue("email", "");
-                setValue("password", "");
-                setValue("passwordConfirm", "");
-            }
-
             setActiveStep((prevStep) => prevStep + 1);
         }
     };
@@ -342,100 +302,13 @@ const SignupPage = () => {
     const renderStepContent = (step) => {
         switch (step) {
             case 0:
-                return (
-                    <Box>
-                        <Grid container spacing={2}>
-                            <Grid item xss={12} sm={12}>
-                                <FormInput name="firstName" label="First Name" control={control} required />
-                            </Grid>
-                            <Grid item xss={12} sm={12}>
-                                <FormInput name="lastName" label="Last Name" control={control} required />
-                            </Grid>
-                            <Grid item xss={12} sm={12}>
-                                <SelectForm name="genderId" label="Gender" options={genderOptions} control={control} />
-                            </Grid>
-                            <Grid item xss={12} sm={12}>
-                                <DateSelectionForm control={control} name="dateOfBirth" label="Date of Birth" />
-                            </Grid>
-                        </Grid>
-                    </Box>
-                );
+                return <GeneralInfoFields control={control} schema={schema} />;
             case 1:
-                return (
-                    <Box>
-                        <Grid container spacing={2}>
-                            {/* <Typography>Address Information</Typography> */}
-                            <AddressFields control={control} />
-                        </Grid>
-                    </Box>
-                );
+                return <AddressFields control={control} schema={schema} />;
             case 2:
-                return (
-                    <Box>
-                        <Grid container spacing={2}>
-                            {/* <Typography>Account Setup</Typography> */}
-                            <Grid item xss={12} sm={12}>
-                                <FormInput name="username" label="Username" control={control} required />
-                            </Grid>
-                            <Grid item xss={12} sm={12}>
-                                <FormInput name="phoneNumber" label="Phone Number" control={control} required />
-                            </Grid>
-                            <Grid item xss={12} sm={12}>
-                                <FormInput
-                                    name="email"
-                                    label="Email"
-                                    control={control}
-                                    required
-                                    disabled={role !== "institution"}
-                                    defaultValue={guest?.inviteEmail || ""}
-                                />
-                            </Grid>
-                            <Grid item xss={12} sm={12}>
-                                <FormInput
-                                    name="password"
-                                    label="Password"
-                                    control={control}
-                                    required
-                                    type="password"
-                                />
-                            </Grid>
-                            <Grid item xss={12} sm={12}>
-                                <FormInput
-                                    name="passwordConfirm"
-                                    label="Confirm Password"
-                                    control={control}
-                                    required
-                                    type="password"
-                                />
-                            </Grid>
-                        </Grid>
-                    </Box>
-                );
+                return <AccountSetupFields control={control} role={role} guest={guest} schema={schema} />;
             case 3:
-                return role === "institution" ? (
-                    <Box>
-                        <Grid container spacing={2}>
-                            {/* <Typography>Institution Information</Typography> */}
-                            <Grid item xss={12} sm={12}>
-                                <FormInput name="institutionName" label="Name" control={control} required />
-                            </Grid>
-                            <Grid item xss={12} sm={12}>
-                                <FormInput name="institutionEmail" label="Email Address" control={control} required />
-                            </Grid>
-                            <Grid item xss={12} sm={12}>
-                                <FormInput
-                                    name="institutionPhoneNumber"
-                                    label="Phone Number"
-                                    control={control}
-                                    required
-                                />
-                            </Grid>
-                            <Grid item xss={12} sm={12}>
-                                <FormInput name="institutionWebsiteUrl" label="Website" control={control} />
-                            </Grid>
-                        </Grid>
-                    </Box>
-                ) : null;
+                return role === "institution" ? <InstitutionInfoFields control={control} schema={schema} /> : null;
 
             default:
                 return null;
@@ -444,6 +317,11 @@ const SignupPage = () => {
 
     return (
         <LandingContainer sx={{ my: 6 }}>
+            {message && (
+                <AlertMessage variant="error" onClose={() => setMessage("")}>
+                    {message}
+                </AlertMessage>
+            )}
             <Grid container spacing={4}>
                 <Grid item xss={12} md={role === "institution" ? 12 : 6}>
                     <Typography
@@ -508,11 +386,6 @@ const SignupPage = () => {
                             </Stack>
                         </Box>
                     </FormProvider>
-                    {isError && (
-                        <Typography color="error" sx={{ mt: 2 }}>
-                            Error: {error.message}
-                        </Typography>
-                    )}
                 </Grid>
                 {role !== "institution" && (
                     <Grid item xss={12} md={6}>

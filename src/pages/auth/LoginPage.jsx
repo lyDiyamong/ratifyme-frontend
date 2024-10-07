@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
+import * as yup from "yup";
 
 // MUI import
 import { Box, Typography, Button, Checkbox, FormControlLabel, IconButton, Divider } from "@mui/material";
@@ -19,9 +20,18 @@ import { Stack } from "@mui/system";
 import LockOpenOutlined from "@mui/icons-material/LockOpenOutlined";
 import EmailOutlined from "@mui/icons-material/EmailOutlined";
 import OutletImageComponent from "./OutletImageTemplate";
+import useCatchStatus from "../../hooks/useCatchStatus";
+import AlertMessage from "../../components/alert/AlertMessage";
+
+const schema = yup.object({
+    email: yup.string().email("Invalid email").required("Email is required"),
+    password: yup.string().min(6, "Password too short").required("Password is required"),
+});
 
 const LoginPage = () => {
-    const [signIn, { isLoading, isError, error }] = useSignInMutation();
+    const [signIn, { isLoading, isError, error, isSuccess, data }] = useSignInMutation();
+
+    const [message, setMessage] = useCatchStatus(isError || isSuccess, isError ? error?.data?.message : data?.message);
 
     const navigate = useNavigate();
     // Form controller
@@ -38,12 +48,12 @@ const LoginPage = () => {
     const onSubmit = async (data) => {
         try {
             setLoading(true);
-            const result = await signIn(data).unwrap();
-
+            await signIn(data).unwrap();
             navigate("/dashboard");
             reset();
-        } catch (error) {
-            console.error("Error during sign in:", error.message || error);
+        } catch (err) {
+            // Handle exception if necessary, though RTK Query already manages error state
+            console.log(err?.data?.message);
         } finally {
             setLoading(false);
         }
@@ -51,7 +61,12 @@ const LoginPage = () => {
 
     return (
         // ============ Start login container ============
-        <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ height: "100vh", display: "flex" }}>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ height: "100vh", display: "flex" }} noValidate>
+            {message && (
+                <AlertMessage variant="error" onClose={() => setMessage("")}>
+                    {message}
+                </AlertMessage>
+            )}
             {/* Right side with login form */}
             <Box
                 flexGrow={0}
@@ -93,6 +108,7 @@ const LoginPage = () => {
                             label="Email"
                             required={true}
                             startIcon={<EmailOutlined />}
+                            schema={schema.fields.email}
                         />
                         {/* Password */}
                         <FormInput
@@ -102,6 +118,7 @@ const LoginPage = () => {
                             type="password"
                             required={true}
                             startIcon={<LockOpenOutlined />}
+                            schema={schema.fields.password}
                         />
                     </Stack>
 
@@ -157,7 +174,7 @@ const LoginPage = () => {
                         </IconButton>
                         <IconButton
                             sx={{
-                                color: theme.palette.customColors.orange200,
+                                color: theme.palette.customColors.orange300,
                                 backgroundColor: theme.palette.background.error,
                                 borderRadius: theme.customShape.input,
                             }}

@@ -25,7 +25,7 @@ const BillingInvoiceManagement = () => {
     const subscriptions = response?.data;
 
     // Error custom hook
-    const errorHandling = useCatchStatus(isError, error?.data?.message);
+    const [message, setMessage] = useCatchStatus(isError || isError, error?.data?.message);
 
     // Handling view for another page
     const handleView = (institutionId) => {
@@ -63,7 +63,11 @@ const BillingInvoiceManagement = () => {
     return (
         // ============ Start BillingInvoiceManagement ============
         <DashboardContainer>
-            {errorHandling && <AlertMessage variant="error">{errorHandling}</AlertMessage>}
+            {message && (
+                <AlertMessage variant="error" onClose={() => setMessage("")}>
+                    {message}
+                </AlertMessage>
+            )}
             {/* Page title */}
             <PageTitle title="Billing and Invoice" />
             {isLoading ? (

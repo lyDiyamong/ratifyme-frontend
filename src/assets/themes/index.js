@@ -149,6 +149,49 @@ const theme = createTheme({
             xl: 1920, // Extra large screens (e.g., ultra-wide monitors)
         },
     },
+    
+    // This overwrite the DatePicker Selection to white
+    components: {
+        MuiPickersYear: {
+            styleOverrides: {
+                yearButton: {
+                    "&.Mui-selected": {
+                        color: "white",
+                    },
+                    "&:hover": {
+                        backgroundColor: "rgba(255, 255, 255, 0.08)",
+                    },
+                },
+            },
+        },
+        MuiPickersMonth: {
+            styleOverrides: {
+                monthButton: {
+                    "&.Mui-selected": {
+                        color: "white",
+                    },
+                    "&:hover": {
+                        backgroundColor: "rgba(255, 255, 255, 0.08)",
+                    },
+                },
+            },
+        },
+        MuiPickersDay: {
+            styleOverrides: {
+                dayWithMargin: {
+
+                    '&.Mui-selected': {
+                        color: 'white',
+                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    },
+                    '&:hover': {
+                        backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                    },
+                },
+            },
+        },
+        // You can add more component overrides here
+    },
 });
 
 export default theme;
