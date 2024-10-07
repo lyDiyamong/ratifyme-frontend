@@ -33,7 +33,6 @@ const BadgeList = () => {
     const badgeIssue = badgeIssuer?.data?.BadgeClasses || [];
     const badgeEarners = badgeEarner?.badgeClasses;
 
-    console.log(badgeEarners, roleId);
     // Apply filtering based on role
     const checkBadge =
         roleId === 3 ? badgeIssue : roleId === 2 ? badgeInstitution : roleId === 4 ? badgeEarners : badges;
