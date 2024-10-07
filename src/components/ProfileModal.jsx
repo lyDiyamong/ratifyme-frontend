@@ -9,89 +9,169 @@ import {
     IconButton,
     Box,
     Grid,
-    Divider,
+    Card,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { styled } from "@mui/system";
+import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
+
+// Custom Import
+import DefaultProfile from "../assets/images/Malen.webp";
+import theme from "../assets/themes";
 
 /**
  * ProfileModal Component
- * 
+ *
  * @param {boolean} open - Controls whether the modal is open or closed.
  * @param {function} onClose - Function to handle closing the modal.
  * @param {object} item - The data object representing the user's profile.
- * @param {string} avatarKey - The key path to the user's avatar image in the `item` object.
- * @param {string} nameKey - The key path to the user's name in the `item` object.
- * @param {string} roleKey - The key path to the user's role in the `item` object.
- * @param {string} desKey - The key path to the user's description or bio in the `item` object.
+ * @param {string} avatarKey - The key path to the user's avatar image in the item object.
+ * @param {string} nameKey - The key path to the user's name in the item object.
+ * @param {string} roleKey - The key path to the user's role in the item object.
+ * @param {string} desKey - The key path to the user's description or bio in the item object.
  * @param {Array} details - An array of detail objects, where each object contains an icon, label, and valueKey for displaying additional profile information.
- * 
+ *
  * @returns {JSX.Element} A Material-UI styled Dialog component displaying user profile information with avatar, name, role, bio, and additional details.
-*/
-
-// The getValue function is a utility function designed to retrieve the value from a nested object using a string-based path.
+ */
 const getValue = (obj, keyPath) => {
     return keyPath.split(".").reduce((o, k) => (o || {})[k], obj);
 };
 
-// ============ Start Profile Modal ============ 
-// This modal handles displaying profile information when clicking the view button in the table list
+// Style
+const StyledDialog = styled(Dialog)(({ theme }) => ({
+    ".MuiPaper-root": {
+        borderRadius: theme.shape.borderRadius * 2,
+        boxShadow: "0px 4px 24px rgba(0, 0, 0, 0.2)",
+        backgroundColor: theme.palette.customColors.white,
+    },
+}));
+
+const StyledCard = styled(Card)(({ theme }) => ({
+    borderRadius: theme.shape.borderRadius * 2,
+    boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.2)",
+    padding: theme.spacing(3),
+    marginBottom: theme.spacing(2),
+    backgroundColor: theme.palette.customColors.white,
+}));
+
+const ProfileCard = styled(Card)(({ theme }) => ({
+    borderRadius: theme.shape.borderRadius * 2,
+    boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.2)",
+    padding: "20px",
+    background: "linear-gradient(to bottom, #ffffff, #e0f7fa)",
+    height: "100%",
+}));
+
+// ============ Start Profile Modal ============
 const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey, details }) => {
     return (
-        <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-            <Box display="flex" justifyContent="space-between" alignItems="center" p={2}>
-                <DialogTitle>Personal Information</DialogTitle>
+        <StyledDialog open={open} onClose={onClose} maxWidth="md" fullWidth>
+            {/* Modal Header */}
+            <Box display="flex" justifyContent="space-between" alignItems="center" pt={2} pr={2}>
+                <DialogTitle variant="h3" sx={{ fontWeight: theme.fontWeight.bold, color: theme.palette.primary.main }}>
+                    Personal Information
+                </DialogTitle>
                 <IconButton onClick={onClose} aria-label="Close">
                     <CloseIcon />
                 </IconButton>
             </Box>
 
+            {/* Card */}
             <DialogContent>
-                {/* Info Section */}
-                <Stack flexDirection="column" alignItems="center" mb={4}>
-                    <Avatar
-                        src={getValue(item, avatarKey) || "/placeholder.jpg"}
-                        alt={getValue(item, nameKey)}
-                        sx={{ width: 120, height: 120 }}
-                    />
-                    <Typography variant="h4" mt={2}>
-                        {getValue(item, nameKey) || "N/A"}
-                    </Typography>
-                    <Box mt={1}>
-                        <Stack direction="row" alignItems="center" spacing={1}>
-                            <Typography variant="body1" sx={{ textTransform: "capitalize" }}>
-                                {getValue(item, roleKey) || "N/A"}
-                            </Typography>
-                        </Stack>
-                    </Box>
-                </Stack>
-
-                <Divider sx={{ mb: 4 }} />
-                
-                {/* Details Section */}
-                <Grid container spacing={2} justifyContent="center">
-                    {details.map(({ icon, label, valueKey }, index) => (
-                        <Grid item xs={12} sm={4} key={index}>
-                            <Stack direction="row" alignItems="center" spacing={1}>
-                                <Box component="span">{icon}</Box>
-                                <Typography variant="body2">{label}</Typography>
+                <Grid container spacing={3}>
+                    <Grid item xs={12} md={6} mb={2} sx={{ height: "full" }}>
+                        {/* Profile Card */}
+                        <ProfileCard>
+                            <Stack flexDirection="column" alignItems="center" mb={2} sx={{ height: "100%" }}>
+                                <Avatar
+                                    src={getValue(item, avatarKey) || DefaultProfile}
+                                    alt={getValue(item, nameKey)}
+                                    sx={{
+                                        width: "150px",
+                                        height: "150px",
+                                        borderRadius: "50%",
+                                        boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
+                                    }}
+                                />
+                                <Typography variant="h3" mt={2}sx={{fontWeight: theme.fontWeight.extraBold}}>
+                                    {getValue(item, nameKey) || "N/A"}
+                                </Typography>
+                                <Stack direction="row" alignItems="center" spacing={1}>
+                                    <WorkOutlineIcon sx={{ color: theme.palette.secondary.light }} />
+                                    <Typography
+                                        variant="body1"
+                                        sx={{
+                                            color: theme.palette.secondary.contrastText,
+                                            textTransform: "capitalize",
+                                            fontWeight: theme.fontWeight.bold,
+                                        }}
+                                        mt={1}
+                                    >
+                                        {getValue(item, roleKey) || "N/A"}
+                                    </Typography>
+                                </Stack>
+                                <Typography variant="body2" mt={4} sx={{ color: theme.palette.customColors.gray500 }}>
+                                    {getValue(item, desKey) || "No bio available"}
+                                </Typography>
                             </Stack>
-                            <Typography variant="body2" color="textSecondary">
-                                {getValue(item, valueKey) || "N/A"}
-                            </Typography>
-                        </Grid>
-                    ))}
-                </Grid>
+                        </ProfileCard>
+                    </Grid>
 
-                {/* Bio Section */}
-                <Divider sx={{ mt: 4 }} />
-                <Box my={4}>
-                    <Typography variant="h6">BIO</Typography>
-                    <Typography variant="body2" color="textSecondary">
-                        {getValue(item, desKey) || "No bio available"}
-                    </Typography>
-                </Box>
+                    <Grid item xs={12} md={6}>
+                        {/* More Detaill */}
+                        <StyledCard>
+                            <Typography
+                                variant="h6"
+                                mb={2}
+                                sx={{
+                                    fontWeight: theme.fontWeight.bold,
+                                }}
+                            >
+                                Additional Details
+                            </Typography>
+                            <Grid container spacing={2}>
+                                {details.map(({ icon, label, valueKey }, index) => (
+                                    <Grid item xs={12} sm={6} key={index}>
+                                        <Stack direction="row" spacing={1}>
+                                            {icon}
+                                            <Stack>
+                                                <Typography variant="body2" sx={{ color: theme.palette.text.primary }}>
+                                                    {label}
+                                                </Typography>
+
+                                                <Typography
+                                                    variant="body3"
+                                                    sx={{ color: theme.palette.text.secondary }}
+                                                >
+                                                    {getValue(item, valueKey) || "N/A"}
+                                                </Typography>
+                                            </Stack>
+                                        </Stack>
+                                    </Grid>
+                                ))}
+                            </Grid>
+                        </StyledCard>
+
+                        {/* Address */}
+                        <StyledCard>
+                            <Typography variant="h6" mb={2} sx={{ fontWeight: theme.fontWeight.bold }}>
+                                Address
+                            </Typography>
+                            <Typography variant="body3" sx={{ color: theme.palette.customColors.gray500 }}>
+                                {(() => {
+                                    const addresses = getValue(item, "User.Addresses") || [];
+                                    const address = addresses.length > 0 ? addresses[0] : {};
+                                    return `Street: ${address.street || "N/A"}, 
+                                            City: ${address.city || "N/A"}, 
+                                            Country: ${address.country || "N/A"},
+                                            Postal Code: ${address.postalCode || "N/A"}`;
+                                })()}
+                            </Typography>
+                        </StyledCard>
+                    </Grid>
+                </Grid>
             </DialogContent>
-        </Dialog>
+        </StyledDialog>
     );
 };
 

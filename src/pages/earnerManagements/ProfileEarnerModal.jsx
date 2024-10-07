@@ -10,10 +10,11 @@ import {
 
 // Custom Import
 import ProfileModal from "../../components/ProfileModal";
+import FormatDate from "../../utils/formatDate";
 
 // Fetching Data Import
 import { useFetchEarnerByIdQuery } from "../../store/api/earnerManagement/earnerApis";
-import FormatDate from "../../utils/formatDate";
+
 /**
  * ProfileEarnerModal Component
  *
@@ -27,7 +28,6 @@ import FormatDate from "../../utils/formatDate";
  *
  * @returns {JSX.Element} A modal component displaying earner profile information.
  */
-
 
 // ============ Start Profile Earner Modal Custom Button ============
 const ProfileEarnerModal = ({ open, onClose, userId }) => {
@@ -43,6 +43,7 @@ const ProfileEarnerModal = ({ open, onClose, userId }) => {
             User: {
                 ...earnerData.User,
                 formattedDateOfBirth: FormatDate(earnerData.User.dateOfBirth),
+                fullName: `${earnerData.User.firstName} ${earnerData.User.lastName}`
             }
         };
     }
@@ -54,24 +55,40 @@ const ProfileEarnerModal = ({ open, onClose, userId }) => {
             onClose={onClose}
             item={earnerData}
             avatarKey="User.profileImage"
-            nameKey="User.username"
+            nameKey="User.fullName"
             roleKey="User.Role.name"
             desKey="User.bio"
             details={[
-                { icon: <PhoneIcon fontSize="small" />, label: "Phone", valueKey: "User.phoneNumber" },
-                { icon: <CakeIcon fontSize="small" />, label: "Date of Birth", valueKey: "User.formattedDateOfBirth" },
-                { icon: <EmailIcon fontSize="small" />, label: "Email", valueKey: "User.email" },
-                {
-                    icon: <BusinessCenterIcon fontSize="small" />,
-                    label: "Organization",
-                    valueKey: "AcademicBackground.Institution.name",
+                { 
+                    icon: <PhoneIcon fontSize="small" sx={{ color: "#ff6f61" }}/>, 
+                    label: "Phone", 
+                    valueKey: "User.phoneNumber" 
+                },
+                { 
+                    icon: <CakeIcon fontSize="small" sx={{ color: "#f48fb1" }} />, 
+                    label: "Date of Birth",
+                    valueKey: "User.formattedDateOfBirth" 
+                },
+                { 
+                    icon: <EmailIcon fontSize="small" sx={{ color: "#42a5f5" }} />,  
+                    label: "Email", 
+                    valueKey: "User.email" 
                 },
                 {
-                    icon: <SchoolIcon fontSize="small" />,
-                    label: "Education",
-                    valueKey: "AcademicBackground.AcademicLevel.name",
+                    icon: <BusinessCenterIcon fontSize="small" sx={{ color: "#9575cd" }} />,
+                    label: "Organization", 
+                    valueKey: "Issuer.Institution.institutionName" 
                 },
-                { icon: <PublicIcon fontSize="small" />, label: "Country", valueKey: "User.nationality" },
+                {
+                    icon: <SchoolIcon fontSize="small" sx={{ color: "#4db6ac" }} />,
+                    label: "Education", 
+                    valueKey: "AcademicBackground.AcademicLevel.name" 
+                },
+                { 
+                    icon: <PublicIcon fontSize="small" sx={{ color: "#81c784" }} />,
+                    label: "Nationality", 
+                    valueKey: "User.nationality" 
+                },
             ]}
         >
             {isLoading && <p>Loading...</p>}
@@ -79,5 +96,6 @@ const ProfileEarnerModal = ({ open, onClose, userId }) => {
         </ProfileModal>
     );
 };
+
 export default ProfileEarnerModal;
 // ============ End Profile Earner Modal Custom Button ============
