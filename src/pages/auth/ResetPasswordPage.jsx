@@ -1,23 +1,17 @@
-// React library import
 import { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-
-// MUI import
 import { Box, Typography, Button, LinearProgress, Stack } from "@mui/material";
 import { VpnKeyOutlined } from "@mui/icons-material";
-
-// Custom imports
 import FormInput from "../../components/FormInput";
 import theme from "../../assets/themes";
 import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
 import { SpinLoading } from "../../components/loading/SpinLoading";
 import OutletImageComponent from "./OutletImageTemplate";
-import { useResetPasswordMutation } from "../../store/api/auth/authApi";
+import { useResetPasswordMutation, useVerifyResetTokenQuery } from "../../store/api/auth/authApi";
 
-// Password validation schema
 const schema = yup.object({
     password: yup
         .string()
@@ -33,7 +27,6 @@ const schema = yup.object({
         .required("Confirm password is required"),
 });
 
-// Password strength calculation
 const getPasswordStrength = (password) => {
     let strength = 0;
     if (password.length >= 10) strength += 20;
@@ -44,7 +37,6 @@ const getPasswordStrength = (password) => {
     return strength;
 };
 
-// Validate password rules
 const validatePassword = (password) => {
     return {
         hasMinLength: password.length >= 10,
@@ -60,6 +52,10 @@ const ResetPasswordPage = () => {
     const [loading, setLoading] = useState(false);
     const { token } = useParams();
     const [resetPassword, { isLoading, isError }] = useResetPasswordMutation();
+    
+    const { data, error } = useVerifyResetTokenQuery(token, {
+        skip: !token,
+    });
 
     const {
         handleSubmit,
@@ -76,19 +72,20 @@ const ResetPasswordPage = () => {
     });
 
     const watchPassword = watch("password", "");
-
-    // Memoize strength and validation states to avoid unnecessary calculations
     const passwordStrength = useMemo(() => getPasswordStrength(watchPassword), [watchPassword]);
     const validationState = useMemo(() => validatePassword(watchPassword), [watchPassword]);
 
+    useEffect(() => {
+        if (error) {
+            navigate("/invalid-reset-password");
+        }
+    }, [error, navigate]);
+
     const onSubmit = async (data) => {
         setLoading(true);
-
         try {
             await resetPassword({ token, ...data }).unwrap();
             navigate("/dashboard");
-        } catch (error) {
-            console.error("Error during password reset:", error.message || error);
         } finally {
             setLoading(false);
         }
@@ -96,7 +93,6 @@ const ResetPasswordPage = () => {
 
     return (
         <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ height: "100vh", display: "flex" }}>
-            {/* Right side with login form */}
             <Box
                 sx={{
                     width: { md: "50%", xss: "100%" },
@@ -135,11 +131,10 @@ const ResetPasswordPage = () => {
                         </Typography>
                     </Box>
 
-                    {/* Password Form */}
                     <Stack spacing={2}>
                         <FormInput
                             name="password"
-                            label="Password"
+                            label="New password"
                             control={control}
                             required
                             type="password"
@@ -147,7 +142,6 @@ const ResetPasswordPage = () => {
                             aria-label="Password"
                         />
 
-                        {/* Password Strength Meter broken into 5 segments */}
                         <Box sx={{ display: "flex", gap: 0.5 }}>
                             {[1, 2, 3, 4, 5].map((_, index) => (
                                 <LinearProgress
@@ -211,7 +205,6 @@ const ResetPasswordPage = () => {
                             </Typography>
                         </Stack>
 
-                        {/* Password Validation Feedback */}
                         <Box mt={2}>
                             <Typography variant="body2" sx={{ color: "text.secondary", fontWeight: "bold" }}>
                                 Your password must contain:
@@ -250,7 +243,7 @@ const ResetPasswordPage = () => {
 
                         <FormInput
                             name="passwordConfirm"
-                            label="Confirm Password"
+                            label="Confirm new password"
                             control={control}
                             required
                             type="password"
@@ -259,7 +252,6 @@ const ResetPasswordPage = () => {
                         />
                     </Stack>
 
-                    {/* Continue Button */}
                     <Button
                         fullWidth
                         variant="contained"
@@ -278,7 +270,6 @@ const ResetPasswordPage = () => {
                 </Stack>
             </Box>
 
-            {/* Left side with text */}
             <OutletImageComponent />
         </Box>
     );

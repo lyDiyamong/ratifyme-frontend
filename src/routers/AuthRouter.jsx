@@ -10,6 +10,7 @@ import CodeInvitationPage from "../pages/auth/CodeInvitationPage";
 import ForgotPasswordPage from "../pages/auth/ForgotPasswordPage";
 import ForgotPasswordSentPage from "../pages/auth/ForgotPasswordSentPage";
 import ResetPasswordPage from "../pages/auth/ResetPasswordPage";
+import ResetPasswordExpiredPage from "../pages/auth/ResetPasswordExpiredPage";
 
 const AuthRouter = () => {
     return (
@@ -22,6 +23,7 @@ const AuthRouter = () => {
                 <Route path="/forgot-password" element={<ForgotPasswordPage />} />
                 <Route path="/forgot-password-sent" element={<ForgotPasswordSentPage />} />
                 <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+                <Route path="/invalid-reset-password" element={<ResetPasswordExpiredPage />} />
                 <Route />
             </Route>
         </Routes>
