@@ -1,4 +1,4 @@
-// MUI Import 
+// MUI Import
 import {
     Stack,
     Dialog,
@@ -13,14 +13,17 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { styled } from "@mui/system";
-import DefaultProfile from "../assets/images/Malen.webp";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
-// Styled components to add colors and card-like styles
+
+// Custom Import
+import DefaultProfile from "../assets/images/Malen.webp";
+import theme from "../assets/themes";
+
 const StyledDialog = styled(Dialog)(({ theme }) => ({
     ".MuiPaper-root": {
         borderRadius: theme.shape.borderRadius * 2,
         boxShadow: "0px 4px 24px rgba(0, 0, 0, 0.1)",
-        backgroundColor: "#f9f9f9",
+        backgroundColor: theme.palette.customColors.white,
     },
 }));
 
@@ -29,7 +32,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
     boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.08)",
     padding: theme.spacing(3),
     marginBottom: theme.spacing(2),
-    backgroundColor: "#ffffff",
+    backgroundColor: theme.palette.customColors.white,
 }));
 
 const ProfileCard = styled(Card)(({ theme }) => ({
@@ -50,7 +53,9 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
         <StyledDialog open={open} onClose={onClose} maxWidth="md" fullWidth>
             {/* Modal Header */}
             <Box display="flex" justifyContent="space-between" alignItems="center" pt={2} pr={2}>
-                <DialogTitle variant="h3" sx={{ fontWeight: 600, color: "#0288d1" }}>Personal Information</DialogTitle>
+                <DialogTitle variant="h3" sx={{ fontWeight: theme.fontWeight.bold, color: theme.palette.primary.main }}>
+                    Personal Information
+                </DialogTitle>
                 <IconButton onClick={onClose} aria-label="Close">
                     <CloseIcon />
                 </IconButton>
@@ -58,14 +63,14 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
 
             <DialogContent>
                 <Grid container spacing={3}>
-                    <Grid item xs={12} md={6} mb={2} sx={{ height: "full"}}>
+                    <Grid item xs={12} md={6} mb={2} sx={{ height: "full" }}>
                         <ProfileCard>
                             <Stack flexDirection="column" alignItems="center" mb={2} sx={{ height: "100%" }}>
                                 <Avatar
                                     src={getValue(item, avatarKey) || DefaultProfile}
                                     alt={getValue(item, nameKey)}
                                     sx={{
-                                        width: "150px", 
+                                        width: "150px",
                                         height: "150px",
                                         borderRadius: "50%",
                                         boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
@@ -75,12 +80,15 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
                                     {getValue(item, nameKey) || "N/A"}
                                 </Typography>
                                 <Stack direction="row" alignItems="center" spacing={1}>
-                                    <WorkOutlineIcon sx={{color: "#42a5f5"}}/> 
+                                    <WorkOutlineIcon sx={{ color: theme.palette.secondary.light }} />
                                     <Typography
                                         variant="body1"
-                                        color="textSecondary"
+                                        sx={{
+                                            color: theme.palette.secondary.contrastText,
+                                            textTransform: "capitalize",
+                                            fontWeight: theme.fontWeight.bold,
+                                        }}
                                         mt={1}
-                                        sx={{ textTransform: "capitalize", fontWeight: 600 }} // Emphasize role
                                     >
                                         {getValue(item, roleKey) || "N/A"}
                                     </Typography>
