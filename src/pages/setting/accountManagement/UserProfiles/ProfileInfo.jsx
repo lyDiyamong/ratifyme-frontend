@@ -1,12 +1,10 @@
-import { Box, Stack, Typography } from "@mui/material";
+// React Library Import
 import { useSelector } from "react-redux";
-import { useFetchInfoUserByIdQuery } from "../../../../store/api/users/userInfoProfileApi";
-import { useFetchEarnerQuery } from "../../../../store/api/earnerManagement/earnerApis";
-import { useGetInstitutionQuery } from "../../../../store/api/institutionManagement/institutionApi";
-import { useGetIssuersQuery } from "../../../../store/api/issuerManagement/issuerApi";
-import FormatDate from "../../../../utils/formatDate";
-import formatPhoneNumber from "../../../../utils/formatPhoneNumber";
-import theme from "../../../../assets/themes";
+
+// MUI Import
+import { Box, Stack, Typography } from "@mui/material";
+
+// Custom Import
 import BirthDateIcon from "../../../../assets/icons/DateOfBirth.svg";
 import EmailIcon from "../../../../assets/icons/Email.svg";
 import OrganizationIcon from "../../../../assets/icons/Organization.svg";
@@ -14,8 +12,17 @@ import PhoneIcon from "../../../../assets/icons/Phone.svg";
 import GenderIcon from "../../../../assets/icons/Gender.svg";
 import EducationIcon from "../../../../assets/icons/Education.svg";
 import Link from "../../../../assets/icons/Link.svg";
+import formatPhoneNumber from "../../../../utils/formatPhoneNumber";
+import FormatDate from "../../../../utils/formatDate";
+import theme from "../../../../assets/themes";
 
-// Profile info configuration
+// Fetching Data Import
+import { useFetchInfoUserByIdQuery } from "../../../../store/api/users/userInfoProfileApi";
+import { useFetchEarnerQuery } from "../../../../store/api/earnerManagement/earnerApis";
+import { useGetInstitutionQuery } from "../../../../store/api/institutionManagement/institutionApi";
+import { useGetIssuersQuery } from "../../../../store/api/issuerManagement/issuerApi";
+
+// =========== Start Profile info configuration ===========
 const profileInfoConfig = {
     admin: [
         { icon: PhoneIcon, label: "Phone", valueKey: "phoneNumber" },
@@ -45,6 +52,7 @@ const profileInfoConfig = {
         { icon: EducationIcon, label: "Education", valueKey: "AcademicBackground.AcademicLevel.name" },
     ],
 };
+// =========== End Profile info configuration ===========
 
 // Utility function to get value from nested objects based on a string key path
 const getValue = (obj, keyPath) => {
@@ -54,12 +62,14 @@ const getValue = (obj, keyPath) => {
     return keyPath.split(".").reduce((o, k) => (o || {})[k], obj);
 };
 
+// =========== Start ProfileInfoContainer ===========
 const ProfileInfoContainer = () => {
+    // Fetching data from table user, institution, issuer and earner
     const { userId } = useSelector((state) => state.global);
     const { data: userInfo, isLoading: isLoadingUser } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
-    const { data: earners, isLoading: isLoadingEarner } = useFetchEarnerQuery();
     const { data: institutions, isLoading: isLoadingInstitution } = useGetInstitutionQuery();
     const { data: issuers, isLoading: isLoadingIssuer } = useGetIssuersQuery();
+    const { data: earners, isLoading: isLoadingEarner } = useFetchEarnerQuery();
 
     if (isLoadingUser || isLoadingEarner || isLoadingInstitution || isLoadingIssuer) {
         return <Typography>Loading...</Typography>;
@@ -68,9 +78,9 @@ const ProfileInfoContainer = () => {
     const userData = userInfo?.data;
     const roleName = userData?.Role?.name;
 
-    const earnerData = earners?.data?.find((earner) => earner.userId === userId) || {};
     const institutionData = institutions?.data?.find((institution) => institution.userId === userId) || {};
     const issuerData = issuers?.data?.find((issuer) => issuer.userId === userId) || {};
+    const earnerData = earners?.data?.find((earner) => earner.userId === userId) || {};
 
     const details = profileInfoConfig[roleName] || [{ label: "No data available for this role" }];
 
@@ -146,3 +156,4 @@ const ProfileInfoContainer = () => {
 };
 
 export default ProfileInfoContainer;
+// =========== End ProfileInfoContainer ===========
