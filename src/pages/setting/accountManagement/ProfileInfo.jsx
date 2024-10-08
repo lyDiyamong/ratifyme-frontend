@@ -82,13 +82,13 @@ import { useFetchInfoUserByIdQuery } from "../../../store/api/users/userInfoProf
 import FormatDate from "../../../utils/formatDate";
 import formatPhoneNumber from "../../../utils/formatPhoneNumber";
 import theme from "../../../assets/themes/index";
-import BirthDateIcon from "../../assets/icons/DateOfBirth.svg";
-import EmailIcon from "../../assets/icons/Email.svg";
-import OrganizationIcon from "../../assets/icons/Organization.svg";
-import PhoneIcon from "../../assets/icons/Phone.svg";
-import GenderIcon from "../../assets/icons/Gender.svg";
-import EducationIcon from "../../assets/icons/Education.svg";
-import Link from "../../assets/icons/Link.svg";
+import BirthDateIcon from "../../../assets/icons/DateOfBirth.svg";
+import EmailIcon from "../../../assets/icons/Email.svg";
+import OrganizationIcon from "../../../assets/icons/Organization.svg";
+import PhoneIcon from "../../../assets/icons/Phone.svg";
+import GenderIcon from "../../../assets/icons/Gender.svg";
+import EducationIcon from "../../../assets/icons/Education.svg";
+import Link from "../../../assets/icons/Link.svg";
 
 // Profile info configuration directly in this file
 const profileInfoConfig = {
