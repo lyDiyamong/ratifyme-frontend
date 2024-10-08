@@ -1,0 +1,148 @@
+import { Box, Stack, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
+import { useFetchInfoUserByIdQuery } from "../../../../store/api/users/userInfoProfileApi";
+import { useFetchEarnerQuery } from "../../../../store/api/earnerManagement/earnerApis";
+import { useGetInstitutionQuery } from "../../../../store/api/institutionManagement/institutionApi";
+import { useGetIssuersQuery } from "../../../../store/api/issuerManagement/issuerApi";
+import FormatDate from "../../../../utils/formatDate";
+import formatPhoneNumber from "../../../../utils/formatPhoneNumber";
+import theme from "../../../../assets/themes";
+import BirthDateIcon from "../../../../assets/icons/DateOfBirth.svg";
+import EmailIcon from "../../../../assets/icons/Email.svg";
+import OrganizationIcon from "../../../../assets/icons/Organization.svg";
+import PhoneIcon from "../../../../assets/icons/Phone.svg";
+import GenderIcon from "../../../../assets/icons/Gender.svg";
+import EducationIcon from "../../../../assets/icons/Education.svg";
+import Link from "../../../../assets/icons/Link.svg";
+
+// Profile info configuration
+const profileInfoConfig = {
+    admin: [
+        { icon: PhoneIcon, label: "Phone", valueKey: "phoneNumber" },
+        { icon: EmailIcon, label: "Email", valueKey: "email" },
+        { icon: BirthDateIcon, label: "Date of Birth", valueKey: "dateOfBirth" },
+    ],
+    institutionOwner: [
+        { icon: PhoneIcon, label: "Phone", valueKey: "phoneNumber" },
+        { icon: EmailIcon, label: "Email", valueKey: "email" },
+        { icon: BirthDateIcon, label: "Date of Birth", valueKey: "dateOfBirth" },
+        { icon: OrganizationIcon, label: "Organization", valueKey: "institutionName" },
+        { icon: Link, label: "Link", valueKey: "institutionWebsiteUrl" },
+    ],
+    issuer: [
+        { icon: PhoneIcon, label: "Phone", valueKey: "phoneNumber" },
+        { icon: EmailIcon, label: "Email", valueKey: "email" },
+        { icon: BirthDateIcon, label: "Date of Birth", valueKey: "dateOfBirth" },
+        { icon: GenderIcon, label: "Gender", valueKey: "Gender.name" },
+        { icon: OrganizationIcon, label: "Organization", valueKey: "Institution.institutionName" },
+        { icon: Link, label: "Link", valueKey: "Institution.institutionWebsiteUrl" },
+    ],
+    earner: [
+        { icon: PhoneIcon, label: "Phone", valueKey: "phoneNumber" },
+        { icon: EmailIcon, label: "Email", valueKey: "email" },
+        { icon: BirthDateIcon, label: "Date of Birth", valueKey: "dateOfBirth" },
+        { icon: GenderIcon, label: "Gender", valueKey: "Gender.name" },
+        { icon: EducationIcon, label: "Education", valueKey: "AcademicBackground.AcademicLevel.name" },
+    ],
+};
+
+// Utility function to get value from nested objects based on a string key path
+const getValue = (obj, keyPath) => {
+    if (!keyPath || typeof keyPath !== "string") {
+        return "N/A";
+    }
+    return keyPath.split(".").reduce((o, k) => (o || {})[k], obj);
+};
+
+const ProfileInfoContainer = () => {
+    const { userId } = useSelector((state) => state.global);
+    const { data: userInfo, isLoading: isLoadingUser } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
+    const { data: earners, isLoading: isLoadingEarner } = useFetchEarnerQuery();
+    const { data: institutions, isLoading: isLoadingInstitution } = useGetInstitutionQuery();
+    const { data: issuers, isLoading: isLoadingIssuer } = useGetIssuersQuery();
+
+    if (isLoadingUser || isLoadingEarner || isLoadingInstitution || isLoadingIssuer) {
+        return <Typography>Loading...</Typography>;
+    }
+
+    const userData = userInfo?.data;
+    const roleName = userData?.Role?.name;
+
+    const earnerData = earners?.data?.find((earner) => earner.userId === userId) || {};
+    const institutionData = institutions?.data?.find((institution) => institution.userId === userId) || {};
+    const issuerData = issuers?.data?.find((issuer) => issuer.userId === userId) || {};
+
+    const details = profileInfoConfig[roleName] || [{ label: "No data available for this role" }];
+
+    return (
+        <Stack
+            flexDirection="row"
+            alignItems="start"
+            sx={{
+                boxShadow: theme.customShadows.default,
+                borderRadius: theme.customShape.section,
+                p: { xss: "24px", sm: "32px" },
+                bgcolor: theme.palette.customColors.white,
+            }}
+        >
+            <Stack direction="column" justifyContent="center" width="100%">
+                <Box>
+                    <Typography variant="h4" sx={{ fontWeight: theme.fontWeight.semiBold, mb: 1 }}>
+                        Personal Information
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: theme.palette.text.disabled }}>
+                        Your personal information is crucial for us to provide you with tailored services.
+                    </Typography>
+                </Box>
+                <Stack mt={5} spacing={3} justifyContent="start" width="100%">
+                    {details.map(({ icon, label, valueKey }, index) => {
+                        let value =
+                            getValue(userData, valueKey) ||
+                            getValue(institutionData, valueKey) ||
+                            getValue(issuerData, valueKey) ||
+                            getValue(earnerData, valueKey) ||
+                            "N/A";
+
+                        if (label === "Date of Birth") {
+                            value = FormatDate(value);
+                        } else if (label === "Phone") {
+                            value = formatPhoneNumber(value);
+                        }
+
+                        return (
+                            <Stack key={index} direction="row" spacing={2} alignItems="center">
+                                <Box component="img" src={icon} alt="icon" sx={{ width: 40, height: 40 }} />
+                                <Stack sx={{ width: "100%" }}>
+                                    <Typography
+                                        sx={{
+                                            fontSize: theme.typography.h6.fontSize,
+                                            color: theme.palette.text.disabled,
+                                            p: 1,
+                                        }}
+                                    >
+                                        {label}
+                                    </Typography>
+                                    <Typography
+                                        sx={{
+                                            fontSize: theme.typography.h5.fontSize,
+                                            fontWeight: theme.fontWeight.semiBold,
+                                            backgroundColor: theme.palette.background.secondary,
+                                            borderRadius: theme.customShape.input,
+                                            p: 1,
+                                            wordBreak: "break-word",
+                                            color: value === "N/A" ? theme.palette.primary.main : "inherit",
+                                        }}
+                                    >
+                                        {value}
+                                    </Typography>
+                                </Stack>
+                            </Stack>
+                        );
+                    })}
+                </Stack>
+            </Stack>
+        </Stack>
+    );
+};
+
+export default ProfileInfoContainer;
