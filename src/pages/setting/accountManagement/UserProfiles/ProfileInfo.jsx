@@ -28,11 +28,13 @@ const profileInfoConfig = {
         { icon: PhoneIcon, label: "Phone", valueKey: "phoneNumber" },
         { icon: EmailIcon, label: "Email", valueKey: "email" },
         { icon: BirthDateIcon, label: "Date of Birth", valueKey: "dateOfBirth" },
+        { icon: GenderIcon, label: "Gender", valueKey: "Gender.name" },
     ],
     institutionOwner: [
         { icon: PhoneIcon, label: "Phone", valueKey: "phoneNumber" },
         { icon: EmailIcon, label: "Email", valueKey: "email" },
         { icon: BirthDateIcon, label: "Date of Birth", valueKey: "dateOfBirth" },
+        { icon: GenderIcon, label: "Gender", valueKey: "Gender.name" },
         { icon: OrganizationIcon, label: "Organization", valueKey: "institutionName" },
         { icon: Link, label: "Link", valueKey: "institutionWebsiteUrl" },
     ],
