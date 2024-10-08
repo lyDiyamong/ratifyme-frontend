@@ -1,18 +1,12 @@
-//React Import
 import { useEffect, useState } from "react";
-//MUI Import
 import { Box, Stack, IconButton, Typography, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { AssignmentIndOutlined, CameraAltRounded } from "@mui/icons-material";
-//Custom Import
 import theme from "../../../assets/themes/index";
-import ProfileInfo from "./ProfileInfo";
-// Import the config function
-import { getProfileInfo } from "../../../data/setting/profileInfoData";
+import ProfileInfoContainer from "./ProfileInfo"; // Updated import
 import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
 import MaleUserDefault from "../../../assets/images/MaleUser.svg";
 import FemaleUserDefault from "../../../assets/images/FemaleUser.svg";
-
 import EditProfileModal from "./ModalEditProfile";
 import {
     useFetchInfoUserByIdQuery,
@@ -22,16 +16,12 @@ import {
 import BioContent from "./BioContent";
 import { useSelector } from "react-redux";
 import MoreMenu from "../../../components/MoreMenu";
-// import { da } from "date-fns/locale";
 
-//============ Start User Profile Component ============
 const UserProfile = () => {
-    // const { data: user } = useCheckAuthQuery();
     const { userId } = useSelector((state) => state.global);
-
     const [open, setOpen] = useState(false);
     const [updateImage, setUpdateImage] = useState(DefaultProfileSvg);
-    const { data: info, isLoading, isError } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
+    const { data: info, isLoading } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
     const userData = info?.data;
 
     const [updateImg] = useUploadUserPfMutation();
@@ -45,60 +35,30 @@ const UserProfile = () => {
         setOpen(false);
     };
 
-    // Inside the UserProfile component
-    // const [anchorEl, setAnchorEl] = useState(null);
-    // const isMenuOpen = Boolean(anchorEl);
-
-    // const handleMoreClick = (event) => {
-    //     setAnchorEl(event.currentTarget);
-    // };
-
-    // const handleCloseMoreMenu = () => {
-    //     setAnchorEl(null);
-    // };
-
     const handleFileChange = async (event) => {
         const file = event.target.files[0];
         if (file) {
             const formData = new FormData();
             formData.append("image", file);
-
-            try {
-                const result = await updateImg({ id: userId, data: formData }).unwrap();
-                setUpdateImage(result?.record.profileImage);
-            } catch (error) {
-                console.error("Error uploading image:", error);
-            }
+            const result = await updateImg({ id: userId, data: formData }).unwrap();
+            setUpdateImage(result?.record.profileImage);
         }
         event.target.value = "";
     };
 
-    // Handle delete image
     const handleDeleteImage = async () => {
-        try {
-            await deleteImg({ id: userId }).unwrap();
-            setUpdateImage(null);
-        } catch (error) {
-            console.error("Error deleting image:", error);
-        }
+        await deleteImg({ id: userId });
+        setUpdateImage(null);
     };
 
     useEffect(() => {
         if (userData?.profileImage) {
-            setUpdateImage(userData?.profileImage);
+            setUpdateImage(userData.profileImage);
         } else {
-            // Set based on gender if no profile image exists
-            if (userData?.Gender?.name === "male") {
-                setUpdateImage(MaleUserDefault);
-            } else if (userData?.Gender?.name === "female") {
-                setUpdateImage(FemaleUserDefault);
-            } else {
-                setUpdateImage(DefaultProfileSvg);
-            }
+            setUpdateImage(userData?.Gender?.name === "male" ? MaleUserDefault : FemaleUserDefault);
         }
     }, [userData?.profileImage, userData?.Gender?.name]);
 
-    // More Menu props
     const menuItems = [{ label: "Remove Profile", onClick: handleDeleteImage }];
 
     return (
@@ -116,24 +76,19 @@ const UserProfile = () => {
                 }}
             >
                 <Stack direction={{ sm: "column", md: "row" }} gap={3} alignItems="center">
-                    <Box
-                        sx={{
-                            position: "relative",
-                            width: "150px",
-                            height: "150px",
-                            borderRadius: "100%",
-                            overflow: "hidden",
-                            "&:hover .hover-overlay": {
-                                visibility: "visible",
-                                opacity: 1,
-                            },
-                        }}
-                    >
-                        <Box
-                            component="img"
-                            src={
-                                updateImage || (userData?.Gender?.name === "male" ? MaleUserDefault : FemaleUserDefault)
-                            }
+                    <Box sx={{
+                        position: "relative",
+                        width: "150px",
+                        height: "150px",
+                        borderRadius: "100%",
+                        overflow: "hidden",
+                        "&:hover .hover-overlay": {
+                            visibility: "visible",
+                            opacity: 1,
+                        },
+                    }}>
+                        <Box component="img"
+                            src={updateImage || DefaultProfileSvg}
                             alt="person"
                             sx={{
                                 width: "100%",
@@ -143,27 +98,23 @@ const UserProfile = () => {
                                 display: "block",
                             }}
                         />
-
-                        <Box
-                            className="hover-overlay"
-                            sx={{
-                                position: "absolute",
-                                top: 0,
-                                left: 0,
-                                width: "100%",
-                                height: "100%",
-                                borderRadius: "100%",
-                                bgcolor: "rgba(0, 0, 0, 0.6)",
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                visibility: "hidden",
-                                opacity: 0,
-                                transition: "visibility 0.2s, opacity 0.3s ease-in-out",
-                                cursor: "pointer",
-                            }}
-                        >
+                        <Box className="hover-overlay" sx={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "100%",
+                            borderRadius: "100%",
+                            bgcolor: "rgba(0, 0, 0, 0.6)",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            visibility: "hidden",
+                            opacity: 0,
+                            transition: "visibility 0.2s, opacity 0.3s ease-in-out",
+                            cursor: "pointer",
+                        }}>
                             <input
                                 type="file"
                                 id="icon-button-photo"
@@ -171,13 +122,7 @@ const UserProfile = () => {
                                 onChange={handleFileChange}
                             />
                             <label htmlFor="icon-button-photo">
-                                <IconButton
-                                    aria-label="upload"
-                                    component="span"
-                                    sx={{
-                                        color: theme.palette.customColors.white,
-                                    }}
-                                >
+                                <IconButton aria-label="upload" component="span" sx={{ color: theme.palette.customColors.white }}>
                                     <CameraAltRounded />
                                 </IconButton>
                             </label>
@@ -186,34 +131,24 @@ const UserProfile = () => {
                             </Typography>
                         </Box>
                     </Box>
-
                     <Stack sx={{ alignItems: { md: "start", xss: "center" }, gap: 1 }}>
                         <Typography sx={{ fontSize: theme.typography.h4, fontWeight: theme.fontWeight.semiBold }}>
                             {`${userData?.firstName || ""} ${userData?.lastName || ""}`}
                         </Typography>
-
-                        <Typography
-                            sx={{
-                                fontSize: theme.typography.h5,
-                                color: theme.palette.text.disabled,
-                            }}
-                        >
+                        <Typography sx={{ fontSize: theme.typography.h5, color: theme.palette.text.disabled }}>
                             @ {userData?.username || "N/A"}
                         </Typography>
-
-                        <Box
-                            sx={{
-                                bgcolor: theme.palette.action.hover,
-                                color: theme.palette.primary.main,
-                                p: 1,
-                                px: 2,
-                                borderRadius: theme.customShape.section,
-                                display: "flex",
-                                justifyContent: "center",
-                                gap: 1,
-                                alignItems: "center",
-                            }}
-                        >
+                        <Box sx={{
+                            bgcolor: theme.palette.action.hover,
+                            color: theme.palette.primary.main,
+                            p: 1,
+                            px: 2,
+                            borderRadius: theme.customShape.section,
+                            display: "flex",
+                            justifyContent: "center",
+                            gap: 1,
+                            alignItems: "center",
+                        }}>
                             <AssignmentIndOutlined sx={{ color: theme.palette.primary.main }} />
                             <Typography sx={{ fontSize: theme.typography.h5, color: theme.palette.primary.main }}>
                                 {userData?.Role?.name || "N/A"}
@@ -221,12 +156,9 @@ const UserProfile = () => {
                         </Box>
                     </Stack>
                 </Stack>
-
                 <Stack flexDirection="row" gap={1} alignItems="center" justifyContent="center">
-                    {/* Edit button */}
                     <Button
                         onClick={handleClickOpen}
-                        onChange={handleFileChange}
                         sx={{
                             backgroundColor: theme.palette.primary.main,
                             color: theme.palette.customColors.white,
@@ -242,27 +174,17 @@ const UserProfile = () => {
                     >
                         Edit Profile
                     </Button>
-
-                    {/* More Menu */}
                     <MoreMenu menuItems={menuItems} />
-
-                    {/* Edit Modal popup */}
                     <EditProfileModal open={open} onClose={handleClose} userData={userData} />
                 </Stack>
             </Stack>
-
             <BioContent />
-
-            <Stack
-                flexDirection="row"
-                alignItems="start"
-                sx={{
-                    boxShadow: theme.customShadows.default,
-                    borderRadius: theme.customShape.section,
-                    p: { xss: "24px", sm: "32px" },
-                    bgcolor: theme.palette.customColors.white,
-                }}
-            >
+            <Stack flexDirection="row" alignItems="start" sx={{
+                boxShadow: theme.customShadows.default,
+                borderRadius: theme.customShape.section,
+                p: { xss: "24px", sm: "32px" },
+                bgcolor: theme.palette.customColors.white,
+            }}>
                 <Stack direction="column" justifyContent={"center"} width="100%">
                     <Box>
                         <Typography variant="h4" sx={{ fontWeight: theme.fontWeight.semiBold, mb: 1 }}>
@@ -272,10 +194,7 @@ const UserProfile = () => {
                             Your personal information is crucial for us to provide you with tailored services.
                         </Typography>
                     </Box>
-
-                    <Stack justifyContent={"center"} alignItems="start" width="100%">
-                        <ProfileInfo item={userData} details={getProfileInfo(userData?.Role?.name)} />
-                    </Stack>
+                    <ProfileInfoContainer /> {/* Updated to use the new container component */}
                 </Stack>
             </Stack>
         </Stack>
