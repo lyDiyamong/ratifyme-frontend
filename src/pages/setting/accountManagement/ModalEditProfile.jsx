@@ -1,8 +1,9 @@
+// React Library Import
 import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import dayjs from "dayjs";
 
-// MUI Imports
+// MUI Import
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -12,16 +13,20 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Paper, TextField } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
-// Custom Imports
+
+// Custom Import
+import theme from "../../../assets/themes/index";
 import FormInput from "../../../components/FormInput";
 import SelectForm from "../../../components/SelectionForm";
-import { useUpdateUserProfileMutation } from "../../../store/api/users/userInfoProfileApi";
-import theme from "../../../assets/themes/index";
 import { SpinLoading } from "../../../components/loading/SpinLoading";
-import PhoneNumberForm from "../../../components/PhoneNumberForm"; // Import the new phone number component
+import PhoneNumberForm from "../../../components/PhoneNumberForm";
+
+// Fetching Data Import
+import { useUpdateUserProfileMutation } from "../../../store/api/users/userInfoProfileApi";
 
 const CustomPaper = (props) => <Paper {...props} sx={{ borderRadius: "16px" }} />;
 
+// =========== Start Edit Profile Modal ===========
 const EditProfileModal = ({ open, userData, onClose }) => {
     const { handleSubmit, control, reset } = useForm({
         defaultValues: {
@@ -159,3 +164,4 @@ const EditProfileModal = ({ open, userData, onClose }) => {
 };
 
 export default EditProfileModal;
+// =========== End Edit Profile Modal ===========
