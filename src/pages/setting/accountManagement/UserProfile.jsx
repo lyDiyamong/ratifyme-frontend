@@ -194,8 +194,8 @@ const UserProfile = () => {
                             Your personal information is crucial for us to provide you with tailored services.
                         </Typography>
                     </Box>
-                    <ProfileInfoContainer /> 
                 </Stack>
+                    <ProfileInfoContainer /> 
             </Stack>
         </Stack>
     );
