@@ -92,6 +92,14 @@ export const badgeApi = createApi({
                     ? [...result.data.map(({ id }) => ({ type: "Badge", id })), { type: "Badge", id }]
                     : [{ type: "Badge", id }],
         }),
+
+        deleteBadge: builder.mutation({
+            query: (id) => ({
+                url: `/issuers/badgeClasses/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: (result, error, id) => [{ type: "Badge", id }],
+        }),
     }),
 });
 
@@ -103,4 +111,5 @@ export const {
     useFetchBadgesQuery,
     useFetchBadgeByEarnerQuery,
     useFetchClaimBadgeByEarnerQuery,
+    useDeleteBadgeMutation,
 } = badgeApi;
