@@ -15,22 +15,25 @@ import { useGetSubInstitutionQuery } from "../../store/api/subscription/subscrip
 import theme from "../../assets/themes";
 import SkeletonLoading from "../../components/loading/SkeletonLoading";
 import AlertMessage from "../../components/alert/AlertMessage";
+import { useSelector } from "react-redux";
 
 const InvoiceManagement = () => {
     // Get query for requesting
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    const institutionId = queryParams.get("institutionId");
+    const { institutionData } = useSelector((state) => state.global);
+
+    let institutionId = institutionData?.id ? institutionData?.id : queryParams.get("institutionId") ;
 
     // Fetching data
     const { data: response, isLoading, isError } = useGetSubInstitutionQuery(institutionId);
-    const institutionData = response?.data;
+    const instiData = response?.data;
 
     // Total paid price
     const price = 0;
     const totalPaid =
         response &&
-        institutionData.reduce((accumulator, current) => {
+        instiData.reduce((accumulator, current) => {
             return accumulator + parseFloat(current.ServicePlan.price);
         }, price);
 
@@ -66,7 +69,7 @@ const InvoiceManagement = () => {
     return (
         // ============ Start login container ============
         <DashboardContainer>
-            {isError && <AlertMessage variant="error" >Error fetching data</AlertMessage>}
+            {isError && <AlertMessage variant="error">Error fetching data</AlertMessage>}
             {/* Page Title */}
             <PageTitle title="Invoice" />
             {/* <AlertMessage variant="error">Login succesfully</AlertMessage> */}
@@ -75,7 +78,7 @@ const InvoiceManagement = () => {
             {isLoading ? (
                 <SkeletonLoading num={5} />
             ) : (
-                <TableCustom title="Invoice" data={institutionData} columns={columns}></TableCustom>
+                <TableCustom title="Invoice" data={instiData} columns={columns}></TableCustom>
             )}
             <Box
                 sx={{
