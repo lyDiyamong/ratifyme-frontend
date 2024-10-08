@@ -1,32 +1,31 @@
 import { useMemo } from "react";
 import { Box, Stack, Typography, LinearProgress } from "@mui/material";
 import FormInput from "../../components/FormInput";
-import { getPasswordStrength, validatePassword } from "../../utils/auth/passwordUtils"; // Assume you create a utils file for the functions
+import { getPasswordStrength, validatePassword } from "../../utils/auth/passwordUtils";
 import theme from "../../assets/themes";
 
-const PasswordFields = ({
-    control,
-    errors = {},
-    watch,
-    passwordName = "password",
-    passwordConfirmName = "passwordConfirm",
-}) => {
+/**
+ * PasswordFields component renders the password input fields with validation and strength indicators.
+ *
+ * @param {object} props - The component props.
+ * @param {object} props.control - The control object provided by react-hook-form to manage form state.
+ * @param {function} props.watch - The watch function provided by react-hook-form to monitor form inputs.
+ * @param {string} [props.passwordName="password"] - The name of the password field.
+ * @param {string} [props.passwordConfirmName="passwordConfirm"] - The name of the password confirmation field.
+ *
+ * @returns {JSX.Element} - Returns the form input fields for password and password confirmation along with the strength indicator and validation hints.
+ */
+
+const PasswordFields = ({ control, watch, passwordName = "password", passwordConfirmName = "passwordConfirm" }) => {
     const watchPassword = watch(passwordName, "");
     const passwordStrength = useMemo(() => getPasswordStrength(watchPassword), [watchPassword]);
     const validationState = useMemo(() => validatePassword(watchPassword), [watchPassword]);
 
     return (
         <Stack spacing={2}>
-            <FormInput
-                name={passwordName}
-                label="New password"
-                control={control}
-                required
-                type="password"
-                errorMessage={errors[passwordName]?.message || ""}
-                aria-label="Password"
-            />
+            <FormInput name={passwordName} label="New password" control={control} required type="password" />
 
+            {/* Password strength visual indicator using LinearProgress bars */}
             <Box sx={{ display: "flex", gap: 0.5 }}>
                 {[1, 2, 3, 4, 5].map((_, index) => (
                     <LinearProgress
@@ -113,8 +112,6 @@ const PasswordFields = ({
                 control={control}
                 required
                 type="password"
-                errorMessage={errors[passwordConfirmName]?.message || ""}
-                aria-label="Confirm Password"
             />
         </Stack>
     );
