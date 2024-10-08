@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 // MUI import
-import { Button, MobileStepper, Stack, Typography, CircularProgress, Box, Skeleton } from "@mui/material";
+import { Button, MobileStepper, Stack, Typography, CircularProgress, Box, Skeleton, IconButton } from "@mui/material";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
@@ -14,11 +14,10 @@ import theme from "../../assets/themes";
 import CoreElementStep from "./CoreElementStep";
 import MetadataStep from "./MetadataStep";
 import OptionalStep from "./OptionalStep";
-import ImageSelection from "./ImageSelection";
 import { SpinLoading } from "../../components/loading/SpinLoading";
-import { useCreateBadgeMutation, useFetchBadgesByIssuerQuery } from "../../store/api/badgeManagement/badgeApi";
-import { useCheckAuthQuery } from "../../store/api/auth/authApi";
+import { useCreateBadgeMutation, } from "../../store/api/badgeManagement/badgeApi";
 import { useFetchAchievementTypeQuery } from "../../store/api/achievements/achievementTypeApi";
+import { AssignmentIndOutlined, CameraAltRounded } from "@mui/icons-material";
 
 // The data static of the description
 const steps = [
@@ -40,6 +39,8 @@ const steps = [
 ];
 
 const BadgeCreationForm = () => {
+    const { issuerData } = useSelector((state) => state.global);
+
     const navigate = useNavigate();
     // Stepper
     const [activeStep, setActiveStep] = useState(0);
@@ -48,13 +49,12 @@ const BadgeCreationForm = () => {
     // Slow loading
     const [loading, setLoading] = useState(false);
 
-    const { data: badge } = useFetchBadgesByIssuerQuery();
     const [createBadge] = useCreateBadgeMutation();
-    const { data: user } = useCheckAuthQuery();
+
     const { data: achievementType } = useFetchAchievementTypeQuery();
 
     const allAchievementTypes = achievementType?.data || [];
-    const { issuerData } = useSelector((state) => state.global);
+
     const userName = `${issuerData.User.firstName} ${issuerData.User.lastName}`;
 
     // React Hook Form
@@ -110,35 +110,40 @@ const BadgeCreationForm = () => {
 
     const onSubmit = async (data) => {
         setLoading(true);
-        console.log(data);
-        // Construct the badge object from the form data
-        const badge = {
-            name: data.badgeName,
-            description: data.badgeDescription,
-            tags: data.tagsOrLanguage.join(","),
-            startedDate: data.startDate ? data.startDate.toISOString() : null,
-            expiredDate: data.endDate ? data.endDate.toISOString() : null,
-            issuerId: issuerData.id,
-            Achievements:
-                data.AchievementTypes?.map((achievementName) => {
-                    const achievementType = allAchievementTypes.find((type) => type.name === achievementName);
-                    if (!achievementType) {
-                        console.error(`Achievement type not found for ${achievementName}`);
-                        return null;
-                    }
-                    return {
-                        achievementTypeId: achievementType?.id,
-                        AchievementType: { name: achievementName },
-                    };
-                }).filter(Boolean) || [],
 
-            Criterias: data.narrative ? [{ narrative: data.narrative }] : [],
-        };
-        console.log(badge);
+        // Construct a FormData object
+        const formData = new FormData();
+
+        // Append form data fields
+        formData.append("name", data.badgeName);
+        formData.append("description", data.badgeDescription);
+        formData.append("tags", data.tagsOrLanguage.join(","));
+        formData.append("startedDate", data.startDate ? data.startDate.toISOString() : null);
+        formData.append("expiredDate", data.endDate ? data.endDate.toISOString() : null);
+        formData.append("issuerId", issuerData.id);
+
+        // Append Achievements
+        data.AchievementTypes?.forEach((achievementName, index) => {
+            const achievementType = allAchievementTypes.find((type) => type.name === achievementName);
+            if (achievementType) {
+                formData.append(`Achievements[${index}][achievementTypeId]`, achievementType.id);
+                formData.append(`Achievements[${index}][AchievementType][name]`, achievementName);
+            }
+        });
+
+        // Append Criterias
+        if (data.narrative) {
+            formData.append("Criterias[0][narrative]", data.narrative);
+        }
+
+        // Append the uploaded image to the FormData object (if available)
+        if (uploadedImage) {
+            formData.append("badgeFile", uploadedImage);
+        }
 
         try {
-            // Call your mutation function to create the badge
-            await createBadge(badge).unwrap();
+            // Call your mutation function to create the badge with formData
+            await createBadge(formData).unwrap();
             console.log("Badge successfully created");
 
             // Reset form and image state
@@ -150,6 +155,15 @@ const BadgeCreationForm = () => {
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            console.log("Selected file:", file);
+            setUploadedImage(file); 
+        }
+        event.target.value = "";
     };
 
     const renderStepContent = () => {
@@ -176,21 +190,107 @@ const BadgeCreationForm = () => {
                 mb: 3,
                 gap: 6,
             }}
+            onSubmit={handleSubmit(onSubmit)}
+            component="form"
         >
             {/* Start the Image Upload */}
-            <ImageSelection onImageSelect={(file) => setUploadedImage(file)} />
+            {/* <Typography>Hello</Typography> */}
+            {/* <ImageSelection onImageSelect={(file) => setUploadedImage(file)} /> */}
+            <Stack direction={{ sm: "column", md: "row" }} gap={3} alignItems="center">
+                <Box
+                    sx={{
+                        position: "relative",
+                        width: "150px",
+                        height: "150px",
+                        borderRadius: "100%",
+                        overflow: "hidden",
+                        "&:hover .hover-overlay": {
+                            visibility: "visible",
+                            opacity: 1,
+                        },
+                    }}
+                >
+                    <Box
+                        component="img"
+                        src={uploadedImage}
+                        alt="person"
+                        sx={{
+                            width: "100%",
+                            height: "100%",
+                            borderRadius: "100%",
+                            objectFit: "cover",
+                            display: "block",
+                        }}
+                    />
+
+                    <Box
+                        className="hover-overlay"
+                        sx={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "100%",
+                            borderRadius: "100%",
+                            bgcolor: "rgba(0, 0, 0, 0.6)",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            visibility: "hidden",
+                            opacity: 0,
+                            transition: "visibility 0.2s, opacity 0.3s ease-in-out",
+                            cursor: "pointer",
+                        }}
+                    >
+                        <input
+                            type="file"
+                            id="icon-button-photo"
+                            style={{ display: "none" }}
+                            onChange={handleFileChange}
+                        />
+                        <label htmlFor="icon-button-photo">
+                            <IconButton
+                                aria-label="upload"
+                                component="span"
+                                sx={{
+                                    color: theme.palette.customColors.white,
+                                }}
+                            >
+                                <CameraAltRounded />
+                            </IconButton>
+                        </label>
+                        <Typography variant="body3" color={theme.palette.customColors.white}>
+                            Update Profile
+                        </Typography>
+                    </Box>
+                </Box>
+
+                {/* <Stack sx={{ alignItems: { md: "start", xss: "center" }, gap: 1 }}>
+
+                    <Box
+                        sx={{
+                            bgcolor: theme.palette.action.hover,
+                            color: theme.palette.primary.main,
+                            p: 1,
+                            px: 2,
+                            borderRadius: theme.customShape.section,
+                            display: "flex",
+                            justifyContent: "center",
+                            gap: 1,
+                            alignItems: "center",
+                        }}
+                    >
+                        <AssignmentIndOutlined sx={{ color: theme.palette.primary.main }} />
+                        
+                    </Box>
+                </Stack> */}
+            </Stack>
             {/* End the Image Upload */}
 
             {/* Start the input form */}
             <Stack>
-                <Stack
-                    component="form"
-                    direction="row"
-                    flexDirection={{ xss: "column", md: "row" }}
-                    gap={{ xss: 1, md: 4 }}
-                    onSubmit={handleSubmit(onSubmit)}
-                    noValidate
-                >
+                <Stack direction="row" flexDirection={{ xss: "column", md: "row" }} gap={{ xss: 1, md: 4 }} noValidate>
                     {/* Slow Loading of Description */}
                     {loading ? (
                         <Stack spacing={1}>
