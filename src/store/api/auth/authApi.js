@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { clearAuthState, setAuthState } from "../../slices/globalSlices";
 import { createBaseQuery } from "../../../utils/baseQuery";
-import { handleAuthSuccess } from "../../../utils/authHelpers";
+import { handleAuthSuccess } from "../../../utils/auth/authHelpers";
 
 export const authApi = createApi({
     reducerPath: "authApi",
