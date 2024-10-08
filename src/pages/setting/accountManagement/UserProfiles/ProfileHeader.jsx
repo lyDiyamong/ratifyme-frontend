@@ -1,25 +1,33 @@
+// React Library Import
 import { useEffect, useState } from "react";
-import { Stack, Box, Typography, IconButton, Button } from "@mui/material";
-import { AssignmentIndOutlined, CameraAltRounded } from "@mui/icons-material";
-import {
-    useFetchInfoUserByIdQuery,
-    useDeleteUserPfMutation,
-    useUploadUserPfMutation,
-} from "../../../../store/api/users/userInfoProfileApi";
 import { useSelector } from "react-redux";
-import MoreMenu from "../../../../components/MoreMenu";
-import EditProfileModal from "../ModalEditProfile";
+
+// MUI Import
+import { Stack, Box, Typography, IconButton, Button } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import { AssignmentIndOutlined, CameraAltRounded } from "@mui/icons-material";
+
+// Custom Import
 import DefaultProfileSvg from "../../../../assets/images/DefaultProfile.svg";
 import MaleUserDefault from "../../../../assets/images/MaleUser.svg";
 import FemaleUserDefault from "../../../../assets/images/FemaleUser.svg";
-import EditIcon from "@mui/icons-material/Edit";
+import EditProfileModal from "../ModalEditProfile";
+import MoreMenu from "../../../../components/MoreMenu";
 import theme from "../../../../assets/themes";
 
+// Fetching Data Import
+import {
+useFetchInfoUserByIdQuery,
+    useDeleteUserPfMutation,
+    useUploadUserPfMutation,
+} from "../../../../store/api/users/userInfoProfileApi";
+
+// =========== Start Profile Header ===========
 const ProfileHeader = () => {
     const { userId } = useSelector((state) => state.global);
     const [open, setOpen] = useState(false);
     const [updateImage, setUpdateImage] = useState(DefaultProfileSvg);
-    const { data: info, isLoading } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
+    const { data: info } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
     const userData = info?.data;
 
     const [updateImg] = useUploadUserPfMutation();
@@ -191,3 +199,4 @@ const ProfileHeader = () => {
 };
 
 export default ProfileHeader;
+// =========== End Profile Header ===========
