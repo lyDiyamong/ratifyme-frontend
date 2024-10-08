@@ -1,6 +1,10 @@
+// MUI Import
 import { Box, Card, CardContent, Typography, Button, Stack } from "@mui/material";
-import theme from "../../../../assets/themes/index"; // Adjust the path as necessary
 
+// Custom Import
+import theme from "../../../../assets/themes/index"; 
+
+// =========== Start Profile Setting ===========
 const ProfileSetting = () => {
     const profileData = {
         education: "Stanford University",
@@ -70,3 +74,4 @@ const ProfileSetting = () => {
 };
 
 export default ProfileSetting;
+// =========== End Profile Setting ===========
