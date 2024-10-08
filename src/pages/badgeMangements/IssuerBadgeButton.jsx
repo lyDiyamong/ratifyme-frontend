@@ -21,8 +21,8 @@ const IssuerBadgeButton = ({ onGetEmail, control, issuerId }) => {
         });
 
     return (
+        // Start Add Earner Button
         <>
-            // Start Add Earner Button 
             <Button
                 onClick={() => setOpen(true)}
                 sx={{
@@ -44,8 +44,8 @@ const IssuerBadgeButton = ({ onGetEmail, control, issuerId }) => {
                 onGetEmail={onGetEmail}
                 control={control}
             />
-             // End Add Earner Button
         </>
+        // End Add Earner Button
     );
 };
 

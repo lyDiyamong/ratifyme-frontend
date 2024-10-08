@@ -22,7 +22,7 @@ const BadgeList = () => {
     const activeId = roleId === 2 ? institutionData.id : roleId === 3 ? issuerData.id : earnerData.id;
 
     // Fetch data
-    const { data: allBadges, isLoading, isError } = useFetchBadgesQuery();
+    const { data: allBadges, isLoading, isError} = useFetchBadgesQuery();
     const { data: badgeInsti } = useFetchBadgesByInstitutionsQuery(activeId);
     const { data: badgeIssuer } = useFetchBadgesByIssuerQuery(activeId);
     const { data: badgeEarner } = useFetchBadgeByEarnerQuery(activeId);
