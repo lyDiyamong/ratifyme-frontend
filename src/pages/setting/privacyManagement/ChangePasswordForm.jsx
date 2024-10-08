@@ -24,7 +24,6 @@ const ChangePasswordForm = () => {
             });
         } else {
             console.log(data);
-
             reset();
         }
     };
@@ -61,9 +60,23 @@ const ChangePasswordForm = () => {
                     noValidate
                 >
                     {/* Username */}
-                    <FormInput name="name" label="Username" control={control} type="text" required={true} />
+                    <FormInput
+                        name="name"
+                        label="Username"
+                        control={control}
+                        type="text"
+                        required={true}
+                        autoComplete="off" 
+                    />
                     {/* Password */}
-                    <FormInput label="Password" name="password" control={control} type="password" required={true} />
+                    <FormInput
+                        label="Password"
+                        name="password"
+                        control={control}
+                        type="password"
+                        required={true}
+                        autoComplete="off"
+                    />
                     {/* New Password */}
                     <FormInput
                         label="New Password"
@@ -71,6 +84,7 @@ const ChangePasswordForm = () => {
                         control={control}
                         type="password"
                         required={true}
+                        autoComplete="new-password" 
                     />
                     {/* Confirm Password */}
                     <FormInput
@@ -79,6 +93,7 @@ const ChangePasswordForm = () => {
                         control={control}
                         type="password"
                         required={true}
+                        autoComplete="new-password"
                     />
                     {/* Submit button */}
                     <Button
