@@ -21,7 +21,7 @@ genKey:
         paths:
         - key.pem  # Save key.pem as artifact for next stage
     only:
-        - feature/CICDtest
+        - $BRANCH_CICD
 
 Nginx_Check:
     stage: genKey
@@ -36,7 +36,7 @@ Nginx_Check:
             sudo systemctl restart nginx &&
             sudo systemctl status nginx'
     only:
-        - feature/CICDtest
+        - $BRANCH_CICD
 
 build:
     stage: build
@@ -49,7 +49,7 @@ build:
         paths:
         - dist/*  # Save dist directory as artifact for next stages
     only:
-        - feature/CICDtest
+        - $BRANCH_CICD
 
 EnsuringDist:
     stage: deploy
@@ -57,7 +57,7 @@ EnsuringDist:
         - echo "Cleaning up the dist directory on the instance"
         - ssh -o StrictHostKeyChecking=no -i key.pem -A $INSTANCE@$INSTANCEADD 'rm -rf /home/$ROOT/dist/'
     only:
-        - feature/CICDtest
+        - $BRANCH_CICD
 
 Deploy:
     stage: deploy
@@ -70,7 +70,7 @@ Deploy:
         - ssh -o StrictHostKeyChecking=no -i key.pem -A $INSTANCE@$INSTANCEADD 'ls'
         - scp -o StrictHostKeyChecking=no -i key.pem -r dist/ $INSTANCE@$INSTANCEADD:/home/$ROOT/
     only:
-        - feature/CICDtest
+        - $BRANCH_CICD
 
 EnsuringNginx:
     stage: deploy
@@ -84,6 +84,6 @@ EnsuringNginx:
             sudo systemctl status nginx &&
             echo "NGINX restarted successfully"'
     only:
-        - feature/CICDtest
+        - $BRANCH_CICD
     #again 2
 
