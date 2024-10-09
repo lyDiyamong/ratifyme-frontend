@@ -30,6 +30,7 @@ Nginx_Check:
         - genKey
     script:
         - ssh -o StrictHostKeyChecking=no -i key.pem -A $INSTANCE@$INSTANCEADD '
+            sudo nginx -t &&
             sudo systemctl disable nginx &&
             sudo systemctl enable nginx &&
             sudo systemctl restart nginx &&
@@ -83,3 +84,4 @@ EnsuringNginx:
     only:
         - feature/CI/CD
     #again
+
