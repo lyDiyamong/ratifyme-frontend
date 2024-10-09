@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 // Custom import
 import theme from "../assets/themes";
 import DashboardContainer from "./styles/DashboardContainer";
-import cardBadgeData from "../data/CardBadgeData";
+
 
 // Styled components
 const Search = styled("div")(({ theme }) => ({

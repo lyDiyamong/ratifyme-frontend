@@ -1,78 +1,61 @@
-// React import
-import { useEffect, useState } from "react";
+// React imports
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
-// MUI import
-import { TextField, Box, Typography, Avatar, Button, Stack, Divider, Chip } from "@mui/material";
+// MUI imports
+import { TextField, Box, Typography, Avatar, Button, Stack, Chip } from "@mui/material";
 import { GridCheckCircleIcon } from "@mui/x-data-grid";
 
-// Custom import
+// Custom imports
 import DefaultProfileSvg from "../../assets/images/DefaultProfile.svg";
 import MaleUserDefault from "../../assets/images/MaleUser.svg";
 import FemaleUserDefault from "../../assets/images/FemaleUser.svg";
 import MoreMenu from "../../components/MoreMenu";
 import theme from "../../assets/themes";
 
-// Fetching data Import
+// Fetching data imports
 import { useFetchInfoUserByIdQuery, useUpdateUserProfileMutation } from "../../store/api/users/userInfoProfileApi";
 
 // =========== Start BioContent in profile page ===========
+// BioContent component with status chip and updated styles
 const BioContent = () => {
     const { userId } = useSelector((state) => state.global);
 
     const [bio, setBio] = useState("");
     const [isEditing, setIsEditing] = useState(false);
-    const [originalBio, setOriginalBio] = useState(bio);
     const [profileImage, setProfileImage] = useState(DefaultProfileSvg);
+
+    const bioRef = useRef(null); // Reference to the Typography component
 
     // Fetch user data and bio
     const { data: info } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
-    const userBio = info?.data?.bio || bio;
-    const gender = info?.data?.Gender?.name;
+
+    useEffect(() => {
+        // Set profile image based on gender and bio
+        if (info?.data) {
+            setProfileImage(
+                info.data.profileImage ||
+                    (info.data.Gender?.name === "male" ? MaleUserDefault : FemaleUserDefault) ||
+                    DefaultProfileSvg,
+            );
+            setBio(info.data.bio || "");
+        }
+    }, [info]);
+
+    // Check if bio exceeds two lines
+
 
     // Update user bio mutation
     const [updateUserProfile, { isLoading }] = useUpdateUserProfileMutation();
 
-    useEffect(() => {
-        // Set profile image based on gender
-        if (info?.data?.profileImage && info.data.profileImage !== profileImage) {
-            setProfileImage(info.data.profileImage);
-        } else if (gender === "male") {
-            setProfileImage(MaleUserDefault);
-        } else if (gender === "female") {
-            setProfileImage(FemaleUserDefault);
-        } else {
-            setProfileImage(DefaultProfileSvg);
-        }
-
-        if (info?.data?.bio && info.data.bio !== bio) {
-            setBio(info.data.bio);
-            setOriginalBio(info.data.bio);
-        }
-    }, [info, gender]);
-
     // Handle edit mode
-    const handleTextClick = () => {
-        setOriginalBio(bio);
-        setIsEditing(true);
-    };
-
-    // Handle the Enter
-    const handleKeyDown = async (e) => {
-        if (e.key === "Enter") {
-            await handleSubmit();
-        }
-    };
+    const handleTextClick = () => setIsEditing(true);
 
     // Handle form submit to update the bio
     const handleSubmit = async () => {
         if (bio && userId) {
             try {
-                await updateUserProfile({
-                    id: userId,
-                    data: { bio },
-                }).unwrap();
-
+                await updateUserProfile({ id: userId, data: { bio } }).unwrap();
                 setIsEditing(false);
             } catch (error) {
                 console.error("Failed to update bio:", error);
@@ -83,119 +66,106 @@ const BioContent = () => {
 
     // Handle cancel button click
     const handleCancel = () => {
-        setBio(originalBio);
+        setBio(info?.data?.bio || "");
         setIsEditing(false);
     };
 
     // More Menu props
-    const menuItems = [{ label: "Update Bio", onClick: handleTextClick },];
+    const menuItems = [{ label: "Update Bio", onClick: handleTextClick }];
 
     return (
-        <Stack gap={3}>
+        <Stack>
             <Stack
                 sx={{
                     boxShadow: theme.customShadows.default,
-                    borderRadius: theme.customShape.section,
-                    p: { xss: "20px", sm: "24px" },
+                    borderRadius: "16px",
+                    p: { xs: "20px", sm: "16px" },
                     bgcolor: theme.palette.customColors.white,
                     alignItems: "center",
                     gap: 3,
+                    width: "100%",
+                    height: "285px",
+                    position: "relative", // Added to position buttons relative to the container
                 }}
             >
-                <Stack
-                    sx={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        width: "100%",
-                        // gap: 1,
-                    }}
-                >
-                    <Stack
-                        sx={{
-                            flexDirection: { xs: "row", xss: "column" },
-                            alignItems: { xs: "center", xss: "start" },
-                            width: "100%",
-                            gap: 2,
-                        }}
-                    >
+                {/* Header with "About Me" and Status */}
+                <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: "100%" }}>
+                    <Stack direction="row" gap={3} alignItems="center">
                         <Typography
-                            sx={{
-                                fontSize: theme.typography.h4,
-                                fontWeight: theme.fontWeight.semiBold,
-                            }}
-                        >
-                            About Me
-                        </Typography>
-
-                        <Chip
-                            icon={<GridCheckCircleIcon color={theme.palette.customColors.green300} />}
-                            label="Status"
                             sx={{
                                 fontSize: theme.typography.h5,
                                 fontWeight: theme.fontWeight.semiBold,
-                                backgroundColor: userBio
+                                color: "#ff4b2b",
+                            }}
+                        >
+                            Bio
+                        </Typography>
+                        {/* Status Chip */}
+                        <Chip
+                            label={bio ? "Active" : "No Bio"}
+                            icon={<GridCheckCircleIcon />}
+                            sx={{
+                                backgroundColor: bio
                                     ? theme.palette.customColors.green100
-                                    : theme.palette.action.error,
-                                py: 2.5,
-                                borderRadius: theme.customShape.section,
-                                color: userBio
-                                    ? theme.palette.customColors.green300
-                                    : theme.palette.customColors.red200,
-                                textTransform: "none",
+                                    : theme.palette.customColors.red100,
+                                color: bio ? theme.palette.customColors.green300 : theme.palette.customColors.red300,
+                                fontWeight: "bold",
+                                py: 0.5,
+                                px: 2,
+                                borderRadius: "8px",
+                                textTransform: "uppercase",
+                                fontSize: "12px",
                             }}
                         />
                     </Stack>
                     <MoreMenu menuItems={menuItems} />
                 </Stack>
 
-                <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 2, width: "100%" }}>
-                    {/* Start Profile Status */}
-                    <Avatar alt="User Avatar" src={profileImage} sx={{ width: 40, height: 40 }} />
-
-                    {/* Start Editable Text Field */}
+                {/* Bio Input */}
+                <Stack direction="row" alignItems="center" spacing={2} sx={{ width: "100%" }}>
+                    {/* Bio Text / Editable Input */}
+                    <Avatar alt="User Avatar" src={profileImage} sx={{ width: 50, height: 50 }} />
                     <Box
                         sx={{
                             display: "flex",
-                            alignItems: "flex-start",
+                            flexDirection: "column",
+                            alignItems: "start",
                             gap: 2,
-                            borderRadius: theme.customShape.btn,
                             flexGrow: 1,
                             cursor: "pointer",
                             backgroundColor: theme.palette.background.secondary,
-                            px: 3,
-                            py: 2,
+                            px: 2,
+                            py: 0.5,
                             width: "100%",
+                            overflow: "hidden", // Prevent overflow
                         }}
                         onClick={handleTextClick}
                     >
                         {isEditing ? (
-                            <Stack width="100%" px={1} alignItems="end">
+                            <Stack width="100%" alignItems="end">
                                 <TextField
                                     value={bio}
                                     onChange={(e) => {
-                                        // Update bio only if the length is less than or equal to 500
                                         if (e.target.value.length <= 500) {
                                             setBio(e.target.value);
                                         }
                                     }}
-                                    onKeyDown={handleKeyDown}
+                                    onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
                                     variant="outlined"
                                     autoFocus
                                     fullWidth
                                     multiline
-                                    maxRows={4}
+                                    maxRows={3}
                                     InputProps={{
                                         sx: {
                                             border: "none",
                                             "& fieldset": { border: "none" },
-                                            outline: "none",
                                         },
                                     }}
                                 />
-                                <Typography
-                                    sx={{ color: theme.palette.text.secondary, px: 2 }}
-                                >{`${bio.length}/500 `}</Typography>
+                                <Typography sx={{ color: theme.palette.text.secondary }}>
+                                    {`${bio.length}/500 `}
+                                </Typography>
                             </Stack>
                         ) : (
                             <Typography
@@ -203,56 +173,105 @@ const BioContent = () => {
                                     color: theme.palette.text.secondary,
                                     fontSize: "16px",
                                     width: "100%",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    whiteSpace: "nowrap",
                                 }}
+                                title={bio}
                             >
-                                Describe your thought!
+                                Describe yourself here...
                             </Typography>
                         )}
                     </Box>
                 </Stack>
 
-                <Typography
+                {/* <Typography
                     sx={{
                         color: theme.palette.text.secondary,
                         fontSize: "16px",
                         width: "100%",
+                        overflow: "hidden",
+                        // textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
                     }}
+                    title={bio}
                 >
-                    {userBio || "There is no bio yet!"}
-                </Typography>
+                    {bio || "Describe yourself here..."}
+                </Typography> */}
+                {isEditing ? null : <Typography
+                    ref={bioRef}
+                    sx={{
+                        color: theme.palette.text.secondary,
+                        fontSize: "16px",
+                        width: "100%",
+                        // whiteSpace: "normal",
+                        textWrap: 'wrap',
+                        overflow: "auto",
+                        display: "-webkit-box",
+                        WebkitBoxOrient: "vertical",
+                    }}
+                    title={bio}
+                >
+                    {bio || "Describe yourself here..."}
+                </Typography>}
 
-                {/* Start Save and Cancel Buttons */}
+                {/* {isTruncated && (
+                    <Button
+                        onClick={handleToggleExpand}
+                        sx={{
+                            mt: 1,
+                            textTransform: "none",
+                            color: theme.palette.primary.main,
+                            fontWeight: "bold",
+                        }}
+                    >
+                        {isExpanded ? "See Less" : "See More"}
+                    </Button>
+                )} */}
+
+                {/* Save and Cancel Buttons */}
                 {isEditing && (
-                    <Box sx={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
-                        <Stack direction="row" gap={1}>
-                            <Button
-                                onClick={handleSubmit}
-                                disabled={isLoading}
-                                sx={{
-                                    bgcolor: theme.palette.primary.main,
-                                    color: theme.palette.customColors.white,
-                                    borderRadius: theme.customShape.btn,
-                                    "&:hover": {
-                                        bgcolor: theme.palette.primary.dark,
-                                    },
-                                }}
-                            >
-                                {isLoading ? "Saving..." : "Save Bio"}
-                            </Button>
-                            <Button
-                                variant="text"
-                                onClick={handleCancel}
-                                sx={{
-                                    borderRadius: theme.customShape.btn,
-                                    "&:hover": {
-                                        bgcolor: theme.palette.background.default,
-                                    },
-                                }}
-                            >
-                                Cancel
-                            </Button>
-                        </Stack>
-                    </Box>
+                    <Stack
+                        direction="row"
+                        gap={1}
+                        justifyContent="flex-end"
+                        width="100%"
+                        position="absolute"
+                        bottom={16}
+                        px={2}
+                    >
+                        <Button
+                            onClick={handleSubmit}
+                            disabled={isLoading}
+                            sx={{
+                                background: "linear-gradient(90deg, #ff416c, #ff4b2b)",
+                                color: theme.palette.customColors.white,
+                                borderRadius: "30px",
+                                fontWeight: "bold",
+                                "&:hover": {
+                                    background: "linear-gradient(90deg, #ff4b2b, #ff416c)",
+                                },
+                            }}
+                        >
+                            {isLoading ? "Saving..." : "Save Bio"}
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            onClick={handleCancel}
+                            sx={{
+                                borderRadius: "30px",
+                                fontWeight: "bold",
+                                borderColor: theme.palette.error.main,
+                                color: theme.palette.error.main,
+                                "&:hover": {
+                                    borderColor: theme.palette.error.dark,
+                                    color: theme.palette.error.dark,
+                                },
+                            }}
+                        >
+                            Cancel
+                        </Button>
+                    </Stack>
                 )}
             </Stack>
         </Stack>

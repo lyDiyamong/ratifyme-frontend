@@ -26,8 +26,8 @@ const PageTitle = ({ title, sx, subtitle }) => {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                my: 5,
                 bgcolor: theme.palette.background.default,
+                mt: 2,
                 ...sx,
             }}
         >
@@ -39,7 +39,7 @@ const PageTitle = ({ title, sx, subtitle }) => {
                         fontSize: theme.typography.h2,
                         fontWeight: theme.fontWeight.bold,
                         color: theme.palette.text.primary,
-                        lineHeight: 1.8
+                        lineHeight: 1.8,
                     }}
                 >
                     {title}
