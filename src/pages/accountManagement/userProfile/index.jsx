@@ -11,7 +11,7 @@ const UserProfile = () => {
     return (
         <Stack >
             <Stack gap={3}>
-                <Typography variant="h5" sx={{ fontWeight: "bold", color: "#1565c0" }}>
+                <Typography variant="h5" sx={{ fontWeight: "bold", color: theme.palette.secondary.main }}>
                     Personal Information
                 </Typography>
                 <Grid container spacing={3} sx={{ height: "100%" }}>
