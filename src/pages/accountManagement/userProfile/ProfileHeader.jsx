@@ -74,7 +74,6 @@ const ProfileHeader = () => {
                 boxShadow: theme.customShadows.default,
                 borderRadius: "16px",
                 p: "24px",
-                // bgcolor: theme.palette.background.paper,
                 background: "linear-gradient(to bottom, #B692C2, #7FA1C3)",
                 width: "100%",
                 Width: "100%",

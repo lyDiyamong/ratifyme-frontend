@@ -42,9 +42,6 @@ const BioContent = () => {
         }
     }, [info]);
 
-    // Check if bio exceeds two lines
-
-
     // Update user bio mutation
     const [updateUserProfile, { isLoading }] = useUpdateUserProfileMutation();
 
@@ -85,7 +82,7 @@ const BioContent = () => {
                     gap: 3,
                     width: "100%",
                     height: "285px",
-                    position: "relative", // Added to position buttons relative to the container
+                    position: "relative",
                 }}
             >
                 {/* Header with "About Me" and Status */}
@@ -137,7 +134,7 @@ const BioContent = () => {
                             px: 2,
                             py: 0.5,
                             width: "100%",
-                            overflow: "hidden", // Prevent overflow
+                            overflow: "hidden",
                         }}
                         onClick={handleTextClick}
                     >
@@ -184,27 +181,12 @@ const BioContent = () => {
                         )}
                     </Box>
                 </Stack>
-
-                {/* <Typography
-                    sx={{
-                        color: theme.palette.text.secondary,
-                        fontSize: "16px",
-                        width: "100%",
-                        overflow: "hidden",
-                        // textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                    }}
-                    title={bio}
-                >
-                    {bio || "Describe yourself here..."}
-                </Typography> */}
                 {isEditing ? null : <Typography
                     ref={bioRef}
                     sx={{
                         color: theme.palette.text.secondary,
                         fontSize: "16px",
                         width: "100%",
-                        // whiteSpace: "normal",
                         textWrap: 'wrap',
                         overflow: "auto",
                         display: "-webkit-box",
@@ -214,20 +196,6 @@ const BioContent = () => {
                 >
                     {bio || "Describe yourself here..."}
                 </Typography>}
-
-                {/* {isTruncated && (
-                    <Button
-                        onClick={handleToggleExpand}
-                        sx={{
-                            mt: 1,
-                            textTransform: "none",
-                            color: theme.palette.primary.main,
-                            fontWeight: "bold",
-                        }}
-                    >
-                        {isExpanded ? "See Less" : "See More"}
-                    </Button>
-                )} */}
 
                 {/* Save and Cancel Buttons */}
                 {isEditing && (
