@@ -1,4 +1,3 @@
-import React from "react";
 import { Route, Routes } from "react-router-dom";
 import DashboardLayout from "../layouts/dasboard";
 import Dashboard from "../pages/dashboard";
@@ -8,10 +7,8 @@ import IssuerManagement from "../pages/issuerManagements";
 import ServicePlanManagement from "../pages/ServicePlanManagement";
 import BillingInvoiceManagement from "../pages/billingInvoiceManagement";
 import Report from "../pages/report";
-import AccountManagement from "../pages/setting/accountManagement";
-import PrivacySecurityManagement from "../pages/setting/privacyManagement";
+import AccountManagement from "../pages/accountManagement/index"
 import BackpackManagement from "../pages/backpackManagement";
-import NotFoundPage from "../pages/NotFoundPage";
 import InvoiceManagement from "../pages/invoice";
 import BadgeCreation from "../pages/badgeMangements/BadgeCreation";
 import AddRecipient from "../pages/earnerManagements/AddRecipient";
@@ -35,7 +32,6 @@ const DashbaordRouter = () => {
                 <Route path="/reports" element={<Report />} />
                 <Route path="/mybackpacks" element={<BackpackManagement />} />
                 <Route path="/setting/account" element={<AccountManagement />} />
-                <Route path="/setting/privacy&security" element={<PrivacySecurityManagement />} />
                 <Route path="/management/eaners/add-earners" element={<AddRecipient />} />
                 <Route path="/management/institutions" element={<InstitutionManagement />} />
                 <Route path="/management/institutions/:institutionId" element={<InstitutionDetail />} />

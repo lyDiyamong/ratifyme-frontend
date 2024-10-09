@@ -88,11 +88,7 @@ export const sidebarItems = [
             {
                 text: "Account",
                 path: "/setting/account",
-            },
-            {
-                text: "Privacy & Security",
-                path: "/setting/privacy&security",
-            },
+            }
         ],
     },
     {
