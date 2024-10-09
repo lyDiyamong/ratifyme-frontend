@@ -12,7 +12,6 @@ import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
 import MaleUserDefault from "../../../assets/images/MaleUser.svg";
 import FemaleUserDefault from "../../../assets/images/FemaleUser.svg";
 import EditProfileModal from "../ModalEditProfile";
-import MoreMenu from "../../../components/MoreMenu";
 import theme from "../../../assets/themes";
 
 // Fetching Data Import
@@ -59,9 +58,16 @@ const ProfileHeader = () => {
 
     useEffect(() => {
         if (userData?.profileImage) {
-            setUpdateImage(userData.profileImage);
+            setUpdateImage(userData?.profileImage);
         } else {
-            setUpdateImage(userData?.Gender?.name === "male" ? MaleUserDefault : FemaleUserDefault);
+            // Set based on gender if no profile image exists
+            if (userData?.Gender?.name === "male") {
+                setUpdateImage(MaleUserDefault);
+            } else if (userData?.Gender?.name === "female") {
+                setUpdateImage(FemaleUserDefault);
+            } else {
+                setUpdateImage(DefaultProfileSvg);
+            }
         }
     }, [userData?.profileImage, userData?.Gender?.name]);
 
@@ -78,7 +84,7 @@ const ProfileHeader = () => {
                 width: "100%",
                 Width: "100%",
                 alignItems: "center",
-                position: "relative"
+                position: "relative",
             }}
         >
             {/* Profile Image Section */}
@@ -94,7 +100,7 @@ const ProfileHeader = () => {
             >
                 <Box
                     component="img"
-                    src={updateImage || DefaultProfileSvg}
+                    src={updateImage || (userData?.Gender?.name === "male" ? MaleUserDefault : FemaleUserDefault)}
                     alt="Profile"
                     sx={{
                         width: "100%",
@@ -148,28 +154,44 @@ const ProfileHeader = () => {
             </Typography>
 
             {/* Save Button */}
-            <Button
-                onClick={handleClickOpen}
-                variant="contained"
-                startIcon={<EditIcon />}
-                sx={{
-                    width: "100%",
-                    py: 1,
-                    mt: 2,
-                    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-                    color: "#fff",
-                    fontWeight: "bold",
-                    borderRadius: "30px",
-                    "&:hover": {
-                        background: "linear-gradient(45deg, #FE6B8B 20%, #FF8E53 80%)",
-                    },
-                }}
-            >
-                Edit profile
-            </Button>
-            <Box sx={{position: 'absolute', top: 10, right: 10, rotate: "90deg"}}>
-                <MoreMenu menuItems={menuItems} />
-            </Box>
+            <Stack direction="row" spacing={0.5} mt={2}>
+                <Button
+                    onClick={handleClickOpen}
+                    variant="contained"
+                    startIcon={<EditIcon />}
+                    sx={{
+                        width: "80%",
+                        py: 1,
+                        mt: 2,
+                        background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+                        color: "#fff",
+                        fontWeight: "bold",
+                        borderRadius: "30px",
+                        "&:hover": {
+                            background: "linear-gradient(45deg, #FE6B8B 20%, #FF8E53 80%)",
+                        },
+                    }}
+                >
+                    Edit profile
+                </Button>
+                <Button
+                    onClick={handleDeleteImage}
+                    sx={{
+                        px: 2,
+                        mt: 2,
+                        background: theme.palette.customColors.red400,
+                        color: "#fff",
+                        fontWeight: "bold",
+                        borderRadius: "30px",
+                        "&:hover": {
+                            background: theme.palette.customColors.red100,
+                            color: theme.palette.customColors.gray600
+                        },
+                    }}
+                >
+                    Delete
+                </Button>
+            </Stack>
             {/* Edit Profile Modal */}
             <EditProfileModal open={open} onClose={handleClose} userData={userData} />
         </Stack>
