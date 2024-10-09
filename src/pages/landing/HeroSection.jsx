@@ -73,7 +73,7 @@ const HeroSection = () => {
                                 my: "0",
                             }}
                         >
-                            Unlock the future of credentials with accessible, Techa Cambodia
+                            Unlock the future of credentials with accessible, Techa Cambodia Kamjea
                         </Box>
                         <Box
                             component="p"
