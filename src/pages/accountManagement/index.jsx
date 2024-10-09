@@ -7,9 +7,10 @@ import { Tabs, Tab } from "@mui/material";
 // Custom import
 import PageTitle from "../../components/PageTitle";
 import DashboardContainer from "../../components/styles/DashboardContainer";
-import UserProfile from "./UserProfiles/index";
-import ChangePasswordForm from "../accountManagement/ChangePassword";
+import UserProfile from "./userProfile/index";
+import ChangePasswordForm from "./changePassword";
 
+// =========== Start Account Management ===========
 const AccountManagement = () => {
     const [value, setValue] = useState(0);
 
@@ -35,3 +36,4 @@ const AccountManagement = () => {
 };
 
 export default AccountManagement;
+// =========== End Account Management ===========
