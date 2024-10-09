@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import MoreHorizRounded from "@mui/icons-material/MoreHorizRounded";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { Box } from "@mui/material";
+
 
 const MoreMenu = ({ menuItems, iconStyles, menuStyles }) => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -20,17 +20,11 @@ const MoreMenu = ({ menuItems, iconStyles, menuStyles }) => {
         <>
             <MoreHorizRounded
                 sx={{
-                    bgcolor: (theme) => theme.palette.grey[200],
-                    color: (theme) => theme.palette.text.primary,
-                    borderRadius: (theme) => theme.customShape.input,
+                    color: (theme) => theme.palette.customColors.white,
                     p: 1,
-                    fontSize: "36px",
+                    fontSize: "48px",
                     cursor: "pointer",
-                    transition: "background-color 0.3s ease",
-                    width: 40,
-                    "&:hover": {
-                        bgcolor: (theme) => theme.palette.grey[300],
-                    },
+                    
                     ...iconStyles,
                 }}
                 onClick={handleMoreClick}
@@ -49,9 +43,8 @@ const MoreMenu = ({ menuItems, iconStyles, menuStyles }) => {
                 }}
                 PaperProps={{
                     sx: {
-                        mt: 1,
-                        boxShadow: (theme) => theme.customShadows.default,
                         ...menuStyles,
+
                     },
                 }}
             >

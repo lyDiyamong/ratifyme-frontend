@@ -7,7 +7,7 @@ import AnBSchoolLogo from "../../assets/images/AnBSchoolLogo.svg";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import InviteIssuerPage from "./InviteIssuerPage";
 import TableIssuer from "./TableIssuer";
-import SearchBar from "../../components/SearchBars/SearchBar";
+import SearchBar from "../../components/searchBars/SearchBar";
 import PageTitle from "../../components/PageTitle";
 
 const IssuerManagement = () => {
