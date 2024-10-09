@@ -43,9 +43,8 @@ const MoreMenu = ({ menuItems, iconStyles, menuStyles }) => {
                 }}
                 PaperProps={{
                     sx: {
-                        mt: 1,
-                        boxShadow: (theme) => theme.customShadows.default,
                         ...menuStyles,
+
                     },
                 }}
             >
