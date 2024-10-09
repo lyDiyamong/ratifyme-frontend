@@ -75,6 +75,8 @@ Deploy:
 EnsuringNginx:
     stage: deploy
     needs: ["Deploy"]
+    dependencies:
+        - genKey
     script:
         - echo "Restarting NGINX service"
         - ssh -o StrictHostKeyChecking=no -i key.pem -A $INSTANCE@$INSTANCEADD '
