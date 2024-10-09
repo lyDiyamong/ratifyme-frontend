@@ -12,8 +12,7 @@ import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
 import MaleUserDefault from "../../../assets/images/MaleUser.svg";
 import FemaleUserDefault from "../../../assets/images/FemaleUser.svg";
 import EditProfileModal from "../ModalEditProfile";
-import BioContent from "../BioContent";
-// import MoreMenu from "../../../components/MoreMenu";
+import MoreMenu from "../../../components/MoreMenu";
 import theme from "../../../assets/themes";
 
 // Fetching Data Import
@@ -80,6 +79,7 @@ const ProfileHeader = () => {
                 width: "100%",
                 Width: "100%",
                 alignItems: "center",
+                position: "relative"
             }}
         >
             {/* Profile Image Section */}
@@ -143,7 +143,7 @@ const ProfileHeader = () => {
             <Typography sx={{ fontSize: theme.typography.h5, color: theme.palette.text.disabled }}>
                 @{userData?.username || "N/A"}
             </Typography>
-            
+
             <Typography sx={{ fontSize: theme.typography.body2, color: "text.secondary", mt: 1 }}>
                 Position: {userData?.Role.name || "N/A"}
             </Typography>
@@ -168,10 +168,11 @@ const ProfileHeader = () => {
             >
                 Edit profile
             </Button>
-
+            <Box sx={{position: 'absolute', top: 10, right: 10, rotate: "90deg"}}>
+                <MoreMenu menuItems={menuItems} />
+            </Box>
             {/* Edit Profile Modal */}
             <EditProfileModal open={open} onClose={handleClose} userData={userData} />
-            
         </Stack>
     );
 };
