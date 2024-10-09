@@ -26,11 +26,10 @@ export const schema = yup.object({
         .required("Verification code is required"),
     institutionName: yup
         .string()
-        .matches(/^[A-Za-z\s]+$/, "Institution name must contains only characters")
         .required("Institution name is required"),
     institutionEmail: yup
         .string()
         .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email format")
         .required("Email is required"),
-    url: yup.string().url("Invalid URL format").required("URL is required"),
+    url: yup.string().url("Invalid URL format"),
 });
