@@ -122,6 +122,7 @@ const Certificate = forwardRef(({ recipientName, date, badge }, ref) => (
                     maxWidth={150}
                     maxHeight={150}
                 />
+                {/* Certificate description */}
                 <Typography
                     sx={{
                         fontSize: theme.typography.body2,
@@ -129,7 +130,7 @@ const Certificate = forwardRef(({ recipientName, date, badge }, ref) => (
                         lineHeight: 2,
                     }}
                 >
-                    This badge certifies advanced knowledge of web development.
+                    {badge?.description}
                 </Typography>
                 {/* Issuer name */}
                 <Typography
@@ -146,7 +147,7 @@ const Certificate = forwardRef(({ recipientName, date, badge }, ref) => (
                             fontWeight: theme.fontWeight.bold,
                         }}
                     >
-                        {badge?.Issuer?.User?.name || "Mary Jane"}
+                        {`${badge?.Issuer?.User?.firstName} ${badge?.Issuer?.User?.lastName}` || "Mary Jane"}
                     </Typography>
                 </Typography>
             </Box>

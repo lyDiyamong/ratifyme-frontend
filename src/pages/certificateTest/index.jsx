@@ -10,8 +10,20 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import ConfettiExplosion from "react-confetti-explosion";
 import DownloadDoneOutlined from "@mui/icons-material/DownloadDoneOutlined";
 import AutoAwesome from "@mui/icons-material/AutoAwesome";
+import { useSelector } from "react-redux";
+import { useFetchOneBadgeQuery } from "../../store/api/badgeManagement/badgeApi";
 
 const CertificateGenerator = () => {
+    // Global state hook
+    const {
+        userInfo,
+    } = useSelector((state) => state.global);
+
+    // Badge fetching hook
+    const {data: badgeResponse, isLoading} = useFetchOneBadgeQuery(4)
+    const badgeData = badgeResponse?.data
+    console.log(badgeResponse);
+
     const certificateRef = useRef();
     const [pdfUrl, setPdfUrl] = useState("");
     const [copyButtonText, setCopyButtonText] = useState("Copy URL");
@@ -22,7 +34,7 @@ const CertificateGenerator = () => {
             const svgDataUrl = await toJpeg(certificateRef.current, { quality: 0.95 });
             const blob = await fetch(svgDataUrl).then((res) => res.blob());
             const formData = new FormData();
-            formData.append("certFile", blob, "certificate");
+            formData.append("certFile", blob, `certificate-${userInfo?.username}`);
 
             const response = await axios.post(`${import.meta.env.VITE_SERVER_BASE_URL}/earners/uploadCerti`, formData, {
                 headers: { "Content-Type": "multipart/form-data" },
@@ -104,15 +116,14 @@ const CertificateGenerator = () => {
                             border: `1px solid ${theme.palette.cardBorder}`,
                         }}
                     >
+                        {/* Start Certificate */}
                         <Certificate
                             ref={certificateRef}
-                            recipientName="Sreang Lyhour"
+                            recipientName={`${userInfo?.firstName} ${userInfo?.lastName}`}
                             date="2024-04-27"
-                            badge={{
-                                name: "Advance Frontend",
-                                imageUrl: BadgeTest,
-                            }}
+                            badge={badgeData}
                         />
+                        {/* End Certificate */}
                     </Box>
                 </Box>
 
