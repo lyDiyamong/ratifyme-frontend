@@ -46,6 +46,7 @@
     "react-router-dom": "^6.26.1",
     "react-select": "^5.8.0",
     "react-select-country-list": "^2.2.3",
+    "react-verification-input": "^4.1.2",
     "styled-components": "^6.1.13",
     "yup": "^1.4.0"
   },
