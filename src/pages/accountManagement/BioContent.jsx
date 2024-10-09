@@ -1,20 +1,22 @@
 // React import
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 // MUI import
 import { TextField, Box, Typography, Avatar, Button, Stack, Divider, Chip } from "@mui/material";
+import { GridCheckCircleIcon } from "@mui/x-data-grid";
 
 // Custom import
-import theme from "../../assets/themes";
-import { useFetchInfoUserByIdQuery, useUpdateUserProfileMutation } from "../../store/api/users/userInfoProfileApi";
 import DefaultProfileSvg from "../../assets/images/DefaultProfile.svg";
 import MaleUserDefault from "../../assets/images/MaleUser.svg";
 import FemaleUserDefault from "../../assets/images/FemaleUser.svg";
-
-import { GridCheckCircleIcon } from "@mui/x-data-grid";
-import { useSelector } from "react-redux";
 import MoreMenu from "../../components/MoreMenu";
+import theme from "../../assets/themes";
 
+// Fetching data Import
+import { useFetchInfoUserByIdQuery, useUpdateUserProfileMutation } from "../../store/api/users/userInfoProfileApi";
+
+// =========== Start BioContent in profile page ===========
 const BioContent = () => {
     const { userId } = useSelector((state) => state.global);
 
@@ -258,3 +260,4 @@ const BioContent = () => {
 };
 
 export default BioContent;
+// =========== End BioContent in profile page ===========
