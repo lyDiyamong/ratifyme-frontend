@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { Stack, Box, Typography, IconButton, Button } from "@mui/material";
 import { CameraAltRounded } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
-
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 // Custom Import
 import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
 import MaleUserDefault from "../../../assets/images/MaleUser.svg";
@@ -71,7 +71,6 @@ const ProfileHeader = () => {
         }
     }, [userData?.profileImage, userData?.Gender?.name]);
 
-    const menuItems = [{ label: "Remove Profile", onClick: handleDeleteImage }];
 
     return (
         <Stack
@@ -161,7 +160,7 @@ const ProfileHeader = () => {
                     startIcon={<EditIcon />}
                     sx={{
                         width: "80%",
-                        py: 1,
+                        px: 1,
                         mt: 2,
                         background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
                         color: "#fff",
@@ -176,8 +175,9 @@ const ProfileHeader = () => {
                 </Button>
                 <Button
                     onClick={handleDeleteImage}
+                    startIcon={<DeleteForeverIcon/>}
                     sx={{
-                        px: 2,
+                        px: 4,
                         mt: 2,
                         background: theme.palette.customColors.red400,
                         color: "#fff",
