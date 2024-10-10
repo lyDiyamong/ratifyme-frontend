@@ -39,7 +39,7 @@ const PageTitle = ({ title, sx, subtitle }) => {
                         fontSize: theme.typography.h2,
                         fontWeight: theme.fontWeight.bold,
                         color: theme.palette.text.primary,
-                        lineHeight: 1.8
+                        lineHeight: 1.8,
                     }}
                 >
                     {title}
@@ -58,7 +58,7 @@ const PageTitle = ({ title, sx, subtitle }) => {
             </Stack>
 
             {/* Start Current Date */}
-            <Typography variant="body2" sx={{ color: theme.palette.customColors.gray300 }}>
+            <Typography variant="body2" sx={{ color: theme.palette.customColors.gray300, pr: 1 }}>
                 {getCurrentDate()}
             </Typography>
         </Box>
