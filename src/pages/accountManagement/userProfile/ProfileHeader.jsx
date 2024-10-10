@@ -79,11 +79,11 @@ const ProfileHeader = () => {
                 boxShadow: theme.customShadows.default,
                 borderRadius: "16px",
                 p: "24px",
-                background: "linear-gradient(to bottom, #B692C2, #7FA1C3)",
                 width: "100%",
                 Width: "100%",
                 alignItems: "center",
                 position: "relative",
+                bgcolor: theme.palette.customColors.white,
             }}
         >
             {/* Profile Image Section */}
@@ -162,19 +162,18 @@ const ProfileHeader = () => {
                         width: "80%",
                         px: 1,
                         mt: 2,
-                        background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+                        background: theme.palette.secondary.light,
                         color: "#fff",
                         fontWeight: "bold",
                         borderRadius: "30px",
-                        "&:hover": {
-                            background: "linear-gradient(45deg, #FE6B8B 20%, #FF8E53 80%)",
-                        },
+                        
                     }}
                 >
                     Edit profile
                 </Button>
                 <Button
                     onClick={handleDeleteImage}
+                    variant="contained"
                     startIcon={<DeleteForeverIcon/>}
                     sx={{
                         px: 4,
@@ -183,10 +182,6 @@ const ProfileHeader = () => {
                         color: "#fff",
                         fontWeight: "bold",
                         borderRadius: "30px",
-                        "&:hover": {
-                            background: theme.palette.customColors.red100,
-                            color: theme.palette.customColors.gray600
-                        },
                     }}
                 >
                     Delete
