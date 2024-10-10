@@ -32,6 +32,7 @@ const BadgeDetailCustom = ({ badge, userRole, activeUserId }) => {
     const result = badge?.data;
 
     console.log(result?.id);
+    console.log(activeUserId);
     // assign variable to get achievement id to update
     const achievement = result?.Achievements?.map((achievement) => {
         return achievement.id;
@@ -47,6 +48,7 @@ const BadgeDetailCustom = ({ badge, userRole, activeUserId }) => {
 
     // Define role-based access for tab content
     const hasAccessEarner = ["issuer", "earner"].includes(userRole);
+    const hasAllAccess = ["issuer", "earner", "institution", "admin"].includes(userRole);
     const hasAccess = ["issuer"].includes(userRole);
 
     // State for handling selected emails
@@ -143,24 +145,28 @@ const BadgeDetailCustom = ({ badge, userRole, activeUserId }) => {
                         </Grid>
 
                         {/* Action Buttons */}
-                        <Grid item>
-                            {userRole === "issuer" ? (
-                                <Box sx={{ marginTop: 2, display: "flex", gap: 1 }}>
-                                    <IssuerBadgeButton
-                                        onGetEmail={handleGetEmails}
-                                        control={control}
-                                        issuerId={activeUserId.id}
+                        {hasAccessEarner ? (
+                            <Grid item>
+                                {userRole === "issuer" ? (
+                                    <Box sx={{ marginTop: 2, display: "flex", gap: 1 }}>
+                                        <IssuerBadgeButton
+                                            onGetEmail={handleGetEmails}
+                                            control={control}
+                                            issuerId={activeUserId}
+                                        />
+                                        <IssueToEarnerButton emails={selectedEmails} badgeId={result?.id || []} />
+                                    </Box>
+                                ) : (
+                                    <ClaimBadgeButton
+                                        badgeClassId={result?.id || ""}
+                                        earnerId={activeUserId || ""}
+                                        achievementIds={achievement}
                                     />
-                                    <IssueToEarnerButton emails={selectedEmails} badgeId={result?.id || []} />
-                                </Box>
-                            ) : (
-                                <ClaimBadgeButton
-                                    badgeClassId={result?.id || ""}
-                                    earnerId={activeUserId.id || ""}
-                                    achievementIds={achievement}
-                                />
-                            )}
-                        </Grid>
+                                )}
+                            </Grid>
+                        ) : (
+                            <></>
+                        )}
                     </Grid>
                 </Grid>
             </Box>
@@ -232,7 +238,7 @@ const BadgeDetailCustom = ({ badge, userRole, activeUserId }) => {
                     maxWidth: "100%",
                 }}
             >
-                {hasAccessEarner && value === 0 && (
+                {hasAllAccess && value === 0 && (
                     <Box>
                         <Box
                             sx={{
@@ -341,16 +347,18 @@ const BadgeDetailCustom = ({ badge, userRole, activeUserId }) => {
             {/* End Tab Content */}
 
             {/* Start Footer (Delete Badge Button) */}
-            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                <Button
-                    variant="contained"
-                    color="error"
-                    sx={{ borderRadius: theme.customShape.btn, marginBottom: 2 }}
-                    onClick={() => handleDeleteBadge(result?.id)}
-                >
-                    Delete Badge
-                </Button>
-            </Box>
+            {hasAccess && (
+                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                    <Button
+                        variant="contained"
+                        color="error"
+                        sx={{ borderRadius: theme.customShape.btn, marginBottom: 2 }}
+                        onClick={() => handleDeleteBadge(result?.id)}
+                    >
+                        Delete Badge
+                    </Button>
+                </Box>
+            )}
             {/* End Footer (Delete Badge Button)*/}
         </Box>
         // ============ End Badge Detail ============
