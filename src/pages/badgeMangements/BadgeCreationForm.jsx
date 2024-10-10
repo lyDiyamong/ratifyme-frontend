@@ -144,7 +144,6 @@ const BadgeCreationForm = () => {
         try {
             // Call your mutation function to create the badge with formData
             await createBadge(formData).unwrap();
-            console.log("Badge successfully created");
 
             // Reset form and image state
             reset();
@@ -160,7 +159,6 @@ const BadgeCreationForm = () => {
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
-            console.log("Selected file:", file);
             setUploadedImage(file); 
         }
         event.target.value = "";

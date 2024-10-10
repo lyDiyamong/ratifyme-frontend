@@ -3,8 +3,8 @@ import { Controller } from "react-hook-form";
 import { TextField } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import theme from "../assets/themes";
 
 /**
  * DateSelectionForm Component
@@ -15,13 +15,13 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
  *
  * @returns {JSX.Element} The rendered DateSelectionForm component.
  */
-const DateSelectionForm = ({ control, name, label }) => {
+const DateSelectionForm = ({ control, name, label, required=false }) => {
     return (
         <Controller
             name={name}
             control={control}
             render={({ field, fieldState }) => (
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
                         label={label}
                         value={field.value || null} 
@@ -33,6 +33,7 @@ const DateSelectionForm = ({ control, name, label }) => {
                                 error={!!fieldState.error}
                                 helperText={fieldState.error ? fieldState.error.message : null}
                                 fullWidth
+                                required={required}
                             />
                         )}
                     />

@@ -347,18 +347,25 @@ const BadgeDetailCustom = ({ badge, userRole, activeUserId }) => {
             {/* End Tab Content */}
 
             {/* Start Footer (Delete Badge Button) */}
-            {hasAccess && (
-                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                    <Button
-                        variant="contained"
-                        color="error"
-                        sx={{ borderRadius: theme.customShape.btn, marginBottom: 2 }}
-                        onClick={() => handleDeleteBadge(result?.id)}
-                    >
-                        Delete Badge
-                    </Button>
-                </Box>
-            )}
+            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                <Button
+                    variant="contained"
+                    color="error"
+                    sx={{ borderRadius: theme.customShape.btn, marginBottom: 2 }}
+                    onClick={() => handleDeleteBadge(result?.id)}
+                >
+                    Delete Badge
+                </Button>
+                <Button
+                onClick={() => navigate(`/management/badges/editBadge/${result?.id}`)}
+                    variant="contained"
+                    color="primary"
+                    sx={{ borderRadius: theme.customShape.btn, marginBottom: 2, color: "white" }}
+                    // onClick={() => handleDeleteBadge(result?.id)}
+                >
+                    Edit
+                </Button>
+            </Box>
             {/* End Footer (Delete Badge Button)*/}
         </Box>
         // ============ End Badge Detail ============
