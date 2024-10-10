@@ -1,11 +1,10 @@
-import { Stack, TextField } from "@mui/material";
+import { Stack, TextField, Typography } from "@mui/material";
 import theme from "../../../assets/themes";
 import FormInput from "../../../components/FormInput";
 import MultiSelectForm from "../../../components/MultiSelectionForm";
 import DateSelectionForm from "../../../components/DateSelectionForm";
 
 const EditMetadata = ({ control }) => {
-
     const optionLanguage = [
         { name: "JavaScript", label: "JavaScript" },
         { name: "ReactJs", label: "React Js" },
@@ -24,23 +23,39 @@ const EditMetadata = ({ control }) => {
     return (
         <Stack
             sx={{
-                my: 3,
-                p: 3,
-                backgroundColor: theme.palette.customColors.white,
-                borderRadius: theme.customShape.section,
-                boxShadow: theme.customShadows.default,
-                gap: 3,
+                gap: 2,
             }}
         >
+            {/* <Stack>
+                <Typography variant="h4" color="primary" fontWeight={theme.fontWeight.bold}>
+                    Metadata
+                </Typography>
+                <Typography variant="body1" color="gray">
+                    This information related to Metadata.
+                </Typography>
+            </Stack> */}
             <Stack gap={3} alignItems="center">
-                {/* Badge Name */}
-                <FormInput name="badgeName" label="Badge Name" control={control} type="text" required={false} />
+                <Stack gap={3} alignItems="center" flexDirection={{ sm: "row", xss: "column" }} width="100%">
+                    {/* Badge Name */}
+                    <FormInput name="badgeName" label="Badge Name" control={control} type="text" required={false} />
 
-                {/* Issued On */}
-                <DateSelectionForm control={control} name="issuedOn" label="Issued On"  />
+                    {/* Issued On */}
+                    <DateSelectionForm control={control} name="issuedOn" label="Issued On" />
+                </Stack>
 
-                {/* Start Date */}
-                <DateSelectionForm control={control} name="startedDate" label="Start Date" />
+                <Stack gap={3} alignItems="center" flexDirection={{ sm: "row", xss: "column" }} width="100%">
+                    {/* Start Date */}
+                    <DateSelectionForm control={control} name="startedDate" label="Start Date" />
+
+                    {/* Tags / Language */}
+                    <MultiSelectForm
+                        name="tagsOrLanguage"
+                        label="Tags / Language"
+                        options={optionLanguage}
+                        control={control}
+                        required={false}
+                    />
+                </Stack>
 
                 {/* Badge Description */}
                 <FormInput
@@ -48,15 +63,6 @@ const EditMetadata = ({ control }) => {
                     label="Badge Description"
                     control={control}
                     type="text"
-                    required={false}
-                />
-
-                {/* Tags / Language */}
-                <MultiSelectForm
-                    name="tagsOrLanguage"
-                    label="Tags / Language"
-                    options={optionLanguage}
-                    control={control}
                     required={false}
                 />
             </Stack>

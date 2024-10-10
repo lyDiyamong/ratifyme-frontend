@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import theme from "../../../assets/themes";
 import FormInput from "../../../components/FormInput";
 import MultiSelectForm from "../../../components/MultiSelectionForm";
@@ -10,15 +10,18 @@ const EditCoreElement = ({ control }) => {
     return (
         <Stack
             sx={{
-                my: 3,
-                p: 3,
-                backgroundColor: theme.palette.customColors.white,
-                borderRadius: theme.customShape.section,
-                boxShadow: theme.customShadows.default,
-                gap: 3,
+                gap: 2,
             }}
         >
-            <Stack gap={3} alignItems="center">
+            {/* <Stack>
+                <Typography variant="h4" color="primary" fontWeight={theme.fontWeight.bold} >
+                    Core Element
+                </Typography>
+                <Typography variant="body1" color="gray">
+                    This information related to Core Element.
+                </Typography>
+            </Stack> */}
+            <Stack gap={3} alignItems="center" flexDirection={{ sm: "row", xss: "column" }}>
                 <FormInput name="narrative" label="Criteria" control={control} type="text" required={false} />
                 <MultiSelectForm
                     name="AchievementTypes"

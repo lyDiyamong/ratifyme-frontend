@@ -58,7 +58,7 @@ const PageTitle = ({ title, sx, subtitle }) => {
             </Stack>
 
             {/* Start Current Date */}
-            <Typography variant="body2" sx={{ color: theme.palette.customColors.gray300 }}>
+            <Typography variant="body2" sx={{ color: theme.palette.customColors.gray300, pr: 1 }}>
                 {getCurrentDate()}
             </Typography>
         </Box>
