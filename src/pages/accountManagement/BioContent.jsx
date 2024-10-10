@@ -92,7 +92,7 @@ const BioContent = () => {
                             sx={{
                                 fontSize: theme.typography.h5,
                                 fontWeight: theme.fontWeight.semiBold,
-                                color: "#ff4b2b",
+                                color: theme.palette.customColors.red400,
                             }}
                         >
                             Bio
@@ -214,30 +214,25 @@ const BioContent = () => {
                         <Button
                             onClick={handleSubmit}
                             disabled={isLoading}
+                            variant="contained"
                             sx={{
-                                background: "linear-gradient(90deg, #ff416c, #ff4b2b)",
+                                background: theme.palette.secondary.light,
                                 color: theme.palette.customColors.white,
                                 borderRadius: "30px",
                                 fontWeight: "bold",
-                                "&:hover": {
-                                    background: "linear-gradient(90deg, #ff4b2b, #ff416c)",
-                                },
                             }}
                         >
                             {isLoading ? "Saving..." : "Save Bio"}
                         </Button>
                         <Button
-                            variant="outlined"
+                            variant="contained"
                             onClick={handleCancel}
                             sx={{
                                 borderRadius: "30px",
                                 fontWeight: "bold",
-                                borderColor: theme.palette.error.main,
-                                color: theme.palette.error.main,
-                                "&:hover": {
-                                    borderColor: theme.palette.error.dark,
-                                    color: theme.palette.error.dark,
-                                },
+                                color: theme.palette.customColors.white,
+                                background: theme.palette.customColors.red400,
+
                             }}
                         >
                             Cancel
