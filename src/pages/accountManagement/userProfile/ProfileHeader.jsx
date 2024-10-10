@@ -133,7 +133,7 @@ const ProfileHeader = () => {
                         onChange={handleFileChange}
                     />
                     <label htmlFor="profile-image-upload">
-                        <IconButton component="span" sx={{ color: "#fff" }}>
+                        <IconButton component="span" sx={{ color: theme.palette.customColors.white }}>
                             <CameraAltRounded />
                         </IconButton>
                     </label>
@@ -163,7 +163,7 @@ const ProfileHeader = () => {
                         px: 1,
                         mt: 2,
                         background: theme.palette.secondary.light,
-                        color: "#fff",
+                        color: theme.palette.customColors.white,
                         fontWeight: "bold",
                         borderRadius: "30px",
                         
@@ -179,7 +179,7 @@ const ProfileHeader = () => {
                         px: 4,
                         mt: 2,
                         background: theme.palette.customColors.red400,
-                        color: "#fff",
+                        color: theme.palette.customColors.white,
                         fontWeight: "bold",
                         borderRadius: "30px",
                     }}
