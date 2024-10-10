@@ -20,6 +20,7 @@ import InstitutionManagement from "../pages/institutionManagement";
 import InstitutionDetail from "../pages/institutionDetail";
 import IssuerDetail from "../pages/issuerDetail";
 import AchievementManagement from "../pages/achievement";
+import EditBadge from "../pages/badgeMangements/editBadge";
 
 const DashbaordRouter = () => {
     return (
@@ -45,6 +46,7 @@ const DashbaordRouter = () => {
                 <Route path="/management/badges/badgecreation" element={<BadgeCreation />} />
                 <Route path="/management/badges/badgeDetail/:id" element={<BadgeDetail />} />
                 <Route path="/myachievement" element={<AchievementManagement />} />
+                <Route path="/management/badges/editBadge/:id" element={<EditBadge />} />
             </Route>
         </Routes>
     );

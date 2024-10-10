@@ -120,6 +120,14 @@ export const badgeApi = createApi({
             }),
             invalidatesTags: [{ type: "BadgeIssuer", id: `LIST` }],
         }),
+        updateBadge: builder.mutation({
+            query: ({ id, updatedBadge }) => ({
+                url: `/issuers/badgeClasses/editBadge/${id}`,
+                method: "PATCH",
+                body: updatedBadge,
+            }),
+            invalidatesTags: (result, error, id) => [{ type: "Badge", id }],
+        }),
     }),
 });
 
@@ -132,4 +140,5 @@ export const {
     useFetchBadgeByEarnerQuery,
     useFetchClaimBadgeByEarnerQuery,
     useDeleteBadgeMutation,
+    useUpdateBadgeMutation,
 } = badgeApi;
