@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 // MUI imports
 import { TextField, Box, Typography, Avatar, Button, Stack, Chip } from "@mui/material";
-import { GridCheckCircleIcon } from "@mui/x-data-grid";
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 // Custom imports
 import DefaultProfileSvg from "../../assets/images/DefaultProfile.svg";
@@ -75,11 +75,11 @@ const BioContent = () => {
             <Stack
                 sx={{
                     boxShadow: theme.customShadows.default,
-                    borderRadius: "16px",
+                    borderRadius: "14px",
                     p: { xs: "20px", sm: "16px" },
                     bgcolor: theme.palette.customColors.white,
                     alignItems: "center",
-                    gap: 3,
+                    gap: 2,
                     width: "100%",
                     height: "290px",
                     position: "relative",
@@ -100,7 +100,7 @@ const BioContent = () => {
                         {/* Status Chip */}
                         <Chip
                             label={bio ? "Active" : "No Bio"}
-                            icon={<GridCheckCircleIcon />}
+                            icon={<CheckCircleOutlineIcon color="green"/>}
                             sx={{
                                 backgroundColor: bio
                                     ? theme.palette.customColors.green100
@@ -119,7 +119,7 @@ const BioContent = () => {
                 </Stack>
 
                 {/* Bio Input */}
-                <Stack direction="row" alignItems="center" spacing={2} sx={{ width: "100%" }}>
+                <Stack direction="row" alignItems="center" spacing={3} sx={{ width: "100%" }}>
                     {/* Bio Text / Editable Input */}
                     <Avatar alt="User Avatar" src={profileImage} sx={{ width: 50, height: 50 }} />
                     <Box
