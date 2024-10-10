@@ -33,7 +33,7 @@ const ForgotPasswordSentPage = () => {
             const timer = setTimeout(() => {
                 setHasResent(false);
                 localStorage.removeItem("hasResent");
-            }, 300000); // 5 minutes
+            }, 120000); // 5 minutes
 
             // Cleanup function to clear the timeout if the component unmounts
             return () => clearTimeout(timer);
