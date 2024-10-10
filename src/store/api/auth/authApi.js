@@ -49,6 +49,14 @@ export const authApi = createApi({
             }),
         }),
 
+        resendVerification: builder.mutation({
+            query: (data) => ({
+                url: "/auth/resendVerification",
+                method: "POST",
+                body: data,
+            }),
+        }),
+
         signIn: builder.mutation({
             query: (data) => ({
                 url: "/auth/signin",
@@ -152,6 +160,7 @@ export const {
     useCheckAuthQuery,
     useSignUpMutation,
     useVerifyEmailMutation,
+    useResendVerificationMutation,
     useSignInMutation,
     useForgotPasswordMutation,
     useVerifyResetTokenQuery,
