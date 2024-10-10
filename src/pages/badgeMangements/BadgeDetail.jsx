@@ -1,11 +1,11 @@
-// React Import 
+// React Import
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-// MUI Import 
+// MUI Import
 import { Typography } from "@mui/material";
 
-// Custom Import 
+// Custom Import
 import BadgeDetailCustom from "../../components/BadgeDetailCustom";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import { useFetchOneBadgeQuery } from "../../store/api/badgeManagement/badgeApi";
@@ -31,12 +31,12 @@ const BadgeDetail = () => {
         }
         case 3: {
             role = "issuer";
-            activeUserId = issuerData;
+            activeUserId = issuerData.id;
             break;
         }
         case 4: {
             role = "earner";
-            activeUserId = earnerData;
+            activeUserId = earnerData.id;
             break;
         }
     }

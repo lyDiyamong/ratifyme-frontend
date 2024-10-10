@@ -84,7 +84,7 @@ const BadgeListCard = ({ badges, onView }) => {
                                 <CardMedia
                                     component="img"
                                     height="200"
-                                    image={badge?.imageUrl || GoldBadge}
+                                    image={badge?.imageUrl}
                                     alt={badge?.name}
                                     sx={{ objectFit: "cover" }}
                                 />
