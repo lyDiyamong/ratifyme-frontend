@@ -58,6 +58,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
+// =========== Start SearchBarCustom ===========
 const SearchBarCustom = ({ onSearch }) => {
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -114,3 +115,4 @@ const SearchBarCustom = ({ onSearch }) => {
 };
 
 export default SearchBarCustom;
+// =========== End SearchBarCustom ===========

@@ -1,5 +1,7 @@
-import React from "react";
+// React Library Import
 import { useForm } from "react-hook-form";
+
+// MUI Import
 import {
     Button,
     Dialog,
@@ -20,9 +22,11 @@ import {
     Tooltip,
 } from "@mui/material";
 import { Close, CheckCircle, ErrorOutline, DeleteOutline, RestartAltOutlined } from "@mui/icons-material";
-import theme from "../../assets/themes";
+
+// Custom Import
 import FormInput from "../../components/FormInput";
 import FormatDate from "../../utils/formatDate";
+import theme from "../../assets/themes";
 
 const statusChipColor = (status) => {
     if (status === true) {
@@ -35,13 +39,14 @@ const statusChipColor = (status) => {
     }
 
     return {
-        label: "Pending", // Label for pending status
-        color: theme.palette.customColors.orange400, // Custom background color
+        label: "Pending",
+        color: theme.palette.customColors.orange400,
         backgroundColor: theme.palette.customColors.orange100,
         icon: <ErrorOutline fontSize="small" color={theme.palette.customColors.orange200} />,
     };
 };
 
+// =========== Start Invite User Modal ===========
 const InviteUserModal = ({ open, handleClose, onSubmit, invitedUsers }) => {
     const {
         handleSubmit,
@@ -51,8 +56,8 @@ const InviteUserModal = ({ open, handleClose, onSubmit, invitedUsers }) => {
     } = useForm();
 
     const internalOnSubmit = (data) => {
-        onSubmit(data); // Call the parent function to submit the data
-        reset(); // Reset form after successful submit
+        onSubmit(data);
+        reset();
     };
 
     return (
@@ -174,3 +179,4 @@ const InviteUserModal = ({ open, handleClose, onSubmit, invitedUsers }) => {
 };
 
 export default InviteUserModal;
+// =========== End Invite User Modal ===========

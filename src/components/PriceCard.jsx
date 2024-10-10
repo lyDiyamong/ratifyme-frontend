@@ -5,6 +5,7 @@ import { Box, Paper, Typography, Button } from "@mui/material";
 import theme from "../assets/themes";
 import CheckoutButton from "./CheckoutButton";
 
+// =========== Start PriceCard ===========
 const PriceCard = ({ item, button }) => {
     return (
         <Paper
@@ -58,3 +59,4 @@ const PriceCard = ({ item, button }) => {
 };
 
 export default PriceCard;
+// =========== End PriceCard ===========

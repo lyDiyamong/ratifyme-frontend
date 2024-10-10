@@ -19,7 +19,7 @@ import theme from "../../assets/themes";
  */
 
 const PageLoading = ({ isLoading, message }) => {
-    if (!isLoading) return null; // If not loading, don't render the component
+    if (!isLoading) return null;
 
     return (
         <Box

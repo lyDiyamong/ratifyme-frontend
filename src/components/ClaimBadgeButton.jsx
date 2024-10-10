@@ -6,6 +6,7 @@ import theme from "../assets/themes";
 import { useClaimBadgeMutation, useFetchStatusBadgeQuery } from "../store/api/earnerManagement/earnerApis";
 import { useEffect, useState } from "react";
 
+// =========== Start ClaimBadgeButton ===========
 const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
     const { data: earnerBadge, refetch: refetchStatus } = useFetchStatusBadgeQuery({ id: earnerId });
     const [claimBadge, { isLoading }] = useClaimBadgeMutation();
@@ -59,3 +60,4 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
 };
 
 export default ClaimBadgeButton;
+// =========== End ClaimBadgeButton ===========

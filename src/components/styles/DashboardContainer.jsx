@@ -1,5 +1,7 @@
+// MUI Import
 import { Box } from '@mui/material';
 
+// =========== Start DashboardContainer ===========
 const DashboardContainer = ({children, sx}) => {
   return (
     <Box
@@ -11,3 +13,4 @@ const DashboardContainer = ({children, sx}) => {
 };
 
 export default DashboardContainer;
+// =========== End DashboardContainer ===========
