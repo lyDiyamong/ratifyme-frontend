@@ -81,7 +81,7 @@ const BioContent = () => {
                     alignItems: "center",
                     gap: 3,
                     width: "100%",
-                    height: "285px",
+                    height: "290px",
                     position: "relative",
                 }}
             >
@@ -181,21 +181,24 @@ const BioContent = () => {
                         )}
                     </Box>
                 </Stack>
-                {isEditing ? null : <Typography
+                {isEditing ? null : (
+                    <Typography
                     ref={bioRef}
                     sx={{
-                        color: theme.palette.text.secondary,
-                        fontSize: "16px",
-                        width: "100%",
-                        textWrap: 'wrap',
-                        overflow: "auto",
-                        display: "-webkit-box",
-                        WebkitBoxOrient: "vertical",
+                      color: theme.palette.text.secondary,
+                      fontSize: "16px",
+                      width: "100%",
+                      height: "100px", 
+                      overflowY: "auto", 
+                      wordWrap: "break-word", 
+                      whiteSpace: "normal",
                     }}
                     title={bio}
-                >
+                  >
                     {bio || "Describe yourself here..."}
-                </Typography>}
+                  </Typography>
+                  
+                )}
 
                 {/* Save and Cancel Buttons */}
                 {isEditing && (
