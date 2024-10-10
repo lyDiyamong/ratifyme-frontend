@@ -1,49 +1,71 @@
+// React import
 import { useEffect, useState } from "react";
-import { Box, Tabs, Tab, Button, Stack, Typography, IconButton, Divider } from "@mui/material";
+import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useParams } from "react-router";
+import dayjs from "dayjs";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+// MUI import
+import { ArrowBack, ZoomInMapOutlined } from "@mui/icons-material";
+import Upload from "@mui/icons-material/Upload";
+import SaveAltOutlined from "@mui/icons-material/SaveAltOutlined";
+import { Modal, Backdrop } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
+
+// Custom import
 import EditCoreElement from "./EditCoreElement";
 import EditMetadata from "./EditMetadata";
 import EditOptionalElements from "./EditOptionalElements";
 import PageTitle from "../../../components/PageTitle";
 import DashboardContainer from "../../../components/styles/DashboardContainer";
-import { useForm } from "react-hook-form";
-import { useParams } from "react-router";
 import { useFetchAchievementTypeQuery } from "../../../store/api/achievements/achievementTypeApi";
 import { useFetchOneBadgeQuery, useUpdateBadgeMutation } from "../../../store/api/badgeManagement/badgeApi";
 import theme from "../../../assets/themes";
-import dayjs from "dayjs";
-import { ArrowBack, CameraAltRounded } from "@mui/icons-material";
-import Upload from "@mui/icons-material/Upload";
-import SaveAltOutlined from "@mui/icons-material/SaveAltOutlined";
-import { Link } from "react-router-dom";
+import AlertMessage from "../../../components/alert/AlertMessage";
+import useCatchStatus from "../../../hooks/useCatchStatus";
+import badgSchema from "../../../utils/schema/badgeSchema";
 
 const EditBadge = () => {
     const { id: badgeId } = useParams();
+
+
+    // Api hook
+    const [updateBadge, { reset: updatedReset, isSuccess, isError }] = useUpdateBadgeMutation();
+
     const { data: badgeResponse } = useFetchOneBadgeQuery(badgeId);
     const badgeData = badgeResponse?.data;
     const userID = badgeData?.id;
 
-    const [updateBadge, { reset: updatedReset }] = useUpdateBadgeMutation();
-
     const { data: achievementType } = useFetchAchievementTypeQuery();
     const allAchievementTypes = achievementType?.data || [];
 
+    // State hook
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [displayImg, setDisplayImg] = useState(null);
     const [uploadedImage, setUploadedImage] = useState(null);
 
-    const { handleSubmit, control, reset } = useForm();
+    // React hook form
+    const { handleSubmit, control, reset } = useForm({
+        resolver : yupResolver(badgSchema),
+        mode : "onChange"
+    });
 
-    // Debugging the parsed date
     const parsedExpirationDate = dayjs(badgeData?.expiredDate);
 
-    const onSubmit = async (data) => {
-        const formData = new FormData();
+    // Status custom hook
+    const [message, setMessage] = useCatchStatus(
+        isSuccess || isError,
+        isSuccess ? "Update succesfully" : "Update Failed",
+    );
 
+      // Handle submit
+      const onSubmit = async (data) => {
+        const formData = new FormData();
         // Append core badge details
         appendBadgeDetails(formData, data);
-
         // Append Achievements
         appendAchievements(formData, data.AchievementTypes, allAchievementTypes);
-
         // Append Criterias
         appendCriterias(formData, data.narrative);
 
@@ -52,14 +74,9 @@ const EditBadge = () => {
             formData.append("badgeFile", uploadedImage);
         }
 
-        try {
-            await updateBadge({ id: badgeId, updatedBadge: formData }).unwrap();
-            reset();
-        } catch (error) {
-            console.error("Error updating badge:", error);
-        } finally {
-            updatedReset();
-        }
+        await updateBadge({ id: badgeId, updatedBadge: formData }).unwrap();
+        reset();
+        updatedReset();
     };
 
     // Helper function to append badge details to FormData
@@ -87,6 +104,18 @@ const EditBadge = () => {
     const appendCriterias = (formData, narrative) => {
         if (narrative) {
             formData.append("Criterias[0][narrative]", narrative);
+        }
+    };
+    // Handle file input change
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setUploadedImage(file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setDisplayImg(reader.result);
+            };
+            reader.readAsDataURL(file);
         }
     };
 
@@ -123,28 +152,50 @@ const EditBadge = () => {
             // Set the uploaded image URL if available
             setDisplayImg(badgeData?.imageUrl || null);
         }
-    }, [badgeData, displayImg]);
-
-    // Handle file input change
-    // const handleFileChange = (event) => {
-    //     const file = event.target.files[0];
-    //     if (file) {
-    //         const reader = new FileReader();
-    //         reader.onloadend = () => {
-    //             setUploadedImage(reader.result);
-    //         };
-    //         reader.readAsDataURL(file);
-    //     }
-    // };
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            setUploadedImage(file);
-        }
-    };
+    }, [badgeData]);
 
     return (
         <DashboardContainer>
+            {message && (
+                <AlertMessage variant={isError ? "error" : "success"} onClose={() => setMessage("")}>
+                    {message}
+                </AlertMessage>
+            )}
+            <Modal
+                open={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                closeAfterTransition
+                BackdropComponent={(props) => (
+                    <Backdrop
+                        {...props}
+                        sx={{
+                            backgroundColor: "rgba(0, 0, 0, 0.8)",
+                        }}
+                    />
+                )}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Box
+                    sx={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        width: "60%",
+                        p: 4,
+                    }}
+                >
+                    <Box
+                        component="img"
+                        src={displayImg || "https://www.mylittleadventure.com/images/default/default-img.png"}
+                        alt="Full size badge"
+                        sx={{ width: "100%", height: "auto", borderRadius: "10px" }}
+                    />
+                </Box>
+            </Modal>
+
             <Box component="form" onSubmit={handleSubmit(onSubmit)} py={3}>
                 <PageTitle
                     title="Edit Badge"
@@ -171,7 +222,7 @@ const EditBadge = () => {
                             gap: 3,
                         }}
                     >
-                        <Stack gap={1} display={{ md: "block", xss: "none" }}>
+                        <Stack gap={1} display={{ md: "block", sm: "none", xss: "block" }}>
                             <Typography variant="h4" fontWeight={theme.fontWeight.bold}>
                                 Badge Image
                             </Typography>
@@ -203,6 +254,7 @@ const EditBadge = () => {
                             >
                                 <Box
                                     component="img"
+                                    onClick={() => setIsModalOpen(true)}
                                     src={
                                         displayImg || "https://www.mylittleadventure.com/images/default/default-img.png"
                                     }
@@ -214,56 +266,14 @@ const EditBadge = () => {
                                         objectFit: "cover",
                                         display: "block",
                                         border: "1px solid gray",
-                                    }}
-                                />
-
-                                <Box
-                                    className="hover-overlay"
-                                    onChange
-                                    sx={{
-                                        position: "absolute",
-                                        top: 0,
-                                        left: 0,
-                                        width: "100%",
-                                        height: "100%",
-                                        borderRadius: theme.customShape.input,
-                                        bgcolor: "rgba(0, 0, 0, 0.6)",
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        justifyContent: "center",
-                                        alignItems: "center",
-                                        visibility: "hidden",
-                                        opacity: 0,
-                                        transition: "visibility 0.2s, opacity 0.3s ease-in-out",
                                         cursor: "pointer",
                                     }}
-                                >
-                                    <input
-                                        type="file"
-                                        id="icon-button-photo"
-                                        style={{ display: "none" }}
-                                        onChange={handleFileChange}
-                                    />
-                                    <label htmlFor="icon-button-photo">
-                                        <IconButton
-                                            aria-label="upload"
-                                            component="span"
-                                            sx={{
-                                                color: theme.palette.customColors.white,
-                                            }}
-                                        >
-                                            <CameraAltRounded />
-                                        </IconButton>
-                                    </label>
-                                    <Typography variant="body3" color={theme.palette.customColors.white}>
-                                        Update Profile
-                                    </Typography>
-                                </Box>
+                                />
                             </Box>
                         </Stack>
 
                         <Stack gap={1}>
-                            <Stack gap={1} display={{ md: "none", xss: "block" }}>
+                            <Stack gap={1} display={{ md: "none", sm: "block", xss: "none" }}>
                                 <Typography variant="h4" fontWeight={theme.fontWeight.bold}>
                                     Badge Image
                                 </Typography>
@@ -271,15 +281,25 @@ const EditBadge = () => {
                                     Update your badge image that related to your Badge.
                                 </Typography>
                             </Stack>
-                            <Button variant="outlined" component="label" startIcon={<Upload />}>
-                                Add Image
-                                <input
-                                    type="file"
-                                    id="icon-button-photo"
-                                    style={{ display: "none" }}
-                                    onChange={handleFileChange}
-                                />
-                            </Button>
+
+                            <Stack sx={{ flexDirection: { xs: "row", xss: "column" }, gap: 1 }}>
+                                <Button variant="outlined" component="label" startIcon={<Upload />}>
+                                    Add Image
+                                    <input
+                                        type="file"
+                                        id="icon-button-photo"
+                                        style={{ display: "none" }}
+                                        onChange={handleFileChange}
+                                    />
+                                </Button>
+                                <Button
+                                    variant="outlined"
+                                    onClick={() => setIsModalOpen(true)}
+                                    startIcon={<ZoomInMapOutlined />}
+                                >
+                                    View
+                                </Button>
+                            </Stack>
                         </Stack>
                     </Stack>
 
@@ -301,11 +321,11 @@ const EditBadge = () => {
                                 Update your badge information that related to your Badge.
                             </Typography>
                         </Stack>
-                        <EditCoreElement control={control} badgeData={badgeData} reset={reset} />
+                        <EditCoreElement control={control} reset={reset} schema={badgSchema} />
 
-                        <EditMetadata control={control} badgeData={badgeData} reset={reset} />
+                        <EditMetadata control={control} reset={reset} schema={badgSchema} />
 
-                        <EditOptionalElements control={control} badgeData={badgeData} reset={reset} />
+                        <EditOptionalElements control={control} reset={reset} schema={badgSchema} />
                         {/* Submit button */}
                         <Stack alignItems="end" flexDirection="row" justifyContent="end" gap={1}>
                             <Link to={`/management/badges/badgeDetail/${userID}`}>

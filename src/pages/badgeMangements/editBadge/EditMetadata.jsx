@@ -4,7 +4,7 @@ import FormInput from "../../../components/FormInput";
 import MultiSelectForm from "../../../components/MultiSelectionForm";
 import DateSelectionForm from "../../../components/DateSelectionForm";
 
-const EditMetadata = ({ control }) => {
+const EditMetadata = ({ control, schema }) => {
     const optionLanguage = [
         { name: "JavaScript", label: "JavaScript" },
         { name: "ReactJs", label: "React Js" },
@@ -37,7 +37,7 @@ const EditMetadata = ({ control }) => {
             <Stack gap={3} alignItems="center">
                 <Stack gap={3} alignItems="center" flexDirection={{ sm: "row", xss: "column" }} width="100%">
                     {/* Badge Name */}
-                    <FormInput name="badgeName" label="Badge Name" control={control} type="text" required={false} />
+                    <FormInput name="badgeName" label="Badge Name" control={control} type="text" required={false} schema={schema.fields.badgeName} />
 
                     {/* Issued On */}
                     <DateSelectionForm control={control} name="issuedOn" label="Issued On" />
@@ -59,6 +59,7 @@ const EditMetadata = ({ control }) => {
 
                 {/* Badge Description */}
                 <FormInput
+                    schema={schema.fields.badgeDescription}
                     name="badgeDescription"
                     label="Badge Description"
                     control={control}

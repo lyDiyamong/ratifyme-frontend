@@ -4,7 +4,7 @@ import FormInput from "../../../components/FormInput";
 import MultiSelectForm from "../../../components/MultiSelectionForm";
 import { useFetchAchievementTypeQuery } from "../../../store/api/achievements/achievementTypeApi";
 
-const EditCoreElement = ({ control }) => {
+const EditCoreElement = ({ control, schema }) => {
     const { data: achievementType } = useFetchAchievementTypeQuery();
 
     return (
@@ -22,7 +22,7 @@ const EditCoreElement = ({ control }) => {
                 </Typography>
             </Stack> */}
             <Stack gap={3} alignItems="center" flexDirection={{ sm: "row", xss: "column" }}>
-                <FormInput name="narrative" label="Criteria" control={control} type="text" required={false} />
+                <FormInput name="narrative" label="Criteria" control={control} type="text" required={false} schema={schema.fields.narrative} />
                 <MultiSelectForm
                     name="AchievementTypes"
                     label="Achievement Types"
