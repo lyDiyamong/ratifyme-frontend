@@ -58,7 +58,7 @@ const ProfileCard = styled(Card)(({ theme }) => ({
     borderRadius: theme.shape.borderRadius * 2,
     boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.2)",
     padding: "20px",
-    background: "linear-gradient(to bottom, #ffffff, #e0f7fa)",
+    background: `linear-gradient(45deg, ${theme.palette.primary.light}, ${theme.palette.secondary.light})`,
     height: "100%",
 }));
 
