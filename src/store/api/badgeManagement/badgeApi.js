@@ -32,7 +32,9 @@ export const badgeApi = createApi({
                 url: `issuers/badgeClasses/${id}`,
                 method: "GET",
             }),
-            providesTags: (result, error, id) => [{ type: "Badge", id }],
+            providesTags: (result, error, id) => {
+                return [{ type: "Badge", id }];
+            },
         }),
 
         // Fetch badge for each institution
@@ -60,7 +62,6 @@ export const badgeApi = createApi({
                 method: "GET",
             }),
             providesTags: (result, error, issuerId) => {
-                console.log(result?.data.BadgeClasses);
                 return result?.data?.BadgeClasses
                     ? [
                           ...result.data.BadgeClasses.map(({ id }) => ({ type: "BadgeIssuer", id })),
@@ -81,9 +82,6 @@ export const badgeApi = createApi({
                     result?.badgeClasses?.filter(
                         (badge) => badge.Achievements?.[0]?.Earners?.[0]?.EarnerAchievements?.status === false,
                     ) || [];
-
-                // Logging to check the filtered results
-                console.log("Badges with false status:", result?.badgeClasses[0]);
 
                 // Providing tags for caching based on the filtered badges
                 return badgesWithFalseStatus.length
@@ -126,7 +124,9 @@ export const badgeApi = createApi({
                 method: "PATCH",
                 body: updatedBadge,
             }),
-            invalidatesTags: (result, error, id) => [{ type: "Badge", id }],
+            invalidatesTags: (result, error, { id }) => {
+                return [{ type: "Badge", id }, [{ type: "BadgeIssuer", id: `LIST` }]];
+            },
         }),
     }),
 });
