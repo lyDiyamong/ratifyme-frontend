@@ -1,38 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 import theme from "../../assets/themes";
 import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
 import SignupOptionCard from "./SignupOptionCard";
-import OutletImageComponent from "./OutletImageTemplate";
-import IssuerImg from "../../assets/images/Issuer.png";
-import UniversifyImg from "../../assets/images/University.png";
-import CertificateImg from "../../assets/images/Certificate.png";
-
-// Signup options data
-const signupOptsData = [
-    {
-        title: "Institution",
-        description:
-            "Sign up as an institution to manage badge issuance, track performance, and create verifiable credentials for your learners.",
-        circleBg: theme.palette.primary.light,
-        icon: UniversifyImg,
-        iconWidth: '80px'
-    },
-    {
-        title: "Issuer",
-        description:
-            "Sign up as an issuer to create, award, and manage badges for achievements, certifications, and skills recognition.",
-        circleBg: theme.palette.customColors.orange200,
-        icon: IssuerImg,
-    },
-    {
-        title: "Earner",
-        description:
-            "Sign up as an earner to collect and showcase digital badges for your skills and achievements, and share them with employers.",
-        circleBg: theme.palette.customColors.green200,
-        icon: CertificateImg,
-    },
-];
+import { signupOptsData } from "../../data/auth/signupOptsData";
 
 const SignupOptPage = () => {
     const navigate = useNavigate();
@@ -45,55 +16,54 @@ const SignupOptPage = () => {
     };
 
     return (
-        <Box sx={{ display: "flex" }}>
-            {/* Right side with login form */}
-            <Box
-                flexGrow={1}
-                display="flex"
-                justifyContent="center"
-                sx={{
-                    width: { md: "50%", xss: "100%" },
-                    mx: "auto",
-                    px: 4,
-                    backgroundColor: { sm: "inherit", xss: "inherit", md: "#fff" },
-                }}
-            >
-                {/* Signup options section */}
-                <Stack width="100%" maxWidth="500px" gap={2} mb={{ sm: 4, xss: 4, md: 0 }}>
-                    <Link to="/">
-                        <Box
-                            component="img"
-                            src={RatifyMELogo}
-                            alt="Ratifyme Favicon"
-                            sx={{ width: 150, height: 150 }}
-                        />
-                    </Link>
+        <Box
+            sx={{
+                display: "flex",
+                flexGrow: 1,
+                justifyContent: "center",
+                mx: "auto",
+                height: "100vh",
+                backgroundColor: "#fff",
+            }}
+        >
+            <Stack width="100%" maxWidth="1800px" gap={2} px={3} alignItems='center' mt={6}>
+                {/* logo  */}
+                <Link to="/">
+                    <Box component="img" src={RatifyMELogo} alt="Ratifyme Favicon" sx={{ width: 150, height: 150 }} />
+                </Link>
 
-                    <Box>
-                        <Typography variant="h3" fontWeight={theme.fontWeight.semiBold} mb={1}>
-                            How do you want to use RatifyMe?
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary" mb={3}>
-                            We’ll personalize your setup experience accordingly.
-                        </Typography>
-                    </Box>
+                {/* Signup Options  */}
+                <Box>
+                    <Typography align="center" variant="h1" fontWeight={theme.fontWeight.semiBold} mb={1}>
+                        How do you want to use RatifyMe?
+                    </Typography>
+                    <Typography align="center" variant="body1" color="text.secondary" mb={3}>
+                        We’ll personalize your setup experience accordingly.
+                    </Typography>
 
                     {/* Render signup option cards */}
-                    {signupOptsData.map((opt, index) => (
-                        <SignupOptionCard
-                            key={index}
-                            title={opt.title}
-                            description={opt.description}
-                            circleBg={opt.circleBg}
-                            icon={opt.icon}
-                            onClick={() => handleRoleSelect(opt.title)}
-                        />
-                    ))}
-                </Stack>
-            </Box>
-
-            {/* Left side with text */}
-            <OutletImageComponent />
+                    <Grid container spacing={3} justifyContent="center" alignItems="stretch" mt={4}>
+                        {signupOptsData.map((opt, index) => (
+                            <Grid
+                                item
+                                key={index}
+                                xs={12}
+                                sm={6}
+                                md={4}
+                                lg={3}
+                            >
+                                <SignupOptionCard
+                                    title={opt.title}
+                                    description={opt.description}
+                                    circleBg={opt.circleBg}
+                                    icon={opt.icon}
+                                    onClick={() => handleRoleSelect(opt.title)}
+                                />
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Box>
+            </Stack>
         </Box>
     );
 };

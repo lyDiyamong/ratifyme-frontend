@@ -8,6 +8,7 @@ const SignupOptionCard = ({ title, description, onClick, circleBg, icon }) => {
             sx={{
                 position: "relative",
                 maxWidth: "500px",
+                height: '100%',
                 backgroundColor: "white",
                 p: 3,
                 boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.09)",
@@ -30,7 +31,7 @@ const SignupOptionCard = ({ title, description, onClick, circleBg, icon }) => {
                 }}
             />
 
-            <Box component="img" src={icon} sx={{ fill: theme.palette.primary.main, width: "100px" }}></Box>
+            <Box component="img" src={icon} sx={{ fill: theme.palette.primary.main, width: {xss: '60px', sm: '80px', md: '100px'} }}></Box>
 
             {/* Title */}
             <Typography variant="h5" sx={{ fontWeight: "bold", pt: 2, textWrap: 'wrap' }}>
