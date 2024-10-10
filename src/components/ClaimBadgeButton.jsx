@@ -5,18 +5,21 @@ import theme from "../assets/themes";
 // Custom Import
 import { useClaimBadgeMutation, useFetchStatusBadgeQuery } from "../store/api/earnerManagement/earnerApis";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
 // =========== Start ClaimBadgeButton ===========
 const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
-    const { data: earnerBadge, refetch: refetchStatus } = useFetchStatusBadgeQuery({ id: earnerId });
+    const { data: earnerBadge } = useFetchStatusBadgeQuery({ id: earnerId });
     const [claimBadge, { isLoading }] = useClaimBadgeMutation();
 
     const statusAchievement = earnerBadge?.data[0]?.status;
+    const navigate = useNavigate();
     const [claimed, setClaimed] = useState(statusAchievement);
 
     useEffect(() => {
         setClaimed(statusAchievement);
     }, [statusAchievement]);
+    console.log(earnerId, badgeClassId, achievementIds);
 
     const handleClaimBadge = async () => {
         try {
@@ -29,7 +32,7 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
             }).unwrap();
 
             console.log("Achievements updated successfully");
-            refetchStatus();
+            navigate("/mybackpacks");
         } catch (error) {
             console.error("Failed to claim badge:", error);
         }
