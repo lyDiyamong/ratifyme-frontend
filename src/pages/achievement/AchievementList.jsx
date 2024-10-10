@@ -19,7 +19,6 @@ const AchievementList = () => {
 
     // Handle loading, error, and empty state in the parent component
     if (isLoading) return <Typography>Loading...</Typography>;
-    if (isError) return <Typography>Error fetching badges</Typography>;
 
     // Handle view badgeDetail
     const handleView = (id) => {
