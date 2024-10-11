@@ -3,8 +3,10 @@ import theme from "../../../assets/themes";
 import FormInput from "../../../components/FormInput";
 import MultiSelectForm from "../../../components/MultiSelectionForm";
 import DateSelectionForm from "../../../components/DateSelectionForm";
+import HelperTextForm from "../../../components/alert/HelperTextForm";
+import { Box } from "@mui/material";
 
-const EditMetadata = ({ control, schema }) => {
+const EditMetadata = ({ control, schema, errors }) => {
     const optionLanguage = [
         { name: "JavaScript", label: "JavaScript" },
         { name: "ReactJs", label: "React Js" },
@@ -37,15 +39,27 @@ const EditMetadata = ({ control, schema }) => {
             <Stack gap={3} alignItems="center">
                 <Stack gap={3} alignItems="center" flexDirection={{ sm: "row", xss: "column" }} width="100%">
                     {/* Badge Name */}
-                    <FormInput name="badgeName" label="Badge Name" control={control} type="text" required={false} schema={schema.fields.badgeName} />
+                    <FormInput
+                        name="badgeName"
+                        label="Badge Name"
+                        control={control}
+                        type="text"
+                        required={false}
+                        schema={schema.fields.badgeName}
+                    />
 
                     {/* Issued On */}
-                    <DateSelectionForm control={control} name="issuedOn" label="Issued On" />
+                    <DateSelectionForm control={control} name="issuedOn" label="Issued On" required />
                 </Stack>
 
                 <Stack gap={3} alignItems="center" flexDirection={{ sm: "row", xss: "column" }} width="100%">
-                    {/* Start Date */}
-                    <DateSelectionForm control={control} name="startedDate" label="Start Date" />
+                    <Box width="100%">
+                        {/* Start Date */}
+                        <DateSelectionForm control={control} name="startedDate" label="Start Date" required />
+                        {errors.startedDate && (
+                            <HelperTextForm color={"error"} message={errors?.startedDate?.message} />
+                        )}
+                    </Box>
 
                     {/* Tags / Language */}
                     <MultiSelectForm

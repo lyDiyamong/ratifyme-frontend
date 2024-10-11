@@ -2,7 +2,7 @@ import { Stack, Typography } from "@mui/material";
 import theme from "../../../assets/themes";
 import DateSelectionForm from "../../../components/DateSelectionForm";
 
-const EditOptionalElements = ({ control }) => {
+const EditOptionalElements = ({ control, errors }) => {
     return (
         <Stack
             sx={{
@@ -15,7 +15,7 @@ const EditOptionalElements = ({ control }) => {
             </Stack> */}
             <Stack gap={3}>
                 {/* Expiration Date */}
-                <DateSelectionForm control={control} name="expiredDate" label="Expiration Date" required />
+                <DateSelectionForm control={control} name="expiredDate" label="Expiration Date" errors={errors} />
             </Stack>
         </Stack>
     );
