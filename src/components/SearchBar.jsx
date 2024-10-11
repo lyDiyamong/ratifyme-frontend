@@ -12,7 +12,6 @@ import { Link } from "react-router-dom";
 import theme from "../assets/themes";
 import DashboardContainer from "./styles/DashboardContainer";
 
-
 // Styled components
 const Search = styled("div")(({ theme }) => ({
     position: "relative",
@@ -66,6 +65,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         },
     },
 }));
+
+// Static data that make the code not error. (White screen)
+const cardBadgeData = [
+    { title: "Badge 1", institution: "Institution 1" },
+    { title: "Badge 2", institution: "Institution 2" },
+];
 
 export default function SearchBar({ showButton = true, textInButton, children }) {
     const [searchQuery, setSearchQuery] = useState("");
