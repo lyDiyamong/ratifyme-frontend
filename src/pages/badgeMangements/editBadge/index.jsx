@@ -29,7 +29,6 @@ import badgSchema from "../../../utils/schema/badgeSchema";
 const EditBadge = () => {
     const { id: badgeId } = useParams();
 
-
     // Api hook
     const [updateBadge, { reset: updatedReset, isSuccess, isError }] = useUpdateBadgeMutation();
 
@@ -46,9 +45,14 @@ const EditBadge = () => {
     const [uploadedImage, setUploadedImage] = useState(null);
 
     // React hook form
-    const { handleSubmit, control, reset } = useForm({
-        resolver : yupResolver(badgSchema),
-        mode : "onChange"
+    const {
+        handleSubmit,
+        control,
+        reset,
+        formState: { errors },
+    } = useForm({
+        mode: "onChange",
+        resolver: yupResolver(badgSchema),
     });
 
     const parsedExpirationDate = dayjs(badgeData?.expiredDate);
@@ -59,8 +63,8 @@ const EditBadge = () => {
         isSuccess ? "Update succesfully" : "Update Failed",
     );
 
-      // Handle submit
-      const onSubmit = async (data) => {
+    // Handle submit
+    const onSubmit = async (data) => {
         const formData = new FormData();
         // Append core badge details
         appendBadgeDetails(formData, data);
@@ -323,9 +327,9 @@ const EditBadge = () => {
                         </Stack>
                         <EditCoreElement control={control} reset={reset} schema={badgSchema} />
 
-                        <EditMetadata control={control} reset={reset} schema={badgSchema} />
+                        <EditMetadata control={control} reset={reset} schema={badgSchema} errors={errors} />
 
-                        <EditOptionalElements control={control} reset={reset} schema={badgSchema} />
+                        <EditOptionalElements control={control} reset={reset} schema={badgSchema} errors={errors} />
                         {/* Submit button */}
                         <Stack alignItems="end" flexDirection="row" justifyContent="end" gap={1}>
                             <Link to={`/management/badges/badgeDetail/${userID}`}>
