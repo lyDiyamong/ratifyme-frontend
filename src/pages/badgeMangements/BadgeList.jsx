@@ -10,7 +10,6 @@ import {
     useFetchBadgesByIssuerQuery,
     useFetchBadgesByInstitutionsQuery,
     useFetchBadgesQuery,
-    useFetchBadgeByEarnerQuery,
 } from "../../store/api/badgeManagement/badgeApi";
 import BadgeListCard from "../../components/BadgeListCard";
 
@@ -23,21 +22,20 @@ const BadgeList = () => {
         roleId === 2 ? institutionData.id : roleId === 3 ? issuerData.id : roleId === 4 ? earnerData.id : userInfo;
 
     // Fetch data
-    const { data: allBadges, isLoading, isError } = useFetchBadgesQuery();
+    const { data: allBadges, isLoading } = useFetchBadgesQuery();
     const { data: badgeInsti } = useFetchBadgesByInstitutionsQuery(activeId);
     const { data: badgeIssuer } = useFetchBadgesByIssuerQuery(activeId);
-    const { data: badgeEarner } = useFetchBadgeByEarnerQuery(activeId);
 
     // Define badges based on role
     const badges = allBadges?.data || [];
     const badgeInstitution = badgeInsti?.data?.Issuers.flatMap((issuer) => issuer.BadgeClasses) || [];
-    const badgeIssue = badgeIssuer?.data?.BadgeClasses || [];
-    const badgeEarners = badgeEarner?.badgeClasses || [];
+    const badgeIssue = badgeIssuer?.data || [];
 
-    console.log("activeId", activeId, "roleId", badgeEarners);
+    console.log("activeId", activeId, "roleId", roleId);
 
     // Apply filtering based on role
-    let checkBadge = roleId === 3 ? badgeIssue : roleId === 2 ? badgeInstitution : roleId === 4 ? badgeEarners : badges;
+    let checkBadge = roleId === 3 ? badgeIssue : roleId === 2 ? badgeInstitution : roleId === 1 ? badges : "";
+    console.log(checkBadge);
 
     // Handle loading, error, and empty state in the parent component
     if (isLoading) return <Typography>Loading...</Typography>;
@@ -48,7 +46,7 @@ const BadgeList = () => {
 
     return (
         <>
-            <BadgeListCard badges={checkBadge} onView={handleView} />
+            <BadgeListCard badges={checkBadge} onView={handleView} roleId={roleId} />
         </>
     );
 };

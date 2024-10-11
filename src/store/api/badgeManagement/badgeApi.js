@@ -49,9 +49,9 @@ export const badgeApi = createApi({
                           ...result.data.Issuers.flatMap(({ BadgeClasses }) =>
                               BadgeClasses.map(({ id }) => ({ type: "BadgeInstitution", id })),
                           ),
-                          { type: "BadgeInstitution", id: `LIST-${institutionId}` },
+                          { type: "BadgeInstitution", id: `LIST` },
                       ]
-                    : [{ type: "BadgeInstitution", id: `LIST-${institutionId}` }];
+                    : [{ type: "BadgeInstitution", id: `LIST` }];
             },
         }),
 
@@ -86,7 +86,7 @@ export const badgeApi = createApi({
                 // Providing tags for caching based on the filtered badges
                 return badgesWithFalseStatus.length
                     ? [
-                          ...result?.badgeClasses?.map(({ id }) => ({ type: "BadgeEarner", id })),
+                          ...result?.badgeClasses.map(({ id }) => ({ type: "BadgeEarner", id })),
                           { type: "BadgeEarner", id: `LIST-${earnerId}` },
                       ]
                     : [{ type: "BadgeEarner", id: `LIST-${earnerId}` }];
