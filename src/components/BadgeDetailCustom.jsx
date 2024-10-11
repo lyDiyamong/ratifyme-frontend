@@ -4,13 +4,14 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 // MUI Import
-import { Box, Grid, Typography, Button, Tabs, Tab, Chip, Stack, useMediaQuery } from "@mui/material";
+import { Box, Grid, Typography, Button, Tabs, Tab, Chip, Stack, useMediaQuery, CardMedia } from "@mui/material";
 import theme from "../assets/themes";
 
 // Custom Import
 import IssuerBadgeButton from "../pages/badgeMangements/IssuerBadgeButton";
 import IssueToEarnerButton from "../pages/badgeMangements/IssueToEarnerButton";
 import ClaimBadgeButton from "./ClaimBadgeButton";
+import StatusCode from "../assets/images/NoData.svg";
 import { useDeleteBadgeMutation } from "../store/api/badgeManagement/badgeApi";
 
 const BadgeDetailCustom = ({ badge, userRole, activeUserId }) => {
@@ -30,8 +31,8 @@ const BadgeDetailCustom = ({ badge, userRole, activeUserId }) => {
 
     // assign variable from props that has fetch value
     const result = badge?.data;
+    console.log(result);
 
-    console.log(result?.id);
     console.log(activeUserId);
     // assign variable to get achievement id to update
     const achievement = result?.Achievements?.map((achievement) => {
@@ -90,6 +91,29 @@ const BadgeDetailCustom = ({ badge, userRole, activeUserId }) => {
             </Typography>
         </Stack>
     );
+
+    const rednerEmail =
+        selectedEmails.length !== 0 ? (
+            <Box>
+                {selectedEmails.map((item, index) => (
+                    <Box key={index} sx={{ py: 1 }}>
+                        {item}
+                    </Box>
+                ))}
+            </Box>
+        ) : (
+            <Box display="flex" flexDirection="column" alignItems="center" p={4}>
+                <CardMedia
+                    component="img"
+                    image={StatusCode}
+                    alt="No badges found"
+                    sx={{ maxWidth: 400, width: "100%" }}
+                />
+                <Typography variant="h6" mt={2} textAlign="center" color={theme.palette.text.secondary}>
+                    No Earner Has Invited
+                </Typography>
+            </Box>
+        );
 
     return (
         // ============ Start Badge Detail ============
@@ -333,15 +357,7 @@ const BadgeDetailCustom = ({ badge, userRole, activeUserId }) => {
                     </Box>
                 )}
 
-                {hasAccess && value === 1 && (
-                    <Box>
-                        {selectedEmails.map((item, index) => (
-                            <Box key={index} sx={{ py: 1 }}>
-                                {item}
-                            </Box>
-                        ))}
-                    </Box>
-                )}
+                {hasAccess && value === 1 && <>{rednerEmail}</>}
             </Box>
 
             {/* End Tab Content */}

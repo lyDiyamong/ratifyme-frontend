@@ -20,8 +20,7 @@ import theme from "../assets/themes";
 import StatusCode from "../assets/images/NoData.svg";
 import GoldBadge from "../assets/images/DiamondBadge.svg";
 
-const BadgeListCard = ({ badges, onView }) => {
-    // State management for pagination
+const BadgeListCard = ({ badges, onView, roleId }) => {
     const [page, setPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(6);
 
@@ -34,24 +33,30 @@ const BadgeListCard = ({ badges, onView }) => {
         setItemsPerPage(isLargeScreen ? 8 : isMediumScreen ? 6 : 4);
     }, [isLargeScreen, isMediumScreen]);
 
+    // Determine which badges to display based on the role
+    let result = [];
+    if (roleId === 2 || roleId === 1) {
+        result = badges;
+    } else if (roleId === 3) {
+        result = badges?.BadgeClasses;
+    }
+
     // Pagination handling
-    const pageCount = Math.ceil(badges.length / itemsPerPage);
-    const currentBadges = badges.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+    const pageCount = Math.ceil(result.length / itemsPerPage);
+    const currentBadges = result.slice((page - 1) * itemsPerPage, page * itemsPerPage);
     const handleChangePage = (_, value) => setPage(value);
 
     const handleView = (id) => {
         onView(id);
     };
-    // console.log(badges[7].imageUrl);
 
     return (
-        // ============ Start Badge List Card ============
         <Box my={3}>
             <Typography variant="h6" sx={{ pb: 2 }}>
-                Total Badges: {badges.length}
+                Total Badges: {result?.length || 0}
             </Typography>
 
-            {badges.length === 0 ? (
+            {result?.length === 0 ? (
                 <Box display="flex" flexDirection="column" alignItems="center" p={4}>
                     <CardMedia
                         component="img"
@@ -66,7 +71,7 @@ const BadgeListCard = ({ badges, onView }) => {
             ) : (
                 <Grid container spacing={2}>
                     {currentBadges.map((badge) => (
-                        <Grid item xs={12} sm={6} md={4} lg={3} key={badge.id}>
+                        <Grid item xs={12} sm={6} md={4} lg={3} key={badge?.id}>
                             <Card
                                 sx={{
                                     maxWidth: { xss: "100%", sm: 320, md: 340, lg: 350 },
@@ -84,7 +89,7 @@ const BadgeListCard = ({ badges, onView }) => {
                                 <CardMedia
                                     component="img"
                                     height="200"
-                                    image={badge?.imageUrl}
+                                    image={badge?.imageUrl || GoldBadge}
                                     alt={badge?.name}
                                     sx={{ objectFit: "cover" }}
                                 />
@@ -111,7 +116,10 @@ const BadgeListCard = ({ badges, onView }) => {
                                                 overflow: "hidden",
                                             }}
                                         >
-                                            {badge?.Issuer?.Institution?.name}
+                                            {/* Display institution name based on the role */}
+                                            {roleId === 2 || roleId === 1
+                                                ? badge?.Issuer?.Institution?.institutionName
+                                                : badges?.Institution?.institutionName}
                                         </Typography>
                                     </Stack>
                                 </CardContent>
@@ -134,6 +142,7 @@ const BadgeListCard = ({ badges, onView }) => {
                     ))}
                 </Grid>
             )}
+
             {pageCount > 1 && (
                 <Box
                     display="flex"
@@ -154,7 +163,6 @@ const BadgeListCard = ({ badges, onView }) => {
                 </Box>
             )}
         </Box>
-        // ============ End Badge List Card ============
     );
 };
 

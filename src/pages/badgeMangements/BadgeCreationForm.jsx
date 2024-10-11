@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 // MUI import
 import { Button, MobileStepper, Stack, Typography, CircularProgress, Box, Skeleton, IconButton } from "@mui/material";
@@ -15,9 +17,9 @@ import CoreElementStep from "./CoreElementStep";
 import MetadataStep from "./MetadataStep";
 import OptionalStep from "./OptionalStep";
 import { SpinLoading } from "../../components/loading/SpinLoading";
-import { useCreateBadgeMutation, } from "../../store/api/badgeManagement/badgeApi";
+import { useCreateBadgeMutation } from "../../store/api/badgeManagement/badgeApi";
 import { useFetchAchievementTypeQuery } from "../../store/api/achievements/achievementTypeApi";
-import { AssignmentIndOutlined, CameraAltRounded } from "@mui/icons-material";
+import { AssignmentIndOutlined, CameraAltRounded, YouTube } from "@mui/icons-material";
 
 // The data static of the description
 const steps = [
@@ -38,6 +40,37 @@ const steps = [
     },
 ];
 
+const schema = yup.object().shape({
+    narrative: yup
+        .string()
+        .min(10, "Criteria must be at least 10 characters long")
+        .max(255, "Criteria cannot exceed 255 characters")
+        .required("Criteria is required"),
+    // achievementType: yup
+    //     .string()
+    //     // .min(1, "Please select at least one achievement type")
+    //     .required("Achievment is reqiured"),
+    startDate: yup
+        .date()
+        .typeError("Please select a valid date")
+        .min(new Date(new Date().setHours(0, 0, 0, 0)), "Start date cannot be in the past")
+        .required("Start date is required"),
+    endDate: yup
+        .date()
+        .typeError("Please select a valid date")
+        .min(yup.ref("startDate"), "End date cannot be earlier than Start Date")
+        .required("End date is required"),
+    badgeName: yup
+        .string()
+        .min(3, "Badge name must be at least 3 characters long")
+        .max(150, "Badge name cannot exceed 150 characters")
+        .required("Badge name is required"),
+    badgeDescription: yup
+        .string()
+        .max(255, "Description cannot exceed 255 characters")
+        .required("Description is required"),
+});
+
 const BadgeCreationForm = () => {
     const { issuerData } = useSelector((state) => state.global);
 
@@ -57,6 +90,10 @@ const BadgeCreationForm = () => {
 
     const userName = `${issuerData.User.firstName} ${issuerData.User.lastName}`;
 
+    const stepFields = {
+        0: ["narrative", "achievementType"], // First step fields
+        1: ["badgeName", "badgeDescription", "startDate", "endDate"], // Second step fields
+    };
     // React Hook Form
     const {
         control,
@@ -83,6 +120,8 @@ const BadgeCreationForm = () => {
             expirationDate: null,
             additionLink: "",
         },
+        mode: "onChange",
+        resolver: yupResolver(schema),
     });
 
     const maxSteps = steps.length;
@@ -91,8 +130,10 @@ const BadgeCreationForm = () => {
         // Start loading
         setLoading(true);
         await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        const isValid = await trigger();
+        // Validate by field of each step
+        const isValid = await trigger(stepFields[activeStep]);
+        console.log(trigger);
+        // Move to next step if valid
         if (isValid) {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         }
@@ -159,7 +200,8 @@ const BadgeCreationForm = () => {
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
-            setUploadedImage(file); 
+            console.log("Selected file:", file);
+            setUploadedImage(file);
         }
         event.target.value = "";
     };
@@ -167,11 +209,11 @@ const BadgeCreationForm = () => {
     const renderStepContent = () => {
         switch (activeStep) {
             case 0:
-                return <CoreElementStep control={control} errors={errors} />;
+                return <CoreElementStep control={control} errors={errors} schema={schema} />;
             case 1:
-                return <MetadataStep control={control} errors={errors} />;
+                return <MetadataStep control={control} errors={errors} schema={schema} />;
             case 2:
-                return <OptionalStep control={control} errors={errors} />;
+                return <OptionalStep control={control} errors={errors} schema={schema} />;
             default:
                 return null;
         }
