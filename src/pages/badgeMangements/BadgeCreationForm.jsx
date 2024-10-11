@@ -46,10 +46,10 @@ const schema = yup.object().shape({
         .min(10, "Criteria must be at least 10 characters long")
         .max(255, "Criteria cannot exceed 255 characters")
         .required("Criteria is required"),
-    achievementType: yup
-        .string()
-        // .min(1, "Please select at least one achievement type"),
-        .required("Achievment is reqiured"),
+    // achievementType: yup
+    //     .string()
+    //     // .min(1, "Please select at least one achievement type")
+    //     .required("Achievment is reqiured"),
     startDate: yup
         .date()
         .typeError("Please select a valid date")
@@ -132,10 +132,11 @@ const BadgeCreationForm = () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
         // Validate by field of each step
         const isValid = await trigger(stepFields[activeStep]);
+        console.log(trigger);
         // Move to next step if valid
         if (isValid) {
-            setActiveStep((prevActiveStep) => prevActiveStep + 1); 
-        }  
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }
         // Stop loading
         setLoading(false);
     };

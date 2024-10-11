@@ -1,4 +1,3 @@
-// MUI import
 import { Stack, Typography } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -10,21 +9,14 @@ import { useFetchAchievementTypeQuery } from "../../store/api/achievements/achie
 import { Box } from "@mui/system";
 
 const CoreElementStep = ({ control, schema, errors }) => {
-    // Data static of the earning criteria select
+    // Fetch achievement types data
     const { data: achievementType } = useFetchAchievementTypeQuery();
+
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Stack gap={2}>
                 {/* Issuer */}
-                <FormInput
-                    disabled
-                    name="issuer"
-                    label="Issuer*"
-                    control={control}
-                    type="text"
-                    required={true}
-                    //
-                />
+                <FormInput disabled name="issuer" label="Issuer*" control={control} type="text" required={true} />
 
                 {/* Criteria */}
                 <FormInput
@@ -35,15 +27,16 @@ const CoreElementStep = ({ control, schema, errors }) => {
                     required={true}
                     schema={schema?.fields.narrative}
                 />
+
                 <Box>
-                    {/* Earning Criteria */}
+                    {/* Achievement Types */}
                     <MultiSelectForm
-                        name="AchievementTypes"
+                        name="AchievementTypes" // Use the same field name consistently
                         label="Achievement Types"
                         options={achievementType?.data || []}
                         control={control}
                         required={true}
-                        schema={schema?.fields.achievementType}
+                        schema={schema?.fields.achievementType} // Use the same name in validation schema
                     />
                     {errors.achievementType && (
                         <Typography sx={{ mx: "12px", fontSize: "12px", mt: "3px" }} color="error">
@@ -51,9 +44,6 @@ const CoreElementStep = ({ control, schema, errors }) => {
                         </Typography>
                     )}
                 </Box>
-
-                {/* Duration */}
-                {/* <FormInput name="duration" label="Duration" control={control} type="text" required={false} /> */}
             </Stack>
         </LocalizationProvider>
     );

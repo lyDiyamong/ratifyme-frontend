@@ -37,22 +37,24 @@ const SelectForm = ({ name, control, options, label, required }) => {
         <FormControl fullWidth error={!!error}>
             <InputLabel id={`${name}-label`}>{label}</InputLabel>
             <Select
-                multiple 
+                multiple // Enable multiple selection
                 required={required}
                 sx={{
                     borderRadius: theme.customShape.input,
                 }}
                 labelId={`${name}-label`}
                 id={`${name}-select`}
-                value={field.value || []} 
+                value={field.value || []} // Default to an empty array for multi-select
+                label={label}
+                onChange={handleChange}
                 onBlur={field.onBlur}
                 inputProps={{ "aria-required": required }}
                 MenuProps={{
                     PaperProps: {
                         sx: {
                             borderRadius: theme.customShape.input,
-                            maxHeight: 48 * 7 + 8, 
-                            overflowY: "auto",
+                            maxHeight: 48 * 7 + 8, // Limit to 7 visible items (assuming ~48px height each)
+                            overflowY: "auto", // Enable vertical scrolling
                         },
                     },
                 }}
