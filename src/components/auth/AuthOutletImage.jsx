@@ -77,7 +77,7 @@ const AuthOutletImage = ({ image, backgroundColor = theme.palette.primary.light,
                     letterSpacing={1.2}
                     variant="body1"
                     maxWidth="720px"
-                    textAlign="justify"
+                    // textAlign="justify"
                     sx={{
                         animation: "bounceIn 2s ease-in-out 1s",
                     }}

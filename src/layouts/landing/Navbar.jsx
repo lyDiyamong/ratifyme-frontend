@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 // MUI import
-import { AppBar, Box, Toolbar, Button, Menu, MenuItem, Slide } from "@mui/material";
+import { AppBar, Box, Toolbar, Button, Menu, MenuItem, Slide, Avatar } from "@mui/material";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 
 // Custom import
@@ -12,6 +12,7 @@ import theme from "../../assets/themes";
 //Images import
 import RatifyMeLogo from "../../assets/icons/RatfiyME.svg";
 import LandingContainer from "../../components/styles/LandingContainer";
+import { Stack } from "@mui/material";
 
 // ============ Start Navbar scroll function ============
 const useHideOnScroll = () => {
@@ -123,7 +124,7 @@ const Navbar = () => {
                             </Box>
 
                             {/* Sign In/Up buttons */}
-                            <Box display={"flex"} gap={2}>
+                            <Box display={"flex"} alignItems="center" gap={2}>
                                 <Link to="/login">
                                     <Button
                                         variant="outlined"
@@ -147,7 +148,11 @@ const Navbar = () => {
                                         Sign Up
                                     </Button>
                                 </Link>
-
+                                <Link to="/dashboard">
+                                    <Stack direction='row' gap={1} alignItems='center'>
+                                        <Avatar>H</Avatar>Sreypov Prak
+                                    </Stack>
+                                </Link>
                             </Box>
                         </Box>
                         {/* ============ End Menu navbar ============ */}

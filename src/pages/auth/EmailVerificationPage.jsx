@@ -14,8 +14,9 @@ import useCatchStatus from "../../hooks/useCatchStatus";
 import { SpinLoading } from "../../components/loading/SpinLoading";
 
 const EmailVerificationPage = () => {
+    // Retrieve email from location.state
     const location = useLocation();
-    const { email } = location.state || {}; // Retrieve email from location.state
+    const { email, roleId } = location.state || {};
     const [verificationCode, setVerificationCode] = useState("");
     const [inputKey, setInputKey] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -64,7 +65,7 @@ const EmailVerificationPage = () => {
         try {
             setLoading(true);
             await verifyEmail({ verifyCode: verificationCode }).unwrap();
-            navigate("/login");
+            navigate(roleId === 2 ? "/price" : "/login");
         } catch (error) {
             setVerificationCode("");
             setInputKey((prevKey) => prevKey + 1);
