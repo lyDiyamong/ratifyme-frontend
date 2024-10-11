@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import dayjs from "dayjs";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -28,6 +28,7 @@ import badgSchema from "../../../utils/schema/badgeSchema";
 
 const EditBadge = () => {
     const { id: badgeId } = useParams();
+    const navigate = useNavigate();
 
     // Api hook
     const [updateBadge, { reset: updatedReset, isSuccess, isError }] = useUpdateBadgeMutation();
@@ -82,6 +83,13 @@ const EditBadge = () => {
         reset();
         updatedReset();
     };
+
+    // Navigate on successful update
+    useEffect(() => {
+        if (isSuccess) {
+            navigate(`/management/badges/badgeDetail/${userID}`);
+        }
+    }, [isSuccess, navigate, userID]);
 
     // Helper function to append badge details to FormData
     const appendBadgeDetails = (formData, data) => {
