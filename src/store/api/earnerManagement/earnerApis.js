@@ -6,10 +6,8 @@ export const earnerApi = createApi({
     tagTypes: ["Earner"],
     endpoints: (builder) => ({
         fetchEarner: builder.query({
-            query: () => ({
-                url: "/earners",
-                method: "GET",
-            }),
+            query: ({ page, limit, sort }) => 
+                `earners?page=${page}&limit=${limit}&sort=${sort}`,
             providesTags: ["Earner"],
         }),
 
