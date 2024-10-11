@@ -22,7 +22,20 @@ const TableEarner = ({ searchQuery }) => {
     // State for controlling dialog
     const [dialogOpen, setDialogOpen] = useState(false);
 
-    const { data: response, isLoading, isError } = useFetchEarnerQuery();
+    // Pagination and Sorting State
+    const [currentPage, setCurrentPage] = useState(2); // Current page number
+    const [rowsPerPage, setRowsPerPage] = useState(10); // Number of rows per page
+    const [sortColumn, setSortColumn] = useState("id"); // Default sorting column
+    const [sortOrder, setSortOrder] = useState("asc"); // Default sort order (ascending)
+
+    const { data: response, isLoading, isError } = useFetchEarnerQuery({
+        page: currentPage,
+        limit: rowsPerPage,
+        sort: sortColumn,
+        order: sortOrder,
+        search: searchQuery, // Apply search query if available
+    });
+    
     const { roleId, userId, issuerData } = useSelector((state) => state.global);
     const [deleteEarner] = useDeleteEarnerByIdMutation();
     const issuerId = issuerData?.id;
@@ -47,9 +60,6 @@ const TableEarner = ({ searchQuery }) => {
     // State for handling modal
     const [selectedUserId, setSelectedUserId] = useState(null);
     const [openModal, setOpenModal] = useState(false);
-
-    // Search query state for filtering earner data
-    // const [searchQuery, setSearchQuery] = useState("");
 
     // Earner data fetched from the API
     const earnerData = response?.data;
@@ -163,6 +173,23 @@ const TableEarner = ({ searchQuery }) => {
         },
     ];
 
+    // Handle page change
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
+
+    // Handle rows per page change (limit)
+    const handleRowsPerPageChange = (newLimit) => {
+        setRowsPerPage(newLimit);
+    };
+
+    // Handle sorting change
+    const handleSortChange = (column) => {
+        const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
+        setSortColumn(column);
+        setSortOrder(newSortOrder);
+    };
+
     return (
         <Box>
             {/* Modal for Viewing Profile */}
@@ -180,6 +207,14 @@ const TableEarner = ({ searchQuery }) => {
                     columns={earnerColumns}
                     onAddNew={handleInviteEarner}
                     addNewLabel="Invite Earner"
+                    paginationTotalRows={response?.total || 0} // Total number of rows for pagination
+                    currentPage={currentPage}
+                    rowsPerPage={rowsPerPage}
+                    onPageChange={handlePageChange} // Handles pagination
+                    onRowsPerPageChange={handleRowsPerPageChange} // Handles changing row limits
+                    onSortChange={handleSortChange} // Handles sorting
+                    sortColumn={sortColumn}
+                    sortOrder={sortOrder}
                 >
                     {/* Display NoRecordData inside the table when no earners match the search query */}
                     {searchedEarnerData?.length === 0 && <NoRecordData />}
