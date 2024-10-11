@@ -207,12 +207,13 @@ const TableEarner = ({ searchQuery }) => {
                     columns={earnerColumns}
                     onAddNew={handleInviteEarner}
                     addNewLabel="Invite Earner"
-                    paginationTotalRows={response?.total || 0} // Total number of rows for pagination
+                    pagination
+                    paginationTotalRows={response?.total || 0} 
                     currentPage={currentPage}
                     rowsPerPage={rowsPerPage}
-                    onPageChange={handlePageChange} // Handles pagination
-                    onRowsPerPageChange={handleRowsPerPageChange} // Handles changing row limits
-                    onSortChange={handleSortChange} // Handles sorting
+                    onPageChange={handlePageChange}
+                    onRowsPerPageChange={handleRowsPerPageChange} 
+                    onSortChange={handleSortChange} 
                     sortColumn={sortColumn}
                     sortOrder={sortOrder}
                 >

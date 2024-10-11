@@ -7,7 +7,7 @@ export const earnerApi = createApi({
     endpoints: (builder) => ({
         fetchEarner: builder.query({
             query: ({ page, limit, sort }) => 
-                `earners?page=${page}&limit=${limit}&sort=${sort}`,
+                `earners?limit=${limit}&page=${page}&sort=${sort}`,
             providesTags: ["Earner"],
         }),
 

@@ -239,7 +239,7 @@ const TableCustom = ({
                 pagination
                 paginationTotalRows={totalRows}
                 paginationPerPage={rowsPerPage}
-                paginationRowsPerPageOptions={[10, 20, 30, 50, 100]}
+                paginationRowsPerPageOptions={[5, 10, 30, 50, 100]}
                 onChangePage={onPageChange}
                 onChangeRowsPerPage={onRowsPerPageChange}
                 selectableRowsComponent={Checkbox}

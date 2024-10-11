@@ -144,6 +144,7 @@ const TableIssuer = ({ searchQuery }) => {
                     columns={getIssuerColumns()}
                     onAddNew={handleInviteIssuer}
                     addNewLabel="Invite Issuer"
+                    pagination={false}
                 >
                     {/* Show NoRecordData inside the table when there's no data */}
                     {filteredData.length === 0 && <NoRecordData />}
