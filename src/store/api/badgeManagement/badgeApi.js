@@ -26,6 +26,14 @@ export const badgeApi = createApi({
             }),
             invalidatesTags: (result) => [{ type: "BadgeIssuer", id: `LIST-${result?.issuerId}` }],
         }),
+        uploadCerti: builder.mutation({
+            query: ({uploadedCert}) => ({
+                url: `/earners/uploadCerti`,
+                method: "POST",
+                body: uploadedCert,
+            }),
+            invalidatesTags: ["Badge"],
+        }),
         // Fetch one data for one badge class
         fetchOneBadge: builder.query({
             query: (id) => ({
@@ -141,4 +149,5 @@ export const {
     useFetchClaimBadgeByEarnerQuery,
     useDeleteBadgeMutation,
     useUpdateBadgeMutation,
+    useUploadCertiMutation
 } = badgeApi;
