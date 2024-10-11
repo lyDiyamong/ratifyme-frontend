@@ -30,9 +30,12 @@ export const CustomStepIcon = styled("div")(({ theme, ownerState }) => ({
 // Custom connector to match the line style
 export const CustomConnector = styled(StepConnector)(({ theme }) => ({
     "&.MuiStepConnector-root": {
-        top: "25%",
+        top: "50%", // Default value for xss and sm
         position: "absolute",
         transform: "translateY(-50%)",
+        "@media (min-width: 600px)": {
+            top: "25%",
+        },
     },
     "& .MuiStepConnector-line": {
         borderColor: theme.palette.customColors.gray200,

@@ -29,7 +29,7 @@ const InstitutionInfoFields = ({ control, schema }) => {
                 label="Institution Phone Number"
                 control={control}
                 required
-            />
+                rules={{ required: "Institution Phone Number is required" }}/>
 
             <FormInput name="institutionWebsiteUrl" label="Website URL" control={control} schema={schema?.fields.url} />
         </Stack>

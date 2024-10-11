@@ -17,7 +17,7 @@ const AddressFields = ({ control, schema }) => {
                 Address Information
             </Typography>
             <Typography sx={{ fontSize: theme.typography.body1, color: theme.palette.customColors.gray500, mb: 1 }}>
-                Enter your address details, including street, city, and postal code, to complete your contact
+                Provide your address details, including street, city, and postal code, to complete your contact
                 information.
             </Typography>
             <Controller

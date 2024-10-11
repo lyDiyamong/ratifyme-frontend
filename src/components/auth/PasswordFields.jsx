@@ -16,14 +16,21 @@ import theme from "../../assets/themes";
  * @returns {JSX.Element} - Returns the form input fields for password and password confirmation along with the strength indicator and validation hints.
  */
 
-const PasswordFields = ({ control, watch, passwordName = "password", passwordConfirmName = "passwordConfirm" }) => {
+const PasswordFields = ({
+    control,
+    watch,
+    passwordName = "password",
+    passwordConfirmName = "passwordConfirm",
+    pwdLabelName,
+    confirmPwdLableName,
+}) => {
     const watchPassword = watch(passwordName, "");
     const passwordStrength = useMemo(() => getPasswordStrength(watchPassword), [watchPassword]);
     const validationState = useMemo(() => validatePassword(watchPassword), [watchPassword]);
 
     return (
         <Stack spacing={2}>
-            <FormInput name={passwordName} label="New password" control={control} required type="password" />
+            <FormInput name={passwordName} label={pwdLabelName} control={control} required type="password" />
 
             {/* Password strength visual indicator using LinearProgress bars */}
             <Box sx={{ display: "flex", gap: 0.5 }}>
@@ -108,7 +115,7 @@ const PasswordFields = ({ control, watch, passwordName = "password", passwordCon
 
             <FormInput
                 name={passwordConfirmName}
-                label="Confirm new password"
+                label={confirmPwdLableName}
                 control={control}
                 required
                 type="password"

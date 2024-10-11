@@ -269,7 +269,6 @@ const theme = createTheme({
                 },
             },
         },
-        // You can add more component overrides here
     },
 });
 
