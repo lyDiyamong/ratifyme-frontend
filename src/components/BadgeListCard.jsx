@@ -42,6 +42,7 @@ const BadgeListCard = ({ badges, onView }) => {
     const handleView = (id) => {
         onView(id);
     };
+    // console.log(badges[7].imageUrl);
 
     return (
         // ============ Start Badge List Card ============
@@ -83,8 +84,8 @@ const BadgeListCard = ({ badges, onView }) => {
                                 <CardMedia
                                     component="img"
                                     height="200"
-                                    image={GoldBadge}
-                                    alt={badge.name}
+                                    image={badge?.imageUrl}
+                                    alt={badge?.name}
                                     sx={{ objectFit: "cover" }}
                                 />
                                 <CardContent>
@@ -99,7 +100,7 @@ const BadgeListCard = ({ badges, onView }) => {
                                                 WebkitBoxOrient: "vertical",
                                             }}
                                         >
-                                            {badge.name}
+                                            {badge?.name}
                                         </Typography>
                                         <Typography
                                             variant="body2"
@@ -123,7 +124,7 @@ const BadgeListCard = ({ badges, onView }) => {
                                             fontWeight: theme.fontWeight.bold,
                                             borderRadius: theme.customShape.btn,
                                         }}
-                                        onClick={() => handleView(badge.id || badge._id)}
+                                        onClick={() => handleView(badge?.id)}
                                     >
                                         Visit
                                     </Button>

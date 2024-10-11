@@ -16,10 +16,11 @@ import BadgeListCard from "../../components/BadgeListCard";
 
 const BadgeList = () => {
     const navigate = useNavigate();
-    const { roleId, issuerData, institutionData, earnerData } = useSelector((state) => state.global);
+    const { roleId, issuerData, institutionData, earnerData, userInfo } = useSelector((state) => state.global);
 
     // Determine the realId based on the role
-    const activeId = roleId === 2 ? institutionData.id : roleId === 3 ? issuerData.id : earnerData.id;
+    const activeId =
+        roleId === 2 ? institutionData.id : roleId === 3 ? issuerData.id : roleId === 4 ? earnerData.id : userInfo;
 
     // Fetch data
     const { data: allBadges, isLoading, isError } = useFetchBadgesQuery();
@@ -29,18 +30,17 @@ const BadgeList = () => {
 
     // Define badges based on role
     const badges = allBadges?.data || [];
-    const badgeInstitution = badgeInsti?.data?.Issuers.map((issuer) => issuer.BadgeClasses) || [];
+    const badgeInstitution = badgeInsti?.data?.Issuers.flatMap((issuer) => issuer.BadgeClasses) || [];
     const badgeIssue = badgeIssuer?.data?.BadgeClasses || [];
-    const badgeEarners = badgeEarner?.badgeClasses;
+    const badgeEarners = badgeEarner?.badgeClasses || [];
+
+    console.log("activeId", activeId, "roleId", badgeEarners);
 
     // Apply filtering based on role
-    const checkBadge =
-        roleId === 3 ? badgeIssue : roleId === 2 ? badgeInstitution : roleId === 4 ? badgeEarners : badges;
+    let checkBadge = roleId === 3 ? badgeIssue : roleId === 2 ? badgeInstitution : roleId === 4 ? badgeEarners : badges;
 
     // Handle loading, error, and empty state in the parent component
     if (isLoading) return <Typography>Loading...</Typography>;
-    if (isError) return <Typography>Error fetching badges</Typography>;
-
     // Handle view badgeDetail
     const handleView = (id) => {
         navigate(`/management/badges/badgeDetail/${id}`);
@@ -48,7 +48,7 @@ const BadgeList = () => {
 
     return (
         <>
-            <BadgeListCard badges={checkBadge || []} onView={handleView} />
+            <BadgeListCard badges={checkBadge} onView={handleView} />
         </>
     );
 };

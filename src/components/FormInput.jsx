@@ -16,8 +16,9 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
  * @param {object} schema - Yup validation schema for this input.
  * @param {object} [validationRules] - Additional validation rules for the input.
  * @param {...object} rest - Additional props to pass to the TextField component.
+ * @param {...condition} name - If "name" have word description in it, it will catch to make the textFild height larger
  */
-const FormInput = ({ label, name, control, type = "text", required = false, schema, validationRules = {}, startIcon, ...rest  }) => {
+const FormInput = ({ label, name, control, type = "text", required = false, schema, validationRules = {}, startIcon, ...rest }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const handleClickShowPassword = () => setShowPassword((prev) => !prev);
@@ -77,6 +78,11 @@ const FormInput = ({ label, name, control, type = "text", required = false, sche
             type={type === "password" ? (showPassword ? "text" : "password") : type}
             error={!!error}
             helperText={error ? error.message : null}
+
+            // Check if this is the description field, and if so, set multiline and rows
+            multiline={name.toLowerCase().includes("description")}
+            rows={name.toLowerCase().includes("description") ? 4 : 1}
+
             InputProps={{
                 startAdornment: startIcon && (
                     <InputAdornment position="start">

@@ -1,19 +1,14 @@
-// React Import
-import { useNavigate } from "react-router";
+import { useFetchBadgeByEarnerQuery } from "../../store/api/badgeManagement/badgeApi";
 import { useSelector } from "react-redux";
-
-// MUI import
+import { useNavigate } from "react-router";
+import BadgeListCard from "../../components/BadgeListCard";
 import { Typography } from "@mui/material";
 
-// Custom import
-import { useFetchClaimBadgeByEarnerQuery } from "../../store/api/badgeManagement/badgeApi";
-import BadgeListCard from "../../components/BadgeListCard";
-
-const AchievementList = () => {
+const BackpackList = () => {
     const navigate = useNavigate();
     const { earnerData } = useSelector((state) => state.global);
     const earnerId = earnerData.id;
-    const { data: badgeClaim, isLoading, isError } = useFetchClaimBadgeByEarnerQuery(earnerId);
+    const { data: badgeClaim, isLoading, isError } = useFetchBadgeByEarnerQuery(earnerId);
 
     const badgeClaims = badgeClaim?.badgeClasses;
 
@@ -32,4 +27,4 @@ const AchievementList = () => {
     );
 };
 
-export default AchievementList;
+export default BackpackList;
