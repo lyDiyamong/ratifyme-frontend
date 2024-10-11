@@ -46,7 +46,12 @@ const customTableStyles = {
  * @param {function} [onFilterChange] - Function to handle filter change.
  * @param {function} [onSortChange] - Function to handle sort change.
  * @param {function} [onAddNew] - Function to handle Add New button click.
+ * @param {function} [onPageChange] - Function to handle page change.
+ * @param {function} [onRowsPerPageChange] - Function to handle rows per page change.
  * @param {string} [addNewLabel="Add New"] - Custom label for the Add New button.
+ * @param {number} totalRows - Total number of rows for pagination.
+ * @param {number} currentPage - The current page number.
+ * @param {number} rowsPerPage - Number of rows per page.
  * @returns {JSX.Element} - Rendered table with search, filter, and sort options.
  */
 
@@ -61,8 +66,13 @@ const TableCustom = ({
     onSearch = () => {},
     onFilterChange = () => {},
     onSortChange = () => {},
+    onPageChange = () => {},
+    onRowsPerPageChange = () => {},
     onAddNew = () => {},
     addNewLabel = "Add New",
+    totalRows,
+    currentPage,
+    rowsPerPage,
 }) => {
     // Default columns if not provided
     const defaultColumns = [
@@ -159,6 +169,7 @@ const TableCustom = ({
                                     </InputAdornment>
                                 ),
                             }}
+                            onChange={(e) => onSearch(e.target.value)}
                         />
                     </Box>
 
@@ -197,9 +208,8 @@ const TableCustom = ({
                             </Typography>
                         </InputLabel>
                         <Select label="Sort by" onChange={(e) => onSortChange(e.target.value)}>
-                            <MenuItem value="Name">Name</MenuItem>
-                            <MenuItem value="Year">Year</MenuItem>
-                            <MenuItem value="Position">Position</MenuItem>
+                            <MenuItem value="id">Asc</MenuItem>
+                            <MenuItem value="-id">Des</MenuItem>
                         </Select>
                     </FormControl>
 
@@ -227,15 +237,22 @@ const TableCustom = ({
                 columns={dynamicColumns}
                 data={data}
                 pagination
+                paginationTotalRows={totalRows}
+                paginationPerPage={rowsPerPage}
+                paginationRowsPerPageOptions={[10, 20, 30, 50, 100]}
+                onChangePage={onPageChange}
+                onChangeRowsPerPage={onRowsPerPageChange}
                 selectableRowsComponent={Checkbox}
                 sortIcon={sortIcon && <ArrowDownward />}
                 dense
                 customStyles={customTableStyles}
             />
+
             {children}
         </Box>
     );
 };
 
-export default TableCustom;
 // =========== End TableCustom ===========
+
+export default TableCustom;
