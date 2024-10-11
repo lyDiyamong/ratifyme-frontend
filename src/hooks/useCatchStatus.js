@@ -1,3 +1,4 @@
+// React Library Import
 import { useState, useEffect } from "react";
 
 /**
@@ -8,6 +9,7 @@ import { useState, useEffect } from "react";
  * @param {number} [clearAfter] - Optional time in milliseconds to clear the message automatically.
  * @returns {[string, Function]} - The current message from the API and a function to manually clear the message.
  */
+
 export default function useCatchStatus(status, statusMessage, clearAfter = 5000) {
     const [message, setMessage] = useState("");
 

@@ -1,5 +1,5 @@
 import Mong from "../assets/images/YaMong.webp"
-import { Avatar, Box, Paper, Stack, Typography } from "@mui/material";
+import { Avatar, Paper, Stack, Typography } from "@mui/material";
 
 function IssuerCard({profileImg, name}) {
     return (

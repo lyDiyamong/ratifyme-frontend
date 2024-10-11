@@ -1,5 +1,5 @@
-import { Outlet, replace, useNavigate } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { Box, useMediaQuery } from "@mui/material";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
@@ -36,7 +36,7 @@ const DashboardLayout = () => {
     }, [isLoading, error, user, navigate]);
 
     if (isLoading) {
-        return <div>Loading...</div>; // Optionally show a loading state
+        return <div>Loading...</div>;
     }
 
     return (

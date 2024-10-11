@@ -1,9 +1,10 @@
 // MUI Import
-import { Box, CardMedia, Typography } from "@mui/material";
+import { Box, CardMedia } from "@mui/material";
 
 // Custom Import
 import StatusCode from "../assets/images/NoData.svg";
 
+// =========== Start NoRecordData ===========
 const NoRecordData = () => {
     return (
         <Box display="flex" flexDirection="column" alignItems="center" p={4}>
@@ -18,3 +19,4 @@ const NoRecordData = () => {
 };
 
 export default NoRecordData;
+// =========== End NoRecordData ===========

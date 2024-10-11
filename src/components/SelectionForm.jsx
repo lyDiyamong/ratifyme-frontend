@@ -16,6 +16,8 @@ import theme from "../assets/themes";
  * @param {boolean} required - A boolean indicating if the field is required.
  * @param {Function} onChange - A function for getting value to email
  */
+
+// =========== Start SelectForm ===========
 const SelectForm = ({ name, control, options, label, required, onChange }) => {
     const validationEmailRules = { required: required ? `${label} is required` : false };
     const {
@@ -67,3 +69,4 @@ const SelectForm = ({ name, control, options, label, required, onChange }) => {
 };
 
 export default SelectForm;
+// =========== End SelectForm ===========

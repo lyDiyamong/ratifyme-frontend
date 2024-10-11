@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 // MUI imports
 import { TextField, Box, Typography, Avatar, Button, Stack, Chip } from "@mui/material";
-import { GridCheckCircleIcon } from "@mui/x-data-grid";
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 // Custom imports
 import DefaultProfileSvg from "../../assets/images/DefaultProfile.svg";
@@ -75,13 +75,13 @@ const BioContent = () => {
             <Stack
                 sx={{
                     boxShadow: theme.customShadows.default,
-                    borderRadius: "16px",
+                    borderRadius: "14px",
                     p: { xs: "20px", sm: "16px" },
                     bgcolor: theme.palette.customColors.white,
                     alignItems: "center",
-                    gap: 3,
+                    gap: 2,
                     width: "100%",
-                    height: "285px",
+                    height: "290px",
                     position: "relative",
                 }}
             >
@@ -92,7 +92,7 @@ const BioContent = () => {
                             sx={{
                                 fontSize: theme.typography.h5,
                                 fontWeight: theme.fontWeight.semiBold,
-                                color: "#ff4b2b",
+                                color: theme.palette.customColors.red400,
                             }}
                         >
                             Bio
@@ -100,7 +100,7 @@ const BioContent = () => {
                         {/* Status Chip */}
                         <Chip
                             label={bio ? "Active" : "No Bio"}
-                            icon={<GridCheckCircleIcon />}
+                            icon={<CheckCircleOutlineIcon color="green"/>}
                             sx={{
                                 backgroundColor: bio
                                     ? theme.palette.customColors.green100
@@ -119,7 +119,7 @@ const BioContent = () => {
                 </Stack>
 
                 {/* Bio Input */}
-                <Stack direction="row" alignItems="center" spacing={2} sx={{ width: "100%" }}>
+                <Stack direction="row" alignItems="center" spacing={3} sx={{ width: "100%" }}>
                     {/* Bio Text / Editable Input */}
                     <Avatar alt="User Avatar" src={profileImage} sx={{ width: 50, height: 50 }} />
                     <Box
@@ -181,21 +181,24 @@ const BioContent = () => {
                         )}
                     </Box>
                 </Stack>
-                {isEditing ? null : <Typography
+                {isEditing ? null : (
+                    <Typography
                     ref={bioRef}
                     sx={{
-                        color: theme.palette.text.secondary,
-                        fontSize: "16px",
-                        width: "100%",
-                        textWrap: 'wrap',
-                        overflow: "auto",
-                        display: "-webkit-box",
-                        WebkitBoxOrient: "vertical",
+                      color: theme.palette.text.secondary,
+                      fontSize: "16px",
+                      width: "100%",
+                      height: "100px", 
+                      overflowY: "auto", 
+                      wordWrap: "break-word", 
+                      whiteSpace: "normal",
                     }}
                     title={bio}
-                >
+                  >
                     {bio || "Describe yourself here..."}
-                </Typography>}
+                  </Typography>
+                  
+                )}
 
                 {/* Save and Cancel Buttons */}
                 {isEditing && (
@@ -211,30 +214,25 @@ const BioContent = () => {
                         <Button
                             onClick={handleSubmit}
                             disabled={isLoading}
+                            variant="contained"
                             sx={{
-                                background: "linear-gradient(90deg, #ff416c, #ff4b2b)",
+                                background: theme.palette.secondary.light,
                                 color: theme.palette.customColors.white,
                                 borderRadius: "30px",
                                 fontWeight: "bold",
-                                "&:hover": {
-                                    background: "linear-gradient(90deg, #ff4b2b, #ff416c)",
-                                },
                             }}
                         >
                             {isLoading ? "Saving..." : "Save Bio"}
                         </Button>
                         <Button
-                            variant="outlined"
+                            variant="contained"
                             onClick={handleCancel}
                             sx={{
                                 borderRadius: "30px",
                                 fontWeight: "bold",
-                                borderColor: theme.palette.error.main,
-                                color: theme.palette.error.main,
-                                "&:hover": {
-                                    borderColor: theme.palette.error.dark,
-                                    color: theme.palette.error.dark,
-                                },
+                                color: theme.palette.customColors.white,
+                                background: theme.palette.customColors.red400,
+
                             }}
                         >
                             Cancel

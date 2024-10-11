@@ -58,7 +58,7 @@ const ProfileCard = styled(Card)(({ theme }) => ({
     borderRadius: theme.shape.borderRadius * 2,
     boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.2)",
     padding: "20px",
-    background: "linear-gradient(to bottom, #ffffff, #e0f7fa)",
+    background: `linear-gradient(45deg, ${theme.palette.primary.light}, ${theme.palette.secondary.light})`,
     height: "100%",
 }));
 
@@ -78,7 +78,7 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
 
             {/* Card */}
             <DialogContent>
-                <Grid container spacing={3}>
+                <Grid container spacing={4}>
                     <Grid item xs={12} md={6} mb={2} sx={{ height: "full" }}>
                         {/* Profile Card */}
                         <ProfileCard>
@@ -93,7 +93,7 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
                                         boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
                                     }}
                                 />
-                                <Typography variant="h3" mt={2}sx={{fontWeight: theme.fontWeight.extraBold}}>
+                                <Typography variant="h3" mt={2} sx={{ fontWeight: theme.fontWeight.extraBold }}>
                                     {getValue(item, nameKey) || "N/A"}
                                 </Typography>
                                 <Stack direction="row" alignItems="center" spacing={1}>
@@ -110,7 +110,19 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
                                         {getValue(item, roleKey) || "N/A"}
                                     </Typography>
                                 </Stack>
-                                <Typography variant="body2" mt={4} sx={{ color: theme.palette.customColors.gray500 }}>
+                                <Typography
+                                    variant="body2"
+                                    mt={4}
+                                    sx={{
+                                        color: theme.palette.customColors.gray500,
+                                        fontSize: "14px",
+                                        width: "100%",
+                                        height: "100px",
+                                        overflowY: "scroll",
+                                        wordWrap: "break-word",
+                                        whiteSpace: "normal",
+                                    }}
+                                >
                                     {getValue(item, desKey) || "No bio available"}
                                 </Typography>
                             </Stack>
@@ -129,7 +141,7 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
                             >
                                 Additional Details
                             </Typography>
-                            <Grid container spacing={2}>
+                            <Grid container spacing={3}>
                                 {details.map(({ icon, label, valueKey }, index) => (
                                     <Grid item xs={12} sm={6} key={index}>
                                         <Stack direction="row" spacing={1}>
@@ -154,7 +166,7 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
 
                         {/* Address */}
                         <StyledCard>
-                            <Typography variant="h6" mb={2} sx={{ fontWeight: theme.fontWeight.bold }}>
+                            <Typography variant="h6" mb={3} sx={{ fontWeight: theme.fontWeight.bold }}>
                                 Address
                             </Typography>
                             <Typography variant="body3" sx={{ color: theme.palette.customColors.gray500 }}>

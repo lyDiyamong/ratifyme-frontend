@@ -49,6 +49,8 @@ const customTableStyles = {
  * @param {string} [addNewLabel="Add New"] - Custom label for the Add New button.
  * @returns {JSX.Element} - Rendered table with search, filter, and sort options.
  */
+
+// =========== Start TableCustom ===========
 const TableCustom = ({
     title = "",
     data = [],
@@ -236,3 +238,4 @@ const TableCustom = ({
 };
 
 export default TableCustom;
+// =========== End TableCustom ===========
