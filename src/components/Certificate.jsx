@@ -2,14 +2,12 @@
 import { forwardRef } from "react";
 
 // MUI import
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Divider, Typography, Stack } from "@mui/material";
 
 // Custom import
 import theme from "../assets/themes";
 // import AnBSchoolLogo from "../assets/images/AnBSchoolLogo.svg";
 import certWave from "../assets/images/certWave.jpg";
-import BadgeImg from "../assets/images/BadgeImg.png";
-import { Stack } from "@mui/system";
 
 // eslint-disable-next-line react/display-name
 const Certificate = forwardRef(({ recipientName, date, badge }, ref) => (

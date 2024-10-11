@@ -1,58 +1,64 @@
+// React import
 import { useRef, useState } from "react";
-import { Box, Button, Stack, Typography } from "@mui/material";
 import { toJpeg } from "html-to-image";
-import axios from "axios";
-import BadgeTest from "../../assets/images/badge.png";
-import Certificate from "../../components/Certificate";
-import DashboardContainer from "../../components/styles/DashboardContainer";
-import theme from "../../assets/themes";
+import { useSelector } from "react-redux";
+
+// MUI import
+import { Box, Button, Stack, Typography } from "@mui/material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import ConfettiExplosion from "react-confetti-explosion";
 import DownloadDoneOutlined from "@mui/icons-material/DownloadDoneOutlined";
 import AutoAwesome from "@mui/icons-material/AutoAwesome";
-import { useSelector } from "react-redux";
-import { useFetchOneBadgeQuery } from "../../store/api/badgeManagement/badgeApi";
+
+// Custom import
+import Certificate from "../../components/Certificate";
+import DashboardContainer from "../../components/styles/DashboardContainer";
+import useCatchStatus from "../../hooks/useCatchStatus";
+import AlertMessage from "../../components/alert/AlertMessage";
+import theme from "../../assets/themes";
+
+// Api import
+import { useFetchOneBadgeQuery, useUploadCertiMutation } from "../../store/api/badgeManagement/badgeApi";
 
 const CertificateGenerator = () => {
     // Global state hook
-    const {
-        userInfo,
-    } = useSelector((state) => state.global);
+    const { userInfo } = useSelector((state) => state.global);
+    // Get reference of HTMLELEMENT
+    const certificateRef = useRef();
 
     // Badge fetching hook
-    const {data: badgeResponse, isLoading} = useFetchOneBadgeQuery(4)
-    const badgeData = badgeResponse?.data
-    console.log(badgeResponse);
+    const { data: badgeResponse, isLoading } = useFetchOneBadgeQuery(4);
+    const badgeData = badgeResponse?.data;
 
-    const certificateRef = useRef();
+    // Upload Certificate hook
+    const [uploadCert, { isLoading: certiLoading, isError: uploadCertError }] = useUploadCertiMutation();
+
+    // Catch status hook
+    const [message, setMessage] = useCatchStatus(uploadCertError, "Get certificate failed");
+
     const [pdfUrl, setPdfUrl] = useState("");
     const [copyButtonText, setCopyButtonText] = useState("Copy URL");
     const [isExploding, setIsExploding] = useState(false);
 
     const handleGenerateImage = async () => {
-        try {
-            const svgDataUrl = await toJpeg(certificateRef.current, { quality: 0.95 });
-            const blob = await fetch(svgDataUrl).then((res) => res.blob());
-            const formData = new FormData();
-            formData.append("certFile", blob, `certificate-${userInfo?.username}`);
+        const jpegDataUrl = await toJpeg(certificateRef.current, { quality: 0.95 });
+        const blob = await fetch(jpegDataUrl).then((res) => res.blob());
+        const formData = new FormData();
+        formData.append("certFile", blob, `certificate-${userInfo?.username}`);
 
-            const response = await axios.post(`${import.meta.env.VITE_SERVER_BASE_URL}/earners/uploadCerti`, formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
-
-            console.log(response);
-
-            if (response.data.pdfUrl) {
-                setPdfUrl(response.data.pdfUrl);
-                window.open(response.data.pdfUrl, "_blank");
-            } else {
-                console.error("PDF URL not found in the response.");
-            }
-        } catch (error) {
-            console.error("Error generating and uploading PDF:", error);
-        }
+        // Handle errors using useCatchStatus instead of try-catch
+        await uploadCert({ uploadedCert: formData })
+            .unwrap() // Access the success response
+            .then((response) => {
+                if (response) {
+                    setPdfUrl(response.pdfUrl);
+                    window.open(response.pdfUrl, "_blank");
+                }
+            })
+            .catch((error) => setMessage("Failed to upload certificate."));
     };
 
+    // Copy handling
     const handleCopyUrl = () => {
         if (pdfUrl) {
             navigator.clipboard
@@ -63,14 +69,13 @@ const CertificateGenerator = () => {
                         setCopyButtonText("Copy URL");
                     }, 3000);
                 })
-                .catch((err) => {
-                    console.error("Failed to copy: ", err);
-                });
+                .catch(() => setMessage("Failed to copy URL."));
         } else {
-            console.error("No URL available to copy.");
+            setMessage("No URL available to copy.");
         }
     };
 
+    // Congrat handling
     const handleCongrats = () => {
         setIsExploding(true);
         setTimeout(() => setIsExploding(false), 4000);
@@ -78,6 +83,11 @@ const CertificateGenerator = () => {
 
     return (
         <DashboardContainer>
+            {message && (
+                <AlertMessage variant="error" onClose={() => setMessage("")}>
+                    {message}
+                </AlertMessage>
+            )}
             <Stack
                 sx={{
                     bgcolor: "white",
