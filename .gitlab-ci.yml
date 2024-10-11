@@ -40,6 +40,9 @@ Nginx_Check:
 
 build:
     stage: build
+    cache:
+        paths:
+            - node_modules/  # Cache node_modules for future runs
     script:
         - echo "Installing node modules"
         - npm install
@@ -61,7 +64,7 @@ EnsuringDist:
 
 Deploy:
     stage: deploy
-    needs: ["build", "genKey","EnsuringDist"]
+    needs: ["build", "genKey", "EnsuringDist"]
     dependencies:
         - build
         - genKey
@@ -85,5 +88,3 @@ EnsuringNginx:
             echo "NGINX restarted successfully"'
     only:
         - develop
-    #again 7
-
