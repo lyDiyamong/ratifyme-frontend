@@ -14,8 +14,18 @@ import ClaimBadgeButton from "./ClaimBadgeButton";
 import StatusCode from "../assets/images/NoData.svg";
 import { useDeleteBadgeMutation } from "../store/api/badgeManagement/badgeApi";
 import MoreMenu from "../components/MoreMenu";
-import { ConfirmationNumber, Delete, Description, Group, ReplyAllOutlined, Update } from "@mui/icons-material";
+import {
+    BorderColorRounded,
+    ConfirmationNumber,
+    Delete,
+    Description,
+    Group,
+    ReplyAllOutlined,
+    SchoolOutlined,
+    Update,
+} from "@mui/icons-material";
 import { positions } from "@mui/system";
+import CertificateGenerator from "../pages/certificateTest";
 
 const BadgeDetailCustom = ({ badge, userRole, activeUserId }) => {
     // define breakpoint of the screen
@@ -80,7 +90,7 @@ const BadgeDetailCustom = ({ badge, userRole, activeUserId }) => {
     const menuItems = [
         {
             label: "Update badge",
-            icon: <Update color="primary" />,
+            icon: <BorderColorRounded color="primary" />,
             onClick: () => navigate(`/management/badges/editBadge/${result?.id}`),
         },
         { label: "Delete badge", icon: <Delete color="error" />, onClick: () => handleDeleteBadge(result?.id) },
@@ -145,101 +155,6 @@ const BadgeDetailCustom = ({ badge, userRole, activeUserId }) => {
     return (
         // ============ Start Badge Detail ============
         <Box sx={{ display: "flex", flexDirection: "column", gap: 3, width: "100%" }}>
-            {/* Start Header */}
-            <Box
-                sx={{
-                    position: "relative",
-                    padding: 3,
-                    boxShadow: theme.customShadows.default,
-                    borderRadius: theme.customShape.card,
-                    display: "flex",
-                    flexDirection: "row",
-                    backgroundColor: theme.palette.customColors.white,
-                }}
-            >
-                <Stack
-                    direction={{ xss: "column", md: "row" }}
-                    gap={2}
-                    sx={{
-                        width: "100%",
-                    }}
-                >
-                    {/* Badge/Logo Image */}
-                    <Box
-                        sx={{
-                            width: "100%",
-                            maxWidth: 260,
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                        component="img"
-                        src={result?.imageUrl}
-                    />
-
-                    {/* Badge Details */}
-                    <Stack sx={{ gap: 2, justifyContent: "center" }}>
-                        <Stack sx={{ gap: 1 }}>
-                            <Typography
-                                variant="h3"
-                                color={theme.palette.text.primary}
-                                fontWeight={theme.fontWeight.semiBold}
-                            >
-                                {result.name}
-                            </Typography>
-
-                            <Typography sx={{ fontSize: theme.typography.body1 }} color={theme.palette.text.secondary}>
-                                Issued By {result.Issuer?.User?.username}
-                            </Typography>
-
-                            <Typography sx={{ fontSize: theme.typography.body1 }} color={theme.palette.text.secondary}>
-                                Created Date: {createdAt}
-                            </Typography>
-                        </Stack>
-
-                        {/* Action Buttons */}
-                        {hasAccessEarner && (
-                            <Box
-                                sx={{
-                                    marginTop: 2,
-                                    display: "flex",
-                                    gap: 1,
-                                    flexDirection: { sm: "row", xs: "column" },
-                                }}
-                            >
-                                {userRole === "issuer" ? (
-                                    <>
-                                        <IssuerBadgeButton
-                                            onGetEmail={handleGetEmails}
-                                            control={control}
-                                            issuerId={activeUserId}
-                                        />
-                                        {/* <IssueToEarnerButton emails={selectedEmails} badgeId={result?.id || []} /> */}
-                                        <Button
-                                            onClick={handleOpen}
-                                            variant="outlined"
-                                            sx={{ borderRadius: theme.customShape.btn }}
-                                        >
-                                            Send Issue
-                                        </Button>
-                                    </>
-                                ) : (
-                                    <ClaimBadgeButton
-                                        badgeClassId={result?.id || ""}
-                                        earnerId={activeUserId || ""}
-                                        achievementIds={achievement}
-                                    />
-                                )}
-                            </Box>
-                        )}
-                    </Stack>
-                </Stack>
-                <MoreMenu
-                    menuItems={menuItems}
-                    iconStyles={{ color: "black", position: "absolute", right: { md: "3%", xss: "5%" } }}
-                />
-            </Box>
-
             {/* Tabs for User Profile, Bio Content, and Settings */}
             <Tabs value={value} onChange={handleChange} textColor="primary" indicatorColor="primary">
                 <Tab label="Description" icon={<Description />} iconPosition="start" />
@@ -248,106 +163,208 @@ const BadgeDetailCustom = ({ badge, userRole, activeUserId }) => {
 
             {/* Conditional rendering based on the selected tab */}
             {value === 0 && (
-                <Box
-                    sx={{
-                        backgroundColor: theme.palette.customColors.white,
-                        boxShadow: theme.customShadows.default,
-                        borderRadius: theme.customShape.card,
-                    }}
-                >
+                <Stack sx={{ display: "flex", flexDirection: "column", gap: 3, width: "100%" }}>
                     <Box
                         sx={{
+                            position: "relative",
+                            padding: 3,
+                            boxShadow: theme.customShadows.default,
+                            borderRadius: theme.customShape.card,
                             display: "flex",
-                            flexDirection: isSmallScreen ? "column" : "row",
-                            justifyContent: "space-between",
-                            alignItems: "flex-start",
-                            margin: isSmallScreen ? 1 : 3,
-                            gap: isSmallScreen ? 2 : 1,
-                            flexWrap: "wrap",
+                            flexDirection: "row",
+                            backgroundColor: theme.palette.customColors.white,
+                        }}
+                    >
+                        <Stack
+                            direction={{ xss: "column", md: "row" }}
+                            gap={2}
+                            sx={{
+                                width: "100%",
+                            }}
+                        >
+                            {/* Badge/Logo Image */}
+                            <Box
+                                sx={{
+                                    width: "100%",
+                                    maxWidth: 260,
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
+                                component="img"
+                                src={result?.imageUrl}
+                            />
+
+                            {/* Badge Details */}
+                            <Stack sx={{ gap: 2, justifyContent: "center" }}>
+                                <Stack sx={{ gap: 1 }}>
+                                    <Typography
+                                        variant="h3"
+                                        color={theme.palette.text.primary}
+                                        fontWeight={theme.fontWeight.semiBold}
+                                    >
+                                        {result.name}
+                                    </Typography>
+
+                                    <Typography
+                                        sx={{ fontSize: theme.typography.body1 }}
+                                        color={theme.palette.text.secondary}
+                                    >
+                                        Issued By {result.Issuer?.User?.username}
+                                    </Typography>
+
+                                    <Typography
+                                        sx={{ fontSize: theme.typography.body1 }}
+                                        color={theme.palette.text.secondary}
+                                    >
+                                        Created Date: {createdAt}
+                                    </Typography>
+                                </Stack>
+
+                                {/* Action Buttons */}
+                                {hasAccessEarner && (
+                                    <Box
+                                        sx={{
+                                            marginTop: 2,
+                                            display: "flex",
+                                            gap: 1,
+                                            flexDirection: { sm: "row", xs: "column" },
+                                        }}
+                                    >
+                                        {userRole === "issuer" ? (
+                                            <>
+                                                <IssuerBadgeButton
+                                                    onGetEmail={handleGetEmails}
+                                                    control={control}
+                                                    issuerId={activeUserId}
+                                                />
+                                                {/* <IssueToEarnerButton emails={selectedEmails} badgeId={result?.id || []} /> */}
+                                                <Button
+                                                    onClick={handleOpen}
+                                                    variant="outlined"
+                                                    sx={{ borderRadius: theme.customShape.btn }}
+                                                >
+                                                    Send Issue
+                                                </Button>
+                                            </>
+                                        ) : (
+                                            <ClaimBadgeButton
+                                                badgeClassId={result?.id || ""}
+                                                earnerId={activeUserId || ""}
+                                                achievementIds={achievement}
+                                            />
+                                        )}
+                                    </Box>
+                                )}
+                            </Stack>
+                        </Stack>
+                        <MoreMenu
+                            menuItems={menuItems}
+                            iconStyles={{ color: "black", position: "absolute", right: { md: "3%", xss: "5%" } }}
+                        />
+                    </Box>
+
+                    <Box
+                        sx={{
+                            backgroundColor: theme.palette.customColors.white,
+                            boxShadow: theme.customShadows.default,
+                            borderRadius: theme.customShape.card,
                         }}
                     >
                         <Box
                             sx={{
                                 display: "flex",
-                                flexDirection: "column",
-                                gap: 3,
-                                flex: 1,
-                                width: "100%",
+                                flexDirection: isSmallScreen ? "column" : "row",
+                                justifyContent: "space-between",
+                                alignItems: "flex-start",
+                                margin: isSmallScreen ? 1 : 3,
+                                gap: isSmallScreen ? 2 : 1,
+                                flexWrap: "wrap",
                             }}
                         >
-                            <DetailItem
-                                label="Description"
-                                value={result.description || "No description available"}
-                                isSmallScreen={isSmallScreen}
-                            />
-                            <DetailItem
-                                label="Issuer"
-                                value={result.Issuer?.User?.username || "Unknown Issuer"}
-                                isSmallScreen={isSmallScreen}
-                            />
-                            <DetailItem
-                                label="Criteria"
-                                value={
-                                    result.Criterias?.length
-                                        ? result.Criterias.map((item, index) => (
-                                              <Typography component="span" key={index}>
-                                                  {item.narrative}
-                                              </Typography>
-                                          ))
-                                        : "No criteria provided"
-                                }
-                                isSmallScreen={isSmallScreen}
-                            />
-                            <DetailItem
-                                label="Issued Date"
-                                value={result.createdAt ? result.createdAt.split("T")[0] : "N/A"}
-                                isSmallScreen={isSmallScreen}
-                            />
-                            <DetailItem
-                                label="Badge’s Expiry Date"
-                                value={expiredDate || "No expiry date"}
-                                isSmallScreen={isSmallScreen}
-                            />
-                            <DetailItem
-                                label="Duration"
-                                value={days ? `${days} days` : "No duration available"}
-                                isSmallScreen={isSmallScreen}
-                            />
-                            <DetailItem
-                                label="Achievement Type"
-                                value={
-                                    result.Achievements?.length
-                                        ? result.Achievements.map(
-                                              (achievement) => achievement.AchievementType?.name,
-                                          ).join(", ")
-                                        : "No achievement type available"
-                                }
-                                isSmallScreen={isSmallScreen}
-                            />
-                            <DetailItem
-                                label="Tags"
-                                value={
-                                    result?.tags
-                                        ? result.tags.split(",").map((tag, index) => (
-                                              <Chip
-                                                  key={index}
-                                                  label={tag}
-                                                  sx={{
-                                                      marginRight: 1,
-                                                      marginBottom: 1,
-                                                      backgroundColor: theme.palette.primary.light,
-                                                      color: theme.palette.primary.main,
-                                                      fontWeight: theme.fontWeight.bold,
-                                                  }}
-                                              />
-                                          ))
-                                        : "No tags"
-                                }
-                                isSmallScreen={isSmallScreen}
-                            />
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    gap: 3,
+                                    flex: 1,
+                                    width: "100%",
+                                }}
+                            >
+                                <DetailItem
+                                    label="Description"
+                                    value={result.description || "No description available"}
+                                    isSmallScreen={isSmallScreen}
+                                />
+                                <DetailItem
+                                    label="Issuer"
+                                    value={result.Issuer?.User?.username || "Unknown Issuer"}
+                                    isSmallScreen={isSmallScreen}
+                                />
+                                <DetailItem
+                                    label="Criteria"
+                                    value={
+                                        result.Criterias?.length
+                                            ? result.Criterias.map((item, index) => (
+                                                  <Typography component="span" key={index}>
+                                                      {item.narrative}
+                                                  </Typography>
+                                              ))
+                                            : "No criteria provided"
+                                    }
+                                    isSmallScreen={isSmallScreen}
+                                />
+                                <DetailItem
+                                    label="Issued Date"
+                                    value={result.createdAt ? result.createdAt.split("T")[0] : "N/A"}
+                                    isSmallScreen={isSmallScreen}
+                                />
+                                <DetailItem
+                                    label="Badge’s Expiry Date"
+                                    value={expiredDate || "No expiry date"}
+                                    isSmallScreen={isSmallScreen}
+                                />
+                                <DetailItem
+                                    label="Duration"
+                                    value={days ? `${days} days` : "No duration available"}
+                                    isSmallScreen={isSmallScreen}
+                                />
+                                <DetailItem
+                                    label="Achievement Type"
+                                    value={
+                                        result.Achievements?.length
+                                            ? result.Achievements.map(
+                                                  (achievement) => achievement.AchievementType?.name,
+                                              ).join(", ")
+                                            : "No achievement type available"
+                                    }
+                                    isSmallScreen={isSmallScreen}
+                                />
+                                <DetailItem
+                                    label="Tags"
+                                    value={
+                                        result?.tags
+                                            ? result.tags.split(",").map((tag, index) => (
+                                                  <Chip
+                                                      key={index}
+                                                      label={tag}
+                                                      sx={{
+                                                          marginRight: 1,
+                                                          marginBottom: 1,
+                                                          backgroundColor: theme.palette.primary.light,
+                                                          color: theme.palette.primary.main,
+                                                          fontWeight: theme.fontWeight.bold,
+                                                      }}
+                                                  />
+                                              ))
+                                            : "No tags"
+                                    }
+                                    isSmallScreen={isSmallScreen}
+                                />
+                            </Box>
                         </Box>
                     </Box>
-                </Box>
+                </Stack>
             )}
             {value === 1 && <>{rednerEmail}</>}
 
@@ -368,6 +385,7 @@ const BadgeDetailCustom = ({ badge, userRole, activeUserId }) => {
                         boxShadow: 24,
                         borderRadius: 2,
                         p: 2,
+                        px: 3,
                         gap: 2,
                     }}
                 >
