@@ -25,11 +25,11 @@ const IssuerBadgeButton = ({ onGetEmail, control, issuerId }) => {
         <>
             <Button
                 onClick={() => setOpen(true)}
+                variant="contained"
+                color="primary"
                 sx={{
-                    backgroundColor: theme.palette.primary.main,
                     color: theme.palette.customColors.white,
                     fontSize: theme.typography.body1,
-                    fontWeight: theme.fontWeight.bold,
                     borderRadius: theme.customShape.btn,
                     px: 3,
                 }}

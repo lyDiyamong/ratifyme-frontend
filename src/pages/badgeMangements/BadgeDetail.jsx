@@ -9,6 +9,7 @@ import { Typography } from "@mui/material";
 import BadgeDetailCustom from "../../components/BadgeDetailCustom";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import { useFetchOneBadgeQuery } from "../../store/api/badgeManagement/badgeApi";
+import PageTitle from "../../components/PageTitle";
 
 const BadgeDetail = () => {
     // Fetch ID from the URL
@@ -50,6 +51,7 @@ const BadgeDetail = () => {
 
     return (
         <DashboardContainer sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            <PageTitle title="Badge Detail" subtitle="If no badge is returned, render a fallback message"/>
             <BadgeDetailCustom badge={oneBadge} userRole={role} activeUserId={activeUserId} />
         </DashboardContainer>
     );

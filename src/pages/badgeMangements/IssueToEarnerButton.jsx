@@ -33,13 +33,12 @@ const IssueToEarnerButton = ({ emails, badgeId }) => {
         <Button
             onClick={handleSendBadge}
             disabled={isLoading}
+            variant="contained"
             sx={{
-                backgroundColor: theme.palette.primary.main,
-                color: theme.palette.customColors.white,
                 fontSize: theme.typography.body1,
-                fontWeight: theme.fontWeight.bold,
                 borderRadius: theme.customShape.btn,
                 px: 3,
+                color: "white",
             }}
         >
             {isLoading ? "Issuing..." : "Send Issue"}

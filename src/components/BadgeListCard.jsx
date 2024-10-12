@@ -42,13 +42,14 @@ const BadgeListCard = ({ badges, onView, roleId }) => {
     }
 
     // Pagination handling
-    const pageCount = Math.ceil(result.length / itemsPerPage);
-    const currentBadges = result.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+    const pageCount = Math.ceil(result?.length / itemsPerPage);
+    const currentBadges = result?.slice((page - 1) * itemsPerPage, page * itemsPerPage);
     const handleChangePage = (_, value) => setPage(value);
 
     const handleView = (id) => {
         onView(id);
     };
+    console.log("result", result);
 
     return (
         <Box my={3}>
@@ -70,7 +71,7 @@ const BadgeListCard = ({ badges, onView, roleId }) => {
                 </Box>
             ) : (
                 <Grid container spacing={2}>
-                    {currentBadges.map((badge) => (
+                    {currentBadges?.map((badge) => (
                         <Grid item xs={12} sm={6} md={4} lg={3} key={badge?.id}>
                             <Card
                                 sx={{
