@@ -12,7 +12,7 @@ import BackpackManagement from "../pages/backpackManagement";
 import InvoiceManagement from "../pages/invoice";
 import BadgeCreation from "../pages/badgeMangements/BadgeCreation";
 import AddRecipient from "../pages/earnerManagements/AddRecipient";
-import BadgeDetail from "../pages/badgeMangements/BadgeDetail";
+import BadgeDetail from "../pages/badgeMangements/badgeDetail";
 import InstitutionManagement from "../pages/institutionManagement";
 import InstitutionDetail from "../pages/institutionDetail";
 import IssuerDetail from "../pages/issuerDetail";
