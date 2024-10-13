@@ -35,21 +35,23 @@ const BadgeListCard = ({ badges, onView, roleId }) => {
 
     // Determine which badges to display based on the role
     let result = [];
+    let issuerName
     if (roleId === 2 || roleId === 1) {
         result = badges;
     } else if (roleId === 3) {
         result = badges?.BadgeClasses;
+        issuerName = `${badges?.User?.firstName} ${badges?.User?.lastName}`
     }
 
     // Pagination handling
     const pageCount = Math.ceil(result?.length / itemsPerPage);
     const currentBadges = result?.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+    console.log("Current badges",currentBadges, result);
     const handleChangePage = (_, value) => setPage(value);
 
     const handleView = (id) => {
         onView(id);
     };
-    console.log("result", result);
 
     return (
         <Box my={3}>
@@ -118,9 +120,10 @@ const BadgeListCard = ({ badges, onView, roleId }) => {
                                             }}
                                         >
                                             {/* Display institution name based on the role */}
-                                            {roleId === 2 || roleId === 1
+                                            {/* {roleId === 2 || roleId === 1
                                                 ? badge?.Issuer?.Institution?.institutionName
-                                                : badges?.Institution?.institutionName}
+                                                : badge?.Institution?.institutionName} */}
+                                            {issuerName}
                                         </Typography>
                                     </Stack>
                                 </CardContent>

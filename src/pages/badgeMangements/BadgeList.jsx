@@ -28,14 +28,18 @@ const BadgeList = () => {
 
     // Define badges based on role
     const badges = allBadges?.data || [];
-    const badgeInstitution = badgeInsti?.data?.Issuers.flatMap((issuer) => issuer.BadgeClasses) || [];
+    const badgeInstitution = badgeInsti?.data?.Issuers.flatMap((issuer) => (issuer.BadgeClasses) || []);
     const badgeIssue = badgeIssuer?.data || [];
 
-    console.log("activeId", activeId, "roleId", roleId);
+    // console.log("activeId", activeId, "roleId", roleId);
 
     // Apply filtering based on role
     let checkBadge = roleId === 3 ? badgeIssue : roleId === 2 ? badgeInstitution : roleId === 1 ? badges : "";
-    console.log(checkBadge);
+    // console.log("Check badges",checkBadge);
+
+    console.log("Badge Institution", badgeInstitution);
+
+    console.log("Badge issuer", badgeIssuer);
 
     // Handle loading, error, and empty state in the parent component
     if (isLoading) return <Typography>Loading...</Typography>;
