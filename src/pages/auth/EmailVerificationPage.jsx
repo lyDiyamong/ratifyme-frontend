@@ -1,13 +1,18 @@
+// React library import
 import { useEffect, useState } from "react";
 import VerificationInput from "react-verification-input";
-import { Box, Typography, Button, Stack } from "@mui/material";
-import { useVerifyEmailMutation, useResendVerificationMutation } from "../../store/api/auth/authApi"; // Import resend mutation
 import { useLocation, useNavigate } from "react-router";
+import { Link } from "react-router-dom";
+
+// MUI import
+import { Box, Typography, Button, Stack } from "@mui/material";
+
+// Custom import
+import { useVerifyEmailMutation, useResendVerificationMutation } from "../../store/api/auth/authApi";
 import "../../assets/styles/EmailVerificationPage.css";
 import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
 import OutletImageComponent from "./OutletImageTemplate";
 import theme from "../../assets/themes";
-import { Link } from "react-router-dom";
 import AlertMessage from "../../components/alert/AlertMessage";
 import PageLoading from "../../components/loading/PageLoading";
 import useCatchStatus from "../../hooks/useCatchStatus";

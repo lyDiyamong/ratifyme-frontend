@@ -1,7 +1,14 @@
 import { Box, Stack, Typography } from "@mui/material";
 import theme from "../../assets/themes";
 
-const AuthOutletImage = ({ image, backgroundColor = theme.palette.primary.light, title1, title2, description }) => {
+const AuthOutletImage = ({
+    width = '50%',
+    image,
+    backgroundColor = theme.palette.primary.light,
+    title1,
+    title2,
+    description,
+}) => {
     return (
         <Box
             sx={{
@@ -11,7 +18,7 @@ const AuthOutletImage = ({ image, backgroundColor = theme.palette.primary.light,
                 alignItems: "center",
                 justifyContent: "center",
                 height: "100vh",
-                width: "50%",
+                width: width,
                 overflow: "hidden",
             }}
         >
@@ -60,6 +67,7 @@ const AuthOutletImage = ({ image, backgroundColor = theme.palette.primary.light,
                     fontWeight="bold"
                     sx={{
                         animation: "bounceIn 2s ease-in-out",
+                        fontSize: {md: '32px', lg: '48px'}
                     }}
                 >
                     {title1}
@@ -69,6 +77,7 @@ const AuthOutletImage = ({ image, backgroundColor = theme.palette.primary.light,
                     fontWeight="bold"
                     sx={{
                         animation: "bounceIn 2s ease-in-out 0.5s",
+                        fontSize: {md: '32px', lg: '48px'}
                     }}
                 >
                     {title2}

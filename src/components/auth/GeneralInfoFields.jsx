@@ -2,7 +2,7 @@ import DateSelectionForm from "../DateSelectionForm";
 import SelectForm from "../SelectionForm";
 import FormInput from "../FormInput";
 import { Stack } from "@mui/system";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import theme from "../../assets/themes";
 
 const GeneralInfoFields = ({ control, schema }) => {
@@ -15,12 +15,15 @@ const GeneralInfoFields = ({ control, schema }) => {
 
     return (
         <Stack gap={2}>
-            <Typography variant="body1" fontWeight={theme.fontWeight.semiBold} fontSize="24px">
-                General Information
-            </Typography>
-            <Typography sx={{ fontSize: theme.typography.body1, color: theme.palette.customColors.gray500, mb: 1 }}>
-                Provide basic personal information details to set up your profile.
-            </Typography>
+            <Box component="div">
+                <Typography variant="body1" fontWeight={theme.fontWeight.semiBold} fontSize="20px">
+                    General Information
+                </Typography>
+                <Typography sx={{ fontSize: theme.typography.body1, color: theme.palette.customColors.gray500, mb: 2 }}>
+                    Provide basic personal information details to set up your profile.
+                </Typography>
+            </Box>
+
             <FormInput
                 name="firstName"
                 label="First Name"

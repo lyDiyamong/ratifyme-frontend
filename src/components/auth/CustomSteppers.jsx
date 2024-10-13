@@ -1,5 +1,5 @@
 import { StepLabel, StepConnector } from "@mui/material";
-import { styled } from "@mui/system";
+import { height, maxWidth, styled, width } from "@mui/system";
 
 // Custom step icon component
 export const CustomStepIcon = styled("div")(({ theme, ownerState }) => ({
@@ -27,23 +27,17 @@ export const CustomStepIcon = styled("div")(({ theme, ownerState }) => ({
     position: "relative",
 }));
 
-// Custom connector to match the line style
+// Custom connector for vertical orientation
 export const CustomConnector = styled(StepConnector)(({ theme }) => ({
     "&.MuiStepConnector-root": {
-        top: "50%", // Default value for xss and sm
-        position: "absolute",
-        transform: "translateY(-50%)",
-        "@media (min-width: 600px)": {
-            top: "25%",
-        },
+        position: "relative",
+        marginLeft: 20,
     },
     "& .MuiStepConnector-line": {
+        borderLeftWidth: 2,
+        height: 60,
+        minHeight: 90,
         borderColor: theme.palette.customColors.gray200,
-        top: "50%",
-        position: "absolute",
-        left: 0,
-        right: 0,
-        transform: "translateY(-50%)",
     },
 }));
 
@@ -57,6 +51,7 @@ export const CustomStepLabel = styled(StepLabel)(({ theme, ownerState }) => ({
             : "#999",
         fontWeight: ownerState.active || ownerState.completed ? "bold" : "normal",
         fontSize: "14px",
+        maxWidth: '120px',
 
         // Handling responsive breakpoints
         [theme.breakpoints.up("md")]: {
