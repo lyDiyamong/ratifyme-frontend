@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 // MUI imports
 import { TextField, Box, Typography, Avatar, Button, Stack, Chip } from "@mui/material";
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 // Custom imports
 import DefaultProfileSvg from "../../assets/images/DefaultProfile.svg";
@@ -15,6 +15,7 @@ import theme from "../../assets/themes";
 
 // Fetching data imports
 import { useFetchInfoUserByIdQuery, useUpdateUserProfileMutation } from "../../store/api/users/userInfoProfileApi";
+import { color } from "@mui/system";
 
 // =========== Start BioContent in profile page ===========
 // BioContent component with status chip and updated styles
@@ -92,7 +93,6 @@ const BioContent = () => {
                             sx={{
                                 fontSize: theme.typography.h5,
                                 fontWeight: theme.fontWeight.semiBold,
-                                color: theme.palette.customColors.red400,
                             }}
                         >
                             Bio
@@ -100,7 +100,7 @@ const BioContent = () => {
                         {/* Status Chip */}
                         <Chip
                             label={bio ? "Active" : "No Bio"}
-                            icon={<CheckCircleOutlineIcon color="green"/>}
+                            icon={<CheckCircleOutlineIcon color="green" />}
                             sx={{
                                 backgroundColor: bio
                                     ? theme.palette.customColors.green100
@@ -115,7 +115,7 @@ const BioContent = () => {
                             }}
                         />
                     </Stack>
-                    <MoreMenu menuItems={menuItems} />
+                    <MoreMenu menuItems={menuItems} iconStyles={{color: 'black'}} />
                 </Stack>
 
                 {/* Bio Input */}
@@ -135,6 +135,7 @@ const BioContent = () => {
                             py: 0.5,
                             width: "100%",
                             overflow: "hidden",
+                            borderRadius: theme.customShape.input
                         }}
                         onClick={handleTextClick}
                     >
@@ -183,21 +184,20 @@ const BioContent = () => {
                 </Stack>
                 {isEditing ? null : (
                     <Typography
-                    ref={bioRef}
-                    sx={{
-                      color: theme.palette.text.secondary,
-                      fontSize: "16px",
-                      width: "100%",
-                      height: "100px", 
-                      overflowY: "auto", 
-                      wordWrap: "break-word", 
-                      whiteSpace: "normal",
-                    }}
-                    title={bio}
-                  >
-                    {bio || "Describe yourself here..."}
-                  </Typography>
-                  
+                        ref={bioRef}
+                        sx={{
+                            color: theme.palette.text.secondary,
+                            fontSize: "16px",
+                            width: "100%",
+                            height: "100px",
+                            overflowY: "auto",
+                            wordWrap: "break-word",
+                            whiteSpace: "normal",
+                        }}
+                        title={bio}
+                    >
+                        {bio || "Describe yourself here..."}
+                    </Typography>
                 )}
 
                 {/* Save and Cancel Buttons */}
@@ -225,14 +225,12 @@ const BioContent = () => {
                             {isLoading ? "Saving..." : "Save Bio"}
                         </Button>
                         <Button
-                            variant="contained"
+                            variant="text"
                             onClick={handleCancel}
                             sx={{
                                 borderRadius: "30px",
                                 fontWeight: "bold",
-                                color: theme.palette.customColors.white,
-                                background: theme.palette.customColors.red400,
-
+                                color: theme.palette.secondary.light,
                             }}
                         >
                             Cancel

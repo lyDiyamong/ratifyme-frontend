@@ -22,6 +22,8 @@ import {
 } from "../../../store/api/users/userInfoProfileApi";
 import { useGetIssuersQuery } from "../../../store/api/issuerManagement/issuerApi";
 import { useGetInstitutionQuery } from "../../../store/api/institutionManagement/institutionApi";
+import MoreMenu from "../../../components/MoreMenu";
+import { borderRadius } from "@mui/system";
 
 // =========== Start Profile Header ===========
 const OrgProfileHeader = () => {
@@ -95,6 +97,11 @@ const OrgProfileHeader = () => {
     const userRole = userData?.Role.id;
     const isDisabled = userRole === 3 || userRole === 4;
 
+    const menuItems = [
+        { label: "Remove Profile", onClick: {handleClickOpen} },
+        { label: "View Profile", onClick: {} },
+    ];
+
     return (
         <Stack
             direction="column"
@@ -130,36 +137,38 @@ const OrgProfileHeader = () => {
                         borderRadius: "100%",
                     }}
                 />
-                <Box
-                    sx={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: "100%",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        backgroundColor: "rgba(0, 0, 0, 0.5)",
-                        opacity: 0,
-                        transition: "opacity 0.3s",
-                        "&:hover": {
-                            opacity: 1,
-                        },
-                    }}
-                >
-                    <input
-                        type="file"
-                        id="profile-image-upload"
-                        style={{ display: "none" }}
-                        onChange={handleFileChange}
-                    />
-                    <label htmlFor="profile-image-upload">
-                        <IconButton component="span" sx={{ color: theme.palette.customColors.white }}>
-                            <CameraAltRounded />
-                        </IconButton>
-                    </label>
-                </Box>
+                {!isDisabled && (
+                    <Box
+                        sx={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "100%",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            backgroundColor: "rgba(0, 0, 0, 0.5)",
+                            opacity: 0,
+                            transition: "opacity 0.3s",
+                            "&:hover": {
+                                opacity: 1,
+                            },
+                        }}
+                    >
+                        <input
+                            type="file"
+                            id="profile-image-upload"
+                            style={{ display: "none" }}
+                            onChange={handleFileChange}
+                        />
+                        <label htmlFor="profile-image-upload">
+                            <IconButton component="span" sx={{ color: theme.palette.customColors.white }}>
+                                <CameraAltRounded />
+                            </IconButton>
+                        </label>
+                    </Box>
+                )}
             </Box>
 
             {/* User Info */}
@@ -207,6 +216,14 @@ const OrgProfileHeader = () => {
                     >
                         Remove
                     </Button>
+                    <MoreMenu
+                        menuItems={menuItems}
+                        iconStyles={{
+                            color: "black",
+                            backgroundColor: theme.palette.background.secondary,
+                            borderRadius: theme.customShape.section,
+                        }}
+                    />
                 </Stack>
             )}
 
