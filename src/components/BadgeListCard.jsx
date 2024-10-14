@@ -73,28 +73,55 @@ const BadgeListCard = ({ badges, onView, roleId }) => {
             ) : (
                 <Grid container spacing={2}>
                     {currentBadges?.map((badge) => (
-                        <Grid item xs={12} sm={6} md={4} lg={3} key={badge?.id}>
+                        <Grid
+                            item
+                            xs={12}
+                            sm={6}
+                            md={4}
+                            lg={3}
+                            xl={2.4}
+                            key={badge?.id}
+                        >
                             <Card
                                 sx={{
-                                    maxWidth: { xss: "100%", sm: 320, md: 340, lg: 350 },
-                                    height: { xss: "auto", md: 400 },
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    justifyContent: "space-between",
+                                    // maxWidth: { xss: "100%", lg: 280 },
+                                    width: "100%",
+                                    height: "100%",
                                     boxShadow: theme.customShadows.default,
                                     borderRadius: theme.shape.borderRadius,
-                                    padding: 1.5,
+                                    padding: 2,
                                     transition: "transform 0.3s ease",
                                     "&:hover": { transform: "scale(1.02)" },
                                 }}
                             >
-                                <CardMedia
-                                    component="img"
-                                    height="200"
-                                    image={badge?.imageUrl || GoldBadge}
-                                    alt={badge?.name}
-                                    sx={{ objectFit: "cover" }}
-                                />
+                                <Stack alignItems="center">
+                                    <Box
+                                        minHeight={140}
+                                        minWidth={140}
+                                        sx={{
+                                            display: "flex",
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            width: "100%",
+                                            height: "100%",
+                                            maxWidth: 170,
+                                            maxHeight: 170,
+                                        }}
+                                    >
+                                        <Box
+                                            component="img"
+                                            src={badge?.imageUrl || GoldBadge}
+                                            alt={badge?.name || "Badge Image"}
+                                            sx={{
+                                                width: "100%",
+                                                height: "auto", // Maintain aspect ratio
+                                                maxHeight: 170,
+                                                objectFit: "contain", // Ensures the image fits without cropping
+                                            }}
+                                        />
+                                    </Box>
+                                </Stack>
+
                                 <CardContent>
                                     <Stack>
                                         <Typography
@@ -119,7 +146,7 @@ const BadgeListCard = ({ badges, onView, roleId }) => {
                                                 overflow: "hidden",
                                             }}
                                         >
-                                            {`${badge?.Issuer?.User?.firstName} ${badge?.Issuer?.User?.lastName} | ${badge?.Institution?.institutionName}` }
+                                            {`${badge?.Issuer?.User?.firstName} ${badge?.Issuer?.User?.lastName} | ${badge?.Institution?.institutionName}`}
                                         </Typography>
                                     </Stack>
                                 </CardContent>
