@@ -21,8 +21,10 @@ const BadgeList = () => {
     const activeId =
         roleId === 2 ? institutionData.id : roleId === 3 ? issuerData.id : roleId === 4 ? earnerData.id : userInfo;
 
+    const field = institutionData.id ? "institutionId" : issuerData.id ? "issuerId" : ''
+
     // Fetch data
-    const { data: allBadges, isLoading } = useFetchBadgesQuery();
+    const { data: allBadges, isLoading } = useFetchBadgesQuery({field, fk: activeId});
     const { data: badgeInsti } = useFetchBadgesByInstitutionsQuery(activeId);
     const { data: badgeIssuer } = useFetchBadgesByIssuerQuery(activeId);
 
@@ -31,6 +33,7 @@ const BadgeList = () => {
     const badgeInstitution = badgeInsti?.data?.Issuers.flatMap((issuer) => (issuer.BadgeClasses) || []);
     const badgeIssue = badgeIssuer?.data || [];
 
+    console.log("Badge All data base on role", allBadges, "active Id", activeId);
     // console.log("activeId", activeId, "roleId", roleId);
 
     // Apply filtering based on role
