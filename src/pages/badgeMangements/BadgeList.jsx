@@ -3,12 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 // MUI import
-import { Typography } from "@mui/material";
 
 // Custom import
 import {
-    useFetchBadgesByIssuerQuery,
-    useFetchBadgesByInstitutionsQuery,
     useFetchBadgesQuery,
 } from "../../store/api/badgeManagement/badgeApi";
 import BadgeListCard from "../../components/BadgeListCard";
@@ -16,13 +13,7 @@ import { SpinLoading } from "../../components/loading/SpinLoading";
 
 const BadgeList = () => {
     const navigate = useNavigate();
-    const { roleId, issuerData, institutionData, earnerData, userInfo } = useSelector((state) => state.global);
-
-    // Determine the realId based on the role
-    // const activeId =
-    //     roleId === 2 ? institutionData.id : roleId === 3 ? issuerData.id : roleId === 4 ? earnerData.id : userInfo;
-
-    // const field = institutionData?.id ? "institutionId" : issuerData?.id ? "issuerId" : ''
+    const { roleId, issuerData, institutionData } = useSelector((state) => state.global);
 
     let activeId;
     let field;

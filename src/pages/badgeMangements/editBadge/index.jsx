@@ -216,6 +216,7 @@ const EditBadge = () => {
 
                 <Stack
                     sx={{
+                        my : 3,
                         flexDirection: { md: "row", xss: "column" },
                         width: "100%",
                         justifyContent: "space-between",
