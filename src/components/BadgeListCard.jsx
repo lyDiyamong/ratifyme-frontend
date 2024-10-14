@@ -33,20 +33,19 @@ const BadgeListCard = ({ badges, onView, roleId }) => {
         setItemsPerPage(isLargeScreen ? 8 : isMediumScreen ? 6 : 4);
     }, [isLargeScreen, isMediumScreen]);
 
-    // Determine which badges to display based on the role
-    let result = [];
-    let issuerName
-    if (roleId === 2 || roleId === 1) {
-        result = badges;
-    } else if (roleId === 3) {
-        result = badges?.BadgeClasses;
-        issuerName = `${badges?.User?.firstName} ${badges?.User?.lastName}`
-    }
+    // // Determine which badges to display based on the role
+    // let badges = [];
+    // let issuerName
+    // if (roleId === 2 || roleId === 1) {
+    //     result = badges;
+    // } else if (roleId === 3) {
+    //     result = badges?.BadgeClasses;
+    //     issuerName = `${badges?.User?.firstName} ${badges?.User?.lastName}`
+    // }
 
     // Pagination handling
-    const pageCount = Math.ceil(result?.length / itemsPerPage);
-    const currentBadges = result?.slice((page - 1) * itemsPerPage, page * itemsPerPage);
-    console.log("Current badges",currentBadges, result);
+    const pageCount = Math.ceil(badges?.length / itemsPerPage);
+    const currentBadges = badges?.slice((page - 1) * itemsPerPage, page * itemsPerPage);
     const handleChangePage = (_, value) => setPage(value);
 
     const handleView = (id) => {
@@ -56,10 +55,10 @@ const BadgeListCard = ({ badges, onView, roleId }) => {
     return (
         <Box my={3}>
             <Typography variant="h6" sx={{ pb: 2 }}>
-                Total Badges: {result?.length || 0}
+                Total Badges: {badges?.length || 0}
             </Typography>
 
-            {result?.length === 0 ? (
+            {badges?.length === 0 ? (
                 <Box display="flex" flexDirection="column" alignItems="center" p={4}>
                     <CardMedia
                         component="img"
@@ -110,6 +109,7 @@ const BadgeListCard = ({ badges, onView, roleId }) => {
                                         >
                                             {badge?.name}
                                         </Typography>
+                                        {/* Issuer Name and Instituton Name */}
                                         <Typography
                                             variant="body2"
                                             sx={{
@@ -119,11 +119,7 @@ const BadgeListCard = ({ badges, onView, roleId }) => {
                                                 overflow: "hidden",
                                             }}
                                         >
-                                            {/* Display institution name based on the role */}
-                                            {/* {roleId === 2 || roleId === 1
-                                                ? badge?.Issuer?.Institution?.institutionName
-                                                : badge?.Institution?.institutionName} */}
-                                            {issuerName}
+                                            {`${badge?.Issuer?.User?.firstName} ${badge?.Issuer?.User?.lastName} | ${badge?.Institution?.institutionName}` }
                                         </Typography>
                                     </Stack>
                                 </CardContent>

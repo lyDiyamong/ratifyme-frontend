@@ -24,7 +24,7 @@ export const badgeApi = createApi({
                 method: "POST",
                 body: badge,
             }),
-            invalidatesTags: (result) => [{ type: "BadgeIssuer", id: `LIST-${result?.issuerId}` }],
+            invalidatesTags: (result) => [{ type: "BadgeIssuer", id: `LIST-${result?.issuerId}` },[{ type: "Badge", id: "LIST" }]],
         }),
         uploadCerti: builder.mutation({
             query: ({uploadedCert}) => ({

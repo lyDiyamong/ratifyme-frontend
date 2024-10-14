@@ -12,40 +12,40 @@ import {
     useFetchBadgesQuery,
 } from "../../store/api/badgeManagement/badgeApi";
 import BadgeListCard from "../../components/BadgeListCard";
+import { SpinLoading } from "../../components/loading/SpinLoading";
 
 const BadgeList = () => {
     const navigate = useNavigate();
     const { roleId, issuerData, institutionData, earnerData, userInfo } = useSelector((state) => state.global);
 
     // Determine the realId based on the role
-    const activeId =
-        roleId === 2 ? institutionData.id : roleId === 3 ? issuerData.id : roleId === 4 ? earnerData.id : userInfo;
+    // const activeId =
+    //     roleId === 2 ? institutionData.id : roleId === 3 ? issuerData.id : roleId === 4 ? earnerData.id : userInfo;
 
-    const field = institutionData.id ? "institutionId" : issuerData.id ? "issuerId" : ''
+    // const field = institutionData?.id ? "institutionId" : issuerData?.id ? "issuerId" : ''
+
+    let activeId;
+    let field;
+    switch (roleId) {
+        case 2:
+            activeId = institutionData?.id;
+            field = "institutionId";
+            break;
+        case 3:
+            activeId = issuerData?.id;
+            field = "issuerId";
+    }
 
     // Fetch data
-    const { data: allBadges, isLoading } = useFetchBadgesQuery({field, fk: activeId});
-    const { data: badgeInsti } = useFetchBadgesByInstitutionsQuery(activeId);
-    const { data: badgeIssuer } = useFetchBadgesByIssuerQuery(activeId);
+    const { data: allBadges, isLoading } = useFetchBadgesQuery({ field, fk: activeId });
 
     // Define badges based on role
     const badges = allBadges?.data || [];
-    const badgeInstitution = badgeInsti?.data?.Issuers.flatMap((issuer) => (issuer.BadgeClasses) || []);
-    const badgeIssue = badgeIssuer?.data || [];
 
-    console.log("Badge All data base on role", allBadges, "active Id", activeId);
-    // console.log("activeId", activeId, "roleId", roleId);
-
-    // Apply filtering based on role
-    let checkBadge = roleId === 3 ? badgeIssue : roleId === 2 ? badgeInstitution : roleId === 1 ? badges : "";
-    // console.log("Check badges",checkBadge);
-
-    console.log("Badge Institution", badgeInstitution);
-
-    console.log("Badge issuer", badgeIssuer);
+    console.log("Badge All data base on role", badges, "active Id", activeId);
 
     // Handle loading, error, and empty state in the parent component
-    if (isLoading) return <Typography>Loading...</Typography>;
+    if (isLoading) return <SpinLoading size={30} />;
     // Handle view badgeDetail
     const handleView = (id) => {
         navigate(`/management/badges/badgeDetail/${id}`);
@@ -53,7 +53,7 @@ const BadgeList = () => {
 
     return (
         <>
-            <BadgeListCard badges={checkBadge} onView={handleView} roleId={roleId} />
+            <BadgeListCard badges={badges} onView={handleView} roleId={roleId} />
         </>
     );
 };
