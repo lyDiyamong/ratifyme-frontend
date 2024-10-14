@@ -4,7 +4,6 @@ import { useState } from "react";
 // MUI import
 import { Tabs, Tab } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
-import BusinessIcon from "@mui/icons-material/Business";
 import SettingsIcon from "@mui/icons-material/Settings";
 
 // Custom import
@@ -13,6 +12,7 @@ import DashboardContainer from "../../components/styles/DashboardContainer";
 import UserProfile from "./userProfile/index";
 import ChangePasswordForm from "./changePassword/";
 import OrganizationInfo from "./organizationInfo";
+import { BusinessRounded } from "@mui/icons-material";
 
 // =========== Start Account Management ===========
 const AccountManagement = () => {
@@ -34,7 +34,7 @@ const AccountManagement = () => {
                 indicatorColor="primary"
             >
                 <Tab icon={<PersonIcon />} label="Profile" iconPosition="start" />
-                <Tab icon={<BusinessIcon />} label="Organization Info" iconPosition="start" />
+                <Tab icon={<BusinessRounded />} label="Organization Info" iconPosition="start" />
                 <Tab icon={<SettingsIcon />} label="Profile Settings" iconPosition="start" />
             </Tabs>
 
