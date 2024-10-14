@@ -1,31 +1,20 @@
 // React Import
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // MUI Import
 import { Box, Typography, Tabs, Tab, Chip, Stack, useMediaQuery, CardMedia, Button, Modal } from "@mui/material";
-import theme from "../assets/themes";
+import theme from "../../../assets/themes";
 
 // Custom Import
-import IssuerBadgeButton from "../pages/badgeMangements/IssuerBadgeButton";
-import IssueToEarnerButton from "../pages/badgeMangements/IssueToEarnerButton";
-import ClaimBadgeButton from "./ClaimBadgeButton";
-import StatusCode from "../assets/images/NoData.svg";
-import { useDeleteBadgeMutation } from "../store/api/badgeManagement/badgeApi";
-import MoreMenu from "../components/MoreMenu";
-import {
-    BorderColorRounded,
-    ConfirmationNumber,
-    Delete,
-    Description,
-    Group,
-    ReplyAllOutlined,
-    SchoolOutlined,
-    Update,
-} from "@mui/icons-material";
-import { positions } from "@mui/system";
-import CertificateGenerator from "../pages/certificateTest";
+import IssuerBadgeButton from "../IssuerBadgeButton";
+import IssueToEarnerButton from "../IssueToEarnerButton";
+import ClaimBadgeButton from "../../../components/ClaimBadgeButton";
+import StatusCode from "../../../assets/images/NoData.svg";
+import { useDeleteBadgeMutation } from "../../../store/api/badgeManagement/badgeApi";
+import MoreMenu from "../../../components/MoreMenu";
+import { BorderColorRounded, ConfirmationNumber, Delete, Description, Group } from "@mui/icons-material";
 
 const BadgeDetailCustom = ({ badge, userRole, activeUserId }) => {
     // define breakpoint of the screen
@@ -64,9 +53,9 @@ const BadgeDetailCustom = ({ badge, userRole, activeUserId }) => {
     const days = durationInMs / (1000 * 60 * 60 * 24);
 
     // Define role-based access for tab content
-    const hasAccessEarner = ["issuer", "earner"].includes(userRole);
-    const hasAllAccess = ["issuer", "earner", "institution", "admin"].includes(userRole);
-    const hasAccess = ["issuer"].includes(userRole);
+    const hasAccess = ["issuer", "earner"].includes(userRole);
+    // const hasAllAccess = ["issuer", "earner", "institution", "admin"].includes(userRole);
+    // const hasAccess = ["issuer"].includes(userRole);
 
     // State for handling selected emails
     const [selectedEmails, setSelectedEmails] = useState([]);
@@ -164,6 +153,47 @@ const BadgeDetailCustom = ({ badge, userRole, activeUserId }) => {
             {/* Conditional rendering based on the selected tab */}
             {value === 0 && (
                 <Stack sx={{ display: "flex", flexDirection: "column", gap: 3, width: "100%" }}>
+                    <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <Stack
+                            sx={{
+                                position: "absolute",
+                                top: "50%",
+                                left: "50%",
+                                transform: "translate(-50%, -50%)",
+                                width: { xs: "90%", sm: "400px" },
+                                bgcolor: "background.paper",
+                                boxShadow: 24,
+                                borderRadius: 2,
+                                p: 2,
+                                px: 3,
+                                gap: 2,
+                            }}
+                        >
+                            {/* Title with Icon */}
+                            <Box sx={{ display: "flex", alignItems: "center" }}>
+                                <ConfirmationNumber sx={{ marginRight: 1, color: theme.palette.primary.main }} />
+                                <Typography id="modal-modal-title" variant="h4" fontWeight={theme.fontWeight.semiBold}>
+                                    Confirm Issue
+                                </Typography>
+                            </Box>
+
+                            {/* Description with Icon */}
+                            <Box sx={{ display: "flex", alignItems: "flex-start" }}>
+                                <Typography id="modal-modal-description" sx={{ color: theme.palette.text.secondary }}>
+                                    After you issue this badge, it will send this badge to all of your Earners.
+                                </Typography>
+                            </Box>
+                            <Stack mt={1}>
+                                <IssueToEarnerButton emails={selectedEmails} badgeId={result?.id || []} />
+                                <Button onClick={handleClose}>Cancel</Button>
+                            </Stack>
+                        </Stack>
+                    </Modal>
                     <Box
                         sx={{
                             position: "relative",
@@ -222,7 +252,7 @@ const BadgeDetailCustom = ({ badge, userRole, activeUserId }) => {
                                 </Stack>
 
                                 {/* Action Buttons */}
-                                {hasAccessEarner && (
+                                {hasAccess && (
                                     <Box
                                         sx={{
                                             marginTop: 2,
@@ -367,48 +397,6 @@ const BadgeDetailCustom = ({ badge, userRole, activeUserId }) => {
                 </Stack>
             )}
             {value === 1 && <>{rednerEmail}</>}
-
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Stack
-                    sx={{
-                        position: "absolute",
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        width: { xs: "90%", sm: "400px" },
-                        bgcolor: "background.paper",
-                        boxShadow: 24,
-                        borderRadius: 2,
-                        p: 2,
-                        px: 3,
-                        gap: 2,
-                    }}
-                >
-                    {/* Title with Icon */}
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <ConfirmationNumber sx={{ marginRight: 1, color: theme.palette.primary.main }} />
-                        <Typography id="modal-modal-title" variant="h4" fontWeight={theme.fontWeight.semiBold}>
-                            Confirm Issue
-                        </Typography>
-                    </Box>
-
-                    {/* Description with Icon */}
-                    <Box sx={{ display: "flex", alignItems: "flex-start" }}>
-                        <Typography id="modal-modal-description" sx={{ color: theme.palette.text.secondary }}>
-                            After you issue this badge, it will send this badge to all of your Earners.
-                        </Typography>
-                    </Box>
-                    <Stack mt={1}>
-                        <IssueToEarnerButton emails={selectedEmails} badgeId={result?.id || []} />
-                        <Button onClick={handleClose}>Cancel</Button>
-                    </Stack>
-                </Stack>
-            </Modal>
         </Box>
         // ============ End Badge Detail ============
     );

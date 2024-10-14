@@ -33,17 +33,19 @@ const BadgeListCard = ({ badges, onView, roleId }) => {
         setItemsPerPage(isLargeScreen ? 8 : isMediumScreen ? 6 : 4);
     }, [isLargeScreen, isMediumScreen]);
 
-    // Determine which badges to display based on the role
-    let result = [];
-    if (roleId === 2 || roleId === 1) {
-        result = badges;
-    } else if (roleId === 3) {
-        result = badges?.BadgeClasses;
-    }
+    // // Determine which badges to display based on the role
+    // let badges = [];
+    // let issuerName
+    // if (roleId === 2 || roleId === 1) {
+    //     result = badges;
+    // } else if (roleId === 3) {
+    //     result = badges?.BadgeClasses;
+    //     issuerName = `${badges?.User?.firstName} ${badges?.User?.lastName}`
+    // }
 
     // Pagination handling
-    const pageCount = Math.ceil(result.length / itemsPerPage);
-    const currentBadges = result.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+    const pageCount = Math.ceil(badges?.length / itemsPerPage);
+    const currentBadges = badges?.slice((page - 1) * itemsPerPage, page * itemsPerPage);
     const handleChangePage = (_, value) => setPage(value);
 
     const handleView = (id) => {
@@ -53,10 +55,10 @@ const BadgeListCard = ({ badges, onView, roleId }) => {
     return (
         <Box my={3}>
             <Typography variant="h6" sx={{ pb: 2 }}>
-                Total Badges: {result?.length || 0}
+                Total Badges: {badges?.length || 0}
             </Typography>
 
-            {result?.length === 0 ? (
+            {badges?.length === 0 ? (
                 <Box display="flex" flexDirection="column" alignItems="center" p={4}>
                     <CardMedia
                         component="img"
@@ -70,29 +72,56 @@ const BadgeListCard = ({ badges, onView, roleId }) => {
                 </Box>
             ) : (
                 <Grid container spacing={2}>
-                    {currentBadges.map((badge) => (
-                        <Grid item xs={12} sm={6} md={4} lg={3} key={badge?.id}>
+                    {currentBadges?.map((badge) => (
+                        <Grid
+                            item
+                            xs={12}
+                            sm={6}
+                            md={4}
+                            lg={3}
+                            xl={2.4}
+                            key={badge?.id}
+                        >
                             <Card
                                 sx={{
-                                    maxWidth: { xss: "100%", sm: 320, md: 340, lg: 350 },
-                                    height: { xss: "auto", md: 400 },
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    justifyContent: "space-between",
+                                    // maxWidth: { xss: "100%", lg: 280 },
+                                    width: "100%",
+                                    height: "100%",
                                     boxShadow: theme.customShadows.default,
                                     borderRadius: theme.shape.borderRadius,
-                                    padding: 1.5,
+                                    padding: 2,
                                     transition: "transform 0.3s ease",
                                     "&:hover": { transform: "scale(1.02)" },
                                 }}
                             >
-                                <CardMedia
-                                    component="img"
-                                    height="200"
-                                    image={badge?.imageUrl || GoldBadge}
-                                    alt={badge?.name}
-                                    sx={{ objectFit: "cover" }}
-                                />
+                                <Stack alignItems="center">
+                                    <Box
+                                        minHeight={140}
+                                        minWidth={140}
+                                        sx={{
+                                            display: "flex",
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            width: "100%",
+                                            height: "100%",
+                                            maxWidth: 170,
+                                            maxHeight: 170,
+                                        }}
+                                    >
+                                        <Box
+                                            component="img"
+                                            src={badge?.imageUrl || GoldBadge}
+                                            alt={badge?.name || "Badge Image"}
+                                            sx={{
+                                                width: "100%",
+                                                height: "auto", // Maintain aspect ratio
+                                                maxHeight: 170,
+                                                objectFit: "contain", // Ensures the image fits without cropping
+                                            }}
+                                        />
+                                    </Box>
+                                </Stack>
+
                                 <CardContent>
                                     <Stack>
                                         <Typography
@@ -107,6 +136,7 @@ const BadgeListCard = ({ badges, onView, roleId }) => {
                                         >
                                             {badge?.name}
                                         </Typography>
+                                        {/* Issuer Name and Instituton Name */}
                                         <Typography
                                             variant="body2"
                                             sx={{
@@ -116,10 +146,7 @@ const BadgeListCard = ({ badges, onView, roleId }) => {
                                                 overflow: "hidden",
                                             }}
                                         >
-                                            {/* Display institution name based on the role */}
-                                            {roleId === 2 || roleId === 1
-                                                ? badge?.Issuer?.Institution?.institutionName
-                                                : badges?.Institution?.institutionName}
+                                            {`${badge?.Issuer?.User?.firstName} ${badge?.Issuer?.User?.lastName} | ${badge?.Institution?.institutionName}`}
                                         </Typography>
                                     </Stack>
                                 </CardContent>

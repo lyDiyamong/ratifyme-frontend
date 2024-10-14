@@ -8,8 +8,8 @@ export const badgeApi = createApi({
     endpoints: (builder) => ({
         // Fetch badges by issuerId
         fetchBadges: builder.query({
-            query: () => ({
-                url: `/issuers/badgeClasses`,
+            query: ({field, fk}) => ({
+                url: `/issuers/badgeClasses?${field}=${fk}`,
                 method: "GET",
             }),
             providesTags: (result) =>
@@ -24,7 +24,7 @@ export const badgeApi = createApi({
                 method: "POST",
                 body: badge,
             }),
-            invalidatesTags: (result) => [{ type: "BadgeIssuer", id: `LIST-${result?.issuerId}` }],
+            invalidatesTags: (result) => [{ type: "BadgeIssuer", id: `LIST-${result?.issuerId}` },[{ type: "Badge", id: "LIST" }]],
         }),
         uploadCerti: builder.mutation({
             query: ({uploadedCert}) => ({

@@ -162,6 +162,7 @@ const BadgeCreationForm = () => {
         formData.append("startedDate", data.startDate ? data.startDate.toISOString() : null);
         formData.append("expiredDate", data.endDate ? data.endDate.toISOString() : null);
         formData.append("issuerId", issuerData.id);
+        formData.append("institutionId", issuerData.institutionId);
 
         // Append Achievements
         data.AchievementTypes?.forEach((achievementName, index) => {
@@ -322,7 +323,7 @@ const BadgeCreationForm = () => {
                         }}
                     >
                         <AssignmentIndOutlined sx={{ color: theme.palette.primary.main }} />
-                        
+
                     </Box>
                 </Stack> */}
             </Stack>

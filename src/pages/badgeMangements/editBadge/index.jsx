@@ -195,7 +195,7 @@ const EditBadge = () => {
                         top: "50%",
                         left: "50%",
                         transform: "translate(-50%, -50%)",
-                        width: "60%",
+                        width: {md: "40%", xss: '70%'},
                         p: 4,
                     }}
                 >
@@ -216,6 +216,7 @@ const EditBadge = () => {
 
                 <Stack
                     sx={{
+                        my : 3,
                         flexDirection: { md: "row", xss: "column" },
                         width: "100%",
                         justifyContent: "space-between",
