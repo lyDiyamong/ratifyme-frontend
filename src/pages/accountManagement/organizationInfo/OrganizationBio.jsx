@@ -17,7 +17,7 @@ import { useFetchInfoUserByIdQuery, useUpdateUserProfileMutation } from "../../s
 
 // =========== Start BioContent in profile page ===========
 // BioContent component with status chip and updated styles
-const BioContent = () => {
+const OrganizationBio = () => {
     const { userId } = useSelector((state) => state.global);
 
     const [bio, setBio] = useState("");
@@ -236,5 +236,5 @@ const BioContent = () => {
     );
 };
 
-export default BioContent;
+export default OrganizationBio;
 // =========== End BioContent in profile page ===========

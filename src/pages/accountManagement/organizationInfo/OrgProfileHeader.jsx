@@ -4,9 +4,10 @@ import { useSelector } from "react-redux";
 
 // MUI Import
 import { Stack, Box, Typography, IconButton, Button } from "@mui/material";
-import { CameraAltRounded } from "@mui/icons-material";
+import { CameraAltRounded, FullscreenExitOutlined } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { Modal, Backdrop } from "@mui/material";
 // Custom Import
 import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
 import MaleUserDefault from "../../../assets/images/MaleUser.svg";
@@ -23,12 +24,13 @@ import {
 import { useGetIssuersQuery } from "../../../store/api/issuerManagement/issuerApi";
 import { useGetInstitutionQuery } from "../../../store/api/institutionManagement/institutionApi";
 import MoreMenu from "../../../components/MoreMenu";
-import { borderRadius } from "@mui/system";
+import { display } from "@mui/system";
 
 // =========== Start Profile Header ===========
 const OrgProfileHeader = () => {
     const { userId } = useSelector((state) => state.global);
     const [open, setOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [updateImage, setUpdateImage] = useState(DefaultProfileSvg);
     const { data: info } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
     const { data: issuers, isLoading: isLoadingIssuer } = useGetIssuersQuery();
@@ -98,8 +100,12 @@ const OrgProfileHeader = () => {
     const isDisabled = userRole === 3 || userRole === 4;
 
     const menuItems = [
-        { label: "Remove Profile", onClick: {handleClickOpen} },
-        { label: "View Profile", onClick: {} },
+        {
+            label: "View Profile",
+            icon: <FullscreenExitOutlined color="primary" />,
+            onClick: () => setIsModalOpen(true),
+        },
+        { label: "Remove Profile", icon: <DeleteForeverIcon color="error" />, onClick: handleDeleteImage },
     ];
 
     return (
@@ -115,6 +121,42 @@ const OrgProfileHeader = () => {
                 bgcolor: theme.palette.customColors.white,
             }}
         >
+            {/* The image view */}
+            <Modal
+                open={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                closeAfterTransition
+                BackdropComponent={(props) => (
+                    <Backdrop
+                        {...props}
+                        sx={{
+                            backgroundColor: "rgba(0, 0, 0, 0.8)",
+                        }}
+                    />
+                )}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Box
+                    sx={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        width: { md: "40%", xss: "70%" },
+                        p: 4,
+                    }}
+                >
+                    <Box
+                        component="img"
+                        src={institutionImage || "https://www.mylittleadventure.com/images/default/default-img.png"}
+                        alt="Full size badge"
+                        sx={{ width: "100%", height: "auto", borderRadius: "10px", cursor: "pointer" }}
+                    />
+                </Box>
+            </Modal>
+
             {/* Profile Image Section */}
             <Box
                 sx={{
@@ -127,6 +169,7 @@ const OrgProfileHeader = () => {
                 }}
             >
                 <Box
+                    onClick={() => setIsModalOpen(true)}
                     component="img"
                     src={updateImage || (userData?.Gender?.name === "male" ? MaleUserDefault : FemaleUserDefault)}
                     alt="Profile"
@@ -135,6 +178,7 @@ const OrgProfileHeader = () => {
                         height: "100%",
                         objectFit: "cover",
                         borderRadius: "100%",
+                        cursor: "pointer",
                     }}
                 />
                 {!isDisabled && (
@@ -175,7 +219,7 @@ const OrgProfileHeader = () => {
             <Typography sx={{ fontSize: theme.typography.h4, fontWeight: theme.fontWeight.semiBold }}>
                 {institutionName || "N/A"}
             </Typography>
-            <Typography sx={{ fontSize: theme.typography.h5, color: theme.palette.text.disabled }}>
+            <Typography sx={{ fontSize: theme.typography.h5, color: theme.palette.text.secondary }}>
                 Code: {institutionCode || "N/A"}
             </Typography>
 
@@ -185,42 +229,27 @@ const OrgProfileHeader = () => {
 
             {/* Conditionally render the Remove button */}
             {!isDisabled && (
-                <Stack direction={{ sm: "row", xss: "column" }} spacing={0.5} mt={2}>
+                <Stack direction="row" mt={2} alignItems="center" justifyContent="center" gap={1}>
                     <Button
                         onClick={handleClickOpen}
                         variant="contained"
                         startIcon={<EditIcon />}
                         sx={{
                             px: 2,
-                            mt: 2,
                             background: theme.palette.secondary.light,
                             color: theme.palette.customColors.white,
                             fontWeight: "bold",
-                            borderRadius: "30px",
+                            borderRadius: theme.customShape.btn,
                         }}
                     >
                         Edit profile
                     </Button>
 
-                    <Button
-                        onClick={handleDeleteImage}
-                        variant="outlined"
-                        startIcon={<DeleteForeverIcon />}
-                        color="error"
-                        sx={{
-                            px: 2,
-                            mt: 2,
-                            fontWeight: "bold",
-                            borderRadius: "30px",
-                        }}
-                    >
-                        Remove
-                    </Button>
                     <MoreMenu
                         menuItems={menuItems}
                         iconStyles={{
                             color: "black",
-                            backgroundColor: theme.palette.background.secondary,
+                            // backgroundColor: theme.palette.background.secondary,
                             borderRadius: theme.customShape.section,
                         }}
                     />

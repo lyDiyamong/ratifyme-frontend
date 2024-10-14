@@ -11,7 +11,7 @@ const OrganizationInfo = () => {
             <Stack gap={3}>
                 <Grid container spacing={3} sx={{ height: "100%" }}>
                     {/* Profile Header and Bio Content in the same parent */}
-                    <Grid item xs={12} md={4} sx={{ display: "flex", flexDirection: "column" }}>
+                    <Grid item xss={12} md={4} sx={{ display: "flex", flexDirection: "column" }}>
                         <Stack spacing={2} direction="column">
                             <OrgProfileHeader />
                             <BioContent />
@@ -19,7 +19,7 @@ const OrganizationInfo = () => {
                     </Grid>
 
                     {/* Profile Info on the right side */}
-                    <Grid item xs={12} md={8} sx={{ height: "100%" }}>
+                    <Grid item xss={12} md={8} sx={{ height: "100%" }}>
                         <Stack>
                             <OrgProfileInfo />
                         </Stack>
