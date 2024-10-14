@@ -27,6 +27,8 @@ const CheckoutButton = ({ id }) => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
+    console.log('institutionData', institutionData);
+
     // Handle redirecting
     const handleClick = async (id) => {
         setLoading(true);
