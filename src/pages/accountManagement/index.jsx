@@ -3,12 +3,16 @@ import { useState } from "react";
 
 // MUI import
 import { Tabs, Tab } from "@mui/material";
+import PersonIcon from "@mui/icons-material/Person";
+import BusinessIcon from "@mui/icons-material/Business";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 // Custom import
 import PageTitle from "../../components/PageTitle";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import UserProfile from "./userProfile/index";
-import ChangePasswordForm from "./changePassword";
+import ChangePasswordForm from "./changePassword/";
+import OrganizationInfo from "./organizationInfo";
 
 // =========== Start Account Management ===========
 const AccountManagement = () => {
@@ -23,14 +27,21 @@ const AccountManagement = () => {
             <PageTitle title="My Profile" />
 
             {/* Tabs for User Profile, Bio Content, and Settings */}
-            <Tabs value={value} onChange={handleChange} textColor="primary" indicatorColor="primary">
-                <Tab label="Profile" />
-                <Tab label="Profile Settings" />
+            <Tabs
+                value={value}
+                onChange={handleChange}
+                textColor="primary"
+                indicatorColor="primary"
+            >
+                <Tab icon={<PersonIcon />} label="Profile" iconPosition="start" />
+                <Tab icon={<BusinessIcon />} label="Organization Info" iconPosition="start" />
+                <Tab icon={<SettingsIcon />} label="Profile Settings" iconPosition="start" />
             </Tabs>
 
             {/* Conditional rendering based on the selected tab */}
             {value === 0 && <UserProfile />}
-            {value === 1 && <ChangePasswordForm />}
+            {value === 1 && <OrganizationInfo />}
+            {value === 2 && <ChangePasswordForm />}
         </DashboardContainer>
     );
 };

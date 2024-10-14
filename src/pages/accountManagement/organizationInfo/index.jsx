@@ -1,12 +1,11 @@
 import { Grid, Stack } from "@mui/material";
 
 // Custom Import
-import ProfileHeader from "./ProfileHeader";
 import BioContent from "../BioContent";
-import ProfileInfoContainer from "./ProfileInfo";
+import OrgProfileInfo from "./OrgProfileInfo";
+import OrgProfileHeader from "./OrgProfileHeader";
 
-// =========== Start UserProfile ===========
-const UserProfile = () => {
+const OrganizationInfo = () => {
     return (
         <Stack>
             <Stack gap={3}>
@@ -14,7 +13,7 @@ const UserProfile = () => {
                     {/* Profile Header and Bio Content in the same parent */}
                     <Grid item xs={12} md={4} sx={{ display: "flex", flexDirection: "column" }}>
                         <Stack spacing={2} direction="column">
-                            <ProfileHeader />
+                            <OrgProfileHeader />
                             <BioContent />
                         </Stack>
                     </Grid>
@@ -22,7 +21,7 @@ const UserProfile = () => {
                     {/* Profile Info on the right side */}
                     <Grid item xs={12} md={8} sx={{ height: "100%" }}>
                         <Stack>
-                            <ProfileInfoContainer />
+                            <OrgProfileInfo />
                         </Stack>
                     </Grid>
                 </Grid>
@@ -31,5 +30,4 @@ const UserProfile = () => {
     );
 };
 
-export default UserProfile;
-// =========== End UserProfile ===========
+export default OrganizationInfo;
