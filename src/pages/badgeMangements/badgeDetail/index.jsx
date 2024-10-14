@@ -1,19 +1,21 @@
 // React Import
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 // MUI Import
 import { Tab, Tabs, Typography } from "@mui/material";
+import { Description, Group, WorkspacePremium } from "@mui/icons-material";
 
 // Custom Import
 import DashboardContainer from "../../../components/styles/DashboardContainer";
-import { useFetchOneBadgeQuery } from "../../../store/api/badgeManagement/badgeApi";
 import PageTitle from "../../../components/PageTitle";
-import { Description, Group, WorkspacePremium } from "@mui/icons-material";
-import { useState } from "react";
 import BadgeInfo from "./BadgeInfo";
 import EarnerList from "./EarnerList";
-import CertificateGenerator from "../../certificateTest";
+import CertificateGenerator from "./CertificateGenerator";
+
+// Api import
+import { useFetchOneBadgeQuery } from "../../../store/api/badgeManagement/badgeApi";
 
 const BadgeDetail = () => {
     // Fetch ID from the URL
@@ -75,8 +77,8 @@ const BadgeDetail = () => {
             <PageTitle title="Badge Detail" subtitle={subtitle} />
             <Tabs value={value} onChange={handleChange} textColor="primary" indicatorColor="primary">
                 <Tab label="Description" icon={<Description />} iconPosition="start" />
-                <Tab label="Earner List" icon={<Group />} iconPosition="start" />
-                <Tab label="Your Certificate" icon={<WorkspacePremium />} iconPosition="start" />
+                {role === "issuer" && <Tab label="Earner List" icon={<Group />} iconPosition="start" />}
+                {role === "earner" && <Tab label="Your Certificate" icon={<WorkspacePremium />} iconPosition="start" />}
             </Tabs>
             {value === 0 && (
                 <BadgeInfo

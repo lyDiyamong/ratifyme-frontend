@@ -11,14 +11,14 @@ import DownloadDoneOutlined from "@mui/icons-material/DownloadDoneOutlined";
 import AutoAwesome from "@mui/icons-material/AutoAwesome";
 
 // Custom import
-import Certificate from "../../components/Certificate";
-import DashboardContainer from "../../components/styles/DashboardContainer";
-import useCatchStatus from "../../hooks/useCatchStatus";
-import AlertMessage from "../../components/alert/AlertMessage";
-import theme from "../../assets/themes";
+import Certificate from "../../../components/Certificate";
+import DashboardContainer from "../../../components/styles/DashboardContainer";
+import useCatchStatus from "../../../hooks/useCatchStatus";
+import AlertMessage from "../../../components/alert/AlertMessage";
+import theme from "../../../assets/themes";
 
 // Api import
-import { useFetchOneBadgeQuery, useUploadCertiMutation } from "../../store/api/badgeManagement/badgeApi";
+import { useFetchOneBadgeQuery, useUploadCertiMutation } from "../../../store/api/badgeManagement/badgeApi";
 
 const CertificateGenerator = () => {
     // Global state hook

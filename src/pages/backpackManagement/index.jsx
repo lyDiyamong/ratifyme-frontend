@@ -7,7 +7,7 @@ import BackpackList from "./BackpackList";
 const BackpackManagement = () => {
     return (
         <DashboardContainer sx={{ pb: 4 }}>
-            <PageTitle title="BackPack Management" />
+            <PageTitle title="Backpack Management" />
             <SearchBar showButton={false} textInButton="Add Badge">
                 <BackpackList />
             </SearchBar>
