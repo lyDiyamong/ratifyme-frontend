@@ -31,6 +31,7 @@ const BadgeDetail = () => {
     let role = roleId;
     let subtitle;
     let activeUserId;
+    let renderedTab
 
     switch (role) {
         case 1: {
@@ -46,12 +47,14 @@ const BadgeDetail = () => {
             role = "issuer";
             activeUserId = issuerData.id;
             subtitle = "Recognizing skills, empowering futures.";
+            renderedTab = <EarnerList emails={selectedEmails} />
             break;
         }
         case 4: {
             role = "earner";
             activeUserId = earnerData.id;
             subtitle = "A mark of achievement, a step forward.";
+            renderedTab = <CertificateGenerator />
             break;
         }
     }
@@ -89,8 +92,7 @@ const BadgeDetail = () => {
                     emails={selectedEmails}
                 />
             )}
-            {value === 1 && <EarnerList emails={selectedEmails} />}
-            {value === 2 && <CertificateGenerator />}
+            {value === 1 && renderedTab}
         </DashboardContainer>
     );
 };

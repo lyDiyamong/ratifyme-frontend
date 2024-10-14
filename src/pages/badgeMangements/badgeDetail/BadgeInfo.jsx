@@ -48,15 +48,6 @@ const days = durationInMs / (1000 * 60 * 60 * 24);
 // Define role-based access for tab content
 const hasAccess = ["issuer", "earner"].includes(userRole);
 
-
-// State for handling selected emails
-const [selectedEmails, setSelectedEmails] = useState([]);
-
-// Handler to get emails from IssuerBadgeButton
-const handleGetEmails = (emails) => {
-    setSelectedEmails(emails);
-};
-
 const handleDeleteBadge = async (id) => {
     try {
         await deleteBadge(id).unwrap();
@@ -185,7 +176,7 @@ const DetailItem = ({ label, value, isSmallScreen }) => (
                             </Typography>
 
                             <Typography sx={{ fontSize: theme.typography.body1 }} color={theme.palette.text.secondary}>
-                                Issued By {result.Issuer?.User?.username}
+                                Issued By {`${result?.Issuer?.User?.firstName} ${result?.Issuer?.User?.lastName}`}
                             </Typography>
 
                             <Typography sx={{ fontSize: theme.typography.body1 }} color={theme.palette.text.secondary}>
@@ -270,7 +261,7 @@ const DetailItem = ({ label, value, isSmallScreen }) => (
                         />
                         <DetailItem
                             label="Issuer"
-                            value={result.Issuer?.User?.username || "Unknown Issuer"}
+                            value={`${result?.Issuer?.User?.firstName} ${result?.Issuer?.User?.lastName}` || "Unknown Issuer"}
                             isSmallScreen={isSmallScreen}
                         />
                         <DetailItem
