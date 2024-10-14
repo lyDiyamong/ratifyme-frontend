@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { Stack, Box, Typography, IconButton, Button } from "@mui/material";
 import { CameraAltRounded } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 // Custom Import
 import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
 import MaleUserDefault from "../../../assets/images/MaleUser.svg";
@@ -20,17 +20,32 @@ import {
     useDeleteUserPfMutation,
     useUploadUserPfMutation,
 } from "../../../store/api/users/userInfoProfileApi";
+import { useGetIssuersQuery } from "../../../store/api/issuerManagement/issuerApi";
+import { useGetInstitutionQuery } from "../../../store/api/institutionManagement/institutionApi";
 
 // =========== Start Profile Header ===========
-const ProfileHeader = () => {
+const OrgProfileHeader = () => {
     const { userId } = useSelector((state) => state.global);
     const [open, setOpen] = useState(false);
     const [updateImage, setUpdateImage] = useState(DefaultProfileSvg);
     const { data: info } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
+    const { data: issuers, isLoading: isLoadingIssuer } = useGetIssuersQuery();
+    const { data: institutions, isLoading: isLoadingInstitution } = useGetInstitutionQuery();
     const userData = info?.data;
 
     const [updateImg] = useUploadUserPfMutation();
     const [deleteImg] = useDeleteUserPfMutation();
+
+    const issuerData = issuers?.data?.find((issuer) => issuer.userId === userId) || {};
+
+    const institutionData = institutions?.data?.find((institution) => institution.userId === userId) || {};
+
+    // All data to fetch, NOTE: cannot use dinamically cuz the fetching data is different
+    const institutionName = institutionData?.institutionName || issuerData.Institution?.institutionName;
+    const institutionCode = institutionData?.code || issuerData.Institution?.code;
+    const institutionImage =
+        institutionData?.institutionProfileImage || issuerData.Institution?.institutionProfileImage;
+    const institutionEmail = institutionData?.institutionEmail || issuerData.Institution?.institutionEmail;
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -56,8 +71,14 @@ const ProfileHeader = () => {
         setUpdateImage(null);
     };
 
+    // console.log("my insti", issuerData?.Institution.institutionName);
+    // console.log("my insti data👨🏻‍💻", issuerData?.Institution);
+
     useEffect(() => {
-        if (userData?.profileImage) {
+        // Update the image based on the issuer data if available
+        if (institutionImage) {
+            setUpdateImage(institutionImage);
+        } else if (userData?.profileImage) {
             setUpdateImage(userData?.profileImage);
         } else {
             // Set based on gender if no profile image exists
@@ -69,8 +90,10 @@ const ProfileHeader = () => {
                 setUpdateImage(DefaultProfileSvg);
             }
         }
-    }, [userData?.profileImage, userData?.Gender?.name]);
+    }, [issuerData, userData?.profileImage, userData?.Gender?.name]);
 
+    const userRole = userData?.Role.id;
+    const isDisabled = userRole === 3 || userRole === 4;
 
     return (
         <Stack
@@ -80,7 +103,6 @@ const ProfileHeader = () => {
                 borderRadius: "16px",
                 p: "24px",
                 width: "100%",
-                Width: "100%",
                 alignItems: "center",
                 position: "relative",
                 bgcolor: theme.palette.customColors.white,
@@ -142,55 +164,57 @@ const ProfileHeader = () => {
 
             {/* User Info */}
             <Typography sx={{ fontSize: theme.typography.h4, fontWeight: theme.fontWeight.semiBold }}>
-                {`${userData?.firstName || ""} ${userData?.lastName || ""}`}
+                {institutionName || "N/A"}
             </Typography>
             <Typography sx={{ fontSize: theme.typography.h5, color: theme.palette.text.disabled }}>
-                @{userData?.username || "N/A"}
+                Code: {institutionCode || "N/A"}
             </Typography>
 
-            <Typography sx={{ fontSize: theme.typography.body2, color: "text.secondary", mt: 1 }}>
-                Position: {userData?.Role.name || "N/A"}
+            <Typography sx={{ fontSize: theme.typography.body2, color: "text.secondary" }}>
+                {institutionEmail || "N/A"}
             </Typography>
 
-            {/* Save Button */}
-            <Stack direction={{sm: "row", xss: 'column'}} spacing={0.5} mt={2}>
-                <Button
-                    onClick={handleClickOpen}
-                    variant="contained"
-                    startIcon={<EditIcon />}
-                    sx={{
-                        // width: "80%",
-                        px: 2,
-                        mt: 2,
-                        background: theme.palette.secondary.light,
-                        color: theme.palette.customColors.white,
-                        fontWeight: "bold",
-                        borderRadius: "30px",
-                        
-                    }}
-                >
-                    Edit profile
-                </Button>
-                <Button
-                    onClick={handleDeleteImage}
-                    variant="outlined"
-                    startIcon={<DeleteForeverIcon/>}
-                    color="error"
-                    sx={{
-                        px: 2,
-                        mt: 2,
-                        fontWeight: "bold",
-                        borderRadius: "30px",
-                    }}
-                >
-                    Remove
-                </Button>
-            </Stack>
+            {/* Conditionally render the Remove button */}
+            {!isDisabled && (
+                <Stack direction={{ sm: "row", xss: "column" }} spacing={0.5} mt={2}>
+                    <Button
+                        onClick={handleClickOpen}
+                        variant="contained"
+                        startIcon={<EditIcon />}
+                        sx={{
+                            px: 2,
+                            mt: 2,
+                            background: theme.palette.secondary.light,
+                            color: theme.palette.customColors.white,
+                            fontWeight: "bold",
+                            borderRadius: "30px",
+                        }}
+                    >
+                        Edit profile
+                    </Button>
+
+                    <Button
+                        onClick={handleDeleteImage}
+                        variant="outlined"
+                        startIcon={<DeleteForeverIcon />}
+                        color="error"
+                        sx={{
+                            px: 2,
+                            mt: 2,
+                            fontWeight: "bold",
+                            borderRadius: "30px",
+                        }}
+                    >
+                        Remove
+                    </Button>
+                </Stack>
+            )}
+
             {/* Edit Profile Modal */}
             <EditProfileModal open={open} onClose={handleClose} userData={userData} />
         </Stack>
     );
 };
 
-export default ProfileHeader;
+export default OrgProfileHeader;
 // =========== End Profile Header ===========

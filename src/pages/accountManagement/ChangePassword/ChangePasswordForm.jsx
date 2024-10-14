@@ -37,19 +37,35 @@ const ChangePasswordForm = () => {
                 borderRadius: theme.customShape.section,
                 justifyContent: "space-between",
                 alignItems: "center",
-                padding: "32px",
+                padding: 4,
                 bgcolor: theme.palette.customColors.white,
-                gap: 4,
-                mb: 3,
-                mt: 4,
+                gap: { md: 4, xss: 0 },
             }}
         >
             {/* Start Text Container */}
-            <Stack maxWidth={600} gap={4}>
-                <Typography sx={{ fontSize: theme.typography.body1 }}>
-                    Your new password must be different from previous used passwords.
-                </Typography>
-
+            <Stack maxWidth={600} gap={3}>
+                <Stack flexDirection="column">
+                    <Typography
+                        variant="h2"
+                        sx={{
+                            fontSize: theme.typography.h2,
+                            fontWeight: theme.fontWeight.bold,
+                            color: theme.palette.text.primary,
+                            lineHeight: 1.8,
+                        }}
+                    >
+                        Change Password
+                    </Typography>
+                    <Typography
+                        variant="h4"
+                        sx={{
+                            fontSize: theme.typography.body2,
+                            color: theme.palette.text.secondary,
+                        }}
+                    >
+                        Your new password must be different from previous used passwords.
+                    </Typography>
+                </Stack>
                 <Box
                     component="form"
                     onSubmit={handleSubmit(onSubmit)}
