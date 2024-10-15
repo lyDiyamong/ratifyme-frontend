@@ -54,7 +54,7 @@ const BadgeDetail = () => {
             role = "earner";
             activeUserId = earnerData.id;
             subtitle = "A mark of achievement, a step forward.";
-            renderedTab = <CertificateGenerator />
+            renderedTab = <CertificateGenerator badgeId={id} />
             break;
         }
     }

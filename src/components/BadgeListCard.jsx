@@ -33,16 +33,7 @@ const BadgeListCard = ({ badges, onView, roleId }) => {
         setItemsPerPage(isLargeScreen ? 8 : isMediumScreen ? 6 : 4);
     }, [isLargeScreen, isMediumScreen]);
 
-    // // Determine which badges to display based on the role
-    // let badges = [];
-    // let issuerName
-    // if (roleId === 2 || roleId === 1) {
-    //     result = badges;
-    // } else if (roleId === 3) {
-    //     result = badges?.BadgeClasses;
-    //     issuerName = `${badges?.User?.firstName} ${badges?.User?.lastName}`
-    // }
-
+    console.log("Badges", badges);
     // Pagination handling
     const pageCount = Math.ceil(badges?.length / itemsPerPage);
     const currentBadges = badges?.slice((page - 1) * itemsPerPage, page * itemsPerPage);
@@ -147,6 +138,17 @@ const BadgeListCard = ({ badges, onView, roleId }) => {
                                             }}
                                         >
                                             {`${badge?.Issuer?.User?.firstName} ${badge?.Issuer?.User?.lastName} | ${badge?.Institution?.institutionName}`}
+                                        </Typography>
+                                        <Typography
+                                            variant="body3"
+                                            sx={{
+                                                pt: 1,
+                                                color: theme.palette.text.disabled,
+                                                whiteSpace: "nowrap",
+                                                overflow: "hidden",
+                                            }}
+                                        >
+                                            {`${badge?.description}`}
                                         </Typography>
                                     </Stack>
                                 </CardContent>

@@ -16,18 +16,19 @@ import DashboardContainer from "../../../components/styles/DashboardContainer";
 import useCatchStatus from "../../../hooks/useCatchStatus";
 import AlertMessage from "../../../components/alert/AlertMessage";
 import theme from "../../../assets/themes";
+import { SpinLoading } from "../../../components/loading/SpinLoading";
 
 // Api import
 import { useFetchOneBadgeQuery, useUploadCertiMutation } from "../../../store/api/badgeManagement/badgeApi";
 
-const CertificateGenerator = () => {
+const CertificateGenerator = ({badgeId}) => {
     // Global state hook
     const { userInfo } = useSelector((state) => state.global);
     // Get reference of HTMLELEMENT
     const certificateRef = useRef();
 
     // Badge fetching hook
-    const { data: badgeResponse, isLoading } = useFetchOneBadgeQuery(4);
+    const { data: badgeResponse, isLoading } = useFetchOneBadgeQuery(badgeId);
     const badgeData = badgeResponse?.data;
 
     // Upload Certificate hook

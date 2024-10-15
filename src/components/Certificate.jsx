@@ -39,7 +39,7 @@ const Certificate = forwardRef(({ recipientName, date, badge }, ref) => (
                 <Typography variant="h3" fontWeight={theme.fontWeight.semiBold}>
                     RatifyMe
                 </Typography>
-                <Typography variant="body2" >
+                <Typography variant="body2">
                     RatifyMe by{" "}
                     <span style={{ color: theme.palette.primary.main, fontWeight: theme.fontWeight.semiBold }}>
                         TechA
@@ -121,15 +121,20 @@ const Certificate = forwardRef(({ recipientName, date, badge }, ref) => (
                     maxHeight={150}
                 />
                 {/* Certificate description */}
-                <Typography
-                    sx={{
-                        fontSize: theme.typography.body2,
-                        color: theme.palette.text.disabled,
-                        lineHeight: 2,
-                    }}
-                >
-                    {badge?.description}
-                </Typography>
+                <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    <Typography
+                        sx={{
+                            fontSize: theme.typography.body2,
+                            color: theme.palette.text.disabled,
+                            lineHeight: 2,
+                            width: 500,
+                            textWrap: "wrap",
+                            textAlign: "center",
+                        }}
+                    >
+                        {badge?.description}
+                    </Typography>
+                </Box>
                 {/* Issuer name */}
                 <Typography
                     sx={{
