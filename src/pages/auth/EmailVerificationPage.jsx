@@ -69,7 +69,7 @@ const EmailVerificationPage = () => {
         event.preventDefault();
         try {
             setLoading(true);
-            const result = await verifyEmail({ verifyCode: verificationCode }).unwrap();
+            await verifyEmail({ verifyCode: verificationCode }).unwrap();
             navigate(roleId === 2 ? "/price" : "/login");
         } catch (error) {
             setVerificationCode("");

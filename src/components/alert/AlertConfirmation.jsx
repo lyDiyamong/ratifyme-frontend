@@ -25,6 +25,7 @@ const AlertConfirmation = ({
     iconBgColor = theme.palette.primary.light,
     showIcon = true,
 }) => {
+
     return (
         
         <Dialog
