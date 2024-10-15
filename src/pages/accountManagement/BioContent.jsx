@@ -74,15 +74,15 @@ const BioContent = () => {
                     borderRadius: "14px",
                     p: { xss: "20px", sm: "16px" },
                     bgcolor: theme.palette.customColors.white,
-                    alignItems: "center",
+                    // alignItems: "center",
                     gap: 2,
-                    width: "100%",
-                    height: "290px",
+                    // width: "100%",
+                    height: "270px",    
                     position: "relative",
                 }}
             >
                 {/* Header with "About Me" and Status */}
-                <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: "100%" }}>
+                <Stack direction="row" >
                     <Stack direction="row" gap={3} alignItems="center">
                         <Typography
                             sx={{
@@ -201,7 +201,7 @@ const BioContent = () => {
                         gap={1}
                         justifyContent="flex-end"
                         width="100%"
-                        position="absolute"
+                        // position="absolute"
                         bottom={16}
                         px={2}
                     >

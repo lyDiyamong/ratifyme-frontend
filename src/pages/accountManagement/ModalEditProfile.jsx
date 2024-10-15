@@ -112,7 +112,7 @@ const EditProfileModal = ({ open, userData, onClose }) => {
                     {/* Use PhoneNumberForm component here */}
                     <PhoneNumberForm name="phoneNumber" label="Phone Number" control={control} required />
 
-                    <FormInput name="email" label="Email Address" control={control} type="email" />
+                    <FormInput name="email" label="Email Address" control={control} type="email" disabled={true} />
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <Controller
                             name="dateOfBirth"

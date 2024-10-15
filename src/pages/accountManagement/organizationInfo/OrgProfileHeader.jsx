@@ -24,7 +24,6 @@ import {
 import { useGetIssuersQuery } from "../../../store/api/issuerManagement/issuerApi";
 import { useGetInstitutionQuery } from "../../../store/api/institutionManagement/institutionApi";
 import MoreMenu from "../../../components/MoreMenu";
-import { display } from "@mui/system";
 
 // =========== Start Profile Header ===========
 const OrgProfileHeader = () => {
