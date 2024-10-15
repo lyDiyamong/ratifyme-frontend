@@ -1,7 +1,7 @@
 // React import
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
-import { useId, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 
 // Mui import
@@ -26,8 +26,6 @@ const CheckoutButton = ({ id }) => {
     const { institutionData, userId } = useSelector((state) => state.global);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-
-    console.log('institutionData', institutionData);
 
     // Handle redirecting
     const handleClick = async (id) => {
