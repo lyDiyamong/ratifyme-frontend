@@ -15,7 +15,17 @@ export const achievementApi = createApi({
             }),
             invalidatesTags: [{ type: "Achievement", id: "LIST" }],
         }),
+        issueOnBadge: builder.mutation({
+            query: ({ achievementId }) => ({
+                url: "/issuers/badgeClasses/issueOn",
+                method: "PATCH",
+                body: {
+                    achievementId: achievementId,
+                },
+            }),
+            invalidatesTags: [{ type: "EarnerAchievement", id: "LIST" }],
+        }),
     }),
 });
 
-export const { useSendBadgeMutation } = achievementApi;
+export const { useSendBadgeMutation, useIssueOnBadgeMutation } = achievementApi;
