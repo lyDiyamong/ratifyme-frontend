@@ -2,18 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import {
-    AppBar,
-    Box,
-    Toolbar,
-    Button,
-    Menu,
-    MenuItem,
-    Slide,
-    Stack,
-    Typography,
-    IconButton,
-} from "@mui/material";
+import { AppBar, Box, Toolbar, Button, Menu, MenuItem, Slide, Stack, Typography, IconButton } from "@mui/material";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
@@ -168,9 +157,7 @@ const Navbar = () => {
                             >
                                 <Box display={"flex"} gap={2} alignItems="center">
                                     <Link to="/price">
-                                        <Button sx={buttonStyle}>
-                                            Price
-                                        </Button>
+                                        <Button sx={buttonStyle}>Price</Button>
                                     </Link>
                                     <Link to="/contactus">
                                         <Button sx={buttonStyle}>Contact Us</Button>
@@ -279,34 +266,39 @@ const Navbar = () => {
                                             </Button>
                                         </Link>
                                     </MenuItem>
-                                    <MenuItem onClick={handleMenuClose}>
-                                        <Link to="/login">
-                                            <Button
-                                                variant="text"
-                                                sx={{
-                                                    borderRadius: "0px",
-                                                    backgroundColor: "inherit",
-                                                    fontWeight: theme.fontWeight.bold,
-                                                }}
-                                            >
-                                                Sign In
-                                            </Button>
-                                        </Link>
-                                    </MenuItem>
-                                    <MenuItem onClick={handleMenuClose}>
-                                        <Link to="/signup">
-                                            <Button
-                                                variant="text"
-                                                sx={{
-                                                    borderRadius: "0px",
-                                                    backgroundColor: "inherit",
-                                                    fontWeight: theme.fontWeight.bold,
-                                                }}
-                                            >
-                                                Sign Up
-                                            </Button>
-                                        </Link>
-                                    </MenuItem>
+
+                                    {!userInfo && (
+                                        <>
+                                            <MenuItem onClick={handleMenuClose}>
+                                                <Link to="/login">
+                                                    <Button
+                                                        variant="text"
+                                                        sx={{
+                                                            borderRadius: "0px",
+                                                            backgroundColor: "inherit",
+                                                            fontWeight: theme.fontWeight.bold,
+                                                        }}
+                                                    >
+                                                        Sign In
+                                                    </Button>
+                                                </Link>
+                                            </MenuItem>
+                                            <MenuItem onClick={handleMenuClose}>
+                                                <Link to="/get-started">
+                                                    <Button
+                                                        variant="text"
+                                                        sx={{
+                                                            borderRadius: "0px",
+                                                            backgroundColor: "inherit",
+                                                            fontWeight: theme.fontWeight.bold,
+                                                        }}
+                                                    >
+                                                        Sign Up
+                                                    </Button>
+                                                </Link>
+                                            </MenuItem>
+                                        </>
+                                    )}
                                 </Menu>
 
                                 {institutionData && userInfo && (
