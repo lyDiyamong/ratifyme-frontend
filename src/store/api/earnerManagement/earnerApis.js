@@ -28,14 +28,6 @@ export const earnerApi = createApi({
             invalidatesTags: ["Earner"],
         }),
 
-        claimBadge: builder.mutation({
-            query: ({ earnerId, achievementIds, badgeClassId, status }) => ({
-                url: `/earners/achievement/${earnerId}`,
-                method: "PATCH",
-                body: { achievementIds, badgeClassId, status },
-            }),
-            invalidatesTags: ["Earner"],
-        }),
         fetchStatusBadge: builder.query({
             query: ({ id }) => ({
                 url: `/earners/earnerAchievement?earnerId=${id}`,
@@ -95,7 +87,6 @@ export const {
     useFetchEarnerQuery,
     useFetchEarnerByIdQuery,
     useDeleteEarnerByIdMutation,
-    useClaimBadgeMutation,
     useFetchStatusBadgeQuery,
     useFetchEarnerAchieByIdQuery,
     useUpdateEarnerByIdMutation,

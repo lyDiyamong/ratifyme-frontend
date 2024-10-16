@@ -30,6 +30,17 @@ export const achievementApi = createApi({
                 url: `earners/earnerAchievement?achievementId=${achievementId}`,
                 method: "GET",
             }),
+            providesTags: (result) => {
+                // If result exists, map over each earner and return a tag for each one
+                if (result?.data) {
+                    return [
+                        { type: "Achievement", id: "LIST" },
+                        ...result.data.map((earner) => ({ type: "Earner", id: earner.Earner.id })),
+                    ];
+                }
+                // Fallback tag if no result
+                return [{ type: "Achievement", id: "LIST" }];
+            },
         }),
     }),
 });
