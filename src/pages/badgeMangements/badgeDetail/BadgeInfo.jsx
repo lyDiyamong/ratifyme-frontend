@@ -30,7 +30,7 @@ const handleClose = () => setOpen(false);
 const { control } = useForm();
 
 // assign variable from props that has fetch value
-const result = badge?.data;
+const result = badge
 
 // assign variable to get achievement id to update
 const achievement = result?.Achievements?.map((achievement) => {

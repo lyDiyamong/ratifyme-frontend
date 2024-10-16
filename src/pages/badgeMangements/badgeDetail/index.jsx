@@ -24,7 +24,8 @@ const BadgeDetail = () => {
     const [selectedEmails, setSelectedEmails] = useState([]);
     // Fetch badge by ID
     const { roleId, issuerData, earnerData } = useSelector((state) => state.global);
-    const { data: oneBadge, isLoading, isError } = useFetchOneBadgeQuery(id);
+    const { data: oneBadgeRes, isLoading, isError } = useFetchOneBadgeQuery(id);
+    const oneBadge = oneBadgeRes?.data
     // Tab state
     const [value, setValue] = useState(0);
 
@@ -54,7 +55,7 @@ const BadgeDetail = () => {
             role = "earner";
             activeUserId = earnerData.id;
             subtitle = "A mark of achievement, a step forward.";
-            renderedTab = <CertificateGenerator badgeId={id} />
+            renderedTab = <CertificateGenerator badge={oneBadge} />
             break;
         }
     }
@@ -72,8 +73,6 @@ const BadgeDetail = () => {
     if (isLoading) return <Typography>Loading...</Typography>;
     if (isError) return <Typography>Error fetching badge details.</Typography>;
 
-    // If no badge is returned, render a fallback message
-    if (!oneBadge) return <Typography>No badge found with the provided ID.</Typography>;
 
     return (
         <DashboardContainer sx={{ display: "flex", flexDirection: "column", gap: 4 }}>

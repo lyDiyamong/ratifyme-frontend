@@ -44,6 +44,13 @@ export const earnerApi = createApi({
             }),
             providesTags: ["Earner"],
         }),
+        fetchEarnerAchieById: builder.query({
+            query: ( {achieveId, earnerId} ) => ({
+                url: `/earners/earnerAchievement/${achieveId}/earner/${earnerId}`,
+                method: "GET",
+            }),
+            providesTags: ["Earner"],
+        }),
     }),
 });
 
@@ -53,4 +60,5 @@ export const {
     useDeleteEarnerByIdMutation,
     useClaimBadgeMutation,
     useFetchStatusBadgeQuery,
+    useFetchEarnerAchieByIdQuery
 } = earnerApi;
