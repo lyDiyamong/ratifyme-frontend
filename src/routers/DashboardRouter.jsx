@@ -45,7 +45,7 @@ const DashbaordRouter = () => {
                 <Route path="/management/badges/badgeDetail/:id" element={<BadgeDetail />} />
                 <Route path="/myachievement" element={<AchievementManagement />} />
                 <Route path="/management/badges/editBadge/:id" element={<EditBadge />} />
-                <Route path="/organizations" element={<Organization />} />
+                <Route path="/organization" element={<Organization />} />
                 <Route path="/organizations/:id" element={<OrganizationInfo />} />
             </Route>
         </Routes>

@@ -6,6 +6,7 @@ import OrgProfileHeader from "./OrgProfileHeader";
 import OrganizationBio from "./OrganizationBio";
 import DashboardContainer from "../../../components/styles/DashboardContainer";
 import { useGetIssuersQuery } from "../../../store/api/issuerManagement/issuerApi";
+import PageTitle from "../../../components/PageTitle";
 
 const OrganizationInfo = () => {
     const { id } = useParams(); // Get the organization ID from the URL
@@ -13,11 +14,14 @@ const OrganizationInfo = () => {
 
     // Find the specific organization by ID from the fetched issuers
     const organization = issuers?.data?.find((issuer) => issuer.Institution.id === parseInt(id));
-    console.log("specific data of insti", organization);
 
     return (
         <DashboardContainer sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
             <Stack gap={3}>
+                <PageTitle
+                    title="Organization Details"
+                    subtitle="This section provides a detailed overview to help you understand the organization"
+                />
                 <Grid container spacing={3}>
                     {/* Profile Header and Bio Content */}
                     <Grid item xss={12} md={4}>

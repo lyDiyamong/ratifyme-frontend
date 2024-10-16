@@ -84,8 +84,8 @@ export const sidebarItems = [
     {
         text: "Organization",
         icon: OrganizationIconSvg,
-        path: "/organizations",
-        altText: "Backpack icon",
+        path: "/organization",
+        altText: "Organization icon",
         roles: [3],
     },
     {

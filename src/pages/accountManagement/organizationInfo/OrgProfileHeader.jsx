@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 // MUI Import
-import { Stack, Box, Typography, IconButton, Button } from "@mui/material";
+import { Stack, Box, Typography, IconButton, Button, Avatar } from "@mui/material";
 import { CameraAltRounded, FullscreenExitOutlined } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -39,11 +39,9 @@ const OrgProfileHeader = ({ institutionInfo }) => {
     const [updateImg] = useUploadUserPfMutation();
     const [deleteImg] = useDeleteUserPfMutation();
 
-    const issuerDataInsti = issuers?.data?.filter((issuer) => issuer?.userId === userId) || {};
-    console.log("Issuer data insti🎉", issuerDataInsti);
+    // const issuerDataInsti = issuers?.data?.filter((issuer) => issuer?.userId === userId) || {};
 
     const issuerData = issuers?.data?.find((issuer) => issuer?.userId === userId) || {};
-    console.log("Issuer data💥", issuerDataInsti);
 
     // const institutionData = institutions?.data?.find((institution) => institution.userId === userId) || {};
     const institutionData = institutions?.data?.find((institution) => institution.userId === userId) || {};
@@ -55,19 +53,16 @@ const OrgProfileHeader = ({ institutionInfo }) => {
                 return source[property];
             }
         }
-        return null; // or provide a default fallback value if all are undefined
+        return null;
     };
 
     // Use the function to get the institution values dynamically
-    const institutionName =
-        getDynamicValue("institutionName", institutionData, institutionInfo?.Institution) || "N/A";
+    const institutionName = getDynamicValue("institutionName", institutionData, institutionInfo?.Institution) || "N/A";
     const institutionCode = getDynamicValue("code", institutionData, institutionInfo?.Institution) || "N/A";
     const institutionImage =
-        getDynamicValue("institutionProfileImage", institutionData, institutionInfo?.Institution) ||
-        "N/A";
+        getDynamicValue("institutionProfileImage", institutionData, institutionInfo?.Institution) || "N/A";
     const institutionEmail =
         getDynamicValue("institutionEmail", institutionData, institutionInfo?.Institution) || "N/A";
-
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -126,6 +121,9 @@ const OrgProfileHeader = ({ institutionInfo }) => {
         { label: "Remove Profile", icon: <DeleteForeverIcon color="error" />, onClick: handleDeleteImage },
     ];
 
+    // Get the first letter of orgName for the avatar
+    const firstLetter = institutionName ? institutionName.charAt(0).toUpperCase() : "";
+
     return (
         <>
             <Stack
@@ -170,7 +168,7 @@ const OrgProfileHeader = ({ institutionInfo }) => {
                         <Box
                             component="img"
                             src={institutionImage || "https://www.mylittleadventure.com/images/default/default-img.png"}
-                            alt="Full size badge"
+                            alt="Image"
                             sx={{ width: "100%", height: "auto", borderRadius: "10px", cursor: "pointer" }}
                         />
                     </Box>
@@ -189,9 +187,6 @@ const OrgProfileHeader = ({ institutionInfo }) => {
                 >
                     <Box
                         onClick={() => setIsModalOpen(true)}
-                        component="img"
-                        src={updateImage || (userData?.Gender?.name === "male" ? MaleUserDefault : FemaleUserDefault)}
-                        alt="Profile"
                         sx={{
                             width: "100%",
                             height: "100%",
@@ -199,7 +194,42 @@ const OrgProfileHeader = ({ institutionInfo }) => {
                             borderRadius: "100%",
                             cursor: "pointer",
                         }}
-                    />
+                    >
+                        {updateImage ? (
+                            <Box
+                                component="img"
+                                src={updateImage}
+                                alt="Profile"
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.style.display = "none";
+                                    e.target.parentNode.querySelector(".avatar-fallback").style.display = "flex";
+                                }}
+                                sx={{
+                                    width: "100%",
+                                    height: "100%",
+                                    objectFit: "cover",
+                                    borderRadius: "100%",
+                                }}
+                            />
+                        ) : null}
+
+                        {/* Avatar as fallback */}
+                        <Avatar
+                            className="avatar-fallback"
+                            sx={{
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "cover",
+                                borderRadius: "100%",
+                                fontSize: 40,
+                                display: updateImage ? "none" : "flex",
+                            }}
+                        >
+                            {firstLetter || "?"}
+                        </Avatar>
+                    </Box>
+
                     {!isDisabled && (
                         <Box
                             sx={{
@@ -242,7 +272,15 @@ const OrgProfileHeader = ({ institutionInfo }) => {
                     Code: {institutionCode || "N/A"}
                 </Typography>
 
-                <Typography sx={{ fontSize: theme.typography.body2, color: "text.secondary" }}>
+                <Typography
+                    sx={{
+                        fontSize: theme.typography.body2,
+                        color: "text.secondary",
+                        wordBreak: "break-all",
+                        whiteSpace: "normal",
+                        overflow: "hidden",
+                    }}
+                >
                     {institutionEmail || "N/A"}
                 </Typography>
 

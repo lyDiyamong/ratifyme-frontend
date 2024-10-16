@@ -87,8 +87,8 @@ const InstitutionProfileCard = ({ cardImgLogo, orgName, orgEmail, cardBgImage, i
                 )}
             </CardAvatar>
             <Stack sx={{ justifyContent: "center", alignItems: "center", p: 1 }}>
-                <CardTitle textAlign="center">{orgName || "Above and Beyond School"}</CardTitle>
-                <CardSubtitle textAlign="center">{orgEmail || "anbschool@gmail.org"}</CardSubtitle>
+                <CardTitle textAlign="center">{orgName || "N/A"}</CardTitle>
+                <CardSubtitle textAlign="center">{orgEmail || "noemail@gmail.com"}</CardSubtitle>
             </Stack>
         </CardWrapper>
     );
