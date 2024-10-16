@@ -18,23 +18,24 @@ import InviteUserModal from "../../components/modals/InviteUserModal";
 import { useInviteEarnerMutation, useFetchAllInvitedUserQuery } from "../../store/api/userManagement/inviteUserApi";
 
 // ============ Start Table Earner Modal ============
-const TableEarner = ({ searchQuery }) => {
+const TableEarner = () => {
     // State for controlling dialog
     const [dialogOpen, setDialogOpen] = useState(false);
 
-    // Pagination and Sorting State
-    const [currentPage, setCurrentPage] = useState(2); // Current page number
-    const [rowsPerPage, setRowsPerPage] = useState(10); // Number of rows per page
-    const [sortColumn, setSortColumn] = useState("id"); // Default sorting column
-    const [sortOrder, setSortOrder] = useState("asc"); // Default sort order (ascending)
+    // Pagination and Sorting , LimitingState
+    const [currentPage, setCurrentPage] = useState(1); 
+    const [rowsPerPage, setRowsPerPage] = useState(10); 
+    const [sortColumn, setSortColumn] = useState("id"); 
+    const [sortOrder, setSortOrder] = useState("asc"); 
+    
 
-    const { data: response, isLoading, isError } = useFetchEarnerQuery({
+    const { data: earnerResponse, isLoading, isError } = useFetchEarnerQuery({
         page: currentPage,
         limit: rowsPerPage,
         sort: sortColumn,
         order: sortOrder,
-        search: searchQuery, // Apply search query if available
     });
+    console.log("Total earnes", earnerResponse?.total);
     
     const { roleId, userId, issuerData } = useSelector((state) => state.global);
     const [deleteEarner] = useDeleteEarnerByIdMutation();
@@ -62,24 +63,18 @@ const TableEarner = ({ searchQuery }) => {
     const [openModal, setOpenModal] = useState(false);
 
     // Earner data fetched from the API
-    const earnerData = response?.data;
+    const earnerData = earnerResponse?.data;
 
-    // Display earner in the earner table by the specific role , role = 1 (Admin), role = 2 (institutionOwner), role = 3 (issuer)
-    let filteredEarnerData;
 
     if (roleId === 1) {
-        filteredEarnerData = earnerData;
+        earnerData;
     } else if (roleId === 2) {
-        filteredEarnerData = earnerData?.filter((earner) => earner.Issuer?.Institution?.userId === userId);
+        earnerData?.filter((earner) => earner.Issuer?.Institution?.userId === userId);
     } else if (roleId === 3) {
-        filteredEarnerData = earnerData?.filter((earner) => earner.Issuer?.userId === userId);
+        earnerData?.filter((earner) => earner.Issuer?.userId === userId);
     }
 
-    // Further filter based on the search query (optional)
-    const searchedEarnerData = filteredEarnerData?.filter((earner) =>
-        earner.User.username.toLowerCase().includes(searchQuery.toLowerCase()),
-    );
-
+    
     // Handle View (open the modal)
     const handleView = (userId) => {
         setSelectedUserId(userId);
@@ -132,6 +127,7 @@ const TableEarner = ({ searchQuery }) => {
             console.error("Error sending invitation", error);
         }
     };
+
 
     // Define the columns including the action column
     const earnerColumns = [
@@ -190,6 +186,7 @@ const TableEarner = ({ searchQuery }) => {
         setSortOrder(newSortOrder);
     };
 
+
     return (
         <Box>
             {/* Modal for Viewing Profile */}
@@ -203,13 +200,12 @@ const TableEarner = ({ searchQuery }) => {
             ) : (
                 <TableCustom
                     title="Earner List"
-                    data={searchedEarnerData}
+                    data={earnerData}
                     columns={earnerColumns}
                     onAddNew={handleInviteEarner}
                     addNewLabel="Invite Earner"
                     pagination
-                    paginationTotalRows={response?.total || 0} 
-                    currentPage={currentPage}
+                    totalRows={earnerResponse?.total || 0} 
                     rowsPerPage={rowsPerPage}
                     onPageChange={handlePageChange}
                     onRowsPerPageChange={handleRowsPerPageChange} 
@@ -218,7 +214,7 @@ const TableEarner = ({ searchQuery }) => {
                     sortOrder={sortOrder}
                 >
                     {/* Display NoRecordData inside the table when no earners match the search query */}
-                    {searchedEarnerData?.length === 0 && <NoRecordData />}
+                    {earnerData?.length === 0 && <NoRecordData />}
                 </TableCustom>
             )}
 
