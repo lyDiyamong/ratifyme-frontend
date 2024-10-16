@@ -4,7 +4,6 @@ import DataTable from "react-data-table-component";
 // MUI Imports
 import {
     Box,
-    Checkbox,
     TextField,
     MenuItem,
     Select,
@@ -15,7 +14,6 @@ import {
     IconButton,
     InputAdornment,
 } from "@mui/material";
-import ArrowDownward from "@mui/icons-material/ArrowDownward";
 
 // Custom Imports
 import MenuSelection from "./TableAction/MenuSelection";
@@ -60,7 +58,6 @@ const TableCustom = ({
     title = "",
     data = [],
     columns = [],
-    sortIcon = false,
     actions = false,
     children,
     onSearch = () => {},
@@ -71,7 +68,6 @@ const TableCustom = ({
     onAddNew = () => {},
     addNewLabel = "Add New",
     totalRows,
-    currentPage,
     rowsPerPage,
 }) => {
     // Default columns if not provided
@@ -90,6 +86,7 @@ const TableCustom = ({
         : columns.length > 0
         ? columns
         : defaultColumns;
+
 
     return (
         <Box
@@ -174,11 +171,11 @@ const TableCustom = ({
                     </Box>
 
                     {/* Filter By */}
-                    <FormControl sx={{ minWidth: { md: 100, sm: 80, xs: 60, xss: 40 } }} size="small">
+                    {/* <FormControl sx={{ minWidth: { md: 100, sm: 80, xs: 60, xss: 40 } }} size="small">
                         <InputLabel>
                             {" "}
                             <IconButton sx={{ display: { md: "none", sm: "flex" } }}>
-                                <FilterListOutlined sx={{fontSize: '24px'}} />
+                                <FilterListOutlined sx={{ fontSize: "24px" }} />
                             </IconButton>
                             <Typography
                                 sx={{ fontSize: "14px", display: { md: "flex", sm: "none", xs: "none", xss: "none" } }}
@@ -187,19 +184,19 @@ const TableCustom = ({
                             </Typography>
                         </InputLabel>
 
-                        <Select label="Filter by" onChange={(e) => onFilterChange(e.target.value)} >
+                        <Select label="Filter by" onChange={(e) => onFilterChange(e.target.value)}>
                             <MenuItem value="All">All</MenuItem>
                             <MenuItem value="Category1">Category 1</MenuItem>
                             <MenuItem value="Category2">Category 2</MenuItem>
                         </Select>
-                    </FormControl>
+                    </FormControl> */}
 
                     {/* Sort By */}
                     <FormControl sx={{ minWidth: { md: 100, sm: 80, xs: 60, xss: 40 } }} size="small">
                         <InputLabel>
                             {" "}
                             <IconButton sx={{ display: { md: "none", sm: "flex" } }}>
-                                <SwapVertIcon sx={{fontSize: '24px'}}/>
+                                <SwapVertIcon sx={{ fontSize: "24px" }} />
                             </IconButton>
                             <Typography
                                 sx={{ fontSize: "14px", display: { md: "flex", sm: "none", xs: "none", xss: "none" } }}
@@ -229,30 +226,33 @@ const TableCustom = ({
                     >
                         {addNewLabel}
                     </Button>
+
                 </Box>
             </Box>
 
-            {/* Data Table */}
+            {/* DataTable */}
             <DataTable
                 columns={dynamicColumns}
                 data={data}
+                defaultSortFieldId={1}
                 pagination
+                paginationServer
                 paginationTotalRows={totalRows}
+                paginationRowsPerPageOptions={[5, 10, 20]}
                 paginationPerPage={rowsPerPage}
-                paginationRowsPerPageOptions={[5, 10, 30, 50, 100]}
-                onChangePage={onPageChange}
-                onChangeRowsPerPage={onRowsPerPageChange}
-                selectableRowsComponent={Checkbox}
-                sortIcon={sortIcon && <ArrowDownward />}
-                dense
+                onChangePage={onPageChange} 
+                onChangeRowsPerPage={onRowsPerPageChange} 
                 customStyles={customTableStyles}
+                responsive
+                highlightOnHover
+                striped
             />
+
 
             {children}
         </Box>
     );
 };
-
 // =========== End TableCustom ===========
 
 export default TableCustom;
