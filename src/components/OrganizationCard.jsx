@@ -47,6 +47,14 @@ const OrganizationLogo = styled(Avatar)(({ theme }) => ({
  * @param {boolean} [showFacebook=true] - Flag to show or hide the Facebook icon.
  * @param {boolean} [showLinkedIn=true] - Flag to show or hide the LinkedIn icon.
  * @returns {JSX.Element} A styled card displaying organization details.
+ *
+ * @example
+ * ===== Usage =====
+ *   <OrganizationCard
+ *       title={institution?.institutionName}
+ *       description={institution?.institutionBio}
+ *       logoUrl={institution?.User.profileImage}
+ *   />
  */
 const OrganizationCard = ({
     // Default tag
@@ -65,7 +73,6 @@ const OrganizationCard = ({
     showLinkedIn = true,
 }) => {
     return (
-
         // ============ Start Organization Card ============ //
         <Box>
             <Card
@@ -166,7 +173,6 @@ const OrganizationCard = ({
         </Box>
 
         // ============ End Organization Card ============ //
-
     );
 };
 

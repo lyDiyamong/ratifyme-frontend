@@ -1,10 +1,8 @@
 // React imports
 import { Controller } from "react-hook-form";
-import { TextField } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import theme from "../assets/themes";
 
 /**
  * DateSelectionForm Component
@@ -15,6 +13,31 @@ import theme from "../assets/themes";
  * @param {boolean} required - add * to label
  *
  * @returns {JSX.Element} The rendered DateSelectionForm component.
+ *
+ * ===== Usage =====
+ * const MyForm = () => {
+    // Initialize the form control using useForm from react-hook-form
+    const { handleSubmit, control } = useForm();
+
+    // Form submission handler
+    const onSubmit = (data) => {
+        console.log("Form Data: ", data);
+    };
+
+    return (
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <DateSelectionForm
+                control={control}
+                name="startDate"
+                label="Start Date"
+                required={true} // Mark the field as required
+            />
+            <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
+                Submit
+            </Button>
+        </form>
+    );
+};
  */
 const DateSelectionForm = ({ control, name, label, required=false }) => {
     return (
