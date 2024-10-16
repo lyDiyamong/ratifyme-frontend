@@ -17,17 +17,15 @@ const AlertConfirmation = ({
     onConfirm,
     icon: Icon = ErrorOutline,
     iconColor,
-    cancelText = "Cancel",
-    confirmText = "Confirm",
+    cancelText,
+    confirmText,
     dialogWidth = "450px",
     confirmButtonColor = theme.palette.primary.main,
     confirmButtonColorHover,
     iconBgColor = theme.palette.primary.light,
     showIcon = true,
 }) => {
-
     return (
-        
         <Dialog
             open={open}
             onClose={onClose}
@@ -63,7 +61,7 @@ const AlertConfirmation = ({
                             borderRadius: theme?.customShape.btn,
                         }}
                     >
-                        <Icon sx={{ fontSize: 32, color: iconColor }} />
+                        {Icon && <Icon sx={{ fontSize: 32, color: iconColor }} />}
                     </Box>
                 )}
                 <DialogTitle
@@ -93,36 +91,40 @@ const AlertConfirmation = ({
                     justifyContent: "center",
                 }}
             >
-                <Button
-                    onClick={onClose}
-                    sx={{
-                        color: theme.palette.customColors.gray500,
-                        borderColor: theme.palette.customColors.gray500,
-                        textTransform: "none",
-                        padding: "8px 32px",
-                        borderRadius: theme?.customShape?.btn || "8px",
-                        ":hover": {
-                            backgroundColor: "#f0f0f0",
-                        },
-                    }}
-                >
-                    {cancelText}
-                </Button>
-                <Button
-                    onClick={onConfirm}
-                    sx={{
-                        color: "#fff",
-                        backgroundColor: confirmButtonColor,
-                        textTransform: "none",
-                        padding: "8px 32px",
-                        borderRadius: theme?.customShape?.btn || "8px",
-                        ":hover": {
-                            backgroundColor: confirmButtonColorHover,
-                        },
-                    }}
-                >
-                    {confirmText}
-                </Button>
+                {cancelText && (
+                    <Button
+                        onClick={onClose}
+                        sx={{
+                            color: theme.palette.customColors.gray500,
+                            borderColor: theme.palette.customColors.gray500,
+                            textTransform: "none",
+                            padding: "8px 32px",
+                            borderRadius: theme?.customShape?.btn || "8px",
+                            ":hover": {
+                                backgroundColor: "#f0f0f0",
+                            },
+                        }}
+                    >
+                        {cancelText}
+                    </Button>
+                )}
+                {confirmText && (
+                    <Button
+                        onClick={onConfirm}
+                        sx={{
+                            color: "#fff",
+                            backgroundColor: confirmButtonColor,
+                            textTransform: "none",
+                            padding: "8px 32px",
+                            borderRadius: theme?.customShape?.btn || "8px",
+                            ":hover": {
+                                backgroundColor: confirmButtonColorHover,
+                            },
+                        }}
+                    >
+                        {confirmText}
+                    </Button>
+                )}
             </DialogActions>
         </Dialog>
     );
