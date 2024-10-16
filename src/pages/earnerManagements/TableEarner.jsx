@@ -23,20 +23,21 @@ const TableEarner = () => {
     const [dialogOpen, setDialogOpen] = useState(false);
 
     // Pagination and Sorting , LimitingState
-    const [currentPage, setCurrentPage] = useState(1); 
-    const [rowsPerPage, setRowsPerPage] = useState(10); 
-    const [sortColumn, setSortColumn] = useState("id"); 
-    const [sortOrder, setSortOrder] = useState("asc"); 
-    
+    const [currentPage, setCurrentPage] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [sortColumn, setSortColumn] = useState("id");
 
-    const { data: earnerResponse, isLoading, isError } = useFetchEarnerQuery({
+    const {
+        data: earnerResponse,
+        isLoading,
+        isError,
+    } = useFetchEarnerQuery({
         page: currentPage,
         limit: rowsPerPage,
         sort: sortColumn,
-        order: sortOrder,
     });
     console.log("Total earnes", earnerResponse?.total);
-    
+
     const { roleId, userId, issuerData } = useSelector((state) => state.global);
     const [deleteEarner] = useDeleteEarnerByIdMutation();
     const issuerId = issuerData?.id;
@@ -65,7 +66,6 @@ const TableEarner = () => {
     // Earner data fetched from the API
     const earnerData = earnerResponse?.data;
 
-
     if (roleId === 1) {
         earnerData;
     } else if (roleId === 2) {
@@ -74,7 +74,6 @@ const TableEarner = () => {
         earnerData?.filter((earner) => earner.Issuer?.userId === userId);
     }
 
-    
     // Handle View (open the modal)
     const handleView = (userId) => {
         setSelectedUserId(userId);
@@ -127,47 +126,10 @@ const TableEarner = () => {
             console.error("Error sending invitation", error);
         }
     };
-
-
-    // Define the columns including the action column
-    const earnerColumns = [
-        {
-            name: "ID",
-            selector: (row) => row.id || "N/A",
-            sortable: true,
-        },
-        {
-            name: "Name",
-            selector: (row) => row.User?.username || "N/A",
-            sortable: true,
-        },
-        {
-            name: "Email",
-            selector: (row) => row.User?.email || "N/A",
-            sortable: true,
-        },
-        {
-            name: "Date Of Birth",
-            selector: (row) => FormatYear(row.User?.dateOfBirth) || "N/A",
-            sortable: true,
-        },
-        {
-            name: "Badge",
-            selector: (row) => row.Achievement?.BadgeClass?.name || "N/A",
-            sortable: true,
-        },
-        {
-            name: "Academic Year",
-            selector: (row) => FormatYear(row.AcademicBackground?.academicYear) || "N/A",
-            sortable: true,
-        },
-        {
-            name: "Action",
-            selector: (row) => (
-                <MenuSelection onView={() => handleView(row.id)} onDelete={() => handleDelete(row.id)} />
-            ),
-        },
-    ];
+    // Handle sorting change
+    const handleSortChange = (column) => {
+        setSortColumn(column);
+    };
 
     // Handle page change
     const handlePageChange = (newPage) => {
@@ -179,13 +141,39 @@ const TableEarner = () => {
         setRowsPerPage(newLimit);
     };
 
-    // Handle sorting change
-    const handleSortChange = (column) => {
-        const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
-        setSortColumn(column);
-        setSortOrder(newSortOrder);
-    };
-
+    // Define the columns including the action column
+    const earnerColumns = [
+        {
+            name: "ID",
+            selector: (row) => row.id || "N/A",
+        },
+        {
+            name: "Name",
+            selector: (row) => row.User?.username || "N/A",
+        },
+        {
+            name: "Email",
+            selector: (row) => row.User?.email || "N/A",
+        },
+        {
+            name: "Date Of Birth",
+            selector: (row) => FormatYear(row.User?.dateOfBirth) || "N/A",
+        },
+        {
+            name: "Badge",
+            selector: (row) => row.Achievement?.BadgeClass?.name || "N/A",
+        },
+        {
+            name: "Academic Year",
+            selector: (row) => FormatYear(row.AcademicBackground?.academicYear) || "N/A",
+        },
+        {
+            name: "Action",
+            selector: (row) => (
+                <MenuSelection onView={() => handleView(row.id)} onDelete={() => handleDelete(row.id)} />
+            ),
+        },
+    ];
 
     return (
         <Box>
@@ -205,13 +193,12 @@ const TableEarner = () => {
                     onAddNew={handleInviteEarner}
                     addNewLabel="Invite Earner"
                     pagination
-                    totalRows={earnerResponse?.total || 0} 
+                    totalRows={earnerResponse?.total || 0}
                     rowsPerPage={rowsPerPage}
                     onPageChange={handlePageChange}
-                    onRowsPerPageChange={handleRowsPerPageChange} 
-                    onSortChange={handleSortChange} 
+                    onRowsPerPageChange={handleRowsPerPageChange}
+                    onSortChange={handleSortChange}
                     sortColumn={sortColumn}
-                    sortOrder={sortOrder}
                 >
                     {/* Display NoRecordData inside the table when no earners match the search query */}
                     {earnerData?.length === 0 && <NoRecordData />}
