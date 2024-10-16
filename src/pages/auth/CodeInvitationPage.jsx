@@ -1,11 +1,10 @@
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { useLocation, useNavigate, Link } from "react-router-dom";
-import { Box, Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import FormInput from "../../components/FormInput";
 import theme from "../../assets/themes";
 import { useEffect, useState } from "react";
-import { useVerifyInvitationMutation } from "../../store/api/userManagement/verifyInvitationApi";
 
 // Custom import
 import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
@@ -13,6 +12,10 @@ import { Stack } from "@mui/system";
 import EmailOutlined from "@mui/icons-material/EmailOutlined";
 import OutletImageComponent from "./OutletImageTemplate";
 import TaskAltOutlined from "@mui/icons-material/TaskAltOutlined";
+import AlertConfirmation from "../../components/alert/AlertConfirmation";
+import { useVerifyInvitationMutation } from "../../store/api/userManagement/verifyInvitationApi";
+import PageLoading from "../../components/loading/PageLoading";
+import { CheckCircleOutline } from "@mui/icons-material";
 
 const schema = yup.object({
     email: yup.string().email("Invalid email").required("Email is required"),
@@ -30,7 +33,7 @@ const CodeInvitationPage = () => {
     const [verifyInvitation, { isLoading, isError, error }] = useVerifyInvitationMutation();
     const [openErrorDialog, setOpenErrorDialog] = useState(false);
 
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const queryRole = new URLSearchParams(search).get("as") || "";
@@ -75,7 +78,8 @@ const CodeInvitationPage = () => {
 
     return (
         <Box sx={{ height: "100vh", display: "flex" }}>
-            {/* Right side with login form */}
+            <PageLoading isLoading={isLoading} />
+            {/* Right side */}
             <Box
                 flexGrow={0}
                 display="flex"
@@ -146,24 +150,26 @@ const CodeInvitationPage = () => {
                         >
                             {isLoading ? "Verifying..." : "Verify"}
                         </Button>
-                        <Dialog open={openErrorDialog} onClose={handleCloseErrorDialog} maxWidth="lg">
-                            <DialogTitle>Verification Failed</DialogTitle>
-                            <DialogContent>
-                                <Typography variant="body1">
-                                    {error?.data?.message ||
-                                        "There was an issue with verifying your invitation. Please try again or log in."}
-                                </Typography>
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={() => navigate(`/login`)} variant="contained" color="primary">
-                                    Go to Login
-                                </Button>
-                                <Button onClick={handleCloseErrorDialog} variant="outlined">
-                                    Close
-                                </Button>
-                            </DialogActions>
-                        </Dialog>
                     </Box>
+
+                    {/* AlertConfirmation component for error dialog */}
+                    <AlertConfirmation
+                        open={openErrorDialog}
+                        title="Verification Successfully"
+                        message={
+                            error?.data?.message ||
+                            "There was an issue with verifying your invitation. Please try again or log in."
+                        }
+                        onConfirm={() => navigate(`/login`)}
+                        onClose={handleCloseErrorDialog}
+                        confirmText="Go to Login"
+                        cancelText="Close"
+                        iconColor={theme.palette.customColors.green400}
+                        iconBgColor={theme.palette.customColors.green100}
+                        icon={CheckCircleOutline}
+
+                    />
+
                     <Box my={3}>
                         <Typography variant="h3" fontWeight={theme.fontWeight.semiBold} mb={1}>
                             Join via RatifyME
@@ -176,7 +182,7 @@ const CodeInvitationPage = () => {
                 </Stack>
             </Box>
 
-            {/* Left side with text */}
+            {/* Left side */}
             <OutletImageComponent />
         </Box>
     );
