@@ -19,7 +19,7 @@ import theme from "../../../assets/themes";
 import ComingSoonImg from "../../../assets/images/Coming-soon.svg";
 
 // Api import
-import { useFetchOneBadgeQuery, useUploadCertiMutation } from "../../../store/api/badgeManagement/badgeApi";
+import { useUploadCertiMutation } from "../../../store/api/badgeManagement/badgeApi";
 import { useFetchEarnerAchieByIdQuery } from "../../../store/api/earnerManagement/earnerApis";
 
 const CertificateGenerator = ({ badge }) => {
