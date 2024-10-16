@@ -26,7 +26,7 @@ import { useFetchVerificationDataQuery } from "../store/api/earnerManagement/ver
 /**
  * A modal component to display verification data.
  *
- * @param {boolean} open - Indicates if the modal is open or closed.
+ * @param {boolean} open - Indicates if the modal is open or closed..
  * @param {function} handleClose - Function to handle closing the modal.
  * @param {string} verificationId - The ID of the verification data to fetch.
  *
