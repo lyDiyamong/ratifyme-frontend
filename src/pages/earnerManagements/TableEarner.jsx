@@ -137,32 +137,26 @@ const TableEarner = () => {
         {
             name: "ID",
             selector: (row) => row.id || "N/A",
-            sortable: true,
         },
         {
             name: "Name",
             selector: (row) => row.User?.username || "N/A",
-            sortable: true,
         },
         {
             name: "Email",
             selector: (row) => row.User?.email || "N/A",
-            sortable: true,
         },
         {
             name: "Date Of Birth",
             selector: (row) => FormatYear(row.User?.dateOfBirth) || "N/A",
-            sortable: true,
         },
         {
             name: "Badge",
             selector: (row) => row.Achievement?.BadgeClass?.name || "N/A",
-            sortable: true,
         },
         {
             name: "Academic Year",
             selector: (row) => FormatYear(row.AcademicBackground?.academicYear) || "N/A",
-            sortable: true,
         },
         {
             name: "Action",
