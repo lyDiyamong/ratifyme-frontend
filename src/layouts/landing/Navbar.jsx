@@ -80,7 +80,9 @@ const Navbar = () => {
         if (!hasActiveSubscription) {
             e.preventDefault();
             setAlertTitle("Subscription Inactive");
-            setAlertMessage("Your subscription is inactive. Would you like to renew your plan?");
+            setAlertMessage(
+                "Your subscription is currently inactive. Please choose a service plan to access our digital badge platform.",
+            );
             setAlertOpen(true);
         }
     };
@@ -355,6 +357,7 @@ const Navbar = () => {
                 message={alertMessage}
                 onConfirm={handleConfirm}
                 onClose={handleCancel}
+                confirmText="Okay"
                 iconColor={theme.palette.customColors.orange400}
                 iconBgColor={theme.palette.customColors.orange200}
             />

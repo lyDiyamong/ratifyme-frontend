@@ -228,7 +228,6 @@ const TableEarner = () => {
                 handleClose={handleCloseDialog}
                 onSubmit={handleInviteSubmit}
                 invitedUsers={invitedEarners}
-                user='earner'
             />
         </Box>
     );
