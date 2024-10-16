@@ -17,7 +17,7 @@ import {
 import MenuSelection from "./TableAction/MenuSelection";
 import theme from "../assets/themes/index";
 import AddIcon from "@mui/icons-material/Add";
-import { FilterListOutlined, SearchOutlined } from "@mui/icons-material";
+import {SearchOutlined } from "@mui/icons-material";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 
 // Custom styling for DataTable
