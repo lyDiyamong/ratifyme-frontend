@@ -1,20 +1,58 @@
-import { CardMedia, Typography } from '@mui/material'
-import { Box } from '@mui/system'
+import { CardMedia, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import StatusCode from "../../../assets/images/NoData.svg";
-import theme from '../../../assets/themes';
+import theme from "../../../assets/themes";
+import TableCustom from "../../../components/TableCustom";
+import { useFetchEmailEarnerQuery } from "../../../store/api/achievements/achievementApi";
 
-const EarnerList = ({emails}) => {
+import FormatYear from "../../../utils/formatDate";
+
+const EarnerList = ({ achievementId }) => {
+    const { data: earner } = useFetchEmailEarnerQuery({ achievementId });
+    const earnerColumns = [
+        {
+            name: "ID",
+            selector: (row) => row.id || "N/A",
+            sortable: true,
+        },
+        {
+            name: "Name",
+            selector: (row) => row.User?.username || "N/A",
+            sortable: true,
+        },
+        {
+            name: "Email",
+            selector: (row) => row.User?.email || "N/A",
+            sortable: true,
+        },
+        {
+            name: "Date Of Birth",
+            selector: (row) => FormatYear(row.User?.dateOfBirth) || "N/A",
+            sortable: true,
+        },
+        {
+            name: "Badge",
+            selector: (row) => row.Achievement?.BadgeClass?.name || "N/A",
+            sortable: true,
+        },
+        {
+            name: "Academic Year",
+            selector: (row) => FormatYear(row.AcademicBackground?.academicYear) || "N/A",
+            sortable: true,
+        },
+        // {
+        //     name: "Action",
+        //     selector: (row) => (
+        //         <MenuSelection onView={() => handleView(row.id)} onDelete={() => handleDelete(row.id)} />
+        //     ),
+        // },
+    ];
     // State for handling selected emails
-
-  return (
-    emails?.length !== 0 ? (
-        <Box>
-            {emails.map((item, index) => (
-                <Box key={index} sx={{ py: 1 }}>
-                    {item}
-                </Box>
-            ))}
-        </Box>
+    const earners = earner?.data.map((earner) => earner?.Earner);
+    console.log("earner", earners);
+    console.log("achievementId", achievementId);
+    return earners?.length !== 0 ? (
+        <TableCustom title="Earner List" data={earners} columns={earnerColumns}></TableCustom>
     ) : (
         <Box
             display="flex"
@@ -30,14 +68,9 @@ const EarnerList = ({emails}) => {
             <Typography variant="h6" mt={2} textAlign="center" color={theme.palette.text.secondary}>
                 No Earner Has Invited
             </Typography>
-            <CardMedia
-                component="img"
-                image={StatusCode}
-                alt="No badges found"
-                sx={{ maxWidth: 400, width: "100%" }}
-            />
+            <CardMedia component="img" image={StatusCode} alt="No badges found" sx={{ maxWidth: 400, width: "100%" }} />
         </Box>
-    )
-)}
+    );
+};
 
-export default EarnerList
+export default EarnerList;

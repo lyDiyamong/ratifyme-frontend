@@ -32,11 +32,6 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
     const result = badge;
 
     // assign variable to get achievement id to update
-    const achievement = result?.Achievements?.map((achievement) => {
-        return achievement.id;
-    });
-
-    // assign variable to get achievement id to update
     const achieveId = badge.Achievements.find(({ badgeClassId }) => badgeClassId === badge.id).id;
     // assign variables for date
     const createdAt = result?.createdAt ? result.createdAt.split("T")[0] : "N/A";
