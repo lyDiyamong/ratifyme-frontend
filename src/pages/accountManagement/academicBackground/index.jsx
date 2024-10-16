@@ -1,18 +1,34 @@
-import { Stack, Typography } from "@mui/material";
+import { CardMedia, Stack, Typography } from "@mui/material";
 import theme from "../../../assets/themes";
 import AcademicInfo from "./academicInfo";
+import { useFetchEarnerQuery } from "../../../store/api/earnerManagement/earnerApis";
+import { useFetchInfoUserByIdQuery } from "../../../store/api/users/userInfoProfileApi";
+import { useSelector } from "react-redux";
+import FormatDate from "../../../utils/formatDate";
+import { Box } from "@mui/system";
+import StatusCode from "../../../assets/images/Search-Illustation.svg";
 
 const AcademicBackground = () => {
+    const { userId } = useSelector((state) => state.global);
+    const { data: response, isLoading, isError } = useFetchEarnerQuery();
+
+    // Fetch user data and bio
+    const { data: info } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
+
+    const earnerData = response?.data;
+    // console.log("User Id", info?.data?.id);
+    // console.log("Data", earnerData);
+
+    if (isLoading) return <Typography>Loading...</Typography>;
+    if (isError) return <Typography>Error loading data.</Typography>;
+
     return (
         <Stack
             sx={{
-                maxWidth: 1200,
-                mx: "auto",
                 backgroundColor: "#fff",
                 p: 3,
                 borderRadius: "12px",
-                boxShadow: theme.customShadows.default,
-                // border: '1px solid #E2E2E2',
+                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
                 gap: 3,
             }}
         >
@@ -35,12 +51,59 @@ const AcademicBackground = () => {
                         color: theme.palette.text.secondary,
                     }}
                 >
-                    Your new password must be different from previous used passwords.
+                    This highlights your educational journey, showcasing the diverse experiences and knowledge.
                 </Typography>
             </Stack>
-            <AcademicInfo />
-            {/* <AcademicInfo />
-            <AcademicCard /> */}
+
+            <Stack
+                direction="row"
+                sx={{
+                    flexWrap: "wrap",
+                    justifyContent: earnerData?.length === 0 ? "center" : "start",
+                    gap: 4,
+                    "& > *": {
+                        flexBasis: "calc(33.33% - 24px)",
+                        "@media (max-width: 1000px)": {
+                            flexBasis: "calc(50% - 24px)",
+                        },
+                        "@media (max-width: 700px)": {
+                            flexBasis: "100%",
+                        },
+                    },
+                }}
+            >
+                {earnerData?.length === 0 ? (
+                    <Box display="flex" flexDirection="column" alignItems="center" p={4}>
+                        <Typography variant="h6" mt={2} textAlign="center" color={theme.palette.text.secondary}>
+                            There are no Academic Background!
+                        </Typography>
+                        <CardMedia
+                            component="img"
+                            image={StatusCode}
+                            alt="No badges found"
+                            sx={{ maxWidth: 400, width: "100%" }}
+                        />
+                    </Box>
+                ) : (
+                    earnerData
+                        ?.filter((data) => data.userId === userId)
+                        .map((data, index) => (
+                            <AcademicInfo
+                                key={index}
+                                academicData={{
+                                    label: data.AcademicBackground?.FieldOfStudy?.name || "N/A",
+                                    year: FormatDate(data.AcademicBackground?.academicYear) || "N/A",
+                                    description:
+                                        data.AcademicBackground?.fieldOfStudyId.description ||
+                                        "No description available",
+                                    fieldStudy: data.AcademicBackground?.fieldOfStudyId.name || "N/A",
+                                    academicLevel: data.AcademicBackground?.AcademicLevel?.name || "N/A",
+                                    academicYear: FormatDate(data.AcademicBackground?.academicYear) || "N/A",
+                                }}
+                            />
+                        ))
+                )}
+            </Stack>
         </Stack>
     );
 };
