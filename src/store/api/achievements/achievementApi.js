@@ -25,7 +25,13 @@ export const achievementApi = createApi({
             }),
             invalidatesTags: [{ type: "EarnerAchievement", id: "LIST" }],
         }),
+        fetchEmailEarner: builder.query({
+            query: ({ achievementId }) => ({
+                url: `earners/earnerAchievement?achievementId=${achievementId}`,
+                method: "GET",
+            }),
+        }),
     }),
 });
 
-export const { useSendBadgeMutation, useIssueOnBadgeMutation } = achievementApi;
+export const { useSendBadgeMutation, useIssueOnBadgeMutation, useFetchEmailEarnerQuery } = achievementApi;
