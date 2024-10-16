@@ -44,7 +44,7 @@ const ContactUsPage = () => {
                             Contact Us
                         </Typography>
                         <Typography gutterBottom my={2}>
-                            Thank you for your interest in VerifyME by TechA. We
+                            Thank you for your interest in RatifyMe by TechA. We
                             are the experts in digital credentialing, and we are
                             here to help you:
                         </Typography>

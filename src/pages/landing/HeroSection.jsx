@@ -73,7 +73,7 @@ const HeroSection = () => {
                                 my: "0",
                             }}
                         >
-                            Unlock the future of credentials with accessible, Techa Cambodia Kamjea
+                            Welcome to RatifyMe, The Future of Trust !!
                         </Box>
                         <Box
                             component="p"
@@ -90,8 +90,7 @@ const HeroSection = () => {
                                 },
                             }}
                         >
-                            Transform the future of education and employment by launching a digital credential business
-                            that empowers people to securely showcase their skills in a rapidly evolving world.
+                            Ensure the authenticity of qualifications, certifications, and professional credentials in real-time. With RatifyMe, organizations and individuals can seamlessly verify digital credentials with unparalleled security and transparency. Simplify your verification process and build trust faster.
                         </Box>
                         <Box component="div">
                             <TextField

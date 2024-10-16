@@ -18,7 +18,7 @@ export default function WhatWeDo() {
             }}
         >
             {/* Title */}
-            <Box sx={{mb: 4}}>
+            <Box sx={{ mb: 4 }}>
                 <Typography
                     component="h1"
                     variant="h1"
@@ -30,7 +30,7 @@ export default function WhatWeDo() {
                         textAlign: "center",
                     }}
                 >
-                    What We Do
+                    What RatifyMe Do
                 </Typography>
                 <Typography sx={{ textAlign: "center" }}>
                     Brings through the world’s most connected digital credentialing network.
@@ -49,13 +49,13 @@ export default function WhatWeDo() {
                 </Grid>
                 <Grid container item xs={12} md={6} gap={2.5}>
                     <Typography variant="body1">
-                        At VerifyME, we provide fast, secure verification of badges and credentials for students,
+                        At RatifyMe, we provide fast, secure verification of badges and credentials for students,
                         professionals, and organizations. Our platform simplifies the process, ensuring authenticity and
                         reducing the risk of fraud.
                     </Typography>
                     <Typography variant="body1">
                         With automated systems and real-time checks, we streamline verification, making it efficient and
-                        reliable. Whether you're validating student badges or professional credentials, VerifyME
+                        reliable. Whether you're validating student badges or professional credentials, RatifyMe
                         guarantees secure, accurate results.
                     </Typography>
                     <Typography variant="body1">
@@ -77,14 +77,14 @@ export default function WhatWeDo() {
                             color: theme.palette.text.primary,
                         }}
                     >
-                        What Our Service Provide ?
+                        What RatifyMe Provide ?
                     </Typography>
 
                     <Typography variant="body1">
-                        Provide the digital credential standard that allows individuals to earn, display, and share
-                        verified badges representing their skills and achievements. Each badge contains detailed
-                        metadata, such as the issuing organization, criteria for earning the badge, and evidence of the
-                        achievement.
+                        At RatifyMe we provide the digital credential standard that allows individuals to earn, display,
+                        and share verified badges representing their skills and achievements. Each badge contains
+                        detailed metadata, such as the issuing organization, criteria for earning the badge, and
+                        evidence of the achievement.
                     </Typography>
                     <Typography variant="body1">
                         Making it a trustworthy and portable way to showcase skills across different platforms and
