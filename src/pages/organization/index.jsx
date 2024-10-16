@@ -12,7 +12,7 @@ const Organization = () => {
 
     // Filter the issuers data based on the current user ID
     const issuerDataInsti = issuers?.data?.filter((issuer) => issuer?.userId === userId) || [];
-    console.log("insti:", issuerDataInsti);
+
     const bgImage = [
         "https://www.gstatic.com/classroom/themes/img_code.jpg",
         "https://www.gstatic.com/classroom/themes/img_reachout.jpg",
