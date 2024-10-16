@@ -20,8 +20,7 @@ const ModalContainer = ({ open, onClose, title, options, control, onGetEmail, ba
 
     const earnerIds =
         earner?.data?.filter((earner) => list.includes(earner.User.email))?.map((earner) => earner.id) || [];
-    
-    console.log(earnerIds, badgeId)
+
     // Handle option selection and add to the list
     const handleSelect = (selectedOption) => {
         const selectedEmail = fetchOptions.find((option) => option.value === selectedOption)?.label;

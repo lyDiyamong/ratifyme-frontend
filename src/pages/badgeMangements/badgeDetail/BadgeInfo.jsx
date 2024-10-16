@@ -124,7 +124,7 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
                         </Typography>
                     </Box>
                     <Stack mt={1}>
-                        <IssueToEarnerButton emails={emails} badgeId={result?.id || []} />
+                        <IssueToEarnerButton achievementId={achievement || []} />
                         <Button onClick={handleClose}>Cancel</Button>
                     </Stack>
                 </Stack>
@@ -196,6 +196,7 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
                                             onGetEmail={onGetEmails}
                                             control={control}
                                             issuerId={activeUserId}
+                                            badgeId={result.id}
                                         />
                                         {/* <IssueToEarnerButton emails={selectedEmails} badgeId={result?.id || []} /> */}
                                         <Button

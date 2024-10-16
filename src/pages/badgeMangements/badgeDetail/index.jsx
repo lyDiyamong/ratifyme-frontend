@@ -25,14 +25,15 @@ const BadgeDetail = () => {
     // Fetch badge by ID
     const { roleId, issuerData, earnerData } = useSelector((state) => state.global);
     const { data: oneBadgeRes, isLoading, isError } = useFetchOneBadgeQuery(id);
-    const oneBadge = oneBadgeRes?.data
+    const oneBadge = oneBadgeRes?.data;
     // Tab state
     const [value, setValue] = useState(0);
+    const achievementId = oneBadge?.Achievements.map((achievement) => achievement.id);
 
     let role = roleId;
     let subtitle;
     let activeUserId;
-    let renderedTab
+    let renderedTab;
 
     switch (role) {
         case 1: {
@@ -48,14 +49,14 @@ const BadgeDetail = () => {
             role = "issuer";
             activeUserId = issuerData.id;
             subtitle = "Recognizing skills, empowering futures.";
-            renderedTab = <EarnerList emails={selectedEmails} />
+            renderedTab = <EarnerList emails={selectedEmails} achievementId={achievementId} />;
             break;
         }
         case 4: {
             role = "earner";
             activeUserId = earnerData.id;
             subtitle = "A mark of achievement, a step forward.";
-            renderedTab = <CertificateGenerator badge={oneBadge} />
+            renderedTab = <CertificateGenerator badge={oneBadge} />;
             break;
         }
     }
@@ -72,7 +73,6 @@ const BadgeDetail = () => {
     // Handle loading and error states
     if (isLoading) return <Typography>Loading...</Typography>;
     if (isError) return <Typography>Error fetching badge details.</Typography>;
-
 
     return (
         <DashboardContainer sx={{ display: "flex", flexDirection: "column", gap: 4 }}>

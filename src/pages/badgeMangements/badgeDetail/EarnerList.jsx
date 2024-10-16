@@ -49,8 +49,6 @@ const EarnerList = ({ achievementId }) => {
     ];
     // State for handling selected emails
     const earners = earner?.data.map((earner) => earner?.Earner);
-    console.log("earner", earners);
-    console.log("achievementId", achievementId);
     return earners?.length !== 0 ? (
         <TableCustom title="Earner List" data={earners} columns={earnerColumns}></TableCustom>
     ) : (
