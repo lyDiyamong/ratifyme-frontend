@@ -6,6 +6,7 @@ import ReportIconSvg from "../assets/icons/report.svg";
 import SettingIconSvg from "../assets/icons/setting.svg";
 import LogoutIconSvg from "../assets/icons/logout.svg";
 import AchievementIconSvg from "../assets/icons/achievements.svg";
+import OrganizationIconSvg from "../assets/icons/OrganizationSvg.svg";
 
 // Navigation Items
 export const sidebarItems = [
@@ -81,6 +82,13 @@ export const sidebarItems = [
         roles: [4],
     },
     {
+        text: "Organization",
+        icon: OrganizationIconSvg,
+        path: "/organizations",
+        altText: "Backpack icon",
+        roles: [3],
+    },
+    {
         text: "Settings",
         icon: SettingIconSvg,
         dropdown: true,
@@ -88,7 +96,7 @@ export const sidebarItems = [
             {
                 text: "Account",
                 path: "/setting/account",
-            }
+            },
         ],
     },
     {

@@ -67,7 +67,7 @@ const getValue = (obj, keyPath) => {
 };
 
 // =========== Start ProfileInfoContainer ===========
-const OrgProfileInfo = () => {
+const OrgProfileInfo = ({institutionInfo}) => {
     // Fetching data from table user, institution, issuer and earner
     const { userId } = useSelector((state) => state.global);
     const { data: userInfo, isLoading: isLoadingUser } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
@@ -81,9 +81,10 @@ const OrgProfileInfo = () => {
 
     const userData = userInfo?.data;
     const roleName = userData?.Role?.name;
-
+    
     const institutionData = institutions?.data?.find((institution) => institution.userId === userId) || {};
     const issuerData = issuers?.data?.find((issuer) => issuer.userId === userId) || {};
+    console.log('my dataa of this shit😱', issuerData)
     const earnerData = earners?.data?.find((earner) => earner.userId === userId) || {};
 
     const details = profileInfoConfig[roleName] || [{ label: "No data available for this role" }];
@@ -115,7 +116,7 @@ const OrgProfileInfo = () => {
                                 ? "Tech-A"
                                 : getValue(userData, valueKey) ||
                                   getValue(institutionData, valueKey) ||
-                                  getValue(issuerData, valueKey) ||
+                                  getValue(institutionInfo, valueKey) ||
                                   getValue(earnerData, valueKey) ||
                                   "N/A";
 

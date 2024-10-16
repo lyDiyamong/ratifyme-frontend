@@ -18,7 +18,7 @@ import { useGetIssuersQuery } from "../../../store/api/issuerManagement/issuerAp
 import { useGetInstitutionQuery } from "../../../store/api/institutionManagement/institutionApi";
 
 // =========== Start BioContent in profile page ===========
-const OrganizationBio = () => {
+const OrganizationBio = ({ institutionInfo }) => {
     const { userId } = useSelector((state) => state.global);
 
     const [institutionBio, setInstitutionBio] = useState("");
@@ -35,8 +35,19 @@ const OrganizationBio = () => {
     const issuerData = issuers?.data?.find((issuer) => issuer.userId === userId) || {};
     const institutionData = institutions?.data?.find((institution) => institution.userId === userId) || {};
 
+    // Utility function to get the first available value from multiple data sources
+    const getDynamicValue = (property, ...sources) => {
+        for (let source of sources) {
+            if (source?.[property] !== undefined) {
+                return source[property];
+            }
+        }
+        return null; // or provide a default fallback value if all are undefined
+    };
+
     // Use institutionBio instead of bio
-    const institutionBioText = institutionData.institutionBio || issuerData.Institution?.institutionBio || "";
+    const institutionBioText =
+        getDynamicValue("institutionBio", institutionData, institutionInfo?.Institution) || "There are no bio!";
 
     const userRole = info?.data?.Role?.id;
     const isDisabled = userRole === 3 || userRole === 4;
