@@ -167,7 +167,7 @@ const EditBadge = () => {
     }, [badgeData]);
 
     return (
-        <DashboardContainer>
+        <DashboardContainer sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             {message && (
                 <AlertMessage variant={isError ? "error" : "success"} onClose={() => setMessage("")}>
                     {message}
@@ -208,11 +208,11 @@ const EditBadge = () => {
                 </Box>
             </Modal>
 
-            <Box component="form" onSubmit={handleSubmit(onSubmit)} py={3}>
                 <PageTitle
                     title="Edit Badge"
                     subtitle="Update the details to ensure it accurately represents your achievement."
                 />
+            <Box component="form" onSubmit={handleSubmit(onSubmit)} >
 
                 <Stack
                     sx={{

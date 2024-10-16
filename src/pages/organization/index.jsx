@@ -1,10 +1,11 @@
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import PageTitle from "../../components/PageTitle";
 import InstitutionProfileCard from "./InstitutionProfileCard";
-import { Stack, Typography } from "@mui/material";
+import { Stack, Typography, Box, CardMedia } from "@mui/material"; // Added Box import
 import { useGetIssuersQuery } from "../../store/api/issuerManagement/issuerApi";
 import { useSelector } from "react-redux";
 import theme from "../../assets/themes";
+import StatusCode from "../../assets/images/Search-Illustation.svg";
 
 const Organization = () => {
     const { userId } = useSelector((state) => state.global);
@@ -23,7 +24,7 @@ const Organization = () => {
 
     return (
         <DashboardContainer sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
-            <PageTitle title="Organization" subtitle="All of your Organization that's you working on." />
+            <PageTitle title="Organization" subtitle="All of your Organizations that you're working on." />
 
             <Stack
                 sx={{
@@ -34,43 +35,58 @@ const Organization = () => {
                     gap: 3,
                 }}
             >
-                <Typography fontWeight="bold">Total Organization: {issuerDataInsti.length}</Typography>
-                <Stack
-                    direction="row"
-                    sx={{
-                        flexWrap: "wrap",
-                        gap: 4,
-                        "& > *": {
-                            flexBasis: "calc(25% - 24px)",
-                            "@media (max-width: 1450px)": {
-                                flexBasis: "calc(33.33% - 24px)",
-                            },
-                            "@media (max-width: 900px)": {
-                                flexBasis: "calc(50% - 24px)",
-                            },
-                            "@media (max-width: 600px)": {
-                                flexBasis: "100%",
-                            },
-                        },
-                    }}
-                >
-                    {!isLoadingIssuer &&
-                        issuerDataInsti.map((issuer, index) => {
-                            // Randomly select a background color
-                            const randomBgImage = bgImage[index % bgImage.length];
+                <Typography variant="h6">Total Organization: {issuerDataInsti.length}</Typography>
 
-                            return (
-                                <InstitutionProfileCard
-                                    key={index}
-                                    cardImgLogo={issuer.Institution.institutionProfileImage}
-                                    orgEmail={issuer.Institution.institutionEmail}
-                                    orgName={issuer.Institution.institutionName}
-                                    cardBgImage={randomBgImage}
-                                    institutionId={issuer.Institution.id}
-                                />
-                            );
-                        })}
-                </Stack>
+                {issuerDataInsti.length !== 0 ? (
+                    <Stack
+                        direction="row"
+                        sx={{
+                            flexWrap: "wrap",
+                            gap: 4,
+                            "& > *": {
+                                flexBasis: "calc(25% - 24px)",
+                                "@media (max-width: 1450px)": {
+                                    flexBasis: "calc(33.33% - 24px)",
+                                },
+                                "@media (max-width: 900px)": {
+                                    flexBasis: "calc(50% - 24px)",
+                                },
+                                "@media (max-width: 600px)": {
+                                    flexBasis: "100%",
+                                },
+                            },
+                        }}
+                    >
+                        {!isLoadingIssuer &&
+                            issuerDataInsti.map((issuer, index) => {
+                                // Randomly select a background color
+                                const randomBgImage = bgImage[index % bgImage.length];
+
+                                return (
+                                    <InstitutionProfileCard
+                                        key={index}
+                                        cardImgLogo={issuer.Institution.institutionProfileImage}
+                                        orgEmail={issuer.Institution.institutionEmail}
+                                        orgName={issuer.Institution.institutionName}
+                                        cardBgImage={randomBgImage}
+                                        institutionId={issuer.Institution.id}
+                                    />
+                                );
+                            })}
+                    </Stack>
+                ) : (
+                    <Box display="flex" flexDirection="column" alignItems="center" p={4}>
+                        <Typography variant="h6" mt={2} textAlign="center" color={theme.palette.text.secondary}>
+                            No Organization Has Invited
+                        </Typography>
+                        <CardMedia
+                            component="img"
+                            image={StatusCode}
+                            alt="No badges found"
+                            sx={{ maxWidth: 400, width: "100%" }}
+                        />
+                    </Box>
+                )}
             </Stack>
         </DashboardContainer>
     );

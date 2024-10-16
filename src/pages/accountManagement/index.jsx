@@ -30,8 +30,10 @@ const AccountManagement = () => {
         setValue(newValue);
     };
 
+    // 1 = role Admin, 2 = role Institution Owner, 3 = role Issuer, 4 = role Earner
     const userRole = userData?.Role.id;
     const isDisabled = userRole === 3 || userRole === 2;
+    const orgInfoDisabled = userRole === 3 || userRole === 4;
 
     return (
         <DashboardContainer sx={{ display: "flex", gap: 3, flexDirection: "column", mb: 3 }}>
@@ -40,7 +42,7 @@ const AccountManagement = () => {
             {/* Tabs for User Profile, Bio Content, and Settings */}
             <Tabs value={value} onChange={handleChange} textColor="primary" indicatorColor="primary">
                 <Tab icon={<PersonIcon />} label="Profile" iconPosition="start" />
-                {isDisabled && <Tab icon={<BusinessRounded />} label="Organization Info" iconPosition="start" />}
+                {!orgInfoDisabled && <Tab icon={<BusinessRounded />} label="Organization Info" iconPosition="start" />}
                 {!isDisabled && <Tab icon={<SchoolRounded />} label="Academic" iconPosition="start" />}
                 <Tab icon={<SettingsIcon />} label="Profile Settings" iconPosition="start" />
             </Tabs>
@@ -49,12 +51,13 @@ const AccountManagement = () => {
             {value === 0 && <UserProfile />}
             {value === 1 && (
                 <>
-                    {isDisabled && <OrganizationInfo />}
+                    {!orgInfoDisabled && <OrganizationInfo />}
                     {!isDisabled && <AcademicBackground />}
+                    {userRole === 3 && <ChangePasswordForm />}
                 </>
             )}
             {value === 2 && <ChangePasswordForm />}
-            {value === 3 && <InstitutionProfileCard />}
+            {/* {value === 3 && <InstitutionProfileCard />} */}
         </DashboardContainer>
     );
 };
