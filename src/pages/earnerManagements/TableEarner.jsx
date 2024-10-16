@@ -23,18 +23,19 @@ const TableEarner = () => {
     const [dialogOpen, setDialogOpen] = useState(false);
 
     // Pagination and Sorting State
-    const [currentPage, setCurrentPage] = useState(1); // Current page number
-    const [rowsPerPage, setRowsPerPage] = useState(10); // Number of rows per page
-    const [sortColumn, setSortColumn] = useState("id"); // Default sorting column
-    const [sortOrder, setSortOrder] = useState("asc"); // Default sort order (ascending)
+    const [currentPage, setCurrentPage] = useState(1); 
+    const [rowsPerPage, setRowsPerPage] = useState(10); 
+    const [sortColumn, setSortColumn] = useState("id"); 
+    const [sortOrder, setSortOrder] = useState("asc"); 
 
+    // Fetch data from the backend based on pagination and sorting
     const { data: response, isLoading, isError } = useFetchEarnerQuery({
         page: currentPage,
         limit: rowsPerPage,
         sort: sortColumn,
-        order: sortOrder,
+        // order: sortOrder,
     });
-    
+
     const { roleId, userId, issuerData } = useSelector((state) => state.global);
     const [deleteEarner] = useDeleteEarnerByIdMutation();
     const issuerId = issuerData?.id;
@@ -64,20 +65,12 @@ const TableEarner = () => {
     const earnerData = response?.data;
 
     // Display earner in the earner table by the specific role , role = 1 (Admin), role = 2 (institutionOwner), role = 3 (issuer)
-    
-
-    if (roleId === 1) {
-        earnerData;
-    } else if (roleId === 2) {
-        earnerData?.filter((earner) => earner.Issuer?.Institution?.userId === userId);
-    } else if (roleId === 3) {
-        earnerData?.filter((earner) => earner.Issuer?.userId === userId);
-    }
-
-    // Further filter based on the search query (optional)
-    // const searchedEarnerData = filteredEarnerData?.filter((earner) =>
-    //     earner.User.username.toLowerCase().includes(searchQuery.toLowerCase()),
-    // );
+    const filteredEarnerData = roleId === 1 
+        ? earnerData 
+        : earnerData?.filter(earner => 
+            roleId === 2 ? earner.Issuer?.Institution?.userId === userId 
+            : earner.Issuer?.userId === userId
+        );
 
     // Handle View (open the modal)
     const handleView = (userId) => {
@@ -110,10 +103,7 @@ const TableEarner = () => {
 
     const handleInviteSubmit = async (data, reset) => {
         try {
-            // Send invitation via API
             const newEarner = await inviteEarner({ issuerId, email: data.email }).unwrap();
-
-            // Update local state with the new invited issuer
             setInvitedEarners((prev) =>
                 [
                     {
@@ -137,26 +127,32 @@ const TableEarner = () => {
         {
             name: "ID",
             selector: (row) => row.id || "N/A",
+            sortable: true,
         },
         {
             name: "Name",
             selector: (row) => row.User?.username || "N/A",
+            sortable: true,
         },
         {
             name: "Email",
             selector: (row) => row.User?.email || "N/A",
+            sortable: true,
         },
         {
             name: "Date Of Birth",
             selector: (row) => FormatYear(row.User?.dateOfBirth) || "N/A",
+            sortable: true,
         },
         {
             name: "Badge",
             selector: (row) => row.Achievement?.BadgeClass?.name || "N/A",
+            sortable: true,
         },
         {
             name: "Academic Year",
             selector: (row) => FormatYear(row.AcademicBackground?.academicYear) || "N/A",
+            sortable: true,
         },
         {
             name: "Action",
@@ -182,6 +178,7 @@ const TableEarner = () => {
         setSortColumn(column);
         setSortOrder(newSortOrder);
     };
+    
 
     return (
         <Box>
@@ -196,7 +193,7 @@ const TableEarner = () => {
             ) : (
                 <TableCustom
                     title="Earner List"
-                    data={earnerData}
+                    data={filteredEarnerData}
                     columns={earnerColumns}
                     onAddNew={handleInviteEarner}
                     addNewLabel="Invite Earner"
@@ -211,7 +208,7 @@ const TableEarner = () => {
                     sortOrder={sortOrder}
                 >
                     {/* Display NoRecordData inside the table when no earners match the search query */}
-                    {earnerData?.length === 0 && <NoRecordData />}
+                    {filteredEarnerData?.length === 0 && <NoRecordData />}
                 </TableCustom>
             )}
 
