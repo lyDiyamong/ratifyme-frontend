@@ -24,6 +24,7 @@ import {
 import { useGetIssuersQuery } from "../../../store/api/issuerManagement/issuerApi";
 import { useGetInstitutionQuery } from "../../../store/api/institutionManagement/institutionApi";
 import MoreMenu from "../../../components/MoreMenu";
+import OrgModalEditProfile from "./OrgModalEditProfile";
 
 // =========== Start Profile Header ===========
 const OrgProfileHeader = ({ institutionInfo }) => {
@@ -45,6 +46,7 @@ const OrgProfileHeader = ({ institutionInfo }) => {
 
     // const institutionData = institutions?.data?.find((institution) => institution.userId === userId) || {};
     const institutionData = institutions?.data?.find((institution) => institution.userId === userId) || {};
+    console.log("Institution data", institutionData);
 
     // Utility function to get the first available value from multiple data sources
     const getDynamicValue = (property, ...sources) => {
@@ -314,7 +316,7 @@ const OrgProfileHeader = ({ institutionInfo }) => {
                 )}
 
                 {/* Edit Profile Modal */}
-                <EditProfileModal open={open} onClose={handleClose} userData={userData} />
+                <OrgModalEditProfile open={open} onClose={handleClose} institutionData={institutionData} />
             </Stack>
         </>
     );
