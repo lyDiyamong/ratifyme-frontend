@@ -12,9 +12,10 @@ import InviteUserModal from "../../components/modals/InviteUserModal";
 import { useFetchInstitutionStatsQuery } from "../../store/api/reports/institutionStatApis";
 import { useInviteIssuerMutation, useFetchAllInvitedUserQuery } from "../../store/api/userManagement/inviteUserApi";
 
-const TableIssuer = ({ searchQuery }) => {
+const TableIssuer = () => {
     // State for controlling dialog
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState(""); // Manage search query here
 
     // Global state for user info and institution info
     const { userId, roleId, institutionData } = useSelector((state) => state.global);
@@ -144,7 +145,7 @@ const TableIssuer = ({ searchQuery }) => {
                     columns={getIssuerColumns()}
                     onAddNew={handleInviteIssuer}
                     addNewLabel="Invite Issuer"
-                    pagination={false}
+                    onSearch={setSearchQuery}
                 >
                     {/* Show NoRecordData inside the table when there's no data */}
                     {filteredData.length === 0 && <NoRecordData />}
@@ -163,3 +164,5 @@ const TableIssuer = ({ searchQuery }) => {
 };
 
 export default TableIssuer;
+
+
