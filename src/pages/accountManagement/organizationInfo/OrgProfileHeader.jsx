@@ -10,36 +10,28 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Modal, Backdrop } from "@mui/material";
 // Custom Import
 import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
-import MaleUserDefault from "../../../assets/images/MaleUser.svg";
-import FemaleUserDefault from "../../../assets/images/FemaleUser.svg";
 import theme from "../../../assets/themes";
 import MoreMenu from "../../../components/MoreMenu";
 import OrgModalEditProfile from "./OrgModalEditProfile";
 
 // Fetching Data Import
+import { useFetchInfoUserByIdQuery } from "../../../store/api/users/userInfoProfileApi";
 import {
-    useFetchInfoUserByIdQuery,
-    useDeleteUserPfMutation,
-    useUploadUserPfMutation,
-} from "../../../store/api/users/userInfoProfileApi";
-import { useGetInstitutionByIdQuery } from "../../../store/api/institutionManagement/institutionApi";
-
+    useDeleteInstitutionImgMutation,
+    useUploadInstitutionImgMutation,
+} from "../../../store/api/institutionManagement/institutionApi";
 
 // =========== Start Profile Header ===========
 const OrgProfileHeader = ({ institutionInfo }) => {
-    const { userId, institutionData: instituData } = useSelector((state) => state.global);
+    const { userId } = useSelector((state) => state.global);
     const [open, setOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [updateImage, setUpdateImage] = useState(DefaultProfileSvg);
+    const [updatedImage, setUpdatedImage] = useState(DefaultProfileSvg);
     const { data: info } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
-    const { data: insitutionRes } = useGetInstitutionByIdQuery(instituData?.id, { skip: !instituData?.id });
     const userData = info?.data;
 
-    const [updateImg] = useUploadUserPfMutation();
-    const [deleteImg] = useDeleteUserPfMutation();
-
-    // Data for view profile
-    const institutionData = insitutionRes?.data;
+    const [updateImg, {reset: updatedReset}] = useUploadInstitutionImgMutation();
+    const [deleteImg] = useDeleteInstitutionImgMutation();
 
     // Utility function to get the first available value from multiple data sources
     const getDynamicValue = (property, ...sources) => {
@@ -68,36 +60,26 @@ const OrgProfileHeader = ({ institutionInfo }) => {
     const handleFileChange = async (event) => {
         const file = event.target.files[0];
         if (file) {
+            console.log("HANDEle", updatedImage);
             const formData = new FormData();
-            formData.append("image", file);
-            const result = await updateImg({ id: userId, data: formData }).unwrap();
-            setUpdateImage(result?.record.profileImage);
+            formData.append("institutionImg", file);
+            const result = await updateImg({ id: institutionInfo.id, data: formData }).unwrap();
+            setUpdatedImage(result?.record.institutionProfileImage);
         }
         event.target.value = "";
     };
 
     const handleDeleteImage = async () => {
-        await deleteImg({ id: userId });
-        setUpdateImage(null);
+        await deleteImg({ id: institutionInfo.id });
+        setUpdatedImage(null);
     };
 
     useEffect(() => {
-        // Update the image based on the issuer data if available
-        if (institutionImage) {
-            setUpdateImage(institutionImage);
-        } else if (userData?.profileImage) {
-            setUpdateImage(userData?.profileImage);
-        } else {
-            // Set based on gender if no profile image exists
-            if (userData?.Gender?.name === "male") {
-                setUpdateImage(MaleUserDefault);
-            } else if (userData?.Gender?.name === "female") {
-                setUpdateImage(FemaleUserDefault);
-            } else {
-                setUpdateImage(DefaultProfileSvg);
-            }
+        if (institutionImage && updatedImage !== institutionImage) {
+           setUpdatedImage(institutionInfo?.institutionProfileImage);
         }
-    }, [userData?.profileImage, userData?.Gender?.name]);
+     }, [institutionImage]);
+
 
     const userRole = userData?.Role.id;
     const isDisabled = userRole === 3 || userRole === 4;
@@ -185,10 +167,10 @@ const OrgProfileHeader = ({ institutionInfo }) => {
                             cursor: "pointer",
                         }}
                     >
-                        {updateImage ? (
+                        {updatedImage ? (
                             <Box
                                 component="img"
-                                src={updateImage}
+                                src={updatedImage}
                                 alt="Profile"
                                 onError={(e) => {
                                     e.target.onerror = null;
@@ -213,7 +195,7 @@ const OrgProfileHeader = ({ institutionInfo }) => {
                                 objectFit: "cover",
                                 borderRadius: "100%",
                                 fontSize: 40,
-                                display: updateImage ? "none" : "flex",
+                                display: updatedImage ? "none" : "flex",
                             }}
                         >
                             {firstLetter || "?"}
@@ -304,7 +286,7 @@ const OrgProfileHeader = ({ institutionInfo }) => {
                 )}
 
                 {/* Edit Profile Modal */}
-                <OrgModalEditProfile open={open} onClose={handleClose} institutionData={institutionData} />
+                <OrgModalEditProfile open={open} onClose={handleClose} institutionData={institutionInfo} />
             </Stack>
         </>
     );

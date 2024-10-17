@@ -6,6 +6,7 @@ export const institutionApi = createApi({
     baseQuery: createBaseQuery(),
     tagTypes: ["Institution"],
     endpoints: (builder) => ({
+        // Query
         getInstitution: builder.query({
             query: () => "/institutions",
         }),
@@ -15,21 +16,48 @@ export const institutionApi = createApi({
                 method: "GET",
             }),
             providesTags: (result, err, id) => {
-                console.log("ID OF FETCH");
+                console.log("ID OF FETCH", id);
                 return [{ type: "Institution", id }];
             },
         }),
+        // Mutation
         updateInstitution: builder.mutation({
             query: ({ id, updatedData }) => ({
                 url: `/institutions/${id}`,
                 method: "PATCH",
                 body: updatedData,
             }),
-            invalidatesTags : (result, err, {id}) => {
-                console.log("ID OF UPdate", id);
+            invalidatesTags: (result, err, { id }) => {
+                return [{ type: "Institution", id }];
+            },
+        }),
+        uploadInstitutionImg: builder.mutation({
+            query: ({ id, data }) => ({
+                url: `/institutions/instiImage/${id}`,
+                method: "PUT",
+                body: data,
+            }),
+            invalidatesTags: (result, err, { id }) => {
+                console.log("Update Img", id);
+                return [{ type: "Institution", id }];
+            },
+        }),
+        deleteInstitutionImg: builder.mutation({
+            query: ({ id }) => ({
+                url: `/institutions/instiImage/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: (result, err, { id }) => {
+                console.log("Delete Img", id);
                 return [{ type: "Institution", id }];
             },
         }),
     }),
 });
-export const { useGetInstitutionQuery, useGetInstitutionByIdQuery, useUpdateInstitutionMutation } = institutionApi;
+export const {
+    useGetInstitutionQuery,
+    useGetInstitutionByIdQuery,
+    useUpdateInstitutionMutation,
+    useUploadInstitutionImgMutation,
+    useDeleteInstitutionImgMutation,
+} = institutionApi;
