@@ -29,11 +29,6 @@ const OrganizationBio = ({ institutionInfo }) => {
 
     // Fetch user data and bio
     const { data: info } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
-    const { data: issuers } = useGetIssuersQuery();
-    const { data: institutions } = useGetInstitutionQuery();
-
-    const issuerData = issuers?.data?.find((issuer) => issuer.userId === userId) || {};
-    const institutionData = institutions?.data?.find((institution) => institution.userId === userId) || {};
 
     // Utility function to get the first available value from multiple data sources
     const getDynamicValue = (property, ...sources) => {
@@ -47,7 +42,7 @@ const OrganizationBio = ({ institutionInfo }) => {
 
     // Use institutionBio instead of bio
     const institutionBioText =
-        getDynamicValue("institutionBio", institutionData, institutionInfo?.Institution) || "There are no bio!";
+        getDynamicValue("institutionBio", institutionInfo) || "There are no bio!";
 
     const userRole = info?.data?.Role?.id;
     const isDisabled = userRole === 3 || userRole === 4;

@@ -1,4 +1,4 @@
-import React from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Grid, Stack } from "@mui/material";
 import OrgProfileInfo from "./OrgProfileInfo";
@@ -7,13 +7,18 @@ import OrganizationBio from "./OrganizationBio";
 import DashboardContainer from "../../../components/styles/DashboardContainer";
 import { useGetIssuersQuery } from "../../../store/api/issuerManagement/issuerApi";
 import PageTitle from "../../../components/PageTitle";
+import { useGetInstitutionByIdQuery } from "../../../store/api/institutionManagement/institutionApi";
 
 const OrganizationInfo = () => {
-    const { id } = useParams(); // Get the organization ID from the URL
+    const { id: orgId } = useParams(); // Get the organization ID from the URL
     const { data: issuers, isLoading: isLoadingIssuer } = useGetIssuersQuery();
-
+    const {institutionData } = useSelector((state) => state.global);
     // Find the specific organization by ID from the fetched issuers
-    const organization = issuers?.data?.find((issuer) => issuer.Institution.id === parseInt(id));
+    const organization = issuers?.data?.find((issuer) => issuer.Institution.id === parseInt(orgId))?.Institution;
+    const { data: insitutionRes } = useGetInstitutionByIdQuery(institutionData?.id, {skip : !institutionData?.id});
+    const instituteData = insitutionRes?.data
+
+    console.log("organization", organization);
 
     return (
         <DashboardContainer sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
@@ -26,14 +31,14 @@ const OrganizationInfo = () => {
                     {/* Profile Header and Bio Content */}
                     <Grid item xss={12} md={4}>
                         <Stack spacing={2} direction="column">
-                            <OrgProfileHeader institutionInfo={organization} />
-                            <OrganizationBio institutionInfo={organization} />
+                            <OrgProfileHeader institutionInfo={instituteData || organization } />
+                            <OrganizationBio institutionInfo={instituteData || organization } />
                         </Stack>
                     </Grid>
 
                     {/* Profile Info */}
                     <Grid item xss={12} md={8}>
-                        <OrgProfileInfo institutionInfo={organization} />
+                        <OrgProfileInfo institutionInfo= {instituteData || organization } />
                     </Grid>
                 </Grid>
             </Stack>

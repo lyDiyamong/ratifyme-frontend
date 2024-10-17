@@ -22,30 +22,39 @@ import {
     useUploadUserPfMutation,
 } from "../../../store/api/users/userInfoProfileApi";
 import { useGetIssuersQuery } from "../../../store/api/issuerManagement/issuerApi";
-import { useGetInstitutionQuery } from "../../../store/api/institutionManagement/institutionApi";
+import {
+    useGetInstitutionQuery,
+    useGetInstitutionByIdQuery,
+} from "../../../store/api/institutionManagement/institutionApi";
 import MoreMenu from "../../../components/MoreMenu";
 import OrgModalEditProfile from "./OrgModalEditProfile";
 
 // =========== Start Profile Header ===========
 const OrgProfileHeader = ({ institutionInfo }) => {
-    const { userId } = useSelector((state) => state.global);
+    const {
+        userId,
+        institutionData : instituData,
+    } = useSelector((state) => state.global);
     const [open, setOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [updateImage, setUpdateImage] = useState(DefaultProfileSvg);
     const { data: info } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
     const { data: issuers, isLoading: isLoadingIssuer } = useGetIssuersQuery();
     const { data: institutions, isLoading: isLoadingInstitution } = useGetInstitutionQuery();
+    const { data: insitutionRes } = useGetInstitutionByIdQuery(instituData?.id, {skip : !instituData?.id});
     const userData = info?.data;
+    console.log("Institution res", insitutionRes);
 
     const [updateImg] = useUploadUserPfMutation();
     const [deleteImg] = useDeleteUserPfMutation();
-
+    // console.log("Institution ID", instituId);
     // const issuerDataInsti = issuers?.data?.filter((issuer) => issuer?.userId === userId) || {};
 
     const issuerData = issuers?.data?.find((issuer) => issuer?.userId === userId) || {};
 
     // Data for view profile
-    const institutionData = institutions?.data?.find((institution) => institution.userId === userId) || {};
+    // const institutionData = institutions?.data?.find((institution) => institution.userId === userId);
+    const institutionData = insitutionRes?.data
     console.log("Institution data", institutionData);
 
     // Utility function to get the first available value from multiple data sources
@@ -59,12 +68,12 @@ const OrgProfileHeader = ({ institutionInfo }) => {
     };
 
     // Use the function to get the institution values dynamically
-    const institutionName = getDynamicValue("institutionName", institutionData, institutionInfo?.Institution) || "N/A";
-    const institutionCode = getDynamicValue("code", institutionData, institutionInfo?.Institution) || "N/A";
+    const institutionName = getDynamicValue("institutionName", institutionInfo) || "N/A";
+    const institutionCode = getDynamicValue("code", institutionInfo) || "N/A";
     const institutionImage =
-        getDynamicValue("institutionProfileImage", institutionData, institutionInfo?.Institution) || "N/A";
+        getDynamicValue("institutionProfileImage", institutionInfo) || "N/A";
     const institutionEmail =
-        getDynamicValue("institutionEmail", institutionData, institutionInfo?.Institution) || "N/A";
+        getDynamicValue("institutionEmail", institutionInfo) || "N/A";
 
     const handleClickOpen = () => {
         setOpen(true);
