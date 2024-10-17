@@ -60,7 +60,6 @@ const getValue = (obj, keyPath) => {
     if (!keyPath || typeof keyPath !== "string") {
         return "N/A";
     }
-    // console.log("OBJ", obj, "KEY path", keyPath);
     return keyPath.split(".").reduce((o, k) => (o || {})[k], obj);
 };
 

@@ -14,8 +14,6 @@ import theme from "../../../assets/themes";
 
 // Fetching data imports
 import { useFetchInfoUserByIdQuery, useUpdateUserProfileMutation } from "../../../store/api/users/userInfoProfileApi";
-import { useGetIssuersQuery } from "../../../store/api/issuerManagement/issuerApi";
-import { useGetInstitutionQuery } from "../../../store/api/institutionManagement/institutionApi";
 
 // =========== Start BioContent in profile page ===========
 const OrganizationBio = ({ institutionInfo }) => {

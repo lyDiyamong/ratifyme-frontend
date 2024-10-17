@@ -1,12 +1,17 @@
+// React import
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+
+// MUI import
 import { Grid, Stack } from "@mui/material";
 import OrgProfileInfo from "./OrgProfileInfo";
 import OrgProfileHeader from "./OrgProfileHeader";
 import OrganizationBio from "./OrganizationBio";
 import DashboardContainer from "../../../components/styles/DashboardContainer";
-import { useGetIssuersQuery } from "../../../store/api/issuerManagement/issuerApi";
 import PageTitle from "../../../components/PageTitle";
+
+// Api import
+import { useGetIssuersQuery } from "../../../store/api/issuerManagement/issuerApi";
 import { useGetInstitutionByIdQuery } from "../../../store/api/institutionManagement/institutionApi";
 
 const OrganizationInfo = () => {
@@ -17,8 +22,6 @@ const OrganizationInfo = () => {
     const organization = issuers?.data?.find((issuer) => issuer.Institution.id === parseInt(orgId))?.Institution;
     const { data: insitutionRes } = useGetInstitutionByIdQuery(institutionData?.id, {skip : !institutionData?.id});
     const instituteData = insitutionRes?.data
-
-    console.log("organization", organization);
 
     return (
         <DashboardContainer sx={{ display: "flex", flexDirection: "column", gap: 4 }}>

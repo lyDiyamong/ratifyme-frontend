@@ -12,8 +12,9 @@ import { Modal, Backdrop } from "@mui/material";
 import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
 import MaleUserDefault from "../../../assets/images/MaleUser.svg";
 import FemaleUserDefault from "../../../assets/images/FemaleUser.svg";
-import EditProfileModal from "../ModalEditProfile";
 import theme from "../../../assets/themes";
+import MoreMenu from "../../../components/MoreMenu";
+import OrgModalEditProfile from "./OrgModalEditProfile";
 
 // Fetching Data Import
 import {
@@ -21,41 +22,24 @@ import {
     useDeleteUserPfMutation,
     useUploadUserPfMutation,
 } from "../../../store/api/users/userInfoProfileApi";
-import { useGetIssuersQuery } from "../../../store/api/issuerManagement/issuerApi";
-import {
-    useGetInstitutionQuery,
-    useGetInstitutionByIdQuery,
-} from "../../../store/api/institutionManagement/institutionApi";
-import MoreMenu from "../../../components/MoreMenu";
-import OrgModalEditProfile from "./OrgModalEditProfile";
+import { useGetInstitutionByIdQuery } from "../../../store/api/institutionManagement/institutionApi";
+
 
 // =========== Start Profile Header ===========
 const OrgProfileHeader = ({ institutionInfo }) => {
-    const {
-        userId,
-        institutionData : instituData,
-    } = useSelector((state) => state.global);
+    const { userId, institutionData: instituData } = useSelector((state) => state.global);
     const [open, setOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [updateImage, setUpdateImage] = useState(DefaultProfileSvg);
     const { data: info } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
-    const { data: issuers, isLoading: isLoadingIssuer } = useGetIssuersQuery();
-    const { data: institutions, isLoading: isLoadingInstitution } = useGetInstitutionQuery();
-    const { data: insitutionRes } = useGetInstitutionByIdQuery(instituData?.id, {skip : !instituData?.id});
+    const { data: insitutionRes } = useGetInstitutionByIdQuery(instituData?.id, { skip: !instituData?.id });
     const userData = info?.data;
-    console.log("Institution res", insitutionRes);
 
     const [updateImg] = useUploadUserPfMutation();
     const [deleteImg] = useDeleteUserPfMutation();
-    // console.log("Institution ID", instituId);
-    // const issuerDataInsti = issuers?.data?.filter((issuer) => issuer?.userId === userId) || {};
-
-    const issuerData = issuers?.data?.find((issuer) => issuer?.userId === userId) || {};
 
     // Data for view profile
-    // const institutionData = institutions?.data?.find((institution) => institution.userId === userId);
-    const institutionData = insitutionRes?.data
-    console.log("Institution data", institutionData);
+    const institutionData = insitutionRes?.data;
 
     // Utility function to get the first available value from multiple data sources
     const getDynamicValue = (property, ...sources) => {
@@ -70,10 +54,8 @@ const OrgProfileHeader = ({ institutionInfo }) => {
     // Use the function to get the institution values dynamically
     const institutionName = getDynamicValue("institutionName", institutionInfo) || "N/A";
     const institutionCode = getDynamicValue("code", institutionInfo) || "N/A";
-    const institutionImage =
-        getDynamicValue("institutionProfileImage", institutionInfo) || "N/A";
-    const institutionEmail =
-        getDynamicValue("institutionEmail", institutionInfo) || "N/A";
+    const institutionImage = getDynamicValue("institutionProfileImage", institutionInfo) || "N/A";
+    const institutionEmail = getDynamicValue("institutionEmail", institutionInfo) || "N/A";
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -99,9 +81,6 @@ const OrgProfileHeader = ({ institutionInfo }) => {
         setUpdateImage(null);
     };
 
-    // console.log("my insti", issuerData?.Institution.institutionName);
-    // console.log("my insti data👨🏻‍💻", issuerData?.Institution);
-
     useEffect(() => {
         // Update the image based on the issuer data if available
         if (institutionImage) {
@@ -118,7 +97,7 @@ const OrgProfileHeader = ({ institutionInfo }) => {
                 setUpdateImage(DefaultProfileSvg);
             }
         }
-    }, [issuerData, userData?.profileImage, userData?.Gender?.name]);
+    }, [userData?.profileImage, userData?.Gender?.name]);
 
     const userRole = userData?.Role.id;
     const isDisabled = userRole === 3 || userRole === 4;
