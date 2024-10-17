@@ -25,9 +25,20 @@ const inviteUserApi = createApi({
                 method: "GET",
             }),
         }),
+        deleteInvitedUser: builder.mutation({
+            query: ({ invitedUserId }) => ({
+                url: `users/codeInvitation/invitedUser/${invitedUserId}`,
+                method: "DELETE",
+            }),
+        }),
     }),
 });
 
 // Export both the API instance and hooks
-export const { useInviteIssuerMutation, useInviteEarnerMutation, useFetchAllInvitedUserQuery } = inviteUserApi;
+export const {
+    useInviteIssuerMutation,
+    useInviteEarnerMutation,
+    useFetchAllInvitedUserQuery,
+    useDeleteInvitedUserMutation,
+} = inviteUserApi;
 export { inviteUserApi };
