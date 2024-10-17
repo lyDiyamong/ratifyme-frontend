@@ -44,7 +44,7 @@ const OrgProfileHeader = ({ institutionInfo }) => {
 
     const issuerData = issuers?.data?.find((issuer) => issuer?.userId === userId) || {};
 
-    // const institutionData = institutions?.data?.find((institution) => institution.userId === userId) || {};
+    // Data for view profile
     const institutionData = institutions?.data?.find((institution) => institution.userId === userId) || {};
     console.log("Institution data", institutionData);
 
