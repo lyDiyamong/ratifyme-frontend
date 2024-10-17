@@ -20,7 +20,7 @@ import theme from "../assets/themes";
 import StatusCode from "../assets/images/NoData.svg";
 import GoldBadge from "../assets/images/DiamondBadge.svg";
 
-const BadgeListCard = ({ badges, onView, roleId }) => {
+const BadgeListCard = ({ badges, onView, roleId, onPage, onNextPage, onPrevPage, total }) => {
     const [page, setPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(6);
 
@@ -33,11 +33,7 @@ const BadgeListCard = ({ badges, onView, roleId }) => {
         setItemsPerPage(isLargeScreen ? 8 : isMediumScreen ? 6 : 4);
     }, [isLargeScreen, isMediumScreen]);
 
-    console.log("Badges", badges);
     // Pagination handling
-    const pageCount = Math.ceil(badges?.length / itemsPerPage);
-    const currentBadges = badges?.slice((page - 1) * itemsPerPage, page * itemsPerPage);
-    const handleChangePage = (_, value) => setPage(value);
 
     const handleView = (id) => {
         onView(id);
@@ -46,10 +42,10 @@ const BadgeListCard = ({ badges, onView, roleId }) => {
     return (
         <Box my={3}>
             <Typography variant="h6" sx={{ pb: 2 }}>
-                Total Badges: {badges?.length || 0}
+                Total Badges: {total || 0}
             </Typography>
 
-            {badges?.length === 0 ? (
+            {total === 0 ? (
                 <Box display="flex" flexDirection="column" alignItems="center" p={4}>
                     <CardMedia
                         component="img"
@@ -63,16 +59,8 @@ const BadgeListCard = ({ badges, onView, roleId }) => {
                 </Box>
             ) : (
                 <Grid container spacing={2}>
-                    {currentBadges?.map((badge) => (
-                        <Grid
-                            item
-                            xs={12}
-                            sm={6}
-                            md={4}
-                            lg={3}
-                            xl={2.4}
-                            key={badge?.id}
-                        >
+                    {badges?.map((badge) => (
+                        <Grid item xs={12} sm={6} md={4} lg={3} xl={2.4} key={badge?.id}>
                             <Card
                                 sx={{
                                     // maxWidth: { xss: "100%", lg: 280 },
@@ -170,26 +158,6 @@ const BadgeListCard = ({ badges, onView, roleId }) => {
                         </Grid>
                     ))}
                 </Grid>
-            )}
-
-            {pageCount > 1 && (
-                <Box
-                    display="flex"
-                    justifyContent="center"
-                    mt={3}
-                    overflowx={isSmallScreen ? "auto" : "unset"}
-                    p={isSmallScreen ? 1 : 0}
-                >
-                    <Pagination
-                        count={pageCount}
-                        page={page}
-                        onChange={handleChangePage}
-                        color="primary"
-                        size={isSmallScreen ? "small" : "large"}
-                        siblingCount={isSmallScreen ? 0 : 1}
-                        boundaryCount={isSmallScreen ? 1 : 2}
-                    />
-                </Box>
             )}
         </Box>
     );

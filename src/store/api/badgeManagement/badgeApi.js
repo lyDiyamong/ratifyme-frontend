@@ -8,12 +8,11 @@ export const badgeApi = createApi({
     endpoints: (builder) => ({
         // Fetch badges by issuerId
         fetchBadges: builder.query({
-            query: ({ field, fk }) => ({
-                url: `/issuers/badgeClasses?${field}=${fk}`,
-                method: "GET",
+            query: ({ field, fk, limit, page = 1 }) => ({
+                url: `/issuers/badgeClasses?page=${page}&${field}=${fk}&limit=${limit}`,
+                // method: "GET",
             }),
             providesTags: (result) => {
-                console.log(result?.data?.map(({ Issuer }) => Issuer.id));
                 return result?.data
                     ? [
                           // Provide a tag for each badge by its id
