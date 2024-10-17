@@ -96,6 +96,7 @@ const AlertConfirmation = ({
                         onClick={onClose}
                         sx={{
                             color: theme.palette.customColors.gray500,
+                            backgroundColor: theme.palette.customColors.gray100,
                             borderColor: theme.palette.customColors.gray500,
                             textTransform: "none",
                             padding: "8px 32px",
