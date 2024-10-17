@@ -71,7 +71,32 @@ const cardBadgeData = [
     { title: "Badge 1", institution: "Institution 1" },
     { title: "Badge 2", institution: "Institution 2" },
 ];
-
+/**
+ * SearchBar Component
+ *
+ * A reusable search bar component with optional button functionality.
+ *
+ * @param {boolean} [showButton=true] - A flag to show or hide the button beside the search input.
+ * @param {string} [textInButton] - Text to display in the button when `showButton` is true.
+ * @param {React.ReactNode} [children] - Child elements to render inside the dashboard container below the search bar.
+ *
+ * @returns {JSX.Element} A styled search bar component with optional button and search input functionality.
+ *
+ * @example
+ * Example usage with a button and a search input
+ * <SearchBar
+ *   showButton={true}
+ *   textInButton="Create Badge"
+ * >
+ *   <BadgeList badges={filteredBadges} />
+ * </SearchBar>
+ *
+ * @example
+ * Example usage without a button
+ * <SearchBar showButton={false}>
+ *   <BadgeList badges={filteredBadges} />
+ * </SearchBar>
+ */
 export default function SearchBar({ showButton = true, textInButton, children }) {
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredData, setFilteredData] = useState(cardBadgeData);

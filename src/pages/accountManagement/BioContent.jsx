@@ -4,13 +4,12 @@ import { useSelector } from "react-redux";
 
 // MUI imports
 import { TextField, Box, Typography, Avatar, Button, Stack, Chip } from "@mui/material";
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 // Custom imports
 import DefaultProfileSvg from "../../assets/images/DefaultProfile.svg";
 import MaleUserDefault from "../../assets/images/MaleUser.svg";
 import FemaleUserDefault from "../../assets/images/FemaleUser.svg";
-import MoreMenu from "../../components/MoreMenu";
 import theme from "../../assets/themes";
 
 // Fetching data imports
@@ -67,32 +66,28 @@ const BioContent = () => {
         setIsEditing(false);
     };
 
-    // More Menu props
-    const menuItems = [{ label: "Update Bio", onClick: handleTextClick }];
-
     return (
         <Stack>
             <Stack
                 sx={{
                     boxShadow: theme.customShadows.default,
                     borderRadius: "14px",
-                    p: { xs: "20px", sm: "16px" },
+                    p: { xss: "20px", sm: "16px" },
                     bgcolor: theme.palette.customColors.white,
-                    alignItems: "center",
+                    // alignItems: "center",
                     gap: 2,
-                    width: "100%",
-                    height: "290px",
+                    // width: "100%",
+                    height: "270px",    
                     position: "relative",
                 }}
             >
                 {/* Header with "About Me" and Status */}
-                <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: "100%" }}>
+                <Stack direction="row" >
                     <Stack direction="row" gap={3} alignItems="center">
                         <Typography
                             sx={{
                                 fontSize: theme.typography.h5,
                                 fontWeight: theme.fontWeight.semiBold,
-                                color: theme.palette.customColors.red400,
                             }}
                         >
                             Bio
@@ -100,7 +95,7 @@ const BioContent = () => {
                         {/* Status Chip */}
                         <Chip
                             label={bio ? "Active" : "No Bio"}
-                            icon={<CheckCircleOutlineIcon color="green"/>}
+                            icon={<CheckCircleOutlineIcon color="green" />}
                             sx={{
                                 backgroundColor: bio
                                     ? theme.palette.customColors.green100
@@ -108,14 +103,13 @@ const BioContent = () => {
                                 color: bio ? theme.palette.customColors.green300 : theme.palette.customColors.red300,
                                 fontWeight: "bold",
                                 py: 0.5,
-                                px: 2,
-                                borderRadius: "8px",
+                                px: 1,
+                                borderRadius: theme.customShape.btn,
                                 textTransform: "uppercase",
                                 fontSize: "12px",
                             }}
                         />
                     </Stack>
-                    <MoreMenu menuItems={menuItems} />
                 </Stack>
 
                 {/* Bio Input */}
@@ -132,9 +126,10 @@ const BioContent = () => {
                             cursor: "pointer",
                             backgroundColor: theme.palette.background.secondary,
                             px: 2,
-                            py: 0.5,
+                            py: 1,
                             width: "100%",
                             overflow: "hidden",
+                            borderRadius: theme.customShape.input,
                         }}
                         onClick={handleTextClick}
                     >
@@ -183,21 +178,20 @@ const BioContent = () => {
                 </Stack>
                 {isEditing ? null : (
                     <Typography
-                    ref={bioRef}
-                    sx={{
-                      color: theme.palette.text.secondary,
-                      fontSize: "16px",
-                      width: "100%",
-                      height: "100px", 
-                      overflowY: "auto", 
-                      wordWrap: "break-word", 
-                      whiteSpace: "normal",
-                    }}
-                    title={bio}
-                  >
-                    {bio || "Describe yourself here..."}
-                  </Typography>
-                  
+                        ref={bioRef}
+                        sx={{
+                            color: theme.palette.text.secondary,
+                            fontSize: "16px",
+                            width: "100%",
+                            height: "100px",
+                            overflowY: "auto",
+                            wordWrap: "break-word",
+                            whiteSpace: "normal",
+                        }}
+                        title={bio}
+                    >
+                        {bio || "Describe yourself here..."}
+                    </Typography>
                 )}
 
                 {/* Save and Cancel Buttons */}
@@ -207,7 +201,7 @@ const BioContent = () => {
                         gap={1}
                         justifyContent="flex-end"
                         width="100%"
-                        position="absolute"
+                        // position="absolute"
                         bottom={16}
                         px={2}
                     >
@@ -225,14 +219,12 @@ const BioContent = () => {
                             {isLoading ? "Saving..." : "Save Bio"}
                         </Button>
                         <Button
-                            variant="contained"
+                            variant="text"
                             onClick={handleCancel}
                             sx={{
                                 borderRadius: "30px",
                                 fontWeight: "bold",
-                                color: theme.palette.customColors.white,
-                                background: theme.palette.customColors.red400,
-
+                                color: theme.palette.secondary.light,
                             }}
                         >
                             Cancel

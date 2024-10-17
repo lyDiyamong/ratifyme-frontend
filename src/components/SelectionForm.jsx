@@ -15,6 +15,23 @@ import theme from "../assets/themes";
  * @param {string} label - The label for the select input field.
  * @param {boolean} required - A boolean indicating if the field is required.
  * @param {Function} onChange - A function for getting value to email
+ * @returns {JSX.Element} A styled Select input component integrated with react-hook-form.
+ *
+ * @example
+ * const options = [
+ *   { id: 1, value: 'option1', label: 'Option 1' },
+ *   { id: 2, value: 'option2', label: 'Option 2' },
+ *   { id: 3, value: 'option3', label: 'Option 3' },
+ * ];
+ *
+ * <SelectForm
+ *   name="exampleSelect"
+ *   control={control}
+ *   options={options}
+ *   label="Choose an option"
+ *   required={true}
+ *   onChange={(value) => console.log(value)}
+ * />
  */
 
 // =========== Start SelectForm ===========

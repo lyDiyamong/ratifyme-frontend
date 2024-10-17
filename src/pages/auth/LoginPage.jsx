@@ -40,7 +40,9 @@ const LoginPage = () => {
         control,
         formState: { errors },
         reset,
-    } = useForm();
+    } = useForm({
+        mode: "onChange",
+    });
 
     const [loading, setLoading] = useState(false);
 

@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 // MUI Import
-import { Stack, Box, Typography, IconButton, Button } from "@mui/material";
-import { CameraAltRounded } from "@mui/icons-material";
+import { Stack, Box, Typography, IconButton, Button, Modal, Backdrop } from "@mui/material";
+import { CameraAltRounded, FullscreenExitOutlined } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 // Custom Import
 import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
 import MaleUserDefault from "../../../assets/images/MaleUser.svg";
@@ -20,11 +20,13 @@ import {
     useDeleteUserPfMutation,
     useUploadUserPfMutation,
 } from "../../../store/api/users/userInfoProfileApi";
+import MoreMenu from "../../../components/MoreMenu";
 
 // =========== Start Profile Header ===========
 const ProfileHeader = () => {
     const { userId } = useSelector((state) => state.global);
     const [open, setOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [updateImage, setUpdateImage] = useState(DefaultProfileSvg);
     const { data: info } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
     const userData = info?.data;
@@ -71,6 +73,14 @@ const ProfileHeader = () => {
         }
     }, [userData?.profileImage, userData?.Gender?.name]);
 
+    const menuItems = [
+        {
+            label: "View Profile",
+            icon: <FullscreenExitOutlined color="primary" />,
+            onClick: () => setIsModalOpen(true),
+        },
+        { label: "Remove Profile", icon: <DeleteForeverIcon color="error" />, onClick: handleDeleteImage },
+    ];
 
     return (
         <Stack
@@ -86,6 +96,42 @@ const ProfileHeader = () => {
                 bgcolor: theme.palette.customColors.white,
             }}
         >
+            {/* The image view */}
+            <Modal
+                open={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                closeAfterTransition
+                BackdropComponent={(props) => (
+                    <Backdrop
+                        {...props}
+                        sx={{
+                            backgroundColor: "rgba(0, 0, 0, 0.8)",
+                        }}
+                    />
+                )}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Box
+                    sx={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        width: { md: "40%", xss: "70%" },
+                        p: 4,
+                    }}
+                >
+                    <Box
+                        component="img"
+                        src={updateImage || "https://www.mylittleadventure.com/images/default/default-img.png"}
+                        alt="Full size badge"
+                        sx={{ width: "100%", height: "auto", borderRadius: "10px", cursor: "pointer" }}
+                    />
+                </Box>
+            </Modal>
+
             {/* Profile Image Section */}
             <Box
                 sx={{
@@ -153,39 +199,29 @@ const ProfileHeader = () => {
             </Typography>
 
             {/* Save Button */}
-            <Stack direction="row" spacing={0.5} mt={2}>
+            <Stack direction="row" mt={2} alignItems="center" justifyContent="center" gap={1}>
                 <Button
                     onClick={handleClickOpen}
                     variant="contained"
                     startIcon={<EditIcon />}
                     sx={{
-                        width: "80%",
-                        px: 1,
-                        mt: 2,
+                        px: 2,
                         background: theme.palette.secondary.light,
                         color: theme.palette.customColors.white,
                         fontWeight: "bold",
-                        borderRadius: "30px",
-                        
+                        borderRadius: theme.customShape.btn,
                     }}
                 >
                     Edit profile
                 </Button>
-                <Button
-                    onClick={handleDeleteImage}
-                    variant="contained"
-                    startIcon={<DeleteForeverIcon/>}
-                    sx={{
-                        px: 4,
-                        mt: 2,
-                        background: theme.palette.customColors.red400,
-                        color: theme.palette.customColors.white,
-                        fontWeight: "bold",
-                        borderRadius: "30px",
+                <MoreMenu
+                    menuItems={menuItems}
+                    iconStyles={{
+                        color: "black",
+                        // backgroundColor: theme.palette.background.secondary,
+                        borderRadius: theme.customShape.section,
                     }}
-                >
-                    Delete
-                </Button>
+                />
             </Stack>
             {/* Edit Profile Modal */}
             <EditProfileModal open={open} onClose={handleClose} userData={userData} />

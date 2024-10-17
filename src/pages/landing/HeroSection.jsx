@@ -73,7 +73,7 @@ const HeroSection = () => {
                                 my: "0",
                             }}
                         >
-                            Welcome to RatifyMe, The Future of Trust !!
+                            Unlock the future of credentials with accessible, flexible, and verifiable
                         </Box>
                         <Box
                             component="p"

@@ -15,7 +15,7 @@ import theme from "../assets/themes";
 import { useSelector } from "react-redux";
 
 // Public key from Stripe
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+const stripePromise = loadStripe(String(import.meta.env.VITE_STRIPE_PUBLIC_KEY));
 
 /**
  *

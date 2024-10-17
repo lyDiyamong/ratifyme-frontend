@@ -17,6 +17,46 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
  * @param {object} [validationRules] - Additional validation rules for the input.
  * @param {...object} rest - Additional props to pass to the TextField component.
  * @param {...condition} name - If "name" have word description in it, it will catch to make the textFild height larger
+ *
+ * ==== Usage =====
+ * // Yup validation schema for email
+const schema = Yup.object().shape({
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+});
+
+const MyForm = () => {
+    const { control, handleSubmit } = useForm();
+
+    const onSubmit = (data) => {
+        console.log("Form data:", data);
+    };
+
+    return (
+        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+            <FormInput
+                label="Email"
+                name="email"
+                control={control}
+                required={true}
+                schema={schema.fields.email}
+            />
+
+            <FormInput
+                label="Password"
+                name="password"
+                control={control}
+                type="password"
+                required={true}
+                schema={schema.fields.password}
+            />
+
+            <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
+                Submit
+            </Button>
+        </Box >
+    );
+};
  */
 const FormInput = ({ label, name, control, type = "text", required = false, schema, validationRules = {}, startIcon, ...rest }) => {
     const [showPassword, setShowPassword] = useState(false);

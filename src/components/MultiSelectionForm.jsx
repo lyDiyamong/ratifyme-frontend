@@ -14,6 +14,41 @@ import theme from "../assets/themes";
  * @param {Array} options - An array of option objects for the select input. Each object should have `value` and `label` properties.
  * @param {string} label - The label for the select input field.
  * @param {boolean} required - A boolean indicating if the field is required.
+ *
+ * @returns {JSX.Element} A multi selection form.
+ *
+ * @example
+ * ===== Usage =====
+* import { useForm, Controller } from "react-hook-form";
+* import SelectForm from "./SelectForm";
+*
+* const MyForm = () => {
+*    const { control, handleSubmit } = useForm();
+*
+*    const onSubmit = (data) => {
+*        console.log(data);
+*    };
+*
+*    const selectOptions = [
+*        { value: "option1", label: "Option 1" },
+*        { value: "option2", label: "Option 2" },
+*        { value: "option3", label: "Option 3" },
+*    ];
+*
+*   return (
+*      <form onSubmit={handleSubmit(onSubmit)}>
+*            <SelectForm
+*               name="mySelectField"
+*              control={control}
+*               options={selectOptions}
+*label="Select Options"
+*              required={true}
+*         />
+*        <button type="submit">Submit</button>
+*   </form>
+);
+};
+
  */
 const SelectForm = ({ name, control, options, label, required }) => {
     const validationRules = { required: required ? `${label} is required` : false };

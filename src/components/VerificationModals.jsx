@@ -23,6 +23,25 @@ import theme from "../assets/themes";
 //Fetching Data
 import { useFetchVerificationDataQuery } from "../store/api/earnerManagement/verificationApi";
 
+/**
+ * A modal component to display verification data.
+ *
+ * @param {boolean} open - Indicates if the modal is open or closed..
+ * @param {function} handleClose - Function to handle closing the modal.
+ * @param {string} verificationId - The ID of the verification data to fetch.
+ *
+ * @returns {JSX.Element} The Verification Modal component.
+ *
+ * @example
+ * const [openModal, setOpenModal] = useState(false);
+ * const handleClose = () => setOpenModal(false);
+ *
+ * <VerificationModal
+ *   open={openModal}
+ *   handleClose={handleClose}
+ *   verificationId="12345"
+ * />
+ */
 //=========== Start Verification Modal ===========
 const VerificationModal = ({ open, handleClose, verificationId }) => {
     const { data, error, isLoading } = useFetchVerificationDataQuery(verificationId, {
