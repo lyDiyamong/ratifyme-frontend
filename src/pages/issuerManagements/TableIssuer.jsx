@@ -45,8 +45,8 @@ const TableIssuer = () => {
 
     // Filter Issuer Data based on role
     const filterIssuerData = (issuerData) => {
-        if (roleId === 1) return issuerData; // Admin can view all
-        return issuerData?.filter((issuer) => issuer.userId === userId); // Other roles view own data
+        if (roleId === 1) return issuerData; 
+        return issuerData?.filter((issuer) => issuer.userId === userId);
     };
 
     // Flatten data to render issuers
