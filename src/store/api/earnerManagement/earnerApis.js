@@ -1,3 +1,4 @@
+// import { Search } from "@mui/icons-material";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const earnerApi = createApi({
@@ -6,8 +7,8 @@ export const earnerApi = createApi({
     tagTypes: ["Earner"],
     endpoints: (builder) => ({
         fetchEarner: builder.query({
-            query: ({ page, limit, sort }) => 
-                `earners?limit=${limit}&page=${page}&sort=${sort}`,
+            query: ({ page, limit, sort, search }) => 
+                `earners?limit=${limit}&page=${page}&sort=${sort}&search=${search}`,
             providesTags: ["Earner"],
         }),
 
