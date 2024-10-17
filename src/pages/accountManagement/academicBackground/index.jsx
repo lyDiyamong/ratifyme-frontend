@@ -16,8 +16,8 @@ const AcademicBackground = () => {
     const { data: info } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
 
     const earnerData = response?.data;
-    // console.log("User Id", info?.data?.id);
-    // console.log("Data", earnerData);
+    console.log("User Id", info?.data?.id);
+    console.log("Data", response);
 
     if (isLoading) return <Typography>Loading...</Typography>;
     if (isError) return <Typography>Error loading data.</Typography>;
