@@ -149,11 +149,7 @@ const InviteUserModal = ({ open, handleClose, onSubmit, userType }) => {
                     <Typography variant="h4" sx={{ lineHeight: 2 }}>
                         Invite {userType}
                     </Typography>
-                    <IconButton
-                        aria-label="close"
-                        onClick={handleClose}
-                        sx={{ position: "absolute", right: 8, top: 8 }}
-                    >
+                    <IconButton aria-label="close" onClick={handleClose} sx={{ position: "absolute", right: 8, top: 8 }}>
                         <Close />
                     </IconButton>
                 </DialogTitle>
@@ -245,10 +241,7 @@ const InviteUserModal = ({ open, handleClose, onSubmit, userType }) => {
                                     </Tooltip>
 
                                     <Tooltip title="Delete">
-                                        <IconButton
-                                            aria-label="delete"
-                                            onClick={() => openConfirmationDialog(invitedUser.id)}
-                                        >
+                                        <IconButton aria-label="delete" onClick={() => openConfirmationDialog(invitedUser.id)}>
                                             <DeleteOutline sx={{ fontSize: { xs: "22px", sm: "24px" } }} />
                                         </IconButton>
                                     </Tooltip>
