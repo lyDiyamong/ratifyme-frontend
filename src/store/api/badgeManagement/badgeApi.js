@@ -91,8 +91,8 @@ export const badgeApi = createApi({
         }),
 
         fetchBadgeByEarner: builder.query({
-            query: (earnerId) => ({
-                url: `/issuers/badgeClasses/earner/${earnerId}`,
+            query: ({ earnerId, limit = 5, page }) => ({
+                url: `/issuers/badgeClasses/earner/${earnerId}?page=${page}&limit=${limit}`,
                 method: "GET",
             }),
             providesTags: (result, error, earnerId) => {

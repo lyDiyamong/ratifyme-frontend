@@ -20,7 +20,7 @@ import theme from "../assets/themes";
 import StatusCode from "../assets/images/NoData.svg";
 import GoldBadge from "../assets/images/DiamondBadge.svg";
 
-const BadgeListCard = ({ badges, onView, roleId, onPage, onNextPage, onPrevPage, total }) => {
+const   BadgeListCard = ({ badges, onView, roleId, onPage, onNextPage, onPrevPage, total }) => {
     const [page, setPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(6);
 
