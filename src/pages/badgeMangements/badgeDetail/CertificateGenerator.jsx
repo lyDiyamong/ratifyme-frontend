@@ -55,12 +55,13 @@ const CertificateGenerator = ({ badge }) => {
         formData.append("certFile", blob, `certificate-${userInfo?.username}`);
 
         // Handle errors using useCatchStatus instead of try-catch
-        await uploadCert({ uploadedCert: formData })
+        await uploadCert({ achieveId, earnerId, uploadedCert: formData })
             .unwrap() // Access the success response
             .then((response) => {
                 if (response) {
-                    setPdfUrl(response.pdfUrl);
-                    window.open(response.pdfUrl, "_blank");
+                    console.log("Response", response);
+                    setPdfUrl(response?.uploadCert);
+                    window.open(response?.uploadCert, "_blank");
                 }
             })
             .catch((error) => setMessage("Failed to upload certificate."));

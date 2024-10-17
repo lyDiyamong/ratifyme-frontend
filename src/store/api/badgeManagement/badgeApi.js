@@ -8,7 +8,7 @@ export const badgeApi = createApi({
     endpoints: (builder) => ({
         // Fetch badges by issuerId
         fetchBadges: builder.query({
-            query: ({field, fk}) => ({
+            query: ({ field, fk }) => ({
                 url: `/issuers/badgeClasses?${field}=${fk}`,
                 method: "GET",
             }),
@@ -24,11 +24,14 @@ export const badgeApi = createApi({
                 method: "POST",
                 body: badge,
             }),
-            invalidatesTags: (result) => [{ type: "BadgeIssuer", id: `LIST-${result?.issuerId}` },[{ type: "Badge", id: "LIST" }]],
+            invalidatesTags: (result) => [
+                { type: "BadgeIssuer", id: `LIST-${result?.issuerId}` },
+                [{ type: "Badge", id: "LIST" }],
+            ],
         }),
         uploadCerti: builder.mutation({
-            query: ({uploadedCert}) => ({
-                url: `/earners/uploadCerti`,
+            query: ({ achieveId, earnerId, uploadedCert }) => ({
+                url: `/earners/uploadCerti/${achieveId}/earner/${earnerId}`,
                 method: "POST",
                 body: uploadedCert,
             }),
@@ -149,5 +152,5 @@ export const {
     useFetchClaimBadgeByEarnerQuery,
     useDeleteBadgeMutation,
     useUpdateBadgeMutation,
-    useUploadCertiMutation
+    useUploadCertiMutation,
 } = badgeApi;

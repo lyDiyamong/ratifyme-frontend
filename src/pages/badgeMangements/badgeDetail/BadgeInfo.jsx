@@ -172,7 +172,7 @@ const DetailItem = ({ label, value, isSmallScreen }) => (
                                 color={theme.palette.text.primary}
                                 fontWeight={theme.fontWeight.semiBold}
                             >
-                                {result.name}
+                                {result?.name}
                             </Typography>
 
                             <Typography sx={{ fontSize: theme.typography.body1 }} color={theme.palette.text.secondary}>
