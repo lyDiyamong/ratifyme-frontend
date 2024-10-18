@@ -38,7 +38,9 @@ function AlertMessage({ variant, children, onClose }) {
             sx={{
                 position: "absolute",
                 top: 20,
-                right: "40%",
+                // display : "flex",
+                // justifyContent: "center",
+                left: "50%",
                 transform: "translateX(-50%)",
                 zIndex: 10000000000,
             }}

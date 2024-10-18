@@ -23,7 +23,7 @@ const ChangePasswordForm = () => {
     const [updatePassword, { isSuccess, isError, error }] = useUpdatePasswordMutation();
     const [message, setMessage] = useCatchStatus(
         isSuccess || isError,
-        isSuccess ? "Update password successfully" : error?.message,
+        isSuccess ? "Update password successfully" : error?.data?.message,
     );
     const onSubmit = async (data) => {
         if (data.newPassword !== data.passwordConfirm) {
