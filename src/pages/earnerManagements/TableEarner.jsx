@@ -185,7 +185,7 @@ const TableEarner = () => {
     // Correct the onSearch function
     const onSearch = (query) => {
         setSearchQuery(query);
-        setCurrentPage(1); // Reset to the first page after a new search query
+        setCurrentPage(1);
     };
     
 
