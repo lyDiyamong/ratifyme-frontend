@@ -18,30 +18,31 @@ const BadgeList = () => {
     let activeId = null;
     let field = null;
 
-    switch (roleId) {
-        case 2:
-            activeId = institutionData?.id;
-            field = "institutionId";
-            break;
-        case 3:
-            activeId = issuerData?.id;
-            field = "issuerId";
-            break;
-        default:
-            return <div>Invalid roleId</div>;
+    // Only set activeId and field when the roleId is valid
+    if (roleId === 2 && institutionData?.id) {
+        activeId = institutionData.id;
+        field = "institutionId";
+    } else if (roleId === 3 && issuerData?.id) {
+        activeId = issuerData.id;
+        field = "issuerId";
     }
 
+    // Avoid fetching if activeId is null or field is not defined
     const {
         data: allBadges,
         isLoading,
         isError,
-    } = useFetchBadgesQuery({ field, fk: activeId, limit, page }, { skip: !activeId });
+    } = useFetchBadgesQuery({ field, fk: activeId, limit, page }, { skip: !activeId || !field });
 
     useEffect(() => {
         if (activeId && field) {
             window.history.replaceState(null, "", `?page=${page}&${field}=${activeId}&limit=${limit}`);
         }
     }, [page, limit, field, activeId]);
+
+    // Display a message for invalid roleId outside of the core logic
+    if (!activeId || !field) return <div>Invalid roleId</div>;
+
     if (isLoading) return <SpinLoading size={30} />;
     if (isError) return <div>Error loading badges.</div>;
     if (!allBadges || !allBadges.data.length) return <div>No badges found.</div>;
@@ -63,7 +64,7 @@ const BadgeList = () => {
 
             <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
                 <Pagination
-                    count={totalPages || 1} // Ensure at least 1 page is displayed
+                    count={totalPages || 1}
                     page={page}
                     onChange={(event, value) => onPage(value)}
                     size={isSmallScreen ? "small" : "large"}

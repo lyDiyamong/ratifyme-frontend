@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useFetchBadgeByEarnerQuery } from "../../store/api/badgeManagement/badgeApi";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -11,22 +11,30 @@ const BackpackList = () => {
     const [limit] = useState(5);
     const navigate = useNavigate();
     const { earnerData } = useSelector((state) => state.global);
-    const earnerId = earnerData.id;
+    const earnerId = earnerData?.id;
     const isSmallScreen = window.innerWidth < 600;
 
-    const { data: badgeClaim, isLoading } = useFetchBadgeByEarnerQuery({ earnerId, page, limit });
+    const { data: badgeClaim, isLoading } = useFetchBadgeByEarnerQuery({ earnerId, page, limit }, { skip: !earnerId });
     const badgeClaims = badgeClaim?.badgeClasses;
-    console.log(badgeClaim?.totalRecords);
 
-    // Handle loading, error, and empty state in the parent component
+    // UseEffect to update the URL with page and limit query params
+    useEffect(() => {
+        if (earnerId) {
+            window.history.replaceState(null, "", `?page=${page}&limit=${limit}`);
+        }
+    }, [page, limit, earnerId]);
+
+    // Handle loading state
     if (isLoading) return <Typography>Loading...</Typography>;
 
+    // Calculate the total pages for pagination
     const totalPages = badgeClaims?.length === limit ? page + 1 : page;
-    console.log(totalPages);
+
     const onPage = (newPage) => {
         setPage(newPage);
     };
-    // Handle view badgeDetail
+
+    // Handle viewing badge detail
     const handleView = (id) => {
         navigate(`/management/badges/badgeDetail/${id}`);
     };
