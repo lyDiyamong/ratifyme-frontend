@@ -112,7 +112,7 @@ const TableIssuer = () => {
     // Issuer Columns based on role
     const getIssuerColumns = () => {
         const commonColumns = [
-            { name: "Issuer ID", selector: (row) => row.issuerId || "N/A", sortable: true },
+            { name: "Issuer ID", selector: (row, index) => index + 1 || "N/A", sortable: true },
             { name: "Issuer Name", selector: (row) => row.issuerName || "N/A", sortable: true },
             { name: "Issuer Email", selector: (row) => row.issuerEmail || "N/A", sortable: true },
             { name: "Total Badge", selector: (row) => row.totalBadges, sortable: true },
