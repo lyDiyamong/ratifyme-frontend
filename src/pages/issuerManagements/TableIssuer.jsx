@@ -148,7 +148,7 @@ const TableIssuer = () => {
                     columns={getIssuerColumns()}
                     onAddNew={handleInviteIssuer}
                     addNewLabel="Invite Issuer"
-                    onSearch={setSearchQuery} // Only pass the props you are using
+                    onSearch={setSearchQuery} 
                 >
                     {/* Show NoRecordData inside the table when there's no data */}
                     {filteredData.length === 0 && <NoRecordData />}
