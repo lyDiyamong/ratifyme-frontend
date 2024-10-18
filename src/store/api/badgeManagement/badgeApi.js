@@ -91,7 +91,7 @@ export const badgeApi = createApi({
         }),
 
         fetchBadgeByEarner: builder.query({
-            query: ({ earnerId, limit = 5, page }) => ({
+            query: ({ earnerId, page, limit }) => ({
                 url: `/issuers/badgeClasses/earner/${earnerId}?page=${page}&limit=${limit}`,
                 method: "GET",
             }),
@@ -115,8 +115,8 @@ export const badgeApi = createApi({
         }),
 
         fetchClaimBadgeByEarner: builder.query({
-            query: (earnerId) => ({
-                url: `/issuers/badgeClasses/claim/${earnerId}`,
+            query: ({ earnerId, page, limit = 5 }) => ({
+                url: `/issuers/badgeClasses/claim/${earnerId}?page=${page}&limit=${limit}`,
                 method: "GET",
             }),
             providesTags: (result, error, earnerId) => {
