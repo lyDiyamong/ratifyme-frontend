@@ -130,8 +130,8 @@ const TableCustom = ({
                             Sort by
                         </InputLabel>
                         <Select label="Sort by" onChange={(e) => onSortChange(e.target.value)}>
-                            <MenuItem value="id">Asc</MenuItem>
-                            <MenuItem value="-id">Des</MenuItem>
+                            <MenuItem value="name">Name asc</MenuItem>
+                            <MenuItem value="-name">Name Decs</MenuItem>
                         </Select>
                     </FormControl>
                     <Button
