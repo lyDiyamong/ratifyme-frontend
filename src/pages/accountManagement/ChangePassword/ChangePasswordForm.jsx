@@ -1,6 +1,5 @@
 //React import
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
 
 // MUI component
 import { Stack, Box, Typography, Button, Grid } from "@mui/material";
@@ -16,15 +15,18 @@ import AlertMessage from "../../../components/alert/AlertMessage";
 import { useUpdatePasswordMutation } from "../../../store/api/auth/authApi";
 
 const ChangePasswordForm = () => {
-    // Token global state
+    // React hook form
     const { control, handleSubmit, setError, reset } = useForm({
         mode : 'onChange'
     });
+    // Update password hook
     const [updatePassword, { isSuccess, isError, error }] = useUpdatePasswordMutation();
+    // Catch status hook
     const [message, setMessage] = useCatchStatus(
         isSuccess || isError,
         isSuccess ? "Update password successfully" : error?.data?.message,
     );
+    // Handle react hook form
     const onSubmit = async (data) => {
         if (data.newPassword !== data.passwordConfirm) {
             setError("passwordConfirm", {
@@ -91,15 +93,6 @@ const ChangePasswordForm = () => {
                     gap={4}
                     noValidate
                 >
-                    {/* Username */}
-                    {/* <FormInput
-                        name="name"
-                        label="Username"
-                        control={control}
-                        type="text"
-                        required={true}
-                        autoComplete="off"
-                    /> */}
                     {/* Password */}
                     <FormInput
                         label="Password"
