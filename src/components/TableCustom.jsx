@@ -1,6 +1,7 @@
 // React Library
-import DataTable from "react-data-table-component";
 import { useState } from "react";
+import DataTable from "react-data-table-component";
+
 // MUI Imports
 import {
     Box,
@@ -14,6 +15,7 @@ import {
     IconButton,
     InputAdornment,
 } from "@mui/material";
+
 // Custom Imports
 import MenuSelection from "./TableAction/MenuSelection";
 import theme from "../assets/themes/index";
@@ -31,13 +33,28 @@ const customTableStyles = {
     },
 };
 
+/**
+ * TableCustom Component
+ *
+ * @param {string} [title=""] - Title of the table.
+ * @param {Array} [data=[]] - Data to be displayed.
+ * @param {Array} [columns=[]] - Column configurations.
+ * @param {boolean} [sortIcon=false] - If true, shows a sort icon in the header.
+ * @param {boolean} [actions=false] - If true, adds an "Action" column.
+ * @param {function} [onSearch] - Function to handle search input.
+ * @param {function} [onFilterChange] - Function to handle filter change.
+ * @param {function} [onSortChange] - Function to handle sort change.
+ * @param {function} [onAddNew] - Function to handle Add New button click.
+ * @param {string} [addNewLabel="Add New"] - Custom label for the Add New button.
+ * @returns {JSX.Element} - Rendered table with search, filter, and sort options.
+ */
 
+// =========== Start TableCustom ===========
 const TableCustom = ({
     title = "",
     data = [],
     columns = [],
     actions = false,
-    // onSearch = () => {},
     onFilterChange = () => {},
     onSortChange = () => {},
     onPageChange = () => {},
@@ -56,7 +73,7 @@ const TableCustom = ({
             onSearch(query);
         }
     };
-
+     // Default columns if not provided
     const defaultColumns = [
         { name: "ID", selector: (row) => row.id || "N/A", sortable: true },
         { name: "Name", selector: (row) => row.name || "N/A", sortable: true },
@@ -65,7 +82,7 @@ const TableCustom = ({
         { name: "Year", selector: (row) => row.year || "N/A", sortable: true },
         { name: "Position", selector: (row) => row.position || "N/A", sortable: true },
     ];
-
+    // Add an action column dynamically if enabled
     const dynamicColumns = actions
         ? [...(columns.length ? columns : defaultColumns), { name: "Action", cell: () => <MenuSelection /> }]
         : columns.length
@@ -89,6 +106,7 @@ const TableCustom = ({
                     <Typography sx={{ fontSize: theme.typography.h3, fontWeight: theme.fontWeight.semiBold }}>
                         {title}
                     </Typography>
+                    {/* Add Button for responsive  */}
                     <Button
                         startIcon={<AddIcon />}
                         variant="contained"
@@ -121,7 +139,7 @@ const TableCustom = ({
                         }}
                         onChange={(e) => onSearch(e.target.value)}
                     />
-
+    {/* Sort By */}
                     <FormControl sx={{ minWidth: { md: 100, sm: 80, xs: 60 } }} size="small">
                         <InputLabel>
                             <IconButton sx={{ display: { md: "none", sm: "flex" } }}>
@@ -130,10 +148,11 @@ const TableCustom = ({
                             Sort by
                         </InputLabel>
                         <Select label="Sort by" onChange={(e) => onSortChange(e.target.value)}>
-                            <MenuItem value="name">Name asc</MenuItem>
-                            <MenuItem value="-name">Name Decs</MenuItem>
+                            <MenuItem value="name" sx={{fontSize: 14,}}>ASC ⬆</MenuItem>
+                            <MenuItem value="-name" sx={{fontSize: 14,}}>DES ⬇</MenuItem>
                         </Select>
                     </FormControl>
+                    {/* Add New Button */}
                     <Button
                         startIcon={<AddIcon />}
                         variant="contained"
@@ -173,3 +192,4 @@ const TableCustom = ({
 };
 
 export default TableCustom;
+// =========== End TableCustom ===========
