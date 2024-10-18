@@ -1,21 +1,24 @@
+// React Library import
+import { useSelector } from "react-redux";
+import { useState } from "react";
+
 // MUI Import
 import { Box, Typography, CircularProgress } from "@mui/material";
 
 // Custom Import
-import TableCustom from "../../components/TableCustom";
+import TableCustom from "../../components/TableCustomFront";
 import NoRecordData from "../../components/NoRecordData";
 
 // Fetching Data Import
 import { useFetchInstitutionStatsQuery } from "../../store/api/reports/institutionStatApis";
-import { useSelector } from "react-redux";
 
 // ============ Start Table Report ============
-const TableReport = ({searchQuery}) => {
+const TableReport = () => {
+    const [searchQuery, setSearchQuery] = useState("");
+
     const { userId, roleId } = useSelector((state) => state.global);
     const { data: response, isLoading, isError } = useFetchInstitutionStatsQuery();
     const reportData = response?.data;
-
-    
 
     // Filter report data based on the user's role
     let filteredReportData;
@@ -29,18 +32,31 @@ const TableReport = ({searchQuery}) => {
     }
 
     // Filter data based on the search query
-    const filteredData =
-        filteredReportData?.filter((report) => {
+    let filteredData = [];
+    if (roleId === 1) {
+        // Admin sees institution-level data
+        filteredData = filteredReportData?.filter((report) => {
             const institutionNameMatch = report?.institutionName?.toLowerCase().includes(searchQuery.toLowerCase());
-
-            const issuerNameMatch = report?.Issuers?.some((issuer) =>
-                `${issuer.User.firstName} ${issuer.User.lastName}`.toLowerCase().includes(searchQuery.toLowerCase()),
-            );
-
-            return institutionNameMatch || issuerNameMatch;
+            return institutionNameMatch;
         }) || [];
+    } else {
+        // Non-admins see issuer-level data, flattening issuers into individual rows
+        filteredData = filteredReportData?.flatMap((report) =>
+            report.Issuers.map((issuer, index) => ({
+                issuerId: index + 1,
+                issuerName: `${issuer.User.firstName} ${issuer.User.lastName}`,
+                issuerEmail: issuer.User.email,
+                totalBadge: issuer.BadgeClasses?.length || 0,
+                totalEarner: issuer.Earners?.length || 0,
+            }))
+        ).filter((issuer) => {
+            const issuerNameMatch = issuer.issuerName.toLowerCase().includes(searchQuery.toLowerCase());
+            const issuerEmailMatch = issuer.issuerEmail.toLowerCase().includes(searchQuery.toLowerCase());
+            return issuerNameMatch || issuerEmailMatch;
+        }) || [];
+    }
 
-    // Report Columns
+    // Report Columns based on role
     const reportColumns =
         roleId === 1
             ? [
@@ -78,34 +94,27 @@ const TableReport = ({searchQuery}) => {
             : [
                   {
                       name: "Issuer ID",
-                      selector: (row) => row.Issuers.map((issuer) => issuer.id).join(", ") || "N/A",
+                      selector: (row) => row.issuerId,
                       sortable: true,
                   },
                   {
                       name: "Issuer Name",
-                      selector: (row) =>
-                          row.Issuers.map((issuer) => `${issuer.User.firstName} ${issuer.User.lastName}`).join(", ") ||
-                          "N/A",
+                      selector: (row) => row.issuerName,
                       sortable: true,
                   },
                   {
                       name: "Issuer Email",
-                      selector: (row) => row.Issuers.map((issuer) => issuer.User.email) || "N/A",
+                      selector: (row) => row.issuerEmail,
                       sortable: true,
                   },
                   {
                       name: "Total Badge",
-                      selector: (row) =>
-                          row.Issuers.reduce(
-                              (totalBadges, issuer) => totalBadges + (issuer.BadgeClasses?.length || 0),
-                              0,
-                          ),
+                      selector: (row) => row.totalBadge,
                       sortable: true,
                   },
                   {
                       name: "Total Earner",
-                      selector: (row) =>
-                          row.Issuers.reduce((totalEarners, issuer) => totalEarners + (issuer.Earners?.length || 0), 0),
+                      selector: (row) => row.totalEarner,
                       sortable: true,
                   },
               ];
@@ -116,13 +125,17 @@ const TableReport = ({searchQuery}) => {
                 <CircularProgress />
             ) : isError ? (
                 <Typography color="error">Error fetching data</Typography>
-            ) : filteredData.length > 0 ? (
-                <>
-                    <TableCustom title="Report List" data={filteredData} columns={reportColumns} />
-                </>
             ) : (
-                // Display this section if no report matches the search query
-                <NoRecordData />
+                <>
+                    <TableCustom
+                        title={roleId === 1 ? "Report List" : "Issuer List"}
+                        data={filteredData}
+                        columns={reportColumns}
+                        onSearch={setSearchQuery}
+                    >
+                        {filteredData.length === 0 && <NoRecordData />}
+                    </TableCustom>
+                </>
             )}
         </Box>
     );
@@ -130,3 +143,5 @@ const TableReport = ({searchQuery}) => {
 
 export default TableReport;
 // ============ End Table Report ============
+
+
