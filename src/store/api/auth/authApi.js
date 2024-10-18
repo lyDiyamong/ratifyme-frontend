@@ -146,6 +146,13 @@ export const authApi = createApi({
                 body: data,
             }),
         }),
+        updatePassword: builder.mutation({
+            query: ({ data }) => ({
+                url: `/auth/updatePassword/`,
+                method: "PATCH",
+                body: data,
+            }),
+        }),
     }),
 });
 
@@ -157,4 +164,5 @@ export const {
     useVerifyResetTokenQuery,
     useResetPasswordMutation,
     useLogoutMutation,
+    useUpdatePasswordMutation
 } = authApi;

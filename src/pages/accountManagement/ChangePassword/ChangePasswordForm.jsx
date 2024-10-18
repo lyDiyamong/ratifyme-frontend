@@ -1,5 +1,6 @@
 //React import
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 
 // MUI component
 import { Stack, Box, Typography, Button, Grid } from "@mui/material";
@@ -7,22 +8,33 @@ import { Stack, Box, Typography, Button, Grid } from "@mui/material";
 // Custom import
 import theme from "../../../assets/themes";
 import FormInput from "../../../components/FormInput";
-
-// Image import
 import ChangePassword from "../../../assets/images/ChangePassword.svg";
+import useCatchStatus from "../../../hooks/useCatchStatus";
+import AlertMessage from "../../../components/alert/AlertMessage";
+
+// Api import
+import { useUpdatePasswordMutation } from "../../../store/api/auth/authApi";
 
 const ChangePasswordForm = () => {
-    // Form controller
-    const { control, handleSubmit, setError, reset } = useForm();
-
-    const onSubmit = (data) => {
-        if (data.newPassword !== data.confirmPassword) {
-            setError("confirmPassword", {
+    // Token global state
+    const { control, handleSubmit, setError, reset } = useForm({
+        mode : 'onChange'
+    });
+    const [updatePassword, { isSuccess, isError, error }] = useUpdatePasswordMutation();
+    const [message, setMessage] = useCatchStatus(
+        isSuccess || isError,
+        isSuccess ? "Update password successfully" : error?.message,
+    );
+    const onSubmit = async (data) => {
+        if (data.newPassword !== data.passwordConfirm) {
+            setError("passwordConfirm", {
                 type: "manual",
                 message: "Passwords do not match",
             });
         } else {
-            console.log(data);
+            await updatePassword({
+                data,
+            }).unwrap();
             reset();
         }
     };
@@ -42,6 +54,11 @@ const ChangePasswordForm = () => {
                 gap: { md: 4, xss: 0 },
             }}
         >
+            {message && (
+                <AlertMessage variant={isSuccess ? "success" : "error"} onClose={() => setMessage("")}>
+                    {message}
+                </AlertMessage>
+            )}
             {/* Start Text Container */}
             <Stack maxWidth={600} gap={3}>
                 <Stack flexDirection="column">
@@ -75,18 +92,18 @@ const ChangePasswordForm = () => {
                     noValidate
                 >
                     {/* Username */}
-                    <FormInput
+                    {/* <FormInput
                         name="name"
                         label="Username"
                         control={control}
                         type="text"
                         required={true}
                         autoComplete="off"
-                    />
+                    /> */}
                     {/* Password */}
                     <FormInput
                         label="Password"
-                        name="password"
+                        name="passwordCurrent"
                         control={control}
                         type="password"
                         required={true}
@@ -104,7 +121,7 @@ const ChangePasswordForm = () => {
                     {/* Confirm Password */}
                     <FormInput
                         label="Confirm Password"
-                        name="confirmPassword"
+                        name="passwordConfirm"
                         control={control}
                         type="password"
                         required={true}
