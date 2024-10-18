@@ -1,6 +1,7 @@
 // React Library Import
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 // MUI Import
 import Box from "@mui/material/Box";
@@ -16,6 +17,9 @@ import theme from "../../../assets/themes/index";
 import FormInput from "../../../components/FormInput";
 import { SpinLoading } from "../../../components/loading/SpinLoading";
 import PhoneNumberForm from "../../../components/PhoneNumberForm";
+import AlertMessage from "../../../components/alert/AlertMessage.jsx";
+import orgSchema from "../../../utils/schema/orgSchema";
+import useCatchStatus from "../../../hooks/useCatchStatus.js";
 
 // Fetching Data Import
 import { useUpdateInstitutionMutation } from "../../../store/api/institutionManagement/institutionApi";
@@ -24,9 +28,18 @@ const CustomPaper = (props) => <Paper {...props} sx={{ borderRadius: "16px" }} /
 
 // =========== Start Edit Profile Modal ===========
 const OrgModalEditProfile = ({ open, institutionData, onClose }) => {
-    const { handleSubmit, control, reset } = useForm({});
+    const { handleSubmit, control, reset } = useForm({
+        mode: "onChange",
+        resolver: yupResolver(orgSchema),
+    });
+    const [updateOrgProfile, { isLoading, isError: updateOrgError, isSuccess: updateOrgSuccess }] =
+        useUpdateInstitutionMutation();
 
-    const [updateOrgProfile, { isLoading, isError }] = useUpdateInstitutionMutation();
+    // CatchStatus hook
+    const [message, setMessage] = useCatchStatus(
+        updateOrgError || updateOrgSuccess,
+        updateOrgError ? "There is no data to update" : "Update successfully",
+    );
 
     useEffect(() => {
         if (institutionData) {
@@ -41,7 +54,6 @@ const OrgModalEditProfile = ({ open, institutionData, onClose }) => {
 
     const onSubmit = async (data) => {
         try {
-            console.log("payload",data);
             await updateOrgProfile({ id: institutionData.id, updatedData: data }).unwrap();
             onClose();
         } catch (error) {
@@ -64,7 +76,11 @@ const OrgModalEditProfile = ({ open, institutionData, onClose }) => {
                 Organization Information
             </DialogTitle>
             <DialogContent>
-                {isError && <p style={{ color: "red" }}>Error updating profile. Please try again.</p>}
+                {message && (
+                    <AlertMessage variant={updateOrgError ? "error" : "success"} onClose={() => setMessage("")}>
+                        {message}
+                    </AlertMessage>
+                )}
                 <Box
                     sx={{
                         mt: 2,

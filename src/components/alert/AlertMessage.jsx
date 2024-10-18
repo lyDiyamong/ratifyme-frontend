@@ -38,9 +38,9 @@ function AlertMessage({ variant, children, onClose }) {
             sx={{
                 position: "absolute",
                 top: 20,
-                right: "2%",
-                // transform: "translateX(-50%)",
-                zIndex: 1000,
+                right: "40%",
+                transform: "translateX(-50%)",
+                zIndex: 10000000000,
             }}
         >
             <Alert

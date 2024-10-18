@@ -16,7 +16,6 @@ export const institutionApi = createApi({
                 method: "GET",
             }),
             providesTags: (result, err, id) => {
-                console.log("ID OF FETCH", id);
                 return [{ type: "Institution", id }];
             },
         }),
@@ -38,7 +37,6 @@ export const institutionApi = createApi({
                 body: data,
             }),
             invalidatesTags: (result, err, { id }) => {
-                console.log("Update Img", id);
                 return [{ type: "Institution", id }];
             },
         }),
@@ -48,7 +46,6 @@ export const institutionApi = createApi({
                 method: "DELETE",
             }),
             invalidatesTags: (result, err, { id }) => {
-                console.log("Delete Img", id);
                 return [{ type: "Institution", id }];
             },
         }),
