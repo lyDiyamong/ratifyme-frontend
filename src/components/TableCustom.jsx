@@ -61,9 +61,9 @@ const TableCustom = ({
     onRowsPerPageChange = () => {},
     onAddNew = () => {},
     addNewLabel = "Add New",
-    totalRows,
-    rowsPerPage,
-    onSearch,
+    totalRows = null,
+    rowsPerPage = null,
+    onSearch = null,
 }) => {
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -177,7 +177,7 @@ const TableCustom = ({
                 pagination
                 paginationServer
                 paginationTotalRows={totalRows}
-                paginationRowsPerPageOptions={[5, 10, 15, 20]}
+                paginationRowsPerPageOptions={[5, 10, 15, 20, 30, 40, 50]}
                 paginationPerPage={rowsPerPage}
                 onChangePage={onPageChange}
                 onChangeRowsPerPage={onRowsPerPageChange}
