@@ -13,7 +13,8 @@ import FemaleUserDefault from "../../../assets/images/FemaleUser.svg";
 import theme from "../../../assets/themes";
 
 // Fetching data imports
-import { useFetchInfoUserByIdQuery, useUpdateUserProfileMutation } from "../../../store/api/users/userInfoProfileApi";
+import { useFetchInfoUserByIdQuery } from "../../../store/api/users/userInfoProfileApi";
+import { useUpdateInstitutionMutation } from "../../../store/api/institutionManagement/institutionApi";
 
 // =========== Start BioContent in profile page ===========
 const OrganizationBio = ({ institutionInfo }) => {
@@ -58,7 +59,7 @@ const OrganizationBio = ({ institutionInfo }) => {
     }, [info, institutionBioText]);
 
     // Update user institutionBio mutation
-    const [updateUserProfile, { isLoading }] = useUpdateUserProfileMutation();
+    const [updateOrgProfile, { isLoading, isError }] = useUpdateInstitutionMutation();
 
     // Handle edit mode
     const handleTextClick = () => setIsEditing(true);
@@ -67,7 +68,7 @@ const OrganizationBio = ({ institutionInfo }) => {
     const handleSubmit = async () => {
         if (institutionBio && userId) {
             try {
-                await updateUserProfile({ id: userId, data: { institutionBio } }).unwrap();
+                await updateOrgProfile({ id: userId, updatedData: { institutionBio } }).unwrap();
                 setIsEditing(false);
             } catch (error) {
                 console.error("Failed to update institutionBio:", error);
