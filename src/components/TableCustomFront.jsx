@@ -55,10 +55,14 @@ const TableCustom = ({
     children,
     onAddNew = () => {},
     addNewLabel = "Add New",
+    onSearch
 }) => {
     const [searchQuery, setSearchQuery] = useState("");
     const handleSearch = (query) => {
         setSearchQuery(query);
+        if (onSearch) {
+            onSearch(query);
+        }
     };
     // Default columns if not provided
     const defaultColumns = [
@@ -153,6 +157,7 @@ const TableCustom = ({
                                     </InputAdornment>
                                 ),
                             }}
+                            onChange={(e) => onSearch(e.target.value)}
                         />
                     </Box>
 
