@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { Box, Typography, CircularProgress } from "@mui/material";
 
 // Custom Import
-import TableCustom from "../../components/TableCustom";
+import TableCustom from "../../components/TableCustomFront";
 import NoRecordData from "../../components/NoRecordData";
 import InviteUserModal from "../../components/modals/InviteUserModal";
 import { useFetchInstitutionStatsQuery } from "../../store/api/reports/institutionStatApis";
@@ -45,8 +45,8 @@ const TableIssuer = () => {
 
     // Filter Issuer Data based on role
     const filterIssuerData = (issuerData) => {
-        if (roleId === 1) return issuerData; 
-        return issuerData?.filter((issuer) => issuer.userId === userId);
+        if (roleId === 1) return issuerData; // Admin can see all issuers
+        return issuerData?.filter((issuer) => issuer.userId === userId); // Other roles see their own issuers
     };
 
     // Flatten data to render issuers
@@ -63,14 +63,17 @@ const TableIssuer = () => {
         );
     };
 
+    // Handle opening invite issuer dialog
     const handleInviteIssuer = () => {
         setDialogOpen(true);
     };
 
+    // Handle closing the invite issuer dialog
     const handleCloseDialog = () => {
         setDialogOpen(false);
     };
 
+    // Handle inviting a new issuer
     const handleInviteSubmit = async (data, reset) => {
         try {
             // Send invitation via API
@@ -88,7 +91,7 @@ const TableIssuer = () => {
                 ].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
             );
 
-            reset();
+            reset(); // Reset the form
             setDialogOpen(false); // Close the dialog on success
         } catch (error) {
             console.error("Error sending invitation", error);
@@ -145,7 +148,7 @@ const TableIssuer = () => {
                     columns={getIssuerColumns()}
                     onAddNew={handleInviteIssuer}
                     addNewLabel="Invite Issuer"
-                    onSearch={setSearchQuery}
+                    onSearch={setSearchQuery} // Only pass the props you are using
                 >
                     {/* Show NoRecordData inside the table when there's no data */}
                     {filteredData.length === 0 && <NoRecordData />}
@@ -164,5 +167,3 @@ const TableIssuer = () => {
 };
 
 export default TableIssuer;
-
-
