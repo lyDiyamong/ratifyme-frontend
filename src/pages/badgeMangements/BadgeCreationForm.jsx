@@ -20,6 +20,7 @@ import { SpinLoading } from "../../components/loading/SpinLoading";
 import { useCreateBadgeMutation } from "../../store/api/badgeManagement/badgeApi";
 import { useFetchAchievementTypeQuery } from "../../store/api/achievements/achievementTypeApi";
 import { AssignmentIndOutlined, CameraAltRounded, YouTube } from "@mui/icons-material";
+import BadgeDefaultSvg from "../../assets/icons/BadgeDefaultSvg.svg";
 
 // The data static of the description
 const steps = [
@@ -201,11 +202,17 @@ const BadgeCreationForm = () => {
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
-            console.log("Selected file:", file);
             setUploadedImage(file);
         }
         event.target.value = "";
     };
+
+    // Monitor changes in the uploaded image using useEffect
+    useEffect(() => {
+        if (uploadedImage) {
+            console.log("Image selected:", uploadedImage);
+        }
+    }, [uploadedImage]);
 
     const renderStepContent = () => {
         switch (activeStep) {
@@ -237,33 +244,31 @@ const BadgeCreationForm = () => {
             {/* Start the Image Upload */}
             {/* <Typography>Hello</Typography> */}
             {/* <ImageSelection onImageSelect={(file) => setUploadedImage(file)} /> */}
-            <Stack direction={{ sm: "column", md: "row" }} gap={3} alignItems="center">
+            <Stack direction={{ md: "row", xss: "column-reverse" }} gap={3} alignItems={{ md: "center", xss: "start" }}>
                 <Box
                     sx={{
                         position: "relative",
-                        width: "150px",
-                        height: "150px",
-                        borderRadius: "100%",
+                        maxWidth: "250px",
+                        width: "100%",
+                        height: "250px",
+                        borderRadius: theme.customShape.input,
                         overflow: "hidden",
-                        "&:hover .hover-overlay": {
-                            visibility: "visible",
-                            opacity: 1,
-                        },
+                        border: "1px solid gray",
                     }}
                 >
-                    <Box
-                        component="img"
-                        src={uploadedImage}
-                        alt="person"
-                        sx={{
-                            width: "100%",
-                            height: "100%",
-                            borderRadius: "100%",
-                            objectFit: "cover",
-                            display: "block",
-                        }}
-                    />
-
+                    {uploadedImage ? (
+                        <img
+                            src={URL.createObjectURL(uploadedImage)}
+                            alt="Selected"
+                            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                        />
+                    ) : (
+                        <img
+                            src={BadgeDefaultSvg}
+                            alt="Default"
+                            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                        />
+                    )}
                     <Box
                         className="hover-overlay"
                         sx={{
@@ -272,60 +277,45 @@ const BadgeCreationForm = () => {
                             left: 0,
                             width: "100%",
                             height: "100%",
-                            borderRadius: "100%",
                             bgcolor: "rgba(0, 0, 0, 0.6)",
                             display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "center",
                             alignItems: "center",
-                            visibility: "hidden",
+                            justifyContent: "center",
                             opacity: 0,
-                            transition: "visibility 0.2s, opacity 0.3s ease-in-out",
-                            cursor: "pointer",
+                            transition: "opacity 0.3s",
                         }}
+                        onMouseOver={(e) => (e.currentTarget.style.opacity = 1)}
+                        onMouseOut={(e) => (e.currentTarget.style.opacity = 0)}
                     >
-                        <input
-                            type="file"
-                            id="icon-button-photo"
-                            style={{ display: "none" }}
-                            onChange={handleFileChange}
-                        />
-                        <label htmlFor="icon-button-photo">
-                            <IconButton
-                                aria-label="upload"
-                                component="span"
-                                sx={{
-                                    color: theme.palette.customColors.white,
-                                }}
-                            >
-                                <CameraAltRounded />
-                            </IconButton>
+                        <input type="file" id="upload-photo" style={{ display: "none" }} onChange={handleFileChange} />
+                        <label htmlFor="upload-photo">
+                            <Stack justifyContent="center" alignItems="center">
+                                <IconButton component="span">
+                                    <CameraAltRounded sx={{ color: "white" }} />
+                                </IconButton>
+                                <Typography color="white" textAlign="center">
+                                    Badge Image
+                                </Typography>
+                            </Stack>
                         </label>
-                        <Typography variant="body3" color={theme.palette.customColors.white}>
-                            Update Profile
-                        </Typography>
                     </Box>
                 </Box>
 
-                {/* <Stack sx={{ alignItems: { md: "start", xss: "center" }, gap: 1 }}>
-
-                    <Box
+                <Stack gap={2}>
+                    <Typography component="h3" variant="h3" fontWeight={theme.fontWeight.semiBold}>
+                        Badge Image
+                    </Typography>
+                    <Typography
+                        variant="body1`"
                         sx={{
-                            bgcolor: theme.palette.action.hover,
-                            color: theme.palette.primary.main,
-                            p: 1,
-                            px: 2,
-                            borderRadius: theme.customShape.section,
-                            display: "flex",
-                            justifyContent: "center",
-                            gap: 1,
-                            alignItems: "center",
+                            maxWidth: 400,
+                            width: "100%",
+                            color: theme.palette.text.disabled,
                         }}
                     >
-                        <AssignmentIndOutlined sx={{ color: theme.palette.primary.main }} />
-
-                    </Box>
-                </Stack> */}
+                        Badge image must use images in PNG format, with dimensions.
+                    </Typography>
+                </Stack>
             </Stack>
             {/* End the Image Upload */}
 
