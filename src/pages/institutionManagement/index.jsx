@@ -1,6 +1,6 @@
 // React import
 import { useNavigate } from "react-router";
-import { useEffect } from "react";
+import { useState } from "react";
 
 // Custom import
 import AlertMessage from "../../components/alert/AlertMessage";
@@ -14,15 +14,30 @@ import useCatchStatus from "../../hooks/useCatchStatus";
 
 // Api import
 import { useGetInstitutionQuery } from "../../store/api/institutionManagement/institutionApi";
+import NoRecordData from "../../components/NoRecordData";
 
 const InstitutionManagement = () => {
+    // Pagination & Sorting State & Limiting & Searching
+    const [currentPage, setCurrentPage] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [sortColumn, setSortColumn] = useState("institutionName");
+    const [sortOrder, setSortOrder] = useState("institutionName");
+    const [searchQuery, setSearchQuery] = useState("");
+
     // Fetching institutions hook
     const {
         data: institutionsResponse,
         isLoading: institutionsLoading,
         isError: institutionsIsError,
         error: institutionsError,
-    } = useGetInstitutionQuery();
+    } = useGetInstitutionQuery({
+        page: currentPage,
+        limit: rowsPerPage,
+        sort: sortColumn,
+        order: sortOrder,
+        search: searchQuery,
+    });
+
     const institutions = institutionsResponse?.data;
     // Navigate hook
     const navigate = useNavigate();
@@ -35,32 +50,55 @@ const InstitutionManagement = () => {
         navigate(`/management/institutions/${institutionId}`);
     };
 
-    const columns = [
+    const invoiceColumns = [
+        {
+            name: "No.",
+            selector: (row, index) => index + 1 || "N/A",
+        },
         {
             name: "Organization Name",
             selector: (row) => row?.institutionName || "N/A",
-            sortable: true,
         },
         {
             name: "Email Address",
             selector: (row) => row?.institutionEmail || "N/A",
-            sortable: true,
         },
         {
             name: "Code",
             selector: (row) => row?.code || "N/A",
-            sortable: true,
         },
         {
             name: "Register Date",
             selector: (row) => FormatDate(row?.createdAt),
-            sortable: true,
         },
         {
             name: "Action",
             selector: ({ id }) => <MenuSelection onView={() => handleView(id)} />,
         },
     ];
+
+    // Handle page change
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
+
+    // Handle rows per page change (limit)
+    const handleRowsPerPageChange = (newLimit) => {
+        setRowsPerPage(newLimit);
+    };
+
+    // Handle sorting change
+    const handleSortChange = (column) => {
+        const newSortOrder = sortOrder === "-institutionName" ? "institutionName" : "-institutionName";
+        setSortColumn(column);
+        setSortOrder(newSortOrder);
+    };
+
+    // Handle searching
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+        setCurrentPage(1);
+    };
 
     return (
         // ============ Start InstitutionManagement ============
@@ -76,7 +114,28 @@ const InstitutionManagement = () => {
                 <SkeletonLoading num={5} />
             ) : (
                 // Billing and Invoice Table
-                <TableCustom title="Issuer List" data={institutions} columns={columns} />
+                <TableCustom
+                    title="Issuer List"
+                    data={institutions}
+                    columns={invoiceColumns}
+                    pagination
+                    addNewLabel="Invite Earner"
+                    totalRows={institutionsResponse?.total || 0}
+                    currentPage={currentPage}
+                    rowsPerPage={rowsPerPage}
+                    onPageChange={handlePageChange}
+                    onRowsPerPageChange={handleRowsPerPageChange}
+                    onSortChange={handleSortChange}
+                    sortColumn={sortColumn}
+                    sortOrder={sortOrder}
+                    onSearch={handleSearch}
+                    sortOptions={[
+                        { value: 'institutionName', label: 'ASC ⬆' },
+                        { value: '-institutionName', label: 'DES ⬇' },
+                    ]}
+                >
+                    {institutions?.length === 0 && <NoRecordData />}
+                </TableCustom>
             )}
         </DashboardContainer>
         // ============ End InstitutionManagement ============
