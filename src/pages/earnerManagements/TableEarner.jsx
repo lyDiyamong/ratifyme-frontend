@@ -23,19 +23,23 @@ const TableEarner = () => {
     const [dialogOpen, setDialogOpen] = useState(false);
 
     // Pagination & Sorting State & Limiting & Searching
-    const [currentPage, setCurrentPage] = useState(1); 
-    const [rowsPerPage, setRowsPerPage] = useState(10); 
-    const [sortColumn, setSortColumn] = useState("name"); 
-    const [sortOrder, setSortOrder] = useState("-name"); 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [sortColumn, setSortColumn] = useState("name");
+    const [sortOrder, setSortOrder] = useState("name");
     const [searchQuery, setSearchQuery] = useState("");
 
     // Fetch data from the backend based on pagination, sorting, and search
-    const { data: response, isLoading, isError } = useFetchEarnerQuery({
+    const {
+        data: response,
+        isLoading,
+        isError,
+    } = useFetchEarnerQuery({
         page: currentPage,
         limit: rowsPerPage,
         sort: sortColumn,
-        order: sortOrder,  
-        search: searchQuery,  
+        order: sortOrder,
+        search: searchQuery,
     });
 
     const { roleId, userId, issuerData } = useSelector((state) => state.global);
@@ -67,12 +71,12 @@ const TableEarner = () => {
     const earnerData = response?.data;
 
     // Display earner in the earner table by the specific role , role = 1 (Admin), role = 2 (institutionOwner), role = 3 (issuer)
-    const filteredEarnerData = roleId === 1 
-        ? earnerData 
-        : earnerData?.filter(earner => 
-            roleId === 2 ? earner.Issuer?.Institution?.userId === userId 
-            : earner.Issuer?.userId === userId
-        );
+    const filteredEarnerData =
+        roleId === 1
+            ? earnerData
+            : earnerData?.filter((earner) =>
+                  roleId === 2 ? earner.Issuer?.Institution?.userId === userId : earner.Issuer?.userId === userId,
+              );
 
     // Handle View (open the modal)
     const handleView = (userId) => {
@@ -128,33 +132,27 @@ const TableEarner = () => {
     const earnerColumns = [
         {
             name: "No.",
-            selector: (row, index) => index+1 || "N/A",
-            sortable: false,
+            selector: (row, index) => index + 1 || "N/A",
         },
         {
             name: "Name",
-            selector: (row) => row?.name || "N/A",
-            sortable: true,
+            selector: (row) => row.name || "N/A",
         },
         {
             name: "Email",
             selector: (row) => row.User?.email || "N/A",
-            sortable: true,
         },
         {
             name: "Date Of Birth",
             selector: (row) => FormatYear(row.User?.dateOfBirth) || "N/A",
-            sortable: true,
         },
         {
             name: "Badge",
             selector: (row) => row.Achievement?.BadgeClass?.name || "N/A",
-            sortable: true,
         },
         {
             name: "Academic Year",
             selector: (row) => FormatYear(row.AcademicBackground?.academicYear) || "N/A",
-            sortable: true,
         },
         {
             name: "Action",
@@ -186,7 +184,6 @@ const TableEarner = () => {
         setSearchQuery(query);
         setCurrentPage(1);
     };
-    
 
     return (
         <Box>
@@ -206,15 +203,19 @@ const TableEarner = () => {
                     onAddNew={handleInviteEarner}
                     addNewLabel="Invite Earner"
                     pagination
-                    totalRows={response?.total || 0} 
+                    totalRows={response?.total || 0}
                     currentPage={currentPage}
                     rowsPerPage={rowsPerPage}
                     onPageChange={handlePageChange}
-                    onRowsPerPageChange={handleRowsPerPageChange} 
-                    onSortChange={handleSortChange} 
+                    onRowsPerPageChange={handleRowsPerPageChange}
+                    onSortChange={handleSortChange}
                     sortColumn={sortColumn}
                     sortOrder={sortOrder}
                     onSearch={handleSearch}
+                    sortOptions={[
+                        { value: "name", label: "ASC ⬆" },
+                        { value: "-name", label: "DES ⬇" },
+                    ]}
                 >
                     {/* Display NoRecordData inside the table when no earners match the search query */}
                     {filteredEarnerData?.length === 0 && <NoRecordData />}
