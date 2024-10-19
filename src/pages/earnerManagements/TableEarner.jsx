@@ -181,7 +181,7 @@ const TableEarner = () => {
         setSortOrder(newSortOrder);
     };
 
-    // Correct the onSearch function
+    // Handle searching
     const handleSearch = (query) => {
         setSearchQuery(query);
         setCurrentPage(1);
