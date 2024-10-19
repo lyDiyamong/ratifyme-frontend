@@ -35,6 +35,7 @@ const InvoiceManagement = () => {
         }, price);
 
     const columns = [
+        
         {
             name: "Organization Name",
             selector: (row) => row.institutionName,
