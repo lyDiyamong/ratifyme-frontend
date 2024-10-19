@@ -77,7 +77,9 @@ const AuthOutletImage = ({
                     fontWeight="bold"
                     sx={{
                         animation: "bounceIn 2s ease-in-out 0.5s",
-                        fontSize: {md: '32px', lg: '48px'}
+                        fontSize: {md: '32px', lg: '48px'},
+                        width: '100%',
+                        maxWidth: '900px'
                     }}
                 >
                     {title2}
@@ -86,10 +88,6 @@ const AuthOutletImage = ({
                     letterSpacing={1.2}
                     variant="body1"
                     maxWidth="720px"
-                    // textAlign="justify"
-                    sx={{
-                        animation: "bounceIn 2s ease-in-out 1s",
-                    }}
                 >
                     {description}
                 </Typography>
