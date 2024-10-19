@@ -1,5 +1,6 @@
 //React import
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 // MUI component
 import { Stack, Box, Typography, Button, Grid } from "@mui/material";
@@ -13,11 +14,13 @@ import AlertMessage from "../../../components/alert/AlertMessage";
 
 // Api import
 import { useUpdatePasswordMutation } from "../../../store/api/auth/authApi";
+import updatePasswordSchema from "../../../utils/schema/updatePasswordSchema";
 
 const ChangePasswordForm = () => {
     // React hook form
-    const { control, handleSubmit, setError, reset } = useForm({
-        mode : 'onChange'
+    const { control, handleSubmit, reset } = useForm({
+        mode : 'onChange',
+        resolver: yupResolver(updatePasswordSchema)
     });
     // Update password hook
     const [updatePassword, { isSuccess, isError, error }] = useUpdatePasswordMutation();
@@ -28,17 +31,11 @@ const ChangePasswordForm = () => {
     );
     // Handle react hook form
     const onSubmit = async (data) => {
-        if (data.newPassword !== data.passwordConfirm) {
-            setError("passwordConfirm", {
-                type: "manual",
-                message: "Passwords do not match",
-            });
-        } else {
+
             await updatePassword({
                 data,
             }).unwrap();
             reset();
-        }
     };
 
     return (
