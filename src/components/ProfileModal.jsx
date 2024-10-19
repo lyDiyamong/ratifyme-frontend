@@ -1,4 +1,5 @@
 // MUI Import
+import { useState, useEffect } from "react";
 import {
     Stack,
     Dialog,
@@ -16,7 +17,9 @@ import { styled } from "@mui/system";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 
 // Custom Import
-import DefaultProfile from "../assets/images/Malen.webp";
+import DefaultProfileSvg from "../assets/images/DefaultProfile.svg";
+import MaleUserDefault from "../assets/images/MaleUser.svg";
+import FemaleUserDefault from "../assets/images/FemaleUser.svg";
 import theme from "../assets/themes";
 
 /**
@@ -64,6 +67,23 @@ const ProfileCard = styled(Card)(({ theme }) => ({
 
 // ============ Start Profile Modal ============
 const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey, details }) => {
+    const [avatarImage, setAvatarImage] = useState(DefaultProfileSvg);
+
+    // UseEffect to set avatar based on user data
+    useEffect(() => {
+        const profileImage = getValue(item, avatarKey);
+
+        if (profileImage) {
+            setAvatarImage(profileImage);
+        } else if (getValue(item, "Gender.name") === "male") {
+            setAvatarImage(MaleUserDefault);
+        } else if (getValue(item, "Gender.name") === "female") {
+            setAvatarImage(FemaleUserDefault);
+        } else {
+            setAvatarImage(DefaultProfileSvg);
+        }
+    }, [item, avatarKey]);
+
     return (
         <StyledDialog open={open} onClose={onClose} maxWidth="md" fullWidth>
             {/* Modal Header */}
@@ -83,8 +103,9 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
                         {/* Profile Card */}
                         <ProfileCard>
                             <Stack flexDirection="column" alignItems="center" mb={2} sx={{ height: "100%" }}>
+                                {/* Avatar */}
                                 <Avatar
-                                    src={getValue(item, avatarKey) || DefaultProfile}
+                                    src={avatarImage}
                                     alt={getValue(item, nameKey)}
                                     sx={{
                                         width: "150px",
@@ -130,7 +151,7 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
                     </Grid>
 
                     <Grid item xs={12} md={6}>
-                        {/* More Detaill */}
+                        {/* More Details */}
                         <StyledCard>
                             <Typography
                                 variant="h6"
