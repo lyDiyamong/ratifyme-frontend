@@ -65,14 +65,6 @@ const TableCustom = ({
     rowsPerPage = null,
     onSearch = null,
 }) => {
-    const [searchQuery, setSearchQuery] = useState("");
-
-    const handleSearch = (query) => {
-        setSearchQuery(query);
-        if (onSearch) {
-            onSearch(query);
-        }
-    };
      // Default columns if not provided
     const defaultColumns = [
         { name: "ID", selector: (row) => row.id || "N/A", sortable: true },
@@ -125,7 +117,7 @@ const TableCustom = ({
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 2 }}>
                     {/* Search Bar */}
                     <TextField
-                        onSearch={handleSearch}
+                        // onSearch={handleSearch}
                         variant="outlined"
                         size="small"
                         placeholder="Search ..."
@@ -185,7 +177,6 @@ const TableCustom = ({
                 responsive
                 highlightOnHover
                 striped
-                searchQuery={searchQuery}
             />
         </Box>
     );
