@@ -21,6 +21,8 @@ import ComingSoonImg from "../../../assets/images/Coming-soon.svg";
 // Api import
 import { useUploadCertiMutation } from "../../../store/api/badgeManagement/badgeApi";
 import { useFetchEarnerAchieByIdQuery } from "../../../store/api/earnerManagement/earnerApis";
+import AlertConfirmation from "../../../components/alert/AlertConfirmation";
+import { WarningAmberOutlined } from "@mui/icons-material";
 
 const CertificateGenerator = ({ badge }) => {
     // Global state hook
@@ -36,7 +38,7 @@ const CertificateGenerator = ({ badge }) => {
 
     // Fetch Earner achievement hook
     const { data: earnerAchieResponse } = useFetchEarnerAchieByIdQuery({ achieveId, earnerId });
-    const earnerAchieveData = earnerAchieResponse?.data
+    const earnerAchieveData = earnerAchieResponse?.data;
     const earnerAchieveStatus = earnerAchieResponse?.data?.status;
     const isCertUpload = earnerAchieResponse?.data?.certUrl ? true : false;
     // Upload Certificate hook
@@ -47,6 +49,7 @@ const CertificateGenerator = ({ badge }) => {
 
     const [pdfUrl, setPdfUrl] = useState("");
     const [isExploding, setIsExploding] = useState(false);
+    const [isUploadCertModal, setIsUploadCertModal] = useState(false);
 
     const handleGenerateImage = async () => {
         const jpegDataUrl = await toJpeg(certificateRef.current, { quality: 0.95 });
@@ -64,6 +67,7 @@ const CertificateGenerator = ({ badge }) => {
                 }
             })
             .catch((error) => setMessage("Failed to upload certificate."));
+        setIsUploadCertModal(false);
     };
 
     // View handling
@@ -206,17 +210,36 @@ const CertificateGenerator = ({ badge }) => {
                             <AutoAwesome />
                         </Button>
                         <Stack flexDirection={{ md: "row", xss: "column" }} gap={1}>
+                            {/* Start Upload  */}
+                            <AlertConfirmation
+                                open={isUploadCertModal}
+                                title="Upload Certificate"
+                                message="Are you sure everything looks good? Once your certificate is uploaded, your name and details will be locked. You won't be able to make changes later, so please double-check your information!"
+                                onClose={() => setIsUploadCertModal(false)}
+                                onConfirm={handleGenerateImage}
+                                confirmText="Upload"
+                                cancelText="Cancel"
+                                iconBgColor={theme.palette.customColors.orange100}
+                                iconColor={theme.palette.customColors.orange300}
+                                confirmButtonColor={theme.palette.primary.main}
+                                confirmButtonColorHover={theme.palette.primary.dark}
+                                icon={WarningAmberOutlined}
+                            />
                             <Button
                                 variant="contained"
                                 color="primary"
-                                onClick={handleGenerateImage}
+                                onClick={() => setIsUploadCertModal(true)}
                                 sx={{ maxWidth: 200, color: theme.palette.customColors.white }}
                                 startIcon={<DownloadDoneOutlined />}
                                 disabled={isCertUpload}
                             >
                                 Get Certificate
                             </Button>
-                            <Button startIcon={<DriveFolderUploadOutlined />} variant="outlined" onClick={handleViewCert}>
+                            <Button
+                                startIcon={<DriveFolderUploadOutlined />}
+                                variant="outlined"
+                                onClick={handleViewCert}
+                            >
                                 View Certificate
                             </Button>
                         </Stack>
