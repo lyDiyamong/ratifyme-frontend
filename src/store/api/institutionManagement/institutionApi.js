@@ -8,7 +8,8 @@ export const institutionApi = createApi({
     endpoints: (builder) => ({
         // Query
         getInstitution: builder.query({
-            query: () => "/institutions",
+            query: ({ page, limit, sort, search }) =>
+                `/institutions?limit=${limit}&page=${page}&sort=${sort}&search=${search}`,
         }),
         getInstitutionById: builder.query({
             query: (id) => ({
