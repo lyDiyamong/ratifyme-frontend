@@ -9,6 +9,7 @@ export const subscriptionApi = createApi({
         // ServicePlans api
         getServicePlan: builder.query({
             query: () => "/subscriptions/servicePlans",
+            providesTags: ["Subscriptions"],
         }),
         // Subscriptions Api
         getSubscritption: builder.query({
