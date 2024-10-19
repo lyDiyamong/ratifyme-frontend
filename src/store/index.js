@@ -16,6 +16,7 @@ import { issuerApi } from "./api/issuerManagement/issuerApi";
 
 import { setupListeners } from "@reduxjs/toolkit/query";
 import gloableReducer from "./slices/globalSlices";
+import { fieldOfStudyApi } from "./api/earnerManagement/fieldOfStudyApi";
 
 const store = configureStore({
     reducer: {
@@ -36,7 +37,8 @@ const store = configureStore({
 
         [inviteUserApi.reducerPath]: inviteUserApi.reducer,
         [verificationApi.reducerPath]: verificationApi.reducer,
-        [issuerApi.reducerPath]: issuerApi.reducer
+        [issuerApi.reducerPath]: issuerApi.reducer,
+        [fieldOfStudyApi.reducerPath] : fieldOfStudyApi.reducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
@@ -54,7 +56,8 @@ const store = configureStore({
             institutionApi.middleware,
             inviteUserApi.middleware,
             verificationApi.middleware,
-            issuerApi.middleware
+            issuerApi.middleware,
+            fieldOfStudyApi.middleware
         ),
 });
 setupListeners(store.dispatch);

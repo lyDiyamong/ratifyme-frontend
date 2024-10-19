@@ -1,84 +1,113 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import { Card, CardContent, CardHeader, Stack } from "@mui/material";
-import { AccountBalanceRounded, CalendarMonth, School } from "@mui/icons-material";
+import { useState } from "react";
+import { Box, Card, CardContent, Stack, Typography, IconButton, Divider, useMediaQuery } from "@mui/material";
+import {
+    AccessTime,
+    AccountBalanceRounded,
+    BorderColorRounded,
+    Delete,
+    School,
+} from "@mui/icons-material";
 import theme from "../../../assets/themes";
+import MoreMenu from "../../../components/MoreMenu";
+import EditAcademicModal from "./EditAcademicModal";
+import dayjs from "dayjs";
 
 const AcademicInfo = ({ academicData }) => {
+    const { userId, FieldOfStudy, academicYear, academicLevel } = academicData;
+
+    const [open, setOpen] = useState(false);
+    const [selectedData, setSelectedData] = useState(null);
+
+    const handleOpen = () => {
+        setSelectedData({
+            FieldOfStudy,
+            academicYear: academicYear ? dayjs(academicYear) : null,
+            academicLevel,
+        });
+        setOpen(true);
+    };
+
+    const handleClose = () => setOpen(false);
+
+    const menuItems = [
+        {
+            label: "Update",
+            icon: <BorderColorRounded color="primary" />,
+            onClick: handleOpen,
+        },
+        { label: "Delete", icon: <Delete color="error" />, onClick: () => {} },
+    ];
+
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
+
     return (
-        <Box>
-            <Card sx={{ boxShadow: theme.customShadows.default }}>
-                <CardHeader
-                    sx={{ backgroundColor: "#E5F3FF" }}
-                    title={
-                        <Box display="flex" alignItems="center">
-                            <Typography
-                                variant="h4"
-                                fontWeight={theme.fontWeight.semiBold}
-                                color={theme.palette.text.primary}
-                            >
-                                {academicData.label}
-                            </Typography>
-                        </Box>
-                    }
-                    subheader={
-                        <Typography variant="caption" sx={{ color: "gray" }}>
-                            {academicData.year}
-                        </Typography>
-                    }
+        <>
+            <Card
+                sx={{
+                    boxShadow: theme.customShadows.default,
+                    display: { md: "flex", xss: "block" },
+                    padding: 2,
+                    width: "100%",
+                    alignItems: "center",
+                }}
+            >
+                <Box sx={{ minWidth: 80, textAlign: "center" }}>
+                    <Typography variant="h6" color="error" fontWeight="bold">
+                        {dayjs(academicYear).format("ddd")}
+                    </Typography>
+                    <Typography variant="h4" color={theme.palette.text.primary}>
+                        {dayjs(academicYear).date()}
+                    </Typography>
+                    <Typography variant="h6" color={theme.palette.text.main}>
+                        {dayjs(academicYear).format("MMM YYYY")}
+                    </Typography>
+                </Box>
+
+                <Divider
+                    orientation={isSmallScreen ? "horizontal" : "vertical"}
+                    sx={{
+                        borderColor: theme.palette.grey[300],
+                        height: { md: "100px", xss: 0 },
+                        mx: 2,
+                        my: { md: 0, xss: 2 },
+                    }}
                 />
-                <CardContent>
-                    <Stack spacing={2}>
-                        <Typography
-                            variant="h5"
-                            fontWeight={theme.fontWeight.semiBold}
-                            sx={{ display: "flex", alignItems: "center" }}
-                        >
-                            <School sx={{ marginRight: 1, color: theme.palette.text.secondary }} />
-                            Academic Level:{" "}
-                            <Typography
-                                component="span"
-                                sx={{ color: theme.palette.text.secondary, marginLeft: 1 }}
-                            >
-                                {academicData.academicLevel}
-                            </Typography>
-                        </Typography>
 
-                        <Typography
-                            variant="h5"
-                            fontWeight={theme.fontWeight.semiBold}
-                            sx={{ display: "flex", alignItems: "center" }}
-                        >
-                            <CalendarMonth sx={{ marginRight: 1, color: theme.palette.text.secondary }} />
-                            Academic Year:{" "}
-                            <Typography
-                                component="span"
-                                sx={{ color: theme.palette.text.secondary, marginLeft: 1 }}
-                            >
-                                {academicData.academicYear}
-                            </Typography>
+                <CardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column", gap: 1 }}>
+                    <Stack direction="row" alignItems="center" spacing={1}>
+                        <AccessTime fontSize="small" color="action" />
+                        <Typography variant="body2" color="textSecondary">
+                            {academicYear}
                         </Typography>
-
-                        <Typography
-                            variant="h5"
-                            fontWeight={theme.fontWeight.semiBold}
-                            sx={{ display: "flex", alignItems: "center" }}
-                        >
-                            <AccountBalanceRounded sx={{ marginRight: 1, color: theme.palette.text.secondary }} />
-                            Field of Study:{" "}
-                            <Typography
-                                component="span"
-                                sx={{ color: theme.palette.text.secondary, marginLeft: 1 }}
-                            >
-                                {academicData.fieldStudy}
-                            </Typography>
+                    </Stack>
+                    <Stack direction="row" alignItems="center" spacing={1}>
+                        <School fontSize="small" color="action" />
+                        <Typography variant="body2" color="textSecondary">
+                            {academicLevel}
                         </Typography>
-
-                        <Typography>{academicData.description}</Typography>
+                    </Stack>
+                    <Stack direction="row" alignItems="center" spacing={1}>
+                        <AccountBalanceRounded fontSize="small" color="action" />
+                        <Typography variant="body2" color="textSecondary">
+                            {FieldOfStudy}
+                        </Typography>
                     </Stack>
                 </CardContent>
+
+                <Stack alignItems={{ md: "start", xss: "end" }}>
+                    <IconButton>
+                        <MoreMenu
+                            menuItems={menuItems}
+                            iconStyles={{
+                                color: theme.palette.text.secondary,
+                            }}
+                        />
+                    </IconButton>
+                </Stack>
             </Card>
-        </Box>
+
+            <EditAcademicModal open={open} onClose={handleClose} initialData={selectedData} userId={userId} />
+        </>
     );
 };
 

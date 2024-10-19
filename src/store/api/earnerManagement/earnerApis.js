@@ -45,11 +45,42 @@ export const earnerApi = createApi({
             providesTags: ["Earner"],
         }),
         fetchEarnerAchieById: builder.query({
-            query: ( {achieveId, earnerId} ) => ({
+            query: ({ achieveId, earnerId }) => ({
                 url: `/earners/earnerAchievement/${achieveId}/earner/${earnerId}`,
                 method: "GET",
             }),
             providesTags: ["Earner"],
+        }),
+        updateEarnerById: builder.mutation({
+            query: ({ id, ...data }) => ({
+                url: `/earners/fieldofstudies/${id}`,
+                method: "PATCH",
+                body: data,
+            }),
+            invalidatesTags: ["Earner"],
+        }),
+        fetchAcademicBackgroundByUser: builder.query({
+            query: ({ userId }) => ({
+                url: `/earners/academicbackgrounds/academicByUserId/${userId}`,
+                method: "GET",
+            }),
+            providesTags: ["AcademicBackground"],
+        }),
+        updateAcademicBackgroundById: builder.mutation({
+            query: ({ id, ...data }) => ({
+                url: `/earners/academicbackgrounds/${id}`,
+                method: "PATCH",
+                body: data,
+            }),
+            invalidatesTags: ["AcademicBackground"],
+        }),
+        createAcademicBackground: builder.mutation({
+            query: ({...data}) => ({
+                url: `/earners/academicbackgrounds`,
+                method: "POST",
+                body: data,
+            }),
+            invalidatesTags: ["AcademicBackground"],
         }),
     }),
 });
@@ -60,5 +91,9 @@ export const {
     useDeleteEarnerByIdMutation,
     useClaimBadgeMutation,
     useFetchStatusBadgeQuery,
-    useFetchEarnerAchieByIdQuery
+    useFetchEarnerAchieByIdQuery,
+    useUpdateEarnerByIdMutation,
+    useFetchAcademicBackgroundByUserQuery,
+    useUpdateAcademicBackgroundByIdMutation,
+    useCreateAcademicBackgroundMutation
 } = earnerApi;
