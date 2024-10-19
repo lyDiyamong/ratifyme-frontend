@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-const badgSchema = yup.object().shape({
+const badgeSchema = yup.object().shape({
     badgeName: yup
         .string()
         .min(6, "Name must be at least 6 characters")
@@ -25,4 +25,4 @@ const badgSchema = yup.object().shape({
     //     .min(yup.ref("startedDate"), "End date cannot be earlier than Start Date"),
 });
 
-export default badgSchema;
+export default badgeSchema;

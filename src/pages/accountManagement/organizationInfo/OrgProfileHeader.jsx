@@ -20,6 +20,8 @@ import {
     useDeleteInstitutionImgMutation,
     useUploadInstitutionImgMutation,
 } from "../../../store/api/institutionManagement/institutionApi";
+import AlertMessage from "../../../components/alert/AlertMessage";
+import useCatchStatus from "../../../hooks/useCatchStatus";
 
 // =========== Start Profile Header ===========
 const OrgProfileHeader = ({ institutionInfo }) => {
@@ -30,8 +32,12 @@ const OrgProfileHeader = ({ institutionInfo }) => {
     const { data: info } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
     const userData = info?.data;
 
-    const [updateImg, {reset: updatedReset}] = useUploadInstitutionImgMutation();
-    const [deleteImg] = useDeleteInstitutionImgMutation();
+    const [updateImg, { isSuccess: updateImgSuccess }] = useUploadInstitutionImgMutation();
+    const [deleteImg, { isSuccess: deleteImgSuccess }] = useDeleteInstitutionImgMutation();
+    const [message, setMessage] = useCatchStatus(
+        updateImgSuccess || deleteImgSuccess,
+        updateImgSuccess ? "Update Image successfully" : "Delete Image successfully",
+    );
 
     // Utility function to get the first available value from multiple data sources
     const getDynamicValue = (property, ...sources) => {
@@ -60,7 +66,6 @@ const OrgProfileHeader = ({ institutionInfo }) => {
     const handleFileChange = async (event) => {
         const file = event.target.files[0];
         if (file) {
-            console.log("HANDEle", updatedImage);
             const formData = new FormData();
             formData.append("institutionImg", file);
             const result = await updateImg({ id: institutionInfo.id, data: formData }).unwrap();
@@ -76,10 +81,9 @@ const OrgProfileHeader = ({ institutionInfo }) => {
 
     useEffect(() => {
         if (institutionImage && updatedImage !== institutionImage) {
-           setUpdatedImage(institutionInfo?.institutionProfileImage);
+            setUpdatedImage(institutionInfo?.institutionProfileImage);
         }
-     }, [institutionImage]);
-
+    }, [institutionImage]);
 
     const userRole = userData?.Role.id;
     const isDisabled = userRole === 3 || userRole === 4;
@@ -110,6 +114,9 @@ const OrgProfileHeader = ({ institutionInfo }) => {
                     bgcolor: theme.palette.customColors.white,
                 }}
             >
+                {message && <AlertMessage variant="success" onClose={() => setMessage("")}>
+                    {message}
+                </AlertMessage>}
                 {/* The image view */}
                 <Modal
                     open={isModalOpen}
