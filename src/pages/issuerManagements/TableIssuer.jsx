@@ -15,7 +15,7 @@ import { useInviteIssuerMutation, useFetchAllInvitedUserQuery } from "../../stor
 const TableIssuer = () => {
     // State for controlling dialog
     const [dialogOpen, setDialogOpen] = useState(false);
-    const [searchQuery, setSearchQuery] = useState(""); // Manage search query here
+    const [searchQuery, setSearchQuery] = useState("");
 
     // Global state for user info and institution info
     const { userId, roleId, institutionData } = useSelector((state) => state.global);
@@ -112,17 +112,24 @@ const TableIssuer = () => {
     // Issuer Columns based on role
     const getIssuerColumns = () => {
         const commonColumns = [
-            { name: "Issuer ID", selector: (row, index) => index + 1 || "N/A", sortable: true },
             { name: "Issuer Name", selector: (row) => row.issuerName || "N/A", sortable: true },
             { name: "Issuer Email", selector: (row) => row.issuerEmail || "N/A", sortable: true },
             { name: "Total Badge", selector: (row) => row.totalBadges, sortable: true },
             { name: "Total Earner", selector: (row) => row.totalEarners, sortable: true },
         ];
 
+
         // Admin has additional organization name column
         if (roleId === 1) {
             return [
+                { name: "No. ", selector: (row, index) => index + 1 || "N/A" },
                 { name: "Organization Name", selector: (row) => row.institutionName || "N/A", sortable: true },
+                ...commonColumns,
+            ];
+        }
+        if (roleId === 2) {
+            return [
+                { name: "No. ", selector: (row, index) => index + 1 || "N/A" },
                 ...commonColumns,
             ];
         }
