@@ -1,5 +1,4 @@
 // React Library
-import { useState } from "react";
 import DataTable from "react-data-table-component";
 
 // MUI Imports
@@ -55,7 +54,6 @@ const TableCustom = ({
     data = [],
     columns = [],
     actions = false,
-    onFilterChange = () => {},
     onSortChange = () => {},
     onPageChange = () => {},
     onRowsPerPageChange = () => {},
@@ -64,6 +62,7 @@ const TableCustom = ({
     totalRows = null,
     rowsPerPage = null,
     onSearch = null,
+    sortOptions = [],
 }) => {
      // Default columns if not provided
     const defaultColumns = [
@@ -132,7 +131,7 @@ const TableCustom = ({
                         onChange={(e) => onSearch(e.target.value)}
                     />
     {/* Sort By */}
-                    <FormControl sx={{ minWidth: { md: 100, sm: 80, xs: 60 } }} size="small">
+    <FormControl sx={{ minWidth: { md: 100, sm: 80, xs: 60 } }} size="small">
                         <InputLabel>
                             <IconButton sx={{ display: { md: "none", sm: "flex" } }}>
                                 <SwapVertIcon sx={{ fontSize: "24px" }} />
@@ -140,8 +139,11 @@ const TableCustom = ({
                             Sort by
                         </InputLabel>
                         <Select label="Sort by" onChange={(e) => onSortChange(e.target.value)}>
-                            <MenuItem value="name" sx={{fontSize: 14,}}>ASC ⬆</MenuItem>
-                            <MenuItem value="-name" sx={{fontSize: 14,}}>DES ⬇</MenuItem>
+                            {sortOptions.map((option) => (
+                                <MenuItem key={option.value} value={option.value} sx={{ fontSize: 14 }}>
+                                    {option.label}
+                                </MenuItem>
+                            ))}
                         </Select>
                     </FormControl>
                     {/* Add New Button */}
