@@ -22,14 +22,13 @@ const TableEarner = () => {
     // State for controlling dialog
     const [dialogOpen, setDialogOpen] = useState(false);
 
-    // Pagination and Sorting State
+    // Pagination & Sorting State & Limiting & Searching
     const [currentPage, setCurrentPage] = useState(1); 
     const [rowsPerPage, setRowsPerPage] = useState(10); 
     const [sortColumn, setSortColumn] = useState("name"); 
-    const [sortOrder, setSortOrder] = useState("asc"); 
+    const [sortOrder, setSortOrder] = useState("-name"); 
     const [searchQuery, setSearchQuery] = useState("");
 
-    console.log('Search Query:', searchQuery);
     // Fetch data from the backend based on pagination, sorting, and search
     const { data: response, isLoading, isError } = useFetchEarnerQuery({
         page: currentPage,
@@ -177,13 +176,13 @@ const TableEarner = () => {
 
     // Handle sorting change
     const handleSortChange = (column) => {
-        const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
+        const newSortOrder = sortOrder === "-name" ? "name" : "-name";
         setSortColumn(column);
         setSortOrder(newSortOrder);
     };
 
     // Correct the onSearch function
-    const onSearch = (query) => {
+    const handleSearch = (query) => {
         setSearchQuery(query);
         setCurrentPage(1);
     };
@@ -215,7 +214,7 @@ const TableEarner = () => {
                     onSortChange={handleSortChange} 
                     sortColumn={sortColumn}
                     sortOrder={sortOrder}
-                    onSearch={onSearch}
+                    onSearch={handleSearch}
                 >
                     {/* Display NoRecordData inside the table when no earners match the search query */}
                     {filteredEarnerData?.length === 0 && <NoRecordData />}
