@@ -8,7 +8,7 @@ import countryList from "react-select-country-list";
 import { Box, Typography, Button, Stack, TextField, CircularProgress } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
-// import CalendarTodayIcon from "@mui/icons-material/CalendarToday"; // Import calendar icon
+
 
 // Custom import
 import theme from "../../assets/themes";
@@ -124,14 +124,14 @@ const AddRecipientForm = () => {
                                                         {...params}
                                                         {...field}
                                                         sx={{
-                                                            width: "100%", // Ensure the width is full
-                                                            maxWidth: "100%", // Limit the maximum width
-                                                            borderRadius: "12px", // Apply border-radius
+                                                            width: "100%", 
+                                                            maxWidth: "100%", 
+                                                            borderRadius: "12px", 
                                                             "& .MuiOutlinedInput-root": {
-                                                                borderRadius: "12px", // Ensure border-radius is applied
+                                                                borderRadius: "12px", 
                                                             },
                                                             "& .MuiOutlinedInput-notchedOutline": {
-                                                                borderRadius: "12px", // Apply radius to the outline
+                                                                borderRadius: "12px",
                                                             },
                                                         }}
                                                     />
