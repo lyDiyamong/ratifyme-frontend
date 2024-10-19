@@ -20,15 +20,12 @@ const AcademicBackground = () => {
     const { data: info } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
     const { data: academicBackgroundData } = useFetchAcademicBackgroundByUserQuery({ userId });
 
-    console.log("academicBackgroundData😭", academicBackgroundData);
-
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const handleSubmit = (academicData) => {
-        console.log("New Academic Entry:", academicData);
         handleClose();
     };
 
@@ -125,9 +122,9 @@ const AcademicBackground = () => {
                                 key={index}
                                 academicData={{
                                     userId: data.id,
-                                    FieldOfStudy: data.FieldOfStudy?.name || "N/A",
+                                    fieldOfStudyId: data.FieldOfStudy?.name || "N/A",
                                     academicYear: FormatDate(data.academicYear) || "N/A",
-                                    academicLevel: data.AcademicLevel?.name || "N/A",
+                                    academicLevelId: data.AcademicLevel?.name || "N/A",
                                 }}
                             />
                         ))

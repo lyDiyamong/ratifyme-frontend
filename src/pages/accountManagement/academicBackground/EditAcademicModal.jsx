@@ -1,6 +1,6 @@
 import { Dialog, DialogTitle, DialogContent, Button, Typography, Divider, Avatar, TextField } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { Box, Stack } from "@mui/system";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -24,21 +24,22 @@ const EditAcademicModal = ({ open, onClose, initialData, userId }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const { control, handleSubmit, reset } = useForm({
-        defaultValues: {
-            academicYear: null,
-            fieldOfStudy: "",
-        },
-    });
+    const { control, handleSubmit, reset } = useForm({});
 
     useEffect(() => {
         if (initialData) {
+            const academicLevelId =
+                fetchAcademicLevelsData?.data?.find((level) => level.name === initialData.academicLevelId)?.id || null;
+            const fieldOfStudyId =
+                fieldOfStudiesData?.data?.find((study) => study.name === initialData.fieldOfStudyId)?.id || null;
+
             reset({
                 ...initialData,
-                academicYear: initialData.academicYear ? dayjs(initialData.academicYear) : null,
+                academicLevelId,
+                fieldOfStudyId,
             });
         }
-    }, [initialData, reset]);
+    }, [initialData, reset, fieldOfStudiesData, fetchAcademicLevelsData]);
 
     // Fetch field of studies data
     useEffect(() => {
@@ -58,18 +59,12 @@ const EditAcademicModal = ({ open, onClose, initialData, userId }) => {
             academicYear: data.academicYear ? dayjs(data.academicYear).format("YYYY-MM-DD") : null,
         };
 
-        // if (!userId) {
-        //     console.error("User ID is undefined");
-        //     return;
-        // }
-
         try {
-            console.log("Submitting Data:", { userId, ...formattedData });
-            const result = await updateAcademicBackgroundById({
+            await updateAcademicBackgroundById({
                 id: userId,
                 ...formattedData,
             }).unwrap();
-            console.log("Mutation Result:", result);
+
             reset();
             onClose();
         } catch (error) {
@@ -137,7 +132,7 @@ const EditAcademicModal = ({ open, onClose, initialData, userId }) => {
                     </LocalizationProvider>
 
                     <SelectForm
-                        name="academicLevel"
+                        name="academicLevelId"
                         control={control}
                         options={fetchAcademicLevelsData?.data?.map((level) => ({
                             id: level.id,
@@ -148,7 +143,7 @@ const EditAcademicModal = ({ open, onClose, initialData, userId }) => {
                     />
 
                     <SelectForm
-                        name="FieldOfStudy"
+                        name="fieldOfStudyId"
                         control={control}
                         options={fieldOfStudiesData?.data?.map((study) => ({
                             id: study.id,

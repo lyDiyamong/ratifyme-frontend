@@ -26,26 +26,17 @@ const AddAcademicModal = ({ open, onClose, onSubmit, userId }) => {
             academicYear: data.academicYear ? dayjs(data.academicYear).format("YYYY-MM-DD") : null,
         };
 
-        // if (!userId) {
-        //     console.error("User ID is undefined");
-        //     return;
-        // }
-
         try {
-            // console.log("Submitting Data:", { userId, ...formattedData });
-            const result = await createAcademicBackground({
+            await createAcademicBackground({
                 userId,
                 ...formattedData,
             }).unwrap();
-            // console.log("Mutation Result:", result);
             reset();
             onClose();
         } catch (error) {
             console.error("Failed to update", error.response?.data || error.message);
         }
-        // Pass the submitted data to the onSubmit prop
     };
-    // console.log("USER ID", userId)
 
     return (
         <Dialog open={open} onClose={onClose} noValidate component="form" onSubmit={handleSubmit(onSubmitForm)}>

@@ -13,16 +13,16 @@ import EditAcademicModal from "./EditAcademicModal";
 import dayjs from "dayjs";
 
 const AcademicInfo = ({ academicData }) => {
-    const { userId, FieldOfStudy, academicYear, academicLevel } = academicData;
+    const { userId, fieldOfStudyId, academicYear, academicLevelId } = academicData;
 
     const [open, setOpen] = useState(false);
     const [selectedData, setSelectedData] = useState(null);
 
     const handleOpen = () => {
         setSelectedData({
-            FieldOfStudy,
+            fieldOfStudyId,
             academicYear: academicYear ? dayjs(academicYear) : null,
-            academicLevel,
+            academicLevelId,
         });
         setOpen(true);
     };
@@ -83,13 +83,13 @@ const AcademicInfo = ({ academicData }) => {
                     <Stack direction="row" alignItems="center" spacing={1}>
                         <School fontSize="small" color="action" />
                         <Typography variant="body2" color="textSecondary">
-                            {academicLevel}
+                            {academicLevelId}
                         </Typography>
                     </Stack>
                     <Stack direction="row" alignItems="center" spacing={1}>
                         <AccountBalanceRounded fontSize="small" color="action" />
                         <Typography variant="body2" color="textSecondary">
-                            {FieldOfStudy}
+                            {fieldOfStudyId}
                         </Typography>
                     </Stack>
                 </CardContent>
