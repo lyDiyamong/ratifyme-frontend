@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react"; // Import useState
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -8,6 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Box } from "@mui/material";
 import { ErrorOutline } from "@mui/icons-material";
 import theme from "../../assets/themes";
+import { SpinLoading } from "../../components/loading/SpinLoading"; // Import SpinLoading
 
 const AlertConfirmation = ({
     open,
@@ -25,6 +26,17 @@ const AlertConfirmation = ({
     iconBgColor = theme.palette.primary.light,
     showIcon = true,
 }) => {
+    const [loading, setLoading] = useState(false);
+
+    const handleConfirm = async () => {
+        setLoading(true);
+        try {
+            await onConfirm();
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <Dialog
             open={open}
@@ -111,7 +123,8 @@ const AlertConfirmation = ({
                 )}
                 {confirmText && (
                     <Button
-                        onClick={onConfirm}
+                        onClick={handleConfirm}
+                        disabled={loading} 
                         sx={{
                             color: "#fff",
                             backgroundColor: confirmButtonColor,
@@ -123,7 +136,12 @@ const AlertConfirmation = ({
                             },
                         }}
                     >
-                        {confirmText}
+                        {/* Show loading spinner or text based on loading state */}
+                        {loading ? (
+                            <SpinLoading size={24} color="#fff" />
+                        ) : (
+                            confirmText
+                        )}
                     </Button>
                 )}
             </DialogActions>
