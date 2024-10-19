@@ -6,18 +6,18 @@ export const subscriptionApi = createApi({
         baseUrl: import.meta.env.VITE_SERVER_BASE_URL,
     }),
     endpoints: (builder) => ({
-
         // ServicePlans api
         getServicePlan: builder.query({
             query: () => "/subscriptions/servicePlans",
         }),
         // Subscriptions Api
-        getSubscritption : builder.query({
-            query : () => "/subscriptions"
+        getSubscritption: builder.query({
+            query: ({ page, limit, sort, search }) =>
+                `/subscriptions?limit=${limit}&page=${page}&sort=${sort}&search=${search}`,
         }),
-        getSubInstitution : builder.query({
-            query : (id) => `/subscriptions?institutionId=${id}`
-        })
+        getSubInstitution: builder.query({
+            query: (id) => `/subscriptions?institutionId=${id}`,
+        }),
     }),
 });
 
