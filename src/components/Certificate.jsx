@@ -3,14 +3,14 @@ import { forwardRef } from "react";
 
 // MUI import
 import { Box, Divider, Typography, Stack } from "@mui/material";
-
 // Custom import
 import theme from "../assets/themes";
 // import AnBSchoolLogo from "../assets/images/AnBSchoolLogo.svg";
 import certWave from "../assets/images/certWave.jpg";
+import FormatDate from "../utils/formatDate";
 
 // eslint-disable-next-line react/display-name
-const Certificate = forwardRef(({ recipientName, date, badge }, ref) => (
+const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) => (
     <Stack
         ref={ref}
         sx={{
@@ -115,7 +115,7 @@ const Certificate = forwardRef(({ recipientName, date, badge }, ref) => (
                 </Typography>
                 <Box
                     component="img"
-                    src="https://ratifyme.s3.ap-southeast-2.amazonaws.com/Badges/GoldBadgeImage.png"
+                    src={badge?.imageUrl}
                     alt={badge?.name || "Badge"}
                     maxWidth={150}
                     maxHeight={150}
@@ -156,7 +156,10 @@ const Certificate = forwardRef(({ recipientName, date, badge }, ref) => (
             </Box>
             <Box sx={{ mt: 3 }}>
                 <Typography variant="body1" sx={{ textAlign: "center" }}>
-                    Issued On: {date}
+                    Issued On: {FormatDate(earnerAchieve?.issuedOn)}
+                </Typography>
+                <Typography variant="body1" sx={{ textAlign: "center" }}>
+                    Claimed On: {FormatDate(earnerAchieve?.claimedOn)}
                 </Typography>
             </Box>
         </Stack>

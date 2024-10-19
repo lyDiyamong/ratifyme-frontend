@@ -19,7 +19,6 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
     useEffect(() => {
         setClaimed(statusAchievement);
     }, [statusAchievement]);
-    console.log(earnerId, badgeClassId, achievementIds);
 
     const handleClaimBadge = async () => {
         try {
@@ -31,7 +30,6 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
                 status: true,
             }).unwrap();
 
-            console.log("Achievements updated successfully");
             navigate("/mybackpacks");
         } catch (error) {
             console.error("Failed to claim badge:", error);

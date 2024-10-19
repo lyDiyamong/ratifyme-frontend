@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 // MUI import
 import { Box, Button, CardMedia, Stack, Typography } from "@mui/material";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import DriveFolderUploadOutlined from "@mui/icons-material/DriveFolderUploadOutlined";
 import ConfettiExplosion from "react-confetti-explosion";
 import DownloadDoneOutlined from "@mui/icons-material/DownloadDoneOutlined";
 import AutoAwesome from "@mui/icons-material/AutoAwesome";
@@ -28,16 +28,17 @@ const CertificateGenerator = ({ badge }) => {
         userInfo,
         earnerData: { id: earnerId },
     } = useSelector((state) => state.global);
+
     // Get reference of HTMLELEMENT
     const certificateRef = useRef();
-    // Achivement Id
+    // Achievement Id
     const achieveId = badge.Achievements.find(({ badgeClassId }) => badgeClassId === badge.id).id;
 
     // Fetch Earner achievement hook
     const { data: earnerAchieResponse } = useFetchEarnerAchieByIdQuery({ achieveId, earnerId });
-    console.log("Earner achievement res", earnerAchieResponse);
+    const earnerAchieveData = earnerAchieResponse?.data
     const earnerAchieveStatus = earnerAchieResponse?.data?.status;
-
+    const isCertUpload = earnerAchieResponse?.data?.certUrl ? true : false;
     // Upload Certificate hook
     const [uploadCert, { isLoading: certiLoading, isError: uploadCertError }] = useUploadCertiMutation();
 
@@ -45,7 +46,6 @@ const CertificateGenerator = ({ badge }) => {
     const [message, setMessage] = useCatchStatus(uploadCertError, "Get certificate failed");
 
     const [pdfUrl, setPdfUrl] = useState("");
-    const [copyButtonText, setCopyButtonText] = useState("Copy URL");
     const [isExploding, setIsExploding] = useState(false);
 
     const handleGenerateImage = async () => {
@@ -59,29 +59,16 @@ const CertificateGenerator = ({ badge }) => {
             .unwrap() // Access the success response
             .then((response) => {
                 if (response) {
-                    console.log("Response", response);
-                    setPdfUrl(response?.uploadCert);
-                    window.open(response?.uploadCert, "_blank");
+                    setPdfUrl(() => response?.uploadCert);
+                    window.open(pdfUrl, "_blank");
                 }
             })
             .catch((error) => setMessage("Failed to upload certificate."));
     };
 
-    // Copy handling
-    const handleCopyUrl = () => {
-        if (pdfUrl) {
-            navigator.clipboard
-                .writeText(pdfUrl)
-                .then(() => {
-                    setCopyButtonText("Copied!");
-                    setTimeout(() => {
-                        setCopyButtonText("Copy URL");
-                    }, 3000);
-                })
-                .catch(() => setMessage("Failed to copy URL."));
-        } else {
-            setMessage("No URL available to copy.");
-        }
+    // View handling
+    const handleViewCert = () => {
+        window.open(earnerAchieResponse?.data?.certUrl, "_blank");
     };
 
     // Congrat handling
@@ -186,8 +173,8 @@ const CertificateGenerator = ({ badge }) => {
                             <Certificate
                                 ref={certificateRef}
                                 recipientName={`${userInfo?.firstName} ${userInfo?.lastName}`}
-                                date="2024-04-27"
                                 badge={badge}
+                                earnerAchieve={earnerAchieveData}
                             />
                             {/* End Certificate */}
                         </Box>
@@ -225,16 +212,12 @@ const CertificateGenerator = ({ badge }) => {
                                 onClick={handleGenerateImage}
                                 sx={{ maxWidth: 200, color: theme.palette.customColors.white }}
                                 startIcon={<DownloadDoneOutlined />}
+                                disabled={isCertUpload}
                             >
                                 Get Certificate
                             </Button>
-                            <Button
-                                variant="outlined"
-                                sx={{ maxWidth: 200 }}
-                                onClick={handleCopyUrl}
-                                startIcon={<ContentCopyIcon />}
-                            >
-                                {copyButtonText}
+                            <Button startIcon={<DriveFolderUploadOutlined />} variant="outlined" onClick={handleViewCert}>
+                                View Certificate
                             </Button>
                         </Stack>
                     </Stack>
