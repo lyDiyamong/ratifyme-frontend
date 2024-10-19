@@ -20,17 +20,11 @@ const GeneralInfoFields = ({ control, schema }) => {
                     General Information
                 </Typography>
                 <Typography sx={{ fontSize: theme.typography.body1, color: theme.palette.customColors.gray500, mb: 2 }}>
-                    Provide basic personal information details to set up your profile.
+                    Provide basic personal information details to set up your profile such as Fullname, gender and date of birth.
                 </Typography>
             </Box>
 
-            <FormInput
-                name="firstName"
-                label="First Name"
-                control={control}
-                required
-                schema={schema?.fields.firstName}
-            />
+            <FormInput name="firstName" label="First Name" control={control} required schema={schema?.fields.firstName} />
             <FormInput name="lastName" label="Last Name" control={control} required schema={schema?.fields.lastName} />
             <SelectForm
                 name="genderId"
