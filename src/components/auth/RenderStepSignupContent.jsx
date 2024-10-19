@@ -2,8 +2,10 @@ import GeneralInfoFields from "./GeneralInfoFields";
 import AddressFields from "./AddressFields";
 import InstitutionInfoFields from "./InstitutionInfoFields";
 import AccountSetupFields from "./AccountSetupFields";
+import PasswordSetupFields from "./PasswordSetupFields";
 
 const RenderStepSignupContent = ({ step, control, role, guest, watch }) => {
+
     switch (step) {
         case 0:
             return <GeneralInfoFields control={control} />;
@@ -18,7 +20,11 @@ const RenderStepSignupContent = ({ step, control, role, guest, watch }) => {
         case 3:
             return role === "institution" ? (
                 <AccountSetupFields control={control} role={role} guest={guest} watch={watch} />
-            ) : null;
+            ) : (
+                <PasswordSetupFields control={control} role={role} guest={guest} watch={watch} />
+            );
+        case 4:
+            return role === "institution" && <PasswordSetupFields control={control} role={role} guest={guest} watch={watch} />;
         default:
             return null;
     }
