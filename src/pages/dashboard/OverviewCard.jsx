@@ -18,8 +18,6 @@ const CardsList = () => {
     const { userId, roleId } = useSelector((state) => state.global);
     const [cardContents, setCardContents] = useState([]);
 
-    console.log(response);
-
     useEffect(() => {
         if (response && roleId) {
             const cardData = createCardContent(roleId, response.data, userId);

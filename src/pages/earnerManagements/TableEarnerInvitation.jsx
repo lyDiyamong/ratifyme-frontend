@@ -28,6 +28,13 @@ const TableEarnerInvitation = () => {
     const [userIdToDelete, setUserIdToDelete] = useState(null);
     const [message, setMessage] = useCatchStatus(false, "");
 
+    // Pagination & Sorting State & Limiting & Searching
+    const [currentPage, setCurrentPage] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [sortColumn, setSortColumn] = useState("inviteEmail");
+    const [sortOrder, setSortOrder] = useState("inviteEmail");
+    const [searchQuery, setSearchQuery] = useState("");
+
     const [resendAlertMsg, setResendAlertMsg] = useState("");
     const [resendAlertSuccess, setResendAlertSuccess] = useState(false);
     const [resendConfirmOpen, setResendConfirmOpen] = useState(false);
@@ -38,7 +45,13 @@ const TableEarnerInvitation = () => {
     const issuerId = issuerData?.id;
 
     // ===================== API Hooks =====================
-    const { data: invitedUserData, refetch: refetchInvitedUsers } = useFetchAllInvitedUserQuery();
+    const { data: invitedUserData, refetch: refetchInvitedUsers } = useFetchAllInvitedUserQuery({
+        page: currentPage,
+        limit: rowsPerPage,
+        sort: sortColumn,
+        order: sortOrder,
+        search: searchQuery,
+    });
     const [inviteEarner, { isLoading, isError, error, isSuccess: apiSuccess, data: newEarner }] = useInviteEarnerMutation();
     const [resendInviteEarner] = useResendInviteEarnerMutation();
     const [deleteInvitedUser] = useDeleteInvitedUserMutation();
@@ -154,9 +167,7 @@ const TableEarnerInvitation = () => {
     const columns = [
         {
             name: "No.",
-            selector: (row, index) => invitedEarners.length - index,
-            sortable: true,
-            width: "80px",
+            selector: (row, index) => index + 1 || "N/A",
         },
         {
             name: "Email",
@@ -215,6 +226,29 @@ const TableEarnerInvitation = () => {
             width: "150px",
         },
     ];
+
+    // Handle page change
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
+
+    // Handle rows per page change (limit)
+    const handleRowsPerPageChange = (newLimit) => {
+        setRowsPerPage(newLimit);
+    };
+
+    // Handle sorting change
+    const handleSortChange = (column) => {
+        const newSortOrder = sortOrder === "-inviteEmail" ? "inviteEmail" : "-inviteEmail";
+        setSortColumn(column);
+        setSortOrder(newSortOrder);
+    };
+
+    // Handle searching
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+        setCurrentPage(1);
+    };
 
     // ===================== Render =====================
     if (!invitedUserData) {
@@ -279,6 +313,20 @@ const TableEarnerInvitation = () => {
                 addNewBtn={true}
                 onAddNew={() => setDialogOpen(true)}
                 sortIcon={true}
+                pagination
+                totalRows={invitedUserData?.total || 0}
+                currentPage={currentPage}
+                rowsPerPage={rowsPerPage}
+                onPageChange={handlePageChange}
+                onRowsPerPageChange={handleRowsPerPageChange}
+                onSortChange={handleSortChange}
+                sortColumn={sortColumn}
+                sortOrder={sortOrder}
+                onSearch={handleSearch}
+                sortOptions={[
+                    { value: "inviteEmail", label: "ASC ⬆" },
+                    { value: "-inviteEmail", label: "DES ⬇" },
+                ]}
             >
                 {invitedEarners.length === 0 && <NoRecordData />}
             </TableCustom>

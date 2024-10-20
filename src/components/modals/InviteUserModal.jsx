@@ -58,7 +58,19 @@ const InviteUserModal = ({ open, handleClose, onSubmit, userType }) => {
     const [deleteAlertMsg, setDeleteAlertMsg] = useState("");
     const [deleteAlertSuccess, setDeleteAlertSuccess] = useState(false);
 
-    const { data: invitedUserData, refetch } = useFetchAllInvitedUserQuery();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [sortColumn, setSortColumn] = useState("inviteEmail");
+    const [sortOrder, setSortOrder] = useState("inviteEmail");
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const { data: invitedUserData, refetch } = useFetchAllInvitedUserQuery({
+        page: currentPage,
+        limit: rowsPerPage,
+        sort: sortColumn,
+        order: sortOrder,
+        search: searchQuery,
+    });
     const { institutionData, issuerData } = useSelector((state) => state.global);
 
     // Fetch and filter invited users when data changes
