@@ -9,11 +9,9 @@ import { useNavigate } from "react-router";
 
 // =========== Start ClaimBadgeButton ===========
 const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
-    // const { data: earnerBadge } = useFetchStatusBadgeQuery({ id: earnerId });
     const { data: earnerAchieResponse } = useFetchEarnerAchieByIdQuery({ achieveId: achievementIds, earnerId });
     const [claimBadge, { isLoading }] = useClaimBadgeMutation();
 
-    // const statusAchievement = earnerBadge?.data[0]?.status;
     const statusAchievement = earnerAchieResponse?.data?.status;
     const navigate = useNavigate();
     const [claimed, setClaimed] = useState(statusAchievement);
