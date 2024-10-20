@@ -47,7 +47,6 @@ const CertificateGenerator = ({ badge }) => {
     // Catch status hook
     const [message, setMessage] = useCatchStatus(uploadCertError, "Get certificate failed");
 
-    const [pdfUrl, setPdfUrl] = useState("");
     const [isExploding, setIsExploding] = useState(false);
     const [isUploadCertModal, setIsUploadCertModal] = useState(false);
 
@@ -62,8 +61,7 @@ const CertificateGenerator = ({ badge }) => {
             .unwrap() // Access the success response
             .then((response) => {
                 if (response) {
-                    setPdfUrl(() => response?.uploadCert);
-                    window.open(pdfUrl, "_blank");
+                    window.open(response?.uploadCert, "_blank");
                 }
             })
             .catch((error) => setMessage("Failed to upload certificate."));

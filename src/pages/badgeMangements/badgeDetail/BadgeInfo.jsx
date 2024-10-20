@@ -33,9 +33,7 @@ const { control } = useForm();
 const result = badge
 
 // assign variable to get achievement id to update
-const achievement = result?.Achievements?.map((achievement) => {
-    return achievement.id;
-});
+const achieveId = badge.Achievements.find(({ badgeClassId }) => badgeClassId === badge.id).id;
 
 // assign variables for date
 const createdAt = result?.createdAt ? result.createdAt.split("T")[0] : "N/A";
@@ -214,7 +212,7 @@ const DetailItem = ({ label, value, isSmallScreen }) => (
                                     <ClaimBadgeButton
                                         badgeClassId={result?.id || ""}
                                         earnerId={activeUserId || ""}
-                                        achievementIds={achievement}
+                                        achievementIds={achieveId}
                                     />
                                 )}
                             </Box>
