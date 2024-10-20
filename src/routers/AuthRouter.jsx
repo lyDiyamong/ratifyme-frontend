@@ -12,6 +12,7 @@ import ForgotPasswordSentPage from "../pages/auth/ForgotPasswordSentPage";
 import ResetPasswordPage from "../pages/auth/ResetPasswordPage";
 import ResetPasswordExpiredPage from "../pages/auth/ResetPasswordExpiredPage";
 import ResetPasswordSuccessPage from "../pages/auth/ResetPasswordSuccessPage";
+import SuccessPayment from "../pages/prices/SuccessPayment";
 
 const AuthRouter = () => {
     return (
@@ -26,6 +27,7 @@ const AuthRouter = () => {
                 <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
                 <Route path="/invalid-reset-password" element={<ResetPasswordExpiredPage />} />
                 <Route path="/reset-password-success" element={<ResetPasswordSuccessPage />} />
+                <Route path="/success-payment" element={<SuccessPayment />} />
                 <Route />
             </Route>
         </Routes>

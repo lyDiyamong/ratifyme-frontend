@@ -64,12 +64,30 @@ const theme = createTheme({
             "@media (max-width:480px)": {
                 fontSize: "2rem", // Mobile size ( 32px )
             },
+            "&::selection": {
+                backgroundColor: "#FFE3E3",
+                color: "black",
+            },
+            // Support for Firefox
+            "::-moz-selection": {
+                backgroundColor: "#FFE3E3",
+                color: "black",
+            },
         },
         h2: {
             fontSize: "2rem", // Default size ( 32px )
             fontFamily: "Poppins, Arial, sans-serif",
             "@media (max-width:480px)": {
                 fontSize: "1.5rem", // Mobile size ( 24px )
+            },
+            "&::selection": {
+                backgroundColor: "#FFE3E3",
+                color: "black",
+            },
+            // Support for Firefox
+            "::-moz-selection": {
+                backgroundColor: "#FFE3E3",
+                color: "black",
             },
         },
         h3: {
@@ -78,12 +96,30 @@ const theme = createTheme({
             "@media (max-width:480px)": {
                 fontSize: "1rem", // Mobile size ( 16px )
             },
+            "&::selection": {
+                backgroundColor: "#FFE3E3",
+                color: "black",
+            },
+            // Support for Firefox
+            "::-moz-selection": {
+                backgroundColor: "#FFE3E3",
+                color: "black",
+            },
         },
         h4: {
             fontSize: "1.125rem", // Default size ( 20px )
             fontFamily: "Poppins, Arial, sans-serif",
             "@media (max-width:480px)": {
                 fontSize: "1rem", // Mobile size ( 16px )
+            },
+            "&::selection": {
+                backgroundColor: "#FFE3E3",
+                color: "black",
+            },
+            // Support for Firefox
+            "::-moz-selection": {
+                backgroundColor: "#FFE3E3",
+                color: "black",
             },
         },
         h5: {
@@ -92,6 +128,15 @@ const theme = createTheme({
             "@media (max-width:480px)": {
                 fontSize: "0.875rem", // Mobile size ( 14px )
             },
+            "&::selection": {
+                backgroundColor: "#FFE3E3",
+                color: "black",
+            },
+            // Support for Firefox
+            "::-moz-selection": {
+                backgroundColor: "#FFE3E3",
+                color: "black",
+            },
         },
         h6: {
             fontSize: "0.875rem", // Default size ( 14px )
@@ -99,11 +144,29 @@ const theme = createTheme({
             "@media (max-width:480px)": {
                 fontSize: "0.625rem", // Mobile size ( 12px )
             },
+            "&::selection": {
+                backgroundColor: "#FFE3E3",
+                color: "black",
+            },
+            // Support for Firefox
+            "::-moz-selection": {
+                backgroundColor: "#FFE3E3",
+                color: "black",
+            },
         },
         body1: {
             fontSize: "1rem", // Default size ( 16px )
             "@media (max-width:480px)": {
                 fontSize: "0.875rem", // Mobile size ( 14px )
+            },
+            "&::selection": {
+                backgroundColor: "#FFE3E3",
+                color: "black",
+            },
+            // Support for Firefox
+            "::-moz-selection": {
+                backgroundColor: "#FFE3E3",
+                color: "black",
             },
         },
         body2: {
@@ -111,11 +174,29 @@ const theme = createTheme({
             "@media (max-width:480px)": {
                 fontSize: "0.75rem", // Mobile size ( 12px )
             },
+            "&::selection": {
+                backgroundColor: "#FFE3E3",
+                color: "black",
+            },
+            // Support for Firefox
+            "::-moz-selection": {
+                backgroundColor: "#FFE3E3",
+                color: "black",
+            },
         },
         body3: {
             fontSize: "0.75rem", // Default size ( 12px )
             "@media (max-width:480px)": {
                 fontSize: "0.5rem", // Mobile size ( 10px )
+            },
+            "&::selection": {
+                backgroundColor: "#FFE3E3",
+                color: "black",
+            },
+            // Support for Firefox
+            "::-moz-selection": {
+                backgroundColor: "#FFE3E3",
+                color: "black",
             },
         },
     },
@@ -148,7 +229,7 @@ const theme = createTheme({
             xl: 1920, // Extra large screens (e.g., ultra-wide monitors)
         },
     },
-    
+
     // This overwrite the DatePicker Selection to white
     components: {
         MuiPickersYear: {
@@ -178,13 +259,12 @@ const theme = createTheme({
         MuiPickersDay: {
             styleOverrides: {
                 dayWithMargin: {
-
-                    '&.Mui-selected': {
-                        color: 'white',
-                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    "&.Mui-selected": {
+                        color: "white",
+                        backgroundColor: "rgba(255, 255, 255, 0.2)",
                     },
-                    '&:hover': {
-                        backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                    "&:hover": {
+                        backgroundColor: "rgba(255, 255, 255, 0.08)",
                     },
                 },
             },

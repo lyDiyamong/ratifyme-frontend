@@ -5,6 +5,8 @@ import Sidebar from "./Sidebar";
 import Header from "./Header";
 import theme from "../../assets/themes";
 import { useCheckAuthQuery } from "../../store/api/auth/authApi";
+import { SpinLoading } from "../../components/loading/SpinLoading";
+
 
 const DashboardLayout = () => {
     // Determine if the screen size is large (desktop)
@@ -36,7 +38,7 @@ const DashboardLayout = () => {
     }, [isLoading, error, user, navigate]);
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <SpinLoading />;
     }
 
     return (
