@@ -3,23 +3,22 @@ import { Button } from "@mui/material";
 import theme from "../assets/themes";
 
 // Custom Import
-import { useClaimBadgeMutation, useFetchStatusBadgeQuery } from "../store/api/earnerManagement/earnerApis";
+import { useClaimBadgeMutation, useFetchEarnerAchieByIdQuery } from "../store/api/earnerManagement/earnerApis";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 // =========== Start ClaimBadgeButton ===========
 const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
-    const { data: earnerBadge } = useFetchStatusBadgeQuery({ id: earnerId });
+    const { data: earnerAchieResponse } = useFetchEarnerAchieByIdQuery({ achieveId: achievementIds, earnerId });
     const [claimBadge, { isLoading }] = useClaimBadgeMutation();
 
-    const statusAchievement = earnerBadge?.data[0]?.status;
+    const statusAchievement = earnerAchieResponse?.data?.status;
     const navigate = useNavigate();
     const [claimed, setClaimed] = useState(statusAchievement);
 
     useEffect(() => {
         setClaimed(statusAchievement);
     }, [statusAchievement]);
-    console.log(earnerId, badgeClassId, achievementIds);
 
     const handleClaimBadge = async () => {
         try {
@@ -31,7 +30,6 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
                 status: true,
             }).unwrap();
 
-            console.log("Achievements updated successfully");
             navigate("/mybackpacks");
         } catch (error) {
             console.error("Failed to claim badge:", error);
