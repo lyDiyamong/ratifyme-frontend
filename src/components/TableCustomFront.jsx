@@ -2,14 +2,7 @@
 import DataTable from "react-data-table-component";
 
 // MUI Imports
-import {
-    Box,
-    Checkbox,
-    TextField,
-    Button,
-    Typography,
-    InputAdornment,
-} from "@mui/material";
+import { Box, Checkbox, TextField, Button, Typography, InputAdornment } from "@mui/material";
 import ArrowDownward from "@mui/icons-material/ArrowDownward";
 
 // Custom Imports
@@ -41,6 +34,7 @@ const customTableStyles = {
  * @param {function} [onFilterChange] - Function to handle filter change.
  * @param {function} [onSortChange] - Function to handle sort change.
  * @param {function} [onAddNew] - Function to handle Add New button click.
+ * @param {boolean} [addNewBtn] - If true, display add button.
  * @param {string} [addNewLabel="Add New"] - Custom label for the Add New button.
  * @returns {JSX.Element} - Rendered table with search, filter, and sort options.
  */
@@ -55,7 +49,8 @@ const TableCustom = ({
     children,
     onAddNew = () => {},
     addNewLabel = "Add New",
-    onSearch
+    addNewBtn,
+    onSearch,
 }) => {
     const [searchQuery, setSearchQuery] = useState("");
     const handleSearch = (query) => {
@@ -162,21 +157,23 @@ const TableCustom = ({
                     </Box>
 
                     {/* Add New Button */}
-                    <Button
-                        startIcon={<AddIcon />}
-                        variant="contained"
-                        onClick={onAddNew}
-                        sx={{
-                            display: { md: "flex", sm: "none", xs: "none", xss: "none" },
-                            color: theme.palette.customColors.white,
-                            fontWeight: theme.fontWeight.semiBold,
-                            borderRadius: theme.customShape.btn,
-                            textTransform: "none",
-                            width: "100%",
-                        }}
-                    >
-                        {addNewLabel}
-                    </Button>
+                    {addNewBtn && (
+                        <Button
+                            startIcon={<AddIcon />}
+                            variant="contained"
+                            onClick={onAddNew}
+                            sx={{
+                                display: { md: "flex", sm: "none", xs: "none", xss: "none" },
+                                color: theme.palette.customColors.white,
+                                fontWeight: theme.fontWeight.semiBold,
+                                borderRadius: theme.customShape.btn,
+                                textTransform: "none",
+                                width: "100%",
+                            }}
+                        >
+                            {addNewLabel}
+                        </Button>
+                    )}
                 </Box>
             </Box>
 

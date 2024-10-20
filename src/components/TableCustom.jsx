@@ -43,6 +43,7 @@ const customTableStyles = {
  * @param {function} [onSearch] - Function to handle search input.
  * @param {function} [onFilterChange] - Function to handle filter change.
  * @param {function} [onSortChange] - Function to handle sort change.
+ * @param {boolean} [addNewBtn] - If true, display add button.
  * @param {function} [onAddNew] - Function to handle Add New button click.
  * @param {string} [addNewLabel="Add New"] - Custom label for the Add New button.
  * @returns {JSX.Element} - Rendered table with search, filter, and sort options.
@@ -61,10 +62,11 @@ const TableCustom = ({
     addNewLabel = "Add New",
     totalRows = null,
     rowsPerPage = null,
+    addNewBtn,
     onSearch = null,
     sortOptions = [],
 }) => {
-     // Default columns if not provided
+    // Default columns if not provided
     const defaultColumns = [
         { name: "ID", selector: (row) => row.id || "N/A", sortable: true },
         { name: "Name", selector: (row) => row.name || "N/A", sortable: true },
@@ -94,9 +96,7 @@ const TableCustom = ({
         >
             <Box sx={{ display: { sm: "block", md: "flex" }, justifyContent: "space-between", alignItems: "center" }}>
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignContent: "center", mb: 3 }}>
-                    <Typography sx={{ fontSize: theme.typography.h3, fontWeight: theme.fontWeight.semiBold }}>
-                        {title}
-                    </Typography>
+                    <Typography sx={{ fontSize: theme.typography.h3, fontWeight: theme.fontWeight.semiBold }}>{title}</Typography>
                     {/* Add Button for responsive  */}
                     <Button
                         startIcon={<AddIcon />}
@@ -130,8 +130,8 @@ const TableCustom = ({
                         }}
                         onChange={(e) => onSearch(e.target.value)}
                     />
-    {/* Sort By */}
-    <FormControl sx={{ minWidth: { md: 100, sm: 80, xs: 60 } }} size="small">
+                    {/* Sort By */}
+                    <FormControl sx={{ minWidth: { md: 100, sm: 80, xs: 60 } }} size="small">
                         <InputLabel>
                             <IconButton sx={{ display: { md: "none", sm: "flex" } }}>
                                 <SwapVertIcon sx={{ fontSize: "24px" }} />
@@ -146,22 +146,25 @@ const TableCustom = ({
                             ))}
                         </Select>
                     </FormControl>
+
                     {/* Add New Button */}
-                    <Button
-                        startIcon={<AddIcon />}
-                        variant="contained"
-                        onClick={onAddNew}
-                        sx={{
-                            display: { md: "flex", sm: "none" },
-                            color: theme.palette.customColors.white,
-                            fontWeight: theme.fontWeight.semiBold,
-                            borderRadius: theme.customShape.btn,
-                            textTransform: "none",
-                            width: "100%",
-                        }}
-                    >
-                        {addNewLabel}
-                    </Button>
+                    {addNewBtn && (
+                        <Button
+                            startIcon={<AddIcon />}
+                            variant="contained"
+                            onClick={onAddNew}
+                            sx={{
+                                display: { md: "flex", sm: "none", xs: "none", xss: "none" },
+                                color: theme.palette.customColors.white,
+                                fontWeight: theme.fontWeight.semiBold,
+                                borderRadius: theme.customShape.btn,
+                                textTransform: "none",
+                                width: "100%",
+                            }}
+                        >
+                            {addNewLabel}
+                        </Button>
+                    )}
                 </Box>
             </Box>
             <DataTable
