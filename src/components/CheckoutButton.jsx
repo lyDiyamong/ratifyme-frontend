@@ -1,7 +1,7 @@
 // React import
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
-import { useId, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 
 // Mui import

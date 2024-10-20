@@ -1,76 +1,9 @@
-// React library import
-import { useNavigate } from "react-router-dom";
-
-// MUI import
-import { Box, Grid, Typography, Button, Card, CardContent, CardMedia } from "@mui/material";
-
-// Custom import
+import { Link, useNavigate } from "react-router-dom";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 import theme from "../../assets/themes";
-import LandingContainer from "../../components/styles/LandingContainer";
-import LoginImgSvg from "../../assets/images/Login-illu.svg";
-import SchoolImage from "../../assets/images/school.png";
-import IssuerImage from "../../assets/images/teach.png";
-import EarnerImage from "../../assets/images/badge.png";
-
-// Signup options data
-const signupOptsData = [
-    {
-        image: SchoolImage,
-        title: "Institution",
-        description:
-            "Sign up as an institution to manage badge issuance, track performance, and create verifiable credentials for your learners.",
-    },
-    {
-        image: IssuerImage,
-        title: "Issuer",
-        description:
-            "Sign up as an issuer to create, award, and manage badges for achievements, certifications, and skills recognition.",
-    },
-    {
-        image: EarnerImage,
-        title: "Earner",
-        description:
-            "Sign up as an earner to collect and showcase digital badges for your skills and achievements, and share them with employers.",
-    },
-];
-
-// Card component for signup options
-const SignupOptionCard = ({ image, title, description, onClick }) => (
-    <Card
-        onClick={onClick} 
-        sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            cursor: "pointer",
-            backgroundColor: theme.palette.augmentColor.white,
-            borderRadius: theme.customShape.card,
-            boxShadow: "rgba(3, 102, 214, 0.3) 0px 0px 0px 2px;",
-            marginBottom: 2,
-            padding: "14px 24px",
-            ":hover": {
-                backgroundColor: theme.palette.action.hover,
-            },
-        }}
-    >
-        <CardMedia
-            component="img"
-            image={image}
-            alt={`${title} image`}
-            sx={{ width: 80, height: 80, marginRight: 2 }}
-        />
-        <Box sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
-            <CardContent>
-                <Typography component="div" variant="h4">
-                    {title}
-                </Typography>
-                <Typography variant="subtitle1" component="div" sx={{ color: "text.secondary" }}>
-                    {description}
-                </Typography>
-            </CardContent>
-        </Box>
-    </Card>
-);
+import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
+import SignupOptionCard from "./SignupOptionCard";
+import { signupOptsData } from "../../data/auth/signupOptsData";
 
 const SignupOptPage = () => {
     const navigate = useNavigate();
@@ -83,44 +16,55 @@ const SignupOptPage = () => {
     };
 
     return (
-        // Start signup container
-        <LandingContainer sx={{ my: 6 }}>
-            {/* Grid container */}
-            <Grid container spacing={4}>
-                {/* Signup options section */}
-                <Grid item xs={12} md={10} order={{ xs: 2, md: 1 }}>
-                    <Box mb={5}>
-                        <Typography
-                            component="h1"
-                            sx={{
-                                fontSize: theme.typography.h2,
-                                fontWeight: theme.fontWeight.bold,
-                                lineHeight: 1.7,
-                            }}
-                        >
-                            How do you want to use RatifyMe?
-                        </Typography>
-                        <Typography sx={{ color: theme.palette.text.secondary }}>
-                            We’ll personalize your setup experience accordingly.
-                        </Typography>
-                    </Box>
+        <Box
+            sx={{
+                display: "flex",
+                flexGrow: 1,
+                justifyContent: "center",
+                mx: "auto",
+                height: "100vh",
+                backgroundColor: "#fff",
+            }}
+        >
+            <Stack width="100%" maxWidth="1800px" gap={2} px={3} alignItems='center' mt={6}>
+                {/* logo  */}
+                <Link to="/">
+                    <Box component="img" src={RatifyMELogo} alt="Ratifyme Favicon" sx={{ width: 150, height: 150 }} />
+                </Link>
+
+                {/* Signup Options  */}
+                <Box>
+                    <Typography align="center" variant="h1" fontWeight={theme.fontWeight.semiBold} mb={1}>
+                        How do you want to use RatifyMe?
+                    </Typography>
+                    <Typography align="center" variant="body1" color="text.secondary" mb={3}>
+                        We’ll personalize your setup experience accordingly.
+                    </Typography>
 
                     {/* Render signup option cards */}
-                    {signupOptsData.map((opt, index) => (
-                        <SignupOptionCard
-                            key={index}
-                            image={opt.image}
-                            title={opt.title}
-                            description={opt.description}
-                            onClick={() => handleRoleSelect(opt.title)}
-                        />
-                    ))}
-                </Grid>
-
-            </Grid>
-            {/* End grid container */}
-        </LandingContainer>
-        // End signup container
+                    <Grid container spacing={3} justifyContent="center" alignItems="stretch" mt={4}>
+                        {signupOptsData.map((opt, index) => (
+                            <Grid
+                                item
+                                key={index}
+                                xs={12}
+                                sm={6}
+                                md={4}
+                                lg={3}
+                            >
+                                <SignupOptionCard
+                                    title={opt.title}
+                                    description={opt.description}
+                                    circleBg={opt.circleBg}
+                                    icon={opt.icon}
+                                    onClick={() => handleRoleSelect(opt.title)}
+                                />
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Box>
+            </Stack>
+        </Box>
     );
 };
 

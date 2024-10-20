@@ -62,12 +62,6 @@ const TableIssuer = () => {
             })),
         );
     };
-
-    // Handle opening invite issuer dialog
-    const handleInviteIssuer = () => {
-        setDialogOpen(true);
-    };
-
     // Handle closing the invite issuer dialog
     const handleCloseDialog = () => {
         setDialogOpen(false);
@@ -153,9 +147,8 @@ const TableIssuer = () => {
                     title="Issuer List"
                     data={filteredData}
                     columns={getIssuerColumns()}
-                    onAddNew={handleInviteIssuer}
-                    addNewLabel="Invite Issuer"
-                    onSearch={setSearchQuery} 
+                    onSearch={setSearchQuery}
+                    addNewBtn = {false}
                 >
                     {/* Show NoRecordData inside the table when there's no data */}
                     {filteredData.length === 0 && <NoRecordData />}

@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { clearAuthState, setAuthState } from "../../slices/globalSlices";
 import { createBaseQuery } from "../../../utils/baseQuery";
-import { handleAuthSuccess } from "../../../utils/authHelpers";
+import { handleAuthSuccess } from "../../../utils/auth/authHelpers";
 
 export const authApi = createApi({
     reducerPath: "authApi",
@@ -39,22 +39,22 @@ export const authApi = createApi({
                 method: "POST",
                 body: data,
             }),
-            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                try {
-                    const { data } = await queryFulfilled;
-                    dispatch(
-                        setAuthState({
-                            userInfo: data.user.newUser,
-                            token: data.token,
-                            isAuthenticated: true,
-                        }),
-                    );
-                    // Fetch user info to ensure authentication is verified
-                    dispatch(authApi.endpoints.checkAuth.initiate());
-                } catch (err) {
-                    console.error("Authentication failed:", err);
-                }
-            },
+        }),
+
+        verifyEmail: builder.mutation({
+            query: (data) => ({
+                url: "/auth/verifyEmail",
+                method: "POST",
+                body: data,
+            }),
+        }),
+
+        resendVerification: builder.mutation({
+            query: (data) => ({
+                url: "/auth/resendVerification",
+                method: "POST",
+                body: data,
+            }),
         }),
 
         signIn: builder.mutation({
@@ -159,6 +159,8 @@ export const authApi = createApi({
 export const {
     useCheckAuthQuery,
     useSignUpMutation,
+    useVerifyEmailMutation,
+    useResendVerificationMutation,
     useSignInMutation,
     useForgotPasswordMutation,
     useVerifyResetTokenQuery,

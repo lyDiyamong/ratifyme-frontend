@@ -1,5 +1,5 @@
-import { setAuthState } from "../store/slices/globalSlices";
-import { authApi } from "../store/api/auth/authApi";
+import { setAuthState } from "../../store/slices/globalSlices";
+import { authApi } from "../../store/api/auth/authApi";
 
 export const handleAuthSuccess = async (dispatch, queryFulfilled) => {
     try {

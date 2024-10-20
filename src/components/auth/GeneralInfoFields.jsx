@@ -1,11 +1,9 @@
-
-
-import { Grid } from "@mui/material";
-
 import DateSelectionForm from "../DateSelectionForm";
 import SelectForm from "../SelectionForm";
 import FormInput from "../FormInput";
-
+import { Stack } from "@mui/system";
+import { Box, Typography } from "@mui/material";
+import theme from "../../assets/themes";
 
 const GeneralInfoFields = ({ control, schema }) => {
     const genderOptions = [
@@ -13,21 +11,30 @@ const GeneralInfoFields = ({ control, schema }) => {
         { value: 2, label: "Female" },
     ];
 
+    const getDefaultValue = (value) => (value ? value : null);
+
     return (
-        <Grid container spacing={2}>
-            <Grid item xss={12} sm={12}>
-                <FormInput name="firstName" label="First Name" control={control} required schema={schema?.fields.firstName} />
-            </Grid>
-            <Grid item xss={12} sm={12}>
-                <FormInput name="lastName" label="Last Name" control={control} required schema={schema?.fields.lastName} />
-            </Grid>
-            <Grid item xss={12} sm={12}>
-                <SelectForm name="genderId" label="Gender" options={genderOptions} control={control} />
-            </Grid>
-            <Grid item xss={12} sm={12}>
-                <DateSelectionForm control={control} name="dateOfBirth" label="Date of Birth" />
-            </Grid>
-        </Grid>
+        <Stack gap={2}>
+            <Box component="div">
+                <Typography variant="body1" fontWeight={theme.fontWeight.semiBold} fontSize="20px">
+                    General Information
+                </Typography>
+                <Typography sx={{ fontSize: theme.typography.body1, color: theme.palette.customColors.gray500, mb: 2 }}>
+                    Provide basic personal information details to set up your profile such as Fullname, gender and date of birth.
+                </Typography>
+            </Box>
+
+            <FormInput name="firstName" label="First Name" control={control} required schema={schema?.fields.firstName} />
+            <FormInput name="lastName" label="Last Name" control={control} required schema={schema?.fields.lastName} />
+            <SelectForm
+                name="genderId"
+                label="Gender"
+                options={genderOptions}
+                control={control}
+                defaultValue={getDefaultValue(schema?.fields.genderId?.defaultValue)}
+            />
+            <DateSelectionForm control={control} name="dateOfBirth" label="Date of Birth" />
+        </Stack>
     );
 };
 

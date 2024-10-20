@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Typography } from "@mui/material";
 import LoadingIconSvg from "../../assets/icons/spinnigLoad.svg";
 import theme from "../../assets/themes";

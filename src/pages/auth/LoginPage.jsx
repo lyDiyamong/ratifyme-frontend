@@ -47,15 +47,21 @@ const LoginPage = () => {
     const [loading, setLoading] = useState(false);
 
     // Submit handler
-    const onSubmit = async (data) => {
+    const onSubmit = async (formData) => {
         try {
             setLoading(true);
-            await signIn(data).unwrap();
-            navigate("/dashboard");
+            const response = await signIn(formData).unwrap();
+
+            // Check if the user has a valid subscription
+            if (response && response.subscriptionStatus === "inactive") {
+                // Redirect to price page if subscription is inactive
+                navigate("/price");
+            } else {
+                // Navigate to dashboard if all checks pass
+                navigate("/dashboard");
+            }
+
             reset();
-        } catch (err) {
-            // Handle exception if necessary, though RTK Query already manages error state
-            console.log(err?.data?.message);
         } finally {
             setLoading(false);
         }
@@ -111,6 +117,7 @@ const LoginPage = () => {
                             required={true}
                             startIcon={<EmailOutlined />}
                             schema={schema.fields.email}
+                            placeholder="example@gmail.com"
                         />
                         {/* Password */}
                         <FormInput
