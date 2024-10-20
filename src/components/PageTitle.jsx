@@ -28,6 +28,7 @@ const PageTitle = ({ title, sx, subtitle }) => {
                 alignItems: "center",
                 bgcolor: theme.palette.background.default,
                 mt: 2,
+                mb: 5,
                 ...sx,
             }}
         >
