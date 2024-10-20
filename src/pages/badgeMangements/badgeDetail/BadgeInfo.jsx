@@ -124,7 +124,7 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
                         </Typography>
                     </Box>
                     <Stack mt={1}>
-                        <IssueToEarnerButton achievementId={achievement || []} />
+                        <IssueToEarnerButton achievementId={achieveId || []} />
                         <Button onClick={handleClose}>Cancel</Button>
                     </Stack>
                 </Stack>

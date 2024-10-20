@@ -10,7 +10,6 @@ export const badgeApi = createApi({
         fetchBadges: builder.query({
             query: ({ field, fk, limit, page = 1 }) => ({
                 url: `/issuers/badgeClasses?page=${page}&${field}=${fk}&limit=${limit}`,
-                // method: "GET",
             }),
             providesTags: (result) => {
                 return result?.data
@@ -32,8 +31,20 @@ export const badgeApi = createApi({
                 body: badge,
             }),
             invalidatesTags: (result) => [
-                { type: "BadgeIssuer", id: `LIST-${result?.issuerId}` },
-                [{ type: "Badge", id: "LIST" }],
+                { type: "BadgeIssuer", id: "LIST" },
+                { type: "Badge", id: "LIST" },
+            ],
+        }),
+
+        // Delete a badge
+        deleteBadge: builder.mutation({
+            query: (badgeId) => ({
+                url: `/issuers/badgeClasses/${badgeId}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: (result) => [
+                { type: "BadgeIssuer", id: "LIST" },
+                { type: "Badge", id: "LIST" },
             ],
         }),
 
@@ -55,7 +66,6 @@ export const badgeApi = createApi({
                 return [{ type: "Badge", id }];
             },
         }),
-
         // Fetch badge for each institution
         fetchBadgesByInstitutions: builder.query({
             query: (institutionId) => ({
@@ -135,27 +145,13 @@ export const badgeApi = createApi({
             },
         }),
 
-        deleteBadge: builder.mutation({
-            query: (badgeId) => ({
-                url: `/issuers/badgeClasses/${badgeId}`,
-                method: "DELETE",
-            }),
-            invalidatesTags: (result) => [
-                // Invalidate the entire Badge list when a new badge is created
-                { type: "Badge", id: "LIST" },
-                // Optionally, invalidate badges based on issuerId if you want finer control
-                result?.issuerId ? { type: "Badge", id: `LIST-${result.issuerId}` } : { type: "Badge", id: "LIST" },
-            ],
-        }),
         updateBadge: builder.mutation({
             query: ({ id, updatedBadge }) => ({
                 url: `/issuers/badgeClasses/editBadge/${id}`,
                 method: "PATCH",
                 body: updatedBadge,
             }),
-            invalidatesTags: (result, error, { id }) => {
-                return [{ type: "Badge", id }, [{ type: "BadgeIssuer", id: `LIST` }]];
-            },
+            invalidatesTags: (result) => [{ type: "BadgeIssuer", id: `LIST` }, [{ type: "Badge", id: "LIST" }]],
         }),
     }),
 });

@@ -2,7 +2,8 @@ import { Button } from "@mui/material";
 import theme from "../assets/themes";
 
 // Custom Import
-import { useClaimBadgeMutation, useFetchEarnerAchieByIdQuery } from "../store/api/earnerManagement/earnerApis";
+import { useFetchEarnerAchieByIdQuery } from "../store/api/earnerManagement/earnerApis";
+import { useClaimBadgeMutation } from "../store/api/badgeManagement/badgeApi";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -13,7 +14,6 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
 
     const statusAchievement = earnerAchieResponse?.data?.status;
     const navigate = useNavigate();
-
 
     // const statusAchievement = earnerBadge?.data?.status;
     const [claimed, setClaimed] = useState(statusAchievement);
