@@ -23,8 +23,8 @@ const inviteUserApi = createApi({
             invalidatesTags: ["InvitedUsers"],
         }),
         fetchAllInvitedUser: builder.query({
-            query: () => ({
-                url: "users/codeInvitation/invitedUser",
+            query: ({ page, limit, sort, search }) => ({
+                url: `users/codeInvitation/invitedUser?limit=${limit}&page=${page}&sort=${sort}&search=${search}`,
                 method: "GET",
             }),
             providesTags: ["InvitedUsers"],

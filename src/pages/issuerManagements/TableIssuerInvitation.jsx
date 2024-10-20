@@ -30,6 +30,13 @@ const TableIssuerInvitation = () => {
     const [userIdToDelete, setUserIdToDelete] = useState(null);
     const [message, setMessage] = useCatchStatus(false, "");
 
+    // Pagination & Sorting State & Limiting & Searching
+    const [currentPage, setCurrentPage] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [sortColumn, setSortColumn] = useState("inviteEmail");
+    const [sortOrder, setSortOrder] = useState("inviteEmail");
+    const [searchQuery, setSearchQuery] = useState("");
+
     const [resendAlertMsg, setResendAlertMsg] = useState("");
     const [resendAlertSuccess, setResendAlertSuccess] = useState(false);
     const [resendConfirmOpen, setResendConfirmOpen] = useState(false);
@@ -40,7 +47,14 @@ const TableIssuerInvitation = () => {
     const institutionId = institutionData?.id;
 
     // ===================== API Hooks =====================
-    const { data: invitedUserData, refetch: refetchInvitedUsers } = useFetchAllInvitedUserQuery();
+    const { data: invitedUserData, refetch: refetchInvitedUsers } = useFetchAllInvitedUserQuery({
+        page: currentPage,
+        limit: rowsPerPage,
+        sort: sortColumn,
+        order: sortOrder,
+        search: searchQuery,
+    });
+
     const [inviteIssuer, { isLoading, isError, error, isSuccess: apiSuccess, data: newIssuer }] = useInviteIssuerMutation();
     const [resendInviteIssuer] = useResendInviteIssuerMutation();
     const [deleteInvitedUser] = useDeleteInvitedUserMutation();
@@ -156,9 +170,7 @@ const TableIssuerInvitation = () => {
     const columns = [
         {
             name: "No.",
-            selector: (row, index) => invitedIssuers.length - index,
-            sortable: true,
-            width: "80px",
+            selector: (row, index) => index + 1 || "N/A",
         },
         {
             name: "Email",
@@ -230,6 +242,29 @@ const TableIssuerInvitation = () => {
         },
     ];
 
+    // Handle page change
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
+
+    // Handle rows per page change (limit)
+    const handleRowsPerPageChange = (newLimit) => {
+        setRowsPerPage(newLimit);
+    };
+
+    // Handle sorting change
+    const handleSortChange = (column) => {
+        const newSortOrder = sortOrder === "-inviteEmail" ? "inviteEmail" : "-inviteEmail";
+        setSortColumn(column);
+        setSortOrder(newSortOrder);
+    };
+
+    // Handle searching
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+        setCurrentPage(1);
+    };
+
     // ===================== Render Component =====================
     return (
         <Box>
@@ -274,6 +309,20 @@ const TableIssuerInvitation = () => {
                 addNewLabel="Invite Issuer"
                 addNewBtn={true}
                 onAddNew={() => setDialogOpen(true)}
+                pagination
+                totalRows={invitedUserData?.total || 0}
+                currentPage={currentPage}
+                rowsPerPage={rowsPerPage}
+                onPageChange={handlePageChange}
+                onRowsPerPageChange={handleRowsPerPageChange}
+                onSortChange={handleSortChange}
+                sortColumn={sortColumn}
+                sortOrder={sortOrder}
+                onSearch={handleSearch}
+                sortOptions={[
+                    { value: "inviteEmail", label: "ASC ⬆" },
+                    { value: "-inviteEmail", label: "DES ⬇" },
+                ]}
             >
                 {invitedIssuers.length === 0 && <NoRecordData />}
             </TableCustom>
