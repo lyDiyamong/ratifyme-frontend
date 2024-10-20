@@ -29,7 +29,7 @@ const AuthRouter = () => {
                 <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
                 <Route path="/invalid-reset-password" element={<ResetPasswordExpiredPage />} />
                 <Route path="/reset-password-success" element={<ResetPasswordSuccessPage />} />
-                <Route path="/success-payment" element={<SuccessPayment />} />
+                <Route path="/success-payment/:paymentId" element={<SuccessPayment />} />
                 <Route />
             </Route>
         </Routes>
