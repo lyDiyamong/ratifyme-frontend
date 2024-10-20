@@ -1,6 +1,5 @@
 import { Dialog, DialogTitle, DialogContent, Button, Typography, Divider, Avatar, TextField } from "@mui/material";
-import FormInput from "../../../components/FormInput";
-import { Controller, useForm } from "react-hook-form"; // Import useForm from react-hook-form
+import { Controller, useForm } from "react-hook-form";
 import { Box, Stack } from "@mui/system";
 import theme from "../../../assets/themes";
 import AcademicBgSvg from "../../../assets/icons/AcademicBgSvg.svg";

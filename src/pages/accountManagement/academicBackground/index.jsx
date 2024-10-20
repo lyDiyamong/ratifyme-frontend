@@ -82,27 +82,14 @@ const AcademicBackground = () => {
                 </Stack>
             </Stack>
 
-            <Stack
-                sx={{
-                    justifyContent: academicBackgroundData?.length === 0 ? "center" : "start",
-                    gap: 4,
-                    flexDirection: "row",
-                    flexWrap: "wrap",
-                    "& > *": {
-                        flexBasis: "calc(33.33% - 24px)",
-                        "@media (max-width: 1500px)": {
-                            flexBasis: "calc(33.33% - 24px)",
-                        },
-                        "@media (max-width: 1450px)": {
-                            flexBasis: "calc(50% - 24px)",
-                        },
-                        "@media (max-width: 600px)": {
-                            flexBasis: "100%",
-                        },
-                    },
-                }}
-            >
-                {academicBackgroundData?.data?.length === 0 ? (
+            {academicBackgroundData?.data?.length === 0 ? (
+                <Stack
+                    sx={{
+                        justifyContent: "center",
+                        gap: 4,
+                        flexDirection: "row",
+                    }}
+                >
                     <Box display="flex" flexDirection="column" alignItems="center" p={4}>
                         <Typography variant="h6" mt={2} textAlign="center" color={theme.palette.text.secondary}>
                             There are no Academic Background!
@@ -114,8 +101,29 @@ const AcademicBackground = () => {
                             sx={{ maxWidth: 400, width: "100%" }}
                         />
                     </Box>
-                ) : (
-                    academicBackgroundData?.data
+                </Stack>
+            ) : (
+                <Stack
+                    sx={{
+                        justifyContent: "start",
+                        gap: 4,
+                        flexDirection: "row",
+                        flexWrap: "wrap",
+                        "& > *": {
+                            flexBasis: "calc(33.33% - 24px)",
+                            "@media (max-width: 1500px)": {
+                                flexBasis: "calc(33.33% - 24px)",
+                            },
+                            "@media (max-width: 1450px)": {
+                                flexBasis: "calc(50% - 24px)",
+                            },
+                            "@media (max-width: 600px)": {
+                                flexBasis: "100%",
+                            },
+                        },
+                    }}
+                >
+                    {academicBackgroundData?.data
                         ?.filter((data) => data.userId === userId)
                         .map((data, index) => (
                             <AcademicInfo
@@ -127,9 +135,9 @@ const AcademicBackground = () => {
                                     academicLevelId: data.AcademicLevel?.name || "N/A",
                                 }}
                             />
-                        ))
-                )}
-            </Stack>
+                        ))}
+                </Stack>
+            )}
 
             <AddAcademicModal open={open} onClose={handleClose} onSubmit={handleSubmit} userId={userId} />
         </Stack>

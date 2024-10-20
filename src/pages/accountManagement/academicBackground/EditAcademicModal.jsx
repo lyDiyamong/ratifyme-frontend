@@ -1,6 +1,6 @@
 import { Dialog, DialogTitle, DialogContent, Button, Typography, Divider, Avatar, TextField } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Stack } from "@mui/system";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -9,7 +9,6 @@ import dayjs from "dayjs";
 import { useUpdateAcademicBackgroundByIdMutation } from "../../../store/api/earnerManagement/earnerApis";
 import theme from "../../../assets/themes";
 import EditAcademicBgSvg from "../../../assets/icons/EditAcademicBgSvg.svg";
-import FormInput from "../../../components/FormInput";
 import {
     useFetchAcademicLevelsQuery,
     useFetchFieldOfStudiesQuery,

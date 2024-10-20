@@ -1,20 +1,15 @@
 import { useState } from "react";
 import { Box, Card, CardContent, Stack, Typography, IconButton, Divider, useMediaQuery } from "@mui/material";
-import {
-    AccessTime,
-    AccountBalanceRounded,
-    BorderColorRounded,
-    Delete,
-    School,
-} from "@mui/icons-material";
+import { AccessTime, AccountBalanceRounded, BorderColorRounded, Delete, School } from "@mui/icons-material";
 import theme from "../../../assets/themes";
 import MoreMenu from "../../../components/MoreMenu";
 import EditAcademicModal from "./EditAcademicModal";
 import dayjs from "dayjs";
+import { useDeleteAcademicBackgroundByIdMutation } from "../../../store/api/earnerManagement/earnerApis";
 
 const AcademicInfo = ({ academicData }) => {
     const { userId, fieldOfStudyId, academicYear, academicLevelId } = academicData;
-
+    const [deleteAcademicBackground] = useDeleteAcademicBackgroundByIdMutation();
     const [open, setOpen] = useState(false);
     const [selectedData, setSelectedData] = useState(null);
 
@@ -23,11 +18,20 @@ const AcademicInfo = ({ academicData }) => {
             fieldOfStudyId,
             academicYear: academicYear ? dayjs(academicYear) : null,
             academicLevelId,
+            userId,
         });
         setOpen(true);
     };
 
     const handleClose = () => setOpen(false);
+
+    const handleDelete = (id) => {
+        deleteAcademicBackground(id)
+            .then(() => {})
+            .catch((error) => {
+                console.error("Error deleting academic background:", error);
+            });
+    };
 
     const menuItems = [
         {
@@ -35,9 +39,12 @@ const AcademicInfo = ({ academicData }) => {
             icon: <BorderColorRounded color="primary" />,
             onClick: handleOpen,
         },
-        { label: "Delete", icon: <Delete color="error" />, onClick: () => {} },
+        {
+            label: "Delete",
+            icon: <Delete color="error" />,
+            onClick: () => handleDelete(academicData.userId),
+        },
     ];
-
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
     return (

@@ -75,10 +75,17 @@ export const earnerApi = createApi({
             invalidatesTags: ["AcademicBackground"],
         }),
         createAcademicBackground: builder.mutation({
-            query: ({...data}) => ({
+            query: ({ ...data }) => ({
                 url: `/earners/academicbackgrounds`,
                 method: "POST",
                 body: data,
+            }),
+            invalidatesTags: ["AcademicBackground"],
+        }),
+        deleteAcademicBackgroundById: builder.mutation({
+            query: (id) => ({
+                url: `/earners/academicbackgrounds/${id}`,
+                method: "DELETE",
             }),
             invalidatesTags: ["AcademicBackground"],
         }),
@@ -95,5 +102,6 @@ export const {
     useUpdateEarnerByIdMutation,
     useFetchAcademicBackgroundByUserQuery,
     useUpdateAcademicBackgroundByIdMutation,
-    useCreateAcademicBackgroundMutation
+    useCreateAcademicBackgroundMutation,
+    useDeleteAcademicBackgroundByIdMutation
 } = earnerApi;
