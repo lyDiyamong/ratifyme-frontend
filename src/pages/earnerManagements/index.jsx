@@ -8,11 +8,13 @@ import PageTitle from "../../components/PageTitle";
 import VerificationsCheckUp from "./Verifications";
 import TableEarnerInvitation from "./TableEarnerInvitation";
 import CustomTabs from "../../components/tabs/customTabs";
+import { useSelector } from "react-redux";
 
 // ============ Start EarnerManagement ============
 const EarnerManagement = () => {
     const tabs = ["Earner List", "Invited Earners"];
     const tabContent = [TableEarner, TableEarnerInvitation];
+    const { roleId } = useSelector((state) => state.global);
 
     return (
         <DashboardContainer>
@@ -22,7 +24,7 @@ const EarnerManagement = () => {
             />
             <VerificationsCheckUp />
 
-            <CustomTabs tabs={tabs} tabContent={tabContent} searchQuery="" />
+            {roleId === 1 ? <TableEarner /> : <CustomTabs tabs={tabs} tabContent={tabContent} searchQuery="" />}
         </DashboardContainer>
     );
 };
