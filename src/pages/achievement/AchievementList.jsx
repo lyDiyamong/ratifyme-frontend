@@ -11,7 +11,7 @@ import { Pagination, Typography } from "@mui/material";
 
 const AchievementList = () => {
     const [page, setPage] = useState(1);
-    const [limit] = useState(5);
+    const [limit] = useState(1);
     const navigate = useNavigate();
     const { earnerData } = useSelector((state) => state.global);
     const earnerId = earnerData?.id;
@@ -43,7 +43,7 @@ const AchievementList = () => {
     };
 
     // Calculate total pages for pagination
-    const totalPages = badgeClaims?.length === limit ? page + 1 : page;
+    const totalPages = Math.ceil(badgeClaim?.totalRecords / limit);
     console.log(badgeClaims?.length);
     // Handle loading state
     if (isLoading) {

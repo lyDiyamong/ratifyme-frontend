@@ -9,7 +9,7 @@ import { Box } from "@mui/material";
 
 const BadgeList = () => {
     const [page, setPage] = useState(1);
-    const [limit] = useState(5);
+    const [limit] = useState(1);
 
     const navigate = useNavigate();
     const { roleId, issuerData, institutionData } = useSelector((state) => state.global);
@@ -48,7 +48,7 @@ const BadgeList = () => {
     if (!allBadges || !allBadges.data.length) return <div>No badges found.</div>;
 
     // If the number of returned badges is less than the limit, it means you're on the last page
-    const totalPages = allBadges.data.length === limit ? page + 1 : page;
+    const totalPages = Math.ceil(allBadges?.total / limit);
 
     const onPage = (newPage) => {
         setPage(newPage);
@@ -62,7 +62,7 @@ const BadgeList = () => {
         <>
             <BadgeListCard badges={allBadges.data} onView={handleView} roleId={roleId} total={allBadges?.total} />
 
-            <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
+            <Box sx={{ display: "flex", justifyContent: "end", marginTop: 2 }}>
                 <Pagination
                     count={totalPages || 1}
                     page={page}

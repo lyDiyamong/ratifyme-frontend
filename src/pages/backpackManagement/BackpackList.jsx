@@ -28,7 +28,7 @@ const BackpackList = () => {
     if (isLoading) return <Typography>Loading...</Typography>;
 
     // Calculate the total pages for pagination
-    const totalPages = badgeClaims?.length === limit ? page + 1 : page;
+    const totalPages = Math.ceil(badgeClaim?.totalRecords / limit);
 
     const onPage = (newPage) => {
         setPage(newPage);
