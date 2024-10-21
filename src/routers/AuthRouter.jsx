@@ -14,6 +14,7 @@ import ResetPasswordExpiredPage from "../pages/auth/ResetPasswordExpiredPage";
 import ResetPasswordSuccessPage from "../pages/auth/ResetPasswordSuccessPage";
 import SuccessPayment from "../pages/prices/SuccessPayment";
 import EmailVerificationPage from "../pages/auth/EmailVerificationPage";
+import SignupSuccessPage from "../pages/auth/SignupSuccessPage";
 
 const AuthRouter = () => {
     return (
@@ -22,6 +23,7 @@ const AuthRouter = () => {
                 <Route path="/join-invitation" element={<CodeInvitationPage />} />
                 <Route path="/get-started" element={<SignupOptPage />} />
                 <Route path="/signup" element={<SignupPage />} />
+                <Route path="/signup-success" element={<SignupSuccessPage />} />
                 <Route path="/verify-email" element={<EmailVerificationPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/forgot-password" element={<ForgotPasswordPage />} />

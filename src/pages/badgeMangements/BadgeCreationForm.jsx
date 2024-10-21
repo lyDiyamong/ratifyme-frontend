@@ -19,7 +19,7 @@ import OptionalStep from "./OptionalStep";
 import { SpinLoading } from "../../components/loading/SpinLoading";
 import { useCreateBadgeMutation } from "../../store/api/badgeManagement/badgeApi";
 import { useFetchAchievementTypeQuery } from "../../store/api/achievements/achievementTypeApi";
-import { AssignmentIndOutlined, CameraAltRounded, YouTube } from "@mui/icons-material";
+import { CameraAltRounded } from "@mui/icons-material";
 import BadgeDefaultSvg from "../../assets/icons/BadgeDefaultSvg.svg";
 
 // The data static of the description
@@ -66,10 +66,7 @@ const schema = yup.object().shape({
         .min(3, "Badge name must be at least 3 characters long")
         .max(150, "Badge name cannot exceed 150 characters")
         .required("Badge name is required"),
-    badgeDescription: yup
-        .string()
-        .max(255, "Description cannot exceed 255 characters")
-        .required("Description is required"),
+    badgeDescription: yup.string().max(255, "Description cannot exceed 255 characters").required("Description is required"),
 });
 
 const BadgeCreationForm = () => {
@@ -132,7 +129,6 @@ const BadgeCreationForm = () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
         // Validate by field of each step
         const isValid = await trigger(stepFields[activeStep]);
-        console.log(trigger);
         // Move to next step if valid
         if (isValid) {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -262,11 +258,7 @@ const BadgeCreationForm = () => {
                             style={{ width: "100%", height: "100%", objectFit: "cover" }}
                         />
                     ) : (
-                        <img
-                            src={BadgeDefaultSvg}
-                            alt="Default"
-                            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                        />
+                        <img src={BadgeDefaultSvg} alt="Default" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                     )}
                     <Box
                         className="hover-overlay"

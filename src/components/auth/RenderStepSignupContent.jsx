@@ -4,11 +4,11 @@ import InstitutionInfoFields from "./InstitutionInfoFields";
 import AccountSetupFields from "./AccountSetupFields";
 import PasswordSetupFields from "./PasswordSetupFields";
 
-const RenderStepSignupContent = ({ step, control, role, guest, watch }) => {
+const RenderStepSignupContent = ({ step, control, role, guest, watch, errors }) => {
 
     switch (step) {
         case 0:
-            return <GeneralInfoFields control={control} />;
+            return <GeneralInfoFields control={control} errors={errors} watch={watch} />;
         case 1:
             return <AddressFields control={control} />;
         case 2:

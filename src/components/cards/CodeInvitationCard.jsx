@@ -90,7 +90,7 @@ const CodeInvitationCard = () => {
 
                     <Stack direction="row" spacing={1} alignItems="center" sx={{ fontSize: 14 }} >
                         <Typography>Position: </Typography>
-                        <Typography variant="h4" fontWeight="bold" letterSpacing={1}>
+                        <Typography variant="h6" fontWeight="bold">
                             {position}
                         </Typography>
                     </Stack>
