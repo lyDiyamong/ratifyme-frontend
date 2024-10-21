@@ -8,12 +8,12 @@ import { Box, Grid, Tabs, Tab, useMediaQuery, Typography } from "@mui/material";
 
 // Custom import
 import ServiceDetailMobile from "./ServiceDetailMobile";
-import { serviceRows as rows } from "../data/pricePage/serviceTable";
-import theme from "../assets/themes";
+import { serviceRows as rows } from "../../data/pricePage/serviceTable";
+import theme from "../../assets/themes";
 import PriceCard from "./PriceCard";
 
 // Api import
-import { useGetServicePlanQuery } from "../store/api/subscription/subscriptionApi";
+import { useGetServicePlanQuery } from "../../store/api/subscription/subscriptionApi";
 
 const ServiceDetail = ({ button }) => {
     // Fetching data from API
