@@ -29,7 +29,6 @@ const TableEarner = () => {
     const [sortOrder, setSortOrder] = useState("name");
     const [searchQuery, setSearchQuery] = useState("");
 
-
     const { roleId, userId, issuerData } = useSelector((state) => state.global);
     const [deleteEarner] = useDeleteEarnerByIdMutation();
     const issuerId = issuerData?.id;
@@ -45,15 +44,14 @@ const TableEarner = () => {
         isLoading,
         isError,
     } = useFetchEarnerQuery({
-        issuerId: issuerId,
+        issuerId: roleId === 1 ? undefined : issuerId,
+        roleId: roleId,
         page: currentPage,
         limit: rowsPerPage,
         sort: sortColumn,
         order: sortOrder,
         search: searchQuery,
     });
-    
-    
 
     // Load and filter invited users on mount
     useEffect(() => {
@@ -160,9 +158,7 @@ const TableEarner = () => {
         },
         {
             name: "Action",
-            selector: (row) => (
-                <MenuSelection onView={() => handleView(row.id)} onDelete={() => handleDelete(row.id)} />
-            ),
+            selector: (row) => <MenuSelection onView={() => handleView(row.id)} onDelete={() => handleDelete(row.id)} />,
         },
     ];
 
