@@ -15,7 +15,34 @@ export const achievementApi = createApi({
             }),
             invalidatesTags: [{ type: "Achievement", id: "LIST" }],
         }),
+        issueOnBadge: builder.mutation({
+            query: ({ achievementId }) => ({
+                url: "/issuers/badgeClasses/issueOn",
+                method: "PATCH",
+                body: {
+                    achievementId: achievementId,
+                },
+            }),
+            invalidatesTags: [{ type: "EarnerAchievement", id: "LIST" }],
+        }),
+        fetchEmailEarner: builder.query({
+            query: ({ achievementId }) => ({
+                url: `earners/earnerAchievement?achievementId=${achievementId}`,
+                method: "GET",
+            }),
+            providesTags: (result) => {
+                // If result exists, map over each earner and return a tag for each one
+                if (result?.data) {
+                    return [
+                        { type: "Achievement", id: "LIST" },
+                        ...result.data.map((earner) => ({ type: "Earner", id: earner.Earner.id })),
+                    ];
+                }
+                // Fallback tag if no result
+                return [{ type: "Achievement", id: "LIST" }];
+            },
+        }),
     }),
 });
 
-export const { useSendBadgeMutation } = achievementApi;
+export const { useSendBadgeMutation, useIssueOnBadgeMutation, useFetchEmailEarnerQuery } = achievementApi;

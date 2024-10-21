@@ -32,9 +32,9 @@ const MetadataStep = ({ control, errors }) => {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Stack gap={2} component="form">
                 {/* Badge Name */}
-                <FormInput name="badgeName" label="Badge Name*" control={control} type="text" required={true} />
+                <FormInput name="badgeName" label="Badge Name" control={control} type="text" required={true} />
                 {/* Issued On */}
-                <DateSelectionForm control={control} name="issuedOn" label="Issued On*" />
+                {/* <DateSelectionForm control={control} name="issuedOn" label="Issued On*" /> */}
 
                 {/* Start Date */}
                 <DateSelectionForm control={control} name="startDate" label="Start Date*" />
@@ -55,7 +55,7 @@ const MetadataStep = ({ control, errors }) => {
                 {/* Badge Description */}
                 <FormInput
                     name="badgeDescription"
-                    label="Badge Description*"
+                    label="Badge Description"
                     control={control}
                     type="text"
                     required={true}

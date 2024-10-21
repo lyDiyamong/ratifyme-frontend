@@ -7,7 +7,7 @@ export const earnerApi = createApi({
     tagTypes: ["Earner"],
     endpoints: (builder) => ({
         fetchEarner: builder.query({
-            query: ({ page, limit, sort, search }) => 
+            query: ({ page = 1, limit = 100, sort = "", search = "" }) =>
                 `earners?limit=${limit}&page=${page}&sort=${sort}&search=${search}`,
             providesTags: ["Earner"],
         }),
@@ -28,14 +28,6 @@ export const earnerApi = createApi({
             invalidatesTags: ["Earner"],
         }),
 
-        claimBadge: builder.mutation({
-            query: ({ earnerId, achievementIds, badgeClassId, status }) => ({
-                url: `/earners/achievement/${earnerId}`,
-                method: "PATCH",
-                body: { achievementIds, badgeClassId, status },
-            }),
-            invalidatesTags: ["Earner"],
-        }),
         fetchStatusBadge: builder.query({
             query: ({ id }) => ({
                 url: `/earners/earnerAchievement?earnerId=${id}`,
@@ -95,12 +87,11 @@ export const {
     useFetchEarnerQuery,
     useFetchEarnerByIdQuery,
     useDeleteEarnerByIdMutation,
-    useClaimBadgeMutation,
     useFetchStatusBadgeQuery,
     useFetchEarnerAchieByIdQuery,
     useUpdateEarnerByIdMutation,
     useFetchAcademicBackgroundByUserQuery,
     useUpdateAcademicBackgroundByIdMutation,
     useCreateAcademicBackgroundMutation,
-    useDeleteAcademicBackgroundByIdMutation
+    useDeleteAcademicBackgroundByIdMutation,
 } = earnerApi;

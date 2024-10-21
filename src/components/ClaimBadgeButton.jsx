@@ -1,43 +1,53 @@
-// MUI Import
 import { Button } from "@mui/material";
 import theme from "../assets/themes";
 
 // Custom Import
-import { useClaimBadgeMutation, useFetchEarnerAchieByIdQuery } from "../store/api/earnerManagement/earnerApis";
+import { useFetchEarnerAchieByIdQuery } from "../store/api/earnerManagement/earnerApis";
+import { useClaimBadgeMutation } from "../store/api/badgeManagement/badgeApi";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 // =========== Start ClaimBadgeButton ===========
 const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
-    const { data: earnerAchieResponse } = useFetchEarnerAchieByIdQuery({ achieveId: achievementIds, earnerId });
+    // Fetch the earner's achievement status from the API
+    const { data: earnerAchieResponse, refetch } = useFetchEarnerAchieByIdQuery({ achieveId: achievementIds, earnerId });
     const [claimBadge, { isLoading }] = useClaimBadgeMutation();
-
-    const statusAchievement = earnerAchieResponse?.data?.status;
     const navigate = useNavigate();
-    const [claimed, setClaimed] = useState(statusAchievement);
 
-    useEffect(() => {
-        setClaimed(statusAchievement);
-    }, [statusAchievement]);
+    // Extract the achievement status from the response
+    const statusAchievement = earnerAchieResponse?.data?.status;
 
+    // Set initial state of claimed based on statusAchievement
+    const [claimed, setClaimed] = useState(statusAchievement || false);
+
+    // Function to handle claiming the badge
     const handleClaimBadge = async () => {
         try {
-            setClaimed(statusAchievement);
             await claimBadge({
                 earnerId,
                 achievementIds,
                 badgeClassId,
                 status: true,
             }).unwrap();
-
+            setClaimed(true);
+            refetch();
             navigate("/mybackpacks");
         } catch (error) {
             console.error("Failed to claim badge:", error);
         }
     };
 
+    // Update claimed state when statusAchievement changes
+    useEffect(() => {
+        if (statusAchievement !== undefined && statusAchievement !== claimed) {
+            setClaimed(statusAchievement);
+        }
+    }, [statusAchievement, claimed]);
+
+    // Log the claimed state for debugging purposes
+    console.log("Claimed state:", claimed);
+
     return (
-        // Start Claim Button
         <Button
             onClick={handleClaimBadge}
             disabled={claimed || isLoading}
@@ -56,9 +66,7 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
         >
             {isLoading ? "Claiming..." : claimed ? "Claimed" : "Claim Badge"}
         </Button>
-        // End Claim Button
     );
 };
 
 export default ClaimBadgeButton;
-// =========== End ClaimBadgeButton ===========

@@ -74,7 +74,6 @@ const schema = yup.object().shape({
 
 const BadgeCreationForm = () => {
     const { issuerData } = useSelector((state) => state.global);
-
     const navigate = useNavigate();
     // Stepper
     const [activeStep, setActiveStep] = useState(0);

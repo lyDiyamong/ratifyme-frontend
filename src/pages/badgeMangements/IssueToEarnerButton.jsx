@@ -3,35 +3,27 @@ import { Button } from "@mui/material";
 import theme from "../../assets/themes";
 
 // Custom Import
-import { useSendBadgeMutation } from "../../store/api/achievements/achievementApi";
-import { useFetchEarnerQuery } from "../../store/api/earnerManagement/earnerApis";
+import { useIssueOnBadgeMutation } from "../../store/api/achievements/achievementApi";
 
-const IssueToEarnerButton = ({ emails, badgeId }) => {
-    const [sendBadge, { isLoading }] = useSendBadgeMutation();
-    const { data: earner } = useFetchEarnerQuery();
-
-    // Ensure earnerIds is always an array
-    const earnerIds =
-        earner?.data?.filter((earner) => emails.includes(earner.User.email))?.map((earner) => earner.id) || [];
-
-    const handleSendBadge = async () => {
-        if (earnerIds.length > 0) {
-            try {
-                // Here, pass the correct parameters expected by the mutation
-                const result = { id: badgeId, earners: earnerIds }; // Use 'id' to match your API definition
-                await sendBadge(result).unwrap(); // Use unwrap to catch the error properly
-                console.log("Badge successfully issued!");
-            } catch (error) {
-                console.error("Error issuing badge:", error);
-            }
-        } else {
-            console.error("No earners found for the provided emails.");
+const IssueToEarnerButton = ({ achievementId }) => {
+    const [issueOnBadge, { isLoading }] = useIssueOnBadgeMutation();
+    console.log(achievementId);
+    const handleIssueBadge = async () => {
+        try {
+            // Here, pass the correct parameters expected by the mutation
+            const result = { achievementId: achievementId };
+            await issueOnBadge(result).unwrap();
+            console.log("Badge successfully issued!");
+            console.log(result);
+        } catch (error) {
+            console.log(result);
+            console.error("Error issuing badge:", error);
         }
     };
 
     return (
         <Button
-            onClick={handleSendBadge}
+            onClick={handleIssueBadge}
             disabled={isLoading}
             variant="contained"
             sx={{

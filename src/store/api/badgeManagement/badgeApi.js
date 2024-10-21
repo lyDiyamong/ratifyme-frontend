@@ -4,19 +4,25 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const badgeApi = createApi({
     reducerPath: "badgeApi",
     baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_SERVER_BASE_URL }),
-    tagTypes: ["Badge", "BadgeIssuer"],
+    tagTypes: ["Badge", "BadgeIssuer", "BadgeEarner", "Earner"],
     endpoints: (builder) => ({
         // Fetch badges by issuerId
         fetchBadges: builder.query({
-            query: ({ field, fk }) => ({
-                url: `/issuers/badgeClasses?${field}=${fk}`,
-                method: "GET",
+            query: ({ field, fk, limit, page = 1 }) => ({
+                url: `/issuers/badgeClasses?page=${page}&${field}=${fk}&limit=${limit}`,
             }),
-            providesTags: (result) =>
-                result?.data
-                    ? [...result.data.map(({ id }) => ({ type: "Badge", id })), { type: "Badge", id: "LIST" }]
-                    : [{ type: "Badge", id: "LIST" }],
+            providesTags: (result) => {
+                return result?.data
+                    ? [
+                          // Provide a tag for each badge by its id
+                          ...result.data.map(({ id }) => ({ type: "Badge", id })),
+                          // Provide a tag for the entire list of badges related to the Issuer
+                          { type: "Badge", id: "LIST" },
+                      ]
+                    : [{ type: "Badge", id: "LIST" }];
+            },
         }),
+
         // Create a new badge
         createBadge: builder.mutation({
             query: (badge) => ({
@@ -25,10 +31,23 @@ export const badgeApi = createApi({
                 body: badge,
             }),
             invalidatesTags: (result) => [
-                { type: "BadgeIssuer", id: `LIST-${result?.issuerId}` },
-                [{ type: "Badge", id: "LIST" }],
+                { type: "BadgeIssuer", id: "LIST" },
+                { type: "Badge", id: "LIST" },
             ],
         }),
+
+        // Delete a badge
+        deleteBadge: builder.mutation({
+            query: (badgeId) => ({
+                url: `/issuers/badgeClasses/${badgeId}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: (result) => [
+                { type: "BadgeIssuer", id: "LIST" },
+                { type: "Badge", id: "LIST" },
+            ],
+        }),
+
         uploadCerti: builder.mutation({
             query: ({ achieveId, earnerId, uploadedCert }) => ({
                 url: `/earners/uploadCerti/${achieveId}/earner/${earnerId}`,
@@ -47,7 +66,6 @@ export const badgeApi = createApi({
                 return [{ type: "Badge", id }];
             },
         }),
-
         // Fetch badge for each institution
         fetchBadgesByInstitutions: builder.query({
             query: (institutionId) => ({
@@ -83,37 +101,12 @@ export const badgeApi = createApi({
         }),
 
         fetchBadgeByEarner: builder.query({
-            query: (earnerId) => ({
-                url: `/issuers/badgeClasses/earner/${earnerId}`,
+            query: ({ earnerId, page, limit }) => ({
+                url: `/issuers/badgeClasses/earner/${earnerId}?page=${page}&limit=${limit}`,
                 method: "GET",
             }),
             providesTags: (result, error, earnerId) => {
-                // Safely filter out badges where status is false
-                const badgesWithFalseStatus =
-                    result?.badgeClasses?.filter(
-                        (badge) => badge.Achievements?.[0]?.Earners?.[0]?.EarnerAchievements?.status === false,
-                    ) || [];
-
-                // Providing tags for caching based on the filtered badges
-                return badgesWithFalseStatus.length
-                    ? [
-                          ...result?.badgeClasses.map(({ id }) => ({ type: "BadgeEarner", id })),
-                          { type: "BadgeEarner", id: `LIST-${earnerId}` },
-                      ]
-                    : [{ type: "BadgeEarner", id: `LIST-${earnerId}` }];
-            },
-        }),
-
-        fetchClaimBadgeByEarner: builder.query({
-            query: (earnerId) => ({
-                url: `/issuers/badgeClasses/claim/${earnerId}`,
-                method: "GET",
-            }),
-            providesTags: (result, error, earnerId) => {
-                const status = [
-                    ...result?.badgeClasses.map((badge) => badge.Achievements[0].Earners[0].EarnerAchievements.status),
-                ];
-                return status
+                return result?.badgeClasses
                     ? [
                           ...result.badgeClasses.map(({ id }) => ({ type: "BadgeEarner", id })),
                           { type: "BadgeEarner", id: `LIST-${earnerId}` },
@@ -121,23 +114,44 @@ export const badgeApi = createApi({
                     : [{ type: "BadgeEarner", id: `LIST-${earnerId}` }];
             },
         }),
-
-        deleteBadge: builder.mutation({
-            query: (badgeId) => ({
-                url: `/issuers/badgeClasses/${badgeId}`,
-                method: "DELETE",
+        claimBadge: builder.mutation({
+            query: ({ earnerId, achievementIds, badgeClassId, status }) => ({
+                url: `/earners/achievement/${earnerId}`,
+                method: "PATCH",
+                body: { achievementIds, badgeClassId, status },
             }),
-            invalidatesTags: [{ type: "BadgeIssuer", id: `LIST` }],
+            // Update to match the tag provided by fetchClaimBadgeByEarner
+            invalidatesTags: (result, error, { earnerId }) => [{ type: "Earner", id: `LIST-${earnerId}` }],
         }),
+
+        fetchClaimBadgeByEarner: builder.query({
+            query: ({ earnerId, page, limit = 5 }) => ({
+                url: `/issuers/badgeClasses/claim/${earnerId}?page=${page}&limit=${limit}`,
+                method: "GET",
+            }),
+            providesTags: (result, error, earnerId) => {
+                const badgesWithTrueStatus =
+                    result?.badgeClasses?.filter(
+                        (badge) => badge.Achievements?.[0]?.Earners?.[0]?.EarnerAchievements?.status === true,
+                    ) || [];
+
+                // Providing tags for caching based on the filtered badges
+                return badgesWithTrueStatus.length
+                    ? [
+                          ...result.badgeClasses.map((badgeClasses) => ({ type: "Earner", id: badgeClasses.id })),
+                          { type: "Earner", id: `LIST-${earnerId}` },
+                      ]
+                    : [{ type: "Earner", id: `LIST-${earnerId}` }];
+            },
+        }),
+
         updateBadge: builder.mutation({
             query: ({ id, updatedBadge }) => ({
                 url: `/issuers/badgeClasses/editBadge/${id}`,
                 method: "PATCH",
                 body: updatedBadge,
             }),
-            invalidatesTags: (result, error, { id }) => {
-                return [{ type: "Badge", id }, [{ type: "BadgeIssuer", id: `LIST` }]];
-            },
+            invalidatesTags: (result) => [{ type: "BadgeIssuer", id: `LIST` }, [{ type: "Badge", id: "LIST" }]],
         }),
     }),
 });
@@ -153,4 +167,5 @@ export const {
     useDeleteBadgeMutation,
     useUpdateBadgeMutation,
     useUploadCertiMutation,
+    useClaimBadgeMutation,
 } = badgeApi;

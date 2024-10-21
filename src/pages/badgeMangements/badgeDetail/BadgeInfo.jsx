@@ -13,81 +13,79 @@ import IssueToEarnerButton from "../IssueToEarnerButton";
 import ClaimBadgeButton from "../../../components/ClaimBadgeButton";
 import { useDeleteBadgeMutation } from "../../../store/api/badgeManagement/badgeApi";
 import MoreMenu from "../../../components/MoreMenu";
-import {  BorderColorRounded, ConfirmationNumber, Delete} from "@mui/icons-material";
+import { BorderColorRounded, ConfirmationNumber, Delete } from "@mui/icons-material";
 
 const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
-// define breakpoint of the screen
-const isSmallScreen = useMediaQuery(theme.breakpoints.down(theme.breakpoints.values.sm));
-const navigate = useNavigate();
+    // define breakpoint of the screen
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down(theme.breakpoints.values.sm));
+    const navigate = useNavigate();
 
-const [deleteBadge, { refetch }] = useDeleteBadgeMutation();
+    const [deleteBadge, { refetch }] = useDeleteBadgeMutation();
 
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
-const [open, setOpen] = useState(false);
-const handleOpen = () => setOpen(true);
-const handleClose = () => setOpen(false);
+    const { control } = useForm();
 
-const { control } = useForm();
+    // assign variable from props that has fetch value
+    const result = badge;
 
-// assign variable from props that has fetch value
-const result = badge
+    // assign variable to get achievement id to update
+    const achieveId = badge.Achievements.find(({ badgeClassId }) => badgeClassId === badge.id).id;
+    // assign variables for date
+    const createdAt = result?.createdAt ? result.createdAt.split("T")[0] : "N/A";
+    const expiredDate = result?.expiredDate ? result.expiredDate.split("T")[0] : "N/A";
 
-// assign variable to get achievement id to update
-const achieveId = badge.Achievements.find(({ badgeClassId }) => badgeClassId === badge.id).id;
+    // convert duration from milli second into date
+    const durationInMs = result?.duration || 0;
+    const days = durationInMs / (1000 * 60 * 60 * 24);
 
-// assign variables for date
-const createdAt = result?.createdAt ? result.createdAt.split("T")[0] : "N/A";
-const expiredDate = result?.expiredDate ? result.expiredDate.split("T")[0] : "N/A";
+    // Define role-based access for tab content
+    const hasAccess = ["issuer", "earner"].includes(userRole);
 
-// convert duration from milli second into date
-const durationInMs = result?.duration || 0;
-const days = durationInMs / (1000 * 60 * 60 * 24);
+    const handleDeleteBadge = async (id) => {
+        try {
+            await deleteBadge(id).unwrap();
+            navigate("/management/badges");
+            refetch();
+        } catch (error) {
+            console.error("Error deleting post:", error);
+        }
+    };
 
-// Define role-based access for tab content
-const hasAccess = ["issuer", "earner"].includes(userRole);
+    // More Menu props
+    const menuItems = [
+        {
+            label: "Update badge",
+            icon: <BorderColorRounded color="primary" />,
+            onClick: () => navigate(`/management/badges/editBadge/${result?.id}`),
+        },
+        { label: "Delete badge", icon: <Delete color="error" />, onClick: () => handleDeleteBadge(result?.id) },
+    ];
 
-const handleDeleteBadge = async (id) => {
-    try {
-        await deleteBadge(id).unwrap();
-        navigate("/management/badges");
-        refetch();
-    } catch (error) {
-        console.error("Error deleting post:", error);
-    }
-};
-
-// More Menu props
-const menuItems = [
-    {
-        label: "Update badge",
-        icon: <BorderColorRounded color="primary" />,
-        onClick: () => navigate(`/management/badges/editBadge/${result?.id}`),
-    },
-    { label: "Delete badge", icon: <Delete color="error" />, onClick: () => handleDeleteBadge(result?.id) },
-];
-
-// Define sub-component to use in tab content
-const DetailItem = ({ label, value, isSmallScreen }) => (
-    <Stack sx={{ flexDirection: isSmallScreen ? "column" : "row", gap: { md: 5, sm: 3, xss: 1 } }}>
-        <Typography
-            sx={{
-                fontSize: theme.typography.h5,
-                fontWeight: theme.fontWeight.bold,
-                width: isSmallScreen ? "100%" : "180px",
-                textAlign: { sm: "end", xss: "start" },
-            }}
-            color={theme.palette.text.primary}
-        >
-            {label}:
-        </Typography>
-        <Typography
-            sx={{ fontSize: theme.typography.h5, width: isSmallScreen ? "100%" : "500px" }}
-            color={theme.palette.text.secondary}
-        >
-            {value}
-        </Typography>
-    </Stack>
-);
+    // Define sub-component to use in tab content
+    const DetailItem = ({ label, value, isSmallScreen }) => (
+        <Stack sx={{ flexDirection: isSmallScreen ? "column" : "row", gap: { md: 5, sm: 3, xss: 1 } }}>
+            <Typography
+                sx={{
+                    fontSize: theme.typography.h5,
+                    fontWeight: theme.fontWeight.bold,
+                    width: isSmallScreen ? "100%" : "180px",
+                    textAlign: { sm: "end", xss: "start" },
+                }}
+                color={theme.palette.text.primary}
+            >
+                {label}:
+            </Typography>
+            <Typography
+                sx={{ fontSize: theme.typography.h5, width: isSmallScreen ? "100%" : "500px" }}
+                color={theme.palette.text.secondary}
+            >
+                {value}
+            </Typography>
+        </Stack>
+    );
     return (
         <Stack sx={{ display: "flex", flexDirection: "column", gap: 3, width: "100%" }}>
             <Modal
@@ -126,7 +124,7 @@ const DetailItem = ({ label, value, isSmallScreen }) => (
                         </Typography>
                     </Box>
                     <Stack mt={1}>
-                        <IssueToEarnerButton emails={emails} badgeId={result?.id || []} />
+                        <IssueToEarnerButton achievementId={achieveId || []} />
                         <Button onClick={handleClose}>Cancel</Button>
                     </Stack>
                 </Stack>
@@ -198,6 +196,7 @@ const DetailItem = ({ label, value, isSmallScreen }) => (
                                             onGetEmail={onGetEmails}
                                             control={control}
                                             issuerId={activeUserId}
+                                            badgeId={result.id}
                                         />
                                         {/* <IssueToEarnerButton emails={selectedEmails} badgeId={result?.id || []} /> */}
                                         <Button
@@ -259,7 +258,10 @@ const DetailItem = ({ label, value, isSmallScreen }) => (
                         />
                         <DetailItem
                             label="Issuer"
-                            value={`${result?.Issuer?.User?.firstName} ${result?.Issuer?.User?.lastName}` || "Unknown Issuer"}
+                            value={
+                                `${result?.Issuer?.User?.firstName} ${result?.Issuer?.User?.lastName}` ||
+                                "Unknown Issuer"
+                            }
                             isSmallScreen={isSmallScreen}
                         />
                         <DetailItem
