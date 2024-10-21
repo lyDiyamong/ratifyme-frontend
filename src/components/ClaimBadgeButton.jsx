@@ -9,22 +9,18 @@ import { useNavigate } from "react-router";
 
 // =========== Start ClaimBadgeButton ===========
 const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
-    const { data: earnerAchieResponse } = useFetchEarnerAchieByIdQuery({ achieveId: achievementIds, earnerId });
+    // Fetch the earner's achievement status from the API
+    const { data: earnerAchieResponse, refetch } = useFetchEarnerAchieByIdQuery({ achieveId: achievementIds, earnerId });
     const [claimBadge, { isLoading }] = useClaimBadgeMutation();
-
-    const statusAchievement = earnerAchieResponse?.data?.status;
     const navigate = useNavigate();
 
-    // const statusAchievement = earnerBadge?.data?.status;
-    const [claimed, setClaimed] = useState(statusAchievement);
+    // Extract the achievement status from the response
+    const statusAchievement = earnerAchieResponse?.data?.status;
 
-    // Update claimed state when statusAchievement changes
-    useEffect(() => {
-        if (statusAchievement !== undefined) {
-            setClaimed(statusAchievement);
-        }
-    }, [statusAchievement]);
+    // Set initial state of claimed based on statusAchievement
+    const [claimed, setClaimed] = useState(statusAchievement || false);
 
+    // Function to handle claiming the badge
     const handleClaimBadge = async () => {
         try {
             await claimBadge({
@@ -33,12 +29,23 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
                 badgeClassId,
                 status: true,
             }).unwrap();
-
+            setClaimed(true);
+            refetch();
             navigate("/mybackpacks");
         } catch (error) {
             console.error("Failed to claim badge:", error);
         }
     };
+
+    // Update claimed state when statusAchievement changes
+    useEffect(() => {
+        if (statusAchievement !== undefined && statusAchievement !== claimed) {
+            setClaimed(statusAchievement);
+        }
+    }, [statusAchievement, claimed]);
+
+    // Log the claimed state for debugging purposes
+    console.log("Claimed state:", claimed);
 
     return (
         <Button

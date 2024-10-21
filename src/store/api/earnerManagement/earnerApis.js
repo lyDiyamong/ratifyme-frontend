@@ -7,7 +7,7 @@ export const earnerApi = createApi({
     tagTypes: ["Earner"],
     endpoints: (builder) => ({
         fetchEarner: builder.query({
-            query: ({ page, limit, sort, search }) => 
+            query: ({ page = 1, limit = 100, sort = "", search = "" }) =>
                 `earners?limit=${limit}&page=${page}&sort=${sort}&search=${search}`,
             providesTags: ["Earner"],
         }),
@@ -93,5 +93,5 @@ export const {
     useFetchAcademicBackgroundByUserQuery,
     useUpdateAcademicBackgroundByIdMutation,
     useCreateAcademicBackgroundMutation,
-    useDeleteAcademicBackgroundByIdMutation
+    useDeleteAcademicBackgroundByIdMutation,
 } = earnerApi;

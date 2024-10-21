@@ -1,5 +1,6 @@
 // React Import
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 // MUI Import
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Paper, Box } from "@mui/material";
@@ -13,13 +14,13 @@ import { useFetchEarnerQuery } from "../../store/api/earnerManagement/earnerApis
 const CustomPaper = (props) => <Paper {...props} sx={{ borderRadius: "16px" }} />;
 
 const ModalContainer = ({ open, onClose, title, options, control, onGetEmail, badgeId }) => {
+    const { issuerData } = useSelector((state) => state.global);
     const [sendBadge] = useSendBadgeMutation();
-    const { data: earner } = useFetchEarnerQuery();
+    const { data: earner } = useFetchEarnerQuery({ issuerId: issuerData?.id });
 
     const [list, setList] = useState([]);
 
-    const earnerIds =
-        earner?.data?.filter((earner) => list.includes(earner.User.email))?.map((earner) => earner.id) || [];
+    const earnerIds = earner?.data?.filter((earner) => list.includes(earner.User.email))?.map((earner) => earner.id) || [];
 
     // Handle option selection and add to the list
     const handleSelect = (selectedOption) => {

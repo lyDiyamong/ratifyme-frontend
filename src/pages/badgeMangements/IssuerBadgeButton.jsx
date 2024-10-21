@@ -11,7 +11,7 @@ import { useFetchEarnerQuery } from "../../store/api/earnerManagement/earnerApis
 
 const IssuerBadgeButton = ({ onGetEmail, control, issuerId, badgeId }) => {
     const [open, setOpen] = useState(false);
-    const { data: earners } = useFetchEarnerQuery();
+    const { data: earners } = useFetchEarnerQuery({ issuerId });
     const emailOptions = earners?.data
         ?.filter((earner) => {
             return earner?.issuerId === issuerId;
