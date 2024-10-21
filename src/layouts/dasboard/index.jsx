@@ -5,7 +5,7 @@ import Sidebar from "./Sidebar";
 import Header from "./Header";
 import theme from "../../assets/themes";
 import { useCheckAuthQuery } from "../../store/api/auth/authApi";
-import { SpinLoading } from "../../components/loading/SpinLoading";
+import PageLoading from "../../components/loading/PageLoading";
 
 
 const DashboardLayout = () => {
@@ -37,13 +37,10 @@ const DashboardLayout = () => {
         }
     }, [isLoading, error, user, navigate]);
 
-    if (isLoading) {
-        return <SpinLoading />;
-    }
-
     return (
         // Use flex layout for desktop and block layout for smaller screens
         <Box display={isDesktop ? "flex" : "block"}>
+            <PageLoading isLoading={isLoading} />
             {/* Sidebar component */}
             <Sidebar
                 user={user}
