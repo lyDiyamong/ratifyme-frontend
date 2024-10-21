@@ -29,18 +29,6 @@ const TableEarner = () => {
     const [sortOrder, setSortOrder] = useState("name");
     const [searchQuery, setSearchQuery] = useState("");
 
-    // Fetch data from the backend based on pagination, sorting, and search
-    const {
-        data: response,
-        isLoading,
-        isError,
-    } = useFetchEarnerQuery({
-        page: currentPage,
-        limit: rowsPerPage,
-        sort: sortColumn,
-        order: sortOrder,
-        search: searchQuery,
-    });
 
     const { roleId, userId, issuerData } = useSelector((state) => state.global);
     const [deleteEarner] = useDeleteEarnerByIdMutation();
@@ -50,6 +38,22 @@ const TableEarner = () => {
 
     // Local State for invited users
     const [invitedEarners, setInvitedEarners] = useState([]);
+
+    // Fetch data from the backend based on pagination, sorting, and search
+    const {
+        data: response,
+        isLoading,
+        isError,
+    } = useFetchEarnerQuery({
+        issuerId: issuerId,
+        page: currentPage,
+        limit: rowsPerPage,
+        sort: sortColumn,
+        order: sortOrder,
+        search: searchQuery,
+    });
+    
+    
 
     // Load and filter invited users on mount
     useEffect(() => {
