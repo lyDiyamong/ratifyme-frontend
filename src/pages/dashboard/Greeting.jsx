@@ -39,20 +39,20 @@ const Greeting = () => {
             ) : isError ? (
                 <Typography color="error">Error fetching user data</Typography>
             ) : (
-                <>
+                <Stack flexDirection="row" alignItems="center" justifyContent="space-between" width="100%">
                     {/* Start Text Container */}
-                    <Box maxWidth={500}>
-                        <Stack direction={{ xss: "column", lg: "row" }}>
+                    <Box>
+                        <Stack direction={{ xss: "column", md: "column" }}>
                             <Typography
                                 sx={{
                                     color: theme.palette.customColors.white,
                                     fontWeight: theme.fontWeight.bold,
                                     fontSize: { xs: "18px", sm: "24px", md: "28px", lg: "32px" },
-                                    mr: '12px',
-                                    textWrap: 'nowrap'
+                                    mr: "12px",
+                                    textWrap: "nowrap",
                                 }}
                             >
-                                Hi!
+                                Welcome back,
                             </Typography>
                             <Typography
                                 sx={{
@@ -60,14 +60,15 @@ const Greeting = () => {
                                     color: theme.palette.customColors.white,
                                     fontWeight: theme.fontWeight.bold,
                                     fontSize: { xs: "18px", sm: "24px", md: "28px", lg: "32px" },
-                                    textWrap: 'nowrap'
+                                    textWrap: "wrap",
                                 }}
                             >
                                 {userData?.firstName || "No"} {userData?.lastName || "Name"}
                             </Typography>
+
                         </Stack>
 
-                        <Typography variant="body2" sx={{ color: theme.palette.customColors.white }}>
+                        <Typography variant="body2" sx={{ color: theme.palette.customColors.white, textWrap: "wrap" }}>
                             Just wanted to say I’m really looking forward to working with you. Let’s rock this!
                         </Typography>
                     </Box>
@@ -80,19 +81,10 @@ const Greeting = () => {
                         alt="greeting"
                         sx={{
                             width: "100%",
-                            maxWidth: {
-                                xs: 70,
-                                sm: 150,
-                                md: 160,
-                                lg: 200,
-                                '@media (max-width: 1245px)': {
-                                  maxWidth: '175px',
-                                },
-                              },
-                            maxHeight: 450,
+                            maxWidth: 140,
                         }}
                     />
-                </>
+                </Stack>
             )}
         </Stack>
     );
