@@ -24,7 +24,10 @@ const Organization = () => {
 
     return (
         <DashboardContainer sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
-            <PageTitle title="Organization" subtitle="All of your Organizations that you're working on." />
+            <PageTitle
+                title="Organization"
+                subtitle="Organization All of your Organizations that you're working on."
+            />
 
             <Stack
                 sx={{

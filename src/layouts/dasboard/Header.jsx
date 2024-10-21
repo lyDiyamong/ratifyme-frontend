@@ -64,7 +64,7 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
                     position: "static",
                     background: "none",
                     boxShadow: "none",
-                    paddingTop: "10px",
+                    paddingTop: "24px",
                 }}
             >
                 <Toolbar disableGutters sx={{ justifyContent: "space-between", px: 0 }}>

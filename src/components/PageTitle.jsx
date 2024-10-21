@@ -21,11 +21,11 @@ const getCurrentDate = () => {
 const PageTitle = ({ title, sx, subtitle }) => {
     return (
         // ============ Start Page Title ============
-        <Box
+        <Stack
+            direction={{ sm: "column", md: "row" }}
+            justifyContent="space-between"
+            alignItems={{ md: "center" }}
             sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
                 bgcolor: theme.palette.background.default,
                 mt: 2,
                 mb: 5,
@@ -62,7 +62,7 @@ const PageTitle = ({ title, sx, subtitle }) => {
             <Typography variant="body2" sx={{ color: theme.palette.customColors.gray300, pr: 1 }}>
                 {getCurrentDate()}
             </Typography>
-        </Box>
+        </Stack>
         // ============ End Page Title ============
     );
 };
