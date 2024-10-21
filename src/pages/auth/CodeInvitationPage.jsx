@@ -94,12 +94,7 @@ const CodeInvitationPage = () => {
             >
                 <Stack width="100%" maxWidth="450px" gap={2}>
                     <Link to="/">
-                        <Box
-                            component="img"
-                            src={RatifyMELogo}
-                            alt="Ratifyme Favicon"
-                            sx={{ width: 150, height: 150 }}
-                        />
+                        <Box component="img" src={RatifyMELogo} alt="Ratifyme Favicon" sx={{ width: 150, height: 150 }} />
                     </Link>
 
                     <Box my={3}>
@@ -167,7 +162,6 @@ const CodeInvitationPage = () => {
                         iconColor={theme.palette.customColors.green400}
                         iconBgColor={theme.palette.customColors.green100}
                         icon={CheckCircleOutline}
-
                     />
 
                     <Box my={3}>
@@ -175,8 +169,8 @@ const CodeInvitationPage = () => {
                             Join via RatifyME
                         </Typography>
                         <Typography variant="body2" color="text.secondary" mb={3}>
-                            To join, please check your inbox (and spam folder) for a verification code sent as part of
-                            your Open Badge invitation. This code will be required to complete the login process.
+                            To join, please check your inbox (and spam folder) for a verification code sent as part of your Open
+                            Badge invitation. This code will be required to complete the login process.
                         </Typography>
                     </Box>
                 </Stack>
