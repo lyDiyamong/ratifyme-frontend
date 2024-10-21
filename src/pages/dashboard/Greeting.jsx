@@ -80,7 +80,15 @@ const Greeting = () => {
                         alt="greeting"
                         sx={{
                             width: "100%",
-                            maxWidth: { xss: 70, xs: 150, md: 160, lg: 200 },
+                            maxWidth: {
+                                xs: 70,
+                                sm: 150,
+                                md: 160,
+                                lg: 200,
+                                '@media (max-width: 1245px)': {
+                                  maxWidth: '175px',
+                                },
+                              },
                             maxHeight: 450,
                         }}
                     />
