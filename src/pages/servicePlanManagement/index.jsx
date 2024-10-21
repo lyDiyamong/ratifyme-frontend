@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 
 // Custom import
 import PageTitle from "../../components/PageTitle";
-import ServiceDetail from "../../components/ServiceDetail";
+import ServiceDetail from "../prices/ServiceDetail";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import theme from "../../assets/themes";
 

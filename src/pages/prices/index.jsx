@@ -2,7 +2,7 @@
 import { Box, Paper, Typography } from "@mui/material";
 
 // Custom import
-import ServiceDetail from "../../components/ServiceDetail";
+import ServiceDetail from "./ServiceDetail";
 import LandingContainer from "../../components/styles/LandingContainer";
 import theme from "../../assets/themes";
 import { useCheckAuthQuery } from "../../store/api/auth/authApi";

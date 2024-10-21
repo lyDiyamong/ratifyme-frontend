@@ -1,8 +1,8 @@
 // MUI import
-import { Box, Paper, Typography, Button } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 
 // Custom import
-import theme from "../assets/themes";
+import theme from "../../assets/themes";
 import CheckoutButton from "./CheckoutButton";
 
 // =========== Start PriceCard ===========

@@ -1,7 +1,7 @@
 // Custom import
 // serviceTable
-import PriceCard from "../../components/PriceCard";
-import { priceTemplate } from "./priceData";
+// import PriceCard from "../../components/PriceCard";
+// import { priceTemplate } from "./priceData";
 // // Fetching data from Api
 
 

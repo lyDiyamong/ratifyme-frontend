@@ -3,16 +3,16 @@ import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 
 // Mui import
 import { Button } from "@mui/material";
 
 // Custom import
-import { SpinLoading } from "../components/loading/SpinLoading";
-import theme from "../assets/themes";
+import { SpinLoading } from "../../components/loading/SpinLoading";
+import theme from "../../assets/themes";
 
 // Api import
-import { useSelector } from "react-redux";
 
 // Public key from Stripe
 const stripePromise = loadStripe(String(import.meta.env.VITE_STRIPE_PUBLIC_KEY));

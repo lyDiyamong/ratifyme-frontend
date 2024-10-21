@@ -3,7 +3,7 @@
 import { Grid, Box } from "@mui/material";
 
 // Custom import
-import theme from "../assets/themes";
+import theme from "../../assets/themes";
 
 // eslint-disable-next-line react/prop-types
 const ServiceDetailMobile = ({ rows, value, checkIcon }) => {
