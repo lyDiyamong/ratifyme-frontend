@@ -6,7 +6,6 @@ import { useState } from "react";
 
 // Custom import
 import TableCustom from "../../components/TableCustom";
-import MenuSelection from "../../components/TableAction/MenuSelection";
 // import FormatDate from "../../utils/formatDate";
 import FormatYear from "../../utils/formatDate";
 import DashboardContainer from "../../components/styles/DashboardContainer";
@@ -18,6 +17,9 @@ import NoRecordData from "../../components/NoRecordData";
 
 // Api import
 import { useGetSubscritptionQuery } from "../../store/api/subscription/subscriptionApi";
+import { Chip} from "@mui/material";
+import theme from "../../assets/themes";
+import { TableAvatars } from "../../components/avartars/TableAvatars";
 
 // ============ Start Table Earner Modal ============
 const BillingInvoiceManagement = () => {
@@ -47,6 +49,29 @@ const BillingInvoiceManagement = () => {
     console.log("API Response:", response);
     const subscriptions = response?.data;
 
+    // Filter the latest subscription by the most recent startDate
+    const latestSubscription = subscriptions?.reduce((acc, current) => {
+        const currentEmail = current.Institution?.institutionEmail;
+        const currentDate = new Date(current?.startDate || 0);
+
+        // Find if the email is already in the accumulator
+        const existingSubscription = acc.find((sub) => sub.Institution?.institutionEmail === currentEmail);
+
+        // If it's not in the accumulator, add the current subscription
+        if (!existingSubscription) {
+            acc.push(current);
+        } else {
+            // If it exists, check the dates and replace if the current is more recent
+            const existingDate = new Date(existingSubscription?.startDate || 0);
+            if (currentDate > existingDate) {
+                const index = acc.indexOf(existingSubscription);
+                acc[index] = current;
+            }
+        }
+
+        return acc;
+    }, []);
+
     // Error custom hook
     const [message, setMessage] = useCatchStatus(isError || isError, error?.data?.message);
 
@@ -63,14 +88,14 @@ const BillingInvoiceManagement = () => {
         },
         {
             name: "Organization Name",
-            selector: (row) => row?.name || "N/A",
+            selector: (row) => <TableAvatars profileImage={row.Institution?.institutionProfileImage} name={row.name} />,
         },
         {
             name: "Email Address",
             selector: (row) => row.Institution?.institutionEmail || "N/A",
         },
         {
-            name: "Subscription Plan",
+            name: "Current Plan",
             selector: (row) => row.ServicePlan?.name || "N/A",
         },
         {
@@ -79,7 +104,14 @@ const BillingInvoiceManagement = () => {
         },
         {
             name: "Action",
-            selector: ({ institutionId }) => <MenuSelection onView={() => handleView(institutionId)} />,
+            selector: ({ institutionId }) => (
+                <Chip
+                    label="View"
+                    clickable
+                    sx={{ color: theme.palette.primary.dark, backgroundColor: theme.palette.primary.light }}
+                    onClick={() => handleView(institutionId)}
+                />
+            ),
         },
     ];
 
@@ -122,7 +154,7 @@ const BillingInvoiceManagement = () => {
                 // Billing and Invoice Table
                 <TableCustom
                     title="Billing and Invoice"
-                    data={subscriptions}
+                    data={latestSubscription}
                     columns={subscriptionColumns}
                     pagination
                     totalRows={response?.total || 0}
