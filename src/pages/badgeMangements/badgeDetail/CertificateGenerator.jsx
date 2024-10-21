@@ -17,6 +17,7 @@ import useCatchStatus from "../../../hooks/useCatchStatus";
 import AlertMessage from "../../../components/alert/AlertMessage";
 import theme from "../../../assets/themes";
 import ComingSoonImg from "../../../assets/images/Coming-soon.svg";
+import PageLoading from "../../../components/loading/PageLoading";
 
 // Api import
 import { useUploadCertiMutation } from "../../../store/api/badgeManagement/badgeApi";
@@ -81,6 +82,7 @@ const CertificateGenerator = ({ badge }) => {
 
     return (
         <DashboardContainer>
+            <PageLoading isLoading={certiLoading} />
             {message && (
                 <AlertMessage variant="error" onClose={() => setMessage("")}>
                     {message}
@@ -105,12 +107,7 @@ const CertificateGenerator = ({ badge }) => {
                         Certificate Pending
                     </Typography>
 
-                    <Typography
-                        variant="subtitle1"
-                        textAlign="center"
-                        color={theme.palette.text.secondary}
-                        sx={{ mb: 3 }}
-                    >
+                    <Typography variant="subtitle1" textAlign="center" color={theme.palette.text.secondary} sx={{ mb: 3 }}>
                         You’re one step closer to earning your certificate!
                     </Typography>
                     {/* Image Section */}
@@ -233,11 +230,7 @@ const CertificateGenerator = ({ badge }) => {
                             >
                                 Get Certificate
                             </Button>
-                            <Button
-                                startIcon={<DriveFolderUploadOutlined />}
-                                variant="outlined"
-                                onClick={handleViewCert}
-                            >
+                            <Button startIcon={<DriveFolderUploadOutlined />} variant="outlined" onClick={handleViewCert}>
                                 View Certificate
                             </Button>
                         </Stack>

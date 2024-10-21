@@ -1,13 +1,3 @@
-// Custom import
-// serviceTable
-// import PriceCard from "../../components/PriceCard";
-// import { priceTemplate } from "./priceData";
-// // Fetching data from Api
-
-
-// datas that store service plan as static
-// when some data have value of 1 , it is a placeholder for
-// logo and null for none.
 export const serviceRows = [
     {
         name: "",
