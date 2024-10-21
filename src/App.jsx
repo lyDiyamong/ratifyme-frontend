@@ -12,6 +12,7 @@ import AuthRouter from "./routers/AuthRouter";
 import DashboardRouter from "./routers/DashboardRouter";
 import PublicPageRouter from "./routers/PublicPage";
 import NotFoundPage from "./pages/notFound";
+import PublicPageRouter from "./routers/PublicPage";
 
 const App = () => {
     return (
@@ -28,6 +29,7 @@ const App = () => {
                     {/* Catch-all route for unmatched paths */}
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
+                <PublicPageRouter />
             </BrowserRouter>
         </ThemeProvider>
     );
