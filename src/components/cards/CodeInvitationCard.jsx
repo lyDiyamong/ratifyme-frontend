@@ -7,9 +7,12 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const CodeInvitationCard = () => {
-    const { roleId, institutionData, issuerData } = useSelector((state) => state.global);
-    console.log(issuerData);
+    const { roleId, institutionData, issuerData, userInfo } = useSelector((state) => state.global);
+    let position = userInfo?.Role?.name;
 
+    if (position === "institutionOwner") {
+        position = "Institution owner";
+    }
     return (
         <Stack
             sx={{
@@ -56,10 +59,14 @@ const CodeInvitationCard = () => {
             />
 
             {/* Card Content */}
-            <Stack spacing={2} zIndex={2} position="relative">
+            <Stack spacing={1} zIndex={2} position="relative">
                 <Stack direction="row" justifyContent="space-between">
                     <Typography variant="h2" fontWeight="bold" className="card-title">
-                        {roleId === 3 ? issuerData?.Institution?.institutionName : institutionData?.institutionName}
+                        {roleId === 1
+                            ? "Ratifyme"
+                            : roleId === 3
+                            ? issuerData?.Institution?.institutionName
+                            : institutionData?.institutionName}
                     </Typography>
                     <SvgIcon
                         component={PasswordOutlined}
@@ -71,48 +78,61 @@ const CodeInvitationCard = () => {
                     />
                 </Stack>
 
-                <Stack direction="row" spacing={1} alignItems="center" sx={{ fontSize: 14 }}>
-                    <Typography>{roleId === 3 ? "Your Code (Issuer): " : "Organization Code: "}</Typography>
-                    <Typography variant="h3" fontWeight="bold" letterSpacing={2}>
-                        {roleId === 3 ? issuerData?.code : institutionData?.code}
-                    </Typography>
-                </Stack>
+                <>
+                    {roleId !== 1 && (
+                        <Stack direction="row" spacing={1} alignItems="center" sx={{ fontSize: 14 }}>
+                            <Typography>{roleId === 3 ? "Your Code (Issuer): " : "Organization Code: "}</Typography>
+                            <Typography variant="h3" fontWeight="bold" letterSpacing={2}>
+                                {roleId === 3 ? issuerData?.code : institutionData?.code}
+                            </Typography>
+                        </Stack>
+                    )}
+
+                    <Stack direction="row" spacing={1} alignItems="center" sx={{ fontSize: 14 }} >
+                        <Typography>Position: </Typography>
+                        <Typography variant="h4" fontWeight="bold" letterSpacing={1}>
+                            {position}
+                        </Typography>
+                    </Stack>
+                </>
 
                 {/* Buttons */}
                 <Stack direction={{ xss: "column", sm: "row" }} spacing={2}>
-                    <Box width={"100%"}>
-                        <Link to="/management/issuers">
-                            <Button
-                                variant="outlined"
-                                fullWidth
-                                sx={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    color: "#3b82f6",
-                                    backgroundColor: "rgb(253, 253, 253)",
-                                    padding: "10px",
-                                    borderRadius: "12px",
-                                    transition: "transform 0.3s, box-shadow 0.3s",
-                                    textTransform: "none",
-                                    width: "100%",
-                                    "&:hover": {
-                                        transform: "translateY(-2px)",
-                                        boxShadow: `
+                    {roleId !== 1 && (
+                        <Box width={"100%"}>
+                            <Link to="/management/issuers">
+                                <Button
+                                    variant="outlined"
+                                    fullWidth
+                                    sx={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        color: "#3b82f6",
+                                        backgroundColor: "rgb(253, 253, 253)",
+                                        padding: "8px",
+                                        borderRadius: "12px",
+                                        transition: "transform 0.3s, box-shadow 0.3s",
+                                        textTransform: "none",
+                                        width: "100%",
+                                        "&:hover": {
+                                            transform: "translateY(-2px)",
+                                            boxShadow: `
                   0 4px 6px -1px rgba(0, 0, 0, 0.1),
                   0 2px 4px -1px rgba(0, 0, 0, 0.06)
                 `,
-                                    },
-                                }}
-                            >
-                                <SvgIcon
-                                    component={NorthEast}
-                                    sx={{ marginRight: "8px", display: { xss: "none", xs: "flex" } }}
-                                />
-                                Invite Issuer
-                            </Button>
-                        </Link>
-                    </Box>
+                                        },
+                                    }}
+                                >
+                                    <SvgIcon
+                                        component={NorthEast}
+                                        sx={{ marginRight: "8px", display: { xss: "none", xs: "flex" } }}
+                                    />
+                                    Invite Issuer
+                                </Button>
+                            </Link>
+                        </Box>
+                    )}
 
                     <Box width={"100%"}>
                         <Link to="/setting/account">
@@ -125,7 +145,7 @@ const CodeInvitationCard = () => {
                                     justifyContent: "center",
                                     color: "white",
                                     backgroundColor: "#007FFF",
-                                    padding: "10px",
+                                    padding: "8px",
                                     borderRadius: "12px",
                                     transition: "transform 0.3s, box-shadow 0.3s",
                                     width: "100%",
