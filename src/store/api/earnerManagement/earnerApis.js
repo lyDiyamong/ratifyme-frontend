@@ -7,8 +7,19 @@ export const earnerApi = createApi({
     tagTypes: ["Earner"],
     endpoints: (builder) => ({
         fetchEarner: builder.query({
-            query: ({ page = 1, limit = 100, sort = "", search = "" }) =>
-                `earners?limit=${limit}&page=${page}&sort=${sort}&search=${search}`,
+            query: ({ issuerId, roleId, page, limit, sort, search }) => {
+                // Base query string
+                let query = `/earners?page=${page}&limit=${limit}&sort=${sort}`;
+
+                // Conditionally append search
+                if (search) query += `&search=${search}`;
+                // Append issuerId only if roleId is not 1 (admin)
+                if (roleId !== 1) {
+                    query += `&issuerId=${issuerId}`;
+                }
+
+                return query;
+            },
             providesTags: ["Earner"],
         }),
 

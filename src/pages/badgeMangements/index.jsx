@@ -9,7 +9,7 @@ const BadgeManagement = () => {
     const allowRole = roleId === 3 ? true : false;
     return (
         <DashboardContainer sx={{ pb: 4 }}>
-            <PageTitle title="Badge Management " />
+            <PageTitle title="Badge Management" subtitle="Monitor, assign, and manage all your digital badges with ease." />
             <SearchBar showButton={allowRole} textInButton="Add Badge">
                 <BadgeList />
             </SearchBar>

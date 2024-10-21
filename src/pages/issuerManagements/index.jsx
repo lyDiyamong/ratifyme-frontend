@@ -4,10 +4,11 @@ import TableIssuer from "./TableIssuer";
 import TableIssuerInvitation from "./TableIssuerInvitation";
 import PageTitle from "../../components/PageTitle";
 import CustomTabs from "../../components/tabs/customTabs";
+import { useSelector } from "react-redux";
 
 // Issuer Management Component
 const IssuerManagement = () => {
-
+    const { roleId } = useSelector((state) => state.global);
     const tabs = ["Issuer List", "Invited Issuers"];
     const tabContent = [TableIssuer, TableIssuerInvitation];
 
@@ -18,11 +19,7 @@ const IssuerManagement = () => {
                 subtitle="Manage issuer accounts, invite new issuers, and track their statuses all in one place."
             />
 
-            <CustomTabs
-                tabs={tabs}
-                tabContent={tabContent}
-                searchQuery=""
-            />
+            {roleId === 1 ? <TableIssuer /> : <CustomTabs tabs={tabs} tabContent={tabContent} searchQuery="" />}
         </DashboardContainer>
     );
 };

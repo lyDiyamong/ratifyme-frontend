@@ -15,6 +15,7 @@ import useCatchStatus from "../../hooks/useCatchStatus";
 // Api import
 import { useGetInstitutionQuery } from "../../store/api/institutionManagement/institutionApi";
 import NoRecordData from "../../components/NoRecordData";
+import { TableAvatars } from "../../components/avartars/TableAvatars";
 
 const InstitutionManagement = () => {
     // Pagination & Sorting State & Limiting & Searching
@@ -57,7 +58,7 @@ const InstitutionManagement = () => {
         },
         {
             name: "Organization Name",
-            selector: (row) => row?.institutionName || "N/A",
+            selector: (row) => <TableAvatars profileImage={row.institutionProfileImage} name={row.institutionName} />,
         },
         {
             name: "Email Address",

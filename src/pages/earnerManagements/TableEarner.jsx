@@ -29,19 +29,6 @@ const TableEarner = () => {
     const [sortOrder, setSortOrder] = useState("name");
     const [searchQuery, setSearchQuery] = useState("");
 
-    // Fetch data from the backend based on pagination, sorting, and search
-    const {
-        data: response,
-        isLoading,
-        isError,
-    } = useFetchEarnerQuery({
-        page: currentPage,
-        limit: rowsPerPage,
-        sort: sortColumn,
-        order: sortOrder,
-        search: searchQuery,
-    });
-
     const { roleId, userId, issuerData } = useSelector((state) => state.global);
     const [deleteEarner] = useDeleteEarnerByIdMutation();
     const issuerId = issuerData?.id;
@@ -50,6 +37,21 @@ const TableEarner = () => {
 
     // Local State for invited users
     const [invitedEarners, setInvitedEarners] = useState([]);
+
+    // Fetch data from the backend based on pagination, sorting, and search
+    const {
+        data: response,
+        isLoading,
+        isError,
+    } = useFetchEarnerQuery({
+        issuerId: roleId === 1 ? undefined : issuerId,
+        roleId: roleId,
+        page: currentPage,
+        limit: rowsPerPage,
+        sort: sortColumn,
+        order: sortOrder,
+        search: searchQuery,
+    });
 
     // Load and filter invited users on mount
     useEffect(() => {
@@ -156,9 +158,7 @@ const TableEarner = () => {
         },
         {
             name: "Action",
-            selector: (row) => (
-                <MenuSelection onView={() => handleView(row.id)} onDelete={() => handleDelete(row.id)} />
-            ),
+            selector: (row) => <MenuSelection onView={() => handleView(row.id)} onDelete={() => handleDelete(row.id)} />,
         },
     ];
 

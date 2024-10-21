@@ -41,7 +41,7 @@ const TableEarnerInvitation = () => {
     const [resendUserEmail, setResendUserEmail] = useState(null);
 
     // ===================== Redux State =====================
-    const { issuerData } = useSelector((state) => state.global);
+    const { issuerData, roleId } = useSelector((state) => state.global);
     const issuerId = issuerData?.id;
 
     // ===================== API Hooks =====================
@@ -310,11 +310,11 @@ const TableEarnerInvitation = () => {
                 data={invitedEarners}
                 columns={columns}
                 addNewLabel="Invite Earner"
-                addNewBtn={true}
+                addNewBtn={roleId === 3 ? true : false}
                 onAddNew={() => setDialogOpen(true)}
                 sortIcon={true}
                 pagination
-                totalRows={invitedUserData?.total || 0}
+                totalRows={invitedEarners?.total || 0}
                 currentPage={currentPage}
                 rowsPerPage={rowsPerPage}
                 onPageChange={handlePageChange}

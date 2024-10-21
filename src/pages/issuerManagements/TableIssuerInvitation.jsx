@@ -43,7 +43,7 @@ const TableIssuerInvitation = () => {
     const [resendUserEmail, setResendUserEmail] = useState(null);
 
     // ===================== Redux State =====================
-    const { institutionData } = useSelector((state) => state.global);
+    const { institutionData, roleId } = useSelector((state) => state.global);
     const institutionId = institutionData?.id;
 
     // ===================== API Hooks =====================
@@ -307,7 +307,7 @@ const TableIssuerInvitation = () => {
                 columns={columns}
                 sortIcon={true}
                 addNewLabel="Invite Issuer"
-                addNewBtn={true}
+                addNewBtn={roleId === 2 ? true : false}
                 onAddNew={() => setDialogOpen(true)}
                 pagination
                 totalRows={invitedUserData?.total || 0}

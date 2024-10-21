@@ -6,7 +6,7 @@ import { Box, Typography } from "@mui/material";
 
 // Custom import
 import DashboardContainer from "../../components/styles/DashboardContainer";
-import TableCustom from "../../components/TableCustom";
+import TableCustom from "../../components/TableCustomFront";
 import FormatDate from "../../utils/formatDate";
 import PageTitle from "../../components/PageTitle";
 
@@ -41,7 +41,7 @@ const InvoiceManagement = () => {
         
         {
             name: "Organization Name",
-            selector: (row) => row.institutionName,
+            selector: (row) => row.name,
             sortable: true,
         },
         {
