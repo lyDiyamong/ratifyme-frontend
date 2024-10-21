@@ -11,7 +11,7 @@ import { Pagination, Typography } from "@mui/material";
 
 const AchievementList = () => {
     const [page, setPage] = useState(1);
-    const [limit] = useState(1);
+    const [limit] = useState(10);
     const navigate = useNavigate();
     const { earnerData } = useSelector((state) => state.global);
     const earnerId = earnerData?.id;
@@ -51,9 +51,17 @@ const AchievementList = () => {
     }
 
     return (
-        <>
+        <Box
+            component="div"
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                minHeight: isSmallScreen ? "auto" : "900px",
+            }}
+        >
             <BadgeListCard badges={badgeClaims || []} onView={handleView} total={badgeClaim?.totalRecords || ""} />
-            <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
+            <Box sx={{ display: "flex", justifyContent: "end", marginY: 2 }}>
                 <Pagination
                     count={totalPages || 1}
                     page={page}
@@ -63,7 +71,7 @@ const AchievementList = () => {
                     boundaryCount={isSmallScreen ? 1 : 2}
                 />
             </Box>
-        </>
+        </Box>
     );
 };
 

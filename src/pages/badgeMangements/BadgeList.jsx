@@ -9,7 +9,7 @@ import { Box } from "@mui/material";
 
 const BadgeList = () => {
     const [page, setPage] = useState(1);
-    const [limit] = useState(1);
+    const [limit] = useState(10);
 
     const navigate = useNavigate();
     const { roleId, issuerData, institutionData } = useSelector((state) => state.global);
@@ -59,10 +59,18 @@ const BadgeList = () => {
     };
 
     return (
-        <>
+        <Box
+            component="div"
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                minHeight: isSmallScreen ? "auto" : "900px",
+            }}
+        >
             <BadgeListCard badges={allBadges.data} onView={handleView} roleId={roleId} total={allBadges?.total} />
 
-            <Box sx={{ display: "flex", justifyContent: "end", marginTop: 2 }}>
+            <Box sx={{ display: "flex", justifyContent: "end", marginY: 2 }}>
                 <Pagination
                     count={totalPages || 1}
                     page={page}
@@ -72,7 +80,7 @@ const BadgeList = () => {
                     boundaryCount={isSmallScreen ? 1 : 2}
                 />
             </Box>
-        </>
+        </Box>
     );
 };
 
