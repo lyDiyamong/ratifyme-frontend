@@ -28,7 +28,7 @@ const AddressFields = ({ control, schema }) => {
                 control={control}
                 rules={{ required: "Country is required" }}
                 render={({ field: { onChange, onBlur, value, ref }, fieldState: { error } }) => (
-                    <>
+                    <Box>
                         <Select
                             options={countryList().getData()}
                             onChange={(selectedOption) => onChange(selectedOption.value)}
@@ -53,8 +53,8 @@ const AddressFields = ({ control, schema }) => {
                                 }),
                             }}
                         />
-                        {error && <Typography color="error">{error.message}</Typography>}
-                    </>
+                        {error && <Typography fontSize='12px' color="error">{error.message}</Typography>}
+                    </Box>
                 )}
             />
 

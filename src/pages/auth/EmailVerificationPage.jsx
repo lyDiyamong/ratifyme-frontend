@@ -38,10 +38,7 @@ const EmailVerificationPage = () => {
     const [message, setMessage] = useCatchStatus(isError || isSuccess, isError ? error?.data?.message : data?.message);
 
     // Custom hook for resend errors
-    const [resendMessage, setResendMessage] = useCatchStatus(
-        isResending,
-        resendError ? resendErrorData?.data?.message : null,
-    );
+    const [resendMessage, setResendMessage] = useCatchStatus(isResending, resendError ? resendErrorData?.data?.message : null);
     const [resendSuccess, setResendSuccess] = useState(false);
 
     const [hasResentVerify, setHasResentVerify] = useState(() => {
@@ -70,7 +67,7 @@ const EmailVerificationPage = () => {
         try {
             setLoading(true);
             await verifyEmail({ verifyCode: verificationCode }).unwrap();
-            navigate(roleId === 2 ? "/price" : "/login");
+            navigate(roleId === 2 ? "/price" : "/signup-success");
         } catch (error) {
             setVerificationCode("");
             setInputKey((prevKey) => prevKey + 1);
@@ -132,12 +129,7 @@ const EmailVerificationPage = () => {
                 >
                     <Stack width="100%" maxWidth="450px" gap={2}>
                         <Link to="/">
-                            <Box
-                                component="img"
-                                src={RatifyMELogo}
-                                alt="Ratifyme Favicon"
-                                sx={{ width: 150, height: 150 }}
-                            />
+                            <Box component="img" src={RatifyMELogo} alt="Ratifyme Favicon" sx={{ width: 150, height: 150 }} />
                         </Link>
 
                         <Box my={3}>
@@ -184,16 +176,11 @@ const EmailVerificationPage = () => {
                         {!hasResentVerify && (
                             <>
                                 <Typography variant="body2" align="center">
-                                    If you haven't received an email in 5 minutes, check your spam, resend or try a
-                                    different email.{" "}
+                                    If you haven't received an email in 5 minutes, check your spam, resend or try a different
+                                    email.{" "}
                                 </Typography>
 
-                                <Typography
-                                    variant="body2"
-                                    align="center"
-                                    color={theme.palette.primary.contrastText}
-                                    mt={2}
-                                >
+                                <Typography variant="body2" align="center" color={theme.palette.primary.contrastText} mt={2}>
                                     Didn't receive a code?{" "}
                                     <Button onClick={handleResendVerification} disabled={isResending}>
                                         <Typography
@@ -212,8 +199,7 @@ const EmailVerificationPage = () => {
 
                         {hasResentVerify && (
                             <Typography variant="body2" mt={2}>
-                                Please check again. If you still haven't recieved an email, try to signup with different
-                                email.
+                                Please check again. If you still haven't recieved an email, try to signup with different email.
                             </Typography>
                         )}
                     </Stack>

@@ -5,7 +5,7 @@ import { Stack } from "@mui/system";
 import { Box, Typography } from "@mui/material";
 import theme from "../../assets/themes";
 
-const GeneralInfoFields = ({ control, schema }) => {
+const GeneralInfoFields = ({ control, schema, errors }) => {
     const genderOptions = [
         { value: 1, label: "Male" },
         { value: 2, label: "Female" },
@@ -33,7 +33,14 @@ const GeneralInfoFields = ({ control, schema }) => {
                 control={control}
                 defaultValue={getDefaultValue(schema?.fields.genderId?.defaultValue)}
             />
-            <DateSelectionForm control={control} name="dateOfBirth" label="Date of Birth" />
+            <Box>
+                <DateSelectionForm control={control} name="dateOfBirth" label="Date of Birth" />
+                {errors.dateOfBirth && (
+                    <Typography sx={{ fontSize: 12, mx: "14px" }} color="error">
+                        {errors.dateOfBirth.message}
+                    </Typography>
+                )}
+            </Box>
         </Stack>
     );
 };

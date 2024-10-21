@@ -80,7 +80,14 @@ const SignupPage = () => {
         resolver: yupResolver(schema.concat(passwordSchemaName)),
     });
 
-    const { handleSubmit, control, trigger, setValue, watch } = methods;
+    const {
+        handleSubmit,
+        control,
+        trigger,
+        setValue,
+        watch,
+        formState: { errors },
+    } = methods;
 
     useEffect(() => {
         const queryRole = new URLSearchParams(search).get("as") || "";
@@ -219,7 +226,7 @@ const SignupPage = () => {
                         {message}
                     </AlertMessage>
                 )}
-                <Stack direction="row" sx={{height: {md: '100vh'}}}>
+                <Stack direction="row" sx={{ height: { md: "100vh" } }}>
                     {/* Right side with login form */}
                     <Box
                         display="flex"
@@ -227,11 +234,9 @@ const SignupPage = () => {
                         sx={{
                             width: { md: "50%", xss: "100%" },
                             px: 4,
-                            backgroundColor: theme.palette.customColors.white,
-                            
                         }}
                     >
-                        <Box mx="auto" maxWidth='750px' width="100%">
+                        <Box mx="auto" maxWidth="750px" width="100%">
                             <Link to="/">
                                 <Box component="img" src={RatifyMELogo} alt="Ratifyme Favicon" sx={{ width: 150, height: 150 }} />
                             </Link>
@@ -251,7 +256,7 @@ const SignupPage = () => {
                                 connector={(steps[role] || steps.default || []).map((_, index) => (
                                     <CustomConnector key={index} ownerState={{ isCompleted: index < activeStep }} />
                                 ))}
-                                sx={{ my: {xss: 2, xs: 3, md: 5} }}
+                                sx={{ my: { xss: 2, xs: 3, md: 5 } }}
                             >
                                 {(steps[role] || steps.default || []).map((label, index) => (
                                     <Step key={label}>
@@ -272,15 +277,16 @@ const SignupPage = () => {
                                 ))}
                             </Stepper>
 
-                            <Stack direction="row" >
+                            <Stack direction="row">
                                 <FormProvider {...methods}>
-                                    <Box component="form"  width="100%" onSubmit={handleSubmit(onSubmit)}>
+                                    <Box component="form" width="100%" onSubmit={handleSubmit(onSubmit)}>
                                         <RenderStepSignupContent
                                             step={activeStep}
                                             control={control}
                                             role={role}
                                             guest={guest}
                                             watch={watch}
+                                            errors={errors}
                                         />
 
                                         <Stack direction="row" justifyContent="space-between" sx={{ mt: 2, mb: 5 }}>
