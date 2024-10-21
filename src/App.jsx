@@ -10,6 +10,7 @@ import theme from "./assets/themes";
 import LandingRouter from "./routers/LandingRouter";
 import AuthRouter from "./routers/AuthRouter";
 import DashbaordRouter from "./routers/DashboardRouter";
+import PublicPageRouter from "./routers/PublicPage";
 
 const App = () => {
     return (
@@ -19,6 +20,7 @@ const App = () => {
                 <LandingRouter />
                 <AuthRouter />
                 <DashbaordRouter />
+                <PublicPageRouter />
             </BrowserRouter>
         </ThemeProvider>
     );

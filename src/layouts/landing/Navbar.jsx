@@ -198,7 +198,7 @@ const Navbar = () => {
                                             </Stack>
                                         </Link>
                                     ) : (
-                                        <>
+                                        <Stack flexDirection="row" gap={1}>
                                             <Link to="/login">
                                                 <Button
                                                     variant="outlined"
@@ -222,7 +222,7 @@ const Navbar = () => {
                                                     Sign Up
                                                 </Button>
                                             </Link>
-                                        </>
+                                        </Stack>
                                     )}
                                 </Box>
                             </Box>
@@ -277,7 +277,7 @@ const Navbar = () => {
                                     </MenuItem>
 
                                     {!userInfo && (
-                                        <>
+                                        <Box>
                                             <MenuItem onClick={handleMenuClose}>
                                                 <Link to="/login">
                                                     <Button
@@ -306,12 +306,12 @@ const Navbar = () => {
                                                     </Button>
                                                 </Link>
                                             </MenuItem>
-                                        </>
+                                        </Box>
                                     )}
                                 </Menu>
 
                                 {institutionData && userInfo && (
-                                    <>
+                                    <Box>
                                         <Link>
                                             <Stack direction="row" alignItems="center">
                                                 <Box
@@ -349,7 +349,7 @@ const Navbar = () => {
                                                 {institutionData?.institutionName}
                                             </MenuItem>
                                         </Menu>
-                                    </>
+                                    </Box>
                                 )}
                             </Box>
                         </Toolbar>
@@ -370,7 +370,7 @@ const Navbar = () => {
                 iconColor={theme.palette.customColors.orange400}
                 iconBgColor={theme.palette.customColors.orange200}
             />
-        </>
+        </Box>
     );
 };
 
