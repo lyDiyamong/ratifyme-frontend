@@ -23,6 +23,7 @@ import { TableAvatars } from "../../components/avartars/TableAvatars";
 
 // ============ Start Table Earner Modal ============
 const BillingInvoiceManagement = () => {
+    const isSortable = true;
     // Navigate hook
     const navigate = useNavigate();
 
@@ -166,6 +167,7 @@ const BillingInvoiceManagement = () => {
                     sortColumn={sortColumn}
                     sortOrder={sortOrder}
                     onSearch={handleSearch}
+                    isSortable={isSortable}
                     sortOptions={[
                         { value: "name", label: "ASC ⬆" },
                         { value: "-name", label: "DES ⬇" },
