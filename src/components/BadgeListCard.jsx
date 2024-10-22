@@ -2,25 +2,14 @@
 import { useState, useEffect } from "react";
 
 // MUI import
-import {
-    Grid,
-    Card,
-    CardContent,
-    CardMedia,
-    Typography,
-    Button,
-    Box,
-    Stack,
-    Pagination,
-    useMediaQuery,
-} from "@mui/material";
+import { Grid, Card, CardContent, CardMedia, Typography, Button, Box, Stack, Pagination, useMediaQuery } from "@mui/material";
 
 // Custom import
 import theme from "../assets/themes";
 import StatusCode from "../assets/images/NoData.svg";
 import GoldBadge from "../assets/images/DiamondBadge.svg";
 
-const   BadgeListCard = ({ badges, onView, roleId, onPage, onNextPage, onPrevPage, total }) => {
+const BadgeListCard = ({ badges, onView, roleId, total }) => {
     const [page, setPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(6);
 
@@ -47,12 +36,7 @@ const   BadgeListCard = ({ badges, onView, roleId, onPage, onNextPage, onPrevPag
 
             {total === 0 ? (
                 <Box display="flex" flexDirection="column" alignItems="center" p={4}>
-                    <CardMedia
-                        component="img"
-                        image={StatusCode}
-                        alt="No badges found"
-                        sx={{ maxWidth: 400, width: "100%" }}
-                    />
+                    <CardMedia component="img" image={StatusCode} alt="No badges found" sx={{ maxWidth: 400, width: "100%" }} />
                     <Typography variant="h6" mt={2} textAlign="center" color={theme.palette.text.secondary}>
                         No badges available
                     </Typography>

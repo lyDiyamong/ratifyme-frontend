@@ -7,7 +7,7 @@ import { SpinLoading } from "../../components/loading/SpinLoading";
 import Pagination from "@mui/material/Pagination";
 import { Box } from "@mui/material";
 
-const BadgeList = () => {
+const BadgeList = ({ badges }) => {
     const [page, setPage] = useState(1);
     const [limit] = useState(10);
 
@@ -26,6 +26,7 @@ const BadgeList = () => {
         activeId = issuerData.id;
         field = "issuerId";
     }
+    console.log("badge", badges);
 
     // Avoid fetching if activeId is null or field is not defined
     const {
@@ -68,7 +69,7 @@ const BadgeList = () => {
                 minHeight: isSmallScreen ? "auto" : "900px",
             }}
         >
-            <BadgeListCard badges={allBadges.data} onView={handleView} roleId={roleId} total={allBadges?.total} />
+            <BadgeListCard badges={badges} onView={handleView} roleId={roleId} total={allBadges?.total} />
 
             <Box sx={{ display: "flex", justifyContent: "end", marginY: 2 }}>
                 <Pagination

@@ -1,4 +1,8 @@
-import { useState } from "react";
+// React Import
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
+// MUI Import
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -6,11 +10,13 @@ import Toolbar from "@mui/material/Toolbar";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { Button, Stack } from "@mui/material";
-import { Link } from "react-router-dom";
 
 // Custom import
 import theme from "../assets/themes";
 import DashboardContainer from "./styles/DashboardContainer";
+import { useFetchBadgesQuery } from "../store/api/badgeManagement/badgeApi";
+import { useSelector } from "react-redux";
+import { skipToken } from "@reduxjs/toolkit/query";
 
 // Styled components
 const Search = styled("div")(({ theme }) => ({
@@ -66,11 +72,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-// Static data that make the code not error. (White screen)
-const cardBadgeData = [
-    { title: "Badge 1", institution: "Institution 1" },
-    { title: "Badge 2", institution: "Institution 2" },
-];
 /**
  * SearchBar Component
  *
@@ -97,18 +98,22 @@ const cardBadgeData = [
  *   <BadgeList badges={filteredBadges} />
  * </SearchBar>
  */
-export default function SearchBar({ showButton = true, textInButton, children }) {
-    const [searchQuery, setSearchQuery] = useState("");
-    const [filteredData, setFilteredData] = useState(cardBadgeData);
-
+export default function SearchBar({
+    showButton = true,
+    textInButton,
+    badges,
+    onSearchChange,
+    total,
+    onPage,
+    limit,
+    page,
+    result,
+    children,
+}) {
     const handleSearchChange = (event) => {
-        const query = event.target.value.toLowerCase();
-        setSearchQuery(query);
-        const filtered = cardBadgeData.filter(
-            (item) => item.title.toLowerCase().includes(query) || item.institution.toLowerCase().includes(query),
-        );
-        setFilteredData(filtered);
+        onSearchChange(event.target.value);
     };
+    // console.log(badges);
 
     return (
         <Stack gap={4}>
@@ -145,7 +150,7 @@ export default function SearchBar({ showButton = true, textInButton, children })
                             <StyledInputBase
                                 placeholder="Search for Badges..."
                                 inputProps={{ "aria-label": "search" }}
-                                value={searchQuery}
+                                // value={searchQuery}
                                 onChange={handleSearchChange}
                             />
                         </Search>
@@ -182,7 +187,9 @@ export default function SearchBar({ showButton = true, textInButton, children })
                     boxShadow: theme.customShadows.default,
                 }}
             >
-                {children}
+                {React.Children.map(children, (child) =>
+                    React.cloneElement(child, { badges, total, onPage, page, limit, result }),
+                )}
             </DashboardContainer>
         </Stack>
     );
