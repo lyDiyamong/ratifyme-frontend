@@ -58,7 +58,7 @@ const ShareSocialModal = ({ open, handleClose, credUrl }) => {
 
                     <Stack
                         component="a"
-                        href={`https://www.facebook.com/sharer/sharer.php?u=https://directly-upload-s3-bucket-test.s3.ap-southeast-2.amazonaws.com/Certificate/certificate.png`}
+                        href={`https://www.facebook.com/sharer/sharer.php?u=${credUrl}`}
                         target="_blank"
                         flexDirection="row"
                         sx={{
@@ -103,7 +103,7 @@ const ShareSocialModal = ({ open, handleClose, credUrl }) => {
 
                     <Stack
                         component="a"
-                        href={`https://twitter.com/intent/tweet?text=Thrilled%20to%20have%20earned%20my%20Unity%20Pro%3A%20Advanced%20Game%20Development%20Techniques%20credential%20from%20CodeDevs!%20%23achievement%20%23Unity%20%23GameDevelopment&url=https://directly-upload-s3-bucket-test.s3.ap-southeast-2.amazonaws.com/Certificate/certificate.png`}
+                        href={`https://twitter.com/intent/tweet?text=Grateful%20for%20the%20opportunity%20to%20grow%20and%20achieve%20this%20milestone.%20%23lifelonglearning%20%23achievement%20%23ratifyme%20%23openbadge&url=${credUrl}`}
                         target="_blank"
                         flexDirection="row"
                         sx={{
@@ -148,7 +148,7 @@ const ShareSocialModal = ({ open, handleClose, credUrl }) => {
 
                     <Stack
                         component="a"
-                        href={`https://pinterest.com/pin/create/button/?url=https://directly-upload-s3-bucket-test.s3.ap-southeast-2.amazonaws.com/Certificate/certificate.png&media=https://directly-upload-s3-bucket-test.s3.ap-southeast-2.amazonaws.com/Certificate/certificate.png&description=Check out my achievement!`}
+                        href={`https://pinterest.com/pin/create/button/?url=${credUrl}&media=${credUrl}=Check out my achievement!`}
                         target="_blank"
                         flexDirection="row"
                         sx={{
@@ -193,7 +193,7 @@ const ShareSocialModal = ({ open, handleClose, credUrl }) => {
 
                     <Stack
                         component="a"
-                        href={`https://t.me/share/url?url=https://directly-upload-s3-bucket-test.s3.ap-southeast-2.amazonaws.com/Certificate/certificate.png&text=Check out my achievement!`}
+                        href={`https://t.me/share/url?url=${credUrl}&text=Check out my achievement!`}
                         target="_blank"
                         flexDirection="row"
                         sx={{
