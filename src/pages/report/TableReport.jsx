@@ -8,6 +8,7 @@ import { Box, Typography, CircularProgress } from "@mui/material";
 // Custom Import
 import TableCustom from "../../components/TableCustom";
 import NoRecordData from "../../components/NoRecordData";
+import { TableAvatars } from "../../components/avartars/TableAvatars";
 
 // Fetching Data Import
 import { useFetchInstitutionStatsQuery } from "../../store/api/reports/institutionStatApis";
@@ -50,6 +51,7 @@ const TableReport = () => {
                     report.Issuers.map((issuer, index) => ({
                         issuerId: index + 1,
                         issuerName: `${issuer.User.firstName} ${issuer.User.lastName}`,
+                        issuerImage: issuer.User.profileImage,
                         issuerEmail: issuer.User.email,
                         totalBadge: issuer.BadgeClasses?.length || 0,
                         totalEarner: issuer.Earners?.length || 0,
@@ -75,7 +77,7 @@ const TableReport = () => {
                   },
                   {
                       name: "Organization Name",
-                      selector: (row) => row.institutionName || "N/A",
+                      selector: (row) => <TableAvatars profileImage={row.institutionProfileImage} name={row.institutionName}/> || "N/A" ,
                       sortable: true,
                   },
                   {
@@ -99,12 +101,11 @@ const TableReport = () => {
             : [
                   {
                       name: "Issuer ID",
-                      selector: (row) => row.issuerId,
-                      sortable: true,
+                      selector: (row, index) => index + 1 || "N/A",
                   },
                   {
                       name: "Issuer Name",
-                      selector: (row) => row.issuerName,
+                      selector: row => <TableAvatars profileImage={row.issuerImage} name={row.issuerName}/> || "N/A",
                       sortable: true,
                   },
                   {
@@ -147,7 +148,6 @@ const TableReport = () => {
                             setCurrentPage(1);
                         }}
                     >
-                        {filteredData.length === 0 && <NoRecordData />}
                     </TableCustom>
                 </>
             )}
