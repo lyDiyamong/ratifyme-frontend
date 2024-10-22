@@ -42,6 +42,7 @@ const CertificateGenerator = ({ badge }) => {
     const earnerAchieveData = earnerAchieResponse?.data;
     const earnerAchieveStatus = earnerAchieResponse?.data?.status;
     const isCertUpload = earnerAchieResponse?.data?.certUrlPdf ? true : false;
+    console.log("EarnerAchive", earnerAchieveData)
 
     // Upload Certificate hook
     const [uploadCert, { isLoading: certiLoading, isError: uploadCertError }] = useUploadCertiMutation();
