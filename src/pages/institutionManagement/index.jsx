@@ -14,10 +14,10 @@ import useCatchStatus from "../../hooks/useCatchStatus";
 
 // Api import
 import { useGetInstitutionQuery } from "../../store/api/institutionManagement/institutionApi";
-import NoRecordData from "../../components/NoRecordData";
 import { TableAvatars } from "../../components/avartars/TableAvatars";
 
 const InstitutionManagement = () => {
+    const isSortable = true;
     // Pagination & Sorting State & Limiting & Searching
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -130,12 +130,12 @@ const InstitutionManagement = () => {
                     sortColumn={sortColumn}
                     sortOrder={sortOrder}
                     onSearch={handleSearch}
+                    isSortable={isSortable}
                     sortOptions={[
                         { value: 'institutionName', label: 'ASC ⬆' },
                         { value: '-institutionName', label: 'DES ⬇' },
                     ]}
                 >
-                    {institutions?.length === 0 && <NoRecordData />}
                 </TableCustom>
             )}
         </DashboardContainer>
