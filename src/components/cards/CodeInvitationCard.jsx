@@ -88,7 +88,7 @@ const CodeInvitationCard = () => {
                         </Stack>
                     )}
 
-                    <Stack direction="row" spacing={1} alignItems="center" sx={{ fontSize: 14 }} >
+                    <Stack direction="row" spacing={1} alignItems="center" sx={{ fontSize: 14 }}>
                         <Typography>Position: </Typography>
                         <Typography variant="h6" fontWeight="bold">
                             {position}

@@ -81,7 +81,7 @@ const Greeting = () => {
                         alt="greeting"
                         sx={{
                             width: "100%",
-                            maxWidth: 140,
+                            maxWidth: {xs: 100, md: 140},
                         }}
                     />
                 </Stack>

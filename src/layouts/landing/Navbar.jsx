@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { AppBar, Box, Toolbar, Button, Menu, MenuItem, Slide, Stack, Typography, IconButton } from "@mui/material";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
@@ -14,6 +14,9 @@ import DefaultProfileSvg from "../../assets/images/DefaultProfile.svg";
 import MaleUserDefault from "../../assets/images/MaleUser.svg";
 import FemaleUserDefault from "../../assets/images/FemaleUser.svg";
 import AlertConfirmation from "../../components/alert/AlertConfirmation";
+import { useLogoutMutation } from "../../store/api/auth/authApi";
+import useCatchStatus from "../../hooks/useCatchStatus";
+import AlertMessage from "../../components/alert/AlertMessage";
 
 const useHideOnScroll = () => {
     const [show, setShow] = useState(true);
@@ -44,6 +47,7 @@ const Navbar = () => {
     const [alertTitle, setAlertTitle] = useState("");
     const [alertMessage, setAlertMessage] = useState("");
     const { institutionData, userInfo } = useSelector((state) => state.global);
+    const navigate = useNavigate();
 
     const gender = userInfo?.Gender?.name;
     const profileImage =
@@ -60,6 +64,9 @@ const Navbar = () => {
 
     const show = useHideOnScroll();
     const openNavbarMenu = Boolean(navbarAnchorEl);
+
+    const [logout, { isError, error, isSuccess }] = useLogoutMutation();
+    const [message, setMessage] = useCatchStatus(isSuccess || isError, isSuccess ? "Logout successfully" : error?.data?.message);
 
     const handleMenuOpen = (event) => {
         setNavbarAnchorEl(event.currentTarget);
@@ -87,7 +94,13 @@ const Navbar = () => {
         }
     };
 
+    const handleLogout = async () => {
+        await logout().unwrap();
+        navigate("/");
+    };
+
     const handleConfirm = () => {
+        handleLogout();
         setAlertOpen(false);
     };
 
@@ -125,6 +138,11 @@ const Navbar = () => {
 
     return (
         <>
+            {message && (
+                <AlertMessage variant={isSuccess ? "success" : "error"} onClose={() => setMessage("")}>
+                    {message}
+                </AlertMessage>
+            )}
             <Slide appear={false} direction="down" in={show}>
                 <AppBar
                     position="sticky"
@@ -138,12 +156,7 @@ const Navbar = () => {
                         <Toolbar disableGutters sx={{ width: "100%" }}>
                             <Box flexGrow={1} display={"flex"}>
                                 <Link to={"/"}>
-                                    <Box
-                                        component="img"
-                                        sx={{ width: 120 }}
-                                        alt="The house from the offer."
-                                        src={RatifyMeLogo}
-                                    />
+                                    <Box component="img" sx={{ width: 120 }} alt="The house from the offer." src={RatifyMeLogo} />
                                 </Link>
                             </Box>
 
@@ -175,16 +188,10 @@ const Navbar = () => {
                                                     style={{ borderRadius: "50%", width: "32px", height: "32px" }}
                                                 />
                                                 <Box>
-                                                    <Typography
-                                                        variant="body2"
-                                                        color={theme.palette.customColors.gray600}
-                                                    >
+                                                    <Typography variant="body2" color={theme.palette.customColors.gray600}>
                                                         {userInfo?.firstName} {userInfo?.lastName}
                                                     </Typography>
-                                                    <Typography
-                                                        variant="body2"
-                                                        color={theme.palette.customColors.gray500}
-                                                    >
+                                                    <Typography variant="body2" color={theme.palette.customColors.gray500}>
                                                         {institutionData?.institutionName}
                                                     </Typography>
                                                 </Box>
@@ -357,7 +364,9 @@ const Navbar = () => {
                 message={alertMessage}
                 onConfirm={handleConfirm}
                 onClose={handleCancel}
-                confirmText="Okay"
+                cancelText="Okay"
+                confirmText="Logout"
+                confirmButtonColor={theme.palette.customColors.red300}
                 iconColor={theme.palette.customColors.orange400}
                 iconBgColor={theme.palette.customColors.orange200}
             />
