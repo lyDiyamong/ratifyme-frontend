@@ -6,16 +6,19 @@ import { useState, useEffect } from "react";
 import { Box, Typography, CircularProgress } from "@mui/material";
 
 // Custom Import
-import TableCustom from "../../components/TableCustomFront";
+import TableCustom from "../../components/TableCustom";
 import NoRecordData from "../../components/NoRecordData";
 import InviteUserModal from "../../components/modals/InviteUserModal";
 import { useFetchInstitutionStatsQuery } from "../../store/api/reports/institutionStatApis";
 import { useInviteIssuerMutation, useFetchAllInvitedUserQuery } from "../../store/api/userManagement/inviteUserApi";
 
+// ============ Start Table Issuer Modal ============
 const TableIssuer = () => {
     // State for controlling dialog
     const [dialogOpen, setDialogOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     // Global state for user info and institution info
     const { userId, roleId, institutionData } = useSelector((state) => state.global);
@@ -62,6 +65,7 @@ const TableIssuer = () => {
             })),
         );
     };
+
     // Handle closing the invite issuer dialog
     const handleCloseDialog = () => {
         setDialogOpen(false);
@@ -112,7 +116,6 @@ const TableIssuer = () => {
             { name: "Total Earner", selector: (row) => row.totalEarners, sortable: true },
         ];
 
-
         // Admin has additional organization name column
         if (roleId === 1) {
             return [
@@ -134,7 +137,10 @@ const TableIssuer = () => {
     const filteredIssuerData = filterIssuerData(response?.data);
     const flattenedData = flattenData(filteredIssuerData);
     const filteredData = searchFilteredData(flattenedData);
-
+    const paginatedData = filteredData.slice(
+        (currentPage - 1) * rowsPerPage,
+        (currentPage - 1) * rowsPerPage + rowsPerPage
+    );
     // Render Component
     return (
         <Box>
@@ -145,10 +151,21 @@ const TableIssuer = () => {
             ) : (
                 <TableCustom
                     title="Issuer List"
-                    data={filteredData}
+                    // data={filteredData}
+                    data={paginatedData}
                     columns={getIssuerColumns()}
                     onSearch={setSearchQuery}
-                    addNewBtn = {false}
+                    addNewBtn={true} 
+                    onAddNew={() => setDialogOpen(true)}
+                    pagination
+                    totalRows={filteredData.length}
+                    currentPage={currentPage} 
+                    rowsPerPage={rowsPerPage} 
+                    onPageChange={setCurrentPage} 
+                    onRowsPerPageChange={(newRowsPerPage) => {
+                        setRowsPerPage(newRowsPerPage);
+                        setCurrentPage(1); 
+                    }} 
                 >
                     {/* Show NoRecordData inside the table when there's no data */}
                     {filteredData.length === 0 && <NoRecordData />}
@@ -167,3 +184,4 @@ const TableIssuer = () => {
 };
 
 export default TableIssuer;
+// ============ End Table Issuer Modal ============
