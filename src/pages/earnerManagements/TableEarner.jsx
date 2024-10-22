@@ -19,6 +19,7 @@ import { useInviteEarnerMutation, useFetchAllInvitedUserQuery } from "../../stor
 
 // ============ Start Table Earner Modal ============
 const TableEarner = () => {
+    const isSortable = true;
     // State for controlling dialog
     const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -216,6 +217,8 @@ const TableEarner = () => {
                         { value: "name", label: "ASC ⬆" },
                         { value: "-name", label: "DES ⬇" },
                     ]}
+                    isSortable={isSortable}
+
                 >
                     {/* Display NoRecordData inside the table when no earners match the search query */}
                     {filteredEarnerData?.length === 0 && <NoRecordData />}
