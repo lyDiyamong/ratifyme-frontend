@@ -9,7 +9,7 @@ import BadgeDetailsCred from "./BadgeDetailsCred";
 import SkillsCred from "./SkillsCred";
 import AchievementTypesCred from "./AchievementTypesCred";
 
-const CredentialContent = ({ earnerData, achieveData, credUrl }) => {
+const CredentialContent = ({ earnerData, achieveData, credUrl, credId }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleOpenModal = () => setIsModalOpen(true);
@@ -31,8 +31,6 @@ const CredentialContent = ({ earnerData, achieveData, credUrl }) => {
                             p: 2,
                             backgroundColor: theme.palette.customColors.white,
                             borderRadius: theme.customShape.input,
-                            // boxShadow: theme.customShadows.default,
-                            // border: `1px solid ${theme.palette.customColors.gray200}`,
                             border: "1px solid #F5F5F7",
                         }}
                     >
@@ -68,7 +66,7 @@ const CredentialContent = ({ earnerData, achieveData, credUrl }) => {
                             <Button
                                 component="a"
                                 variant="outlined"
-                                href={`https://www.linkedin.com/sharing/share-offsite/?url=https://directly-upload-s3-bucket-test.s3.ap-southeast-2.amazonaws.com/Certificate/certificate.png&text=Thrilled%20to%20have%20earned%20my%20Unity%20Pro%3A%20Advanced%20Game%20Development%20Techniques%20credential%20from%20CodeDevs!%20Grateful%20for%20the%20opportunity%20to%20grow%20and%20achieve%20this%20milestone.%20%23lifelonglearning%20%23achievement`}
+                                href={`https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name=${achieveData?.BadgeClass?.name}&certUrl=${credUrl}&certId=${credId}`}
                                 target="_blank"
                                 startIcon={<LinkedIn />}
                                 sx={{
@@ -77,7 +75,7 @@ const CredentialContent = ({ earnerData, achieveData, credUrl }) => {
                                 }}
                                 fullWidth
                             >
-                                LinkedIn Profile
+                                Add to LinkedIn Profile
                             </Button>
 
                             <Typography>Share your success with the world on your social media platforms.</Typography>
