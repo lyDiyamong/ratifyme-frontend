@@ -14,9 +14,9 @@ const LandingLayout = () => {
         if (!isLoading) {
             if (error) {
                 // Redirect to login page if there is an error or no user data
-                navigate("/login");
+                navigate("/");
             } else if (!user) {
-                navigate("/login");
+                navigate("/");
             }
         }
     }, [isLoading, error, user, navigate]);
