@@ -5,35 +5,35 @@ import { VerifiedRounded } from "@mui/icons-material";
 import IssuerSvg from "../../../assets/icons/IssuerSvg.svg";
 
 const CustomTooltip = ({ title, children }) => {
-  return (
-      <Tooltip
-          title={
-              <Typography variant="body2" sx={{ color: "white" }}>
-                  {title}
-              </Typography>
-          }
-          arrow
-          componentsProps={{
-              tooltip: {
-                  sx: {
-                      backgroundColor: "black",
-                      borderRadius: "8px",
-                      p: 1,
-                  },
-              },
-              arrow: {
-                  sx: {
-                      color: "black",
-                  },
-              },
-          }}
-      >
-          {children}
-      </Tooltip>
-  );
+    return (
+        <Tooltip
+            title={
+                <Typography variant="body2" sx={{ color: "white" }}>
+                    {title}
+                </Typography>
+            }
+            arrow
+            componentsProps={{
+                tooltip: {
+                    sx: {
+                        backgroundColor: "black",
+                        borderRadius: "8px",
+                        p: 1,
+                    },
+                },
+                arrow: {
+                    sx: {
+                        color: "black",
+                    },
+                },
+            }}
+        >
+            {children}
+        </Tooltip>
+    );
 };
 
-const IssuerByCred = ({IssuerName}) => {
+const IssuerByCred = ({ IssuerName }) => {
     return (
         <Box
             elevation={3}

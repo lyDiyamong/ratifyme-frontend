@@ -3,7 +3,7 @@ import theme from "../../../assets/themes";
 
 const ShareSocialModal = ({ open, handleClose }) => {
     return (
-        <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth>
+        <Dialog open={open} onClose={handleClose} fullWidth>
             <DialogTitle variant="h4" fontWeight={theme.fontWeight.semiBold} my={2}>
                 Share Award
                 <Typography color="textSecondary">This will share your Achievement to social media.</Typography>
@@ -50,7 +50,7 @@ const ShareSocialModal = ({ open, handleClose }) => {
                             <Typography variant="body1" fontWeight={theme.fontWeight.semiBold} color={theme.palette.text.primary}>
                                 Share to Linkedin
                             </Typography>
-                            <Typography variant="subtitle1" color="textSecondary">
+                            <Typography variant="body2" color="textSecondary">
                                 Share your Achievement to Linkedin.
                             </Typography>
                         </Stack>
@@ -95,7 +95,7 @@ const ShareSocialModal = ({ open, handleClose }) => {
                             <Typography variant="body1" fontWeight={theme.fontWeight.semiBold} color={theme.palette.text.primary}>
                                 Share to Facebook
                             </Typography>
-                            <Typography variant="subtitle1" color="textSecondary">
+                            <Typography variant="body2" color="textSecondary">
                                 Share your Achievement to Facebook.
                             </Typography>
                         </Stack>
@@ -140,8 +140,98 @@ const ShareSocialModal = ({ open, handleClose }) => {
                             <Typography variant="body1" fontWeight={theme.fontWeight.semiBold} color={theme.palette.text.primary}>
                                 Share to X
                             </Typography>
-                            <Typography variant="subtitle1" color="textSecondary">
+                            <Typography variant="body2" color="textSecondary">
                                 Share your Achievement to X.
+                            </Typography>
+                        </Stack>
+                    </Stack>
+
+                    <Stack
+                        component="a"
+                        href={`https://pinterest.com/pin/create/button/?url=https://directly-upload-s3-bucket-test.s3.ap-southeast-2.amazonaws.com/Certificate/certificate.png&media=https://directly-upload-s3-bucket-test.s3.ap-southeast-2.amazonaws.com/Certificate/certificate.png&description=Check out my achievement!`}
+                        target="_blank"
+                        flexDirection="row"
+                        sx={{
+                            border: "1px solid #EDEDED",
+                            borderRadius: "8px",
+                            minHeight: 80,
+                            alignItems: "center",
+                            gap: 2,
+                            p: 1,
+                            textDecoration: "none",
+                            "&:hover": {
+                                borderColor: "#1A87EC",
+                            },
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                height: "100%",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                borderTopLeftRadius: "8px",
+                                borderBottomLeftRadius: "8px",
+                            }}
+                        >
+                            <Box
+                                alt="Pinterest"
+                                component="img"
+                                src="https://cdn.iconscout.com/icon/free/png-256/free-pinterest-logo-icon-download-in-svg-png-gif-file-formats--70-flat-social-icons-color-pack-logos-432533.png?f=webp&w=256"
+                                sx={{ m: 1, width: 40, height: 40 }}
+                            />
+                        </Box>
+                        <Stack>
+                            <Typography variant="body1" fontWeight={theme.fontWeight.semiBold} color={theme.palette.text.primary}>
+                                Share to Pinterest
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary">
+                                Pin your achievement on Pinterest.
+                            </Typography>
+                        </Stack>
+                    </Stack>
+
+                    <Stack
+                        component="a"
+                        href={`https://t.me/share/url?url=https://directly-upload-s3-bucket-test.s3.ap-southeast-2.amazonaws.com/Certificate/certificate.png&text=Check out my achievement!`}
+                        target="_blank"
+                        flexDirection="row"
+                        sx={{
+                            border: "1px solid #EDEDED",
+                            borderRadius: "8px",
+                            minHeight: 80,
+                            alignItems: "center",
+                            gap: 2,
+                            p: 1,
+                            textDecoration: "none",
+                            "&:hover": {
+                                borderColor: "#1A87EC",
+                            },
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                height: "100%",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                borderTopLeftRadius: "8px",
+                                borderBottomLeftRadius: "8px",
+                            }}
+                        >
+                            <Box
+                                alt="Telegram"
+                                component="img"
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Telegram_2019_Logo.svg/2048px-Telegram_2019_Logo.svg.png"
+                                sx={{ m: 1, width: 40, height: 40 }}
+                            />
+                        </Box>
+                        <Stack>
+                            <Typography variant="body1" fontWeight={theme.fontWeight.semiBold} color={theme.palette.text.primary}>
+                                Share to Telegram
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary">
+                                Share your achievement in Telegram chat.
                             </Typography>
                         </Stack>
                     </Stack>

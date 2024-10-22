@@ -4,8 +4,8 @@ import { VerifiedUserRounded } from "@mui/icons-material";
 
 const ImageSwitcher = () => {
     const images = [
-        "https://directly-upload-s3-bucket-test.s3.ap-southeast-2.amazonaws.com/Certificate/certificate.png",
-        "https://directly-upload-s3-bucket-test.s3.ap-southeast-2.amazonaws.com/Badge/1f6aea4e-b99f-4115-82da-78293b294e9e_BadgeImg.png",
+        "https://directly-upload-s3-bucket-test.s3.ap-southeast-2.amazonaws.com/Certificate/CertifierCertificate.png",
+        "https://directly-upload-s3-bucket-test.s3.ap-southeast-2.amazonaws.com/Badge/CertifierBadge.png",
     ];
 
     const [selectedImage, setSelectedImage] = useState(images[0]);

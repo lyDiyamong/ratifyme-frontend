@@ -1,6 +1,6 @@
-import { Box, Grid, Typography, Button, Stack } from "@mui/material";
+import { Box, Grid, Typography, Button, Stack, CardContent, Card } from "@mui/material";
 import theme from "../../../assets/themes";
-import { CalendarMonthOutlined, LinkedIn, LinkOutlined, Share } from "@mui/icons-material";
+import { CalendarMonthOutlined, CheckCircle, LinkedIn, LinkOutlined, Share } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import ShareSocialModal from "./ShareSocialModal";
@@ -83,6 +83,53 @@ const CredentialContent = () => {
                             <Typography>Share your success with the world on your social media platforms.</Typography>
                         </Stack>
                     </Stack>
+
+                    <Card
+                        sx={{
+                            maxWidth: 400,
+                            border: "1px solid #EDEDED",
+                            borderRadius: "8px",
+                            backgroundColor: "#F5FAF9",
+                        }}
+                    >
+                        <CardContent>
+                            {/* Icon and Title */}
+                            <Box display="flex" alignItems="center" mb={1}>
+                                <CheckCircle sx={{ color: "#4CB5AE", mr: 1 }} />
+                                <Typography variant="subtitle2" color="#4CB5AE" fontWeight="bold">
+                                    CREDENTIAL VERIFICATION
+                                </Typography>
+                            </Box>
+
+                            {/* Issue Date */}
+                            <Typography variant="body2" color="textSecondary" mb={2}>
+                                <strong>Issue date:</strong> October 9, 2024
+                            </Typography>
+
+                            {/* Button */}
+                            <Button
+                                variant="contained"
+                                sx={{
+                                    backgroundColor: "#4CB5AE",
+                                    borderRadius: "8px",
+                                    textTransform: "none", // keep button text normal case
+                                    width: "100%",
+                                    padding: "10px 0",
+                                    "&:hover": {
+                                        backgroundColor: "#3AA092",
+                                    },
+                                }}
+                                startIcon={<CheckCircle />}
+                            >
+                                Verify Credential
+                            </Button>
+
+                            {/* ID */}
+                            <Typography variant="caption" color="textSecondary" mt={2} display="block">
+                                ID: 04786f98-6f2f-4b2b-8c0b-3cf1853c6bba
+                            </Typography>
+                        </CardContent>
+                    </Card>
                 </Box>
             </Grid>
 
