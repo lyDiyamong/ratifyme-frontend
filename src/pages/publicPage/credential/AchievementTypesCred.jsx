@@ -43,24 +43,20 @@ const AchievementTypesCred = () => {
                         },
                     }}
                 >
-                    <Button
-                        variant="outlined"
-                        sx={{ pointerEvents: "none", borderRadius: theme.customShape.btn, borderColor: "#C7E4FF" }}
-                    >
-                        Certificate
-                    </Button>
-                    <Button
-                        variant="outlined"
-                        sx={{ pointerEvents: "none", borderRadius: theme.customShape.btn, borderColor: "#C7E4FF" }}
-                    >
-                        Award
-                    </Button>
-                    <Button
-                        variant="outlined"
-                        sx={{ pointerEvents: "none", borderRadius: theme.customShape.btn, borderColor: "#C7E4FF" }}
-                    >
-                        Competition
-                    </Button>
+                    {achievementTypes?.map(({ AchievementType }, index) => (
+                        <Button
+                            key={index}
+                            variant="outlined"
+                            sx={{
+                                pointerEvents: "none",
+                                borderRadius: theme.customShape.btn,
+                                borderColor: "#C7E4FF",
+                                textTransform: "none",
+                            }}
+                        >
+                            {AchievementType?.name}
+                        </Button>
+                    ))}
                 </Stack>
             </Stack>
         </Box>

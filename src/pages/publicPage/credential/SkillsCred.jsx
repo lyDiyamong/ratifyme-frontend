@@ -43,42 +43,20 @@ const SkillsCred = () => {
                         },
                     }}
                 >
-                    <Button
-                        variant="outlined"
-                        sx={{ pointerEvents: "none", borderRadius: theme.customShape.btn, borderColor: "#C7E4FF" }}
-                    >
-                        Java
-                    </Button>
-                    <Button
-                        variant="outlined"
-                        sx={{ pointerEvents: "none", borderRadius: theme.customShape.btn, borderColor: "#C7E4FF" }}
-                    >
-                        Python
-                    </Button>
-                    <Button
-                        variant="outlined"
-                        sx={{ pointerEvents: "none", borderRadius: theme.customShape.btn, borderColor: "#C7E4FF" }}
-                    >
-                        JavaScript
-                    </Button>
-                    <Button
-                        variant="outlined"
-                        sx={{ pointerEvents: "none", borderRadius: theme.customShape.btn, borderColor: "#C7E4FF" }}
-                    >
-                        Agular
-                    </Button>
-                    <Button
-                        variant="outlined"
-                        sx={{ pointerEvents: "none", borderRadius: theme.customShape.btn, borderColor: "#C7E4FF" }}
-                    >
-                        React Native
-                    </Button>
-                    <Button
-                        variant="outlined"
-                        sx={{ pointerEvents: "none", borderRadius: theme.customShape.btn, borderColor: "#C7E4FF" }}
-                    >
-                        Node Js
-                    </Button>
+                    {tags?.split(",").map((tag) => (
+                        <Button
+                            key={tag}
+                            variant="outlined"
+                            sx={{
+                                pointerEvents: "none",
+                                borderRadius: theme.customShape.btn,
+                                borderColor: "#C7E4FF",
+                                textTransform: "none",
+                            }}
+                        >
+                            {tag}
+                        </Button>
+                    ))}
                 </Stack>
             </Stack>
         </Box>
