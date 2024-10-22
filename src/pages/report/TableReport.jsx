@@ -7,7 +7,6 @@ import { Box, Typography, CircularProgress } from "@mui/material";
 
 // Custom Import
 import TableCustom from "../../components/TableCustom";
-import NoRecordData from "../../components/NoRecordData";
 import { TableAvatars } from "../../components/avartars/TableAvatars";
 
 // Fetching Data Import
