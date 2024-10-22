@@ -11,6 +11,7 @@ import MenuSelection from "../../components/TableAction/MenuSelection";
 import FormatYear from "../../utils/formatDate";
 import ProfileEarnerModal from "./ProfileEarnerModal";
 import InviteUserModal from "../../components/modals/InviteUserModal";
+import { TableAvatars } from "../../components/avartars/TableAvatars";
 
 // Fetching Data Import
 import { useFetchEarnerQuery, useDeleteEarnerByIdMutation } from "../../store/api/earnerManagement/earnerApis";
@@ -138,7 +139,7 @@ const TableEarner = () => {
         },
         {
             name: "Name",
-            selector: (row) => row.name || "N/A",
+            selector: (row) => <TableAvatars profileImage={row.User.profileImage} name={row.name} />
         },
         {
             name: "Email",
