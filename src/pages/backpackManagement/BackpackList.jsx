@@ -6,16 +6,17 @@ import BadgeListCard from "../../components/BadgeListCard";
 import { Pagination, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
-const BackpackList = () => {
+const BackpackList = ({ badges }) => {
     const [page, setPage] = useState(1);
     const [limit] = useState(10);
     const navigate = useNavigate();
-    const { earnerData } = useSelector((state) => state.global);
+    const { roleId, earnerData } = useSelector((state) => state.global);
     const earnerId = earnerData?.id;
     const isSmallScreen = window.innerWidth < 600;
 
     const { data: badgeClaim, isLoading } = useFetchBadgeByEarnerQuery({ earnerId, page, limit }, { skip: !earnerId });
-    const badgeClaims = badgeClaim?.badgeClasses;
+    // const badgeClaims = badgeClaim?.badgeClasses;
+    console.log(badges);
 
     // UseEffect to update the URL with page and limit query params
     useEffect(() => {
@@ -49,7 +50,7 @@ const BackpackList = () => {
                 minHeight: isSmallScreen ? "auto" : "900px",
             }}
         >
-            <BadgeListCard badges={badgeClaims || []} onView={handleView} total={badgeClaim?.totalRecords} />
+            <BadgeListCard badges={badges} onView={handleView} total={badgeClaim?.totalRecords} roleId={roleId} />
             <Box sx={{ display: "flex", justifyContent: "end", marginY: 2 }}>
                 <Pagination
                     count={totalPages || 1}
