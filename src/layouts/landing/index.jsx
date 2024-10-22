@@ -3,23 +3,21 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useCheckAuthQuery } from "../../store/api/auth/authApi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const LandingLayout = () => {
-    const { data, error, isLoading } = useCheckAuthQuery();
-    const user = data?.user || {};
+    const [authUser, setAuthUser] = useState(null);
+
+    // Fetch authentication data
+    const { data} = useCheckAuthQuery();
     const navigate = useNavigate();
 
+    // Store the authentication data once available
     useEffect(() => {
-        if (!isLoading) {
-            if (error) {
-                // Redirect to login page if there is an error or no user data
-                navigate("/");
-            } else if (!user) {
-                navigate("/");
-            }
+        if (data && data.user) {
+            setAuthUser(data.user);
         }
-    }, [isLoading, error, user, navigate]);
+    }, [data, navigate]);
 
     return (
         <Box width="100%" height="100%">
