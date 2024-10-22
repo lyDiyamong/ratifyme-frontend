@@ -30,12 +30,13 @@ const TableEarner = () => {
     const [sortOrder, setSortOrder] = useState("name");
     const [searchQuery, setSearchQuery] = useState("");
 
-    const { roleId, userId, issuerData } = useSelector((state) => state.global);
+    const { roleId, userId, issuerData, institutionData } = useSelector((state) => state.global);
     const [deleteEarner] = useDeleteEarnerByIdMutation();
     const issuerId = issuerData?.id;
     const { data: invitedUserData } = useFetchAllInvitedUserQuery();
     const [inviteEarner] = useInviteEarnerMutation();
 
+    const institutionId = institutionData?.id;
     // Local State for invited users
     const [invitedEarners, setInvitedEarners] = useState([]);
 
@@ -47,6 +48,7 @@ const TableEarner = () => {
     } = useFetchEarnerQuery({
         issuerId: roleId === 1 ? undefined : issuerId,
         roleId: roleId,
+        institutionId: roleId === 2 ? institutionId : undefined,
         page: currentPage,
         limit: rowsPerPage,
         sort: sortColumn,
@@ -73,12 +75,16 @@ const TableEarner = () => {
     // Earner data fetched from the API
     const earnerData = response?.data;
 
+    console.log(earnerData);
+
     // Display earner in the earner table by the specific role , role = 1 (Admin), role = 2 (institutionOwner), role = 3 (issuer)
     const filteredEarnerData =
         roleId === 1
             ? earnerData
             : earnerData?.filter((earner) =>
-                  roleId === 2 ? earner.Issuer?.Institution?.userId === userId : earner.Issuer?.userId === userId,
+                  roleId === 2
+                      ? earner.institutionId === institutionId 
+                      : earner.Issuer?.userId === userId,
               );
 
     // Handle View (open the modal)
@@ -139,7 +145,7 @@ const TableEarner = () => {
         },
         {
             name: "Name",
-            selector: (row) => <TableAvatars profileImage={row.User.profileImage} name={row.name} />
+            selector: (row) => <TableAvatars profileImage={row.User.profileImage} name={row.name} />,
         },
         {
             name: "Email",
@@ -214,13 +220,12 @@ const TableEarner = () => {
                     sortColumn={sortColumn}
                     sortOrder={sortOrder}
                     onSearch={handleSearch}
+                    addNewBtn={false}
                     sortOptions={[
                         { value: "name", label: "ASC ⬆" },
                         { value: "-name", label: "DES ⬇" },
                     ]}
-                >
-                   
-                </TableCustom>
+                ></TableCustom>
             )}
 
             {/* Invite Earner Modal */}
