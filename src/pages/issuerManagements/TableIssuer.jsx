@@ -7,7 +7,6 @@ import { Box, Typography, CircularProgress } from "@mui/material";
 
 // Custom Import
 import TableCustom from "../../components/TableCustom";
-import NoRecordData from "../../components/NoRecordData";
 import InviteUserModal from "../../components/modals/InviteUserModal";
 import { useFetchInstitutionStatsQuery } from "../../store/api/reports/institutionStatApis";
 import { useInviteIssuerMutation, useFetchAllInvitedUserQuery } from "../../store/api/userManagement/inviteUserApi";
@@ -167,8 +166,6 @@ const TableIssuer = () => {
                         setCurrentPage(1); 
                     }} 
                 >
-                    {/* Show NoRecordData inside the table when there's no data */}
-                    {filteredData.length === 0 && <NoRecordData />}
                 </TableCustom>
             )}
 

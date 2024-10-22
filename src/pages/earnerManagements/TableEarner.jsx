@@ -1,4 +1,5 @@
 // React Library
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
 // MUI Import
@@ -9,12 +10,10 @@ import TableCustom from "../../components/TableCustom";
 import MenuSelection from "../../components/TableAction/MenuSelection";
 import FormatYear from "../../utils/formatDate";
 import ProfileEarnerModal from "./ProfileEarnerModal";
-import NoRecordData from "../../components/NoRecordData";
+import InviteUserModal from "../../components/modals/InviteUserModal";
 
 // Fetching Data Import
 import { useFetchEarnerQuery, useDeleteEarnerByIdMutation } from "../../store/api/earnerManagement/earnerApis";
-import { useSelector } from "react-redux";
-import InviteUserModal from "../../components/modals/InviteUserModal";
 import { useInviteEarnerMutation, useFetchAllInvitedUserQuery } from "../../store/api/userManagement/inviteUserApi";
 
 // ============ Start Table Earner Modal ============
@@ -209,6 +208,7 @@ const TableEarner = () => {
                     rowsPerPage={rowsPerPage}
                     onPageChange={handlePageChange}
                     onRowsPerPageChange={handleRowsPerPageChange}
+                    isSortable={isSortable}
                     onSortChange={handleSortChange}
                     sortColumn={sortColumn}
                     sortOrder={sortOrder}
@@ -217,11 +217,8 @@ const TableEarner = () => {
                         { value: "name", label: "ASC ⬆" },
                         { value: "-name", label: "DES ⬇" },
                     ]}
-                    isSortable={isSortable}
-
                 >
-                    {/* Display NoRecordData inside the table when no earners match the search query */}
-                    {filteredEarnerData?.length === 0 && <NoRecordData />}
+                   
                 </TableCustom>
             )}
 

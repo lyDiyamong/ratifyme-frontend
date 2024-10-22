@@ -1,5 +1,6 @@
 // ============ Start TableCustom Component ============
 // React Library
+import { useState } from "react";
 import DataTable from "react-data-table-component";
 
 // MUI Imports
@@ -15,14 +16,13 @@ import {
     IconButton,
     InputAdornment,
 } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import SwapVertIcon from "@mui/icons-material/SwapVert";
+import { SearchOutlined } from "@mui/icons-material";
 
 // Custom Imports
 import MenuSelection from "./TableAction/MenuSelection";
 import theme from "../assets/themes/index";
-import AddIcon from "@mui/icons-material/Add";
-import { SearchOutlined } from "@mui/icons-material";
-import SwapVertIcon from "@mui/icons-material/SwapVert";
-import { useState } from "react";
 import NoRecordData from "./NoRecordData";
 
 // Custom styling for DataTable
@@ -194,7 +194,7 @@ const TableCustom = ({
                 columns={dynamicColumns}
                 data={data}
                 defaultSortFieldId={1}
-                sortDirection={sortOrder === "name" ? "asc" : "desc"} // Adjust this logic based on your sort order
+                sortDirection={sortOrder === "name" ? "asc" : "desc"}
                 onSort={(column) => {
                     if (onSortChange) {
                         onSortChange(column.selector);
