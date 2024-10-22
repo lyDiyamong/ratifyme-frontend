@@ -45,9 +45,24 @@ export const earnerApi = createApi({
             }),
             providesTags: ["Earner"],
         }),
+        // Fetching By earner id and achievement id
         fetchEarnerAchieById: builder.query({
             query: ({ achieveId, earnerId }) => ({
                 url: `/earners/earnerAchievement/${achieveId}/earner/${earnerId}`,
+                method: "GET",
+            }),
+            providesTags: ["Earner"],
+        }),
+        fetchEarnerAchieveByUid: builder.query({
+            query: ({ credId }) => ({
+                url: `/earners/earnerAchievementByUid/${credId}`,
+                method: "GET",
+            }),
+            providesTags: ["Earner"],
+        }),
+        fetchAchieveByid: builder.query({
+            query: ({ achievementId }) => ({
+                url: `/earners/achievementById/${achievementId}`,
                 method: "GET",
             }),
             providesTags: ["Earner"],
@@ -104,4 +119,6 @@ export const {
     useUpdateAcademicBackgroundByIdMutation,
     useCreateAcademicBackgroundMutation,
     useDeleteAcademicBackgroundByIdMutation,
+    useFetchEarnerAchieveByUidQuery,
+    useFetchAchieveByidQuery
 } = earnerApi;
