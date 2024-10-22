@@ -10,7 +10,7 @@ import TableCustom from "../../components/TableCustom";
 import InviteUserModal from "../../components/modals/InviteUserModal";
 import { useFetchInstitutionStatsQuery } from "../../store/api/reports/institutionStatApis";
 import { useInviteIssuerMutation, useFetchAllInvitedUserQuery } from "../../store/api/userManagement/inviteUserApi";
-
+import { TableAvatars } from "../../components/avartars/TableAvatars";
 // ============ Start Table Issuer Modal ============
 const TableIssuer = () => {
     // State for controlling dialog
@@ -58,6 +58,7 @@ const TableIssuer = () => {
                 institutionName: institution.institutionName,
                 issuerId: issuer.id,
                 issuerName: `${issuer.User.firstName} ${issuer.User.lastName}`,
+                issuerImage: issuer.User.profileImage,
                 issuerEmail: issuer.User.email,
                 totalBadges: issuer.BadgeClasses?.length || 0,
                 totalEarners: issuer.Earners?.length || 0,
@@ -109,7 +110,7 @@ const TableIssuer = () => {
     // Issuer Columns based on role
     const getIssuerColumns = () => {
         const commonColumns = [
-            { name: "Issuer Name", selector: (row) => row.issuerName || "N/A", sortable: true },
+            
             { name: "Issuer Email", selector: (row) => row.issuerEmail || "N/A", sortable: true },
             { name: "Total Badge", selector: (row) => row.totalBadges, sortable: true },
             { name: "Total Earner", selector: (row) => row.totalEarners, sortable: true },
@@ -119,6 +120,7 @@ const TableIssuer = () => {
         if (roleId === 1) {
             return [
                 { name: "No. ", selector: (row, index) => index + 1 || "N/A" },
+                { name: "Issuer Name", selector: (row) =><TableAvatars profileImage={row.issuerImage} name={row.issuerName} /> || "N/A", sortable: true },
                 { name: "Organization Name", selector: (row) => row.institutionName || "N/A", sortable: true },
                 ...commonColumns,
             ];
@@ -126,6 +128,7 @@ const TableIssuer = () => {
         if (roleId === 2) {
             return [
                 { name: "No. ", selector: (row, index) => index + 1 || "N/A" },
+                { name: "Issuer Name", selector: (row) => row.issuerName || "N/A", sortable: true },
                 ...commonColumns,
             ];
         }
@@ -150,7 +153,6 @@ const TableIssuer = () => {
             ) : (
                 <TableCustom
                     title="Issuer List"
-                    // data={filteredData}
                     data={paginatedData}
                     columns={getIssuerColumns()}
                     onSearch={setSearchQuery}
