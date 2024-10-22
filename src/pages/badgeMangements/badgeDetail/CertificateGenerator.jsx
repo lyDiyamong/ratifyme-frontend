@@ -35,13 +35,14 @@ const CertificateGenerator = ({ badge }) => {
     // Get reference of HTMLELEMENT
     const certificateRef = useRef();
     // Achievement Id
-    const achieveId = badge.Achievements.find(({ badgeClassId }) => badgeClassId === badge.id).id;
+    const achieveId = badge?.Achievements?.find(({ badgeClassId }) => badgeClassId === badge.id)?.id;
 
     // Fetch Earner achievement hook
     const { data: earnerAchieResponse } = useFetchEarnerAchieByIdQuery({ achieveId, earnerId });
     const earnerAchieveData = earnerAchieResponse?.data;
     const earnerAchieveStatus = earnerAchieResponse?.data?.status;
     const isCertUpload = earnerAchieResponse?.data?.certUrlPdf ? true : false;
+
     // Upload Certificate hook
     const [uploadCert, { isLoading: certiLoading, isError: uploadCertError }] = useUploadCertiMutation();
 
@@ -55,7 +56,7 @@ const CertificateGenerator = ({ badge }) => {
         const jpegDataUrl = await toJpeg(certificateRef.current, { quality: 0.95 });
         const blob = await fetch(jpegDataUrl).then((res) => res.blob());
         const formData = new FormData();
-        formData.append("certFile", blob, `certificate-${userInfo?.username}`);
+        formData.append("certFile", blob, `${earnerAchieResponse?.data?.credId}`);
 
         // Handle errors using useCatchStatus instead of try-catch
         await uploadCert({ achieveId, earnerId, uploadedCert: formData })
