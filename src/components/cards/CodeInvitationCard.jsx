@@ -7,12 +7,13 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const CodeInvitationCard = () => {
-    const { roleId, institutionData, issuerData, userInfo } = useSelector((state) => state.global);
+    const { roleId, institutionData, issuerData, userInfo, earnerData } = useSelector((state) => state.global);
     let position = userInfo?.Role?.name;
 
     if (position === "institutionOwner") {
         position = "Institution owner";
     }
+
     return (
         <Stack
             sx={{
@@ -66,7 +67,7 @@ const CodeInvitationCard = () => {
                             ? "Ratifyme"
                             : roleId === 3
                             ? issuerData?.Institution?.institutionName
-                            : institutionData?.institutionName}
+                            : institutionData?.institutionName || earnerData?.Issuer?.Institution?.institutionName}
                     </Typography>
                     <SvgIcon
                         component={PasswordOutlined}
@@ -83,7 +84,7 @@ const CodeInvitationCard = () => {
                         <Stack direction="row" spacing={1} alignItems="center" sx={{ fontSize: 14 }}>
                             <Typography>{roleId === 3 ? "Your Code (Issuer): " : "Organization Code: "}</Typography>
                             <Typography variant="h3" fontWeight="bold" letterSpacing={2}>
-                                {roleId === 3 ? issuerData?.code : institutionData?.code}
+                                {roleId === 3 ? issuerData?.code : institutionData?.code || earnerData?.Issuer?.Institution?.code}
                             </Typography>
                         </Stack>
                     )}
