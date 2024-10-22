@@ -166,5 +166,5 @@ export const {
     useVerifyResetTokenQuery,
     useResetPasswordMutation,
     useLogoutMutation,
-    useUpdatePasswordMutation
+    useUpdatePasswordMutation,
 } = authApi;
