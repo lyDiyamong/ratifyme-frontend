@@ -9,21 +9,20 @@ import { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import { Pagination, Typography } from "@mui/material";
 
-const AchievementList = () => {
-    const [page, setPage] = useState(1);
-    const [limit] = useState(10);
+export const AchievementList = ({ badges, total, onPage, page, limit, result }) => {
     const navigate = useNavigate();
     const { earnerData } = useSelector((state) => state.global);
     const earnerId = earnerData?.id;
     const isSmallScreen = window.innerWidth < 600;
 
     // Fetch claim badges based on the earner's ID, page, and limit
-    const { data: badgeClaim, isLoading } = useFetchClaimBadgeByEarnerQuery(
-        { earnerId, page, limit },
-        { skip: !earnerId },
-    );
+    const { data: badgeClaim, isLoading } = useFetchClaimBadgeByEarnerQuery({ earnerId, page, limit }, { skip: !earnerId });
 
     const badgeClaims = badgeClaim?.badgeClasses;
+
+    console.log(badges);
+    console.log(badgeClaims);
+    console.log(total);
 
     // UseEffect to update URL query parameters when page or limit changes
     useEffect(() => {
@@ -38,13 +37,12 @@ const AchievementList = () => {
     };
 
     // Pagination logic
-    const onPage = (newPage) => {
-        setPage(newPage);
-    };
+    // const onPage = (newPage) => {
+    //     setPage(newPage);
+    // };
 
     // Calculate total pages for pagination
-    const totalPages = Math.ceil(badgeClaim?.totalRecords / limit);
-    console.log(badgeClaims?.length);
+    const totalPages = Math.ceil(total / limit);
     // Handle loading state
     if (isLoading) {
         return <Typography>Loading...</Typography>;
@@ -60,7 +58,7 @@ const AchievementList = () => {
                 minHeight: isSmallScreen ? "auto" : "900px",
             }}
         >
-            <BadgeListCard badges={badgeClaims || []} onView={handleView} total={badgeClaim?.totalRecords || ""} />
+            <BadgeListCard badges={badges} onView={handleView} total={badges.length !== total ? result : total} />
             <Box sx={{ display: "flex", justifyContent: "end", marginY: 2 }}>
                 <Pagination
                     count={totalPages || 1}
@@ -74,5 +72,3 @@ const AchievementList = () => {
         </Box>
     );
 };
-
-export default AchievementList;
