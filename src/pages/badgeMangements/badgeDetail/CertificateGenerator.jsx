@@ -41,7 +41,7 @@ const CertificateGenerator = ({ badge }) => {
     const { data: earnerAchieResponse } = useFetchEarnerAchieByIdQuery({ achieveId, earnerId });
     const earnerAchieveData = earnerAchieResponse?.data;
     const earnerAchieveStatus = earnerAchieResponse?.data?.status;
-    const isCertUpload = earnerAchieResponse?.data?.certUrl ? true : false;
+    const isCertUpload = earnerAchieResponse?.data?.certUrlPdf ? true : false;
     // Upload Certificate hook
     const [uploadCert, { isLoading: certiLoading, isError: uploadCertError }] = useUploadCertiMutation();
 
@@ -59,7 +59,7 @@ const CertificateGenerator = ({ badge }) => {
 
         // Handle errors using useCatchStatus instead of try-catch
         await uploadCert({ achieveId, earnerId, uploadedCert: formData })
-            .unwrap() // Access the success response
+            .unwrap()
             .then((response) => {
                 if (response) {
                     window.open(response?.uploadCert, "_blank");
@@ -71,7 +71,7 @@ const CertificateGenerator = ({ badge }) => {
 
     // View handling
     const handleViewCert = () => {
-        window.open(earnerAchieResponse?.data?.certUrl, "_blank");
+        window.open(earnerAchieResponse?.data?.certUrlPdf, "_blank");
     };
 
     // Congrat handling
