@@ -1,7 +1,7 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Stack, Typography } from "@mui/material";
 import theme from "../../../assets/themes";
 
-const ShareSocialModal = ({ open, handleClose }) => {
+const ShareSocialModal = ({ open, handleClose, credUrl }) => {
     return (
         <Dialog open={open} onClose={handleClose} fullWidth>
             <DialogTitle variant="h4" fontWeight={theme.fontWeight.semiBold} my={2}>
@@ -13,7 +13,7 @@ const ShareSocialModal = ({ open, handleClose }) => {
                 <Stack gap={2}>
                     <Stack
                         component="a"
-                        href={`https://www.linkedin.com/sharing/share-offsite/?url=https://directly-upload-s3-bucket-test.s3.ap-southeast-2.amazonaws.com/Certificate/certificate.png&text=Thrilled%20to%20have%20earned%20my%20Unity%20Pro%3A%20Advanced%20Game%20Development%20Techniques%20credential%20from%20CodeDevs!%20Grateful%20for%20the%20opportunity%20to%20grow%20and%20achieve%20this%20milestone.%20%23lifelonglearning%20%23achievement`}
+                        href={`https://www.linkedin.com/sharing/share-offsite/?url=${credUrl}&text=Grateful%20for%20the%20opportunity%20to%20grow%20and%20achieve%20this%20milestone.%20%23lifelonglearning%20%23achievement%20%23ratifyme%20%23openbadge`}
                         target="_blank"
                         flexDirection="row"
                         sx={{

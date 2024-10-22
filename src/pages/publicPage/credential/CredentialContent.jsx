@@ -9,7 +9,7 @@ import BadgeDetailsCred from "./BadgeDetailsCred";
 import SkillsCred from "./SkillsCred";
 import AchievementTypesCred from "./AchievementTypesCred";
 
-const CredentialContent = () => {
+const CredentialContent = ({ earnerData, achieveData, credUrl }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleOpenModal = () => setIsModalOpen(true);
@@ -63,7 +63,7 @@ const CredentialContent = () => {
                             </Button>
 
                             {/* Share Modal Component */}
-                            <ShareSocialModal open={isModalOpen} handleClose={handleCloseModal} />
+                            <ShareSocialModal open={isModalOpen} handleClose={handleCloseModal} credUrl={credUrl} />
 
                             <Button
                                 component="a"

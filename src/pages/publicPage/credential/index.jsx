@@ -8,7 +8,7 @@ const Credential = () => {
         <Box>
             <ImageSwitcher />
             <LandingContainer>
-                <CredentialContent />
+                <CredentialContent earnerData={earnerData} achieveData={achieveData} credUrl={earnerAchieData?.credUrl}  />
             </LandingContainer>
         </Box>
     );
