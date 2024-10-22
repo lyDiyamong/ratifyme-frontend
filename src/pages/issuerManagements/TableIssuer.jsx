@@ -13,6 +13,7 @@ import { useInviteIssuerMutation, useFetchAllInvitedUserQuery } from "../../stor
 import { TableAvatars } from "../../components/avartars/TableAvatars";
 // ============ Start Table Issuer Modal ============
 const TableIssuer = () => {
+    const isSortable = true;
     // State for controlling dialog
     const [dialogOpen, setDialogOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
@@ -35,9 +36,7 @@ const TableIssuer = () => {
     useEffect(() => {
         if (invitedUserData && institutionData?.code) {
             const filteredIssuers =
-                invitedUserData.data?.filter(
-                    (user) => user.roleId === 3 && user.inviterCode === institutionData.code,
-                ) || [];
+                invitedUserData.data?.filter((user) => user.roleId === 3 && user.inviterCode === institutionData.code) || [];
 
             const sortedIssuers = filteredIssuers.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
@@ -110,7 +109,6 @@ const TableIssuer = () => {
     // Issuer Columns based on role
     const getIssuerColumns = () => {
         const commonColumns = [
-            
             { name: "Issuer Email", selector: (row) => row.issuerEmail || "N/A", sortable: true },
             { name: "Total Badge", selector: (row) => row.totalBadges, sortable: true },
             { name: "Total Earner", selector: (row) => row.totalEarners, sortable: true },
@@ -120,7 +118,10 @@ const TableIssuer = () => {
         if (roleId === 1) {
             return [
                 { name: "No. ", selector: (row, index) => index + 1 || "N/A" },
-                { name: "Issuer Name", selector: (row) => <TableAvatars profileImage={row.issuerImage} name={row.issuerName} /> || "N/A" },
+                {
+                    name: "Issuer Name",
+                    selector: (row) => <TableAvatars profileImage={row.issuerImage} name={row.issuerName} /> || "N/A",
+                },
                 { name: "Organization Name", selector: (row) => row.institutionName || "N/A", sortable: true },
                 ...commonColumns,
             ];
@@ -128,7 +129,11 @@ const TableIssuer = () => {
         if (roleId === 2) {
             return [
                 { name: "No. ", selector: (row, index) => index + 1 || "N/A" },
-                { name: "Issuer Name", selector: (row) => <TableAvatars profileImage={row.issuerImage} name={row.issuerName} /> || "N/A", sortable: true },
+                {
+                    name: "Issuer Name",
+                    selector: (row) => <TableAvatars profileImage={row.issuerImage} name={row.issuerName} /> || "N/A",
+                    sortable: true,
+                },
                 ...commonColumns,
             ];
         }
@@ -139,10 +144,7 @@ const TableIssuer = () => {
     const filteredIssuerData = filterIssuerData(response?.data);
     const flattenedData = flattenData(filteredIssuerData);
     const filteredData = searchFilteredData(flattenedData);
-    const paginatedData = filteredData.slice(
-        (currentPage - 1) * rowsPerPage,
-        (currentPage - 1) * rowsPerPage + rowsPerPage
-    );
+    const paginatedData = filteredData.slice((currentPage - 1) * rowsPerPage, (currentPage - 1) * rowsPerPage + rowsPerPage);
     // Render Component
     return (
         <Box>
@@ -156,19 +158,18 @@ const TableIssuer = () => {
                     data={paginatedData}
                     columns={getIssuerColumns()}
                     onSearch={setSearchQuery}
-                    addNewBtn={true} 
+                    addNewBtn={false}
                     onAddNew={() => setDialogOpen(true)}
                     pagination
                     totalRows={filteredData.length}
-                    currentPage={currentPage} 
-                    rowsPerPage={rowsPerPage} 
-                    onPageChange={setCurrentPage} 
+                    currentPage={currentPage}
+                    rowsPerPage={rowsPerPage}
+                    onPageChange={setCurrentPage}
                     onRowsPerPageChange={(newRowsPerPage) => {
                         setRowsPerPage(newRowsPerPage);
-                        setCurrentPage(1); 
-                    }} 
-                >
-                </TableCustom>
+                        setCurrentPage(1);
+                    }}
+                ></TableCustom>
             )}
 
             {/* Invite Issuer Modal */}
