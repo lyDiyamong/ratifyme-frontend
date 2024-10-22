@@ -17,9 +17,9 @@ import PageLoading from "../../components/loading/PageLoading";
 import useCatchStatus from "../../hooks/useCatchStatus";
 import AlertMessage from "../../components/alert/AlertMessage";
 import InviteUserStatus from "../../components/chips/inviteUserStatus";
-import NoRecordData from "../../components/NoRecordData";
 
 const TableEarnerInvitation = () => {
+    const isSortable = true;
     // ===================== State Management =====================
     const [dialogOpen, setDialogOpen] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
@@ -43,59 +43,99 @@ const TableEarnerInvitation = () => {
     // ===================== Redux State =====================
     const { issuerData, roleId } = useSelector((state) => state.global);
     const issuerId = issuerData?.id;
+    const inviterCode = issuerData?.code;
 
     // ===================== API Hooks =====================
     const { data: invitedUserData, refetch: refetchInvitedUsers } = useFetchAllInvitedUserQuery({
+        inviterCode: roleId === 3 ? inviterCode : undefined,
+        roleId: roleId,
         page: currentPage,
         limit: rowsPerPage,
         sort: sortColumn,
         order: sortOrder,
         search: searchQuery,
     });
+
+
+
     const [inviteEarner, { isLoading, isError, error, isSuccess: apiSuccess, data: newEarner }] = useInviteEarnerMutation();
     const [resendInviteEarner] = useResendInviteEarnerMutation();
     const [deleteInvitedUser] = useDeleteInvitedUserMutation();
 
     // ===================== Fetch and Sort Invited Earners =====================
+    // useEffect(() => {
+    //     if (invitedUserData && issuerData?.code) {
+    //         const filteredEarners =
+    //             invitedUserData.data?.filter((user) => user.roleId === 4 && user.inviterCode === issuerData.code) || [];
+    //         const sortedEarners = filteredEarners.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    //         setInvitedEarners(sortedEarners);
+    //     }
+    // }, [invitedUserData, issuerData]);
+
     useEffect(() => {
-        if (invitedUserData && issuerData?.code) {
-            const filteredEarners =
-                invitedUserData.data?.filter((user) => user.roleId === 4 && user.inviterCode === issuerData.code) || [];
-            const sortedEarners = filteredEarners.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-            setInvitedEarners(sortedEarners);
+        if (invitedUserData) {
+            // Directly use the invitedUserData.data without filtering or sorting
+            setInvitedEarners(invitedUserData.data || []);
         }
-    }, [invitedUserData, issuerData]);
+    }, [invitedUserData]);
 
     // ===================== Handle Form Submission =====================
+    // const handleInviteSubmit = async (data, reset) => {
+    //     try {
+    //         const newEarnerResponse = await inviteEarner({ issuerId, email: data.email }).unwrap();
+
+    //         // Update the invited earners list immediately
+    //         setInvitedEarners((prev) =>
+    //             [
+    //                 {
+    //                     inviteEmail: newEarnerResponse.inviteEmail || data.email,
+    //                     status: false,
+    //                     createdAt: new Date().toISOString(),
+    //                 },
+    //                 ...prev,
+    //             ].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+    //         );
+
+    //         // Ensure success and message states are set together
+    //         setIsSuccess(true);
+    //         setMessage(newEarnerResponse?.message || "Invitation sent successfully!");
+
+    //         reset();
+    //     } catch (err) {
+    //         setIsSuccess(false);
+    //         setMessage(err?.data?.message || "Failed to send invitation. Please try again.");
+    //     } finally {
+    //         setDialogOpen(false);
+    //     }
+    // };
     const handleInviteSubmit = async (data, reset) => {
-        try {
-            const newEarnerResponse = await inviteEarner({ issuerId, email: data.email }).unwrap();
+    try {
+        const newEarnerResponse = await inviteEarner({ issuerId, email: data.email }).unwrap();
 
-            // Update the invited earners list immediately
-            setInvitedEarners((prev) =>
-                [
-                    {
-                        inviteEmail: newEarnerResponse.inviteEmail || data.email,
-                        status: false,
-                        createdAt: new Date().toISOString(),
-                    },
-                    ...prev,
-                ].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
-            );
+        // Update the invited earners list immediately without filtering
+        setInvitedEarners((prev) => [
+            {
+                inviteEmail: newEarnerResponse.inviteEmail || data.email,
+                status: false,
+                createdAt: new Date().toISOString(),
+            },
+            ...prev,
+        ]);
 
-            // Ensure success and message states are set together
-            setIsSuccess(true);
-            setMessage(newEarnerResponse?.message || "Invitation sent successfully!");
+        // Ensure success and message states are set together
+        setIsSuccess(true);
+        setMessage(newEarnerResponse?.message || "Invitation sent successfully!");
 
-            reset();
-        } catch (err) {
-            setIsSuccess(false);
-            setMessage(err?.data?.message || "Failed to send invitation. Please try again.");
-        } finally {
-            setDialogOpen(false);
-        }
-    };
+        reset();
+    } catch (err) {
+        setIsSuccess(false);
+        setMessage(err?.data?.message || "Failed to send invitation. Please try again.");
+    } finally {
+        setDialogOpen(false);
+    }
+};
 
+    // console.log(invitedEarners);
     // ===================== Handle API Response =====================
     useEffect(() => {
         if (apiSuccess) {
@@ -190,9 +230,8 @@ const TableEarnerInvitation = () => {
                     </Typography>
                 </Box>
             ),
-            sortable: true,
         },
-        { name: "Invited At", selector: (row) => FormatDate(row.createdAt), sortable: true },
+        { name: "Invited At", selector: (row) => FormatDate(row.createdAt) },
         {
             name: "Status",
             cell: (row) => {
@@ -204,7 +243,6 @@ const TableEarnerInvitation = () => {
                     <InviteUserStatus status={status} isAccountCreated={isAccountCreated} expiredInvitation={expiredInvitation} />
                 );
             },
-            sortable: true,
         },
         {
             name: "Actions",
@@ -312,9 +350,8 @@ const TableEarnerInvitation = () => {
                 addNewLabel="Invite Earner"
                 addNewBtn={roleId === 3 ? true : false}
                 onAddNew={() => setDialogOpen(true)}
-                sortIcon={true}
                 pagination
-                totalRows={invitedEarners?.total || 0}
+                totalRows={invitedUserData?.total || 0}
                 currentPage={currentPage}
                 rowsPerPage={rowsPerPage}
                 onPageChange={handlePageChange}
@@ -323,13 +360,12 @@ const TableEarnerInvitation = () => {
                 sortColumn={sortColumn}
                 sortOrder={sortOrder}
                 onSearch={handleSearch}
+                isSortable={isSortable}
                 sortOptions={[
                     { value: "inviteEmail", label: "ASC ⬆" },
                     { value: "-inviteEmail", label: "DES ⬇" },
                 ]}
-            >
-                {invitedEarners.length === 0 && <NoRecordData />}
-            </TableCustom>
+            ></TableCustom>
         </Box>
     );
 };
