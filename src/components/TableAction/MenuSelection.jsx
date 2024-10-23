@@ -6,7 +6,7 @@ import { Box, Menu, IconButton } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 // Custom Import
-import ActionButton from "./DataTableActionButton";
+import ActionButton from "./ActionButton";
 /**
  * MenuSelection Component
  *
