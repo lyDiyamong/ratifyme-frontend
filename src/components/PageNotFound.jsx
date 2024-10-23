@@ -1,6 +1,7 @@
 import { Box, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import PageNotFoundImage from "../assets/images/PageNotFoundWise.png";
+import theme from "../assets/themes";
 
 const PageNotFound = () => {
     const navigate = useNavigate();
@@ -25,9 +26,9 @@ const PageNotFound = () => {
                 variant="contained"
                 color="primary"
                 onClick={() => navigate("/")}
-                sx={{ mt: 2, color: "white", textTransform: "none" }}
+                sx={{ mt: 2, color: "white", textTransform: "none", fontWeight: theme.fontWeight.bold }}
             >
-                Back to Home
+                Back to RatifyME
             </Button>
         </Box>
     );
