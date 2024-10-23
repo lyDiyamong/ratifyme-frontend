@@ -163,8 +163,7 @@ verifyme-frontend/
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](https://www.notion.so/technology-team/LICENSE) file for details.
-
+This project is licensed under the RatifyMe by Tech_A Team License.
 ## Contact
 
 For any questions or feedback, feel free to reach out:
