@@ -18,6 +18,7 @@ import useCatchStatus from "../../hooks/useCatchStatus";
 import AlertMessage from "../../components/alert/AlertMessage";
 import InviteUserStatus from "../../components/chips/inviteUserStatus";
 import NoRecordData from "../../components/NoRecordData";
+import getSortOptions from "../../components/GetSortOptions";
 
 const TableIssuerInvitation = () => {
     const isSortable = true;
@@ -78,46 +79,15 @@ const TableIssuerInvitation = () => {
             // Directly use the invitedUserData.data without filtering or sorting
             const filteredIssuers =
                 invitedUserData.data?.filter((user) => user.roleId === 3 && user.inviterCode === institutionData.code) || [];
-            
+
             setInvitedIssuers(filteredIssuers);
         }
     }, [invitedUserData, institutionData]);
     
-
-    // ===================== Handle Form Submission =====================
-    // const handleInviteSubmit = async (data, reset) => {
-    //     try {
-    //         const newIssuerResponse = await inviteIssuer({ institutionId, email: data.email }).unwrap();
-
-    //         // Update the invited issuers list immediately
-    //         setInvitedIssuers((prev) =>
-    //             [
-    //                 {
-    //                     inviteEmail: newIssuerResponse.inviteEmail || data.email,
-    //                     status: false,
-    //                     createdAt: new Date().toISOString(),
-    //                 },
-    //                 ...prev,
-    //             ].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
-    //         );
-
-    //         // Ensure success and message states are set together
-    //         setIsSuccess(true);
-    //         setMessage(newIssuerResponse?.message || "Invitation sent successfully!");
-
-    //         reset(); // Reset the form fields
-    //     } catch (err) {
-    //         setIsSuccess(false);
-    //         setMessage(err?.data?.message || "Failed to send invitation. Please try again.");
-    //     } finally {
-    //         setDialogOpen(false); // Close dialog whether success or error
-    //     }
-    // };
-
     const handleInviteSubmit = async (data, reset) => {
         try {
             const newIssuerResponse = await inviteIssuer({ institutionId, email: data.email }).unwrap();
-    
+
             // Update the invited issuers list immediately without sorting
             setInvitedIssuers((prev) => [
                 {
@@ -127,11 +97,11 @@ const TableIssuerInvitation = () => {
                 },
                 ...prev,
             ]);
-    
+
             // Ensure success and message states are set together
             setIsSuccess(true);
             setMessage(newIssuerResponse?.message || "Invitation sent successfully!");
-    
+
             reset(); // Reset the form fields
         } catch (err) {
             setIsSuccess(false);
@@ -140,7 +110,6 @@ const TableIssuerInvitation = () => {
             setDialogOpen(false); // Close dialog whether success or error
         }
     };
-    
 
     console.log(invitedUserData?.total);
     console.log(invitedIssuers);
@@ -366,10 +335,7 @@ const TableIssuerInvitation = () => {
                 sortOrder={sortOrder}
                 onSearch={handleSearch}
                 isSortable={isSortable}
-                sortOptions={[
-                    { value: "inviteEmail", label: "ASC ⬆" },
-                    { value: "-inviteEmail", label: "DES ⬇" },
-                ]}
+                sortOptions={getSortOptions("inviteEmail", "-inviteEmail")}
             >
                 {invitedIssuers.length === 0 && <NoRecordData />}
             </TableCustom>
