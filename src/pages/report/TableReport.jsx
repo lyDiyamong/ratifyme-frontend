@@ -74,12 +74,12 @@ const TableReport = () => {
                       selector: (row, index) => index + 1 || "N/A",
                       sortable: false,
                   },
-                {
-                    name: "Organization Name",
-                    selector: (row) => row.institutionName || "N/A", 
-                    sortable: true, 
-                    cell: (row) => <TableAvatars profileImage={row.institutionProfileImage} name={row.institutionName} />,
-                },
+                  {
+                      name: "Organization Name",
+                      selector: (row) => row.institutionName || "N/A",
+                      sortable: true,
+                      cell: (row) => <TableAvatars profileImage={row.institutionProfileImage} name={row.institutionName} />,
+                  },
                   {
                       name: "Total Issuer",
                       selector: (row) => row.Issuers.length || 0,
@@ -105,7 +105,9 @@ const TableReport = () => {
                   },
                   {
                       name: "Issuer Name",
-                      selector: row => <TableAvatars profileImage={row.issuerImage} name={row.issuerName}/> || "N/A",
+                      selector: (row) => row.issuerName || "N/A",
+                      sortable: true,
+                      cell: (row) => <TableAvatars profileImage={row.issuerImage} name={row.issuerName} />,
                   },
                   {
                       name: "Issuer Email",
@@ -146,8 +148,7 @@ const TableReport = () => {
                             setRowsPerPage(newRowsPerPage);
                             setCurrentPage(1);
                         }}
-                    >
-                    </TableCustom>
+                    ></TableCustom>
                 </>
             )}
         </Box>
