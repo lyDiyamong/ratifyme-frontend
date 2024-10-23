@@ -1,6 +1,6 @@
 import { Box, Stack } from "@mui/system";
 import theme from "../../../assets/themes";
-import { Avatar, Button, Tooltip, Typography } from "@mui/material";
+import { Avatar, Button, Chip, Tooltip, Typography } from "@mui/material";
 import { VerifiedRounded } from "@mui/icons-material";
 import IssuerSvg from "../../../assets/icons/IssuerSvg.svg";
 
@@ -61,22 +61,21 @@ const IssuerByCred = ({ IssuerName }) => {
             </Stack>
 
             <CustomTooltip title="RatifyMe confirms that this issuer is an officially registered organization.">
-                <Button
-                    startIcon={<VerifiedRounded />}
-                    variant="text"
+                <Chip
+                    icon={<VerifiedRounded color="#0AA4A5" sx={{ fontSize: 16 }} />}
+                    label="Verified"
+                    variant="outlined"
                     sx={{
                         color: "#0AA4A5",
                         backgroundColor: "#F3FAFA",
                         border: "1px solid #0AA4A5",
                         maxHeight: 25,
-                        cursor: "default",
                         "&:hover": {
                             cursor: "help",
                         },
+                        padding: "0 6px",
                     }}
-                >
-                    Verified
-                </Button>
+                />
             </CustomTooltip>
         </Box>
     );

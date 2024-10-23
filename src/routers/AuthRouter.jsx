@@ -16,6 +16,7 @@ import SuccessPayment from "../pages/prices/SuccessPayment";
 import EmailVerificationPage from "../pages/auth/EmailVerificationPage";
 import SignupSuccessPage from "../pages/auth/SignupSuccessPage";
 import NotFoundPage from "../pages/notFound";
+import PageNotFound from "../components/PageNotFound";
 
 const AuthRouter = () => {
     return (
@@ -33,6 +34,7 @@ const AuthRouter = () => {
                 <Route path="/invalid-reset-password" element={<ResetPasswordExpiredPage />} />
                 <Route path="/reset-password-success" element={<ResetPasswordSuccessPage />} />
                 <Route path="/success-payment/:paymentId" element={<SuccessPayment />} />
+                <Route path="/404" element={<PageNotFound />} />
             </Route>
             <Route path="*" element={<NotFoundPage />} />
         </Routes>

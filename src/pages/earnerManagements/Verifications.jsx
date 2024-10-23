@@ -13,7 +13,7 @@ const VerificationCheckUp = () => {
     const [isGray, setIsGray] = useState(false);
 
     //id TEST
-    const verificationId = 123;
+    // const verificationId = 123;
 
     //Handle open modal
     const handleOpen = () => {
@@ -33,7 +33,7 @@ const VerificationCheckUp = () => {
                 Open Verification Modal
             </Button>
 
-            <VerificationModal open={open} handleClose={handleClose} verificationId={verificationId} />
+            <VerificationModal open={open} handleClose={handleClose}  />
         </div>
     );
 };
