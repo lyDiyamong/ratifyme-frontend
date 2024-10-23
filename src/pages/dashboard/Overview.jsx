@@ -1,7 +1,8 @@
+// MUI import
+import { Box, Grid } from "@mui/material";
 //Custom Import
 import CardsList from "./OverviewCard";
 import Notification from "./Notification";
-import { Box, Grid } from "@mui/material";
 
 // ============ Start Overview Seciton ============
 const Overview = () => {

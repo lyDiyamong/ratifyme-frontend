@@ -1,4 +1,4 @@
-import * as React from "react";
+// Custom import
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -7,6 +7,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import ClassroomImage from "../../assets/images/classroom.jpg"; // Correctly imported image
 import theme from "../../assets/themes";
+
+// Api import
 import { useFetchEarnerQuery } from "../../store/api/earnerManagement/earnerApis";
 
 export default function IssuerCard() {
