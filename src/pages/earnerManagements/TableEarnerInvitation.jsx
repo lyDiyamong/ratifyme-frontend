@@ -17,6 +17,7 @@ import PageLoading from "../../components/loading/PageLoading";
 import useCatchStatus from "../../hooks/useCatchStatus";
 import AlertMessage from "../../components/alert/AlertMessage";
 import InviteUserStatus from "../../components/chips/inviteUserStatus";
+import getSortOptions from "../../components/GetSortOptions";
 
 const TableEarnerInvitation = () => {
     const isSortable = true;
@@ -361,10 +362,7 @@ const TableEarnerInvitation = () => {
                 sortOrder={sortOrder}
                 onSearch={handleSearch}
                 isSortable={isSortable}
-                sortOptions={[
-                    { value: "inviteEmail", label: "ASC ⬆" },
-                    { value: "-inviteEmail", label: "DES ⬇" },
-                ]}
+                sortOptions={getSortOptions("inviteEmail", "-inviteEmail")}
             ></TableCustom>
         </Box>
     );
