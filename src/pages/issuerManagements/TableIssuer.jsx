@@ -120,7 +120,9 @@ const TableIssuer = () => {
                 { name: "No. ", selector: (row, index) => index + 1 || "N/A" },
                 {
                     name: "Issuer Name",
-                    selector: (row) => <TableAvatars profileImage={row.issuerImage} name={row.issuerName} /> || "N/A",
+                    selector: (row) => row.issuerName || "N/A",
+                    sortable: true,
+                    cell: (row) => <TableAvatars profileImage={row.issuerImage} name={row.issuerName} />,
                 },
                 { name: "Organization Name", selector: (row) => row.institutionName || "N/A", sortable: true },
                 ...commonColumns,
@@ -131,8 +133,9 @@ const TableIssuer = () => {
                 { name: "No. ", selector: (row, index) => index + 1 || "N/A" },
                 {
                     name: "Issuer Name",
-                    selector: (row) => <TableAvatars profileImage={row.issuerImage} name={row.issuerName} /> || "N/A",
+                    selector: (row) => row.issuerName || "N/A",
                     sortable: true,
+                    cell: (row) => <TableAvatars profileImage={row.issuerImage} name={row.issuerName} />,
                 },
                 ...commonColumns,
             ];
