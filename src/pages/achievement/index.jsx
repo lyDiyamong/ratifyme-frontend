@@ -15,9 +15,11 @@ const AchievementManagement = () => {
     const { earnerData } = useSelector((state) => state.global);
 
     // Fetch badges using the search query and earner ID
-    const { data: badges } = useFetchBadgeByEarnerQuery(
-        earnerData ? { earnerId: earnerData.id, search: searchQuery, page, limit } : skipToken,
-    );
+    const {
+        data: badges,
+        isLoading,
+        isError,
+    } = useFetchBadgeByEarnerQuery(earnerData ? { earnerId: earnerData.id, search: searchQuery, page, limit } : skipToken);
 
     // State to store the result, initialized with totalRecords or 0
     const [result, setResult] = useState(badges?.totalRecords || 0);
@@ -56,6 +58,8 @@ const AchievementManagement = () => {
                 limit={limit || []}
                 page={page || []}
                 result={result || []}
+                isError={isError}
+                isLoading={isLoading}
             >
                 <AchievementList />
             </SearchBar>
