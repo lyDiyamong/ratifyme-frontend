@@ -3,7 +3,8 @@ import { Box } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
-export const getSortOptions = (ascValue, descValue) => [
+// Default export of the utility function
+const getSortOptions = (ascValue, descValue) => [
     {
         value: ascValue,
         label: (
@@ -23,3 +24,5 @@ export const getSortOptions = (ascValue, descValue) => [
         ),
     },
 ];
+
+export default getSortOptions;
