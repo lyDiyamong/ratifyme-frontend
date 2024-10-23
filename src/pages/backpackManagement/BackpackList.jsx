@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import BadgeListCard from "../../components/BadgeListCard";
 import { Pagination, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import PageLoading from "../../components/loading/PageLoading";
 
 const BackpackList = ({ badges, total, onPage, page, limit, result, isLoading, isError }) => {
     const navigate = useNavigate();
@@ -30,7 +31,7 @@ const BackpackList = ({ badges, total, onPage, page, limit, result, isLoading, i
 
     // Handle loading state
     if (isLoading) {
-        return <Typography>Loading...</Typography>;
+        return <PageLoading isLoading={isLoading} />;
     } else if (isError) {
         return <Typography>Error...</Typography>;
     }

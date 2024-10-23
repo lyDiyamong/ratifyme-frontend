@@ -7,6 +7,7 @@ import BadgeListCard from "../../components/BadgeListCard";
 import { useEffect } from "react";
 import { Box } from "@mui/system";
 import { Pagination, Typography } from "@mui/material";
+import PageLoading from "../../components/loading/PageLoading";
 
 export const AchievementList = ({ badges, total, onPage, page, limit, result, isLoading, isError }) => {
     const navigate = useNavigate();
@@ -33,7 +34,7 @@ export const AchievementList = ({ badges, total, onPage, page, limit, result, is
 
     // Handle loading state
     if (isLoading) {
-        return <Typography>Loading...</Typography>;
+        return <PageLoading isLoading={isLoading} />;
     } else if (isError) {
         return <Typography>Error...</Typography>;
     }
