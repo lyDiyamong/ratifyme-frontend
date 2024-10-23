@@ -27,7 +27,7 @@ const TableReport = () => {
 
     if (roleId === 1) {
         // Admin
-        filteredReportData = reportData; // Admin sees all reports
+        filteredReportData = reportData;
     } else if (roleId === 2) {
         // Institution Owner
         filteredReportData = reportData?.filter((report) => report.userId === userId);
