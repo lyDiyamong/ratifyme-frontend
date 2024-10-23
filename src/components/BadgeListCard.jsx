@@ -64,9 +64,9 @@ const BadgeListCard = ({ badges, onView, total }) => {
                                                 alt={badge?.name || "Badge Image"}
                                                 sx={{
                                                     width: "100%",
-                                                    height: "auto", // Maintain aspect ratio
+                                                    height: "auto",
                                                     maxHeight: 170,
-                                                    objectFit: "contain", // Ensures the image fits without cropping
+                                                    objectFit: "contain",
                                                 }}
                                             />
                                         </Box>
