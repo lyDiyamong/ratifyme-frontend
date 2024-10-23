@@ -7,6 +7,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 // Custom Import
 import ActionButton from "./ActionButton";
+
 /**
  * MenuSelection Component
  *
@@ -15,25 +16,30 @@ import ActionButton from "./ActionButton";
  *
  * @returns {JSX.Element} The rendered MenuSelection component.
  */
+
 // ============ Start Menu Selection ============
 const MenuSelection = ({ onView, onDelete }) => {
     // Open and Close Modal
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
+    //Handle Click Anchor in MenuSection
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
+    //Handle Close Anchor in MenuSection
     const handleClose = () => {
         setAnchorEl(null);
     };
-    // View data
+
+    // Handle View
     const handleView = () => {
         onView();
         handleClose();
     };
-    // Delete data
+
+    // Handle Delete
     const handleDelete = () => {
         onDelete();
         handleClose();
