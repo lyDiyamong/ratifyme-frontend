@@ -16,6 +16,7 @@ import { TableAvatars } from "../../components/avartars/TableAvatars";
 // Fetching Data Import
 import { useFetchEarnerQuery, useDeleteEarnerByIdMutation } from "../../store/api/earnerManagement/earnerApis";
 import { useInviteEarnerMutation, useFetchAllInvitedUserQuery } from "../../store/api/userManagement/inviteUserApi";
+import getSortOptions from "../../components/GetSortOptions";
 
 // ============ Start Table Earner Modal ============
 const TableEarner = () => {
@@ -221,10 +222,7 @@ const TableEarner = () => {
                     sortOrder={sortOrder}
                     onSearch={handleSearch}
                     addNewBtn={false}
-                    sortOptions={[
-                        { value: "name", label: "ASC ⬆" },
-                        { value: "-name", label: "DES ⬇" },
-                    ]}
+                    sortOptions={getSortOptions("name", "-name")}
                 ></TableCustom>
             )}
 
