@@ -30,10 +30,6 @@ const ChangePasswordForm = () => {
         reset,
     } = useForm({
         mode: "onChange",
-        defaultValues: {
-            password: "",
-            passwordConfirm: "",
-        },
         resolver: yupResolver(schema),
     });
     // Update password hook
