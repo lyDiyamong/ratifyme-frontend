@@ -1,12 +1,8 @@
-import { CardMedia, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import StatusCode from "../../../assets/images/NoData.svg";
-import theme from "../../../assets/themes";
 import TableCustom from "../../../components/TableCustom";
 import { useFetchEmailEarnerQuery } from "../../../store/api/achievements/achievementApi";
 import FormatYear from "../../../utils/formatDate";
 import { useState } from "react";
-// import getSortOptions from "../../../components/GetSortOptions"
+import getSortOptions from "../../../components/GetSortOptions"
 
 const TableEarnerList = ({ achievementId }) => {
     const isSortable = true;
@@ -89,7 +85,7 @@ const TableEarnerList = ({ achievementId }) => {
             sortOrder={sortOrder}
             onSearch={handleSearch}
             addNewBtn={false}
-            // sortOptions={getSortOptions("name", "-name")}
+            sortOptions={getSortOptions("name", "-name")}
         ></TableCustom>
     )
 };
