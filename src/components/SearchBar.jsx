@@ -14,9 +14,6 @@ import { Button, Stack } from "@mui/material";
 // Custom import
 import theme from "../assets/themes";
 import DashboardContainer from "./styles/DashboardContainer";
-import { useFetchBadgesQuery } from "../store/api/badgeManagement/badgeApi";
-import { useSelector } from "react-redux";
-import { skipToken } from "@reduxjs/toolkit/query";
 
 // Styled components
 const Search = styled("div")(({ theme }) => ({
@@ -108,6 +105,8 @@ export default function SearchBar({
     limit,
     page,
     result,
+    isLoading,
+    isError,
     children,
 }) {
     const handleSearchChange = (event) => {
@@ -188,7 +187,7 @@ export default function SearchBar({
                 }}
             >
                 {React.Children.map(children, (child) =>
-                    React.cloneElement(child, { badges, total, onPage, page, limit, result }),
+                    React.cloneElement(child, { badges, total, onPage, page, limit, result, isError, isLoading }),
                 )}
             </DashboardContainer>
         </Stack>
