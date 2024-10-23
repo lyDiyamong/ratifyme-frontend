@@ -8,16 +8,17 @@ import { Box } from "@mui/material";
 import OrganizationCard from "../../components/OrganizationCard";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import AlertMessage from "../../components/alert/AlertMessage";
-import { SpinLoading } from "../../components/loading/SpinLoading";
+import SpinLoading from "../../components/loading/SpinLoading";
 import useCatchStatus from "../../hooks/useCatchStatus";
-
-// Api import
-import { useGetInstitutionByIdQuery } from "../../store/api/institutionManagement/institutionApi";
 import BadgeListCard from "../../components/BadgeListCard";
 import theme from "../../assets/themes";
+
+// Fetching import
+import { useGetInstitutionByIdQuery } from "../../store/api/institutionManagement/institutionApi";
 import { useFetchBadgesByInstitutionsQuery } from "../../store/api/badgeManagement/badgeApi";
 
-function InstitutionDetail() {
+// =========== Start InstitutionDetail ===========
+const InstitutionDetail = () => {
     // Navigation hook
     const navigate = useNavigate();
 
@@ -97,3 +98,4 @@ function InstitutionDetail() {
 }
 
 export default InstitutionDetail;
+// =========== End InstitutionDetail ===========
