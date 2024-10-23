@@ -1,21 +1,16 @@
-import { useState, useEffect } from "react";
-import { useFetchBadgeByEarnerQuery } from "../../store/api/badgeManagement/badgeApi";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import BadgeListCard from "../../components/BadgeListCard";
 import { Pagination, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import PageLoading from "../../components/loading/PageLoading";
 
-const BackpackList = () => {
-    const [page, setPage] = useState(1);
-    const [limit] = useState(10);
+const BackpackList = ({ badges, total, onPage, page, limit, result, isLoading, isError }) => {
     const navigate = useNavigate();
     const { earnerData } = useSelector((state) => state.global);
     const earnerId = earnerData?.id;
     const isSmallScreen = window.innerWidth < 600;
-
-    const { data: badgeClaim, isLoading } = useFetchBadgeByEarnerQuery({ earnerId, page, limit }, { skip: !earnerId });
-    const badgeClaims = badgeClaim?.badgeClasses;
 
     // UseEffect to update the URL with page and limit query params
     useEffect(() => {
@@ -24,20 +19,22 @@ const BackpackList = () => {
         }
     }, [page, limit, earnerId]);
 
-    // Handle loading state
-    if (isLoading) return <Typography>Loading...</Typography>;
+    let totalBadge = badges.length !== total ? result : total;
 
     // Calculate the total pages for pagination
-    const totalPages = Math.ceil(badgeClaim?.totalRecords / limit);
-
-    const onPage = (newPage) => {
-        setPage(newPage);
-    };
+    const totalPages = totalBadge > 0 ? Math.ceil(totalBadge / limit) : 0;
 
     // Handle viewing badge detail
     const handleView = (id) => {
         navigate(`/management/badges/badgeDetail/${id}`);
     };
+
+    // Handle loading state
+    if (isLoading) {
+        return <PageLoading isLoading={isLoading} />;
+    } else if (isError) {
+        return <Typography>Error...</Typography>;
+    }
 
     return (
         <Box
@@ -49,9 +46,10 @@ const BackpackList = () => {
                 minHeight: isSmallScreen ? "auto" : "900px",
             }}
         >
-            <BadgeListCard badges={badgeClaims || []} onView={handleView} total={badgeClaim?.totalRecords} />
+            <BadgeListCard badges={badges} onView={handleView} total={totalBadge} />
             <Box sx={{ display: "flex", justifyContent: "end", marginY: 2 }}>
                 <Pagination
+                    sx={{ display: totalPages > 0 ? "block" : "none" }}
                     count={totalPages || 1}
                     page={page}
                     onChange={(event, value) => onPage(value)}

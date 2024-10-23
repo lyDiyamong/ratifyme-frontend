@@ -1,16 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { useFetchBadgesQuery } from "../../store/api/badgeManagement/badgeApi";
+import { useEffect } from "react";
 import BadgeListCard from "../../components/BadgeListCard";
-import { SpinLoading } from "../../components/loading/SpinLoading";
 import Pagination from "@mui/material/Pagination";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import PageLoading from "../../components/loading/PageLoading";
 
-const BadgeList = () => {
-    const [page, setPage] = useState(1);
-    const [limit] = useState(10);
-
+const BadgeList = ({ badges, total, onPage, page, limit, result, isLoading, isError }) => {
     const navigate = useNavigate();
     const { roleId, issuerData, institutionData } = useSelector((state) => state.global);
     const isSmallScreen = window.innerWidth < 600;
@@ -27,32 +23,21 @@ const BadgeList = () => {
         field = "issuerId";
     }
 
-    // Avoid fetching if activeId is null or field is not defined
-    const {
-        data: allBadges,
-        isLoading,
-        isError,
-    } = useFetchBadgesQuery({ field, fk: activeId, limit, page }, { skip: !activeId || !field });
-
     useEffect(() => {
         if (activeId && field) {
             window.history.replaceState(null, "", `?page=${page}&${field}=${activeId}&limit=${limit}`);
         }
     }, [page, limit, field, activeId]);
 
-    // Display a message for invalid roleId outside of the core logic
-    if (!activeId || !field) return <div>Invalid roleId</div>;
-
-    if (isLoading) return <SpinLoading size={30} />;
-    if (isError) return <div>Error loading badges.</div>;
-    if (!allBadges || !allBadges.data.length) return <div>No badges found.</div>;
-
+    // Handle loading state
+    if (isLoading) {
+        return <PageLoading isLoading={isLoading} />;
+    } else if (isError) {
+        return <Typography>Error...</Typography>;
+    }
+    const totalBadge = badges.length !== total ? result : total;
     // If the number of returned badges is less than the limit, it means you're on the last page
-    const totalPages = Math.ceil(allBadges?.total / limit);
-
-    const onPage = (newPage) => {
-        setPage(newPage);
-    };
+    const totalPages = totalBadge > 0 ? Math.ceil(totalBadge / limit) : 0;
 
     const handleView = (id) => {
         navigate(`/management/badges/badgeDetail/${id}`);
@@ -68,10 +53,11 @@ const BadgeList = () => {
                 minHeight: isSmallScreen ? "auto" : "900px",
             }}
         >
-            <BadgeListCard badges={allBadges.data} onView={handleView} roleId={roleId} total={allBadges?.total} />
+            <BadgeListCard badges={badges} onView={handleView} total={totalBadge} />
 
             <Box sx={{ display: "flex", justifyContent: "end", marginY: 2 }}>
                 <Pagination
+                    sx={{ display: totalPages > 0 ? "block" : "none" }}
                     count={totalPages || 1}
                     page={page}
                     onChange={(event, value) => onPage(value)}

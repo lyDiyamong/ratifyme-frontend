@@ -8,8 +8,8 @@ export const badgeApi = createApi({
     endpoints: (builder) => ({
         // Fetch badges by issuerId
         fetchBadges: builder.query({
-            query: ({ field, fk, limit, page = 1 }) => ({
-                url: `/issuers/badgeClasses?page=${page}&${field}=${fk}&limit=${limit}`,
+            query: ({ field, fk, limit = 100, page = 1, search = "" }) => ({
+                url: `/issuers/badgeClasses?page=${page}&${field}=${fk}&limit=${limit}&search=${search}`,
             }),
             providesTags: (result) => {
                 return result?.data
@@ -101,8 +101,8 @@ export const badgeApi = createApi({
         }),
 
         fetchBadgeByEarner: builder.query({
-            query: ({ earnerId, page, limit }) => ({
-                url: `/issuers/badgeClasses/earner/${earnerId}?page=${page}&limit=${limit}`,
+            query: ({ earnerId, page = 1, limit = 100, search = "" }) => ({
+                url: `/issuers/badgeClasses/earner/${earnerId}?page=${page}&limit=${limit}&search=${search}`,
                 method: "GET",
             }),
             providesTags: (result, error, earnerId) => {
@@ -125,8 +125,8 @@ export const badgeApi = createApi({
         }),
 
         fetchClaimBadgeByEarner: builder.query({
-            query: ({ earnerId, page, limit = 5 }) => ({
-                url: `/issuers/badgeClasses/claim/${earnerId}?page=${page}&limit=${limit}`,
+            query: ({ earnerId, page = 1, limit = 100, search = "" }) => ({
+                url: `/issuers/badgeClasses/claim/${earnerId}?page=${page}&limit=${limit}&search=${search}`,
                 method: "GET",
             }),
             providesTags: (result, error, earnerId) => {

@@ -3,27 +3,17 @@ import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 
 // Custom import
-import { useFetchClaimBadgeByEarnerQuery } from "../../store/api/badgeManagement/badgeApi";
 import BadgeListCard from "../../components/BadgeListCard";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Box } from "@mui/system";
 import { Pagination, Typography } from "@mui/material";
+import PageLoading from "../../components/loading/PageLoading";
 
-const AchievementList = () => {
-    const [page, setPage] = useState(1);
-    const [limit] = useState(10);
+export const AchievementList = ({ badges, total, onPage, page, limit, result, isLoading, isError }) => {
     const navigate = useNavigate();
     const { earnerData } = useSelector((state) => state.global);
     const earnerId = earnerData?.id;
     const isSmallScreen = window.innerWidth < 600;
-
-    // Fetch claim badges based on the earner's ID, page, and limit
-    const { data: badgeClaim, isLoading } = useFetchClaimBadgeByEarnerQuery(
-        { earnerId, page, limit },
-        { skip: !earnerId },
-    );
-
-    const badgeClaims = badgeClaim?.badgeClasses;
 
     // UseEffect to update URL query parameters when page or limit changes
     useEffect(() => {
@@ -37,17 +27,16 @@ const AchievementList = () => {
         navigate(`/management/badges/badgeDetail/${id}`);
     };
 
-    // Pagination logic
-    const onPage = (newPage) => {
-        setPage(newPage);
-    };
+    let totalBadge = badges.length !== total ? result : total;
 
     // Calculate total pages for pagination
-    const totalPages = Math.ceil(badgeClaim?.totalRecords / limit);
-    console.log(badgeClaims?.length);
+    const totalPages = totalBadge > 0 ? Math.ceil(totalBadge / limit) : 0;
+
     // Handle loading state
     if (isLoading) {
-        return <Typography>Loading...</Typography>;
+        return <PageLoading isLoading={isLoading} />;
+    } else if (isError) {
+        return <Typography>Error...</Typography>;
     }
 
     return (
@@ -60,9 +49,10 @@ const AchievementList = () => {
                 minHeight: isSmallScreen ? "auto" : "900px",
             }}
         >
-            <BadgeListCard badges={badgeClaims || []} onView={handleView} total={badgeClaim?.totalRecords || ""} />
+            <BadgeListCard badges={badges} onView={handleView} total={totalBadge} />
             <Box sx={{ display: "flex", justifyContent: "end", marginY: 2 }}>
                 <Pagination
+                    sx={{ display: totalPages > 0 ? "block" : "none" }}
                     count={totalPages || 1}
                     page={page}
                     onChange={(event, value) => onPage(value)}
@@ -74,5 +64,3 @@ const AchievementList = () => {
         </Box>
     );
 };
-
-export default AchievementList;
