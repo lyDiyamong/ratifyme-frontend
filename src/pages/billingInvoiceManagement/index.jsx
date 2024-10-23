@@ -13,9 +13,9 @@ import PageTitle from "../../components/PageTitle";
 import SkeletonLoading from "../../components/loading/SkeletonLoading";
 import AlertMessage from "../../components/alert/AlertMessage";
 import useCatchStatus from "../../hooks/useCatchStatus";
-import NoRecordData from "../../components/NoRecordData";
 import { TableAvatars } from "../../components/avartars/TableAvatars";
 import theme from "../../assets/themes";
+import getSortOptions from "../../components/GetSortOptions"
 
 // Api import
 import { useGetSubscritptionQuery } from "../../store/api/subscription/subscriptionApi";
@@ -144,10 +144,7 @@ const BillingInvoiceManagement = () => {
                     sortOrder={sortOrder}
                     onSearch={handleSearch}
                     isSortable={isSortable}
-                    sortOptions={[
-                        { value: "name", label: "ASC ⬆" },
-                        { value: "-name", label: "DES ⬇" },
-                    ]}
+                    sortOptions={getSortOptions("name", "-name")}
                 >
                 </TableCustom>
             )}
