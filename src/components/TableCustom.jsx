@@ -1,4 +1,3 @@
-// ============ Start TableCustom Component ============
 // React Library
 import { useState } from "react";
 import DataTable from "react-data-table-component";
@@ -16,14 +15,12 @@ import {
     IconButton,
     InputAdornment,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import SwapVertIcon from "@mui/icons-material/SwapVert";
-import { SearchOutlined } from "@mui/icons-material";
+import { SearchOutlined, AddIcon, SwapVertIcon } from "@mui/icons-material";
 
 // Custom Imports
 import MenuSelection from "./TableAction/MenuSelection";
-import theme from "../assets/themes/index";
 import NoRecordData from "./NoRecordData";
+import theme from "../assets/themes/index";
 
 // Custom styling for DataTable
 const customTableStyles = {
@@ -41,7 +38,6 @@ const customTableStyles = {
  * @param {string} [title=""] - Title of the table.
  * @param {Array} [data=[]] - Data to be displayed.
  * @param {Array} [columns=[]] - Column configurations.
- * @param {boolean} [sortIcon=false] - If true, shows a sort icon in the header.
  * @param {boolean} [actions=false] - If true, adds an "Action" column.
  * @param {function} [onSearch] - Function to handle search input.
  * @param {function} [onSortChange] - Function to handle sort change.
@@ -56,11 +52,11 @@ const customTableStyles = {
  * @returns {JSX.Element} - Rendered table with search, filter, and sort options.
  */
 
+// ============ Start TableCustom Component ============
 const TableCustom = ({
     title = "",
     data = [],
     columns = [],
-    sortIcon = false,
     actions = false,
     onAddNew = () => {},
     addNewLabel = "Add New",
@@ -73,7 +69,6 @@ const TableCustom = ({
     rowsPerPage = null,
     sortOptions = [],
     isSortable = false,
-    sortColumn,
     sortOrder,
     
 }) => {
@@ -152,6 +147,7 @@ const TableCustom = ({
                         }}
                         onChange={(e) => handleSearch(e.target.value)}
                     />
+                    {/* Sorting */}
                     {isSortable && (
                         <FormControl sx={{ minWidth: { md: 100, sm: 80, xs: 60 } }} size="small">
                             <InputLabel>
@@ -195,11 +191,6 @@ const TableCustom = ({
                 data={data}
                 defaultSortFieldId={1}
                 sortDirection={sortOrder === "name" ? "asc" : "desc"}
-                onSort={(column) => {
-                    if (onSortChange) {
-                        onSortChange(column.selector);
-                    }
-                }}
                 pagination
                 paginationServer
                 paginationTotalRows={totalRows}
@@ -212,6 +203,11 @@ const TableCustom = ({
                 highlightOnHover
                 striped
                 searchQuery={searchQuery}
+                onSort={(column) => {
+                    if (onSortChange) {
+                        onSortChange(column.selector);
+                    }
+                }}
             />
             {data.length === 0 && <NoRecordData />}
         </Box>
@@ -219,5 +215,4 @@ const TableCustom = ({
 };
 
 export default TableCustom;
-
 // ============ End TableCustom Component ============
