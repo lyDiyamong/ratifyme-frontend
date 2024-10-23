@@ -1,12 +1,10 @@
 // React Import
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 // MUI Import
 import { styled, alpha } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { Button, Stack } from "@mui/material";
@@ -20,8 +18,6 @@ const Search = styled("div")(({ theme }) => ({
     position: "relative",
     borderRadius: theme.customShape.input,
     backgroundColor: alpha(theme.palette.common.black, 0.15),
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
         marginLeft: theme.spacing(2),
@@ -76,6 +72,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
  *
  * @param {boolean} [showButton=true] - A flag to show or hide the button beside the search input.
  * @param {string} [textInButton] - Text to display in the button when `showButton` is true.
+ * @param {Function} onSearchChange - Callback function to handle the search input changes.
  * @param {React.ReactNode} [children] - Child elements to render inside the dashboard container below the search bar.
  *
  * @returns {JSX.Element} A styled search bar component with optional button and search input functionality.
@@ -85,13 +82,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
  * <SearchBar
  *   showButton={true}
  *   textInButton="Create Badge"
+ *   onSearchChange={handleSearch}
  * >
  *   <BadgeList badges={filteredBadges} />
  * </SearchBar>
  *
  * @example
  * Example usage without a button
- * <SearchBar showButton={false}>
+ * <SearchBar showButton={false} onSearchChange={handleSearch}>
  *   <BadgeList badges={filteredBadges} />
  * </SearchBar>
  */
@@ -112,71 +110,49 @@ export default function SearchBar({
     const handleSearchChange = (event) => {
         onSearchChange(event.target.value);
     };
-    // console.log(badges);
 
     return (
         <Stack gap={4}>
-            <Box sx={{ flexGrow: 1, marginTop: "20px" }}>
-                <AppBar
-                    position="static"
+            <Box sx={{ flexGrow: 1, marginTop: "20px", display: "flex", alignItems: "center", gap: "10px" }}>
+                <Search
                     sx={{
+                        borderRadius: theme.customShape.section,
                         backgroundColor: theme.palette.customColors.white,
-                        color: theme.palette.text.primary,
-                        borderRadius: theme.customShape.card,
-                        padding: theme.spacing(1, 2),
-                        boxShadow: theme.customShadows.default,
                         border: `1px solid ${theme.palette.divider}`,
                     }}
                 >
-                    <Toolbar
-                        sx={{
-                            flex: 1,
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            flexWrap: "wrap",
-                        }}
-                    >
-                        <Search
+                    <SearchIconWrapper>
+                        <SearchIcon />
+                    </SearchIconWrapper>
+                    <StyledInputBase
+                        sx={{ width: "100%" }}
+                        placeholder="Search for Badges..."
+                        inputProps={{ "aria-label": "search" }}
+                        onChange={handleSearchChange}
+                    />
+                </Search>
+
+                {showButton && (
+                    <Link to="/management/badges/badgecreation">
+                        <Button
+                            variant="contained"
                             sx={{
-                                borderRadius: theme.customShape.section,
-                                backgroundColor: theme.palette.customColors.white,
-                                border: `1px solid ${theme.palette.divider}`,
+                                backgroundColor: theme.palette.primary.main,
+                                color: theme.palette.customColors.white,
+                                borderRadius: theme.customShape.btn,
+                                textTransform: "none",
+                                marginTop: { xs: theme.spacing(2), sm: 0 },
+                                fontSize: { xs: "0.75rem", sm: "0.875rem", md: "1rem" },
+                                padding: { xs: theme.spacing(1, 2), sm: theme.spacing(1, 3) },
+                                width: { xs: "100%", sm: "auto" },
+                                boxShadow: theme.customShadows.default,
+                                fontWeight: theme.fontWeight.bold,
                             }}
                         >
-                            <SearchIconWrapper>
-                                <SearchIcon />
-                            </SearchIconWrapper>
-                            <StyledInputBase
-                                placeholder="Search for Badges..."
-                                inputProps={{ "aria-label": "search" }}
-                                // value={searchQuery}
-                                onChange={handleSearchChange}
-                            />
-                        </Search>
-
-                        {showButton && (
-                            <Link to="/management/badges/badgecreation">
-                                <Button
-                                    variant="contained"
-                                    sx={{
-                                        backgroundColor: theme.palette.primary.main,
-                                        color: theme.palette.customColors.white,
-                                        borderRadius: theme.customShape.btn,
-                                        textTransform: "none",
-                                        marginTop: { xs: theme.spacing(2), sm: 0 },
-                                        fontSize: { xs: "0.75rem", sm: "0.875rem", md: "1rem" },
-                                        padding: { xs: theme.spacing(1, 2), sm: theme.spacing(1, 3) },
-                                        width: { xs: "100%", sm: "auto" },
-                                        boxShadow: theme.customShadows.default,
-                                        fontWeight: theme.fontWeight.bold,
-                                    }}
-                                >
-                                    {textInButton}
-                                </Button>
-                            </Link>
-                        )}
-                    </Toolbar>
-                </AppBar>
+                            {textInButton}
+                        </Button>
+                    </Link>
+                )}
             </Box>
             <DashboardContainer
                 sx={{
