@@ -1,5 +1,7 @@
-import { Stack, Typography } from "@mui/material";
-import theme from "../../../assets/themes";
+// MUI import
+import { Stack } from "@mui/material";
+
+// Custom import
 import DateSelectionForm from "../../../components/DateSelectionForm";
 
 const EditOptionalElements = ({ control, errors }) => {

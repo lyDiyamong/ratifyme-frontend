@@ -1,7 +1,11 @@
-import { Stack, Typography } from "@mui/material";
-import theme from "../../../assets/themes";
+// MUI import
+import { Stack } from "@mui/material";
+
+// Custom import
 import FormInput from "../../../components/FormInput";
 import MultiSelectForm from "../../../components/MultiSelectionForm";
+
+// Api import
 import { useFetchAchievementTypeQuery } from "../../../store/api/achievements/achievementTypeApi";
 
 const EditCoreElement = ({ control, schema }) => {
