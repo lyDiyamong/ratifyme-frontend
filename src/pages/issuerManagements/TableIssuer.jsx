@@ -8,12 +8,14 @@ import { Box, Typography, CircularProgress } from "@mui/material";
 // Custom Import
 import TableCustom from "../../components/TableCustom";
 import InviteUserModal from "../../components/modals/InviteUserModal";
+import  TableAvatars  from "../../components/avartars/TableAvatars";
+
+// Fetching Import
 import { useFetchInstitutionStatsQuery } from "../../store/api/reports/institutionStatApis";
 import { useInviteIssuerMutation, useFetchAllInvitedUserQuery } from "../../store/api/userManagement/inviteUserApi";
-import { TableAvatars } from "../../components/avartars/TableAvatars";
+
 // ============ Start Table Issuer Modal ============
 const TableIssuer = () => {
-    const isSortable = true;
     // State for controlling dialog
     const [dialogOpen, setDialogOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
@@ -87,8 +89,8 @@ const TableIssuer = () => {
                     ...prev,
                 ].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
             );
-
-            reset(); // Reset the form
+            // Reset the form
+            reset(); 
             setDialogOpen(false); // Close the dialog on success
         } catch (error) {
             console.error("Error sending invitation", error);
