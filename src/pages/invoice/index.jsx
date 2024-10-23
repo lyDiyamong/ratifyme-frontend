@@ -1,7 +1,7 @@
 // React import
-import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 // MUI import
 import { Box, Typography } from "@mui/material";
@@ -9,29 +9,28 @@ import { Box, Typography } from "@mui/material";
 // Custom import
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import TableCustom from "../../components/TableCustom";
-import FormatDate from "../../utils/formatDate";
 import PageTitle from "../../components/PageTitle";
-
-// API import
-import { useGetSubInstitutionQuery } from "../../store/api/subscription/subscriptionApi";
-import theme from "../../assets/themes";
 import SkeletonLoading from "../../components/loading/SkeletonLoading";
 import AlertMessage from "../../components/alert/AlertMessage";
+import FormatDate from "../../utils/formatDate";
+import theme from "../../assets/themes";
 
+// Fetching import
+import { useGetSubInstitutionQuery } from "../../store/api/subscription/subscriptionApi";
+
+// =========== Start InvoiceManagement ===========
 const InvoiceManagement = () => {
+    const { roleId, institutionData } = useSelector((state) => state.global);
     const [searchQuery, setSearchQuery] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const { roleId } = useSelector((state) => state.global);
 
     // Get query for requesting
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    const { institutionData } = useSelector((state) => state.global);
-
-    const institutionId = institutionData?.id || queryParams.get("institutionId");
-
+    
     // Fetching data
+    const institutionId = institutionData?.id || queryParams.get("institutionId");
     const { data: response, isLoading, isError } = useGetSubInstitutionQuery(institutionId);
     const instiData = response?.data || [];
 
@@ -140,3 +139,4 @@ const InvoiceManagement = () => {
 };
 
 export default InvoiceManagement;
+// =========== Start InvoiceManagement ===========
