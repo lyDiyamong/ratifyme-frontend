@@ -6,17 +6,17 @@ import { useEffect, useState } from "react";
 import { Box, Typography, CircularProgress } from "@mui/material";
 
 // Custom Import
+import ProfileEarnerModal from "./ProfileEarnerModal";
 import TableCustom from "../../components/TableCustom";
 import MenuSelection from "../../components/TableAction/MenuSelection";
-import FormatYear from "../../utils/formatDate";
-import ProfileEarnerModal from "./ProfileEarnerModal";
 import InviteUserModal from "../../components/modals/InviteUserModal";
-import { TableAvatars } from "../../components/avartars/TableAvatars";
+import TableAvatars from "../../components/avartars/TableAvatars";
+import getSortOptions from "../../components/GetSortOptions";
+import FormatYear from "../../utils/formatDate";
 
 // Fetching Data Import
 import { useFetchEarnerQuery, useDeleteEarnerByIdMutation } from "../../store/api/earnerManagement/earnerApis";
 import { useInviteEarnerMutation, useFetchAllInvitedUserQuery } from "../../store/api/userManagement/inviteUserApi";
-import getSortOptions from "../../components/GetSortOptions";
 
 // ============ Start Table Earner Modal ============
 const TableEarner = () => {
@@ -132,7 +132,7 @@ const TableEarner = () => {
             );
 
             reset();
-            setDialogOpen(false); // Close the dialog on success
+            setDialogOpen(false);
         } catch (error) {
             console.error("Error sending invitation", error);
         }
