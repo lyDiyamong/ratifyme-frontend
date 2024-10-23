@@ -124,11 +124,11 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
                         </Typography>
                     </Box>
                     <Stack mt={1}>
-                        <IssueToEarnerButton achievementId={achieveId || []} />
                         <Button onClick={handleClose}>Cancel</Button>
                     </Stack>
                 </Stack>
             </Modal>
+
             <Box
                 sx={{
                     position: "relative",
@@ -199,13 +199,7 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
                                             badgeId={result.id}
                                         />
                                         {/* <IssueToEarnerButton emails={selectedEmails} badgeId={result?.id || []} /> */}
-                                        <Button
-                                            onClick={handleOpen}
-                                            variant="outlined"
-                                            sx={{ borderRadius: theme.customShape.btn }}
-                                        >
-                                            Send Issue
-                                        </Button>
+                                        <IssueToEarnerButton achievementId={achieveId || []} />
                                     </>
                                 ) : (
                                     <ClaimBadgeButton

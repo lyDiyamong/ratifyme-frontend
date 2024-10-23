@@ -42,7 +42,7 @@ const CertificateGenerator = ({ badge }) => {
     const earnerAchieveData = earnerAchieResponse?.data;
     const earnerAchieveStatus = earnerAchieResponse?.data?.status;
     const isCertUpload = earnerAchieResponse?.data?.certUrlPdf ? true : false;
-    console.log("EarnerAchive", earnerAchieveData)
+    console.log("EarnerAchive", earnerAchieveData);
 
     // Upload Certificate hook
     const [uploadCert, { isLoading: certiLoading, isError: uploadCertError }] = useUploadCertiMutation();
@@ -54,21 +54,33 @@ const CertificateGenerator = ({ badge }) => {
     const [isUploadCertModal, setIsUploadCertModal] = useState(false);
 
     const handleGenerateImage = async () => {
-        const jpegDataUrl = await toJpeg(certificateRef.current, { quality: 0.95 });
-        const blob = await fetch(jpegDataUrl).then((res) => res.blob());
-        const formData = new FormData();
-        formData.append("certFile", blob, `${earnerAchieResponse?.data?.credId}`);
+        let jpegDataUrl, blob, formData;
 
-        // Handle errors using useCatchStatus instead of try-catch
-        await uploadCert({ achieveId, earnerId, uploadedCert: formData })
-            .unwrap()
-            .then((response) => {
-                if (response) {
-                    window.open(response?.uploadCert, "_blank");
-                }
-            })
-            .catch((error) => setMessage("Failed to upload certificate."));
-        setIsUploadCertModal(false);
+        try {
+            // Generate JPEG data URL
+            jpegDataUrl = await toJpeg(certificateRef.current, { quality: 0.95 });
+
+            // Fetch blob from data URL
+            blob = await fetch(jpegDataUrl).then((res) => res.blob());
+
+            // Create FormData and append the blob
+            formData = new FormData();
+            formData.append("certFile", blob, `${earnerAchieResponse?.data?.credId}`);
+
+            // Upload certificate
+            const response = await uploadCert({ achieveId, earnerId, uploadedCert: formData }).unwrap();
+
+            // Open the uploaded certificate URL
+            if (response) {
+                window.open(response?.uploadCert, "_blank");
+            }
+        } catch (error) {
+            // Handle errors
+            setMessage("Failed to upload certificate.");
+        } finally {
+            // Close modal regardless of success or error
+            setIsUploadCertModal(false);
+        }
     };
 
     // View handling
