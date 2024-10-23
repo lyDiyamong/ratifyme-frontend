@@ -62,7 +62,10 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
         } else if (statusAchievement !== undefined) {
             setClaimed(statusAchievement);
         }
-    }, [statusAchievement, issuedOn]);
+    }, [statusAchievement, claimed]);
+
+    // Log the claimed state for debugging purposes
+    console.log("Claimed state:", claimed);
 
     return (
         // =========== Start ClaimBadgeButton ===========
@@ -85,12 +88,14 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
             <Button
                 onClick={() => setIsClaimBadgeModal(true)}
                 disabled={claimed || isLoading}
-                sx={{
-                    backgroundColor: claimed ? theme.palette.customColors.gray200 : theme.palette.primary.main,
+                variant="contained"
+            sx={{
+                    // backgroundColor: claimed ? theme.palette.customColors.gray200 : theme.palette.primary.main,
                     color: claimed ? theme.palette.text.disabled : theme.palette.customColors.white,
-                    fontSize: theme.typography.body1,
+                    // fontSize: theme.typography.body1,
                     fontWeight: theme.fontWeight.bold,
-                    borderRadius: theme.customShape.btn,
+                    textTransform: "none",
+                borderRadius: theme.customShape.btn,
                     minWidth: 150,
                     "&:disabled": {
                         backgroundColor: theme.palette.customColors.gray200,

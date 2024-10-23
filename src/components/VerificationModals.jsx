@@ -1,4 +1,4 @@
-// // React librart import
+// // React Library
 // import React, { useEffect, useState } from "react";
 
 // //MUI Import
@@ -304,7 +304,7 @@ const VerificationModal = ({ open, handleClose, achieveData, earnerData, credId,
                                                 <Typography
                                                     component="span"
                                                     sx={{ color: loadingStates[key] ? "gray" : "inherit" }}
-                                                    // sx={{ color: loadingStates[key] ? "gray" : "inherit", display: "block", mt: 1 }} 
+                                                    // sx={{ color: loadingStates[key] ? "gray" : "inherit", display: "block", mt: 1 }}
                                                 >
                                                     {loadingStates[key]
                                                         ? key === "IssuedOn"
