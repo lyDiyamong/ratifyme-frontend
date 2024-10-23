@@ -1,17 +1,14 @@
-// React Import
-import React from "react";
-import { Link } from "react-router-dom";
+//React Import Library
+import React, { useState } from "react";
+
 
 // MUI Import
-import { styled, alpha } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import InputBase from "@mui/material/InputBase";
+import { Box, InputBase ,Button, Stack, styled, alpha, Link} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { Button, Stack } from "@mui/material";
 
-// Custom import
-import theme from "../assets/themes";
+// Custom Import
 import DashboardContainer from "./styles/DashboardContainer";
+import theme from "../assets/themes";
 
 // Styled components
 const Search = styled("div")(({ theme }) => ({
@@ -65,6 +62,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
+
+// Static data that make the code not error. (White screen)
+const cardBadgeData = [
+    { title: "Badge 1", institution: "Institution 1" },
+    { title: "Badge 2", institution: "Institution 2" },
+];
+
 /**
  * SearchBar Component
  *
@@ -93,7 +97,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
  *   <BadgeList badges={filteredBadges} />
  * </SearchBar>
  */
-export default function SearchBar({
+
+function SearchBar({
     showButton = true,
     textInButton,
     badges,
@@ -107,6 +112,14 @@ export default function SearchBar({
     isError,
     children,
 }) {
+
+
+// ============ Start SearchBar ============
+const SearchBar = ({ showButton = true, textInButton, children }) => {
+    const [searchQuery, setSearchQuery] = useState("");
+    const [filteredData, setFilteredData] = useState(cardBadgeData);
+
+
     const handleSearchChange = (event) => {
         onSearchChange(event.target.value);
     };
@@ -169,3 +182,6 @@ export default function SearchBar({
         </Stack>
     );
 }
+}
+export default SearchBar;
+// ============ End SearchBar ============
