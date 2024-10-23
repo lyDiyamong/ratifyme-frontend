@@ -10,28 +10,14 @@ import StatusCode from "../assets/images/NoData.svg";
 import GoldBadge from "../assets/images/DiamondBadge.svg";
 
 const BadgeListCard = ({ badges, onView, total }) => {
-    // const [page, setPage] = useState(1);
-    // const [itemsPerPage, setItemsPerPage] = useState(6);
-
-    // Dynamically set items per page based on screen size
-    const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
-    const isMediumScreen = useMediaQuery(theme.breakpoints.up("md"));
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-
-    // useEffect(() => {
-    //     setItemsPerPage(isLargeScreen ? 8 : isMediumScreen ? 6 : 4);
-    // }, [isLargeScreen, isMediumScreen]);
-
-    // Pagination handling
-
     const handleView = (id) => {
         onView(id);
     };
-    console.log(total.length);
+    const totalBadge = typeof total === "number" ? total : total.length;
 
     return (
         <Box my={3}>
-            {total.length === 0 ? (
+            {totalBadge === 0 ? (
                 <Box display="flex" flexDirection="column" alignItems="center" p={4}>
                     <CardMedia component="img" image={StatusCode} alt="No badges found" sx={{ maxWidth: 400, width: "100%" }} />
                     <Typography variant="h6" mt={2} textAlign="center" color={theme.palette.text.secondary}>
