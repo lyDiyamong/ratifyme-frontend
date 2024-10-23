@@ -1,11 +1,18 @@
+// React import
+import { useSelector } from "react-redux";
+
+// MUI import
+import { Stack, Typography, Box, CardMedia } from "@mui/material";
+
+// Custom import
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import PageTitle from "../../components/PageTitle";
 import InstitutionProfileCard from "./InstitutionProfileCard";
-import { Stack, Typography, Box, CardMedia } from "@mui/material"; // Added Box import
-import { useGetIssuersQuery } from "../../store/api/issuerManagement/issuerApi";
-import { useSelector } from "react-redux";
 import theme from "../../assets/themes";
 import StatusCode from "../../assets/images/Search-Illustation.svg";
+
+// Api import
+import { useGetIssuersQuery } from "../../store/api/issuerManagement/issuerApi";
 
 const Organization = () => {
     const { userId } = useSelector((state) => state.global);

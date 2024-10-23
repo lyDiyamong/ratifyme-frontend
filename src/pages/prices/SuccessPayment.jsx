@@ -1,10 +1,17 @@
-import { Box, Typography, Button, Paper, Divider } from "@mui/material";
-import theme from "../../assets/themes";
-import { CheckCircleRounded, ChevronRight } from "@mui/icons-material";
-import { useGetPaymentSuccessQuery } from "../../store/api/subscription/subscriptionApi";
+// React import
 import { useNavigate, useParams } from "react-router";
+
+// MUI import
+import { Box, Typography, Button, Paper, Divider } from "@mui/material";
+import { CheckCircleRounded, ChevronRight } from "@mui/icons-material";
+
+// Custom import
+import theme from "../../assets/themes";
 import FormDate from "../../utils/formatDate";
 import PageLoading from "../../components/loading/PageLoading";
+
+// Api import
+import { useGetPaymentSuccessQuery } from "../../store/api/subscription/subscriptionApi";
 
 const SuccessPayment = () => {
     // Payment Id params hook

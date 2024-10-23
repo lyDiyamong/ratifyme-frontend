@@ -1,8 +1,12 @@
-import React from "react";
+// React import
+import { useNavigate } from "react-router";
+
+// MUI import
 import { Box, Typography, Avatar } from "@mui/material";
 import { Stack, styled } from "@mui/system";
+
+// Custom import
 import theme from "../../assets/themes";
-import { useNavigate } from "react-router";
 
 const CardWrapper = styled(Box)(({ theme }) => ({
     position: "relative",
