@@ -5,6 +5,7 @@ import { Stack } from "@mui/material";
 import PageTitle from "../../components/PageTitle";
 import AddRecipientForm from "./AddRecipientForm";
 
+// =========== Start AddRecipient ===========
 const AddRecipient = () => {
     return <Stack gap={3}>
         {/* Start page's title */}
@@ -15,3 +16,4 @@ const AddRecipient = () => {
 };
 
 export default AddRecipient;
+// =========== End AddRecipient ===========
