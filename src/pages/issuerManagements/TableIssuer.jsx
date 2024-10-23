@@ -6,16 +6,19 @@ import { useState, useEffect } from "react";
 import { Box, Typography, CircularProgress } from "@mui/material";
 
 // Custom Import
-import TableCustom from "../../components/TableCustomFront";
-import NoRecordData from "../../components/NoRecordData";
+import TableCustom from "../../components/TableCustom";
 import InviteUserModal from "../../components/modals/InviteUserModal";
 import { useFetchInstitutionStatsQuery } from "../../store/api/reports/institutionStatApis";
 import { useInviteIssuerMutation, useFetchAllInvitedUserQuery } from "../../store/api/userManagement/inviteUserApi";
-
+import { TableAvatars } from "../../components/avartars/TableAvatars";
+// ============ Start Table Issuer Modal ============
 const TableIssuer = () => {
+    const isSortable = true;
     // State for controlling dialog
     const [dialogOpen, setDialogOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     // Global state for user info and institution info
     const { userId, roleId, institutionData } = useSelector((state) => state.global);
@@ -33,9 +36,7 @@ const TableIssuer = () => {
     useEffect(() => {
         if (invitedUserData && institutionData?.code) {
             const filteredIssuers =
-                invitedUserData.data?.filter(
-                    (user) => user.roleId === 3 && user.inviterCode === institutionData.code,
-                ) || [];
+                invitedUserData.data?.filter((user) => user.roleId === 3 && user.inviterCode === institutionData.code) || [];
 
             const sortedIssuers = filteredIssuers.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
@@ -56,12 +57,14 @@ const TableIssuer = () => {
                 institutionName: institution.institutionName,
                 issuerId: issuer.id,
                 issuerName: `${issuer.User.firstName} ${issuer.User.lastName}`,
+                issuerImage: issuer.User.profileImage,
                 issuerEmail: issuer.User.email,
                 totalBadges: issuer.BadgeClasses?.length || 0,
                 totalEarners: issuer.Earners?.length || 0,
             })),
         );
     };
+
     // Handle closing the invite issuer dialog
     const handleCloseDialog = () => {
         setDialogOpen(false);
@@ -106,17 +109,21 @@ const TableIssuer = () => {
     // Issuer Columns based on role
     const getIssuerColumns = () => {
         const commonColumns = [
-            { name: "Issuer Name", selector: (row) => row.issuerName || "N/A", sortable: true },
             { name: "Issuer Email", selector: (row) => row.issuerEmail || "N/A", sortable: true },
             { name: "Total Badge", selector: (row) => row.totalBadges, sortable: true },
             { name: "Total Earner", selector: (row) => row.totalEarners, sortable: true },
         ];
 
-
         // Admin has additional organization name column
         if (roleId === 1) {
             return [
                 { name: "No. ", selector: (row, index) => index + 1 || "N/A" },
+                {
+                    name: "Issuer Name",
+                    selector: (row) => row.issuerName || "N/A",
+                    sortable: true,
+                    cell: (row) => <TableAvatars profileImage={row.issuerImage} name={row.issuerName} />,
+                },
                 { name: "Organization Name", selector: (row) => row.institutionName || "N/A", sortable: true },
                 ...commonColumns,
             ];
@@ -124,6 +131,12 @@ const TableIssuer = () => {
         if (roleId === 2) {
             return [
                 { name: "No. ", selector: (row, index) => index + 1 || "N/A" },
+                {
+                    name: "Issuer Name",
+                    selector: (row) => row.issuerName || "N/A",
+                    sortable: true,
+                    cell: (row) => <TableAvatars profileImage={row.issuerImage} name={row.issuerName} />,
+                },
                 ...commonColumns,
             ];
         }
@@ -134,7 +147,7 @@ const TableIssuer = () => {
     const filteredIssuerData = filterIssuerData(response?.data);
     const flattenedData = flattenData(filteredIssuerData);
     const filteredData = searchFilteredData(flattenedData);
-
+    const paginatedData = filteredData.slice((currentPage - 1) * rowsPerPage, (currentPage - 1) * rowsPerPage + rowsPerPage);
     // Render Component
     return (
         <Box>
@@ -145,14 +158,21 @@ const TableIssuer = () => {
             ) : (
                 <TableCustom
                     title="Issuer List"
-                    data={filteredData}
+                    data={paginatedData}
                     columns={getIssuerColumns()}
                     onSearch={setSearchQuery}
-                    addNewBtn = {false}
-                >
-                    {/* Show NoRecordData inside the table when there's no data */}
-                    {filteredData.length === 0 && <NoRecordData />}
-                </TableCustom>
+                    addNewBtn={false}
+                    onAddNew={() => setDialogOpen(true)}
+                    pagination
+                    totalRows={filteredData.length}
+                    currentPage={currentPage}
+                    rowsPerPage={rowsPerPage}
+                    onPageChange={setCurrentPage}
+                    onRowsPerPageChange={(newRowsPerPage) => {
+                        setRowsPerPage(newRowsPerPage);
+                        setCurrentPage(1);
+                    }}
+                ></TableCustom>
             )}
 
             {/* Invite Issuer Modal */}
@@ -167,3 +187,4 @@ const TableIssuer = () => {
 };
 
 export default TableIssuer;
+// ============ End Table Issuer Modal ============

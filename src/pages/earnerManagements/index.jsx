@@ -24,7 +24,7 @@ const EarnerManagement = () => {
             />
             <VerificationsCheckUp />
 
-            {roleId === 1 ? <TableEarner /> : <CustomTabs tabs={tabs} tabContent={tabContent} searchQuery="" />}
+            {roleId === 3 ? <CustomTabs tabs={tabs} tabContent={tabContent} searchQuery="" /> : <TableEarner />}
         </DashboardContainer>
     );
 };

@@ -3,26 +3,26 @@ import { useNavigate } from "react-router";
 import { useState } from "react";
 
 // Mui import
+import { Chip } from "@mui/material";
 
-// Custom import
+// // Custom import
 import TableCustom from "../../components/TableCustom";
-// import FormatDate from "../../utils/formatDate";
 import FormatYear from "../../utils/formatDate";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import PageTitle from "../../components/PageTitle";
 import SkeletonLoading from "../../components/loading/SkeletonLoading";
 import AlertMessage from "../../components/alert/AlertMessage";
 import useCatchStatus from "../../hooks/useCatchStatus";
-import NoRecordData from "../../components/NoRecordData";
+import { TableAvatars } from "../../components/avartars/TableAvatars";
+import theme from "../../assets/themes";
+import getSortOptions from "../../components/GetSortOptions"
 
 // Api import
 import { useGetSubscritptionQuery } from "../../store/api/subscription/subscriptionApi";
-import { Chip} from "@mui/material";
-import theme from "../../assets/themes";
-import { TableAvatars } from "../../components/avartars/TableAvatars";
 
 // ============ Start Table Earner Modal ============
 const BillingInvoiceManagement = () => {
+    const isSortable = true;
     // Navigate hook
     const navigate = useNavigate();
 
@@ -46,31 +46,8 @@ const BillingInvoiceManagement = () => {
         order: sortOrder,
         search: searchQuery,
     });
-    console.log("API Response:", response);
-    const subscriptions = response?.data;
 
-    // Filter the latest subscription by the most recent startDate
-    const latestSubscription = subscriptions?.reduce((acc, current) => {
-        const currentEmail = current.Institution?.institutionEmail;
-        const currentDate = new Date(current?.startDate || 0);
-
-        // Find if the email is already in the accumulator
-        const existingSubscription = acc.find((sub) => sub.Institution?.institutionEmail === currentEmail);
-
-        // If it's not in the accumulator, add the current subscription
-        if (!existingSubscription) {
-            acc.push(current);
-        } else {
-            // If it exists, check the dates and replace if the current is more recent
-            const existingDate = new Date(existingSubscription?.startDate || 0);
-            if (currentDate > existingDate) {
-                const index = acc.indexOf(existingSubscription);
-                acc[index] = current;
-            }
-        }
-
-        return acc;
-    }, []);
+    const subscriptionData = response?.data;
 
     // Error custom hook
     const [message, setMessage] = useCatchStatus(isError || isError, error?.data?.message);
@@ -154,7 +131,7 @@ const BillingInvoiceManagement = () => {
                 // Billing and Invoice Table
                 <TableCustom
                     title="Billing and Invoice"
-                    data={latestSubscription}
+                    data={subscriptionData}
                     columns={subscriptionColumns}
                     pagination
                     totalRows={response?.total || 0}
@@ -166,12 +143,9 @@ const BillingInvoiceManagement = () => {
                     sortColumn={sortColumn}
                     sortOrder={sortOrder}
                     onSearch={handleSearch}
-                    sortOptions={[
-                        { value: "name", label: "ASC ⬆" },
-                        { value: "-name", label: "DES ⬇" },
-                    ]}
+                    isSortable={isSortable}
+                    sortOptions={getSortOptions("name", "-name")}
                 >
-                    {subscriptions?.length === 0 && <NoRecordData />}
                 </TableCustom>
             )}
         </DashboardContainer>

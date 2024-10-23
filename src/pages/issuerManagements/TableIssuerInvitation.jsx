@@ -18,8 +18,10 @@ import useCatchStatus from "../../hooks/useCatchStatus";
 import AlertMessage from "../../components/alert/AlertMessage";
 import InviteUserStatus from "../../components/chips/inviteUserStatus";
 import NoRecordData from "../../components/NoRecordData";
+import getSortOptions from "../../components/GetSortOptions";
 
 const TableIssuerInvitation = () => {
+    const isSortable = true;
     // ===================== State Management =====================
     const [dialogOpen, setDialogOpen] = useState(false);
     const [alertOpen, setAlertOpen] = useState(false);
@@ -45,9 +47,12 @@ const TableIssuerInvitation = () => {
     // ===================== Redux State =====================
     const { institutionData, roleId } = useSelector((state) => state.global);
     const institutionId = institutionData?.id;
+    const inviterCode = institutionData.code;
 
     // ===================== API Hooks =====================
     const { data: invitedUserData, refetch: refetchInvitedUsers } = useFetchAllInvitedUserQuery({
+        inviterCode: roleId === 2 ? inviterCode : undefined,
+        roleId: roleId,
         page: currentPage,
         limit: rowsPerPage,
         sort: sortColumn,
@@ -60,31 +65,38 @@ const TableIssuerInvitation = () => {
     const [deleteInvitedUser] = useDeleteInvitedUserMutation();
 
     // ===================== Fetch and Sort Invited Issuers =====================
+    // useEffect(() => {
+    //     if (invitedUserData && institutionData?.code) {
+    //         const filteredIssuers =
+    //             invitedUserData.data?.filter((user) => user.roleId === 3 && user.inviterCode === institutionData.code) || [];
+    //         const sortedIssuers = filteredIssuers.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    //         setInvitedIssuers(sortedIssuers);
+    //     }
+    // }, [invitedUserData, institutionData]);
+
     useEffect(() => {
-        if (invitedUserData && institutionData?.code) {
+        if (invitedUserData) {
+            // Directly use the invitedUserData.data without filtering or sorting
             const filteredIssuers =
                 invitedUserData.data?.filter((user) => user.roleId === 3 && user.inviterCode === institutionData.code) || [];
-            const sortedIssuers = filteredIssuers.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-            setInvitedIssuers(sortedIssuers);
+
+            setInvitedIssuers(filteredIssuers);
         }
     }, [invitedUserData, institutionData]);
-
-    // ===================== Handle Form Submission =====================
+    
     const handleInviteSubmit = async (data, reset) => {
         try {
             const newIssuerResponse = await inviteIssuer({ institutionId, email: data.email }).unwrap();
 
-            // Update the invited issuers list immediately
-            setInvitedIssuers((prev) =>
-                [
-                    {
-                        inviteEmail: newIssuerResponse.inviteEmail || data.email,
-                        status: false,
-                        createdAt: new Date().toISOString(),
-                    },
-                    ...prev,
-                ].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
-            );
+            // Update the invited issuers list immediately without sorting
+            setInvitedIssuers((prev) => [
+                {
+                    inviteEmail: newIssuerResponse.inviteEmail || data.email,
+                    status: false,
+                    createdAt: new Date().toISOString(),
+                },
+                ...prev,
+            ]);
 
             // Ensure success and message states are set together
             setIsSuccess(true);
@@ -98,6 +110,9 @@ const TableIssuerInvitation = () => {
             setDialogOpen(false); // Close dialog whether success or error
         }
     };
+
+    console.log(invitedUserData?.total);
+    console.log(invitedIssuers);
 
     // ===================== Handle API Response =====================
     useEffect(() => {
@@ -319,10 +334,8 @@ const TableIssuerInvitation = () => {
                 sortColumn={sortColumn}
                 sortOrder={sortOrder}
                 onSearch={handleSearch}
-                sortOptions={[
-                    { value: "inviteEmail", label: "ASC ⬆" },
-                    { value: "-inviteEmail", label: "DES ⬇" },
-                ]}
+                isSortable={isSortable}
+                sortOptions={getSortOptions("inviteEmail", "-inviteEmail")}
             >
                 {invitedIssuers.length === 0 && <NoRecordData />}
             </TableCustom>

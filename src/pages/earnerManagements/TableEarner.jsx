@@ -1,4 +1,5 @@
 // React Library
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
 // MUI Import
@@ -9,16 +10,17 @@ import TableCustom from "../../components/TableCustom";
 import MenuSelection from "../../components/TableAction/MenuSelection";
 import FormatYear from "../../utils/formatDate";
 import ProfileEarnerModal from "./ProfileEarnerModal";
-import NoRecordData from "../../components/NoRecordData";
+import InviteUserModal from "../../components/modals/InviteUserModal";
+import { TableAvatars } from "../../components/avartars/TableAvatars";
 
 // Fetching Data Import
 import { useFetchEarnerQuery, useDeleteEarnerByIdMutation } from "../../store/api/earnerManagement/earnerApis";
-import { useSelector } from "react-redux";
-import InviteUserModal from "../../components/modals/InviteUserModal";
 import { useInviteEarnerMutation, useFetchAllInvitedUserQuery } from "../../store/api/userManagement/inviteUserApi";
+import getSortOptions from "../../components/GetSortOptions";
 
 // ============ Start Table Earner Modal ============
 const TableEarner = () => {
+    const isSortable = true;
     // State for controlling dialog
     const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -29,12 +31,13 @@ const TableEarner = () => {
     const [sortOrder, setSortOrder] = useState("name");
     const [searchQuery, setSearchQuery] = useState("");
 
-    const { roleId, userId, issuerData } = useSelector((state) => state.global);
+    const { roleId, userId, issuerData, institutionData } = useSelector((state) => state.global);
     const [deleteEarner] = useDeleteEarnerByIdMutation();
     const issuerId = issuerData?.id;
     const { data: invitedUserData } = useFetchAllInvitedUserQuery();
     const [inviteEarner] = useInviteEarnerMutation();
 
+    const institutionId = institutionData?.id;
     // Local State for invited users
     const [invitedEarners, setInvitedEarners] = useState([]);
 
@@ -46,6 +49,7 @@ const TableEarner = () => {
     } = useFetchEarnerQuery({
         issuerId: roleId === 1 ? undefined : issuerId,
         roleId: roleId,
+        institutionId: roleId === 2 ? institutionId : undefined,
         page: currentPage,
         limit: rowsPerPage,
         sort: sortColumn,
@@ -72,12 +76,16 @@ const TableEarner = () => {
     // Earner data fetched from the API
     const earnerData = response?.data;
 
+    console.log(earnerData);
+
     // Display earner in the earner table by the specific role , role = 1 (Admin), role = 2 (institutionOwner), role = 3 (issuer)
     const filteredEarnerData =
         roleId === 1
             ? earnerData
             : earnerData?.filter((earner) =>
-                  roleId === 2 ? earner.Issuer?.Institution?.userId === userId : earner.Issuer?.userId === userId,
+                  roleId === 2
+                      ? earner.institutionId === institutionId 
+                      : earner.Issuer?.userId === userId,
               );
 
     // Handle View (open the modal)
@@ -138,7 +146,7 @@ const TableEarner = () => {
         },
         {
             name: "Name",
-            selector: (row) => row.name || "N/A",
+            selector: (row) => <TableAvatars profileImage={row.User.profileImage} name={row.name} />,
         },
         {
             name: "Email",
@@ -208,18 +216,14 @@ const TableEarner = () => {
                     rowsPerPage={rowsPerPage}
                     onPageChange={handlePageChange}
                     onRowsPerPageChange={handleRowsPerPageChange}
+                    isSortable={isSortable}
                     onSortChange={handleSortChange}
                     sortColumn={sortColumn}
                     sortOrder={sortOrder}
                     onSearch={handleSearch}
-                    sortOptions={[
-                        { value: "name", label: "ASC ⬆" },
-                        { value: "-name", label: "DES ⬇" },
-                    ]}
-                >
-                    {/* Display NoRecordData inside the table when no earners match the search query */}
-                    {filteredEarnerData?.length === 0 && <NoRecordData />}
-                </TableCustom>
+                    addNewBtn={false}
+                    sortOptions={getSortOptions("name", "-name")}
+                ></TableCustom>
             )}
 
             {/* Invite Earner Modal */}

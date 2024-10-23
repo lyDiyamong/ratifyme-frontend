@@ -11,7 +11,7 @@ import { Description, Group, WorkspacePremium } from "@mui/icons-material";
 import DashboardContainer from "../../../components/styles/DashboardContainer";
 import PageTitle from "../../../components/PageTitle";
 import BadgeInfo from "./BadgeInfo";
-import EarnerList from "./EarnerList";
+import TableEarnerList from "./TableEarnerList";
 import CertificateGenerator from "./CertificateGenerator";
 
 // Api import
@@ -49,7 +49,7 @@ const BadgeDetail = () => {
             role = "issuer";
             activeUserId = issuerData.id;
             subtitle = "Recognizing skills, empowering futures.";
-            renderedTab = <EarnerList emails={selectedEmails} achievementId={achievementId} />;
+            renderedTab = <TableEarnerList emails={selectedEmails} achievementId={achievementId} />;
             break;
         }
         case 4: {

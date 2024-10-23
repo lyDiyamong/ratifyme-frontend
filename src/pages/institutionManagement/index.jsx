@@ -11,13 +11,14 @@ import TableCustom from "../../components/TableCustom";
 import MenuSelection from "../../components/TableAction/MenuSelection";
 import FormatDate from "../../utils/formatDate";
 import useCatchStatus from "../../hooks/useCatchStatus";
+import getSortOptions from "../../components/GetSortOptions";
 
 // Api import
 import { useGetInstitutionQuery } from "../../store/api/institutionManagement/institutionApi";
-import NoRecordData from "../../components/NoRecordData";
 import { TableAvatars } from "../../components/avartars/TableAvatars";
 
 const InstitutionManagement = () => {
+    const isSortable = true;
     // Pagination & Sorting State & Limiting & Searching
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -130,12 +131,9 @@ const InstitutionManagement = () => {
                     sortColumn={sortColumn}
                     sortOrder={sortOrder}
                     onSearch={handleSearch}
-                    sortOptions={[
-                        { value: 'institutionName', label: 'ASC ⬆' },
-                        { value: '-institutionName', label: 'DES ⬇' },
-                    ]}
+                    isSortable={isSortable}
+                    sortOptions={getSortOptions("institutionName", "-institutionName")}
                 >
-                    {institutions?.length === 0 && <NoRecordData />}
                 </TableCustom>
             )}
         </DashboardContainer>

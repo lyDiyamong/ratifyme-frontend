@@ -23,10 +23,16 @@ const inviteUserApi = createApi({
             invalidatesTags: ["InvitedUsers"],
         }),
         fetchAllInvitedUser: builder.query({
-            query: ({ page, limit, sort, search }) => ({
-                url: `users/codeInvitation/invitedUser?limit=${limit}&page=${page}&sort=${sort}&search=${search}`,
-                method: "GET",
-            }),
+            query: ({ inviterCode, roleId, page, limit, sort, search }) => {
+                let query = `users/codeInvitation/invitedUser?limit=${limit}&page=${page}&sort=${sort}`;
+                if (search) query += `&search=${search}`;
+
+                if (roleId !== 1) {
+                    query += `&inviterCode=${inviterCode}`;
+                }
+
+                return query;
+            },
             providesTags: ["InvitedUsers"],
         }),
         deleteInvitedUser: builder.mutation({
