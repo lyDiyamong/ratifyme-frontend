@@ -1,5 +1,5 @@
 // MUI import
-import { Box, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 
 // Custom import
 import theme from "../assets/themes";
@@ -18,9 +18,10 @@ const getCurrentDate = () => {
  * @param {Object} sx - Additional style mui
  * @returns {JSX.Element} The rendered PageTitle component.
  */
+
+// ============ Start Page Title ============
 const PageTitle = ({ title, sx, subtitle }) => {
     return (
-        // ============ Start Page Title ============
         <Stack
             direction={{ sm: "column", md: "row" }}
             justifyContent="space-between"
@@ -63,8 +64,8 @@ const PageTitle = ({ title, sx, subtitle }) => {
                 {getCurrentDate()}
             </Typography>
         </Stack>
-        // ============ End Page Title ============
     );
 };
 
 export default PageTitle;
+ // ============ End Page Title ============
