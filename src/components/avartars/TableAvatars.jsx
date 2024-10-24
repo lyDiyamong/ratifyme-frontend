@@ -1,5 +1,7 @@
+// MUI import
 import { Avatar, Box, Typography } from "@mui/material";
 
+// =========== Start TableAvatars ===========
 const TableAvatars = ({ profileImage, name }) => {
     return (
         <Box style={{ display: "flex", alignItems: "center" }}>
@@ -23,3 +25,4 @@ const TableAvatars = ({ profileImage, name }) => {
 };
 
 export default TableAvatars;
+// =========== End TableAvatars ===========
