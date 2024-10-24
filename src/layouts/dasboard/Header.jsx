@@ -10,7 +10,6 @@ import {
     Search,
     SettingsOutlined,
     NotificationsNoneOutlined,
-    PortableWifiOff,
     AccountCircleOutlined,
     LogoutOutlined,
 } from "@mui/icons-material";
@@ -27,6 +26,8 @@ import { useFetchInfoUserByIdQuery } from "../../store/api/users/userInfoProfile
 import { useNavigate } from "react-router";
 import NotificationSidebar from "../../components/NotificationSidebar";
 import PageLoading from "../../components/loading/PageLoading";
+import AlertConfirmation from "../../components/alert/AlertConfirmation";
+import { useLogoutMutation } from "../../store/api/auth/authApi";
 
 // ============ Start Header ============
 const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
@@ -35,7 +36,8 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState(false);
-
+    const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
+    const [logout] = useLogoutMutation();
     const [anchorEl, setAnchorEl] = useState(null);
 
     // Handle dropdown menu open and close
@@ -54,8 +56,7 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
     };
 
     const handleLogoutClick = () => {
-        // Implement logout functionality here
-        console.log("Logout clicked");
+        setIsLogoutDialogOpen(true);
         handleMenuClose();
     };
 
@@ -71,20 +72,17 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
     // Update profile image on user data change
     useEffect(() => {
         if (userData) {
-            // Check if the user has a custom profile image
             if (imageProfile) {
                 setProfileImage(imageProfile);
-            }
-            // Check gender to set default profile image
-            else if (gender && gender === "male") {
+            } else if (gender === "male") {
                 setProfileImage(MaleUserDefault);
-            } else if (gender && gender === "female") {
+            } else if (gender === "female") {
                 setProfileImage(FemaleUserDefault);
             } else {
                 setProfileImage(DefaultProfileSvg);
             }
         }
-    }, [imageProfile]);
+    }, [imageProfile, userData]);
 
     // Header icons
     const headerIcons = [
@@ -116,7 +114,6 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
             const timeout = setTimeout(() => {
                 setIsLoading(false);
             }, 1000);
-
             return () => clearTimeout(timeout);
         }
     }, [isLoading]);
@@ -202,6 +199,26 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
                     {/* End right side  */}
                 </Toolbar>
             </AppBar>
+
+            {/* Logout Confirmation Dialog */}
+            <AlertConfirmation
+                open={isLogoutDialogOpen}
+                title="Confirm Logout"
+                message="Are you sure you want to log out?"
+                onClose={() => setIsLogoutDialogOpen(false)}
+                onConfirm={async () => {
+                    await logout().unwrap();
+                    localStorage.removeItem("loginMessageShown");
+                    navigate("/login");
+                    setIsLogoutDialogOpen(false);
+                }}
+                confirmText="Logout"
+                cancelText="Cancel"
+                iconBgColor="#ffebee"
+                iconColor={theme.palette.error.main}
+                confirmButtonColor={theme.palette.error.main}
+                confirmButtonColorHover={theme.palette.error.dark}
+            />
         </DashboardContainer>
         // ============ End Appbar ============
     );
