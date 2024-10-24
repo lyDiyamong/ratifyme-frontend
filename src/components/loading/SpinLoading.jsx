@@ -72,4 +72,4 @@ const SpinLoading = ({ color = "#1a90ff", size = 40, ...props }) => {
     );
 };
 
-export { BorderLinearProgress, SpinLoading };
+export default { BorderLinearProgress, SpinLoading };

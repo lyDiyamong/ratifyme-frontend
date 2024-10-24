@@ -13,7 +13,7 @@ import PageTitle from "../../components/PageTitle";
 import SkeletonLoading from "../../components/loading/SkeletonLoading";
 import AlertMessage from "../../components/alert/AlertMessage";
 import useCatchStatus from "../../hooks/useCatchStatus";
-import { TableAvatars } from "../../components/avartars/TableAvatars";
+import TableAvatars  from "../../components/avartars/TableAvatars";
 import theme from "../../assets/themes";
 import getSortOptions from "../../components/GetSortOptions"
 

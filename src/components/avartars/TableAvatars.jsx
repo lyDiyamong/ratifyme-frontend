@@ -1,6 +1,6 @@
 import { Avatar, Box, Typography } from "@mui/material";
 
-export const TableAvatars = ({ profileImage, name }) => {
+const TableAvatars = ({ profileImage, name }) => {
     return (
         <Box style={{ display: "flex", alignItems: "center" }}>
             <Avatar
@@ -21,3 +21,5 @@ export const TableAvatars = ({ profileImage, name }) => {
         </Box>
     );
 };
+
+export default TableAvatars;

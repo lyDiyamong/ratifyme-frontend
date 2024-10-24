@@ -14,7 +14,7 @@ import Google from "@mui/icons-material/Google";
 import FormInput from "../../components/FormInput";
 import theme from "../../assets/themes";
 import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
-import { SpinLoading } from "../../components/loading/SpinLoading";
+import SpinLoading from "../../components/loading/SpinLoading";
 import { useSignInMutation } from "../../store/api/auth/authApi";
 import { Stack } from "@mui/system";
 import LockOpenOutlined from "@mui/icons-material/LockOpenOutlined";

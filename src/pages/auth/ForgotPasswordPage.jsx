@@ -14,7 +14,7 @@ import EmailOutlined from "@mui/icons-material/EmailOutlined";
 import FormInput from "../../components/FormInput";
 import theme from "../../assets/themes";
 import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
-import { SpinLoading } from "../../components/loading/SpinLoading";
+import SpinLoading from "../../components/loading/SpinLoading";
 import OutletImageComponent from "./OutletImageTemplate";
 import useCatchStatus from "../../hooks/useCatchStatus";
 import AlertMessage from "../../components/alert/AlertMessage";

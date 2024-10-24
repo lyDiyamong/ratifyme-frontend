@@ -8,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Box, Stack, Typography } from "@mui/material";
 import { ErrorOutline } from "@mui/icons-material";
 import theme from "../../assets/themes";
-import { SpinLoading } from "../../components/loading/SpinLoading"; // Import SpinLoading
+import SpinLoading from "../../components/loading/SpinLoading"; // Import SpinLoading
 
 const AlertConfirmation = ({
     open,

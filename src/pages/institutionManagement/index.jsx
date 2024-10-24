@@ -15,7 +15,7 @@ import FormatDate from "../../utils/formatDate";
 
 // Fetching import
 import { useGetInstitutionQuery } from "../../store/api/institutionManagement/institutionApi";
-import { TableAvatars } from "../../components/avartars/TableAvatars";
+import TableAvatars from "../../components/avartars/TableAvatars";
 
 // =========== Start InstitutionManagement ===========
 const InstitutionManagement = () => {

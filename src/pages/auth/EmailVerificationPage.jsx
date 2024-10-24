@@ -16,7 +16,7 @@ import theme from "../../assets/themes";
 import AlertMessage from "../../components/alert/AlertMessage";
 import PageLoading from "../../components/loading/PageLoading";
 import useCatchStatus from "../../hooks/useCatchStatus";
-import { SpinLoading } from "../../components/loading/SpinLoading";
+import  SpinLoading from "../../components/loading/SpinLoading";
 
 const EmailVerificationPage = () => {
     // Retrieve email from location.state

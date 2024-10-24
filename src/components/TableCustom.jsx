@@ -15,7 +15,8 @@ import {
     IconButton,
     InputAdornment,
 } from "@mui/material";
-import { SearchOutlined, AddIcon, SwapVertIcon } from "@mui/icons-material";
+import { SearchOutlined, Add, SwapVert } from "@mui/icons-material";
+
 
 // Custom Imports
 import MenuSelection from "./TableAction/MenuSelection";
@@ -116,7 +117,7 @@ const TableCustom = ({
                     {/* Add Button for responsive  */}
                     {addNewBtn && (
                         <Button
-                            startIcon={<AddIcon />}
+                            startIcon={<Add />}
                             variant="contained"
                             onClick={onAddNew}
                             sx={{
@@ -152,7 +153,7 @@ const TableCustom = ({
                         <FormControl sx={{ minWidth: { md: 100, sm: 80, xs: 60 } }} size="small">
                             <InputLabel>
                                 <IconButton sx={{ display: { md: "none", sm: "flex" } }}>
-                                    <SwapVertIcon sx={{ fontSize: "24px" }} />
+                                    <SwapVert sx={{ fontSize: "24px" }} />
                                 </IconButton>
                                 Sort by
                             </InputLabel>
@@ -169,7 +170,7 @@ const TableCustom = ({
                     {/* Add New Button */}
                     {addNewBtn && (
                         <Button
-                            startIcon={<AddIcon />}
+                            startIcon={<Add />}
                             variant="contained"
                             onClick={onAddNew}
                             sx={{

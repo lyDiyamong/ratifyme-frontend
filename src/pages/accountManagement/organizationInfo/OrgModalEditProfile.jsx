@@ -15,7 +15,7 @@ import { Paper } from "@mui/material";
 // Custom Import
 import theme from "../../../assets/themes/index";
 import FormInput from "../../../components/FormInput";
-import { SpinLoading } from "../../../components/loading/SpinLoading";
+import SpinLoading from "../../../components/loading/SpinLoading";
 import PhoneNumberForm from "../../../components/PhoneNumberForm";
 import AlertMessage from "../../../components/alert/AlertMessage.jsx";
 import orgSchema from "../../../utils/schema/orgSchema";

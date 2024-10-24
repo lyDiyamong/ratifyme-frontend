@@ -9,7 +9,7 @@ import { ArrowBackOutlined, ErrorOutlineOutlined } from "@mui/icons-material";
 import theme from "../../assets/themes";
 import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
 import OutletImageComponent from "./OutletImageTemplate";
-import { SpinLoading } from "../../components/loading/SpinLoading";
+import SpinLoading from "../../components/loading/SpinLoading";
 import { useState } from "react";
 
 const ResetPasswordExpiredPage = () => {
