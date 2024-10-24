@@ -192,7 +192,7 @@ const SignupPage = () => {
 
         try {
             await signUp(reqData).unwrap();
-            navigate("/verify-email", { state: { email: data.email, roleId } });
+            navigate("/auth/verify-email", { state: { email: data.email, roleId } });
         } catch (err) {
             console.error("Error during signup:", err);
         }

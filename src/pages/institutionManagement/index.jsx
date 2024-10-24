@@ -49,7 +49,7 @@ const InstitutionManagement = () => {
 
     // View institution profiles
     const handleView = (institutionId) => {
-        navigate(`/management/institutions/${institutionId}`);
+        navigate(`/dashboard/management/institutions/${institutionId}`);
     };
 
     const invoiceColumns = [

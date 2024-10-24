@@ -64,7 +64,7 @@ const ResetPasswordSuccessPage = () => {
                             </Typography>
                         </Box>
 
-                        <Link to="/login">
+                        <Link to="/auth/login">
                             <Button
                                 fullWidth
                                 variant="contained"

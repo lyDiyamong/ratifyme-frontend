@@ -30,7 +30,7 @@ const BackpackList = ({ badges, total, onPage, page, limit, result, isLoading, i
 
     // Handle viewing badge detail
     const handleView = (id) => {
-        navigate(`/management/badges/badgeDetail/${id}`);
+        navigate(`/dashboard/management/badges/badgeDetail/${id}`);
     };
 
     // Handle loading state

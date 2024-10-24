@@ -23,22 +23,22 @@ export const sidebarItems = [
         subItems: [
             {
                 text: "Badges",
-                path: "/management/badges",
+                path: "/dashboard/management/badges",
                 roles: [1, 2, 3],
             },
             {
                 text: "Institutions",
-                path: "/management/institutions",
+                path: "/dashboard/management/institutions",
                 roles: [1],
             },
             {
                 text: "Issuers",
-                path: "/management/issuers",
+                path: "/dashboard/management/issuers",
                 roles: [1, 2],
             },
             {
                 text: "Earners",
-                path: "/management/earners",
+                path: "/dashboard/management/earners",
                 roles: [1, 2, 3],
             },
         ],
@@ -50,17 +50,17 @@ export const sidebarItems = [
         subItems: [
             {
                 text: "Service Plans",
-                path: "/sales/servicePlan",
+                path: "dashboard/sales/servicePlan",
                 roles: [1],
             },
             {
                 text: "Billing and Invoice",
-                path: "/sales/billing&invoice",
+                path: "dashboard/sales/billing&invoice",
                 roles: [1],
             },
             {
                 text: "Invoices",
-                path: "/sales/invoice",
+                path: "dashboard/sales/invoice",
                 roles: [2],
             },
         ],
@@ -68,28 +68,28 @@ export const sidebarItems = [
     {
         text: "Reports",
         icon: ReportIconSvg,
-        path: "/reports",
+        path: "/dashboard/reports",
         altText: "Reports icon",
         roles: [1, 2],
     },
     {
         text: "My Achievement",
         icon: AchievementIconSvg,
-        path: "/myachievement",
+        path: "/dashboard/myachievement",
         altText: "Backpack icon",
         roles: [4],
     },
     {
         text: "My Backpacks",
         icon: BackpackIconSvg,
-        path: "/mybackpacks",
+        path: "/dashboard/mybackpacks",
         altText: "Backpack icon",
         roles: [4],
     },
     {
         text: "Organization",
         icon: OrganizationIconSvg,
-        path: "/organization",
+        path: "/dashboard/organization",
         altText: "Organization icon",
         roles: [3],
     },
@@ -100,7 +100,7 @@ export const sidebarItems = [
         subItems: [
             {
                 text: "Account",
-                path: "/setting/account",
+                path: "/dashboard/setting/account",
             },
         ],
     },

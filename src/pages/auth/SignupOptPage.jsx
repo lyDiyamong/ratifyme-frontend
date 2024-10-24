@@ -11,7 +11,7 @@ const SignupOptPage = () => {
     // Handles role selection
     const handleRoleSelect = (role) => {
         navigate(
-            role === "Institution" ? `/signup?as=${role.toLowerCase()}` : `/join-invitation?as=${role.toLowerCase()}`,
+            role === "Institution" ? `/auth/signup?as=${role.toLowerCase()}` : `/auth/join-invitation?as=${role.toLowerCase()}`,
         );
     };
 

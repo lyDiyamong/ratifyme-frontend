@@ -48,23 +48,23 @@ const ResetPasswordPage = () => {
 
     useEffect(() => {
         if (error) {
-            navigate("/invalid-reset-password");
+            navigate("/auth/invalid-reset-password");
         }
     }, [error, navigate]);
 
     const onSubmit = async (data) => {
-        
+
         setLoading(true);
         try {
             // Attempt to reset the password
             await resetPassword({ token, ...data }).unwrap();
             // Navigate to success page if successful
-            navigate("/reset-password-success");
+            navigate("/auth/reset-password-success");
         } catch (err) {
             console.error("Error resetting password:", err);
             // Redirect to error page if there's an issue with the token
             if (error) {
-                navigate("/invalid-reset-password");
+                navigate("/auth/invalid-reset-password");
             }
         } finally {
             setLoading(false);

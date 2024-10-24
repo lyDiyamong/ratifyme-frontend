@@ -101,7 +101,7 @@ const CodeInvitationCard = () => {
                 <Stack direction={{ xss: "column", sm: "row" }} spacing={2}>
                     {(roleId === 2 || roleId === 3) && (
                         <Box width={"100%"}>
-                            <Link to="/management/issuers">
+                            <Link to="/dashboard/management/issuers">
                                 <Button
                                     variant="outlined"
                                     fullWidth

@@ -316,7 +316,7 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
                     onConfirm={async () => {
                         await logout().unwrap();
                         localStorage.removeItem("loginMessageShown");
-                        navigate("/login");
+                        navigate("/auth/login");
                         setIsLogoutDialogOpen(false);
                     }}
                     confirmText="Logout"

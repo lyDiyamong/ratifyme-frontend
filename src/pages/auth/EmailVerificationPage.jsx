@@ -67,7 +67,7 @@ const EmailVerificationPage = () => {
         try {
             setLoading(true);
             await verifyEmail({ verifyCode: verificationCode }).unwrap();
-            navigate(roleId === 2 ? "/price" : "/signup-success");
+            navigate(roleId === 2 ? "/price" : "/auth/signup-success");
         } catch (error) {
             setVerificationCode("");
             setInputKey((prevKey) => prevKey + 1);

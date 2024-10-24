@@ -70,7 +70,7 @@ const InstitutionProfileCard = ({ cardImgLogo, orgName, orgEmail, cardBgImage, i
     const navigate = useNavigate();
 
     const handleCardClick = () => {
-        navigate(`/organizations/${institutionId}`);
+        navigate(`/dashboard/organizations/${institutionId}`);
     };
 
     return (

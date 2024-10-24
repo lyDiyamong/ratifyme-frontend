@@ -30,9 +30,9 @@ const DashboardLayout = () => {
         if (!isLoading) {
             if (error) {
                 // Redirect to login page if there is an error or no user data
-                navigate("/login");
+                navigate("/auth/login");
             } else if (!user) {
-                navigate("/login");
+                navigate("/auth/login");
             }
         }
     }, [isLoading, error, user, navigate]);

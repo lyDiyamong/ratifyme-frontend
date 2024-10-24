@@ -32,7 +32,7 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
             }).unwrap();
             setClaimed(true);
             refetch();
-            navigate("/mybackpacks");
+            navigate("/dashboard/mybackpacks");
         } catch (error) {
             console.error("Failed to claim badge:", error);
         }
