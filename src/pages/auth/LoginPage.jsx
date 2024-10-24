@@ -86,7 +86,7 @@ const LoginPage = () => {
             await resendVerification({ email: userEmail }).unwrap();
 
             setOpenDialog(false);
-            navigate("/verify-email", { state: { email: userEmail } });
+            navigate("/auth/verify-email", { state: { email: userEmail } });
 
             if (isResendSuccess) {
                 setMessage("Verification email has been resent. Please check your inbox.");
@@ -170,7 +170,7 @@ const LoginPage = () => {
                             control={<Checkbox />}
                             label="Remember Me"
                         />
-                        <Link to="/forgot-password">
+                        <Link to="/auth/forgot-password">
                             <Typography
                                 component="a"
                                 href="#"
@@ -237,7 +237,7 @@ const LoginPage = () => {
 
                     <Typography variant="body2" align="center" color="text.secondary" mt={2}>
                         New on our platform?{" "}
-                        <Link to="/get-started">
+                        <Link to="/auth/get-started">
                             <Typography component="a" href="#" variant="body2" color="primary" sx={{ textDecoration: "none" }}>
                                 Create an account
                             </Typography>

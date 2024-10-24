@@ -69,9 +69,9 @@ const CodeInvitationPage = () => {
         const { inviter, guest, user } = data;
 
         if (user === null) {
-            navigate(`/signup?as=${role}`, { state: { inviter, guest } });
+            navigate(`/auth/signup?as=${role}`, { state: { inviter, guest } });
         } else {
-            navigate(`/login`);
+            navigate(`/auth/login`);
         }
         setOpenDialog(false); // Close dialog after confirmation
     };

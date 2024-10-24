@@ -20,7 +20,7 @@ const App = () => {
             <BrowserRouter>
                 <Routes>
                     {/* Define unique paths for each router */}
-                    <Route path="/" element={<LandingRouter />} />
+                    <Route path="/*" element={<LandingRouter />} />
                     <Route path="/auth/*" element={<AuthRouter />} />
                     <Route path="/dashboard/*" element={<DashboardRouter />} />
                     <Route path="/public/*" element={<PublicPageRouter />} />
