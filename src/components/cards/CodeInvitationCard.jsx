@@ -99,7 +99,7 @@ const CodeInvitationCard = () => {
 
                 {/* Buttons */}
                 <Stack direction={{ xss: "column", sm: "row" }} spacing={2}>
-                    {roleId !== 1 && (
+                    {(roleId === 2 || roleId === 3) && (
                         <Box width={"100%"}>
                             <Link to="/management/issuers">
                                 <Button
@@ -129,7 +129,7 @@ const CodeInvitationCard = () => {
                                         component={NorthEast}
                                         sx={{ marginRight: "8px", display: { xss: "none", xs: "flex" } }}
                                     />
-                                    Invite Issuer
+                                    {roleId === 2 ? 'Invite Issuer' : 'Invite Earner'}
                                 </Button>
                             </Link>
                         </Box>
