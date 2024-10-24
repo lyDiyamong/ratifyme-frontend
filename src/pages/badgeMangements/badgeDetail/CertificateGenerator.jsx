@@ -111,7 +111,7 @@ const CertificateGenerator = ({ badge }) => {
                         borderRadius: theme.customShape.section,
                         boxShadow: theme.customShadows.default,
                         gap: 3,
-                        // padding: 3,
+                        padding: 3,
                         my: 3,
                     }}
                 >
@@ -150,7 +150,6 @@ const CertificateGenerator = ({ badge }) => {
                         boxShadow: theme.customShadows.default,
                         gap: 3,
                         padding: 3,
-                        mb: 3,
                         background: `linear-gradient(to bottom, ${theme.palette.action.hover} 40%, ${theme.palette.customColors.white} 30%)`,
                     }}
                 >
@@ -179,6 +178,12 @@ const CertificateGenerator = ({ badge }) => {
                                 },
                                 scrollbarWidth: "none",
                                 border: `1px solid ${theme.palette.cardBorder}`,
+                                width: "100%",
+                                maxWidth: 1000,
+                                // Set maxWidth to 900px when between 1200px and 1383px
+                                "@media (min-width: 1200px) and (max-width: 1383px)": {
+                                    maxWidth: "820px",
+                                },
                             }}
                         >
                             {/* Start Certificate */}
