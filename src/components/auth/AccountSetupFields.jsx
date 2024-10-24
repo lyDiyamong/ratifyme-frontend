@@ -1,8 +1,12 @@
+// MUI Import 
 import { Box, Stack, Typography } from "@mui/material";
+
+// Custom Import
 import FormInput from "../FormInput";
 import PhoneNumberForm from "../PhoneNumberForm";
 import theme from "../../assets/themes";
 
+// =========== Start AccountSetupFields ===========
 const AccountSetupFields = ({ control, role, guest, schema, errors, watch }) => {
     return (
         <Stack gap={2}>
@@ -33,3 +37,4 @@ const AccountSetupFields = ({ control, role, guest, schema, errors, watch }) => 
 };
 
 export default AccountSetupFields;
+// =========== End AccountSetupFields ===========
