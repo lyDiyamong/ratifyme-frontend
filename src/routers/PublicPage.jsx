@@ -8,7 +8,7 @@ const PublicPageRouter = () => {
         <Routes>
             <Route element={<LandingLayout />}>
             {/* <Route> */}
-                <Route path="/credential" element={<Credential />} />
+                <Route path="/credential/:credId" element={<Credential />} />
             </Route>
             <Route path="*" element={<NotFoundPage />} />
         </Routes>

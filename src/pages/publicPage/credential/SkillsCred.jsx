@@ -2,7 +2,7 @@ import { Box, Stack } from "@mui/system";
 import theme from "../../../assets/themes";
 import { Button, Typography } from "@mui/material";
 
-const SkillsCred = () => {
+const SkillsCred = ({ tags }) => {
     return (
         <Box
             elevation={3}
