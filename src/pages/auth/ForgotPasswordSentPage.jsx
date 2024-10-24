@@ -9,7 +9,7 @@ import { MailOutline } from "@mui/icons-material";
 import theme from "../../assets/themes";
 import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
 import OutletImageComponent from "./OutletImageTemplate";
-import  SpinLoading from "../../components/loading/SpinLoading";
+import { SpinLoading } from "../../components/loading/SpinLoading";
 import { useState, useEffect } from "react";
 import { useForgotPasswordMutation } from "../../store/api/auth/authApi";
 import PageLoading from "../../components/loading/PageLoading";
@@ -72,12 +72,7 @@ const ForgotPasswordSentPage = () => {
             >
                 <Stack width="100%" maxWidth="500px" gap={2}>
                     <Link to="/">
-                        <Box
-                            component="img"
-                            src={RatifyMELogo}
-                            alt="Ratifyme Favicon"
-                            sx={{ width: 150, height: 150 }}
-                        />
+                        <Box component="img" src={RatifyMELogo} alt="Ratifyme Favicon" sx={{ width: 150, height: 150 }} />
                     </Link>
 
                     <Box

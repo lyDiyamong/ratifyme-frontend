@@ -16,7 +16,7 @@ import theme from "../../assets/themes";
 import CoreElementStep from "./CoreElementStep";
 import MetadataStep from "./MetadataStep";
 import OptionalStep from "./OptionalStep";
-import  SpinLoading  from "../../components/loading/SpinLoading";
+import { SpinLoading } from "../../components/loading/SpinLoading";
 import { useCreateBadgeMutation } from "../../store/api/badgeManagement/badgeApi";
 import { useFetchAchievementTypeQuery } from "../../store/api/achievements/achievementTypeApi";
 import { CameraAltRounded } from "@mui/icons-material";

@@ -9,7 +9,7 @@ import { ArrowBackOutlined, ErrorOutlineOutlined } from "@mui/icons-material";
 import theme from "../../assets/themes";
 import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
 import OutletImageComponent from "./OutletImageTemplate";
-import SpinLoading from "../../components/loading/SpinLoading";
+import { SpinLoading } from "../../components/loading/SpinLoading";
 import { useState } from "react";
 
 const ResetPasswordExpiredPage = () => {
@@ -46,12 +46,7 @@ const ResetPasswordExpiredPage = () => {
                 >
                     <Stack width="100%" maxWidth="500px" gap={2}>
                         <Link to="/">
-                            <Box
-                                component="img"
-                                src={RatifyMELogo}
-                                alt="Ratifyme Favicon"
-                                sx={{ width: 150, height: 150 }}
-                            />
+                            <Box component="img" src={RatifyMELogo} alt="Ratifyme Favicon" sx={{ width: 150, height: 150 }} />
                         </Link>
 
                         <Box
@@ -98,10 +93,7 @@ const ResetPasswordExpiredPage = () => {
                         <Box>
                             <Link to="/auth/login">
                                 <Box display="flex" gap={1} alignItems="center" justifyContent="center" width="100%">
-                                    <ArrowBackOutlined
-                                        fontSize="32px"
-                                        sx={{ color: theme.palette.primary.contrastText }}
-                                    />
+                                    <ArrowBackOutlined fontSize="32px" sx={{ color: theme.palette.primary.contrastText }} />
                                     <Typography
                                         component="a"
                                         href="#"

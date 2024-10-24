@@ -36,8 +36,6 @@ const DashbaordRouter = () => {
                 <Route path="/setting/account" element={<AccountManagement />} />
                 <Route path="/management/institutions" element={<InstitutionManagement />} />
                 <Route path="/management/institutions/:institutionId" element={<InstitutionDetail />} />
-                {/* <Route path="/unauthorized" element={<UnauthorizedPage />} />
-                <Route path="*" element={<NotFoundPage />} /> */}
                 <Route path="/management/badges/badgecreation" element={<BadgeCreation />} />
                 <Route path="/management/badges/badgeDetail/:id" element={<BadgeDetail />} />
                 <Route path="/myachievement" element={<AchievementManagement />} />

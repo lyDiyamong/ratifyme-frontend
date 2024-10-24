@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { Button } from "@mui/material";
 
 // Custom import
-import  SpinLoading  from "../../components/loading/SpinLoading";
+import { SpinLoading } from "../../components/loading/SpinLoading";
 import theme from "../../assets/themes";
 
 // Api import

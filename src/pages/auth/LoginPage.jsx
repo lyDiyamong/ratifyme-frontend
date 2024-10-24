@@ -14,7 +14,7 @@ import Google from "@mui/icons-material/Google";
 import FormInput from "../../components/FormInput";
 import theme from "../../assets/themes";
 import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
-import SpinLoading from "../../components/loading/SpinLoading";
+import { SpinLoading } from "../../components/loading/SpinLoading";
 import { useSignInMutation } from "../../store/api/auth/authApi";
 import { Stack } from "@mui/system";
 import LockOpenOutlined from "@mui/icons-material/LockOpenOutlined";
@@ -90,12 +90,7 @@ const LoginPage = () => {
             >
                 <Stack width="100%" maxWidth="450px" gap={2}>
                     <Link to="/">
-                        <Box
-                            component="img"
-                            src={RatifyMELogo}
-                            alt="Ratifyme Favicon"
-                            sx={{ width: 150, height: 150 }}
-                        />
+                        <Box component="img" src={RatifyMELogo} alt="Ratifyme Favicon" sx={{ width: 150, height: 150 }} />
                     </Link>
 
                     <Box my={3}>
@@ -209,13 +204,7 @@ const LoginPage = () => {
                     <Typography variant="body2" align="center" color="text.secondary" mt={2}>
                         New on our platform?{" "}
                         <Link to="/get-started">
-                            <Typography
-                                component="a"
-                                href="#"
-                                variant="body2"
-                                color="primary"
-                                sx={{ textDecoration: "none" }}
-                            >
+                            <Typography component="a" href="#" variant="body2" color="primary" sx={{ textDecoration: "none" }}>
                                 Create an account
                             </Typography>
                         </Link>

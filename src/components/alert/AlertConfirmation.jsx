@@ -6,7 +6,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import { ErrorOutline } from "@mui/icons-material";
 
 // Custom import
-import SpinLoading from "../../components/loading/SpinLoading";
+import { SpinLoading } from "../../components/loading/SpinLoading";
 import theme from "../../assets/themes";
 
 // =========== Start AlertConfirmation ===========

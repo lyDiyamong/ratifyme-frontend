@@ -15,7 +15,7 @@ import { Paper } from "@mui/material";
 // Custom Import
 import theme from "../../../assets/themes/index";
 import FormInput from "../../../components/FormInput";
-import SpinLoading from "../../../components/loading/SpinLoading";
+import { SpinLoading } from "../../../components/loading/SpinLoading";
 import PhoneNumberForm from "../../../components/PhoneNumberForm";
 import AlertMessage from "../../../components/alert/AlertMessage.jsx";
 import orgSchema from "../../../utils/schema/orgSchema";
@@ -91,27 +91,10 @@ const OrgModalEditProfile = ({ open, institutionData, onClose }) => {
                     }}
                     noValidate
                 >
-                    <FormInput
-                        name="institutionName"
-                        label="Organization Name"
-                        control={control}
-                        type="text"
-                        required
-                    />
-                    <FormInput
-                        name="institutionEmail"
-                        label="Organization Email"
-                        control={control}
-                        type="email"
-                        required
-                    />
+                    <FormInput name="institutionName" label="Organization Name" control={control} type="text" required />
+                    <FormInput name="institutionEmail" label="Organization Email" control={control} type="email" required />
                     {/* Use PhoneNumberForm component here */}
-                    <PhoneNumberForm
-                        name="institutionPhoneNumber"
-                        label="Organization Phone Number"
-                        control={control}
-                        required
-                    />
+                    <PhoneNumberForm name="institutionPhoneNumber" label="Organization Phone Number" control={control} required />
 
                     <FormInput name="institutionWebsiteUrl" label="Organization Website" control={control} />
                 </Box>
