@@ -18,12 +18,12 @@ Join RatifyME today and take your achievements from hidden to highlighted—lett
 
 # Demo
 
-as our project is ready to be deploy this is the link to Demo our Project Showcase. RatifyMe Digital - www.ratifyme.digital
+As our project is ready to be deploy this is the link to Demo our Project Showcase. RatifyMe Digital - www.ratifyme.digital
 
 # Tech Stack
 
-Client: React, Node, MUi
-Server: Node, Express, MySQL
+- Client: React, Node, MUi
+- Server: Node, Express, MySQL
 
 ## Getting Started
 
@@ -36,7 +36,7 @@ Follow these instructions to get a local copy of the project up and running.
 ### Installation
 
 1. **Clone the repository**:
-    ```bash
+    ```
     git clone <https://git.clp.kr/anbschool/2nd/tech-a/team-projects/verifyme-frontend.git>
     cd verifyme-frontend
     ```
