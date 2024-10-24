@@ -6,14 +6,45 @@ export const earnerApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_SERVER_BASE_URL }),
     tagTypes: ["Earner"],
     endpoints: (builder) => ({
+        // fetchEarner: builder.query({
+        //     query: ({ issuerId = null, roleId = null, page = 1, limit =10, sort="", search="", institutionId=null }) => {
+        //         let query = `/earners?page=${page}&limit=${limit}&sort=${sort}`;
+        //         if (search) query += `&search=${search}`;
+
+        //         if (roleId === 2) {
+        //             query += `&institutionId=${institutionId}`;
+        //         } else if (roleId !== 1) {
+        //             query += `&issuerId=${issuerId}`;
+        //         }
+
+        //         return query;
+        //     },
+        //     providesTags: ["Earner"],
+        // }),
         fetchEarner: builder.query({
-            query: ({ issuerId, roleId, page, limit, sort, search, institutionId }) => {
+            query: ({
+                issuerId = null, // Default to null if undefined
+                roleId = 1, // Default roleId if undefined
+                page = 1, // Default to first page
+                limit = 10, // Default to 10 items per page
+                sort = "", // Default sorting value
+                search = "", // Default search string
+                institutionId = null, // Default to null if undefined
+            } = {}) => {
+                // Default empty object to avoid undefined destructuring
+                // Construct the base query
                 let query = `/earners?page=${page}&limit=${limit}&sort=${sort}`;
+
+                // Add search to the query if it's provided
                 if (search) query += `&search=${search}`;
-                
-                if (roleId === 2) {
+
+                // Add institutionId if roleId is 2
+                if (roleId === 2 && institutionId) {
                     query += `&institutionId=${institutionId}`;
-                } else if (roleId !== 1) {
+                }
+
+                // Only add issuerId if it exists and roleId is not 1
+                if (issuerId && roleId !== 1) {
                     query += `&issuerId=${issuerId}`;
                 }
 
@@ -45,9 +76,24 @@ export const earnerApi = createApi({
             }),
             providesTags: ["Earner"],
         }),
+        // Fetching By earner id and achievement id
         fetchEarnerAchieById: builder.query({
             query: ({ achieveId, earnerId }) => ({
                 url: `/earners/earnerAchievement/${achieveId}/earner/${earnerId}`,
+                method: "GET",
+            }),
+            providesTags: ["Earner"],
+        }),
+        fetchEarnerAchieveByUid: builder.query({
+            query: ({ credId }) => ({
+                url: `/earners/earnerAchievementByUid/${credId}`,
+                method: "GET",
+            }),
+            providesTags: ["Earner"],
+        }),
+        fetchAchieveByid: builder.query({
+            query: ({ achievementId }) => ({
+                url: `/earners/achievementById/${achievementId}`,
                 method: "GET",
             }),
             providesTags: ["Earner"],
@@ -104,4 +150,6 @@ export const {
     useUpdateAcademicBackgroundByIdMutation,
     useCreateAcademicBackgroundMutation,
     useDeleteAcademicBackgroundByIdMutation,
+    useFetchEarnerAchieveByUidQuery,
+    useFetchAchieveByidQuery,
 } = earnerApi;

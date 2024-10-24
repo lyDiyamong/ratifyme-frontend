@@ -133,7 +133,7 @@ export default function SearchBar({
                 </Search>
 
                 {showButton && (
-                    <Link to="/management/badges/badgecreation">
+                    <Link to="/dashboard/management/badges/badgecreation">
                         <Button
                             variant="contained"
                             sx={{

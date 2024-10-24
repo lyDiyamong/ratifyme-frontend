@@ -1,23 +1,66 @@
 // React library import
 import { useEffect, useState } from "react";
-
-// MUI import
-import { AppBar, IconButton, InputBase, Toolbar, useMediaQuery, Box } from "@mui/material";
-import { Menu as MenuIcon, Search, SettingsOutlined, NotificationsNoneOutlined } from "@mui/icons-material";
+import { useSelector } from "react-redux";
 import { useTheme } from "@emotion/react";
 
-// Custom Import
+// MUI import
+import { AppBar, IconButton, InputBase, Toolbar, useMediaQuery, Box, Menu, MenuItem } from "@mui/material";
+import {
+    Menu as MenuIcon,
+    Search,
+    SettingsOutlined,
+    NotificationsNoneOutlined,
+    AccountCircleOutlined,
+    LogoutOutlined,
+} from "@mui/icons-material";
+
+// Custom import
 import FlexBetween from "../../components/styles/FlexBetween";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import DefaultProfileSvg from "../../assets/images/DefaultProfile.svg";
 import MaleUserDefault from "../../assets/images/MaleUser.svg";
 import FemaleUserDefault from "../../assets/images/FemaleUser.svg";
-import { useSelector } from "react-redux";
-import { useFetchInfoUserByIdQuery } from "../../store/api/users/userInfoProfileApi";
 
+// API import
+import { useFetchInfoUserByIdQuery } from "../../store/api/users/userInfoProfileApi";
+import { useNavigate } from "react-router";
+import NotificationSidebar from "../../components/NotificationSidebar";
+import PageLoading from "../../components/loading/PageLoading";
+import AlertConfirmation from "../../components/alert/AlertConfirmation";
+import { useLogoutMutation } from "../../store/api/auth/authApi";
+
+// ============ Start Header ============
 const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const theme = useTheme();
     const isTablet = useMediaQuery(theme.breakpoints.up("md"));
+    const navigate = useNavigate();
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
+    const [logout] = useLogoutMutation();
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    // Handle dropdown menu open and close
+    const handleMenuClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleProfileClick = () => {
+        setIsLoading(true);
+        navigate("/dashboard/setting/account");
+        handleMenuClose();
+    };
+
+    const handleLogoutClick = () => {
+        setIsLogoutDialogOpen(true);
+        handleMenuClose();
+    };
+
+    const [notificationSidebarOpen, setNotificationSidebarOpen] = useState(false);
 
     // Fetch user data using the query
     const { userId } = useSelector((state) => state.global);
@@ -29,36 +72,82 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
     // Update profile image on user data change
     useEffect(() => {
         if (userData) {
-            // Check if the user has a custom profile image
             if (imageProfile) {
                 setProfileImage(imageProfile);
-            }
-            // Check gender to set default profile image
-            else if (gender && gender === "male") {
+            } else if (gender === "male") {
                 setProfileImage(MaleUserDefault);
-            } else if (gender && gender === "female") {
+            } else if (gender === "female") {
                 setProfileImage(FemaleUserDefault);
             } else {
                 setProfileImage(DefaultProfileSvg);
             }
         }
-    }, [imageProfile]);
+    }, [imageProfile, userData]);
 
     // Header icons
     const headerIcons = [
-        <NotificationsNoneOutlined />,
-        <Box
-            component="img"
-            src={profileImage}
-            alt="Profile Icon"
-            style={{ borderRadius: "50%", width: "24px", height: "24px" }}
-        />,
-        <SettingsOutlined />,
+        <IconButton sx={{ p: 0 }} onClick={() => setNotificationSidebarOpen(true)}>
+            <NotificationsNoneOutlined />
+        </IconButton>,
+        <IconButton
+            sx={{ p: 0 }}
+            onClick={() => {
+                setIsLoading(true);
+                navigate("/dashboard/setting/account");
+            }}
+        >
+            <Box
+                component="img"
+                src={profileImage}
+                alt="Profile Icon"
+                style={{ borderRadius: "50%", width: "24px", height: "24px" }}
+            />
+        </IconButton>,
+        <IconButton sx={{ p: 0 }} onClick={handleMenuClick}>
+            <SettingsOutlined />
+        </IconButton>,
     ];
+
+    // Show loading when navigating
+    useEffect(() => {
+        if (isLoading) {
+            const timeout = setTimeout(() => {
+                setIsLoading(false);
+            }, 1000);
+            return () => clearTimeout(timeout);
+        }
+    }, [isLoading]);
 
     return (
         // ============ Start Appbar ============
         <DashboardContainer>
+            <NotificationSidebar open={notificationSidebarOpen} onClose={() => setNotificationSidebarOpen(false)} />
+
+            {isLoading && <PageLoading isLoading={isLoading} />}
+
+            {/* Dropdown Menu */}
+            <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+                PaperProps={{
+                    sx: {
+                        mt: 1,
+                        ml: -2,
+                        transform: "translateY(8px)",
+                    },
+                }}
+            >
+                <MenuItem onClick={handleProfileClick}>
+                    <AccountCircleOutlined sx={{ mr: 1 }} />
+                    Profile
+                </MenuItem>
+                <MenuItem onClick={handleLogoutClick}>
+                    <LogoutOutlined sx={{ mr: 1, color: theme.palette.customColors.red300 }} />
+                    Logout
+                </MenuItem>
+            </Menu>
+
             <AppBar
                 sx={{
                     position: "static",
@@ -110,9 +199,30 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
                     {/* End right side  */}
                 </Toolbar>
             </AppBar>
+
+            {/* Logout Confirmation Dialog */}
+            <AlertConfirmation
+                open={isLogoutDialogOpen}
+                title="Confirm Logout"
+                message="Are you sure you want to log out?"
+                onClose={() => setIsLogoutDialogOpen(false)}
+                onConfirm={async () => {
+                    await logout().unwrap();
+                    localStorage.removeItem("loginMessageShown");
+                    navigate("/auth/login");
+                    setIsLogoutDialogOpen(false);
+                }}
+                confirmText="Logout"
+                cancelText="Cancel"
+                iconBgColor="#ffebee"
+                iconColor={theme.palette.error.main}
+                confirmButtonColor={theme.palette.error.main}
+                confirmButtonColorHover={theme.palette.error.dark}
+            />
         </DashboardContainer>
         // ============ End Appbar ============
     );
 };
 
 export default Header;
+// ============ End Header ============

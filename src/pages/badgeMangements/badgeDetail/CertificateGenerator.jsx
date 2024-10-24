@@ -1,5 +1,5 @@
 // React import
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toJpeg } from "html-to-image";
 import { useSelector } from "react-redux";
 
@@ -12,7 +12,6 @@ import AutoAwesome from "@mui/icons-material/AutoAwesome";
 
 // Custom import
 import Certificate from "../../../components/Certificate";
-import DashboardContainer from "../../../components/styles/DashboardContainer";
 import useCatchStatus from "../../../hooks/useCatchStatus";
 import AlertMessage from "../../../components/alert/AlertMessage";
 import theme from "../../../assets/themes";
@@ -41,8 +40,7 @@ const CertificateGenerator = ({ badge }) => {
     const { data: earnerAchieResponse } = useFetchEarnerAchieByIdQuery({ achieveId, earnerId });
     const earnerAchieveData = earnerAchieResponse?.data;
     const earnerAchieveStatus = earnerAchieResponse?.data?.status;
-    const isCertUpload = earnerAchieResponse?.data?.certUrlPdf ? true : false;
-    console.log("EarnerAchive", earnerAchieveData);
+    const certUrl = earnerAchieResponse?.data?.certUrlPdf;
 
     // Upload Certificate hook
     const [uploadCert, { isLoading: certiLoading, isError: uploadCertError }] = useUploadCertiMutation();
@@ -51,6 +49,7 @@ const CertificateGenerator = ({ badge }) => {
     const [message, setMessage] = useCatchStatus(uploadCertError, "Get certificate failed");
 
     const [isExploding, setIsExploding] = useState(false);
+    const [isCertUpload, setIsCertUpload] = useState(false)
     const [isUploadCertModal, setIsUploadCertModal] = useState(false);
 
     const handleGenerateImage = async () => {
@@ -73,6 +72,9 @@ const CertificateGenerator = ({ badge }) => {
             // Open the uploaded certificate URL
             if (response) {
                 window.open(response?.uploadCert, "_blank");
+                if(response?.uploadCert){
+                    setIsCertUpload(true)
+                }
             }
         } catch (error) {
             // Handle errors
@@ -94,8 +96,15 @@ const CertificateGenerator = ({ badge }) => {
         setTimeout(() => setIsExploding(false), 4000);
     };
 
+    // Disable Generate button effect
+    useEffect(() => {
+        if (certUrl) {
+            setIsCertUpload(true)
+        }
+    }, [certUrl])
+
     return (
-        <DashboardContainer>
+        <Box>
             <PageLoading isLoading={certiLoading} />
             {message && (
                 <AlertMessage variant="error" onClose={() => setMessage("")}>
@@ -151,7 +160,6 @@ const CertificateGenerator = ({ badge }) => {
                         boxShadow: theme.customShadows.default,
                         gap: 3,
                         padding: 3,
-                        my: 3,
                         background: `linear-gradient(to bottom, ${theme.palette.action.hover} 40%, ${theme.palette.customColors.white} 30%)`,
                     }}
                 >
@@ -180,6 +188,12 @@ const CertificateGenerator = ({ badge }) => {
                                 },
                                 scrollbarWidth: "none",
                                 border: `1px solid ${theme.palette.cardBorder}`,
+                                width: "100%",
+                                maxWidth: 1000,
+                                // Set maxWidth to 900px when between 1200px and 1383px
+                                "@media (min-width: 1200px) and (max-width: 1383px)": {
+                                    maxWidth: "820px",
+                                },
                             }}
                         >
                             {/* Start Certificate */}
@@ -256,7 +270,7 @@ const CertificateGenerator = ({ badge }) => {
                     )}
                 </Stack>
             )}
-        </DashboardContainer>
+        </Box>
     );
 };
 

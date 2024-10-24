@@ -1,15 +1,15 @@
-import { Box, Grid, Typography, Button, Stack, CardContent, Card } from "@mui/material";
+import { Box, Grid, Typography, Button, Stack } from "@mui/material";
 import theme from "../../../assets/themes";
-import { CalendarMonthOutlined, CheckCircle, LinkedIn, LinkOutlined, Share } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { CalendarMonthOutlined, LinkedIn, Share, VerifiedUserOutlined, VerifiedUserRounded } from "@mui/icons-material";
 import { useState } from "react";
 import ShareSocialModal from "./ShareSocialModal";
 import IssuerByCred from "./IssuerByCred";
 import BadgeDetailsCred from "./BadgeDetailsCred";
 import SkillsCred from "./SkillsCred";
 import AchievementTypesCred from "./AchievementTypesCred";
+import FormatDate from "../../../utils/formatDate";
 
-const CredentialContent = ({ earnerData, achieveData, credUrl, credId }) => {
+const CredentialContent = ({ earnerData, achieveData, credUrl, credId, verifyCred }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleOpenModal = () => setIsModalOpen(true);
@@ -19,10 +19,11 @@ const CredentialContent = ({ earnerData, achieveData, credUrl, credId }) => {
         <Grid container spacing={2} my={2}>
             {/* Left Sticky Section */}
             <Grid item xs={12} md={4}>
-                <Box
+                <Stack
                     sx={{
                         position: "sticky",
                         top: 20,
+                        gap: 2,
                     }}
                 >
                     <Stack
@@ -37,11 +38,11 @@ const CredentialContent = ({ earnerData, achieveData, credUrl, credId }) => {
                         <Stack spacing={2}>
                             <Stack>
                                 <Typography variant="body3" fontWeight="bold" color="primary" gutterBottom>
-                                    ISSUER TO
+                                    ISSUED TO
                                 </Typography>
 
                                 <Typography variant="h3" fontWeight={theme.fontWeight.semiBold} gutterBottom>
-                                    Sreang Lyhour
+                                    {earnerData?.User?.firstName} {earnerData?.User?.lastName}
                                 </Typography>
                             </Stack>
 
@@ -82,53 +83,61 @@ const CredentialContent = ({ earnerData, achieveData, credUrl, credId }) => {
                         </Stack>
                     </Stack>
 
-                    <Card
+                    <Stack
+                        elevation={3}
                         sx={{
-                            maxWidth: 400,
-                            border: "1px solid #EDEDED",
-                            borderRadius: "8px",
-                            backgroundColor: "#F5FAF9",
+                            p: 2,
+                            backgroundColor: "#F3FAFA",
+                            borderRadius: theme.customShape.input,
+                            border: "1px solid #C5E3E3",
                         }}
                     >
-                        <CardContent>
-                            {/* Icon and Title */}
-                            <Box display="flex" alignItems="center" mb={1}>
-                                <CheckCircle sx={{ color: "#4CB5AE", mr: 1 }} />
-                                <Typography variant="subtitle2" color="#4CB5AE" fontWeight="bold">
-                                    CREDENTIAL VERIFICATION
-                                </Typography>
-                            </Box>
+                        <Stack spacing={2}>
+                            <Stack gap={1}>
+                                <Box display="flex" alignItems="center" gap={1}>
+                                    <VerifiedUserRounded sx={{ fontSize: 16, color: "#0AA4A5" }} />
+                                    <Typography variant="body2" color="#0AA4A5" fontWeight="bold">
+                                        Credential Verification
+                                    </Typography>
+                                </Box>
 
-                            {/* Issue Date */}
-                            <Typography variant="body2" color="textSecondary" mb={2}>
-                                <strong>Issue date:</strong> October 9, 2024
-                            </Typography>
+                                <Box display="flex" alignItems="center" gap={1}>
+                                    <Typography variant="body2" fontWeight="bold">
+                                        Issue On:{"  "}
+                                    </Typography>
+                                    <Typography variant="body2">{FormatDate(achieveData?.BadgeClass?.startedDate)}</Typography>
+                                </Box>
+                            </Stack>
 
-                            {/* Button */}
+                            {/* Share Award Button */}
                             <Button
                                 variant="contained"
+                                startIcon={<VerifiedUserOutlined />}
                                 sx={{
-                                    backgroundColor: "#4CB5AE",
-                                    borderRadius: "8px",
-                                    textTransform: "none", // keep button text normal case
-                                    width: "100%",
-                                    padding: "10px 0",
-                                    "&:hover": {
-                                        backgroundColor: "#3AA092",
-                                    },
+                                    backgroundColor: "#0AA4A5",
+                                    fontWeight: theme.fontWeight.bold,
+                                    color: theme.palette.customColors.white,
+                                    textTransform: "none",
                                 }}
-                                startIcon={<CheckCircle />}
+                                onClick={verifyCred}
+                                open={open}
+                                // handleClose={handleOpen}
+                                fullWidth
                             >
-                                Verify Credential
+                                Verify Credentail
                             </Button>
 
-                            {/* ID */}
-                            <Typography variant="caption" color="textSecondary" mt={2} display="block">
-                                ID: 04786f98-6f2f-4b2b-8c0b-3cf1853c6bba
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                </Box>
+                            <Box display="flex" alignItems="center" gap={1}>
+                                <Typography variant="body3" fontWeight="bold">
+                                    ID:{"  "}
+                                </Typography>
+                                <Typography variant="body3" color="#0AA4A5" fontWeight="bold">
+                                    {credId}
+                                </Typography>
+                            </Box>
+                        </Stack>
+                    </Stack>
+                </Stack>
             </Grid>
 
             {/* Right Scrollable Section */}
@@ -136,14 +145,16 @@ const CredentialContent = ({ earnerData, achieveData, credUrl, credId }) => {
                 {/* Stack for all content sections */}
                 <Stack spacing={2} sx={{ height: "100%", overflowY: "auto" }}>
                     {/* Issuer By Section */}
-                    <IssuerByCred IssuerName="Rotha SAMON" />
+                    <IssuerByCred
+                        IssuerName={`${achieveData?.BadgeClass?.Issuer?.User?.firstName} ${achieveData?.BadgeClass?.Issuer?.User?.lastName}`}
+                    />
 
                     {/* Badge Details card Section */}
                     <BadgeDetailsCred
-                        BadgeName="Avdance Java of the RUPP Competitetion"
-                        Criteria="Avdance Java"
-                        StartDate="22 / 12/ 2024"
-                        EndDate="01 / 01/ 2025"
+                        BadgeName={achieveData?.BadgeClass?.name}
+                        Criteria={achieveData?.BadgeClass?.Criterias[0]?.narrative}
+                        StartDate={FormatDate(achieveData?.BadgeClass?.startedDate)}
+                        EndDate={FormatDate(achieveData?.BadgeClass?.endDate)}
                     />
 
                     {/* Description Section */}
@@ -166,21 +177,15 @@ const CredentialContent = ({ earnerData, achieveData, credUrl, credId }) => {
                                 </Typography>
                             </Stack>
 
-                            <Typography>
-                                Unity Pro: Advanced Game Development Techniques is an intensive training program designed to
-                                elevate intermediate Unity developers into expert game creators 🎮 This advanced course delves
-                                deep into the intricacies of Unity, exploring sophisticated techniques that will push your game
-                                development skills to the next level. Participants will master complex scripting, optimize game
-                                performance, and implement advanced AI and procedural generation.
-                            </Typography>
+                            <Typography>{achieveData?.BadgeClass?.description}</Typography>
                         </Stack>
                     </Box>
 
                     {/* Skills Section */}
-                    <SkillsCred />
+                    <SkillsCred tags={achieveData?.BadgeClass?.tags} />
 
                     {/* Achievement Types Section */}
-                    <AchievementTypesCred />
+                    <AchievementTypesCred achievementTypes={achieveData?.BadgeClass?.Achievements} />
 
                     <Box
                         elevation={3}
@@ -196,16 +201,9 @@ const CredentialContent = ({ earnerData, achieveData, credUrl, credId }) => {
                                 Addition Element
                             </Typography>
 
-                            <Link to="http://localhost:5173/credential">
-                                <Stack flexDirection="row" gap={1}>
-                                    <LinkOutlined />
-                                    <Typography>Addition Link</Typography>
-                                </Stack>
-                            </Link>
-
                             <Stack flexDirection="row" gap={1}>
                                 <CalendarMonthOutlined />
-                                <Typography>Expiration Date: 22/ 12/ 2030</Typography>
+                                <Typography>Expiration Date: {FormatDate(achieveData?.BadgeClass?.expiredDate)}</Typography>
                             </Stack>
                         </Stack>
                     </Box>
