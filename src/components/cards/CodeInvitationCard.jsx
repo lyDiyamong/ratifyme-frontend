@@ -1,11 +1,14 @@
-// MUI imports
+// React library import
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
+// MUI import
 import { Box, Typography, Button, SvgIcon, Stack } from "@mui/material";
 
-// MUI icons
+// MUI import
 import { PasswordOutlined, NorthEast, Business } from "@mui/icons-material";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 
+// =========== Start CodeInvitationCard ===========
 const CodeInvitationCard = () => {
     const { roleId, institutionData, issuerData, userInfo, earnerData } = useSelector((state) => state.global);
     let position = userInfo?.Role?.name;
@@ -172,3 +175,4 @@ const CodeInvitationCard = () => {
 };
 
 export default CodeInvitationCard;
+// =========== Start CodeInvitationCard ===========
