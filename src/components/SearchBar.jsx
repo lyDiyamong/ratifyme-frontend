@@ -16,20 +16,17 @@ import DashboardContainer from "./styles/DashboardContainer";
 // Styled components
 const Search = styled("div")(({ theme }) => ({
     position: "relative",
-    borderRadius: theme.customShape.input,
+    borderRadius: theme.customShape.btn,
     backgroundColor: alpha(theme.palette.common.black, 0.15),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-        marginLeft: theme.spacing(2),
-        width: "60%",
-    },
+    maxWidth: "1600px",
+
     [theme.breakpoints.up("md")]: {
+        width: "90%",
+    },
+    [theme.breakpoints.down("md")]: {
         width: "70%",
     },
-    [theme.breakpoints.down("sm")]: {
-        width: "100%",
-        marginRight: theme.spacing(0),
-    },
+
     boxShadow: theme.customShadows.default,
 }));
 
@@ -114,8 +111,10 @@ export default function SearchBar({
     return (
         <Stack gap={4}>
             <Box sx={{ flexGrow: 1, marginTop: "20px", display: "flex", alignItems: "center", gap: "10px" }}>
+                {/* Search bar with flexible width */}
                 <Search
                     sx={{
+                        flexGrow: 1, // allows the search bar to take up remaining space
                         borderRadius: theme.customShape.section,
                         backgroundColor: theme.palette.customColors.white,
                         border: `1px solid ${theme.palette.divider}`,
@@ -132,6 +131,7 @@ export default function SearchBar({
                     />
                 </Search>
 
+                {/* Button with fixed size */}
                 {showButton && (
                     <Link to="/dashboard/management/badges/badgecreation">
                         <Button
@@ -141,12 +141,11 @@ export default function SearchBar({
                                 color: theme.palette.customColors.white,
                                 borderRadius: theme.customShape.btn,
                                 textTransform: "none",
-                                marginTop: { xs: theme.spacing(2), sm: 0 },
-                                fontSize: { xs: "0.75rem", sm: "0.875rem", md: "1rem" },
-                                padding: { xs: theme.spacing(1, 2), sm: theme.spacing(1, 3) },
-                                width: { xs: "100%", sm: "auto" },
+                                paddingY: "8px",
                                 boxShadow: theme.customShadows.default,
                                 fontWeight: theme.fontWeight.bold,
+                                fontSize: "1.2rem",
+                                whiteSpace: "nowrap",
                             }}
                         >
                             {textInButton}
@@ -154,6 +153,7 @@ export default function SearchBar({
                     </Link>
                 )}
             </Box>
+
             <DashboardContainer
                 sx={{
                     backgroundColor: theme.palette.customColors.white,

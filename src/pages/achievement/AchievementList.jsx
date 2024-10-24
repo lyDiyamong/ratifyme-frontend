@@ -1,12 +1,14 @@
 // React Import
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+
+// MUI Import
+import { Box } from "@mui/system";
+import { Pagination, Typography } from "@mui/material";
 
 // Custom import
 import BadgeListCard from "../../components/BadgeListCard";
-import { useEffect } from "react";
-import { Box } from "@mui/system";
-import { Pagination, Typography } from "@mui/material";
 import PageLoading from "../../components/loading/PageLoading";
 
 export const AchievementList = ({ badges, total, onPage, page, limit, result, isLoading, isError }) => {

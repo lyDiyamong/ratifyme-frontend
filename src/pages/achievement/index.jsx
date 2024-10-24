@@ -1,11 +1,16 @@
+// React Import
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { skipToken } from "@reduxjs/toolkit/query";
+
+// Custom Import
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import PageTitle from "../../components/PageTitle";
 import SearchBar from "../../components/SearchBar";
 import { AchievementList } from "./AchievementList";
-import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+
+// Api Import
 import { useFetchBadgeByEarnerQuery } from "../../store/api/badgeManagement/badgeApi";
-import { skipToken } from "@reduxjs/toolkit/query";
 
 const AchievementManagement = () => {
     const [page, setPage] = useState(1);
