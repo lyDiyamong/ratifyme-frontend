@@ -1,6 +1,10 @@
+// React library import
 import { useState } from "react";
+
+// MUI import
 import { Box, Tabs, Tab } from "@mui/material";
 
+// =========== Start CustomTabs ===========
 const CustomTabs = ({ tabs, tabContent, searchQuery }) => {
     const [tabIndex, setTabIndex] = useState(0);
 
@@ -54,3 +58,4 @@ const CustomTabs = ({ tabs, tabContent, searchQuery }) => {
 };
 
 export default CustomTabs;
+// =========== End CustomTabs ===========
