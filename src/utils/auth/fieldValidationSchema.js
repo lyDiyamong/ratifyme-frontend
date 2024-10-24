@@ -32,7 +32,6 @@ export const schema = yup.object({
         .string()
         .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email format")
         .required("⚠️ Email is required"),
-    url: yup.string().url("⚠️ Invalid URL format"),
     dateOfBirth: yup
         .date()
         .typeError("⚠️ Please select a valid date")
