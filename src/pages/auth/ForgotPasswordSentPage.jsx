@@ -72,12 +72,7 @@ const ForgotPasswordSentPage = () => {
             >
                 <Stack width="100%" maxWidth="500px" gap={2}>
                     <Link to="/">
-                        <Box
-                            component="img"
-                            src={RatifyMELogo}
-                            alt="Ratifyme Favicon"
-                            sx={{ width: 150, height: 150 }}
-                        />
+                        <Box component="img" src={RatifyMELogo} alt="Ratifyme Favicon" sx={{ width: 150, height: 150 }} />
                     </Link>
 
                     <Box

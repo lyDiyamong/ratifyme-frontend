@@ -1,6 +1,10 @@
+// MUI import
 import { Box, Stack, Typography } from "@mui/material";
+
+// Custom import
 import theme from "../../assets/themes";
 
+// =========== Start AuthOutletImage ===========
 const AuthOutletImage = ({
     width = '50%',
     image,
@@ -116,3 +120,4 @@ const AuthOutletImage = ({
 };
 
 export default AuthOutletImage;
+// =========== End AuthOutletImage ===========

@@ -1,4 +1,4 @@
-// MUI Import
+// MUI import
 import Button from "@mui/material/Button";
 
 /**
@@ -9,7 +9,6 @@ import Button from "@mui/material/Button";
  *
  * @returns {JSX.Element} A reusable Material-UI Button component with custom styles.
  */
-
 
 // ============ Start Action Button ============ 
 // This button is a reusable component that receives two props

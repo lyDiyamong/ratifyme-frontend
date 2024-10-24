@@ -1,10 +1,14 @@
+// MUI import
+import { Box, Typography } from "@mui/material";
+import { Stack } from "@mui/system";
+
+// Custom import
 import DateSelectionForm from "../DateSelectionForm";
 import SelectForm from "../SelectionForm";
 import FormInput from "../FormInput";
-import { Stack } from "@mui/system";
-import { Box, Typography } from "@mui/material";
 import theme from "../../assets/themes";
 
+// =========== Start GeneralInfoFields ===========
 const GeneralInfoFields = ({ control, schema, errors }) => {
     const genderOptions = [
         { value: 1, label: "Male" },
@@ -23,7 +27,7 @@ const GeneralInfoFields = ({ control, schema, errors }) => {
                     Provide basic personal information details to set up your profile such as Fullname, gender and date of birth.
                 </Typography>
             </Box>
-
+            
             <FormInput name="firstName" label="First Name" control={control} required schema={schema?.fields.firstName} />
             <FormInput name="lastName" label="Last Name" control={control} required schema={schema?.fields.lastName} />
             <SelectForm
@@ -46,3 +50,4 @@ const GeneralInfoFields = ({ control, schema, errors }) => {
 };
 
 export default GeneralInfoFields;
+// =========== End GeneralInfoFields ===========

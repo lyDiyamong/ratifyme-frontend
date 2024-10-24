@@ -1,4 +1,4 @@
-// import image
+// Custom import
 import RatanakImg from "../assets/images/Rotanak.svg";
 import LyHour from "../assets/images/LyHour.svg";
 import Rotha from "../assets/images/Rotha.webp";
@@ -8,6 +8,7 @@ import Malen from "../assets/images/Malen.webp";
 import Yamong from "../assets/images/Yamong.webp";
 import BunThong from "../assets/images/BunThong.svg";
 
+// ============ Start testimonials ============
 export const testimonials = [
     {
         id: 1,
@@ -66,3 +67,4 @@ export const testimonials = [
         image: BunThong,
     },
 ];
+// ============ End testimonials ============

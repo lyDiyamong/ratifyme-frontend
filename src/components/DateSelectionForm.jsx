@@ -1,5 +1,7 @@
-// React imports
+// React libray imports
 import { Controller } from "react-hook-form";
+
+// MUI import
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -30,7 +32,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
                 control={control}
                 name="startDate"
                 label="Start Date"
-                required={true} // Mark the field as required
+                required={true} 
             />
             <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
                 Submit
@@ -39,6 +41,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
     );
 };
  */
+
+// =========== Start DateSelectionForm ===========
 const DateSelectionForm = ({ control, name, label, required=false }) => {
     return (
         <Controller
@@ -48,8 +52,8 @@ const DateSelectionForm = ({ control, name, label, required=false }) => {
                 <LocalizationProvider dateAdapter={AdapterDayjs} >
                     <DatePicker
                         label={required ?  `${label}*` : label}
-                        value={field.value || null} // Ensures the value is always controlled
-                        onChange={(newValue) => field.onChange(newValue)} // Handle date change
+                        value={field.value || null} 
+                        onChange={(newValue) => field.onChange(newValue)}
                         sx={{ width: "100%" }}
                     />
                 </LocalizationProvider>
@@ -59,3 +63,4 @@ const DateSelectionForm = ({ control, name, label, required=false }) => {
 };
 
 export default DateSelectionForm;
+// =========== End DateSelectionForm ===========

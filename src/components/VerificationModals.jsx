@@ -1,7 +1,7 @@
-// React Library
+// React librart import
 import React, { useEffect, useState } from "react";
 
-//MUI Import
+//MUI import
 import {
     Dialog,
     DialogTitle,
@@ -17,10 +17,10 @@ import {
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 
-//Custom Import
+//Custom import
 import theme from "../assets/themes";
 
-//Fetching Data
+//API import
 import { useFetchVerificationDataQuery } from "../store/api/earnerManagement/verificationApi";
 
 /**
@@ -42,6 +42,7 @@ import { useFetchVerificationDataQuery } from "../store/api/earnerManagement/ver
  *   verificationId="12345"
  * />
  */
+
 //=========== Start Verification Modal ===========
 const VerificationModal = ({ open, handleClose, verificationId }) => {
     const { data, error, isLoading } = useFetchVerificationDataQuery(verificationId, {

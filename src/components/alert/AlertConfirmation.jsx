@@ -1,15 +1,15 @@
-import { useState } from "react"; // Import useState
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import { Box, Stack, Typography } from "@mui/material";
-import { ErrorOutline } from "@mui/icons-material";
-import theme from "../../assets/themes";
-import { SpinLoading } from "../../components/loading/SpinLoading"; // Import SpinLoading
+// React library import
+import { useState } from "react";
 
+//MUI import
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Box } from "@mui/material";
+import { ErrorOutline } from "@mui/icons-material";
+
+// Custom import
+import { SpinLoading } from "../../components/loading/SpinLoading";
+import theme from "../../assets/themes";
+
+// =========== Start AlertConfirmation ===========
 const AlertConfirmation = ({
     open,
     title,
@@ -106,51 +106,47 @@ const AlertConfirmation = ({
                     justifyContent: "center",
                 }}
             >
-                <Stack direction='column'>
-                    <Stack spacing={2} direction='row'>
-                        {cancelText && (
-                            <Button
-                                onClick={onClose}
-                                sx={{
-                                    color: theme.palette.customColors.gray500,
-                                    backgroundColor: theme.palette.customColors.gray100,
-                                    borderColor: theme.palette.customColors.gray500,
-                                    textTransform: "none",
-                                    padding: "8px 32px",
-                                    borderRadius: theme?.customShape?.btn || "8px",
-                                    ":hover": {
-                                        backgroundColor: "#f0f0f0",
-                                    },
-                                }}
-                            >
-                                {cancelText}
-                            </Button>
-                        )}
-                        {confirmText && (
-                            <Button
-                                onClick={handleConfirm}
-                                disabled={loading}
-                                sx={{
-                                    color: "#fff",
-                                    backgroundColor: confirmButtonColor,
-                                    textTransform: "none",
-                                    padding: "8px 32px",
-                                    borderRadius: theme?.customShape?.btn || "8px",
-                                    ":hover": {
-                                        backgroundColor: confirmButtonColorHover,
-                                    },
-                                }}
-                            >
-                                {/* Show loading spinner or text based on loading state */}
-                                {loading ? <SpinLoading size={24} color="#fff" /> : confirmText}
-                            </Button>
-                        )}
-                    </Stack>
-
-                </Stack>
+                {cancelText && (
+                    <Button
+                        onClick={onClose}
+                        sx={{
+                            color: theme.palette.customColors.gray500,
+                            backgroundColor: theme.palette.customColors.gray100,
+                            borderColor: theme.palette.customColors.gray500,
+                            textTransform: "none",
+                            padding: "8px 32px",
+                            borderRadius: theme?.customShape?.btn || "8px",
+                            ":hover": {
+                                backgroundColor: "#f0f0f0",
+                            },
+                        }}
+                    >
+                        {cancelText}
+                    </Button>
+                )}
+                {confirmText && (
+                    <Button
+                        onClick={handleConfirm}
+                        disabled={loading}
+                        sx={{
+                            color: "#fff",
+                            backgroundColor: confirmButtonColor,
+                            textTransform: "none",
+                            padding: "8px 32px",
+                            borderRadius: theme?.customShape?.btn || "8px",
+                            ":hover": {
+                                backgroundColor: confirmButtonColorHover,
+                            },
+                        }}
+                    >
+                        {/* Show loading spinner or text based on loading state */}
+                        {loading ? <SpinLoading size={24} color="#fff" /> : confirmText}
+                    </Button>
+                )}
             </DialogActions>
         </Dialog>
     );
 };
 
 export default AlertConfirmation;
+// =========== End AlertConfirmation ===========

@@ -55,12 +55,7 @@ const ForgotPasswordPage = () => {
         // ============ Start forgot password container ============
         <>
             <PageLoading isLoading={isLoading} />
-            <Box
-                component="form"
-                onSubmit={handleSubmit(onSubmit)}
-                sx={{ height: "100vh", display: "flex" }}
-                noValidate
-            >
+            <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ height: "100vh", display: "flex" }} noValidate>
                 {message && (
                     <AlertMessage variant="error" onClose={() => setMessage("")}>
                         {message}
@@ -81,12 +76,7 @@ const ForgotPasswordPage = () => {
                 >
                     <Stack width="100%" maxWidth="500px" gap={2}>
                         <Link to="/">
-                            <Box
-                                component="img"
-                                src={RatifyMELogo}
-                                alt="Ratifyme Favicon"
-                                sx={{ width: 150, height: 150 }}
-                            />
+                            <Box component="img" src={RatifyMELogo} alt="Ratifyme Favicon" sx={{ width: 150, height: 150 }} />
                         </Link>
 
                         <Box
@@ -146,10 +136,7 @@ const ForgotPasswordPage = () => {
                         <Box>
                             <Link to="/auth/login">
                                 <Box display="flex" gap={1} alignItems="center" justifyContent="center" width="100%">
-                                    <ArrowBackOutlined
-                                        fontSize="32px"
-                                        sx={{ color: theme.palette.primary.contrastText }}
-                                    />
+                                    <ArrowBackOutlined fontSize="32px" sx={{ color: theme.palette.primary.contrastText }} />
                                     <Typography
                                         component="a"
                                         href="#"

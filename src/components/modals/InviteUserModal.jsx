@@ -1,6 +1,10 @@
+// React library import
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import * as yup from "yup";
+
+// MUI import
 import {
     Button,
     Dialog,
@@ -20,19 +24,22 @@ import {
     Tooltip,
 } from "@mui/material";
 import { Close, DeleteOutline, RestartAltOutlined } from "@mui/icons-material";
-import theme from "../../assets/themes";
+
+// Custom import
+import AlertConfirmation from "../../components/alert/AlertConfirmation";
+import AlertMessage from "../alert/AlertMessage";
+import InviteUserStatus from "../chips/inviteUserStatus";
 import FormInput from "../../components/FormInput";
 import FormatDate from "../../utils/formatDate";
+import theme from "../../assets/themes";
+
+// API import
 import {
     useDeleteInvitedUserMutation,
     useFetchAllInvitedUserQuery,
     useResendInviteEarnerMutation,
     useResendInviteIssuerMutation,
 } from "../../store/api/userManagement/inviteUserApi";
-import AlertConfirmation from "../../components/alert/AlertConfirmation";
-import { useSelector } from "react-redux";
-import AlertMessage from "../alert/AlertMessage";
-import InviteUserStatus from "../chips/inviteUserStatus";
 
 // Validation schema for the email input
 const schema = yup.object({
@@ -42,6 +49,7 @@ const schema = yup.object({
         .required("Email is required"),
 });
 
+// =========== Start InviteUserModal ===========
 const InviteUserModal = ({ open, handleClose, onSubmit, userType }) => {
     const [deleteInvitedUser] = useDeleteInvitedUserMutation();
     const [resendInviteIssuer] = useResendInviteIssuerMutation();
@@ -298,3 +306,4 @@ const InviteUserModal = ({ open, handleClose, onSubmit, userType }) => {
 };
 
 export default InviteUserModal;
+// =========== End InviteUserModal ===========

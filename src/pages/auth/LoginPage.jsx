@@ -90,12 +90,7 @@ const LoginPage = () => {
             >
                 <Stack width="100%" maxWidth="450px" gap={2}>
                     <Link to="/">
-                        <Box
-                            component="img"
-                            src={RatifyMELogo}
-                            alt="Ratifyme Favicon"
-                            sx={{ width: 150, height: 150 }}
-                        />
+                        <Box component="img" src={RatifyMELogo} alt="Ratifyme Favicon" sx={{ width: 150, height: 150 }} />
                     </Link>
 
                     <Box my={3}>
@@ -209,13 +204,7 @@ const LoginPage = () => {
                     <Typography variant="body2" align="center" color="text.secondary" mt={2}>
                         New on our platform?{" "}
                         <Link to="/get-started">
-                            <Typography
-                                component="a"
-                                href="#"
-                                variant="body2"
-                                color="primary"
-                                sx={{ textDecoration: "none" }}
-                            >
+                            <Typography component="a" href="#" variant="body2" color="primary" sx={{ textDecoration: "none" }}>
                                 Create an account
                             </Typography>
                         </Link>

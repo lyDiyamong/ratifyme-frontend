@@ -1,3 +1,4 @@
+// React library import
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -12,14 +13,17 @@ import CloseIcon from "@mui/icons-material/Close";
  * @param {Function} onClose - callback to handle manual closure
  * @return {JSX.Element} rendered AlertMessage component
  */
-function AlertMessage({ variant, children, onClose }) {
+
+// =========== Start AlertMessage ===========
+const AlertMessage = ({ variant, children, onClose }) => {
     const [visible, setVisible] = useState(true);
 
     useEffect(() => {
         // Set a timer to hide the alert after 5 seconds
         const timer = setTimeout(() => {
             setVisible(false);
-            if (onClose) onClose(); // Call onClose if it's provided
+            // Call onClose if it's provided
+            if (onClose) onClose(); 
         }, 5000);
 
         // Cleanup timer on component unmount
@@ -28,7 +32,7 @@ function AlertMessage({ variant, children, onClose }) {
 
     const handleClose = () => {
         setVisible(false);
-        if (onClose) onClose(); // Call onClose when manually closed
+        if (onClose) onClose(); 
     };
 
     if (!visible) return null;
@@ -38,8 +42,6 @@ function AlertMessage({ variant, children, onClose }) {
             sx={{
                 position: "absolute",
                 top: 20,
-                // display : "flex",
-                // justifyContent: "center",
                 left: "50%",
                 transform: "translateX(-50%)",
                 zIndex: 10000000000,
@@ -69,3 +71,4 @@ function AlertMessage({ variant, children, onClose }) {
 }
 
 export default AlertMessage;
+// =========== End AlertMessage ===========

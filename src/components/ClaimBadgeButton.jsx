@@ -106,3 +106,4 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
 };
 
 export default ClaimBadgeButton;
+// =========== End ClaimBadgeButton ===========

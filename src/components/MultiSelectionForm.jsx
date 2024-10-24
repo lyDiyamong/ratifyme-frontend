@@ -1,9 +1,10 @@
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import FormHelperText from "@mui/material/FormHelperText";
+// React library import
 import { useController } from "react-hook-form";
+
+// MUI import
+import { InputLabel, MenuItem, FormControl, Select, FormHelperText } from "@mui/material";
+
+// Custom import
 import theme from "../assets/themes";
 
 /**
@@ -50,6 +51,8 @@ import theme from "../assets/themes";
 };
 
  */
+
+// =========== Start SelectForm ===========
 const SelectForm = ({ name, control, options, label, required }) => {
     const validationRules = { required: required ? `${label} is required` : false };
     const {
@@ -72,14 +75,14 @@ const SelectForm = ({ name, control, options, label, required }) => {
         <FormControl fullWidth error={!!error}>
             <InputLabel id={`${name}-label`}>{label}</InputLabel>
             <Select
-                multiple // Enable multiple selection
+                multiple
                 required={required}
                 sx={{
                     borderRadius: theme.customShape.input,
                 }}
                 labelId={`${name}-label`}
                 id={`${name}-select`}
-                value={field.value || []} // Default to an empty array for multi-select
+                value={field.value || []} 
                 label={label}
                 onChange={handleChange}
                 onBlur={field.onBlur}
@@ -88,8 +91,8 @@ const SelectForm = ({ name, control, options, label, required }) => {
                     PaperProps: {
                         sx: {
                             borderRadius: theme.customShape.input,
-                            maxHeight: 48 * 7 + 8, // Limit to 7 visible items (assuming ~48px height each)
-                            overflowY: "auto", // Enable vertical scrolling
+                            maxHeight: 48 * 7 + 8, 
+                            overflowY: "auto", 
                         },
                     },
                 }}
@@ -108,3 +111,4 @@ const SelectForm = ({ name, control, options, label, required }) => {
 };
 
 export default SelectForm;
+// =========== End SelectForm ===========

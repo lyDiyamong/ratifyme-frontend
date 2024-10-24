@@ -18,7 +18,7 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import theme from "../../assets/themes/index";
 import FormInput from "../../components/FormInput";
 import SelectForm from "../../components/SelectionForm";
-import { SpinLoading } from "../../components/loading/SpinLoading";
+import {SpinLoading} from "../../components/loading/SpinLoading";
 import PhoneNumberForm from "../../components/PhoneNumberForm";
 
 // Fetching Data Import

@@ -14,7 +14,6 @@ import BadgeCreation from "../pages/badgeMangements/BadgeCreation";
 import BadgeDetail from "../pages/badgeMangements/badgeDetail";
 import InstitutionManagement from "../pages/institutionManagement";
 import InstitutionDetail from "../pages/institutionDetail";
-import IssuerDetail from "../pages/issuerDetail";
 import AchievementManagement from "../pages/achievement";
 import EditBadge from "../pages/badgeMangements/editBadge";
 import Organization from "../pages/organization";
@@ -37,7 +36,6 @@ const DashbaordRouter = () => {
                 <Route path="/setting/account" element={<AccountManagement />} />
                 <Route path="/management/institutions" element={<InstitutionManagement />} />
                 <Route path="/management/institutions/:institutionId" element={<InstitutionDetail />} />
-                <Route path="/management/issuer/:issuerId" element={<IssuerDetail />} />
                 <Route path="/management/badges/badgecreation" element={<BadgeCreation />} />
                 <Route path="/management/badges/badgeDetail/:id" element={<BadgeDetail />} />
                 <Route path="/myachievement" element={<AchievementManagement />} />

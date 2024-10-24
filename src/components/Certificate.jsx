@@ -3,12 +3,13 @@ import { forwardRef } from "react";
 
 // MUI import
 import { Box, Divider, Typography, Stack } from "@mui/material";
+
 // Custom import
-import theme from "../assets/themes";
-// import AnBSchoolLogo from "../assets/images/AnBSchoolLogo.svg";
 import certWave from "../assets/images/certWave.jpg";
+import theme from "../assets/themes";
 import FormatDate from "../utils/formatDate";
 
+// =========== Start Certificate ===========
 // eslint-disable-next-line react/display-name
 const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) => {
     return (
@@ -161,3 +162,4 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
 });
 
 export default Certificate;
+// =========== End Certificate ===========

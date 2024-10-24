@@ -43,8 +43,7 @@ const SpinLoading = ({ color = "#1a90ff", size = 40, ...props }) => {
             <CircularProgress
                 variant="determinate"
                 sx={{
-                    color: (theme) =>
-                        theme.palette.mode === "dark" ? theme.palette.grey[800] : theme.palette.grey[200],
+                    color: (theme) => (theme.palette.mode === "dark" ? theme.palette.grey[800] : theme.palette.grey[200]),
                 }}
                 size={size}
                 thickness={4}
@@ -73,3 +72,4 @@ const SpinLoading = ({ color = "#1a90ff", size = 40, ...props }) => {
 };
 
 export { BorderLinearProgress, SpinLoading };
+// // =========== End SpinLoading ===========

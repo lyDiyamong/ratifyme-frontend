@@ -1,14 +1,13 @@
-// MUI Import
-import DashboardContainer from "../../components/styles/DashboardContainer";
+// React Library Import
+import { useSelector } from "react-redux";
 
 // Custom Import
-import TableEarner from "./TableEarner";
-
+import DashboardContainer from "../../components/styles/DashboardContainer";
 import PageTitle from "../../components/PageTitle";
-import VerificationsCheckUp from "./Verifications";
-import TableEarnerInvitation from "./TableEarnerInvitation";
 import CustomTabs from "../../components/tabs/customTabs";
-import { useSelector } from "react-redux";
+import TableEarner from "./TableEarner";
+import TableEarnerInvitation from "./TableEarnerInvitation";
+import VerificationsCheckUp from "./Verifications";
 
 // ============ Start EarnerManagement ============
 const EarnerManagement = () => {

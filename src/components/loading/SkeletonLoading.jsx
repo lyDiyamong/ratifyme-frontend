@@ -1,3 +1,4 @@
+// MUI import
 import { Box, Skeleton } from "@mui/material";
 
 /**
@@ -6,6 +7,8 @@ import { Box, Skeleton } from "@mui/material";
  * @param {Number}  num : number of skeleton
  * @return {JSX.Element} The rendered SkeletonLoading component.
  */
+
+// =========== Start SkeletonLoading ===========
 const SkeletonLoading = ({ num = 3 }) => {
     return (
         <>
@@ -19,3 +22,4 @@ const SkeletonLoading = ({ num = 3 }) => {
 };
 
 export default SkeletonLoading;
+// =========== End SkeletonLoading ===========

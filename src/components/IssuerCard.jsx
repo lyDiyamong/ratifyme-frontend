@@ -1,5 +1,8 @@
-import Mong from "../assets/images/YaMong.webp"
+// MUI import
 import { Avatar, Paper, Stack, Typography } from "@mui/material";
+
+// Custom import
+import Mong from "../assets/images/YaMong.webp"
 
 /**
  * IssuerCard Component
@@ -18,7 +21,9 @@ import { Avatar, Paper, Stack, Typography } from "@mui/material";
     />
 
  */
-function IssuerCard({profileImg, name}) {
+
+// =========== Start IssuerCard ===========
+const IssuerCard = ({profileImg, name}) => {
     return (
         <Paper>
             <Stack>
@@ -32,3 +37,4 @@ function IssuerCard({profileImg, name}) {
 }
 
 export default IssuerCard;
+// =========== End IssuerCard ===========

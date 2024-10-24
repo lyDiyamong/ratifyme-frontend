@@ -7,7 +7,7 @@ import EducationSvg from "../../assets/icons/Education.svg";
 import CountrySvg from "../../assets/icons/Country.svg";
 import EarnerProfileSvg from "../../assets/images/EarnerProfile.svg"
 
-//Identity User Profile Data
+// ============ Start ProfileIdentityData ============
 export const ProfileIdentityData = 
 {
     profilepic: EarnerProfileSvg,
@@ -54,3 +54,5 @@ export const ProfileInfoData = [
     },
 
 ];
+
+// ============ End ProfileIdentityData ============

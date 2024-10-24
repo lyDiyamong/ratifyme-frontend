@@ -1,24 +1,32 @@
+// React Library Import
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+
+// MUI Import 
 import { Avatar, Box, IconButton, Tooltip, Typography } from "@mui/material";
+import { RestartAltOutlined, DeleteOutline } from "@mui/icons-material";
+
+// Custom Import
+import TableCustom from "../../components/TableCustom";
 import InviteUserModal from "../../components/modals/InviteUserModal";
 import AlertConfirmation from "../../components/alert/AlertConfirmation";
+import PageLoading from "../../components/loading/PageLoading";
+import AlertMessage from "../../components/alert/AlertMessage";
+import InviteUserStatus from "../../components/chips/inviteUserStatus";
+import getSortOptions from "../../components/GetSortOptions";
+import useCatchStatus from "../../hooks/useCatchStatus";
+import FormatDate from "../../utils/formatDate";
 import theme from "../../assets/themes";
+
+// Fetching Import 
 import {
     useInviteEarnerMutation,
     useFetchAllInvitedUserQuery,
     useResendInviteEarnerMutation,
     useDeleteInvitedUserMutation,
 } from "../../store/api/userManagement/inviteUserApi";
-import { useSelector } from "react-redux";
-import { RestartAltOutlined, DeleteOutline } from "@mui/icons-material";
-import TableCustom from "../../components/TableCustom";
-import FormatDate from "../../utils/formatDate";
-import PageLoading from "../../components/loading/PageLoading";
-import useCatchStatus from "../../hooks/useCatchStatus";
-import AlertMessage from "../../components/alert/AlertMessage";
-import InviteUserStatus from "../../components/chips/inviteUserStatus";
-import getSortOptions from "../../components/GetSortOptions";
 
+// ============ Start TableEarnerInvitation ============
 const TableEarnerInvitation = () => {
     const isSortable = true;
     // ===================== State Management =====================
@@ -81,34 +89,6 @@ const TableEarnerInvitation = () => {
     }, [invitedUserData]);
 
     // ===================== Handle Form Submission =====================
-    // const handleInviteSubmit = async (data, reset) => {
-    //     try {
-    //         const newEarnerResponse = await inviteEarner({ issuerId, email: data.email }).unwrap();
-
-    //         // Update the invited earners list immediately
-    //         setInvitedEarners((prev) =>
-    //             [
-    //                 {
-    //                     inviteEmail: newEarnerResponse.inviteEmail || data.email,
-    //                     status: false,
-    //                     createdAt: new Date().toISOString(),
-    //                 },
-    //                 ...prev,
-    //             ].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
-    //         );
-
-    //         // Ensure success and message states are set together
-    //         setIsSuccess(true);
-    //         setMessage(newEarnerResponse?.message || "Invitation sent successfully!");
-
-    //         reset();
-    //     } catch (err) {
-    //         setIsSuccess(false);
-    //         setMessage(err?.data?.message || "Failed to send invitation. Please try again.");
-    //     } finally {
-    //         setDialogOpen(false);
-    //     }
-    // };
     const handleInviteSubmit = async (data, reset) => {
     try {
         const newEarnerResponse = await inviteEarner({ issuerId, email: data.email }).unwrap();
@@ -142,11 +122,11 @@ const TableEarnerInvitation = () => {
         if (apiSuccess) {
             const successMessage = newEarner?.message || `Invitation sent to ${newEarner?.email} successfully!`;
             setMessage(successMessage);
-            setIsSuccess(true); // Ensure success is set to true here
+            setIsSuccess(true);
             refetchInvitedUsers();
         } else if (isError) {
             setMessage(error?.data?.message || "Failed to send invitation. Please try again.");
-            setIsSuccess(false); // Ensure success is set to false here
+            setIsSuccess(false);
         }
     }, [apiSuccess, isError, newEarner, error]);
 
@@ -369,3 +349,4 @@ const TableEarnerInvitation = () => {
 };
 
 export default TableEarnerInvitation;
+// ============ End TableEarnerInvitation ============

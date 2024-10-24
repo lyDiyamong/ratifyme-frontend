@@ -1,6 +1,8 @@
 // React library import
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useTheme } from "@emotion/react";
 
 // MUI import
 import {
@@ -22,15 +24,15 @@ import {
 import { ChevronLeft, SettingsOutlined } from "@mui/icons-material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-import { useTheme } from "@emotion/react";
 
 // Custom import
-import FlexBetween from "../../components/styles/FlexBetween";
 import LogoIconSvg from "../../assets/icons/RatfiyME.svg";
-import { sidebarItems } from "../../data/sidebarData";
-import { useSelector } from "react-redux";
-import { useLogoutMutation } from "../../store/api/auth/authApi";
+import FlexBetween from "../../components/styles/FlexBetween";
 import AlertConfirmation from "../../components/alert/AlertConfirmation";
+import { sidebarItems } from "../../data/sidebarData";
+
+// API import
+import { useLogoutMutation } from "../../store/api/auth/authApi";
 
 // Icon Style Constant
 const iconStyles = { width: "20px", height: "20px" };
@@ -45,6 +47,8 @@ const iconStyles = { width: "20px", height: "20px" };
  * @param {boolean} isDesktop - Whether the view is for desktop
  * @return {JSX.Element}
  */
+
+// ============ Start Sidebar ============
 const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) => {
     const { pathname } = useLocation();
     const navigate = useNavigate();
@@ -77,8 +81,9 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
 
     const handleNavigation = useCallback(
         (path) => {
+            // Open the dialog instead of logging out directly
             if (path === "/logout") {
-                setIsLogoutDialogOpen(true); // Open the dialog instead of logging out directly
+                setIsLogoutDialogOpen(true); 
             } else {
                 setActive(path.substring(1));
                 navigate(path);
@@ -333,3 +338,4 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
 };
 
 export default Sidebar;
+// ============ Start Sidebar ============

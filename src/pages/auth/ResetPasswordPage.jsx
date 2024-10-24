@@ -53,7 +53,6 @@ const ResetPasswordPage = () => {
     }, [error, navigate]);
 
     const onSubmit = async (data) => {
-
         setLoading(true);
         try {
             // Attempt to reset the password

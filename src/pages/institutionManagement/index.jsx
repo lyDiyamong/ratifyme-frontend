@@ -8,15 +8,16 @@ import SkeletonLoading from "../../components/loading/SkeletonLoading";
 import PageTitle from "../../components/PageTitle";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import TableCustom from "../../components/TableCustom";
-import MenuSelection from "../../components/TableAction/MenuSelection";
-import FormatDate from "../../utils/formatDate";
-import useCatchStatus from "../../hooks/useCatchStatus";
+import MenuSelection from "../../components/tableAction/MenuSelection";
 import getSortOptions from "../../components/GetSortOptions";
+import useCatchStatus from "../../hooks/useCatchStatus";
+import FormatDate from "../../utils/formatDate";
 
-// Api import
+// Fetching import
 import { useGetInstitutionQuery } from "../../store/api/institutionManagement/institutionApi";
-import { TableAvatars } from "../../components/avartars/TableAvatars";
+import TableAvatars from "../../components/avartars/TableAvatars";
 
+// =========== Start InstitutionManagement ===========
 const InstitutionManagement = () => {
     const isSortable = true;
     // Pagination & Sorting State & Limiting & Searching
@@ -133,8 +134,7 @@ const InstitutionManagement = () => {
                     onSearch={handleSearch}
                     isSortable={isSortable}
                     sortOptions={getSortOptions("institutionName", "-institutionName")}
-                >
-                </TableCustom>
+                ></TableCustom>
             )}
         </DashboardContainer>
         // ============ End InstitutionManagement ============
@@ -142,3 +142,4 @@ const InstitutionManagement = () => {
 };
 
 export default InstitutionManagement;
+// =========== End InstitutionManagement ===========

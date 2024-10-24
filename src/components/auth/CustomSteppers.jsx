@@ -1,7 +1,7 @@
+// MUI import
 import { StepLabel, StepConnector } from "@mui/material";
+import { Business, HomeOutlined, LockOutlined, ManageAccountsOutlined, PersonOutline } from "@mui/icons-material";
 import { styled } from "@mui/system";
-import BusinessIcon from "@mui/icons-material/Business";
-import { HomeOutlined, LockOutlined, ManageAccountsOutlined, PersonOutline } from "@mui/icons-material";
 
 export const GetStepIcon = (label) => {
     switch (label) {
@@ -10,7 +10,7 @@ export const GetStepIcon = (label) => {
         case "Address Info":
             return <HomeOutlined />;
         case "Institution Info":
-            return <BusinessIcon />;
+            return <Business/>;
         case "Account Setup":
             return <ManageAccountsOutlined />;
         case "Password Setup":

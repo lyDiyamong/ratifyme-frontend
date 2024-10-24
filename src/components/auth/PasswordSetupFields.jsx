@@ -1,8 +1,12 @@
+// MUI import
+import { Box, Stack, Typography } from "@mui/material";
+
+// Custom import
 import PasswordFields from "./PasswordFields";
 import { passwordSchema } from "../../utils/auth/passwordUtils";
-import { Box, Stack, Typography } from "@mui/material";
 import theme from "../../assets/themes";
 
+// =========== Start PasswordSetupFields ===========
 const PasswordSetupFields = ({ control, role, guest, schema, errors, watch }) => {
     return (
         <Stack gap={2}>
@@ -28,3 +32,4 @@ const PasswordSetupFields = ({ control, role, guest, schema, errors, watch }) =>
 };
 
 export default PasswordSetupFields;
+// =========== End PasswordSetupFields ===========

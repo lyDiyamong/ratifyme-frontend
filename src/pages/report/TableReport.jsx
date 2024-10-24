@@ -7,7 +7,7 @@ import { Box, Typography, CircularProgress } from "@mui/material";
 
 // Custom Import
 import TableCustom from "../../components/TableCustom";
-import { TableAvatars } from "../../components/avartars/TableAvatars";
+import  TableAvatars  from "../../components/avartars/TableAvatars";
 
 // Fetching Data Import
 import { useFetchInstitutionStatsQuery } from "../../store/api/reports/institutionStatApis";
@@ -27,7 +27,7 @@ const TableReport = () => {
 
     if (roleId === 1) {
         // Admin
-        filteredReportData = reportData; // Admin sees all reports
+        filteredReportData = reportData;
     } else if (roleId === 2) {
         // Institution Owner
         filteredReportData = reportData?.filter((report) => report.userId === userId);

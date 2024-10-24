@@ -1,7 +1,6 @@
 // MUI import
 import { Box, Typography, Card, CardContent, Avatar } from "@mui/material";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import { Facebook, LinkedIn } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
 
 // Custom import
@@ -56,6 +55,8 @@ const OrganizationLogo = styled(Avatar)(({ theme }) => ({
  *       logoUrl={institution?.User.profileImage}
  *   />
  */
+
+// =========== Start OrganizationCard ===========
 const OrganizationCard = ({
     // Default tag
     tag = "ORGANIZATION",
@@ -73,7 +74,6 @@ const OrganizationCard = ({
     showLinkedIn = true,
 }) => {
     return (
-        // ============ Start Organization Card ============ //
         <Box>
             <Card
                 sx={{
@@ -132,8 +132,8 @@ const OrganizationCard = ({
                             }}
                         >
                             {/* Smaller icons on mobile screen */}
-                            {showFacebook && <FacebookIcon sx={{ fontSize: { xs: 40, md: 50 } }} />}{" "}
-                            {showLinkedIn && <LinkedInIcon sx={{ fontSize: { xs: 40, md: 50 } }} />}
+                            {showFacebook && <Facebook sx={{ fontSize: { xs: 40, md: 50 } }} />}{" "}
+                            {showLinkedIn && <LinkedIn sx={{ fontSize: { xs: 40, md: 50 } }} />}
                         </SocialIconWrapper>
                     </CardContent>
                 </Box>
@@ -171,9 +171,8 @@ const OrganizationCard = ({
                 </Box>
             </Card>
         </Box>
-
-        // ============ End Organization Card ============ //
     );
 };
 
 export default OrganizationCard;
+// =========== End OrganizationCard ===========

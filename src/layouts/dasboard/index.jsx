@@ -1,13 +1,20 @@
+// React library import
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+
+// MUI import
 import { Box, useMediaQuery } from "@mui/material";
+
+// Custom import
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import theme from "../../assets/themes";
-import { useCheckAuthQuery } from "../../store/api/auth/authApi";
 import PageLoading from "../../components/loading/PageLoading";
 
+// API import
+import { useCheckAuthQuery } from "../../store/api/auth/authApi";
 
+// ============ Start DashboardLayout ============
 const DashboardLayout = () => {
     // Determine if the screen size is large (desktop)
     const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
@@ -62,3 +69,4 @@ const DashboardLayout = () => {
 };
 
 export default DashboardLayout;
+// ============ End DashboardLayout ============

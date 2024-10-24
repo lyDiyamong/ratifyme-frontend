@@ -1,5 +1,7 @@
-// MUI Import
+//React library import
 import { useState, useEffect } from "react";
+
+// MUI import
 import {
     Stack,
     Dialog,
@@ -13,10 +15,10 @@ import {
     Card,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { styled } from "@mui/system";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
+import { styled } from "@mui/system";
 
-// Custom Import
+// Custom import
 import DefaultProfileSvg from "../assets/images/DefaultProfile.svg";
 import MaleUserDefault from "../assets/images/MaleUser.svg";
 import FemaleUserDefault from "../assets/images/FemaleUser.svg";
@@ -36,6 +38,7 @@ import theme from "../assets/themes";
  *
  * @returns {JSX.Element} A Material-UI styled Dialog component displaying user profile information with avatar, name, role, bio, and additional details.
  */
+
 const getValue = (obj, keyPath) => {
     return keyPath.split(".").reduce((o, k) => (o || {})[k], obj);
 };

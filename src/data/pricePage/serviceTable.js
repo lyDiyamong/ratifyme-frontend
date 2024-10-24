@@ -1,3 +1,4 @@
+// ============ Start serviceRows ============
 export const serviceRows = [
     {
         name: "",
@@ -48,3 +49,4 @@ export const serviceRows = [
         twelve_monthPlan: 1,
     },
 ];
+// ============ End serviceRows ============

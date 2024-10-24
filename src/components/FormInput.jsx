@@ -1,6 +1,9 @@
+// React library import
 import { useState } from "react";
-import { TextField, IconButton, InputAdornment } from "@mui/material";
 import { useController } from "react-hook-form";
+
+// MUI import
+import { TextField, IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 /**
@@ -58,6 +61,8 @@ const MyForm = () => {
     );
 };
  */
+
+// =========== Start FormInput ===========
 const FormInput = ({ label, name, control, type = "text", required = false, schema, validationRules = {}, startIcon, ...rest }) => {
     const [showPassword, setShowPassword] = useState(false);
 
@@ -144,3 +149,4 @@ const FormInput = ({ label, name, control, type = "text", required = false, sche
 };
 
 export default FormInput;
+// =========== End FormInput ===========

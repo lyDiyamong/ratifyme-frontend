@@ -11,11 +11,12 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 
 
 // Custom import
-import theme from "../../assets/themes";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import FormInput from "../../components/FormInput";
 import SelectForm from "../../components/SelectionForm";
+import theme from "../../assets/themes";
 
+// ============ Start Add Recipient Form container ============
 const AddRecipientForm = () => {
     const [loading, setLoading] = useState(false);
 
@@ -53,7 +54,6 @@ const AddRecipientForm = () => {
     ];
 
     return (
-        // ============ Start Add Recipient Form container ============
         <DashboardContainer>
             <Stack
                 component="form"
@@ -277,8 +277,8 @@ const AddRecipientForm = () => {
                 {/* End Button Add Recipient */}
             </Stack>
         </DashboardContainer>
-        // ============ End Add Recipient Form container ============
     );
 };
 
 export default AddRecipientForm;
+// ============ End Add Recipient Form container ============
