@@ -8,7 +8,7 @@ import { Box, Typography, CircularProgress } from "@mui/material";
 // Custom Import
 import ProfileEarnerModal from "./ProfileEarnerModal";
 import TableCustom from "../../components/TableCustom";
-import MenuSelection from "../../components/TableAction/MenuSelection";
+import MenuSelection from "../../components/tableAction/MenuSelection";
 import InviteUserModal from "../../components/modals/InviteUserModal";
 import TableAvatars from "../../components/avartars/TableAvatars";
 import getSortOptions from "../../components/GetSortOptions";
@@ -83,9 +83,7 @@ const TableEarner = () => {
         roleId === 1
             ? earnerData
             : earnerData?.filter((earner) =>
-                  roleId === 2
-                      ? earner.institutionId === institutionId 
-                      : earner.Issuer?.userId === userId,
+                  roleId === 2 ? earner.institutionId === institutionId : earner.Issuer?.userId === userId,
               );
 
     // Handle View (open the modal)

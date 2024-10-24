@@ -17,9 +17,8 @@ import {
 } from "@mui/material";
 import { SearchOutlined, Add, SwapVert } from "@mui/icons-material";
 
-
 // Custom Imports
-import MenuSelection from "./TableAction/MenuSelection";
+import MenuSelection from "./tableAction/MenuSelection";
 import NoRecordData from "./NoRecordData";
 import theme from "../assets/themes/index";
 
@@ -71,7 +70,6 @@ const TableCustom = ({
     sortOptions = [],
     isSortable = false,
     sortOrder,
-    
 }) => {
     const [searchQuery, setSearchQuery] = useState("");
 

@@ -8,7 +8,7 @@ import SkeletonLoading from "../../components/loading/SkeletonLoading";
 import PageTitle from "../../components/PageTitle";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import TableCustom from "../../components/TableCustom";
-import MenuSelection from "../../components/TableAction/MenuSelection";
+import MenuSelection from "../../components/tableAction/MenuSelection";
 import getSortOptions from "../../components/GetSortOptions";
 import useCatchStatus from "../../hooks/useCatchStatus";
 import FormatDate from "../../utils/formatDate";
@@ -134,8 +134,7 @@ const InstitutionManagement = () => {
                     onSearch={handleSearch}
                     isSortable={isSortable}
                     sortOptions={getSortOptions("institutionName", "-institutionName")}
-                >
-                </TableCustom>
+                ></TableCustom>
             )}
         </DashboardContainer>
         // ============ End InstitutionManagement ============
