@@ -1,10 +1,10 @@
-// React Library Import
+// React library import
 import { useController } from "react-hook-form";
 
-// MUI Import
+// MUI import
 import {InputLabel, MenuItem, FormControl, Select, FormHelperText} from "@mui/material";
 
-// Custom Import
+// Custom import
 import theme from "../assets/themes";
 
 /**

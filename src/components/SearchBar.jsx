@@ -1,12 +1,12 @@
-//React Import Library
+//React library import 
 import React, { useState } from "react";
 
 
-// MUI Import
+// MUI import
 import { Box, InputBase ,Button, Stack, styled, alpha, Link} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-// Custom Import
+// Custom import
 import DashboardContainer from "./styles/DashboardContainer";
 import theme from "../assets/themes";
 

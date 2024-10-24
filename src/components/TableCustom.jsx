@@ -1,8 +1,8 @@
-// React Library
+// React library import
 import { useState } from "react";
 import DataTable from "react-data-table-component";
 
-// MUI Imports
+// MUI import
 import {
     Box,
     TextField,
@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { SearchOutlined, Add, SwapVert } from "@mui/icons-material";
 
-// Custom Imports
+// Custom import
 import MenuSelection from "./tableAction/MenuSelection";
 import NoRecordData from "./NoRecordData";
 import theme from "../assets/themes/index";
