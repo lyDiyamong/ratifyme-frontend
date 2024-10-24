@@ -6,7 +6,7 @@ import { Button } from "@mui/material";
 import theme from "../../assets/themes";
 
 // Custom Import
-import ModalContainer from "../../components/styles/ModalContainer";
+import ModalContainer from "./badgeDetail/ModalContainer";
 import { useFetchEarnerQuery } from "../../store/api/earnerManagement/earnerApis";
 
 const IssuerBadgeButton = ({ onGetEmail, control, issuerId, badgeId }) => {

@@ -22,17 +22,13 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
 
     const [deleteBadge, { refetch }] = useDeleteBadgeMutation();
 
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-
     const { control } = useForm();
 
     // assign variable from props that has fetch value
     const result = badge;
 
     // assign variable to get achievement id to update
-    const achieveId = badge.Achievements.find(({ badgeClassId }) => badgeClassId === badge.id).id;
+    const achieveId = badge?.Achievements?.find(({ badgeClassId }) => badgeClassId === badge.id).id;
     // assign variables for date
     const createdAt = result?.createdAt ? result.createdAt.split("T")[0] : "N/A";
     const expiredDate = result?.expiredDate ? result.expiredDate.split("T")[0] : "N/A";
@@ -88,47 +84,6 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
     );
     return (
         <Stack sx={{ display: "flex", flexDirection: "column", gap: 3, width: "100%" }}>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Stack
-                    sx={{
-                        position: "absolute",
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        width: { xs: "90%", sm: "400px" },
-                        bgcolor: "background.paper",
-                        boxShadow: 24,
-                        borderRadius: 2,
-                        p: 2,
-                        px: 3,
-                        gap: 2,
-                    }}
-                >
-                    {/* Title with Icon */}
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <ConfirmationNumber sx={{ marginRight: 1, color: theme.palette.primary.main }} />
-                        <Typography id="modal-modal-title" variant="h4" fontWeight={theme.fontWeight.semiBold}>
-                            Confirm Issue
-                        </Typography>
-                    </Box>
-
-                    {/* Description with Icon */}
-                    <Box sx={{ display: "flex", alignItems: "flex-start" }}>
-                        <Typography id="modal-modal-description" sx={{ color: theme.palette.text.secondary }}>
-                            After you issue this badge, it will send this badge to all of your Earners.
-                        </Typography>
-                    </Box>
-                    <Stack mt={1}>
-                        <Button onClick={handleClose}>Cancel</Button>
-                    </Stack>
-                </Stack>
-            </Modal>
-
             <Box
                 sx={{
                     position: "relative",
