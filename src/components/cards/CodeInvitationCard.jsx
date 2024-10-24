@@ -136,7 +136,7 @@ const CodeInvitationCard = () => {
                     )}
 
                     <Box width={"100%"}>
-                        <Link to="/setting/account">
+                        <Link to="/dashboard/setting/account">
                             <Button
                                 variant="contained"
                                 fullWidth
