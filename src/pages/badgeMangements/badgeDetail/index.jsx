@@ -19,6 +19,7 @@ import { useFetchOneBadgeQuery } from "../../../store/api/badgeManagement/badgeA
 import { useFetchEarnerAchieByIdQuery } from "../../../store/api/earnerManagement/earnerApis";
 import { Box } from "@mui/system";
 import theme from "../../../assets/themes";
+import PageLoading from "../../../components/loading/PageLoading";
 
 const BadgeDetail = () => {
     // Fetch ID from the URL
@@ -70,9 +71,6 @@ const BadgeDetail = () => {
         }
     }
 
-    // console.log("Earner CredUrl💥", earnerAchieveData?.credUrl);
-    // console.log("Try to see the Status🎉", earnerAchieveData?.status);
-
     // Handler to get emails from IssuerBadgeButton
     const handleGetEmails = (emails) => {
         setSelectedEmails(emails);
@@ -87,12 +85,9 @@ const BadgeDetail = () => {
         window.open(earnerAchieveData?.credUrl, "_blank");
     };
 
-    // Handle loading and error states
-    if (isLoading) return <Typography>Loading...</Typography>;
-    if (isError) return <Typography>Error fetching badge details.</Typography>;
-
     return (
         <DashboardContainer sx={{ display: "flex", flexDirection: "column", mb: 3 }}>
+            <PageLoading isLoading={isLoading} />
             <PageTitle title="Badge Detail" subtitle={subtitle} />
 
             {/* Conditional rendering based on Status */}

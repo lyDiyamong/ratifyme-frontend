@@ -1,5 +1,5 @@
 // React import
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toJpeg } from "html-to-image";
 import { useSelector } from "react-redux";
 
@@ -40,8 +40,7 @@ const CertificateGenerator = ({ badge }) => {
     const { data: earnerAchieResponse } = useFetchEarnerAchieByIdQuery({ achieveId, earnerId });
     const earnerAchieveData = earnerAchieResponse?.data;
     const earnerAchieveStatus = earnerAchieResponse?.data?.status;
-    const isCertUpload = earnerAchieResponse?.data?.certUrlPdf ? true : false;
-    // console.log("Earner CredUrl", earnerAchieveData?.credUrl);;
+    const certUrl = earnerAchieResponse?.data?.certUrlPdf;
 
     // Upload Certificate hook
     const [uploadCert, { isLoading: certiLoading, isError: uploadCertError }] = useUploadCertiMutation();
@@ -50,6 +49,7 @@ const CertificateGenerator = ({ badge }) => {
     const [message, setMessage] = useCatchStatus(uploadCertError, "Get certificate failed");
 
     const [isExploding, setIsExploding] = useState(false);
+    const [isCertUpload, setIsCertUpload] = useState(false)
     const [isUploadCertModal, setIsUploadCertModal] = useState(false);
 
     const handleGenerateImage = async () => {
@@ -72,6 +72,9 @@ const CertificateGenerator = ({ badge }) => {
             // Open the uploaded certificate URL
             if (response) {
                 window.open(response?.uploadCert, "_blank");
+                if(response?.uploadCert){
+                    setIsCertUpload(true)
+                }
             }
         } catch (error) {
             // Handle errors
@@ -92,6 +95,13 @@ const CertificateGenerator = ({ badge }) => {
         setIsExploding(true);
         setTimeout(() => setIsExploding(false), 4000);
     };
+
+    // Disable Generate button effect
+    useEffect(() => {
+        if (certUrl) {
+            setIsCertUpload(true)
+        }
+    }, [certUrl])
 
     return (
         <Box>

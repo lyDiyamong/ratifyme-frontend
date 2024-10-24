@@ -36,20 +36,6 @@ const VerificationModal = ({ open, handleClose, achieveData, earnerData, credId,
             setTimeout(() => {
                 setLoadingStates((prev) => ({ ...prev, [key]: true }));
 
-                // Log relevant data based on the key
-                if (key === "IssuedOn") {
-                    console.log("Issued On:", FormatDate(achieveData?.BadgeClass?.startedDate));
-                } else if (key === "IssuedBy") {
-                    console.log(
-                        `Issued By: ${achieveData?.BadgeClass?.Issuer?.User?.firstName} ${achieveData?.BadgeClass?.Issuer?.User?.lastName}`,
-                    );
-                } else if (key === "ClaimedOn") {
-                    console.log("Claimed On: ", FormatDate(earnerAchieData?.claimedOn));
-                } else if (key === "IssuedTo") {
-                    console.log("Issued To:", `${earnerData?.name}`);
-                } else if (key === "CredentialId") {
-                    console.log("Credential ID:", credId);
-                }
             }, index * 1000);
         });
     };
@@ -67,11 +53,6 @@ const VerificationModal = ({ open, handleClose, achieveData, earnerData, credId,
                 IssuedTo: false,
                 CredentialId: false,
             });
-
-            // Log data for debugging
-            console.log("achieveData:", achieveData);
-            console.log("earnerData:", earnerData);
-            console.log("earnerAchieData:", earnerAchieData);
 
             simulateSequentialLoading();
         }

@@ -30,12 +30,10 @@ const Credential = () => {
         error: earnerAchieveError,
     } = useFetchEarnerAchieveByUidQuery({ credId });
     const earnerAchieData = earnerAchieRes?.data;
-    console.log("Earner Achievement", earnerAchieData);
 
     // Earner Hook
     const { data: earnerRes, isLoading: earnerLoading } = useFetchEarnerByIdQuery(earnerAchieData?.earnerId);
     const earnerData = earnerRes?.data;
-    console.log("Earner 😱", earnerData);
 
     // Achievement Hook
     const { data: achieveRes, isLoading: achieveLoading } = useFetchAchieveByidQuery({
@@ -50,7 +48,6 @@ const Credential = () => {
         return navigate("/404");
     }
 
-    console.log("Achievement 👋", achieveRes?.data);
     const achieveData = achieveRes?.data;
 
     // Loading state
