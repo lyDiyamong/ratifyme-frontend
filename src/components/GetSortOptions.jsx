@@ -1,15 +1,14 @@
-// utils/sortOptions.js
+// MUI import
 import { Box } from "@mui/material";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import { ArrowUpward, ArrowDownward } from "@mui/icons-material";
 
-// Default export of the utility function
+// =========== Start getSortOptions ===========
 const getSortOptions = (ascValue, descValue) => [
     {
         value: ascValue,
         label: (
             <Box display="flex" alignItems="center">
-                <ArrowUpwardIcon fontSize="small" />
+                <ArrowUpward fontSize="small" />
                 <Box ml={1}>ASC</Box>
             </Box>
         ),
@@ -18,7 +17,7 @@ const getSortOptions = (ascValue, descValue) => [
         value: descValue,
         label: (
             <Box display="flex" alignItems="center">
-                <ArrowDownwardIcon fontSize="small" />
+                <ArrowDownward fontSize="small" />
                 <Box ml={1}>DES</Box>
             </Box>
         ),
@@ -26,3 +25,4 @@ const getSortOptions = (ascValue, descValue) => [
 ];
 
 export default getSortOptions;
+// =========== End getSortOptions ===========
