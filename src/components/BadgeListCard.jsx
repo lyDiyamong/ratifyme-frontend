@@ -1,14 +1,12 @@
-// React Import
-import { useState, useEffect } from "react";
-
 // MUI import
-import { Grid, Card, CardContent, CardMedia, Typography, Button, Box, Stack, Pagination, useMediaQuery } from "@mui/material";
+import { Grid, Card, CardContent, CardMedia, Typography, Button, Box, Stack } from "@mui/material";
 
 // Custom import
-import theme from "../assets/themes";
 import StatusCode from "../assets/images/NoData.svg";
 import GoldBadge from "../assets/images/DiamondBadge.svg";
+import theme from "../assets/themes";
 
+// =========== Start BadgeListCard ===========
 const BadgeListCard = ({ badges, onView, total }) => {
     const handleView = (id) => {
         onView(id);
@@ -34,7 +32,6 @@ const BadgeListCard = ({ badges, onView, total }) => {
                             <Grid item xs={12} sm={6} md={4} lg={3} xl={2.4} key={badge?.id}>
                                 <Card
                                     sx={{
-                                        // maxWidth: { xss: "100%", lg: 280 },
                                         width: "100%",
                                         height: "100%",
                                         boxShadow: theme.customShadows.default,
@@ -136,3 +133,4 @@ const BadgeListCard = ({ badges, onView, total }) => {
 };
 
 export default BadgeListCard;
+// =========== End BadgeListCard ===========
