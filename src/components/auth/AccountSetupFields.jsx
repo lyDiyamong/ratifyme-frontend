@@ -1,7 +1,7 @@
-// MUI Import 
+// MUI import 
 import { Box, Stack, Typography } from "@mui/material";
 
-// Custom Import
+// Custom import
 import FormInput from "../FormInput";
 import PhoneNumberForm from "../PhoneNumberForm";
 import theme from "../../assets/themes";

@@ -1,11 +1,11 @@
-// React Library Import
+// React library import
 import { useState } from "react";
 
-//MUI Import
+//MUI import
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Box } from "@mui/material";
 import { ErrorOutline } from "@mui/icons-material";
 
-// Custom Import
+// Custom import
 import SpinLoading from "../../components/loading/SpinLoading";
 import theme from "../../assets/themes";
 

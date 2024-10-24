@@ -1,8 +1,8 @@
-// React Library Import
+// React library import
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-// MUI Import
+// MUI import
 import { Box, Alert, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 

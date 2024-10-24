@@ -1,7 +1,7 @@
-// React Library Import
+// React library import
 import { cloneElement, useState } from "react";
 
-// MUI Import
+// MUI import
 import {
     Button,
     Dialog,
@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 
-// Custom Import
+// Custom import
 import theme from "../../assets/themes";
 
 /**
