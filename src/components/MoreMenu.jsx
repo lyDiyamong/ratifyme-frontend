@@ -2,10 +2,8 @@
 import { useState } from "react";
 
 // MUI import
+import { Menu, MenuItem, ListItemIcon, ListItemText } from "@mui/material";
 import MoreHorizRounded from "@mui/icons-material/MoreHorizRounded";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import { ListItemIcon, ListItemText } from "@mui/material"; // Import for better layout
 
 /**
  * MoreMenu Component
