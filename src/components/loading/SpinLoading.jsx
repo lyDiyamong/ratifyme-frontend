@@ -1,6 +1,6 @@
 // MUI import
-import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
+import { styled } from "@mui/material/styles";
 import CircularProgress, { circularProgressClasses } from "@mui/material/CircularProgress";
 import LinearProgress, { linearProgressClasses } from "@mui/material/LinearProgress";
 
@@ -28,6 +28,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     },
 }));
 
+// =========== Start SpinLoading ===========
 const SpinLoading = ({ color = "#1a90ff", size = 40, ...props }) => {
     return (
         <Box
@@ -73,3 +74,4 @@ const SpinLoading = ({ color = "#1a90ff", size = 40, ...props }) => {
 };
 
 export default { BorderLinearProgress, SpinLoading };
+// =========== End SpinLoading ===========

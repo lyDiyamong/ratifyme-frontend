@@ -1,4 +1,7 @@
+// MUI import
 import { Box, Typography } from "@mui/material";
+
+// Custom import
 import LoadingIconSvg from "../../assets/icons/spinnigLoad.svg";
 import theme from "../../assets/themes";
 
@@ -17,6 +20,7 @@ import theme from "../../assets/themes";
  * @returns {JSX.Element | null} The rendered loading overlay if `isLoading` is true, otherwise null.
  */
 
+// =========== Start PageLoading ===========
 const PageLoading = ({ isLoading, message }) => {
     if (!isLoading) return null;
 
@@ -48,3 +52,4 @@ const PageLoading = ({ isLoading, message }) => {
 };
 
 export default PageLoading;
+// =========== End PageLoading ===========

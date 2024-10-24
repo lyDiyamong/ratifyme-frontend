@@ -1,6 +1,8 @@
+// React library import
 import * as React from "react";
-
 import PropTypes from "prop-types";
+
+// MUI import
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -15,6 +17,7 @@ import Box from "@mui/material/Box";
  * @param {string} Custom - <UploadLoading value={progress} color="red" /> You can change your own color like this
  */
 
+// =========== Start UploadLoading ===========
 const UploadLoading = ({ color = "#1a90ff", value, ...props }) => {
     return (
         <Box sx={{ position: "relative", display: "inline-flex" }}>
@@ -67,3 +70,4 @@ export default function CircularWithValueLabel() {
 
     return <UploadLoading value={progress} />;
 }
+// =========== End UploadLoading ===========
