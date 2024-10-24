@@ -8,10 +8,11 @@ import { Box, Button, Typography } from "@mui/material";
 // Custom import
 import NotFoundSvg from "../../assets/images/NotFound.svg";
 import theme from "../../assets/themes";
+import { useCheckAuthQuery } from "../../store/api/auth/authApi";
 
 const NotFoundPage = () => {
-    const { userId } = useSelector((state) => state.global);
-    console.log("user Id", userId);
+    const {data} = useCheckAuthQuery()
+    console.log("User data",data);
     // Navigate hook
     const navigate = useNavigate();
     return (
@@ -50,14 +51,14 @@ const NotFoundPage = () => {
                 }}
             >
                 <Button
-                    onClick={() => navigate("/dashboard")}
+                    onClick={() => navigate(data? "/dashboard" : "/")}
                     variant="contained"
                     sx={{
                         color: theme.palette.customColors.white,
                         borderRadius: theme.customShape.btn,
                     }}
                 >
-                    Go back to {userId ? "Dashboard" : "Home"}
+                    Go back to {data ? "Dashboard" : "Home"}
                 </Button>
             </Box>
         </Box>

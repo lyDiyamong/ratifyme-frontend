@@ -186,7 +186,7 @@ const BadgeCreationForm = () => {
             // Reset form and image state
             reset();
             setUploadedImage(null);
-            navigate("/management/badges");
+            navigate("/dashboard/management/badges");
         } catch (error) {
             console.error("Error creating badge:", error);
         } finally {

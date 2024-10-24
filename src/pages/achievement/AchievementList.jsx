@@ -24,10 +24,10 @@ export const AchievementList = ({ badges, total, onPage, page, limit, result, is
 
     // Handle view badge detail
     const handleView = (id) => {
-        navigate(`/management/badges/badgeDetail/${id}`);
+        navigate(`/dashboard/management/badges/badgeDetail/${id}`);
     };
 
-    let totalBadge = badges.length !== total ? result : total;
+    let totalBadge = badges?.length !== total ? result : total;
 
     // Calculate total pages for pagination
     const totalPages = totalBadge > 0 ? Math.ceil(totalBadge / limit) : 0;

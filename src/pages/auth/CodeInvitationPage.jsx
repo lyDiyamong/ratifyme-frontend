@@ -56,9 +56,9 @@ const CodeInvitationPage = () => {
                 const userData = response.data.user;
 
                 if (userData === null) {
-                    navigate(`/signup?as=${role}`, { state: { inviter: inviterData, guest: guestData } });
+                    navigate(`/auth/signup?as=${role}`, { state: { inviter: inviterData, guest: guestData } });
                 } else {
-                    navigate(`/login`);
+                    navigate(`/auth/login`);
                 }
             }
         } catch (error) {
@@ -155,7 +155,7 @@ const CodeInvitationPage = () => {
                             error?.data?.message ||
                             "There was an issue with verifying your invitation. Please try again or log in."
                         }
-                        onConfirm={() => navigate(`/login`)}
+                        onConfirm={() => navigate(`/auth/login`)}
                         onClose={handleCloseErrorDialog}
                         confirmText="Go to Login"
                         cancelText="Close"

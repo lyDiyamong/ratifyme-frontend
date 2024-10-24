@@ -199,7 +199,7 @@ const Navbar = () => {
                                         </Link>
                                     ) : (
                                         <>
-                                            <Link to="/login">
+                                            <Link to="/auth/login">
                                                 <Button
                                                     variant="outlined"
                                                     sx={{
@@ -279,7 +279,7 @@ const Navbar = () => {
                                     {!userInfo && (
                                         <>
                                             <MenuItem onClick={handleMenuClose}>
-                                                <Link to="/login">
+                                                <Link to="/auth/login">
                                                     <Button
                                                         variant="text"
                                                         sx={{

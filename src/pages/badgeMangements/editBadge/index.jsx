@@ -87,7 +87,7 @@ const EditBadge = () => {
     // Navigate on successful update
     useEffect(() => {
         if (isSuccess) {
-            navigate(`/management/badges/badgeDetail/${userID}`);
+            navigate(`/dashboard/management/badges/badgeDetail/${userID}`);
         }
     }, [isSuccess, navigate, userID]);
 

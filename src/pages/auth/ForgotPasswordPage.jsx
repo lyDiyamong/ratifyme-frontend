@@ -45,7 +45,7 @@ const ForgotPasswordPage = () => {
 
         try {
             await fortgotPassword(data).unwrap();
-            navigate("/forgot-password-sent", { state: { email: data.email } });
+            navigate("/auth/forgot-password-sent", { state: { email: data.email } });
         } finally {
             setLoading(false);
         }
@@ -144,7 +144,7 @@ const ForgotPasswordPage = () => {
                         </Button>
 
                         <Box>
-                            <Link to="/login">
+                            <Link to="/auth/login">
                                 <Box display="flex" gap={1} alignItems="center" justifyContent="center" width="100%">
                                     <ArrowBackOutlined
                                         fontSize="32px"

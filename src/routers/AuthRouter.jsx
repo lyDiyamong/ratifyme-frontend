@@ -15,6 +15,7 @@ import ResetPasswordSuccessPage from "../pages/auth/ResetPasswordSuccessPage";
 import SuccessPayment from "../pages/prices/SuccessPayment";
 import EmailVerificationPage from "../pages/auth/EmailVerificationPage";
 import SignupSuccessPage from "../pages/auth/SignupSuccessPage";
+import NotFoundPage from "../pages/notFound";
 
 const AuthRouter = () => {
     return (
@@ -32,8 +33,8 @@ const AuthRouter = () => {
                 <Route path="/invalid-reset-password" element={<ResetPasswordExpiredPage />} />
                 <Route path="/reset-password-success" element={<ResetPasswordSuccessPage />} />
                 <Route path="/success-payment/:paymentId" element={<SuccessPayment />} />
-                <Route />
             </Route>
+            <Route path="*" element={<NotFoundPage />} />
         </Routes>
     );
 };

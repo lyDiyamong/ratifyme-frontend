@@ -33,7 +33,7 @@ const CheckoutButton = ({ id }) => {
 
         try {
             // Redirect to signup when there's no user
-            if (!institutionData.id) return navigate("/signup?as=institution");
+            if (!institutionData.id) return navigate("/auth/signup?as=institution");
 
             // Create a Checkout Session
             const response = await axios.post(`${import.meta.env.VITE_SERVER_BASE_URL}/subscriptions/subscribe/${id}`, {

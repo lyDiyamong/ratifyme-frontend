@@ -55,7 +55,7 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
         {
             label: "Update badge",
             icon: <BorderColorRounded color="primary" />,
-            onClick: () => navigate(`/management/badges/editBadge/${result?.id}`),
+            onClick: () => navigate(`/dashboard/management/badges/editBadge/${result?.id}`),
         },
         { label: "Delete badge", icon: <Delete color="error" />, onClick: () => handleDeleteBadge(result?.id) },
     ];

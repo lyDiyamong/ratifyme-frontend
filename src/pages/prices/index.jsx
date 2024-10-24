@@ -22,7 +22,7 @@ const PricePage = () => {
     useEffect(() => {
         if (!isLoading) {
             if (!user) {
-                navigate("/signup");
+                navigate("/auth/signup");
             }
         }
     }, [isLoading, error, user, navigate]);

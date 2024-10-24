@@ -7,11 +7,10 @@ import IssuerManagement from "../pages/issuerManagements";
 import ServicePlanManagement from "../pages/ServicePlanManagement";
 import BillingInvoiceManagement from "../pages/billingInvoiceManagement";
 import Report from "../pages/report";
-import AccountManagement from "../pages/accountManagement/index"
+import AccountManagement from "../pages/accountManagement/index";
 import BackpackManagement from "../pages/backpackManagement";
 import InvoiceManagement from "../pages/invoice";
 import BadgeCreation from "../pages/badgeMangements/BadgeCreation";
-import AddRecipient from "../pages/earnerManagements/AddRecipient";
 import BadgeDetail from "../pages/badgeMangements/badgeDetail";
 import InstitutionManagement from "../pages/institutionManagement";
 import InstitutionDetail from "../pages/institutionDetail";
@@ -20,12 +19,13 @@ import AchievementManagement from "../pages/achievement";
 import EditBadge from "../pages/badgeMangements/editBadge";
 import Organization from "../pages/organization";
 import OrganizationInfo from "../pages/accountManagement/organizationInfo";
+import NotFoundPage from "../pages/notFound";
 
 const DashbaordRouter = () => {
     return (
         <Routes>
             <Route element={<DashboardLayout />}>
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/" element={<Dashboard />} />
                 <Route path="/management/badges" element={<BadgeManagement />} />
                 <Route path="/management/issuers" element={<IssuerManagement />} />
                 <Route path="/management/earners" element={<EarnerManagement />} />
@@ -35,12 +35,9 @@ const DashbaordRouter = () => {
                 <Route path="/reports" element={<Report />} />
                 <Route path="/mybackpacks" element={<BackpackManagement />} />
                 <Route path="/setting/account" element={<AccountManagement />} />
-                <Route path="/management/eaners/add-earners" element={<AddRecipient />} />
                 <Route path="/management/institutions" element={<InstitutionManagement />} />
                 <Route path="/management/institutions/:institutionId" element={<InstitutionDetail />} />
                 <Route path="/management/issuer/:issuerId" element={<IssuerDetail />} />
-                {/* <Route path="/unauthorized" element={<UnauthorizedPage />} />
-                <Route path="*" element={<NotFoundPage />} /> */}
                 <Route path="/management/badges/badgecreation" element={<BadgeCreation />} />
                 <Route path="/management/badges/badgeDetail/:id" element={<BadgeDetail />} />
                 <Route path="/myachievement" element={<AchievementManagement />} />
@@ -48,6 +45,7 @@ const DashbaordRouter = () => {
                 <Route path="/organization" element={<Organization />} />
                 <Route path="/organizations/:id" element={<OrganizationInfo />} />
             </Route>
+            <Route path="*" element={<NotFoundPage />} />
         </Routes>
     );
 };

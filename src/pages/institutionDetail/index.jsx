@@ -53,7 +53,7 @@ function InstitutionDetail() {
 
     // Badge view handler
     const handleView = (id) => {
-        navigate(`/management/badges/badgeDetail/${id}`);
+        navigate(`/dashboard/management/badges/badgeDetail/${id}`);
     };
 
     return (

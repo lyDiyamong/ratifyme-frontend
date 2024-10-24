@@ -22,7 +22,7 @@ const ResetPasswordExpiredPage = () => {
             // Simulate an API request to reset the password
             await new Promise((resolve) => setTimeout(resolve, 500));
 
-            navigate("/forgot-password");
+            navigate("/auth/forgot-password");
         } finally {
             setLoading(false);
         }
@@ -96,7 +96,7 @@ const ResetPasswordExpiredPage = () => {
                         </Button>
 
                         <Box>
-                            <Link to="/login">
+                            <Link to="/auth/login">
                                 <Box display="flex" gap={1} alignItems="center" justifyContent="center" width="100%">
                                     <ArrowBackOutlined
                                         fontSize="32px"

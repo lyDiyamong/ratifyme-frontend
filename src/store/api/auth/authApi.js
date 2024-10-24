@@ -13,7 +13,7 @@ export const authApi = createApi({
         } catch (error) {
             if (error.status === 401) {
                 api.dispatch(clearAuthState());
-                window.location.href = "/login";
+                window.location.href = "/auth/login";
                 return { error: { status: 401, data: "Unauthorized" } };
             }
 

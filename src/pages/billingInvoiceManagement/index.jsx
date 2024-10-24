@@ -54,7 +54,7 @@ const BillingInvoiceManagement = () => {
 
     // Handling view for another page
     const handleView = (institutionId) => {
-        navigate(`/sales/invoice?institutionId=${institutionId}`);
+        navigate(`/dashboard/sales/invoice?institutionId=${institutionId}`);
     };
 
     // Data columns

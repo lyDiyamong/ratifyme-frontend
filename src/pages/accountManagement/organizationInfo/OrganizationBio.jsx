@@ -48,15 +48,15 @@ const OrganizationBio = ({ institutionInfo }) => {
 
     useEffect(() => {
         // Set profile image and institutionBio
-        if (info?.data) {
+        if (institutionInfo) {
             setProfileImage(
-                info.data.profileImage ||
+                institutionInfo?.institutionProfileImage ||
                     (info.data.Gender?.name === "male" ? MaleUserDefault : FemaleUserDefault) ||
                     DefaultProfileSvg,
             );
             setInstitutionBio(institutionBioText);
         }
-    }, [info, institutionBioText]);
+    }, [info, institutionInfo]);
 
     // Update user institutionBio mutation
     const [updateOrgProfile, { isLoading, isError }] = useUpdateInstitutionMutation();

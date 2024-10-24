@@ -45,7 +45,7 @@ const BadgeList = ({ badges, total, onPage, page, limit, result, isLoading, isEr
     const totalPages = totalBadge > 0 ? Math.ceil(totalBadge / limit) : 0;
 
     const handleView = (id) => {
-        navigate(`/management/badges/badgeDetail/${id}`);
+        navigate(`/dashboard/management/badges/badgeDetail/${id}`);
     };
 
     return (
