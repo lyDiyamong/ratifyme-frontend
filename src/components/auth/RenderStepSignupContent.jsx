@@ -1,9 +1,11 @@
+// Custom import
 import GeneralInfoFields from "./GeneralInfoFields";
 import AddressFields from "./AddressFields";
 import InstitutionInfoFields from "./InstitutionInfoFields";
 import AccountSetupFields from "./AccountSetupFields";
 import PasswordSetupFields from "./PasswordSetupFields";
 
+// =========== Start RenderStepSignupContent ===========
 const RenderStepSignupContent = ({ step, control, role, guest, watch, errors }) => {
 
     switch (step) {
@@ -31,3 +33,4 @@ const RenderStepSignupContent = ({ step, control, role, guest, watch, errors }) 
 };
 
 export default RenderStepSignupContent;
+// =========== End RenderStepSignupContent ===========

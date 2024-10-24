@@ -1,5 +1,10 @@
+// React library import
 import { useMemo } from "react";
+
+// MUI import
 import { Box, Stack, Typography, LinearProgress } from "@mui/material";
+
+// Custom import
 import FormInput from "../../components/FormInput";
 import { getPasswordStrength, validatePassword } from "../../utils/auth/passwordUtils";
 import theme from "../../assets/themes";
@@ -16,6 +21,7 @@ import theme from "../../assets/themes";
  * @returns {JSX.Element} - Returns the form input fields for password and password confirmation along with the strength indicator and validation hints.
  */
 
+// =========== Start PasswordFields ===========
 const PasswordFields = ({
     control,
     watch,
@@ -125,3 +131,4 @@ const PasswordFields = ({
 };
 
 export default PasswordFields;
+// =========== End PasswordFields ===========

@@ -1,8 +1,12 @@
+// MUI import
 import { Box, Stack, Typography } from "@mui/material";
+
+// Custom import
 import FormInput from "../FormInput";
 import PhoneNumberForm from "../PhoneNumberForm";
 import theme from "../../assets/themes";
 
+// =========== Start InstitutionInfoFields ===========
 const InstitutionInfoFields = ({ control, schema }) => {
     return (
         <Stack gap={2}>
@@ -40,3 +44,4 @@ const InstitutionInfoFields = ({ control, schema }) => {
 };
 
 export default InstitutionInfoFields;
+// =========== End InstitutionInfoFields ===========
