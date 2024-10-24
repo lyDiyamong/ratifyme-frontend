@@ -1,33 +1,39 @@
+// React import
+import { useEffect, useState } from "react";
+
+// MUI import
 import { Button } from "@mui/material";
-import theme from "../assets/themes";
 
 // Custom Import
-import { useFetchEarnerAchieByIdQuery } from "../store/api/earnerManagement/earnerApis";
-import { useClaimBadgeMutation } from "../store/api/badgeManagement/badgeApi";
-import { useEffect, useState } from "react";
+import theme from "../assets/themes";
 import AlertConfirmation from "./alert/AlertConfirmation";
 import VerifiedRoundedIcon from "@mui/icons-material/VerifiedRounded";
 import useCatchStatus from "../hooks/useCatchStatus";
 import AlertMessage from "./alert/AlertMessage";
 
-// =========== Start ClaimBadgeButton ===========
+// Api import
+import { useClaimBadgeMutation } from "../store/api/badgeManagement/badgeApi";
+import { useFetchEarnerAchieByIdQuery } from "../store/api/earnerManagement/earnerApis";
+
 const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
-    // Fetch the earner's achievement status from the API
+    // =========== API Hooks & Data Fetching ===========
     const { data: earnerAchieResponse, refetch } = useFetchEarnerAchieByIdQuery({ achieveId: achievementIds, earnerId });
     const [claimBadge, { isLoading, isSuccess }] = useClaimBadgeMutation();
 
-    // Extract the achievement status from the response
+    // =========== State Management ===========
+    const [claimed, setClaimed] = useState(false);
+    const [isClaimBadgeModal, setIsClaimBadgeModal] = useState(false);
+    const [message, setMessage] = useCatchStatus(isSuccess, isSuccess ? "Badge Claimed successfully" : "Badge Claimed failed");
+
+    // Extract response data
     const statusAchievement = earnerAchieResponse?.data?.status;
     const issuedOn = earnerAchieResponse?.data?.issuedOn;
 
-    // Set initial state of claimed based on statusAchievement
-    const [claimed, setClaimed] = useState(false);
-
-    const [message, setMessage] = useCatchStatus(isSuccess, isSuccess ? "Badge Claimed successfully" : "Badge Claimed failed");
-
-    // Confirm modal State
-    const [isClaimBadgeModal, setIsClaimBadgeModal] = useState(false);
-    // Function to handle claiming the badge
+    // =========== Badge Claim Handler ===========
+    /**
+     * Handles the badge claiming process
+     * Makes API call to claim badge and updates local state
+     */
     const handleClaimBadge = async () => {
         try {
             await claimBadge({
@@ -39,24 +45,27 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
             setClaimed(true);
             refetch();
         } catch (error) {
-            console.error("Failed to claim badge:", error);
-            setMessage("Badge Claimed failed")
+            setMessage("Badge Claimed failed");
         } finally {
-            // Close modal regardless of success or error
             setIsClaimBadgeModal(false);
         }
     };
 
-    // Update claimed state when statusAchievement changes or issuedOn is null
+    // =========== Side Effects ===========
+    /**
+     * Updates claimed state based on API response
+     * Marks as claimed if issuedOn is null or based on statusAchievement
+     */
     useEffect(() => {
         if (issuedOn === null) {
-            setClaimed(true); // Mark as claimed if the issuedOn field is null
+            setClaimed(true);
         } else if (statusAchievement !== undefined) {
-            setClaimed(statusAchievement); // Update claimed state based on statusAchievement
+            setClaimed(statusAchievement);
         }
-    }, [statusAchievement, issuedOn]); // Only run this effect when statusAchievement or issuedOn changes
+    }, [statusAchievement, issuedOn]);
 
     return (
+        // =========== Start ClaimBadgeButton ===========
         <>
             {message && <AlertMessage variant={isSuccess ? "success" : "error"}>{message}</AlertMessage>}
             <AlertConfirmation
@@ -92,6 +101,7 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
                 {isLoading ? "Claiming..." : issuedOn === null || !claimed ? "Claim Badge" : "Claimed"}
             </Button>
         </>
+        // =========== End ClaimBadgeButton ===========
     );
 };
 
