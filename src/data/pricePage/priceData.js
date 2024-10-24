@@ -1,3 +1,4 @@
+// ============ Start priceTemplate ============
 export const priceTemplate = [
     {
         priceDuration: "Quarterly Quater",
@@ -18,3 +19,4 @@ export const priceTemplate = [
         productId : 3
     },
 ];
+// ============ End priceTemplate ============
