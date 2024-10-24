@@ -1,12 +1,19 @@
+// React import
+import { useEffect, useState } from "react";
+
+// MUI import
+import { Grid, useMediaQuery } from "@mui/material";
+
+// Custom import
 import Greeting from "./Greeting";
 import PageTitle from "../../components/PageTitle";
 import Overview from "./Overview";
 import DashboardContainer from "../../components/styles/DashboardContainer";
-import { useCheckAuthQuery } from "../../store/api/auth/authApi";
 import AlertMessage from "../../components/alert/AlertMessage";
-import { useEffect, useState } from "react";
-import { Grid, useMediaQuery } from "@mui/material";
 import CodeInvitationCard from "../../components/cards/CodeInvitationCard";
+
+// Api import
+import { useCheckAuthQuery } from "../../store/api/auth/authApi";
 
 const Dashboard = () => {
     // CheckAuth if success hook

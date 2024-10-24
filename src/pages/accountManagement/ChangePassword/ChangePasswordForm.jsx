@@ -11,16 +11,26 @@ import FormInput from "../../../components/FormInput";
 import ChangePassword from "../../../assets/images/ChangePassword.svg";
 import useCatchStatus from "../../../hooks/useCatchStatus";
 import AlertMessage from "../../../components/alert/AlertMessage";
+import PasswordFields from "../../../components/auth/PasswordFields";
+import { passwordSchema } from "../../../utils/auth/passwordUtils";
 
 // Api import
 import { useUpdatePasswordMutation } from "../../../store/api/auth/authApi";
-import updatePasswordSchema from "../../../utils/schema/updatePasswordSchema";
 
 const ChangePasswordForm = () => {
-    // React hook form
-    const { control, handleSubmit, reset } = useForm({
-        mode : 'onChange',
-        resolver: yupResolver(updatePasswordSchema)
+    const schema = passwordSchema({
+        passwordName: "newPassword",
+        passwordConfirmName: "passwordConfirm",
+    });
+
+    const {
+        handleSubmit,
+        control,
+        watch,
+        reset,
+    } = useForm({
+        mode: "onChange",
+        resolver: yupResolver(schema),
     });
     // Update password hook
     const [updatePassword, { isSuccess, isError, error }] = useUpdatePasswordMutation();
@@ -31,11 +41,10 @@ const ChangePasswordForm = () => {
     );
     // Handle react hook form
     const onSubmit = async (data) => {
-
-            await updatePassword({
-                data,
-            }).unwrap();
-            reset();
+        await updatePassword({
+            data,
+        }).unwrap();
+        reset();
     };
 
     return (
@@ -82,14 +91,7 @@ const ChangePasswordForm = () => {
                         Your new password must be different from previous used passwords.
                     </Typography>
                 </Stack>
-                <Box
-                    component="form"
-                    onSubmit={handleSubmit(onSubmit)}
-                    display="flex"
-                    flexDirection="column"
-                    gap={4}
-                    noValidate
-                >
+                <Box component="form" onSubmit={handleSubmit(onSubmit)} display="flex" flexDirection="column" gap={4} noValidate>
                     {/* Password */}
                     <FormInput
                         label="Password"
@@ -99,23 +101,14 @@ const ChangePasswordForm = () => {
                         required={true}
                         autoComplete="off"
                     />
-                    {/* New Password */}
-                    <FormInput
-                        label="New Password"
-                        name="newPassword"
+                    {/* Password and Confirm Password field */}
+                    <PasswordFields
                         control={control}
-                        type="password"
-                        required={true}
-                        autoComplete="new-password"
-                    />
-                    {/* Confirm Password */}
-                    <FormInput
-                        label="Confirm Password"
-                        name="passwordConfirm"
-                        control={control}
-                        type="password"
-                        required={true}
-                        autoComplete="new-password"
+                        passwordName="newPassword"
+                        passwordConfirmName="passwordConfirm"
+                        watch={watch}
+                        pwdLabelName="New Password"
+                        confirmPwdLableName="Confirm Password"
                     />
                     {/* Submit button */}
                     <Button

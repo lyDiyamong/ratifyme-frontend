@@ -1,3 +1,7 @@
+// React import
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
+
 // MUI import
 import { Box, Paper, Typography } from "@mui/material";
 
@@ -5,9 +9,10 @@ import { Box, Paper, Typography } from "@mui/material";
 import ServiceDetail from "./ServiceDetail";
 import LandingContainer from "../../components/styles/LandingContainer";
 import theme from "../../assets/themes";
+
+// Api import
 import { useCheckAuthQuery } from "../../store/api/auth/authApi";
-import { useEffect } from "react";
-import { useNavigate } from "react-router";
+
 
 const PricePage = () => {
     const { data, error, isLoading } = useCheckAuthQuery();

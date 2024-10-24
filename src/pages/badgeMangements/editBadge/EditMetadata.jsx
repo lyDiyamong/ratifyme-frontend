@@ -1,10 +1,11 @@
-import { Stack, TextField, Typography } from "@mui/material";
-import theme from "../../../assets/themes";
+// MUI import
+import { Stack, Box } from "@mui/material";
+
+// Custom import
 import FormInput from "../../../components/FormInput";
 import MultiSelectForm from "../../../components/MultiSelectionForm";
 import DateSelectionForm from "../../../components/DateSelectionForm";
 import HelperTextForm from "../../../components/alert/HelperTextForm";
-import { Box } from "@mui/material";
 
 const EditMetadata = ({ control, schema, errors }) => {
     const optionLanguage = [

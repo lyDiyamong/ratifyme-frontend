@@ -17,6 +17,7 @@ import useCatchStatus from "../../../hooks/useCatchStatus";
 import AlertMessage from "../../../components/alert/AlertMessage";
 import theme from "../../../assets/themes";
 import ComingSoonImg from "../../../assets/images/Coming-soon.svg";
+import PageLoading from "../../../components/loading/PageLoading";
 
 // Api import
 import { useUploadCertiMutation } from "../../../store/api/badgeManagement/badgeApi";
@@ -34,13 +35,15 @@ const CertificateGenerator = ({ badge }) => {
     // Get reference of HTMLELEMENT
     const certificateRef = useRef();
     // Achievement Id
-    const achieveId = badge.Achievements.find(({ badgeClassId }) => badgeClassId === badge.id).id;
+    const achieveId = badge?.Achievements?.find(({ badgeClassId }) => badgeClassId === badge.id)?.id;
 
     // Fetch Earner achievement hook
     const { data: earnerAchieResponse } = useFetchEarnerAchieByIdQuery({ achieveId, earnerId });
     const earnerAchieveData = earnerAchieResponse?.data;
     const earnerAchieveStatus = earnerAchieResponse?.data?.status;
-    const isCertUpload = earnerAchieResponse?.data?.certUrl ? true : false;
+    const isCertUpload = earnerAchieResponse?.data?.certUrlPdf ? true : false;
+    console.log("EarnerAchive", earnerAchieveData);
+
     // Upload Certificate hook
     const [uploadCert, { isLoading: certiLoading, isError: uploadCertError }] = useUploadCertiMutation();
 
@@ -51,26 +54,38 @@ const CertificateGenerator = ({ badge }) => {
     const [isUploadCertModal, setIsUploadCertModal] = useState(false);
 
     const handleGenerateImage = async () => {
-        const jpegDataUrl = await toJpeg(certificateRef.current, { quality: 0.95 });
-        const blob = await fetch(jpegDataUrl).then((res) => res.blob());
-        const formData = new FormData();
-        formData.append("certFile", blob, `certificate-${userInfo?.username}`);
+        let jpegDataUrl, blob, formData;
 
-        // Handle errors using useCatchStatus instead of try-catch
-        await uploadCert({ achieveId, earnerId, uploadedCert: formData })
-            .unwrap() // Access the success response
-            .then((response) => {
-                if (response) {
-                    window.open(response?.uploadCert, "_blank");
-                }
-            })
-            .catch((error) => setMessage("Failed to upload certificate."));
-        setIsUploadCertModal(false);
+        try {
+            // Generate JPEG data URL
+            jpegDataUrl = await toJpeg(certificateRef.current, { quality: 0.95 });
+
+            // Fetch blob from data URL
+            blob = await fetch(jpegDataUrl).then((res) => res.blob());
+
+            // Create FormData and append the blob
+            formData = new FormData();
+            formData.append("certFile", blob, `${earnerAchieResponse?.data?.credId}`);
+
+            // Upload certificate
+            const response = await uploadCert({ achieveId, earnerId, uploadedCert: formData }).unwrap();
+
+            // Open the uploaded certificate URL
+            if (response) {
+                window.open(response?.uploadCert, "_blank");
+            }
+        } catch (error) {
+            // Handle errors
+            setMessage("Failed to upload certificate.");
+        } finally {
+            // Close modal regardless of success or error
+            setIsUploadCertModal(false);
+        }
     };
 
     // View handling
     const handleViewCert = () => {
-        window.open(earnerAchieResponse?.data?.certUrl, "_blank");
+        window.open(earnerAchieResponse?.data?.certUrlPdf, "_blank");
     };
 
     // Congrat handling
@@ -81,6 +96,7 @@ const CertificateGenerator = ({ badge }) => {
 
     return (
         <DashboardContainer>
+            <PageLoading isLoading={certiLoading} />
             {message && (
                 <AlertMessage variant="error" onClose={() => setMessage("")}>
                     {message}
@@ -105,12 +121,7 @@ const CertificateGenerator = ({ badge }) => {
                         Certificate Pending
                     </Typography>
 
-                    <Typography
-                        variant="subtitle1"
-                        textAlign="center"
-                        color={theme.palette.text.secondary}
-                        sx={{ mb: 3 }}
-                    >
+                    <Typography variant="subtitle1" textAlign="center" color={theme.palette.text.secondary} sx={{ mb: 3 }}>
                         You’re one step closer to earning your certificate!
                     </Typography>
                     {/* Image Section */}
@@ -233,11 +244,7 @@ const CertificateGenerator = ({ badge }) => {
                             >
                                 Get Certificate
                             </Button>
-                            <Button
-                                startIcon={<DriveFolderUploadOutlined />}
-                                variant="outlined"
-                                onClick={handleViewCert}
-                            >
+                            <Button startIcon={<DriveFolderUploadOutlined />} variant="outlined" onClick={handleViewCert}>
                                 View Certificate
                             </Button>
                         </Stack>

@@ -1,9 +1,13 @@
-import { useEffect } from "react";
+// React import
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+
+// MUI import
+import { Pagination, Typography, Box } from "@mui/material";
+
+// Custom import
 import BadgeListCard from "../../components/BadgeListCard";
-import { Pagination, Typography } from "@mui/material";
-import { Box } from "@mui/system";
 import PageLoading from "../../components/loading/PageLoading";
 
 const BackpackList = ({ badges, total, onPage, page, limit, result, isLoading, isError }) => {
