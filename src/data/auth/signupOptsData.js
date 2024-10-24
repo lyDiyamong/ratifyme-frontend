@@ -1,8 +1,10 @@
-import theme from "../../assets/themes";
+// Custom import
 import IssuerImg from "../../assets/images/Issuer.png";
 import UniversifyImg from "../../assets/images/University.png";
 import CertificateImg from "../../assets/images/Certificate.png";
+import theme from "../../assets/themes";
 
+// ============ Start signupOptsData ============
 export const signupOptsData = [
     {
         title: "Institution",
@@ -27,3 +29,4 @@ export const signupOptsData = [
         icon: CertificateImg,
     },
 ];
+// ============ End signupOptsData ============
