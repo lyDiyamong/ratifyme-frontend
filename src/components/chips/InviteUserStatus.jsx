@@ -1,7 +1,11 @@
+// MUI import
 import { Chip } from "@mui/material";
 import { CheckCircleOutline, ErrorOutline, AccessAlarm } from "@mui/icons-material";
+
+// Custom import
 import theme from "../../assets/themes"; // Assuming you have a theme setup
 
+// =========== Start InviteUserStatus ===========
 const InviteUserStatus = ({ status, expiredInvitation, isAccountCreated }) => {
     // Function to determine the color, label, and icon based on the status
     const getStatusChipProps = () => {
@@ -46,3 +50,4 @@ const InviteUserStatus = ({ status, expiredInvitation, isAccountCreated }) => {
 };
 
 export default InviteUserStatus;
+// =========== End InviteUserStatus ===========
