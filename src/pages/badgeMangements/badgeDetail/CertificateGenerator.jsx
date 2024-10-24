@@ -12,7 +12,6 @@ import AutoAwesome from "@mui/icons-material/AutoAwesome";
 
 // Custom import
 import Certificate from "../../../components/Certificate";
-import DashboardContainer from "../../../components/styles/DashboardContainer";
 import useCatchStatus from "../../../hooks/useCatchStatus";
 import AlertMessage from "../../../components/alert/AlertMessage";
 import theme from "../../../assets/themes";
@@ -95,7 +94,7 @@ const CertificateGenerator = ({ badge }) => {
     };
 
     return (
-        <DashboardContainer>
+        <Box>
             <PageLoading isLoading={certiLoading} />
             {message && (
                 <AlertMessage variant="error" onClose={() => setMessage("")}>
@@ -112,7 +111,7 @@ const CertificateGenerator = ({ badge }) => {
                         borderRadius: theme.customShape.section,
                         boxShadow: theme.customShadows.default,
                         gap: 3,
-                        padding: 3,
+                        // padding: 3,
                         my: 3,
                     }}
                 >
@@ -151,7 +150,7 @@ const CertificateGenerator = ({ badge }) => {
                         boxShadow: theme.customShadows.default,
                         gap: 3,
                         padding: 3,
-                        my: 3,
+                        mb: 3,
                         background: `linear-gradient(to bottom, ${theme.palette.action.hover} 40%, ${theme.palette.customColors.white} 30%)`,
                     }}
                 >
@@ -256,7 +255,7 @@ const CertificateGenerator = ({ badge }) => {
                     )}
                 </Stack>
             )}
-        </DashboardContainer>
+        </Box>
     );
 };
 

@@ -92,7 +92,7 @@ const BadgeDetail = () => {
     if (isError) return <Typography>Error fetching badge details.</Typography>;
 
     return (
-        <DashboardContainer sx={{ display: "flex", flexDirection: "column" }}>
+        <DashboardContainer sx={{ display: "flex", flexDirection: "column", mb: 3 }}>
             <PageTitle title="Badge Detail" subtitle={subtitle} />
 
             {/* Conditional rendering based on Status */}
