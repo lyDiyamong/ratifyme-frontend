@@ -6,15 +6,15 @@ export const serviceRows = [
         twelve_monthPlan: null,
     },
     {
-        name: "Create Badge",
-        three_monthPlan: 200,
-        six_monthPlan: 1000,
-        twelve_monthPlan: 2000,
+        name: "Badge Limit",
+        three_monthPlan: 5,
+        six_monthPlan: 50,
+        twelve_monthPlan: 500,
     },
     {
         name: "People",
-        three_monthPlan: 100,
-        six_monthPlan: 500,
+        three_monthPlan: 10,
+        six_monthPlan: 100,
         twelve_monthPlan: 1000,
     },
     {
