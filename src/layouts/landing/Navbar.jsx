@@ -1,22 +1,28 @@
+// React library import
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
+// MUI import
 import { AppBar, Box, Toolbar, Button, Menu, MenuItem, Slide, Stack, Typography, IconButton } from "@mui/material";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import theme from "../../assets/themes";
-import RatifyMeLogo from "../../assets/icons/RatfiyME.svg";
+// Custom import
 import LandingContainer from "../../components/styles/LandingContainer";
-import { useGetSubInstitutionQuery } from "../../store/api/subscription/subscriptionApi";
+import AlertConfirmation from "../../components/alert/AlertConfirmation";
 import DefaultProfileSvg from "../../assets/images/DefaultProfile.svg";
+import RatifyMeLogo from "../../assets/icons/RatfiyME.svg";
 import MaleUserDefault from "../../assets/images/MaleUser.svg";
 import FemaleUserDefault from "../../assets/images/FemaleUser.svg";
-import AlertConfirmation from "../../components/alert/AlertConfirmation";
-import { useLogoutMutation } from "../../store/api/auth/authApi";
 import useCatchStatus from "../../hooks/useCatchStatus";
 import AlertMessage from "../../components/alert/AlertMessage";
+import theme from "../../assets/themes";
+
+// API import
+import { useLogoutMutation } from "../../store/api/auth/authApi";
+import { useGetSubInstitutionQuery } from "../../store/api/subscription/subscriptionApi";
+
 
 const useHideOnScroll = () => {
     const [show, setShow] = useState(true);
@@ -41,6 +47,7 @@ const useHideOnScroll = () => {
     return show;
 };
 
+// ============ Start Navbar ============
 const Navbar = () => {
     const [navbarAnchorEl, setNavbarAnchorEl] = useState(null);
     const [alertOpen, setAlertOpen] = useState(false);
@@ -117,9 +124,9 @@ const Navbar = () => {
     const handleMenuProfileClick = (event) => {
         // Toggle the profile menu
         if (openProfileMenu) {
-            handleMenuCloseProfile(); // Close if already open
+            handleMenuCloseProfile(); 
         } else {
-            setAnchorEl(event.currentTarget); // Open if closed
+            setAnchorEl(event.currentTarget);
         }
     };
 
@@ -375,3 +382,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+// ============ Start Navbar ============
