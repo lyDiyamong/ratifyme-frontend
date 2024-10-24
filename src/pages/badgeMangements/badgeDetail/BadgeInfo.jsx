@@ -14,6 +14,7 @@ import ClaimBadgeButton from "../../../components/ClaimBadgeButton";
 import { useDeleteBadgeMutation } from "../../../store/api/badgeManagement/badgeApi";
 import MoreMenu from "../../../components/MoreMenu";
 import { BorderColorRounded, ConfirmationNumber, Delete } from "@mui/icons-material";
+import { display } from "@mui/system";
 
 const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
     // define breakpoint of the screen
@@ -118,11 +119,7 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
                     {/* Badge Details */}
                     <Stack sx={{ gap: 2, justifyContent: "center" }}>
                         <Stack sx={{ gap: 1 }}>
-                            <Typography
-                                variant="h3"
-                                color={theme.palette.text.primary}
-                                fontWeight={theme.fontWeight.semiBold}
-                            >
+                            <Typography variant="h3" color={theme.palette.text.primary} fontWeight={theme.fontWeight.semiBold}>
                                 {result?.name}
                             </Typography>
 
@@ -169,7 +166,12 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
                 </Stack>
                 <MoreMenu
                     menuItems={menuItems}
-                    iconStyles={{ color: "black", position: "absolute", right: { md: "3%", xss: "5%" } }}
+                    iconStyles={{
+                        color: "black",
+                        position: "absolute",
+                        right: { md: "3%", xss: "5%" },
+                        display: userRole !== "issuer" ? "none" : "block",
+                    }}
                 />
             </Box>
 
@@ -207,10 +209,7 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
                         />
                         <DetailItem
                             label="Issuer"
-                            value={
-                                `${result?.Issuer?.User?.firstName} ${result?.Issuer?.User?.lastName}` ||
-                                "Unknown Issuer"
-                            }
+                            value={`${result?.Issuer?.User?.firstName} ${result?.Issuer?.User?.lastName}` || "Unknown Issuer"}
                             isSmallScreen={isSmallScreen}
                         />
                         <DetailItem
@@ -245,9 +244,7 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
                             label="Achievement Type"
                             value={
                                 result?.Achievements?.length
-                                    ? result?.Achievements.map((achievement) => achievement.AchievementType?.name).join(
-                                          ", ",
-                                      )
+                                    ? result?.Achievements.map((achievement) => achievement.AchievementType?.name).join(", ")
                                     : "No achievement type available"
                             }
                             isSmallScreen={isSmallScreen}

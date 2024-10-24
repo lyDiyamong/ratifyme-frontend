@@ -85,17 +85,14 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
             <Button
                 onClick={() => setIsClaimBadgeModal(true)}
                 disabled={claimed || isLoading}
+                variant="contained"
                 sx={{
-                    backgroundColor: claimed ? theme.palette.customColors.gray200 : theme.palette.primary.main,
-                    color: claimed ? theme.palette.text.disabled : theme.palette.customColors.white,
+                    color: theme.palette.customColors.white,
                     fontSize: theme.typography.body1,
                     fontWeight: theme.fontWeight.bold,
                     borderRadius: theme.customShape.btn,
-                    minWidth: 150,
-                    "&:disabled": {
-                        backgroundColor: theme.palette.customColors.gray200,
-                        color: theme.palette.text.disabled,
-                    },
+                    px: 3,
+                    textTransform: "none",
                 }}
             >
                 {isLoading ? "Claiming..." : issuedOn === null || !claimed ? "Claim Badge" : "Claimed"}

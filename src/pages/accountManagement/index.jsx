@@ -16,7 +16,6 @@ import { BusinessRounded, SchoolRounded } from "@mui/icons-material";
 import { useFetchInfoUserByIdQuery } from "../../store/api/users/userInfoProfileApi";
 import { useSelector } from "react-redux";
 import AcademicBackground from "./academicBackground";
-import InstitutionProfileCard from "../organization/InstitutionProfileCard";
 
 // =========== Start Account Management ===========
 const AccountManagement = () => {
@@ -32,8 +31,8 @@ const AccountManagement = () => {
 
     // 1 = role Admin, 2 = role Institution Owner, 3 = role Issuer, 4 = role Earner
     const userRole = userData?.Role.id;
-    const isDisabled = userRole === 3 || userRole === 2;
-    const orgInfoDisabled = userRole === 3 || userRole === 4;
+    const isDisabled = userRole === 3 || userRole === 2 || userRole === 1;
+    const orgInfoDisabled = userRole === 3 || userRole === 4 || userRole === 1;
 
     return (
         <DashboardContainer sx={{ display: "flex", gap: 3, flexDirection: "column", mb: 3 }}>
@@ -54,10 +53,10 @@ const AccountManagement = () => {
                     {!orgInfoDisabled && <OrganizationInfo />}
                     {!isDisabled && <AcademicBackground />}
                     {userRole === 3 && <ChangePasswordForm />}
+                    {userRole === 1 && <ChangePasswordForm />}
                 </>
             )}
             {value === 2 && <ChangePasswordForm />}
-            {/* {value === 3 && <InstitutionProfileCard />} */}
         </DashboardContainer>
     );
 };

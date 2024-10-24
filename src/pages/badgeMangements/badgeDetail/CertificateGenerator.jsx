@@ -12,7 +12,6 @@ import AutoAwesome from "@mui/icons-material/AutoAwesome";
 
 // Custom import
 import Certificate from "../../../components/Certificate";
-import DashboardContainer from "../../../components/styles/DashboardContainer";
 import useCatchStatus from "../../../hooks/useCatchStatus";
 import AlertMessage from "../../../components/alert/AlertMessage";
 import theme from "../../../assets/themes";
@@ -42,7 +41,7 @@ const CertificateGenerator = ({ badge }) => {
     const earnerAchieveData = earnerAchieResponse?.data;
     const earnerAchieveStatus = earnerAchieResponse?.data?.status;
     const isCertUpload = earnerAchieResponse?.data?.certUrlPdf ? true : false;
-    console.log("EarnerAchive", earnerAchieveData);
+    // console.log("Earner CredUrl", earnerAchieveData?.credUrl);;
 
     // Upload Certificate hook
     const [uploadCert, { isLoading: certiLoading, isError: uploadCertError }] = useUploadCertiMutation();
@@ -95,7 +94,7 @@ const CertificateGenerator = ({ badge }) => {
     };
 
     return (
-        <DashboardContainer>
+        <Box>
             <PageLoading isLoading={certiLoading} />
             {message && (
                 <AlertMessage variant="error" onClose={() => setMessage("")}>
@@ -151,7 +150,6 @@ const CertificateGenerator = ({ badge }) => {
                         boxShadow: theme.customShadows.default,
                         gap: 3,
                         padding: 3,
-                        my: 3,
                         background: `linear-gradient(to bottom, ${theme.palette.action.hover} 40%, ${theme.palette.customColors.white} 30%)`,
                     }}
                 >
@@ -180,6 +178,12 @@ const CertificateGenerator = ({ badge }) => {
                                 },
                                 scrollbarWidth: "none",
                                 border: `1px solid ${theme.palette.cardBorder}`,
+                                width: "100%",
+                                maxWidth: 1000,
+                                // Set maxWidth to 900px when between 1200px and 1383px
+                                "@media (min-width: 1200px) and (max-width: 1383px)": {
+                                    maxWidth: "820px",
+                                },
                             }}
                         >
                             {/* Start Certificate */}
@@ -256,7 +260,7 @@ const CertificateGenerator = ({ badge }) => {
                     )}
                 </Stack>
             )}
-        </DashboardContainer>
+        </Box>
     );
 };
 
