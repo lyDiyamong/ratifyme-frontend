@@ -47,7 +47,10 @@ const AchievementManagement = () => {
 
     return (
         <DashboardContainer sx={{ pb: 4 }}>
-            <PageTitle title="My Achievement" />
+            <PageTitle
+                title="My Achievement"
+                subtitle="Track and showcase your earned digital badges, representing your achievements and skills, all in one place."
+            />
             <SearchBar
                 showButton={false}
                 textInButton="Add Badge"
