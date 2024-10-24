@@ -1,20 +1,23 @@
 // React library import
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useTheme } from "@emotion/react";
 
 // MUI import
 import { AppBar, IconButton, InputBase, Toolbar, useMediaQuery, Box } from "@mui/material";
 import { Menu as MenuIcon, Search, SettingsOutlined, NotificationsNoneOutlined } from "@mui/icons-material";
-import { useTheme } from "@emotion/react";
 
-// Custom Import
+// Custom import
 import FlexBetween from "../../components/styles/FlexBetween";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import DefaultProfileSvg from "../../assets/images/DefaultProfile.svg";
 import MaleUserDefault from "../../assets/images/MaleUser.svg";
 import FemaleUserDefault from "../../assets/images/FemaleUser.svg";
-import { useSelector } from "react-redux";
+
+// API import
 import { useFetchInfoUserByIdQuery } from "../../store/api/users/userInfoProfileApi";
 
+// ============ Start Header ============
 const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const theme = useTheme();
     const isTablet = useMediaQuery(theme.breakpoints.up("md"));
@@ -116,3 +119,4 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
 };
 
 export default Header;
+// ============ End Header ============
