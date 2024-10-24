@@ -1,4 +1,3 @@
-import React from "react";
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ element, role, allowedRoles }) => {
@@ -7,4 +6,3 @@ const ProtectedRoute = ({ element, role, allowedRoles }) => {
 };
 
 export default ProtectedRoute;
-    
