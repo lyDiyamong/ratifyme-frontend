@@ -16,9 +16,10 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
 
     // Extract the achievement status from the response
     const statusAchievement = earnerAchieResponse?.data?.status;
+    const issuedOn = earnerAchieResponse?.data?.issuedOn;
 
     // Set initial state of claimed based on statusAchievement
-    const [claimed, setClaimed] = useState(statusAchievement || false);
+    const [claimed, setClaimed] = useState(false);
 
     // Function to handle claiming the badge
     const handleClaimBadge = async () => {
@@ -37,15 +38,14 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
         }
     };
 
-    // Update claimed state when statusAchievement changes
+    // Update claimed state when statusAchievement changes or issuedOn is null
     useEffect(() => {
-        if (statusAchievement !== undefined && statusAchievement !== claimed) {
-            setClaimed(statusAchievement);
+        if (issuedOn === null) {
+            setClaimed(true); // Mark as claimed if the issuedOn field is null
+        } else if (statusAchievement !== undefined) {
+            setClaimed(statusAchievement); // Update claimed state based on statusAchievement
         }
-    }, [statusAchievement, claimed]);
-
-    // Log the claimed state for debugging purposes
-    console.log("Claimed state:", claimed);
+    }, [statusAchievement, issuedOn]); // Only run this effect when statusAchievement or issuedOn changes
 
     return (
         <Button
@@ -64,7 +64,7 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
                 },
             }}
         >
-            {isLoading ? "Claiming..." : claimed ? "Claimed" : "Claim Badge"}
+            {isLoading ? "Claiming..." : (issuedOn === null || !claimed) ? "Claim Badge" : "Claimed"}
         </Button>
     );
 };
