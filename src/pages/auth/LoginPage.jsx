@@ -203,8 +203,15 @@ const LoginPage = () => {
 
                     <Typography variant="body2" align="center" color="text.secondary" mt={2}>
                         New on our platform?{" "}
-                        <Link to="/get-started">
-                            <Typography component="a" href="#" variant="body2" color="primary" sx={{ textDecoration: "none" }}>
+                        <Link to="/auth/get-started">
+
+                            <Typography
+                                component="a"
+                                href="#"
+                                variant="body2"
+                                color="primary"
+                                sx={{ textDecoration: "none" }}
+                            >
                                 Create an account
                             </Typography>
                         </Link>

@@ -51,17 +51,17 @@ export const sidebarItems = [
         subItems: [
             {
                 text: "Service Plans",
-                path: "dashboard/sales/servicePlan",
+                path: "/dashboard/sales/servicePlan",
                 roles: [1],
             },
             {
                 text: "Billing and Invoice",
-                path: "dashboard/sales/billing&invoice",
+                path: "/dashboard/sales/billing&invoice",
                 roles: [1],
             },
             {
                 text: "Invoices",
-                path: "dashboard/sales/invoice",
+                path: "/dashboard/sales/invoice",
                 roles: [2],
             },
         ],

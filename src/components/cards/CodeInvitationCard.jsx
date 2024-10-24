@@ -132,7 +132,7 @@ const CodeInvitationCard = () => {
                                         component={NorthEast}
                                         sx={{ marginRight: "8px", display: { xss: "none", xs: "flex" } }}
                                     />
-                                    {roleId === 2 ? 'Invite Issuer' : 'Invite Earner'}
+                                    {roleId === 2 ? "Invite Issuer" : "Invite Earner"}
                                 </Button>
                             </Link>
                         </Box>

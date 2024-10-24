@@ -51,7 +51,7 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
     const handleProfileClick = () => {
         setIsLoading(true);
-        navigate("/setting/account");
+        navigate("/dashboard/setting/account");
         handleMenuClose();
     };
 
@@ -93,7 +93,7 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
             sx={{ p: 0 }}
             onClick={() => {
                 setIsLoading(true);
-                navigate("/setting/account");
+                navigate("/dashboard/setting/account");
             }}
         >
             <Box
@@ -209,7 +209,7 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 onConfirm={async () => {
                     await logout().unwrap();
                     localStorage.removeItem("loginMessageShown");
-                    navigate("/login");
+                    navigate("/auth/login");
                     setIsLogoutDialogOpen(false);
                 }}
                 confirmText="Logout"

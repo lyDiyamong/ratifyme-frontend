@@ -9,10 +9,7 @@ import dayjs from "dayjs";
 import { useUpdateAcademicBackgroundByIdMutation } from "../../../store/api/earnerManagement/earnerApis";
 import theme from "../../../assets/themes";
 import EditAcademicBgSvg from "../../../assets/icons/EditAcademicBgSvg.svg";
-import {
-    useFetchAcademicLevelsQuery,
-    useFetchFieldOfStudiesQuery,
-} from "../../../store/api/earnerManagement/fieldOfStudyApi";
+import { useFetchAcademicLevelsQuery, useFetchFieldOfStudiesQuery } from "../../../store/api/earnerManagement/fieldOfStudyApi";
 import SelectForm from "../../../components/SelectionForm";
 
 const EditAcademicModal = ({ open, onClose, initialData, userId }) => {

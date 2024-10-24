@@ -152,7 +152,7 @@ const ForgotPasswordPage = () => {
 
                         <Typography variant="body2" align="center" color="text.secondary" mt={2}>
                             New to RatifyMe?{" "}
-                            <Link to="/get-started">
+                            <Link to="/auth/get-started">
                                 <Typography
                                     component="a"
                                     href="#"

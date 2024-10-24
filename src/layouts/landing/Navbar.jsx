@@ -217,7 +217,7 @@ const Navbar = () => {
                                                     Sign In
                                                 </Button>
                                             </Link>
-                                            <Link to="/get-started">
+                                            <Link to="/auth/get-started">
                                                 <Button
                                                     variant="contained"
                                                     sx={{
@@ -300,7 +300,7 @@ const Navbar = () => {
                                                 </Link>
                                             </MenuItem>
                                             <MenuItem onClick={handleMenuClose}>
-                                                <Link to="/get-started">
+                                            <Link to="/auth/get-started">
                                                     <Button
                                                         variant="text"
                                                         sx={{

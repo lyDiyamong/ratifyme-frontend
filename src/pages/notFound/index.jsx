@@ -11,8 +11,8 @@ import theme from "../../assets/themes";
 import { useCheckAuthQuery } from "../../store/api/auth/authApi";
 
 const NotFoundPage = () => {
-    const {data} = useCheckAuthQuery()
-    console.log("User data",data);
+    const { data } = useCheckAuthQuery();
+    console.log("User data", data);
     // Navigate hook
     const navigate = useNavigate();
     return (
@@ -26,6 +26,7 @@ const NotFoundPage = () => {
                 alignItems: "center",
                 minHeight: "100vh",
                 textAlign: "center",
+                padding: 1
             }}
         >
             <Box
@@ -33,12 +34,13 @@ const NotFoundPage = () => {
                     position: "relative",
                 }}
             >
-                <Box sx={{ position: "absolute", top: "12%", left: "50%", transform: "translateX(-50%)" }}>
+                <Box >
                     <Typography variant="h1">Page Not Found</Typography>
                 </Box>
                 <Box
                     sx={{
                         maxWidth: "1000px",
+                        width: "100%",
                     }}
                     component="img"
                     src={NotFoundSvg}
@@ -51,7 +53,7 @@ const NotFoundPage = () => {
                 }}
             >
                 <Button
-                    onClick={() => navigate(data? "/dashboard" : "/")}
+                    onClick={() => navigate(data ? "/dashboard" : "/")}
                     variant="contained"
                     sx={{
                         color: theme.palette.customColors.white,
