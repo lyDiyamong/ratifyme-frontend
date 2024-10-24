@@ -1,10 +1,16 @@
-import { Box } from "@mui/material";
+// React library import
+import { useEffect, useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+
+// MUI import
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import { Outlet, useNavigate } from "react-router-dom";
-import { useCheckAuthQuery } from "../../store/api/auth/authApi";
-import { useEffect, useState } from "react";
+import { Box } from "@mui/material";
 
+// API import
+import { useCheckAuthQuery } from "../../store/api/auth/authApi";
+
+// ============ Start LandingLayout ============
 const LandingLayout = () => {
     const [authUser, setAuthUser] = useState(null);
 
@@ -29,3 +35,4 @@ const LandingLayout = () => {
 };
 
 export default LandingLayout;
+// ============ End LandingLayout ============
