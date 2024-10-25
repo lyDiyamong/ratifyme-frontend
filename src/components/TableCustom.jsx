@@ -156,16 +156,33 @@ const TableCustom = ({
                         onChange={(e) => handleSearch(e.target.value)}
                     />
                     {isSortable && (
-                        <FormControl sx={{ minWidth: { md: 100, sm: 80, xs: 60 } }} size="small">
-                            <InputLabel>
-                                <IconButton sx={{ display: { md: "none", sm: "flex" } }}>
-                                    <SwapVertIcon sx={{ fontSize: "24px" }} />
-                                </IconButton>
-                                Sort by
-                            </InputLabel>
-                            <Select label="Sort by" onChange={(e) => onSortChange(e.target.value)}>
+                        <FormControl
+                            sx={{
+                                minWidth: { md: 140, sm: 100, xs: 80 },
+                                width: { md: "auto", sm: "auto", xs: "100%" },
+                                mx: { xs: 1, sm: 2, md: 3 },
+                                mt: { xs: 1, sm: 0 },
+                            }}
+                            size="small"
+                            variant="outlined"
+                        >
+                            <InputLabel sx={{ display: { xs: "none", sm: "block" } }}>Sort by</InputLabel>
+                            <Select
+                                label={window.innerWidth >= 600 ? "Sort by" : ""}
+                                onChange={(e) => onSortChange(e.target.value)}
+                                displayEmpty
+                                IconComponent={(props) => (
+                                    <IconButton {...props} sx={{ padding: 0, display: { xs: "flex" } }}>
+                                        <SwapVertIcon sx={{ fontSize: { md: "24px", xs: "20px" } }} />
+                                    </IconButton>
+                                )}
+                            >
                                 {sortOptions.map((option) => (
-                                    <MenuItem key={option.value} value={option.value} sx={{ fontSize: 14 }}>
+                                    <MenuItem
+                                        key={option.value}
+                                        value={option.value}
+                                        sx={{ fontSize: { md: 14, xs: 12 }, py: { xs: 1, sm: 1.5 } }}
+                                    >
                                         {option.label}
                                     </MenuItem>
                                 ))}
@@ -222,5 +239,4 @@ const TableCustom = ({
 };
 
 export default TableCustom;
-
 // ============ End TableCustom Component ============
