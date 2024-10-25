@@ -1,8 +1,13 @@
+// React library import
 import { useMemo } from "react";
+
+// MUI import
 import { Box, Stack, Typography, LinearProgress } from "@mui/material";
+
+// Custom import
 import FormInput from "../../components/FormInput";
-import { getPasswordStrength, validatePassword } from "../../utils/auth/passwordUtils";
 import theme from "../../assets/themes";
+import { getPasswordStrength, validatePassword } from "../../utils/auth/passwordUtils";
 
 /**
  * PasswordFields component renders the password input fields with validation and strength indicators.
