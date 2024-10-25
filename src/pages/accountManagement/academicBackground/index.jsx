@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import { Button, CardMedia, Stack, Typography } from "@mui/material";
 import theme from "../../../assets/themes";
 import AcademicInfo from "./academicInfo";
-import {
-    useFetchAcademicBackgroundByUserQuery,
-    useFetchEarnerQuery,
-} from "../../../store/api/earnerManagement/earnerApis";
+import { useFetchAcademicBackgroundByUserQuery, useFetchEarnerQuery } from "../../../store/api/earnerManagement/earnerApis";
 import { useFetchInfoUserByIdQuery } from "../../../store/api/users/userInfoProfileApi";
 import { useSelector } from "react-redux";
 import FormatDate from "../../../utils/formatDate";
@@ -13,6 +10,7 @@ import { Box } from "@mui/system";
 import StatusCode from "../../../assets/images/Search-Illustation.svg";
 import { LoupeRounded } from "@mui/icons-material";
 import AddAcademicModal from "./AddAcademicModal";
+import PageLoading from "../../../components/loading/PageLoading";
 
 const AcademicBackground = () => {
     const { userId } = useSelector((state) => state.global);
@@ -29,7 +27,7 @@ const AcademicBackground = () => {
         handleClose();
     };
 
-    if (isLoading) return <Typography>Loading...</Typography>;
+    if (isLoading) return <PageLoading isLoading={isLoading}>Loading...</PageLoading>;
     if (isError) return <Typography>Error loading data.</Typography>;
 
     return (
@@ -129,7 +127,8 @@ const AcademicBackground = () => {
                             <AcademicInfo
                                 key={index}
                                 academicData={{
-                                    userId: data.id,
+                                    academicId: data.id,
+                                    userId,
                                     fieldOfStudyId: data.FieldOfStudy?.name || "N/A",
                                     academicYear: FormatDate(data.academicYear) || "N/A",
                                     academicLevelId: data.AcademicLevel?.name || "N/A",

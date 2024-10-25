@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 import { useDeleteAcademicBackgroundByIdMutation } from "../../../store/api/earnerManagement/earnerApis";
 
 const AcademicInfo = ({ academicData }) => {
-    const { userId, fieldOfStudyId, academicYear, academicLevelId } = academicData;
+    const { userId, fieldOfStudyId, academicYear, academicLevelId, academicId } = academicData;
     const [deleteAcademicBackground] = useDeleteAcademicBackgroundByIdMutation();
     const [open, setOpen] = useState(false);
     const [selectedData, setSelectedData] = useState(null);
@@ -113,7 +113,7 @@ const AcademicInfo = ({ academicData }) => {
                 </Stack>
             </Card>
 
-            <EditAcademicModal open={open} onClose={handleClose} initialData={selectedData} userId={userId} />
+            <EditAcademicModal open={open} onClose={handleClose} initialData={selectedData} academicId={academicId} />
         </>
     );
 };

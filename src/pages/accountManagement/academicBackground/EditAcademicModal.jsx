@@ -1,27 +1,35 @@
-import { Dialog, DialogTitle, DialogContent, Button, Typography, Divider, Avatar, TextField } from "@mui/material";
+// React import
 import { useForm, Controller } from "react-hook-form";
-import { useEffect, useState } from "react";
-import { Box, Stack } from "@mui/system";
+import { useEffect } from "react";
+import dayjs from "dayjs";
+
+// MUI import
+import { Dialog, DialogTitle, DialogContent, Button, Typography, Divider, Avatar, TextField, Box, Stack } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
+
+// Custom import
 import { useUpdateAcademicBackgroundByIdMutation } from "../../../store/api/earnerManagement/earnerApis";
 import theme from "../../../assets/themes";
 import EditAcademicBgSvg from "../../../assets/icons/EditAcademicBgSvg.svg";
-import {
-    useFetchAcademicLevelsQuery,
-    useFetchFieldOfStudiesQuery,
-} from "../../../store/api/earnerManagement/fieldOfStudyApi";
 import SelectForm from "../../../components/SelectionForm";
 
-const EditAcademicModal = ({ open, onClose, initialData, userId }) => {
-    const [updateAcademicBackgroundById] = useUpdateAcademicBackgroundByIdMutation();
-    const { data: fieldOfStudiesData, error: fieldOfStudiesError, isLoading } = useFetchFieldOfStudiesQuery();
-    const { data: fetchAcademicLevelsData } = useFetchAcademicLevelsQuery();
+// Api import
+import { useFetchAcademicLevelsQuery, useFetchFieldOfStudiesQuery } from "../../../store/api/earnerManagement/fieldOfStudyApi";
+import PageLoading from "../../../components/loading/PageLoading";
 
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+const EditAcademicModal = ({ open, onClose, initialData, academicId }) => {
+    const [updateAcademicBackgroundById] = useUpdateAcademicBackgroundByIdMutation();
+    const {
+        data: fieldOfStudiesData,
+        error: fieldOfStudiesError,
+        isLoading: isFieldOfStudiesLoading
+    } = useFetchFieldOfStudiesQuery();
+    const {
+        data: fetchAcademicLevelsData,
+        isLoading: isAcademicLevelsLoading
+    } = useFetchAcademicLevelsQuery();
 
     const { control, handleSubmit, reset } = useForm({});
 
@@ -40,18 +48,6 @@ const EditAcademicModal = ({ open, onClose, initialData, userId }) => {
         }
     }, [initialData, reset, fieldOfStudiesData, fetchAcademicLevelsData]);
 
-    // Fetch field of studies data
-    useEffect(() => {
-        if (isLoading) {
-            setLoading(true);
-        } else if (fieldOfStudiesError) {
-            setError(fieldOfStudiesError);
-            setLoading(false);
-        } else {
-            setLoading(false);
-        }
-    }, [isLoading, fieldOfStudiesError]);
-
     const onSubmitForm = async (data) => {
         const formattedData = {
             ...data,
@@ -60,7 +56,7 @@ const EditAcademicModal = ({ open, onClose, initialData, userId }) => {
 
         try {
             await updateAcademicBackgroundById({
-                id: userId,
+                id: academicId,
                 ...formattedData,
             }).unwrap();
 
@@ -71,9 +67,11 @@ const EditAcademicModal = ({ open, onClose, initialData, userId }) => {
         }
     };
 
-    // Conditional rendering based on loading and error state
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error loading field of studies.</div>;
+    // Use RTK Query's isLoading states
+    if (isFieldOfStudiesLoading || isAcademicLevelsLoading) {
+        return <PageLoading isLoading={isFieldOfStudiesLoading || isAcademicLevelsLoading}>Loading...</PageLoading>;
+    }
+    if (fieldOfStudiesError) return <div>Error loading field of studies.</div>;
 
     return (
         <Dialog open={open} onClose={onClose} component="form" onSubmit={handleSubmit(onSubmitForm)}>
