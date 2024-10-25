@@ -1,3 +1,4 @@
+// React library import
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -19,7 +20,7 @@ function AlertMessage({ variant, children, onClose }) {
         // Set a timer to hide the alert after 5 seconds
         const timer = setTimeout(() => {
             setVisible(false);
-            if (onClose) onClose(); // Call onClose if it's provided
+            if (onClose) onClose();
         }, 5000);
 
         // Cleanup timer on component unmount
@@ -28,7 +29,7 @@ function AlertMessage({ variant, children, onClose }) {
 
     const handleClose = () => {
         setVisible(false);
-        if (onClose) onClose(); // Call onClose when manually closed
+        if (onClose) onClose();
     };
 
     if (!visible) return null;
@@ -38,8 +39,6 @@ function AlertMessage({ variant, children, onClose }) {
             sx={{
                 position: "absolute",
                 top: 20,
-                // display : "flex",
-                // justifyContent: "center",
                 left: "50%",
                 transform: "translateX(-50%)",
                 zIndex: 10000000000,
