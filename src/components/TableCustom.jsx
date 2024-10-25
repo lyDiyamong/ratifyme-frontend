@@ -15,6 +15,7 @@ import {
     Typography,
     IconButton,
     InputAdornment,
+    useMediaQuery,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
@@ -75,9 +76,9 @@ const TableCustom = ({
     isSortable = false,
     sortColumn,
     sortOrder,
-    
 }) => {
     const [searchQuery, setSearchQuery] = useState("");
+    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
     // Default columns if not provided
     const defaultColumns = [
@@ -116,7 +117,7 @@ const TableCustom = ({
             }}
         >
             <Box sx={{ display: { sm: "block", md: "flex" }, justifyContent: "space-between", alignItems: "center" }}>
-                <Box sx={{ display: "flex", justifyContent: "space-between", alignContent: "center", mb: 3 }}>
+                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
                     <Typography sx={{ fontSize: theme.typography.h3, fontWeight: theme.fontWeight.semiBold }}>{title}</Typography>
                     {/* Add Button for responsive  */}
                     {addNewBtn && (
@@ -130,9 +131,10 @@ const TableCustom = ({
                                 fontWeight: theme.fontWeight.semiBold,
                                 borderRadius: theme.customShape.btn,
                                 textTransform: "none",
-                            }}
+                                justifyContent: isMobile ? "center" : "space-between",
+                                }}
                         >
-                            {addNewLabel}
+                            {!isMobile && addNewLabel}
                         </Button>
                     )}
                 </Box>
@@ -177,7 +179,7 @@ const TableCustom = ({
                             variant="contained"
                             onClick={onAddNew}
                             sx={{
-                                display: { md: "flex", sm: "none" },
+                                display: { xss: "none", md: "flex" },
                                 color: theme.palette.customColors.white,
                                 fontWeight: theme.fontWeight.semiBold,
                                 borderRadius: theme.customShape.btn,
