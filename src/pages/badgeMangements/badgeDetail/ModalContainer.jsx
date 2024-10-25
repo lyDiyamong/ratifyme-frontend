@@ -96,11 +96,13 @@ const ModalContainer = ({ open, onClose, title, options, control, onGetEmail, ba
                             }}
                         >
                             {" "}
+                            {/* Uninvited Email */}
                             {filteredList.map((item, index) => (
                                 <Box key={index} sx={{ py: 1 }}>
                                     {item}
                                 </Box>
                             ))}
+                            {/* Invited Email */}
                             {filteredEmails.map((earner) => (
                                 <Box key={earner.Earner.User.id} sx={{ display: "flex", justifyContent: "space-between" }}>
                                     {earner.Earner.User.email}{" "}
