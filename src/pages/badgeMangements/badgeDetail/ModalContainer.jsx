@@ -4,12 +4,12 @@ import { useSelector } from "react-redux";
 
 // MUI Import
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Paper, Box, Typography } from "@mui/material";
-import theme from "../../assets/themes/index";
+import theme from "../../../assets/themes";
 
 // Custom Import
-import SelectForm from "../SelectionForm";
-import { useSendBadgeMutation } from "../../store/api/achievements/achievementApi";
-import { useFetchEarnerQuery } from "../../store/api/earnerManagement/earnerApis";
+import SelectForm from "../../../components/SelectionForm";
+import { useSendBadgeMutation } from "../../../store/api/achievements/achievementApi";
+import { useFetchEarnerQuery } from "../../../store/api/earnerManagement/earnerApis";
 
 const CustomPaper = (props) => <Paper {...props} sx={{ borderRadius: "16px" }} />;
 

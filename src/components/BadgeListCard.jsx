@@ -13,7 +13,7 @@ const BadgeListCard = ({ badges, onView, total }) => {
     const handleView = (id) => {
         onView(id);
     };
-    const totalBadge = typeof total === "number" ? total : total.length;
+    const totalBadge = typeof total === "number" ? total : total?.length;
 
     return (
         <Box my={3}>
