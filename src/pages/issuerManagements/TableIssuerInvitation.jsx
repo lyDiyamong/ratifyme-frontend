@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 // MUI import
 import { CheckCircleOutline, ErrorOutlineOutlined, RestartAltOutlined, DeleteOutline } from "@mui/icons-material";
-import { Avatar, Box, IconButton, Tooltip, Typography } from "@mui/material";
+import { Box, IconButton, Tooltip } from "@mui/material";
 
 // Custom import
 import InviteUserModal from "../../components/modals/InviteUserModal";
@@ -14,6 +14,7 @@ import PageLoading from "../../components/loading/PageLoading";
 import AlertMessage from "../../components/alert/AlertMessage";
 import InviteUserStatus from "../../components/chips/inviteUserStatus";
 import getSortOptions from "../../components/GetSortOptions";
+import { TableAvatars } from "../../components/avartars/TableAvatars";
 import theme from "../../assets/themes";
 import FormatDate from "../../utils/formatDate";
 import useCatchStatus from "../../hooks/useCatchStatus";
@@ -180,25 +181,7 @@ const TableIssuerInvitation = () => {
     const columns = [
         {
             name: "Email",
-            cell: (row) => (
-                <Box display="flex" alignItems="center" sx={{ width: "750px" }}>
-                    <Avatar alt={row.inviteEmail} src={row.avatar} sx={{ width: 32, height: 32, marginRight: 1 }}>
-                        {row.inviteEmail ? row.inviteEmail.charAt(0).toUpperCase() : ""}
-                    </Avatar>
-                    <Typography
-                        variant="body2"
-                        noWrap
-                        sx={{
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            whiteSpace: "nowrap",
-                            maxWidth: "200px",
-                        }}
-                    >
-                        {row.inviteEmail}
-                    </Typography>
-                </Box>
-            ),
+            cell: (row) => <TableAvatars profileImage={row.User?.profileImage} name={row.inviteEmail} />,
         },
         { name: "Invited At", selector: (row) => FormatDate(row.createdAt) },
         {
