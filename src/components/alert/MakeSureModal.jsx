@@ -2,6 +2,7 @@
 import { cloneElement, useState } from "react";
 
 // MUI import
+import { Box } from "@mui/system";
 import {
     Button,
     Dialog,
@@ -14,7 +15,6 @@ import {
 
 // Custom import
 import theme from "../../assets/themes";
-import { Box } from "@mui/system";
 
 /**
  * MakeSureModal Component
@@ -37,6 +37,7 @@ import { Box } from "@mui/system";
     onAgree={() => console.log("Submit action triggered")}
 />
  */
+
 export default function MakeSureModal({ openBtn, icon, variant, openBtnSx, title, message, agreeBtn, onAgree }) {
     const [isOpen, setIsOpen] = useState(false);
 
