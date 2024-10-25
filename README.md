@@ -22,8 +22,8 @@ As our project is ready to be deploy this is the link to Demo our Project Showca
 
 # Tech Stack
 
-- Client: React, Node, MUi
-- Server: Node, Express, MySQL
+-   Client: React, Node, MUi
+-   Server: Node, Express, MySQL
 
 ## Getting Started
 
@@ -154,7 +154,7 @@ verifyme-frontend/
 │   ├── App.css         # Application-wide styles
 │   ├── App.jsx         # Root React component
 │   ├── index.css       # Global CSS
-│   └── main.jsx        # Application entry point   
+│   └── main.jsx        # Application entry point
 ├── .editorconfig       # Editor configuration
 ├── .env               # Environment variables
 ├── .gitignore         # Git ignore rules
@@ -169,12 +169,34 @@ verifyme-frontend/
 └── vite.config.js     # Vite configuration
 ```
 
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+### Frontend
+
+**_Global Config_**
+
+`VITE_SERVER_BASE_URL`
+
+`VITE_STRIPE_PUBLIC_KEY`
+
 ## Features
 
 -   **ReactJS**: For building dynamic UI components.
 -   **Vite**: Fast build times and hot module replacement.
 -   **MUI**: Consistent and customizable design system.
 -   **Responsive Design**: Optimized for different screen sizes.
+
+## Contribution
+-   1 Prak Sreypov
+-   2 Phok Keomonnyratanak
+-   3 Samon Rotha
+-   4 Ly Diyamong
+-   5 Khun Malen
+-   6 Sreang Lyhour
+-   7 Rorn Bunthong
+-   8 Tep Chounan
 
 ## License
 
