@@ -1,14 +1,13 @@
-// React import
+// React Import
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-// MUI import
-import { Box, Typography } from "@mui/material";
+// MUI Import
+import { Box, Typography, Pagination } from "@mui/material";
 
-// Custom import
+// Custom Import
 import BadgeListCard from "../../components/BadgeListCard";
-import Pagination from "@mui/material/Pagination";
 import PageLoading from "../../components/loading/PageLoading";
 
 const BadgeList = ({ badges, total, onPage, page, limit, result, isLoading, isError }) => {

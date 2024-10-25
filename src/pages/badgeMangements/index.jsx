@@ -13,7 +13,7 @@ const BadgeManagement = () => {
     const [limit] = useState(10);
 
     const [searchQuery, setSearchQuery] = useState("");
-    const { roleId, issuerData, institutionData } = useSelector((state) => state.global);
+    const { roleId, issuerData, institutionData, userInfo } = useSelector((state) => state.global);
 
     let activeId = null;
     let field = null;
@@ -24,9 +24,16 @@ const BadgeManagement = () => {
     } else if (roleId === 3 && issuerData?.id) {
         activeId = issuerData.id;
         field = "issuerId";
+    } else if (roleId === 1 && userInfo?.id) {
+        activeId = null;
+        field = null;
     }
 
-    const { data: badges } = useFetchBadgesQuery(field && activeId ? { field, fk: activeId, search: searchQuery } : skipToken);
+    const { data: badges } = useFetchBadgesQuery(
+        roleId === 1 ? { search: searchQuery } : { field, fk: activeId, search: searchQuery },
+        { skip: roleId !== 1 && (!activeId || !field) },
+    );
+
     const allowRole = roleId === 3 ? true : false;
 
     const [result, setResult] = useState(badges?.total || 0);

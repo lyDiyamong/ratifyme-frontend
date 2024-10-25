@@ -26,7 +26,7 @@ export const achievementApi = createApi({
             invalidatesTags: [{ type: "EarnerAchievement", id: "LIST" }],
         }),
         fetchEmailEarner: builder.query({
-            query: ({ achievementId, limit, sort, page, search }) => ({
+            query: ({ achievementId, limit = 100, sort = "", page = 1, search = "" }) => ({
                 url: `earners/earnerAchievement?achievementId=${achievementId}&limit=${limit}&sort=${sort}&page=${page}&search=${search}`,
                 method: "GET",
             }),

@@ -4,12 +4,12 @@ import { useSelector } from "react-redux";
 
 // MUI Import
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Paper, Box, Typography } from "@mui/material";
-import theme from "../../../assets/themes";
+import theme from "../../assets/themes/index";
 
 // Custom Import
-import SelectForm from "../../../components/SelectionForm";
-import { useSendBadgeMutation } from "../../../store/api/achievements/achievementApi";
-import { useFetchEarnerQuery } from "../../../store/api/earnerManagement/earnerApis";
+import SelectForm from "../SelectionForm";
+import { useSendBadgeMutation } from "../../store/api/achievements/achievementApi";
+import { useFetchEarnerQuery } from "../../store/api/earnerManagement/earnerApis";
 
 const CustomPaper = (props) => <Paper {...props} sx={{ borderRadius: "16px" }} />;
 
@@ -96,13 +96,11 @@ const ModalContainer = ({ open, onClose, title, options, control, onGetEmail, ba
                             }}
                         >
                             {" "}
-                            {/* Uninvited Email */}
                             {filteredList.map((item, index) => (
                                 <Box key={index} sx={{ py: 1 }}>
                                     {item}
                                 </Box>
                             ))}
-                            {/* Invited Email */}
                             {filteredEmails.map((earner) => (
                                 <Box key={earner.Earner.User.id} sx={{ display: "flex", justifyContent: "space-between" }}>
                                     {earner.Earner.User.email}{" "}
