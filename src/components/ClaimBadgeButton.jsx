@@ -18,7 +18,9 @@ import { useFetchEarnerAchieByIdQuery } from "../store/api/earnerManagement/earn
 const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
     // =========== API Hooks & Data Fetching ===========
     const { data: earnerAchieResponse, refetch } = useFetchEarnerAchieByIdQuery({ achieveId: achievementIds, earnerId });
-    const [claimBadge, { isLoading, isSuccess }] = useClaimBadgeMutation();
+    const [claimBadge, { isSuccess }] = useClaimBadgeMutation();
+    console.log("Achievement Id", achievementIds);
+    console.log("Earner Id", earnerId);
 
     // =========== State Management ===========
     const [claimed, setClaimed] = useState(false);
@@ -50,17 +52,18 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
             setIsClaimBadgeModal(false);
         }
     };
+    console.log("Claim status", claimed);
 
     // =========== Side Effects ===========
     /**
      * Updates claimed state based on API response
      * Marks as claimed if issuedOn is null or based on statusAchievement
      */
+    console.log("Issued On", issuedOn);
     useEffect(() => {
-        if (issuedOn === null) {
-            setClaimed(true);
-        } else if (statusAchievement !== undefined) {
+        if (statusAchievement !== undefined) {
             setClaimed(statusAchievement);
+            console.log("Status", statusAchievement);
         }
     }, [statusAchievement, issuedOn]);
 
@@ -84,7 +87,7 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
             />
             <Button
                 onClick={() => setIsClaimBadgeModal(true)}
-                disabled={claimed || isLoading}
+                disabled={issuedOn === null|| claimed}
                 variant="contained"
                 sx={{
                     color: theme.palette.customColors.white,
@@ -95,7 +98,7 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
                     textTransform: "none",
                 }}
             >
-                {isLoading ? "Claiming..." : issuedOn === null || !claimed ? "Claim Badge" : "Claimed"}
+                {claimed ? "Claimed" :  "Claim Badge" }
             </Button>
         </>
         // =========== End ClaimBadgeButton ===========
