@@ -25,7 +25,6 @@ const OrganizationInfo = () => {
     const { data: insitutionRes } = useGetInstitutionByIdQuery(institutionData?.id, { skip: !institutionData?.id });
     const instituteData = insitutionRes?.data;
     const userRole = info?.data?.Role?.name;
-    console.log("role: ", userRole);
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
