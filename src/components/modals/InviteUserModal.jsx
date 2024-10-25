@@ -46,6 +46,7 @@ const InviteUserModal = ({ open, handleClose, onSubmit, userType }) => {
     const [deleteInvitedUser] = useDeleteInvitedUserMutation();
     const [resendInviteIssuer] = useResendInviteIssuerMutation();
     const [resendInviteEarner] = useResendInviteEarnerMutation();
+    const { roleId, issuerData, institutionData } = useSelector((state) => state.global);
 
     const [confirmDelete, setConfirmDelete] = useState(false);
     const [userIdToDelete, setUserIdToDelete] = useState(null);
@@ -65,13 +66,14 @@ const InviteUserModal = ({ open, handleClose, onSubmit, userType }) => {
     const [searchQuery, setSearchQuery] = useState("");
 
     const { data: invitedUserData, refetch } = useFetchAllInvitedUserQuery({
+        inviterCode: roleId === 2 ? institutionData?.code : issuerData?.code,
+        roleId: roleId,
         page: currentPage,
         limit: rowsPerPage,
         sort: sortColumn,
         order: sortOrder,
         search: searchQuery,
     });
-    const { institutionData, issuerData } = useSelector((state) => state.global);
 
     // Fetch and filter invited users when data changes
     useEffect(() => {

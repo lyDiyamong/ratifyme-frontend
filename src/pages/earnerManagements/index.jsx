@@ -5,7 +5,6 @@ import DashboardContainer from "../../components/styles/DashboardContainer";
 import TableEarner from "./TableEarner";
 
 import PageTitle from "../../components/PageTitle";
-import VerificationsCheckUp from "./Verifications";
 import TableEarnerInvitation from "./TableEarnerInvitation";
 import CustomTabs from "../../components/tabs/customTabs";
 import { useSelector } from "react-redux";
@@ -22,8 +21,6 @@ const EarnerManagement = () => {
                 title="Earner Managements"
                 subtitle="Manage earner accounts, invite new earners, and track their statuses all in one place."
             />
-            <VerificationsCheckUp />
-
             {roleId === 3 ? <CustomTabs tabs={tabs} tabContent={tabContent} searchQuery="" /> : <TableEarner />}
         </DashboardContainer>
     );

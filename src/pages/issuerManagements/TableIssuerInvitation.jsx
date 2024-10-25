@@ -65,15 +65,6 @@ const TableIssuerInvitation = () => {
     const [deleteInvitedUser] = useDeleteInvitedUserMutation();
 
     // ===================== Fetch and Sort Invited Issuers =====================
-    // useEffect(() => {
-    //     if (invitedUserData && institutionData?.code) {
-    //         const filteredIssuers =
-    //             invitedUserData.data?.filter((user) => user.roleId === 3 && user.inviterCode === institutionData.code) || [];
-    //         const sortedIssuers = filteredIssuers.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    //         setInvitedIssuers(sortedIssuers);
-    //     }
-    // }, [invitedUserData, institutionData]);
-
     useEffect(() => {
         if (invitedUserData) {
             // Directly use the invitedUserData.data without filtering or sorting
@@ -83,7 +74,7 @@ const TableIssuerInvitation = () => {
             setInvitedIssuers(filteredIssuers);
         }
     }, [invitedUserData, institutionData]);
-    
+
     const handleInviteSubmit = async (data, reset) => {
         try {
             const newIssuerResponse = await inviteIssuer({ institutionId, email: data.email }).unwrap();
@@ -111,15 +102,12 @@ const TableIssuerInvitation = () => {
         }
     };
 
-    console.log(invitedUserData?.total);
-    console.log(invitedIssuers);
-
     // ===================== Handle API Response =====================
     useEffect(() => {
         if (apiSuccess) {
             const successMessage = newIssuer?.message || `Invitation sent to ${newIssuer?.email} successfully!`;
             setMessage(successMessage);
-            setIsSuccess(true); // Ensure success is set to true here
+            setIsSuccess(true);
             refetchInvitedUsers();
         } else if (isError) {
             setMessage(error?.data?.message || "Failed to send invitation. Please try again.");
@@ -183,10 +171,6 @@ const TableIssuerInvitation = () => {
 
     // ===================== Table Columns Definition =====================
     const columns = [
-        {
-            name: "No.",
-            selector: (row, index) => index + 1 || "N/A",
-        },
         {
             name: "Email",
             cell: (row) => (

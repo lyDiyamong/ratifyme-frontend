@@ -41,7 +41,10 @@ const BackpackManagement = () => {
     };
     return (
         <DashboardContainer sx={{ pb: 4 }}>
-            <PageTitle title="Backpack Management" />
+            <PageTitle
+                title="Backpack Management"
+                subtitle="Manage your digital badges and achievements in your personalized backpack, all organized in one convenient dashboard."
+            />
             <SearchBar
                 showButton={false}
                 textInButton="Add Badge"

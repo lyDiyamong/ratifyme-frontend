@@ -23,7 +23,12 @@ export const schema = yup.object({
         .required("⚠️ Email is required"),
     phoneNumber: yup.string().required("⚠️ Phone number is required"),
     country: yup.string().required("⚠️ Country is required"),
-    city: yup.string().required("⚠️ City is required"),
+    city: yup
+        .string()
+        .required("⚠️ City is required")
+        .min(2, "⚠️ City must be at least 2 characters")
+        .max(50, "⚠️ City cannot be longer than 50 characters")
+        .matches(/^[a-zA-Z\s]+$/, "⚠️ City must only contain letters and spaces"),
     street: yup.string().required("⚠️ Street is required"),
     postalCode: yup.string().matches(/^\d+$/, "⚠️ Verification code must be numeric").required("Verification code is required"),
     institutionName: yup.string().required("⚠️ Institution name is required"),
@@ -32,7 +37,6 @@ export const schema = yup.object({
         .string()
         .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email format")
         .required("⚠️ Email is required"),
-    url: yup.string().url("⚠️ Invalid URL format"),
     dateOfBirth: yup
         .date()
         .typeError("⚠️ Please select a valid date")

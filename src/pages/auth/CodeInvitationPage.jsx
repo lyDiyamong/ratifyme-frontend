@@ -16,6 +16,8 @@ import AlertConfirmation from "../../components/alert/AlertConfirmation";
 import { useVerifyInvitationMutation } from "../../store/api/userManagement/verifyInvitationApi";
 import PageLoading from "../../components/loading/PageLoading";
 import { CheckCircleOutline } from "@mui/icons-material";
+import AlertMessage from "../../components/alert/AlertMessage";
+import useCatchStatus from "../../hooks/useCatchStatus";
 
 const schema = yup.object({
     email: yup.string().email("Invalid email").required("Email is required"),
@@ -30,10 +32,10 @@ const CodeInvitationPage = () => {
     const { search } = useLocation();
     const [role, setRole] = useState("");
     const navigate = useNavigate();
-    const [verifyInvitation, { isLoading, isError, error }] = useVerifyInvitationMutation();
-    const [openErrorDialog, setOpenErrorDialog] = useState(false);
+    const [verifyInvitation, { isLoading, isSuccess, isError, error, data }] = useVerifyInvitationMutation();
+    const [openDialog, setOpenDialog] = useState(false);
 
-    // const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useCatchStatus(isError, error?.data?.message);
 
     useEffect(() => {
         const queryRole = new URLSearchParams(search).get("as") || "";
@@ -49,17 +51,8 @@ const CodeInvitationPage = () => {
     const onSubmit = async (data) => {
         try {
             const response = await verifyInvitation({ data, role });
-
             if (response?.data) {
-                const inviterData = response.data.inviter;
-                const guestData = response.data.guest;
-                const userData = response.data.user;
-
-                if (userData === null) {
-                    navigate(`/auth/signup?as=${role}`, { state: { inviter: inviterData, guest: guestData } });
-                } else {
-                    navigate(`/auth/login`);
-                }
+                setOpenDialog(true);
             }
         } catch (error) {
             console.error("Verification failed:", error);
@@ -68,17 +61,35 @@ const CodeInvitationPage = () => {
 
     useEffect(() => {
         if (isError) {
-            setOpenErrorDialog(true);
+            setOpenDialog(true);
         }
     }, [isError]);
 
+    const handleDialogConfirm = () => {
+        const { inviter, guest, user } = data;
+
+        if (user === null) {
+            navigate(`/auth/signup?as=${role}`, { state: { inviter, guest } });
+        } else {
+            navigate(`/auth/login`);
+        }
+        setOpenDialog(false); // Close dialog after confirmation
+    };
+
     const handleCloseErrorDialog = () => {
-        setOpenErrorDialog(false);
+        setOpenDialog(false);
     };
 
     return (
         <Box sx={{ height: "100vh", display: "flex" }}>
             <PageLoading isLoading={isLoading} />
+
+            {message && (
+                <AlertMessage variant="error" onClose={() => setMessage("")}>
+                    {message}
+                </AlertMessage>
+            )}
+
             {/* Right side */}
             <Box
                 flexGrow={0}
@@ -148,21 +159,20 @@ const CodeInvitationPage = () => {
                     </Box>
 
                     {/* AlertConfirmation component for error dialog */}
-                    <AlertConfirmation
-                        open={openErrorDialog}
-                        title="Verification Successfully"
-                        message={
-                            error?.data?.message ||
-                            "There was an issue with verifying your invitation. Please try again or log in."
-                        }
-                        onConfirm={() => navigate(`/auth/login`)}
-                        onClose={handleCloseErrorDialog}
-                        confirmText="Go to Login"
-                        cancelText="Close"
-                        iconColor={theme.palette.customColors.green400}
-                        iconBgColor={theme.palette.customColors.green100}
-                        icon={CheckCircleOutline}
-                    />
+                    {!isError && (
+                        <AlertConfirmation
+                            open={openDialog}
+                            title="Verification Successfully! 🎉"
+                            message={"Congratulations! Your invitation has been successfully verified."}
+                            onConfirm={handleDialogConfirm}
+                            onClose={handleCloseErrorDialog}
+                            confirmText="Get Started"
+                            cancelText="Close"
+                            iconColor={theme.palette.customColors.green400}
+                            iconBgColor={theme.palette.customColors.green100}
+                            icon={CheckCircleOutline}
+                        />
+                    )}
 
                     <Box my={3}>
                         <Typography variant="h3" fontWeight={theme.fontWeight.semiBold} mb={1}>

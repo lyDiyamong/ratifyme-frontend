@@ -15,13 +15,15 @@ import FormInput from "../../components/FormInput";
 import theme from "../../assets/themes";
 import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
 import { SpinLoading } from "../../components/loading/SpinLoading";
-import { useSignInMutation } from "../../store/api/auth/authApi";
+import { useResendVerificationMutation, useSignInMutation } from "../../store/api/auth/authApi";
 import { Stack } from "@mui/system";
 import LockOpenOutlined from "@mui/icons-material/LockOpenOutlined";
 import EmailOutlined from "@mui/icons-material/EmailOutlined";
 import OutletImageComponent from "./OutletImageTemplate";
 import useCatchStatus from "../../hooks/useCatchStatus";
 import AlertMessage from "../../components/alert/AlertMessage";
+import AlertConfirmation from "../../components/alert/AlertConfirmation";
+import PageLoading from "../../components/loading/PageLoading";
 
 const schema = yup.object({
     email: yup.string().email("Invalid email").required("Email is required"),
@@ -29,7 +31,13 @@ const schema = yup.object({
 });
 
 const LoginPage = () => {
+    const [openDialog, setOpenDialog] = useState(false);
+    const [isVerified, setIsVerified] = useState(true);
+    const [userEmail, setUserEmail] = useState("");
+
     const [signIn, { isLoading, isError, error, isSuccess, data }] = useSignInMutation();
+    const [resendVerification, { isLoading: isResending, isError: isResendError, isSuccess: isResendSuccess }] =
+        useResendVerificationMutation();
 
     const [message, setMessage] = useCatchStatus(isError || isSuccess, isError ? error?.data?.message : data?.message);
 
@@ -46,31 +54,57 @@ const LoginPage = () => {
 
     const [loading, setLoading] = useState(false);
 
-    // Submit handler
     const onSubmit = async (formData) => {
+        setLoading(true);
         try {
-            setLoading(true);
             const response = await signIn(formData).unwrap();
 
-            // Check if the user has a valid subscription
-            if (response && response.subscriptionStatus === "inactive") {
-                // Redirect to price page if subscription is inactive
+            if (response.subscriptionStatus === "inactive") {
                 navigate("/price");
             } else {
-                // Navigate to dashboard if all checks pass
                 navigate("/dashboard");
             }
-
             reset();
+        } catch (error) {
+            const errorMessage = error?.data?.message || "An unexpected error occurred.";
+            setMessage(errorMessage);
+
+            if (errorMessage === "Your account has not been verified yet.") {
+                setIsVerified(false);
+                setUserEmail(formData.email);
+                setOpenDialog(true);
+            }
         } finally {
             setLoading(false);
         }
     };
 
+    // Dialog handler functions
+    const handleDialogConfirm = async () => {
+        try {
+            // Trigger resend verification
+            await resendVerification({ email: userEmail }).unwrap();
+
+            setOpenDialog(false);
+            navigate("/auth/verify-email", { state: { email: userEmail } });
+
+            if (isResendSuccess) {
+                setMessage("Verification email has been resent. Please check your inbox.");
+            }
+        } catch (error) {
+            console.error("Resending verification email failed:", error);
+            setMessage("Failed to resend verification email. Please try again.");
+        }
+    };
+
+    const handleCloseErrorDialog = () => {
+        setOpenDialog(false);
+    };
+
     return (
         // ============ Start login container ============
         <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ height: "100vh", display: "flex" }} noValidate>
-            {message && (
+            {message && isVerified && (
                 <AlertMessage variant="error" onClose={() => setMessage("")}>
                     {message}
                 </AlertMessage>
@@ -90,12 +124,7 @@ const LoginPage = () => {
             >
                 <Stack width="100%" maxWidth="450px" gap={2}>
                     <Link to="/">
-                        <Box
-                            component="img"
-                            src={RatifyMELogo}
-                            alt="Ratifyme Favicon"
-                            sx={{ width: 150, height: 150 }}
-                        />
+                        <Box component="img" src={RatifyMELogo} alt="Ratifyme Favicon" sx={{ width: 150, height: 150 }} />
                     </Link>
 
                     <Box my={3}>
@@ -141,7 +170,7 @@ const LoginPage = () => {
                             control={<Checkbox />}
                             label="Remember Me"
                         />
-                        <Link to="/forgot-password">
+                        <Link to="/auth/forgot-password">
                             <Typography
                                 component="a"
                                 href="#"
@@ -208,14 +237,8 @@ const LoginPage = () => {
 
                     <Typography variant="body2" align="center" color="text.secondary" mt={2}>
                         New on our platform?{" "}
-                        <Link to="/get-started">
-                            <Typography
-                                component="a"
-                                href="#"
-                                variant="body2"
-                                color="primary"
-                                sx={{ textDecoration: "none" }}
-                            >
+                        <Link to="/auth/get-started">
+                            <Typography component="a" href="#" variant="body2" color="primary" sx={{ textDecoration: "none" }}>
                                 Create an account
                             </Typography>
                         </Link>
@@ -225,6 +248,21 @@ const LoginPage = () => {
 
             {/* Left side with text */}
             <OutletImageComponent />
+
+            <PageLoading isLoading={isResending} />
+            {isVerified === false && (
+                <AlertConfirmation
+                    open={openDialog}
+                    title="Your account has not been verified yet."
+                    message={"You have signed up to our platform but haven't verified your email yet."}
+                    onConfirm={handleDialogConfirm}
+                    onClose={handleCloseErrorDialog}
+                    confirmText="Verify email"
+                    cancelText="Close"
+                    iconColor={theme.palette.customColors.red400}
+                    iconBgColor={theme.palette.customColors.red100}
+                />
+            )}
         </Box>
         // ============ End login container ============
     );

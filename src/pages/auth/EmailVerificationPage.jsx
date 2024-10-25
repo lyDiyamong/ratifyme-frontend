@@ -54,7 +54,7 @@ const EmailVerificationPage = () => {
             const timer = setTimeout(() => {
                 setHasResentVerify(false);
                 localStorage.removeItem("hasResent");
-            }, 120000); // 5 minutes
+            }, 120000); // 2 minutes
 
             // Cleanup function to clear the timeout if the component unmounts
             return () => clearTimeout(timer);

@@ -117,7 +117,7 @@ const ForgotPasswordSentPage = () => {
                         <Typography variant="body2" color="text.secondary" mb={2}>
                             If you haven't received an email in 5 minutes, check your spam,
                             {hasResent ? " or try a different email." : " or resend."}
-                            {hasResent && <Link to="/forgot-password"> try a different email</Link>}
+                            {hasResent && <Link to="/auth/forgot-password"> try a different email</Link>}
                         </Typography>
                         <br />
                         {!hasResent && (
