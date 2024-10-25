@@ -1,9 +1,9 @@
 // ============ Start TableCustom Component ============
-// React Library
+// React library
 import { useState } from "react";
 import DataTable from "react-data-table-component";
 
-// MUI Imports
+// MUI imports
 import {
     Box,
     TextField,
@@ -21,7 +21,7 @@ import AddIcon from "@mui/icons-material/Add";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import { SearchOutlined } from "@mui/icons-material";
 
-// Custom Imports
+// Custom imports
 import MenuSelection from "./TableAction/MenuSelection";
 import theme from "../assets/themes/index";
 import NoRecordData from "./NoRecordData";
@@ -57,6 +57,7 @@ const customTableStyles = {
  * @returns {JSX.Element} - Rendered table with search, filter, and sort options.
  */
 
+// =========== Start TableCustom ===========
 const TableCustom = ({
     title = "",
     data = [],
