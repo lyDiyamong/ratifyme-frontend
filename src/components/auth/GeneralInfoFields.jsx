@@ -1,8 +1,11 @@
+// MUI import
+import { Stack } from "@mui/system";
+import { Box, Typography } from "@mui/material";
+
+// Custom import
 import DateSelectionForm from "../DateSelectionForm";
 import SelectForm from "../SelectionForm";
 import FormInput from "../FormInput";
-import { Stack } from "@mui/system";
-import { Box, Typography } from "@mui/material";
 import theme from "../../assets/themes";
 
 const GeneralInfoFields = ({ control, schema, errors }) => {
