@@ -341,7 +341,7 @@ const EditBadge = () => {
                         <EditOptionalElements control={control} reset={reset} schema={badgSchema} errors={errors} />
                         {/* Submit button */}
                         <Stack alignItems="end" flexDirection="row" justifyContent="end" gap={1}>
-                            <Link to={`/management/badges/badgeDetail/${userID}`}>
+                            <Link to={`/dashboard/management/badges/badgeDetail/${userID}`}>
                                 <Button
                                     variant="text"
                                     startIcon={<ArrowBack />}
