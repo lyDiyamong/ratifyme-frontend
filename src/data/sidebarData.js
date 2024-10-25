@@ -1,3 +1,4 @@
+// Custom import
 import DashboardIconSvg from "../assets/icons/dashboard.svg";
 import ManagementIconSvg from "../assets/icons/management.svg";
 import SaleIconSvg from "../assets/icons/sales.svg";

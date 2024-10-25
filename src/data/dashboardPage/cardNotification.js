@@ -1,4 +1,4 @@
-//Custom Import 
+//Custom import 
 import profileASvg from "../../assets/images/profileA.svg";
 import profileBSvg from "../../assets/images/profileB.svg";
 import profileCSvg from "../../assets/images/profileC.svg";
