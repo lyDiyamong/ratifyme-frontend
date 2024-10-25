@@ -40,23 +40,20 @@ const OrganizationBio = ({ institutionInfo }) => {
     };
 
     // Use institutionBio instead of bio
-    const institutionBioText =
-        getDynamicValue("institutionBio", institutionInfo) || "There are no bio!";
+    const institutionBioText = getDynamicValue("institutionBio", institutionInfo);
+    const institutionName = getDynamicValue("institutionName", institutionInfo) || "N/A";
 
     const userRole = info?.data?.Role?.id;
     const isDisabled = userRole === 3 || userRole === 4;
 
     useEffect(() => {
-        // Set profile image and institutionBio
+        // Set profile image and institutionBio if institutionInfo is available
         if (institutionInfo) {
-            setProfileImage(
-                institutionInfo?.institutionProfileImage ||
-                    (info.data.Gender?.name === "male" ? MaleUserDefault : FemaleUserDefault) ||
-                    DefaultProfileSvg,
-            );
+            const imageUrl = institutionInfo?.institutionProfileImage;
+            setProfileImage(imageUrl);
             setInstitutionBio(institutionBioText);
         }
-    }, [info, institutionInfo]);
+    }, [institutionInfo, institutionBioText]);
 
     // Update user institutionBio mutation
     const [updateOrgProfile, { isLoading, isError }] = useUpdateInstitutionMutation();
@@ -82,6 +79,8 @@ const OrganizationBio = ({ institutionInfo }) => {
         setInstitutionBio(institutionBioText);
         setIsEditing(false);
     };
+
+    const firstLetter = institutionName ? institutionName.charAt(0).toUpperCase() : "";
 
     return (
         <Stack>
@@ -131,7 +130,23 @@ const OrganizationBio = ({ institutionInfo }) => {
                 </Stack>
                 {!isDisabled && (
                     <Stack direction="row" alignItems="center" spacing={3} sx={{ width: "100%" }}>
-                        <Avatar alt="User Avatar" src={profileImage} sx={{ width: 50, height: 50 }} />
+                        {profileImage ? (
+                            <Avatar alt="Organization Avatar" src={profileImage} sx={{ width: 50, height: 50 }} />
+                        ) : (
+                            <Avatar
+                                className="avatar-fallback"
+                                sx={{
+                                    width: 50,
+                                    height: 50,
+                                    objectFit: "cover",
+                                    borderRadius: "100%",
+                                    fontSize: 24,
+                                    display: profileImage ? "none" : "flex",
+                                }}
+                            >
+                                {firstLetter || "?"}
+                            </Avatar>
+                        )}
 
                         <Box
                             sx={{
@@ -215,15 +230,7 @@ const OrganizationBio = ({ institutionInfo }) => {
 
                 {/* Save and Cancel Buttons */}
                 {isEditing && (
-                    <Stack
-                        direction="row"
-                        gap={1}
-                        justifyContent="flex-end"
-                        width="100%"
-                        position="absolute"
-                        bottom={16}
-                        px={2}
-                    >
+                    <Stack direction="row" gap={1} justifyContent="flex-end" width="100%" position="absolute" bottom={16} px={2}>
                         <Button
                             onClick={handleSubmit}
                             disabled={isLoading}

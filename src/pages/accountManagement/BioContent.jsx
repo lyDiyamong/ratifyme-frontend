@@ -190,7 +190,7 @@ const BioContent = () => {
                         }}
                         title={bio}
                     >
-                        {bio || "Describe yourself here..."}
+                        {bio || "There are no bio yet!"}
                     </Typography>
                 )}
 
