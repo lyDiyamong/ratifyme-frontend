@@ -13,6 +13,7 @@ import PageTitle from "../../../components/PageTitle";
 import { useGetIssuersQuery } from "../../../store/api/issuerManagement/issuerApi";
 import { useGetInstitutionByIdQuery } from "../../../store/api/institutionManagement/institutionApi";
 import { useFetchInfoUserByIdQuery } from "../../../store/api/users/userInfoProfileApi";
+import DashboardContainer from "../../../components/styles/DashboardContainer";
 
 const OrganizationInfo = () => {
     const { userId } = useSelector((state) => state.global);
@@ -27,7 +28,7 @@ const OrganizationInfo = () => {
     const userRole = info?.data?.Role?.name;
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
+        <DashboardContainer sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
             <Stack gap={3}>
                 <PageTitle
                     title="Organization Details"
@@ -49,7 +50,7 @@ const OrganizationInfo = () => {
                     </Grid>
                 </Grid>
             </Stack>
-        </Box>
+        </DashboardContainer>
     );
 };
 
