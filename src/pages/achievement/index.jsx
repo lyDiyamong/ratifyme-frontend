@@ -10,7 +10,7 @@ import SearchBar from "../../components/SearchBar";
 import { AchievementList } from "./AchievementList";
 
 // Api Import
-import { useFetchBadgeByEarnerQuery } from "../../store/api/badgeManagement/badgeApi";
+import { useFetchClaimBadgeByEarnerQuery } from "../../store/api/badgeManagement/badgeApi";
 
 const AchievementManagement = () => {
     const [page, setPage] = useState(1);
@@ -24,11 +24,10 @@ const AchievementManagement = () => {
         data: badges,
         isLoading,
         isError,
-    } = useFetchBadgeByEarnerQuery(earnerData ? { earnerId: earnerData.id, search: searchQuery, page, limit } : skipToken);
+    } = useFetchClaimBadgeByEarnerQuery(earnerData ? { earnerId: earnerData.id, search: searchQuery, page, limit } : skipToken);
 
     // State to store the result, initialized with totalRecords or 0
     const [result, setResult] = useState(badges?.totalRecords || 0);
-    console.log();
 
     // Use useEffect to update the result when badges data changes
     useEffect(() => {

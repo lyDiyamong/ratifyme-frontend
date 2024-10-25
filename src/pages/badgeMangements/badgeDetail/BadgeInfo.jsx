@@ -6,15 +6,16 @@ import { useNavigate } from "react-router-dom";
 // MUI Import
 import { Box, Typography, Chip, Stack, Button, Modal, useMediaQuery } from "@mui/material";
 import theme from "../../../assets/themes";
+import { BorderColorRounded, ConfirmationNumber, Delete } from "@mui/icons-material";
 
 // Custom Import
 import IssuerBadgeButton from "../IssuerBadgeButton";
 import IssueToEarnerButton from "../IssueToEarnerButton";
 import ClaimBadgeButton from "../../../components/ClaimBadgeButton";
-import { useDeleteBadgeMutation } from "../../../store/api/badgeManagement/badgeApi";
 import MoreMenu from "../../../components/MoreMenu";
-import { BorderColorRounded, ConfirmationNumber, Delete } from "@mui/icons-material";
-import { display } from "@mui/system";
+
+// Api Import
+import { useDeleteBadgeMutation } from "../../../store/api/badgeManagement/badgeApi";
 
 const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
     // define breakpoint of the screen
@@ -149,6 +150,7 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
                                             control={control}
                                             issuerId={activeUserId}
                                             badgeId={result.id}
+                                            achievementId={achieveId || []}
                                         />
                                         {/* <IssueToEarnerButton emails={selectedEmails} badgeId={result?.id || []} /> */}
                                         <IssueToEarnerButton achievementId={achieveId || []} />

@@ -7,11 +7,23 @@ import theme from "../../assets/themes";
 
 // Custom Import
 import ModalContainer from "./badgeDetail/ModalContainer";
-import { useFetchEarnerQuery } from "../../store/api/earnerManagement/earnerApis";
 
-const IssuerBadgeButton = ({ onGetEmail, control, issuerId, badgeId }) => {
+// Api Import
+import { useFetchEarnerQuery } from "../../store/api/earnerManagement/earnerApis";
+import { useFetchEmailEarnerQuery } from "../../store/api/achievements/achievementApi";
+
+const IssuerBadgeButton = ({ onGetEmail, control, issuerId, badgeId, achievementId }) => {
     const [open, setOpen] = useState(false);
     const { data: earners } = useFetchEarnerQuery({ issuerId });
+    const { data: email } = useFetchEmailEarnerQuery({
+        achievementId,
+        page: "",
+        limit: "",
+        sort: "",
+        order: "",
+        search: "",
+    });
+
     const emailOptions = earners?.data
         ?.filter((earner) => {
             return earner?.issuerId === issuerId;
@@ -19,7 +31,6 @@ const IssuerBadgeButton = ({ onGetEmail, control, issuerId, badgeId }) => {
         .map((user) => {
             return user?.User;
         });
-
     return (
         // Start Add Earner Button
         <>
@@ -44,6 +55,7 @@ const IssuerBadgeButton = ({ onGetEmail, control, issuerId, badgeId }) => {
                 onGetEmail={onGetEmail}
                 control={control}
                 badgeId={badgeId || ""}
+                emails={email?.data || []}
             />
         </>
         // End Add Earner Button
