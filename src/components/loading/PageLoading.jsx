@@ -1,4 +1,7 @@
+// MUI import
 import { Box, Typography } from "@mui/material";
+
+// Custom import
 import LoadingIconSvg from "../../assets/icons/spinnigLoad.svg";
 import theme from "../../assets/themes";
 

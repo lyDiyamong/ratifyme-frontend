@@ -1,4 +1,4 @@
-// MUI Import
+// MUI import
 import { Box } from '@mui/material';
 
 // =========== Start LandingContainer ===========

@@ -1,6 +1,9 @@
+// MUI import
 import { Chip } from "@mui/material";
 import { CheckCircleOutline, ErrorOutline, AccessAlarm } from "@mui/icons-material";
-import theme from "../../assets/themes"; // Assuming you have a theme setup
+
+// Custom import
+import theme from "../../assets/themes"; 
 
 const InviteUserStatus = ({ status, expiredInvitation, isAccountCreated }) => {
     // Function to determine the color, label, and icon based on the status

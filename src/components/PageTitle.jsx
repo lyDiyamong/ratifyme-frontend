@@ -1,5 +1,5 @@
 // MUI import
-import { Box, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 
 // Custom import
 import theme from "../assets/themes";

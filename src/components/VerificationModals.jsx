@@ -1,4 +1,7 @@
+// React library import
 import React, { useEffect, useState } from "react";
+
+// MUI import
 import {
     Dialog,
     DialogTitle,
@@ -15,9 +18,11 @@ import {
 } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
+import { CheckCircle } from "@mui/icons-material";
+
+// Custom import
 import theme from "../assets/themes";
 import FormatDate from "../utils/formatDate";
-import { CheckCircle } from "@mui/icons-material";
 
 //=========== Start Verification Modal ===========
 const VerificationModal = ({ open, handleClose, achieveData, earnerData, credId, earnerAchieData }) => {

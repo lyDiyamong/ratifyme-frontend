@@ -1,6 +1,11 @@
+// React library import
 import { useState } from "react";
+
+// MUI import
 import { Drawer, IconButton, Box, Divider, Tabs, Tab, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+
+// Custom import
 import NoNotification from "../assets/images/NoNotification.png";
 import AchieveNotification from "../assets/images/AchieveNotification.png";
 import theme from "../assets/themes";

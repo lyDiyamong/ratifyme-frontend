@@ -1,4 +1,4 @@
-// MUI Import
+// MUI import
 import { styled, Box } from "@mui/material";
 
 // =========== Start FlexBetween ===========

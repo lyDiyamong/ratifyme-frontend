@@ -1,9 +1,10 @@
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import FormHelperText from "@mui/material/FormHelperText";
+// React library import
 import { useController } from "react-hook-form";
+
+// MUI import
+import { InputLabel, MenuItem, FormControl, Select, FormHelperText } from "@mui/material";
+
+// Custom import
 import theme from "../assets/themes";
 
 /**

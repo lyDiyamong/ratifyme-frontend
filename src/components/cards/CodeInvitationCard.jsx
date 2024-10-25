@@ -1,10 +1,11 @@
-// MUI imports
-import { Box, Typography, Button, SvgIcon, Stack } from "@mui/material";
-
-// MUI icons
-import { PasswordOutlined, NorthEast, Business } from "@mui/icons-material";
+// React library import
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+
+// MUI imports
+import { Box, Typography, Button, SvgIcon, Stack } from "@mui/material";
+import { PasswordOutlined, NorthEast, Business } from "@mui/icons-material";
+
 
 const CodeInvitationCard = () => {
     const { roleId, institutionData, issuerData, userInfo, earnerData } = useSelector((state) => state.global);

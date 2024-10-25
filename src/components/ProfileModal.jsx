@@ -1,5 +1,7 @@
-// MUI Import
+// React library import
 import { useState, useEffect } from "react";
+
+// MUI import
 import {
     Stack,
     Dialog,
@@ -16,7 +18,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { styled } from "@mui/system";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 
-// Custom Import
+// Custom import
 import DefaultProfileSvg from "../assets/images/DefaultProfile.svg";
 import MaleUserDefault from "../assets/images/MaleUser.svg";
 import FemaleUserDefault from "../assets/images/FemaleUser.svg";

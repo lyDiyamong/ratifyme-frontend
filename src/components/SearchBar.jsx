@@ -1,17 +1,17 @@
-// React Import
+// React import
 import React from "react";
 import { Link } from "react-router-dom";
 
-// MUI Import
-import { styled, alpha } from "@mui/material/styles";
+// MUI import
 import Box from "@mui/material/Box";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
+import { styled, alpha } from "@mui/material/styles";
 import { Button, Stack } from "@mui/material";
 
 // Custom import
-import theme from "../assets/themes";
 import DashboardContainer from "./styles/DashboardContainer";
+import theme from "../assets/themes";
 
 // Styled components
 const Search = styled("div")(({ theme }) => ({

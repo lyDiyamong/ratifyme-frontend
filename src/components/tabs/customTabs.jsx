@@ -1,4 +1,7 @@
+// React library import
 import { useState } from "react";
+
+// MUI import
 import { Box, Tabs, Tab } from "@mui/material";
 
 const CustomTabs = ({ tabs, tabContent, searchQuery }) => {

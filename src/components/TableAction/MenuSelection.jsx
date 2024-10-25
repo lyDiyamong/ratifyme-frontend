@@ -1,11 +1,11 @@
-// React Library
+// React library
 import { useState } from "react";
 
-// MUI Import
+// MUI import
 import { Box, Menu, IconButton } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
-// Custom Import
+// Custom import
 import ActionButton from "./ActionButton";
 /**
  * MenuSelection Component

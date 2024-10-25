@@ -1,7 +1,7 @@
-// MUI Import
+// MUI import
 import { Box, CardMedia } from "@mui/material";
 
-// Custom Import
+// Custom import
 import StatusCode from "../assets/images/NoData.svg";
 
 // =========== Start NoRecordData ===========

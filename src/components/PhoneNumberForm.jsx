@@ -1,8 +1,13 @@
+// React library import
 import 'react-phone-input-2/lib/style.css';
 import PhoneInput from 'react-phone-input-2';
 import { Controller } from 'react-hook-form';
+
+// MUI import
 import { Box, FormHelperText, InputAdornment } from '@mui/material';
 import { styled } from '@mui/material/styles';
+
+// Custom import
 import theme from '../assets/themes';
 
 // Utility function to format phone numbers

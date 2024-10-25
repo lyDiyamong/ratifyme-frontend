@@ -1,6 +1,9 @@
+// React library import
 import { useState } from "react";
-import { TextField, IconButton, InputAdornment } from "@mui/material";
 import { useController } from "react-hook-form";
+
+// MUI import
+import { TextField, IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 /**
