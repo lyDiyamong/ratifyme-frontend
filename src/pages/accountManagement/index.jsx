@@ -35,7 +35,7 @@ const AccountManagement = () => {
     const orgInfoDisabled = userRole === 3 || userRole === 4 || userRole === 1;
 
     return (
-        <DashboardContainer sx={{ display: "flex", gap: 3, flexDirection: "column", mb: 3 }}>
+        <DashboardContainer sx={{ display: "flex",  flexDirection: "column", mb: 3 }}>
             <PageTitle title="My Profile" subtitle="View and update your personal information and account settings." />
 
             {/* Tabs for User Profile, Bio Content, and Settings */}

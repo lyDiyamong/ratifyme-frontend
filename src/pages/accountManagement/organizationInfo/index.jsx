@@ -37,7 +37,7 @@ const OrganizationInfo = () => {
                 <Grid container spacing={3}>
                     {/* Profile Header and Bio Content */}
                     <Grid item xss={12} md={4}>
-                        <Stack spacing={2} direction="column">
+                        <Stack spacing={3} direction="column">
                             <OrgProfileHeader institutionInfo={instituteData || organization} />
                             <OrganizationBio institutionInfo={instituteData || organization} />
                         </Stack>
