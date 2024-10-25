@@ -10,7 +10,6 @@ import theme from "./assets/themes";
 import LandingRouter from "./routers/LandingRouter";
 import AuthRouter from "./routers/AuthRouter";
 import DashboardRouter from "./routers/DashboardRouter";
-import PublicPageRouter from "./routers/PublicPage";
 import NotFoundPage from "./pages/notFound";
 
 const App = () => {
@@ -23,7 +22,6 @@ const App = () => {
                     <Route path="/*" element={<LandingRouter />} />
                     <Route path="/auth/*" element={<AuthRouter />} />
                     <Route path="/dashboard/*" element={<DashboardRouter />} />
-                    <Route path="/public/*" element={<PublicPageRouter />} />
 
                     {/* Catch-all route for unmatched paths */}
                     <Route path="*" element={<NotFoundPage />} />

@@ -4,6 +4,7 @@ import HomePage from "../pages/landing/index";
 import ContactUsPage from './../pages/contactus'
 import PricePage from "../pages/prices/index";
 import NotFoundPage from "../pages/notFound";
+import Credential from "../pages/publicPage/credential";
 
 const LandingRouter = () => {
     return (
@@ -12,6 +13,7 @@ const LandingRouter = () => {
                 <Route path="/" element={<HomePage />}/>
                 <Route path="/price" element={<PricePage />} />
                 <Route path="/contactus" element={<ContactUsPage />} />
+                <Route path="/credential/:credId" element={<Credential />} />
             </Route>
             <Route path="*" element={<NotFoundPage />} />
         </Routes>
