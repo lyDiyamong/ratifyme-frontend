@@ -1,9 +1,16 @@
+// React library import
+import { Outlet, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+// MUI import
 import { Box } from "@mui/material";
+
+// Custom import
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import { Outlet, useNavigate } from "react-router-dom";
+
+// API import
 import { useCheckAuthQuery } from "../../store/api/auth/authApi";
-import { useEffect, useState } from "react";
 
 const LandingLayout = () => {
     const [authUser, setAuthUser] = useState(null);

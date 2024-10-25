@@ -1,12 +1,12 @@
-// React Import
+// React import
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-// MUI Import
+// MUI import
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Paper, Box, Typography } from "@mui/material";
 import theme from "../../assets/themes/index";
 
-// Custom Import
+// Custom import
 import SelectForm from "../SelectionForm";
 import { useSendBadgeMutation } from "../../store/api/achievements/achievementApi";
 import { useFetchEarnerQuery } from "../../store/api/earnerManagement/earnerApis";

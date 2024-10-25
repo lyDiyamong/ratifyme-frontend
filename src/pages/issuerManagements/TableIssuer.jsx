@@ -1,19 +1,21 @@
-// React Library import
+// React library import
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 
-// MUI Import
+// MUI import
 import { Box, Typography, CircularProgress } from "@mui/material";
 
-// Custom Import
+// Custom import
 import TableCustom from "../../components/TableCustom";
 import InviteUserModal from "../../components/modals/InviteUserModal";
+import { TableAvatars } from "../../components/avartars/TableAvatars";
+
+// API import
 import { useFetchInstitutionStatsQuery } from "../../store/api/reports/institutionStatApis";
 import { useInviteIssuerMutation, useFetchAllInvitedUserQuery } from "../../store/api/userManagement/inviteUserApi";
-import { TableAvatars } from "../../components/avartars/TableAvatars";
+
 // ============ Start Table Issuer Modal ============
 const TableIssuer = () => {
-    const isSortable = true;
     // State for controlling dialog
     const [dialogOpen, setDialogOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
@@ -46,8 +48,8 @@ const TableIssuer = () => {
 
     // Filter Issuer Data based on role
     const filterIssuerData = (issuerData) => {
-        if (roleId === 1) return issuerData; // Admin can see all issuers
-        return issuerData?.filter((issuer) => issuer.userId === userId); // Other roles see their own issuers
+        if (roleId === 1) return issuerData;
+        return issuerData?.filter((issuer) => issuer.userId === userId);
     };
 
     // Flatten data to render issuers
@@ -88,8 +90,8 @@ const TableIssuer = () => {
                 ].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
             );
 
-            reset(); // Reset the form
-            setDialogOpen(false); // Close the dialog on success
+            reset(); 
+            setDialogOpen(false);
         } catch (error) {
             console.error("Error sending invitation", error);
         }
@@ -117,7 +119,6 @@ const TableIssuer = () => {
         // Admin has additional organization name column
         if (roleId === 1) {
             return [
-                { name: "No. ", selector: (row, index) => index + 1 || "N/A" },
                 {
                     name: "Issuer Name",
                     selector: (row) => row.issuerName || "N/A",
@@ -130,7 +131,6 @@ const TableIssuer = () => {
         }
         if (roleId === 2) {
             return [
-                { name: "No. ", selector: (row, index) => index + 1 || "N/A" },
                 {
                     name: "Issuer Name",
                     selector: (row) => row.issuerName || "N/A",

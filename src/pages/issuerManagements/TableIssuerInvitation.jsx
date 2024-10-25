@@ -1,25 +1,33 @@
+// React library import
 import { useState, useEffect } from "react";
-import { Avatar, Box, IconButton, Tooltip, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
+
+// MUI import
+import { CheckCircleOutline, ErrorOutlineOutlined, RestartAltOutlined, DeleteOutline } from "@mui/icons-material";
+import { Box, IconButton, Tooltip } from "@mui/material";
+
+// Custom import
 import InviteUserModal from "../../components/modals/InviteUserModal";
 import AlertConfirmation from "../../components/alert/AlertConfirmation";
+import TableCustom from "../../components/TableCustom";
+import PageLoading from "../../components/loading/PageLoading";
+import AlertMessage from "../../components/alert/AlertMessage";
+import InviteUserStatus from "../../components/chips/inviteUserStatus";
+import getSortOptions from "../../components/GetSortOptions";
+import { TableAvatars } from "../../components/avartars/TableAvatars";
 import theme from "../../assets/themes";
+import FormatDate from "../../utils/formatDate";
+import useCatchStatus from "../../hooks/useCatchStatus";
+
+// API import
 import {
     useInviteIssuerMutation,
     useFetchAllInvitedUserQuery,
     useResendInviteIssuerMutation,
     useDeleteInvitedUserMutation,
 } from "../../store/api/userManagement/inviteUserApi";
-import { useSelector } from "react-redux";
-import { CheckCircleOutline, ErrorOutlineOutlined, RestartAltOutlined, DeleteOutline } from "@mui/icons-material";
-import TableCustom from "../../components/TableCustom";
-import FormatDate from "../../utils/formatDate";
-import PageLoading from "../../components/loading/PageLoading";
-import useCatchStatus from "../../hooks/useCatchStatus";
-import AlertMessage from "../../components/alert/AlertMessage";
-import InviteUserStatus from "../../components/chips/inviteUserStatus";
-import NoRecordData from "../../components/NoRecordData";
-import getSortOptions from "../../components/GetSortOptions";
 
+// =========== Start TableIssuerInvitation ===========
 const TableIssuerInvitation = () => {
     const isSortable = true;
     // ===================== State Management =====================
@@ -173,28 +181,9 @@ const TableIssuerInvitation = () => {
     const columns = [
         {
             name: "Email",
-            cell: (row) => (
-                <Box display="flex" alignItems="center" sx={{ width: "750px" }}>
-                    <Avatar alt={row.inviteEmail} src={row.avatar} sx={{ width: 32, height: 32, marginRight: 1 }}>
-                        {row.inviteEmail ? row.inviteEmail.charAt(0).toUpperCase() : ""}
-                    </Avatar>
-                    <Typography
-                        variant="body2"
-                        noWrap
-                        sx={{
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            whiteSpace: "nowrap",
-                            maxWidth: "200px",
-                        }}
-                    >
-                        {row.inviteEmail}
-                    </Typography>
-                </Box>
-            ),
-            sortable: true,
+            cell: (row) => <TableAvatars profileImage={row.User?.profileImage} name={row.inviteEmail} />,
         },
-        { name: "Invited At", selector: (row) => FormatDate(row.createdAt), sortable: true },
+        { name: "Invited At", selector: (row) => FormatDate(row.createdAt) },
         {
             name: "Status",
             cell: (row) => {
@@ -321,7 +310,6 @@ const TableIssuerInvitation = () => {
                 isSortable={isSortable}
                 sortOptions={getSortOptions("inviteEmail", "-inviteEmail")}
             >
-                {invitedIssuers.length === 0 && <NoRecordData />}
             </TableCustom>
 
             <AlertConfirmation
@@ -355,3 +343,4 @@ const TableIssuerInvitation = () => {
 };
 
 export default TableIssuerInvitation;
+// =========== End TableIssuerInvitation ===========

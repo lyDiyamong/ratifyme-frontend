@@ -93,7 +93,7 @@ const InvoiceManagement = () => {
         <DashboardContainer>
             {isError && <AlertMessage variant="error">Error fetching data</AlertMessage>}
             {/* Page Title */}
-            <PageTitle title="Invoice" />
+            <PageTitle title="Total Invoice" />
 
             {/* Table Data */}
             {isLoading ? (

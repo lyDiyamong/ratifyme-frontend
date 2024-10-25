@@ -1,7 +1,7 @@
 // MUI import
-import { Box, Typography, Card, CardContent, Avatar } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import { Box, Typography, Card, CardContent, Avatar } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 // Custom import

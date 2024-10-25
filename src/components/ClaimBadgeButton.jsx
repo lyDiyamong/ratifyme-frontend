@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 // MUI import
 import { Button } from "@mui/material";
 
-// Custom Import
-import theme from "../assets/themes";
+// Custom import
 import AlertConfirmation from "./alert/AlertConfirmation";
 import VerifiedRoundedIcon from "@mui/icons-material/VerifiedRounded";
 import useCatchStatus from "../hooks/useCatchStatus";
 import AlertMessage from "./alert/AlertMessage";
+import theme from "../assets/themes";
 
 // Api import
 import { useClaimBadgeMutation } from "../store/api/badgeManagement/badgeApi";

@@ -1,4 +1,5 @@
-import { Box, Skeleton } from "@mui/material";
+// MUi import
+import { Skeleton } from "@mui/material";
 
 /**
  *

@@ -1,7 +1,10 @@
-import { Box, Typography, Button, DialogContent, IconButton, DialogTitle, Dialog, Stack } from "@mui/material";
+// MUI import 
+import { Box, Typography, DialogContent, IconButton, DialogTitle, Dialog, Stack } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import theme from "../assets/themes";
 import { Error } from "@mui/icons-material";
+
+// Custom import
+import theme from "../assets/themes";
 
 const VerificationFailureModal = ({ open, handleClose, message }) => {
     return (

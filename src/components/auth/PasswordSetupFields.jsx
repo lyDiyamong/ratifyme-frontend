@@ -1,7 +1,10 @@
-import PasswordFields from "./PasswordFields";
-import { passwordSchema } from "../../utils/auth/passwordUtils";
+// MUI import 
 import { Box, Stack, Typography } from "@mui/material";
+
+// Custom import 
+import PasswordFields from "./PasswordFields";
 import theme from "../../assets/themes";
+import { passwordSchema } from "../../utils/auth/passwordUtils";
 
 const PasswordSetupFields = ({ control, role, guest, schema, errors, watch }) => {
     return (

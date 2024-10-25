@@ -1,4 +1,4 @@
-// import image
+// Custom import
 import RatanakImg from "../assets/images/Rotanak.svg";
 import LyHour from "../assets/images/LyHour.svg";
 import Rotha from "../assets/images/Rotha.webp";

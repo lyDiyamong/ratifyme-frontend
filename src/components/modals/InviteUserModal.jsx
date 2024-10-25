@@ -1,6 +1,10 @@
+// React library import
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import * as yup from "yup";
+
+// MUI import
 import {
     Button,
     Dialog,
@@ -20,19 +24,22 @@ import {
     Tooltip,
 } from "@mui/material";
 import { Close, DeleteOutline, RestartAltOutlined } from "@mui/icons-material";
+
+// Custom import
 import theme from "../../assets/themes";
+import AlertMessage from "../alert/AlertMessage";
 import FormInput from "../../components/FormInput";
+import AlertConfirmation from "../../components/alert/AlertConfirmation";
+import InviteUserStatus from "../chips/inviteUserStatus";
 import FormatDate from "../../utils/formatDate";
+
+// API import
 import {
     useDeleteInvitedUserMutation,
     useFetchAllInvitedUserQuery,
     useResendInviteEarnerMutation,
     useResendInviteIssuerMutation,
 } from "../../store/api/userManagement/inviteUserApi";
-import AlertConfirmation from "../../components/alert/AlertConfirmation";
-import { useSelector } from "react-redux";
-import AlertMessage from "../alert/AlertMessage";
-import InviteUserStatus from "../chips/inviteUserStatus";
 
 // Validation schema for the email input
 const schema = yup.object({

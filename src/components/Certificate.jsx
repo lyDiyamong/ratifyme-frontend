@@ -1,4 +1,4 @@
-// React import
+// React library import
 import { forwardRef } from "react";
 
 // MUI import

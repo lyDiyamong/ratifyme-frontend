@@ -1,4 +1,4 @@
-// MUI Import
+// MUI import
 import Button from "@mui/material/Button";
 
 /**

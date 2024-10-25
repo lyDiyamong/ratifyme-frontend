@@ -1,3 +1,4 @@
+// MUI import
 import { Avatar, Box, Typography } from "@mui/material";
 
 export const TableAvatars = ({ profileImage, name }) => {

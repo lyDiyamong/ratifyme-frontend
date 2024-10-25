@@ -1,5 +1,8 @@
-import Mong from "../assets/images/YaMong.webp"
+// MUI import
 import { Avatar, Paper, Stack, Typography } from "@mui/material";
+
+// Custom import
+import Mong from "../assets/images/YaMong.webp"
 
 /**
  * IssuerCard Component

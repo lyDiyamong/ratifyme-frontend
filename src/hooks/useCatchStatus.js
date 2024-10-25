@@ -1,4 +1,4 @@
-// React Library Import
+// React library import
 import { useState, useEffect } from "react";
 
 /**

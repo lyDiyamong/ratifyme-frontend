@@ -1,10 +1,8 @@
 
-// Custome Import
+// Custome import
 import AnBLogoSvg from "../assets/images/AnB.svg";
 import EmcastLogoSvg from "../assets/images/Emcast.svg";
 import TechALogoSvg from "../assets/images/TechA.svg";
-
-
 
 // Static data for logo images
 const logoImage = [

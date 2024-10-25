@@ -1,14 +1,13 @@
-import { useState } from "react"; // Import useState
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import { Box, Stack, Typography } from "@mui/material";
+// React library import 
+import { useState } from "react";
+
+// MUI import
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Box, Stack } from "@mui/material";
 import { ErrorOutline } from "@mui/icons-material";
+
+// Custom import
 import theme from "../../assets/themes";
-import { SpinLoading } from "../../components/loading/SpinLoading"; // Import SpinLoading
+import { SpinLoading } from "../../components/loading/SpinLoading";
 
 const AlertConfirmation = ({
     open,
@@ -25,7 +24,6 @@ const AlertConfirmation = ({
     confirmButtonColorHover,
     iconBgColor = theme.palette.primary.light,
     showIcon = true,
-    additionalLink,
     ...additionalInfo
 }) => {
     const [loading, setLoading] = useState(false);
