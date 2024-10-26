@@ -48,7 +48,7 @@ const CertificateGenerator = ({ badge }) => {
     // Catch status hook
     const [message, setMessage] = useCatchStatus(uploadCertError, "Get certificate failed");
 
-    const [isCertUpload, setIsCertUpload] = useState(false)
+    const [isCertUpload, setIsCertUpload] = useState(false);
     const [isUploadCertModal, setIsUploadCertModal] = useState(false);
 
     const handleGenerateImage = async () => {
@@ -71,8 +71,8 @@ const CertificateGenerator = ({ badge }) => {
             // Open the uploaded certificate URL
             if (response) {
                 window.open(response?.uploadCert, "_blank");
-                if(response?.uploadCert){
-                    setIsCertUpload(true)
+                if (response?.uploadCert) {
+                    setIsCertUpload(true);
                 }
             }
         } catch (error) {
@@ -92,9 +92,9 @@ const CertificateGenerator = ({ badge }) => {
     // Disable Generate button effect
     useEffect(() => {
         if (certUrl) {
-            setIsCertUpload(true)
+            setIsCertUpload(true);
         }
-    }, [certUrl])
+    }, [certUrl]);
 
     return (
         <Box>
@@ -242,11 +242,6 @@ const CertificateGenerator = ({ badge }) => {
                             </Button>
                         </Stack>
                     </Stack>
-                    {isExploding && (
-                        <Box sx={{ position: "absolute", top: "20%", left: { md: "55%", xss: "50%" } }}>
-                            <ConfettiExplosion force={0.6} duration={3000} particleCount={150} width={1600} />
-                        </Box>
-                    )}
                 </Stack>
             )}
         </Box>
