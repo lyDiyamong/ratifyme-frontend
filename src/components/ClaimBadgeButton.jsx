@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import ConfettiExplosion from "react-confetti-explosion";
 
 // MUI import
-import { Box, Button } from "@mui/material";
+import { Button } from "@mui/material";
 
 // Custom import
 import AlertConfirmation from "./alert/AlertConfirmation";
@@ -19,7 +19,7 @@ import { useFetchEarnerAchieByIdQuery } from "../store/api/earnerManagement/earn
 const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
     // =========== API Hooks & Data Fetching ===========
     const { data: earnerAchieResponse, refetch } = useFetchEarnerAchieByIdQuery({ achieveId: achievementIds, earnerId });
-    const [claimBadge, { isSuccess }] = useClaimBadgeMutation();
+    const [claimBadge, { isLoading, isSuccess }] = useClaimBadgeMutation();
 
     // =========== State Management ===========
     // Claim state
@@ -52,7 +52,7 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
             setIsExploding(true);
             refetch();
         } catch (error) {
-            setMessage("Badge Claimed failed");
+            setMessage("Badge Claimed failed", error);
         } finally {
             setIsClaimBadgeModal(false);
         }
@@ -94,7 +94,7 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
             />
             <Button
                 onClick={() => setIsClaimBadgeModal(true)}
-                disabled={issuedOn === null || claimed}
+                disabled={claimed || isLoading}
                 variant="contained"
                 sx={{
                     color: theme.palette.customColors.white,
@@ -105,7 +105,7 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
                     textTransform: "none",
                 }}
             >
-                {claimed ? "Claimed" : "Claim Badge"}
+                {isLoading ? "Claiming..." : issuedOn === null || !claimed ? "Claim Badge" : "Claimed"}
             </Button>
         </>
         // =========== End ClaimBadgeButton ===========

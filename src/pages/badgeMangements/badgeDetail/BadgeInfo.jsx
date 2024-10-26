@@ -246,7 +246,19 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
                             label="Achievement Type"
                             value={
                                 result?.Achievements?.length
-                                    ? result?.Achievements.map((achievement) => achievement.AchievementType?.name).join(", ")
+                                    ? result?.Achievements.map((achievement, index) => (
+                                          <Chip
+                                              key={index}
+                                              label={achievement.AchievementType?.name}
+                                              sx={{
+                                                  marginRight: 1,
+                                                  marginBottom: 1,
+                                                  backgroundColor: theme.palette.primary.light,
+                                                  color: theme.palette.primary.main,
+                                                  fontWeight: theme.fontWeight.bold,
+                                              }}
+                                          />
+                                      ))
                                     : "No achievement type available"
                             }
                             isSmallScreen={isSmallScreen}

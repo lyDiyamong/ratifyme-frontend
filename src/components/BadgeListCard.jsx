@@ -1,8 +1,9 @@
-// React import
+// React Import
 import { useState, useEffect } from "react";
 
 // MUI import
 import { Grid, Card, CardContent, CardMedia, Typography, Button, Box, Stack, Pagination, useMediaQuery } from "@mui/material";
+import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 
 // Custom import
 import theme from "../assets/themes";
@@ -13,7 +14,48 @@ const BadgeListCard = ({ badges, onView, total }) => {
     const handleView = (id) => {
         onView(id);
     };
+    const { roleId, userInfo } = useSelector((state) => state.global);
     const totalBadge = typeof total === "number" ? total : total?.length;
+
+    const [afterCheck, setAfterCheck] = useState([]);
+
+    useEffect(() => {
+        const processBadges = (badges) => {
+            if (!badges) return { issuedBadge: [], claimedBadge: [] };
+
+            const achievements = badges.flatMap(({ Achievements }) => Achievements) || [];
+            const uniqueBadges = [];
+            const seenBadgeIds = new Set();
+            for (const achievement of achievements) {
+                if (!seenBadgeIds.has(achievement.badgeClassId)) {
+                    uniqueBadges.push(achievement);
+                    seenBadgeIds.add(achievement.badgeClassId);
+                }
+            }
+
+            const issuedBadge = uniqueBadges.map((item) => {
+                if (!item.Earners || item.Earners.length === 0) return null;
+                return item.Earners.some((earner) => earner.EarnerAchievements?.issuedOn !== null)
+                    ? item.Earners.find((earner) => earner.EarnerAchievements?.issuedOn)?.EarnerAchievements?.issuedOn
+                    : null;
+            });
+            console.log(issuedBadge);
+
+            const claimedBadge = uniqueBadges.map((item) =>
+                item.Earners
+                    ? item.Earners.some((earner) => earner.EarnerAchievements?.claimedOn !== null)
+                        ? item.Earners.find((earner) => earner.EarnerAchievements?.claimedOn)?.EarnerAchievements?.claimedOn
+                        : null
+                    : null,
+            );
+
+            return { issuedBadge, claimedBadge };
+        };
+
+        // Process badges based on current badges and set `afterCheck` accordingly
+        const { issuedBadge, claimedBadge } = processBadges(badges);
+        setAfterCheck(roleId === 4 ? claimedBadge : issuedBadge);
+    }, [badges, roleId]);
 
     return (
         <Box my={3}>
@@ -31,7 +73,7 @@ const BadgeListCard = ({ badges, onView, total }) => {
                     </Typography>
                     <Grid container spacing={2}>
                         {badges?.map((badge) => (
-                            <Grid item xss={12} sm={6} md={4} lg={3} xl={2.4} key={badge?.id}>
+                            <Grid item xs={12} sm={6} md={4} lg={3} xl={2.4} key={badge?.id}>
                                 <Card
                                     sx={{
                                         maxWidth: { xss: "100%", lg: 360 },
@@ -44,7 +86,7 @@ const BadgeListCard = ({ badges, onView, total }) => {
                                         "&:hover": { transform: "scale(1.02)" },
                                     }}
                                 >
-                                    <Stack alignItems="center">
+                                    <Stack alignItems="center" position="relative">
                                         <Box
                                             minHeight={140}
                                             minWidth={140}
@@ -69,6 +111,17 @@ const BadgeListCard = ({ badges, onView, total }) => {
                                                     objectFit: "contain",
                                                 }}
                                             />
+                                            {((roleId === 4 && typeof afterCheck[index] === "string") ||
+                                                (roleId === 3 && typeof afterCheck[index] === "undefined")) && (
+                                                <CheckCircleRoundedIcon
+                                                    sx={{
+                                                        position: "absolute",
+                                                        right: "1px",
+                                                        top: "1px",
+                                                        color: theme.palette.primary.main,
+                                                    }}
+                                                />
+                                            )}
                                         </Box>
                                     </Stack>
 
