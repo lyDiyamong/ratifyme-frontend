@@ -37,11 +37,14 @@ const InvoiceManagement = () => {
 
     // Filter data based on search query
     const filteredData = instiData.filter((invoice) => {
+        const activeSubscription = invoice.status === true; // Ensure active subscription
         const organizationName = invoice.name?.toLowerCase() || "";
         const subscriptionPlan = invoice.ServicePlan?.name?.toLowerCase() || "";
+
+        // Return true only if there's an active subscription and either name matches the search query
         return (
-            organizationName.includes(searchQuery.toLowerCase()) ||
-            subscriptionPlan.includes(searchQuery.toLowerCase())
+            activeSubscription &&
+            (organizationName.includes(searchQuery.toLowerCase()) || subscriptionPlan.includes(searchQuery.toLowerCase()))
         );
     });
 
@@ -55,12 +58,12 @@ const InvoiceManagement = () => {
         ...(roleId === 2
             ? []
             : [
-                {
-                    name: "Organization Name",
-                    selector: (row) => row.name,
-                    sortable: true,
-                },
-            ]),
+                  {
+                      name: "Organization Name",
+                      selector: (row) => row.name,
+                      sortable: true,
+                  },
+              ]),
         {
             name: "Subscription Plan",
             selector: (row) => row.ServicePlan?.name,
@@ -83,10 +86,7 @@ const InvoiceManagement = () => {
         },
     ];
 
-    const paginatedData = filteredData.slice(
-        (currentPage - 1) * rowsPerPage,
-        (currentPage - 1) * rowsPerPage + rowsPerPage
-    );
+    const paginatedData = filteredData.slice((currentPage - 1) * rowsPerPage, (currentPage - 1) * rowsPerPage + rowsPerPage);
 
     return (
         // ============ Start dashboard container ============
