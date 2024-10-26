@@ -71,9 +71,6 @@ const BadgeDetail = () => {
         }
     }
 
-    // console.log("Earner CredUrl💥", earnerAchieveData?.credUrl);
-    // console.log("Try to see the Status🎉", earnerAchieveData?.status);
-
     // Handler to get emails from IssuerBadgeButton
     const handleGetEmails = (emails) => {
         setSelectedEmails(emails);

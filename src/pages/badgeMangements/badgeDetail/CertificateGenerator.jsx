@@ -6,9 +6,7 @@ import { useSelector } from "react-redux";
 // MUI import
 import { Box, Button, CardMedia, Stack, Typography } from "@mui/material";
 import DriveFolderUploadOutlined from "@mui/icons-material/DriveFolderUploadOutlined";
-import ConfettiExplosion from "react-confetti-explosion";
 import DownloadDoneOutlined from "@mui/icons-material/DownloadDoneOutlined";
-import AutoAwesome from "@mui/icons-material/AutoAwesome";
 
 // Custom import
 import Certificate from "../../../components/Certificate";

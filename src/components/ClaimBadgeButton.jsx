@@ -20,8 +20,6 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
     // =========== API Hooks & Data Fetching ===========
     const { data: earnerAchieResponse, refetch } = useFetchEarnerAchieByIdQuery({ achieveId: achievementIds, earnerId });
     const [claimBadge, { isSuccess }] = useClaimBadgeMutation();
-    console.log("Achievement Id", achievementIds);
-    console.log("Earner Id", earnerId);
 
     // =========== State Management ===========
     // Claim state
@@ -68,7 +66,6 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
     useEffect(() => {
         if (statusAchievement !== undefined) {
             setClaimed(statusAchievement);
-            console.log("Status", statusAchievement);
         }
     }, [statusAchievement, issuedOn]);
 
