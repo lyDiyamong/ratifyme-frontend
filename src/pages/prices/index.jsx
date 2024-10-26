@@ -2,17 +2,14 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 
-// MUI import
-import { Box, Paper, Typography } from "@mui/material";
-
 // Custom import
-import ServiceDetail from "./ServiceDetail";
 import LandingContainer from "../../components/styles/LandingContainer";
-import theme from "../../assets/themes";
 
 // Api import
 import { useCheckAuthQuery } from "../../store/api/auth/authApi";
-
+import ServicePlanCard from "../../components/cards/ServicePlanCard";
+import { Typography } from "@mui/material";
+import theme from "../../assets/themes";
 
 const PricePage = () => {
     const { data, error, isLoading } = useCheckAuthQuery();
@@ -30,50 +27,20 @@ const PricePage = () => {
     return (
         // ============ Start servicePlanSection ============
         <LandingContainer>
-            <Paper
+            <Typography
                 sx={{
+                    fontWeight: theme.fontWeight.extraBold,
+                    textAlign: "center",
+                    fontSize: "48px",
+                    maxWidth: "800px",
                     mx: "auto",
-                    p: 4,
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 5,
-                    boxShadow: theme.shadows.default,
-                    borderRadius: theme.customShape.section,
-                    mt: 4,
+                    mt: "56px",
                 }}
             >
-                {/* Typography refer to Title of service plan */}
-                <Typography
-                    sx={{
-                        fontFamily: theme.typography.fontFamily,
-                        fontSize: theme.typography.h1,
-                        textAlign: "center",
-                        fontWeight: 700,
-                    }}
-                >
-                    Badge Service Pricing
-                </Typography>
-
-                {/* Typography refer to service plan detail */}
-                <Typography
-                    sx={{
-                        fontFamily: theme.typography.fontFamily,
-                        fontSize: theme.typography.body1,
-                    }}
-                >
-                    Our Digital Badge Service offers a comprehensive solution for recognizing and showcasing
-                    achievements in a digital format. Ideal for educational institutions, professional organizations,
-                    and corporate training programs, our service allows you to create, manage, and distribute digital
-                    badges that are secure, verifiable, and easily shareable across social media platforms. Each badge
-                    is customizable, ensuring it reflects your brand identity while celebrating the recipient’s
-                    accomplishments.
-                </Typography>
-
-                {/* Box refer to container of card */}
-                <Box sx={{ width: "100%" }}>
-                    <ServiceDetail button />
-                </Box>
-            </Paper>
+                Pick up a plan to generate certificates and badges
+            </Typography>
+            <Typography textAlign="center">Trusted for simplicity, time-efficiency, and professional impact</Typography>
+            <ServicePlanCard />
         </LandingContainer>
         // ============ End servicePlanSection ============
     );
