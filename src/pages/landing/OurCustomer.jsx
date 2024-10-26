@@ -1,49 +1,61 @@
+// React library import
+import { Box, Stack, Typography } from "@mui/material";
+import { motion } from "framer-motion";
 
-// MUI import
-import { useTheme } from "@mui/material/styles";
-import { Box } from "@mui/material";
+const OurCustomers = () => {
+    const images = [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/640px-Google_2015_logo.svg.png",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/2560px-Amazon_logo.svg.png",
+        "https://ratifyme.s3.ap-southeast-2.amazonaws.com/Logo/emcast-logo.png",
+        "https://ratifyme.s3.ap-southeast-2.amazonaws.com/Logo/AboveBeyond.png",
 
-// Custom import
-import LogoCards from "./CompanyLogoCard.jsx";
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/640px-Google_2015_logo.svg.png",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/2560px-Amazon_logo.svg.png",
+    ];
 
-//Our Customer Component
-function OurCustomer() {
-    const theme = useTheme();
+    const duplicatedImages = [...images, ...images];
+
     return (
-        //============ Start Our Customer Section  ============
-        <Box
-            component="section"
-            sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "end",
-                margin: "0",
-                width: "100%",
-                maxWidth: "none",
-                backgroundColor: theme.palette.primary.dark,
-                minHeight: "248px",
-                padding: "0",
-            }}
-        >
-            {/* Start Tittle   */}
-            <Box
-                component="div"
+        <Box sx={{ textAlign: "center", padding: "40px 0", maxWidth: 1200, mx: "auto" }}>
+            <Typography variant="h3" sx={{ marginBottom: "50px" }}>
+                Trusted by more than <span style={{ fontWeight: "bold", color: "#000" }}>100,000</span> of the world's leading
+                organizations
+            </Typography>
+            <Stack
+                component={motion.div}
+                direction="row"
                 sx={{
-                    color: "white",
-                    textAlign: "center",
-
-                    fontWeight: theme.fontWeight.bold,
-                    fontSize: theme.typography.h4,
+                    // maxWidth: "1000px",
+                    mx: "auto",
+                    overflow: "hidden",
+                    width: "100%",
                 }}
             >
-                <Box component="p">Our Customer</Box>
-            </Box>
-            {/*  End Tittle   */}
-
-            <LogoCards />
+                <Stack
+                    component={motion.div}
+                    direction="row"
+                    initial={{ x: 0 }}
+                    animate={{ x: ["0%", "-50%"] }}
+                    transition={{
+                        repeat: Infinity,
+                        duration: 8,
+                        ease: "linear",
+                    }}
+                    sx={{ display: "flex", gap: 2 }}
+                >
+                    {duplicatedImages.map((src, index) => (
+                        <Box
+                            component="img"
+                            key={index}
+                            src={src}
+                            alt={`Logo ${index + 1}`}
+                            sx={{ maxHeight: "60px", margin: "0 10px" }}
+                        />
+                    ))}
+                </Stack>
+            </Stack>
         </Box>
-        //============ End Our Customer Section  ============
     );
-}
+};
 
-export default OurCustomer;
+export default OurCustomers;

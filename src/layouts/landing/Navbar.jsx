@@ -201,7 +201,7 @@ const Navbar = () => {
                                         </Stack>
                                     </Link>
                                 ) : (
-                                    <>
+                                    <Box>
                                         <Link to="/auth/login">
                                             <Button
                                                 variant="outlined"
@@ -227,7 +227,7 @@ const Navbar = () => {
                                                 Sign Up
                                             </Button>
                                         </Link>
-                                    </>
+                                    </Box>
                                 )}
                             </Box>
                         </Box>
@@ -282,7 +282,7 @@ const Navbar = () => {
                                 </MenuItem>
 
                                 {!userInfo && (
-                                    <>
+                                    <Box>
                                         <MenuItem onClick={handleMenuClose}>
                                             <Link to="/auth/login">
                                                 <Button
@@ -311,12 +311,12 @@ const Navbar = () => {
                                                 </Button>
                                             </Link>
                                         </MenuItem>
-                                    </>
+                                    </Box>
                                 )}
                             </Menu>
 
                             {institutionData && userInfo && (
-                                <>
+                                <Box>
                                     <Link>
                                         <Stack direction="row" alignItems="center">
                                             <Box
@@ -354,7 +354,7 @@ const Navbar = () => {
                                             {institutionData?.institutionName}
                                         </MenuItem>
                                     </Menu>
-                                </>
+                                </Box>
                             )}
                         </Box>
                     </Toolbar>
