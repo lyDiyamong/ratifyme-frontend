@@ -10,7 +10,7 @@ const HomePage = () => {
     return (
         <Stack gap={12}>
             <HeroSection />
-            <OurCustomer />
+            {/* <OurCustomer /> */}
             <WhatWeDo />
             <Testimonial />
             <Faq />

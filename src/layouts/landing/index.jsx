@@ -27,7 +27,7 @@ const LandingLayout = () => {
     }, [data, navigate]);
 
     return (
-        <Box width="100%" height="100%">
+        <Box width="100%" height="100%" bgcolor="#FFFFFF">
             <Navbar />
             <Outlet />
             <Footer />

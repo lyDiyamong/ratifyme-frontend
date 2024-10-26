@@ -1,160 +1,127 @@
 import { Link } from "react-router-dom";
 // Mui Import
-import { Box, Button, TextField } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { Box, Button, Chip, Stack, TextField, Typography } from "@mui/material";
 //Custom Import
 import PosterHeroSvg from "../../assets/images/Poster.svg";
 import LandingContainer from "../../components/styles/LandingContainer";
+import {
+    AdminPanelSettingsOutlined,
+    ApartmentOutlined,
+    ArrowForwardIosOutlined,
+    CastForEducationOutlined,
+    Circle,
+    VerifiedRounded,
+} from "@mui/icons-material";
+import theme from "../../assets/themes";
 
 const HeroSection = () => {
-    const theme = useTheme();
     return (
         //============ Start Hero Section  ============
-        <Box
-            component="section"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            paddingTop="32px"
-            minHeight="613px"
-        >
+        <Box component="section" display="flex" justifyContent="center" alignItems="center" paddingTop="32px" minHeight="500px">
             {/*  Start Hero Container  */}
             <LandingContainer>
-                <Box
-                    component="div"
-                    sx={{
-                        paddingX: "10px",
-                        paddingY: "15px",
-                        marginX: "25px",
-                        display: "flex",
-                        flexDirection: "row",
-                        gap: "12px",
-                        "@media (max-width:1120px)": {
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                        },
-                        "@media (max-width:480px)": {
-                            marginX: "15px",
-                        },
-                    }}
-                >
-                    {/* Start Left Content Wrapper */}
-                    <Box
-                        component="div"
+                <Stack sx={{ justifyContent: "center", alignItems: "center", gap: 5 }}>
+                    <Chip
+                        icon={<Circle color="#0AA4A5" sx={{ fontSize: 10 }} />}
+                        label="v1.0.0"
+                        variant="outlined"
                         sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "flex-start",
-                            minHeight: "405px",
-                            "@media (max-width:1120px)": {
-                                alignItems: "center",
+                            color: "#0AA4A5",
+                            backgroundColor: "#F3FAFA",
+                            border: "1px solid #0AA4A5",
+                            maxHeight: 28,
+                            "&:hover": {
+                                cursor: "help",
                             },
-                        }}
-                    >
-                        <Box
-                            component="h1"
-                            sx={{
-                                fontSize: theme.typography.h1.fontSize,
-                                "@media (max-width:1120px)": {
-                                    maxWidth: "900px",
-                                    textAlign: "center",
-                                },
-                                "@media (max-width:643px)": {
-                                    fontSize: "36px",
-                                    textAlign: "start",
-                                },
-
-                                "@media (max-width:480px)": {
-                                    fontSize: theme.typography.h1["@media (max-width:480px)"].fontSize,
-                                },
-                                maxWidth: "609px",
-                                height: "auto",
-                                my: "0",
-                            }}
-                        >
-                            Unlock the future of credentials with accessible, flexible, and verifiable
-                        </Box>
-                        <Box
-                            component="p"
-                            sx={{
-                                fontFamily: theme.typography.body1,
-                                marginY: "51px",
-                                maxWidth: "436px",
-                                "@media (max-width:1120px)": {
-                                    maxWidth: "600px",
-                                },
-                                "@media (max-width:480px)": {
-                                    fontSize: "12px",
-                                    Width: "636px",
-                                },
-                            }}
-                        >
-                            Ensure the authenticity of qualifications, certifications, and professional credentials in real-time. With RatifyMe, organizations and individuals can seamlessly verify digital credentials with unparalleled security and transparency. Simplify your verification process and build trust faster.
-                        </Box>
-                        <Box component="div">
-                            <TextField
-                                label="Email"
-                                variant="outlined"
-                                height="48px"
-                                sx={{
-                                    maxWidth: "250px",
-                                    textTransform: "none",
-
-                                    color: "white",
-
-                                    "& .MuiOutlinedInput-root": {
-                                        borderRadius: "10px",
-                                    },
-                                    "& .MuiOutlinedInput-input": {
-                                        height: "50px",
-                                        padding: "10px",
-                                        boxSizing: "border-box",
-                                    },
-                                    "@media (max-width:480px)": {
-                                        display: "none",
-                                    },
-                                }}
-                            />
-                            <Link to="/contactus">
-                                <Button
-                                    variant="contained"
-                                    sx={{
-                                        maxWidth: "276px",
-                                        textTransform: "none",
-                                        fontSize: "16px",
-                                        color: "white",
-                                        borderRadius: "10px",
-                                        height: "50px",
-                                        marginLeft: "5px",
-                                    }}
-                                >
-                                    Let's Communicate
-                                </Button>
-                            </Link>
-                        </Box>
-                    </Box>
-                    {/*  End Left Content Wrapper */}
-                    {/* Start Right Content Wrapper  */}
-                    <Box
-                        component="img"
-                        src={PosterHeroSvg}
-                        alt="Hero"
-                        sx={{
-                            width: "100%",
-                            maxWidth: "539px",
-                            minWidth: "200px",
-
-                            height: "auto",
-                            "@media (max-width:1120px)": {
-                                maxWidth: "639px",
-                                minWidth: "200px",
-                                height: "auto",
-                            },
+                            padding: "0 6px",
+                            borderRadius: "8px",
+                            fontSize: 16,
+                            fontWeight: theme.fontWeight.bold,
                         }}
                     />
-                </Box>
-                {/* End Right Content Wrapper  */}
+
+                    <Stack sx={{ flexDirection: "row", gap: 3 }}>
+                        <Stack sx={{ justifyContent: "center", alignItems: "center", flexDirection: "row", gap: 1 }}>
+                            <ApartmentOutlined sx={{ color: theme.palette.text.disabled, fontSize: 20 }} />
+                            <Typography variant="body1" sx={{ color: theme.palette.text.disabled }}>
+                                Institution role
+                            </Typography>
+                        </Stack>
+
+                        <Stack sx={{ justifyContent: "center", alignItems: "center", flexDirection: "row", gap: 1 }}>
+                            <CastForEducationOutlined sx={{ color: theme.palette.text.disabled, fontSize: 20 }} />
+                            <Typography variant="body1" sx={{ color: theme.palette.text.disabled }}>
+                                Issuer role
+                            </Typography>
+                        </Stack>
+
+                        <Stack sx={{ justifyContent: "center", alignItems: "center", flexDirection: "row", gap: 1 }}>
+                            <AdminPanelSettingsOutlined sx={{ color: theme.palette.text.disabled, fontSize: 20 }} />
+                            <Typography variant="body1" sx={{ color: theme.palette.text.disabled }}>
+                                Earner role
+                            </Typography>
+                        </Stack>
+                    </Stack>
+
+                    <Stack sx={{ gap: 1 }}>
+                        <Typography
+                            sx={{
+                                fontSize: "72px",
+                                textAlign: "center",
+                                maxWidth: 600,
+                                fontWeight: theme.fontWeight.bold,
+                                lineHeight: 1,
+                                marginBottom: "20px",
+                            }}
+                        >
+                            Unlock the future of credentials
+                        </Typography>
+                        <Typography
+                            variant="h3"
+                            sx={{
+                                textAlign: "center",
+                                // fontWeight: theme.fontWeight.semiBold,
+                                lineHeight: 1.2,
+                                marginBottom: "20px",
+                                maxWidth: 600,
+                            }}
+                        >
+                            Ensure the authenticity of qualifications, certifications, and professional credentials in real-time.
+                        </Typography>
+                    </Stack>
+
+                    <Stack sx={{ flexDirection: "row", gap: 2 }}>
+                        <Button
+                            variant="contained"
+                            sx={{
+                                color: theme.palette.customColors.white,
+                                fontWeight: theme.fontWeight.bold,
+                                textTransform: "none",
+                                fontSize: "18px",
+                                px: 3,
+                                py: 1.5,
+                            }}
+                        >
+                            Let's Get Start
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            endIcon={<ArrowForwardIosOutlined/>}
+                            sx={{
+                                color: theme.palette.customColors.white,
+                                background: "#0B3558",
+                                border: `1px solid #D0D1D6`,
+                                fontWeight: theme.fontWeight.bold,
+                                textTransform: "none",
+                                fontSize: "18px",
+                                px: 3,
+                                py: 1.5,
+                            }}
+                        >
+                            Demo Credential
+                        </Button>
+                    </Stack>
+                </Stack>
             </LandingContainer>
             {/* End Hero Container  */}
         </Box>
