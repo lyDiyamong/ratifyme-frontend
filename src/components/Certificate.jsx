@@ -17,6 +17,7 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
         ref={ref}
         sx={{
             minWidth: "1000px",
+            maxWidth: "1000px",
             height: 700,
             border: "10px solid #ffffff",
             padding: 3,
@@ -39,7 +40,12 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
                 </Typography>
                 <Typography variant="body2">
                     RatifyMe by{" "}
-                    <span style={{ color: theme.palette.primary.main, fontWeight: theme.fontWeight.semiBold }}>TechA</span>
+                    <Typography
+                        component="span"
+                        sx={{ color: theme.palette.primary.main, fontWeight: theme.fontWeight.semiBold }}
+                    >
+                        TechA
+                    </Typography>
                 </Typography>
             </Stack>
         </Stack>
@@ -99,16 +105,24 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
                 >
                     successfully completed all requirements in
                 </Typography>
-                <Typography
-                    sx={{
-                        fontSize: theme.typography.h1,
-                        color: theme.palette.text.primary,
-                        fontWeight: theme.fontWeight.bold,
-                        lineHeight: 2,
-                    }}
-                >
-                    {badge?.name}
-                </Typography>
+                <Box sx={{ maxWidth: "100%", overflowWrap: "break-word", paddingX: 3 }}>
+                    <Typography
+                        sx={{
+                            fontSize: theme.typography.h1,
+                            color: theme.palette.text.primary,
+                            fontWeight: theme.fontWeight.bold,
+                            lineHeight: 1.2,
+                            textAlign: "center",
+                            wordBreak: "break-word",
+                            overflowWrap: "break-word",
+                            maxWidth: "100%",
+                            textWrap: "wrap"
+                        }}
+                    >
+                        {badge?.name}
+                    </Typography>
+                </Box>
+
                 {/* Certificate description */}
                 <Box sx={{ display: "flex", justifyContent: "center" }}>
                     <Typography
