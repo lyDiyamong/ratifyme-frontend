@@ -31,11 +31,9 @@ const AddRecipientForm = () => {
     // Start onSubmit function
     const onSubmit = (data) => {
         setLoading(true);
-        console.log(data);
 
         // SetTimeout to see Loading
         setTimeout(() => {
-            console.log("Data submitted");
             setLoading(false);
         }, 2000);
 
@@ -124,11 +122,11 @@ const AddRecipientForm = () => {
                                                         {...params}
                                                         {...field}
                                                         sx={{
-                                                            width: "100%", 
-                                                            maxWidth: "100%", 
-                                                            borderRadius: "12px", 
+                                                            width: "100%",
+                                                            maxWidth: "100%",
+                                                            borderRadius: "12px",
                                                             "& .MuiOutlinedInput-root": {
-                                                                borderRadius: "12px", 
+                                                                borderRadius: "12px",
                                                             },
                                                             "& .MuiOutlinedInput-notchedOutline": {
                                                                 borderRadius: "12px",

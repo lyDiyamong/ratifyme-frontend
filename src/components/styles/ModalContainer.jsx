@@ -37,7 +37,6 @@ const ModalContainer = ({ open, onClose, title, options, control, onGetEmail, ba
             try {
                 const result = { id: badgeId, earners: earnerIds };
                 await sendBadge(result).unwrap();
-                console.log("Badge successfully issued");
             } catch (error) {
                 console.error("Error issuing badge:", error);
             }
