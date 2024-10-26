@@ -235,7 +235,7 @@ const CertificateGenerator = ({ badge }) => {
                             >
                                 Get Certificate
                             </Button>
-                            <Button startIcon={<DriveFolderUploadOutlined />} variant="outlined" onClick={handleViewCert}>
+                            <Button disabled={earnerAchieResponse?.data?.certUrlPdf ? false : true} startIcon={<DriveFolderUploadOutlined />} variant="outlined" onClick={handleViewCert}>
                                 View Certificate
                             </Button>
                         </Stack>
