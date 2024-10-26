@@ -139,7 +139,7 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
                             fontWeight: theme.fontWeight.bold,
                         }}
                     >
-                        {`${badge?.Issuer?.User?.firstName} ${badge?.Issuer?.User?.lastName}` || "Mary Jane"}
+                        {`${badge?.Issuer?.User?.firstName} ${badge?.Issuer?.User?.lastName}` || "N/A"}
                     </Typography>
                 </Typography>
             </Box>

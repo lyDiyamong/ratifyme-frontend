@@ -1,8 +1,9 @@
 // React import
 import { useEffect, useState } from "react";
+import ConfettiExplosion from "react-confetti-explosion";
 
 // MUI import
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 // Custom import
 import AlertConfirmation from "./alert/AlertConfirmation";
@@ -19,12 +20,15 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
     // =========== API Hooks & Data Fetching ===========
     const { data: earnerAchieResponse, refetch } = useFetchEarnerAchieByIdQuery({ achieveId: achievementIds, earnerId });
     const [claimBadge, { isSuccess }] = useClaimBadgeMutation();
-    console.log("Achievement Id", achievementIds);
-    console.log("Earner Id", earnerId);
 
     // =========== State Management ===========
+    // Claim state
     const [claimed, setClaimed] = useState(false);
+    // Claim modal state
     const [isClaimBadgeModal, setIsClaimBadgeModal] = useState(false);
+    // Congrats state
+    const [isExploding, setIsExploding] = useState(false);
+    // Catch status custom hook
     const [message, setMessage] = useCatchStatus(isSuccess, isSuccess ? "Badge Claimed successfully" : "Badge Claimed failed");
 
     // Extract response data
@@ -45,6 +49,7 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
                 status: true,
             }).unwrap();
             setClaimed(true);
+            setIsExploding(true);
             refetch();
         } catch (error) {
             setMessage("Badge Claimed failed");
@@ -52,24 +57,26 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
             setIsClaimBadgeModal(false);
         }
     };
-    console.log("Claim status", claimed);
 
     // =========== Side Effects ===========
     /**
      * Updates claimed state based on API response
      * Marks as claimed if issuedOn is null or based on statusAchievement
      */
-    console.log("Issued On", issuedOn);
     useEffect(() => {
         if (statusAchievement !== undefined) {
             setClaimed(statusAchievement);
-            console.log("Status", statusAchievement);
         }
     }, [statusAchievement, issuedOn]);
 
     return (
         // =========== Start ClaimBadgeButton ===========
         <>
+            {isExploding && (
+                <Box sx={{ position: "absolute", top: "20%", left: { md: "55%", xss: "50%" } }}>
+                    <ConfettiExplosion force={0.6} duration={3000} particleCount={150} width={1600} />
+                </Box>
+            )}
             {message && <AlertMessage variant={isSuccess ? "success" : "error"}>{message}</AlertMessage>}
             <AlertConfirmation
                 open={isClaimBadgeModal}
@@ -87,7 +94,7 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
             />
             <Button
                 onClick={() => setIsClaimBadgeModal(true)}
-                disabled={issuedOn === null|| claimed}
+                disabled={issuedOn === null || claimed}
                 variant="contained"
                 sx={{
                     color: theme.palette.customColors.white,
@@ -98,7 +105,7 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
                     textTransform: "none",
                 }}
             >
-                {claimed ? "Claimed" :  "Claim Badge" }
+                {claimed ? "Claimed" : "Claim Badge"}
             </Button>
         </>
         // =========== End ClaimBadgeButton ===========

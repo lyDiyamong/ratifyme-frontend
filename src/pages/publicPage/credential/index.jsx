@@ -69,7 +69,7 @@ const Credential = () => {
             setOpen(true);
 
             // Make the API call and unwrap the response
-            const postData = await verifyCred({
+            await verifyCred({
                 credId,
                 verifyData: {
                     earnerName: earnerData?.name,
@@ -79,7 +79,6 @@ const Credential = () => {
                 },
             }).unwrap();
 
-            console.log("Payload", postData);
         } catch (error) {
             console.error("Verification failed", error);
             setOpen(false);

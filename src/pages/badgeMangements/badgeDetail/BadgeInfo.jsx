@@ -45,7 +45,7 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
     const handleDeleteBadge = async (id) => {
         try {
             await deleteBadge(id).unwrap();
-            navigate("/management/badges");
+            navigate("/dashboard/management/badges");
             refetch();
         } catch (error) {
             console.error("Error deleting post:", error);

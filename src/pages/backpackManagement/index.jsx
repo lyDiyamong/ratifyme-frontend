@@ -18,7 +18,6 @@ const BackpackManagement = () => {
     const { data: badges } = useFetchBadgeByEarnerQuery(
         earnerData ? { earnerId: earnerData?.id, search: searchQuery } : skipToken,
     );
-    console.log(earnerData.id, badges?.badgeClasses);
 
     const [result, setResult] = useState(badges?.totalRecords || 0);
 

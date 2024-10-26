@@ -2,7 +2,7 @@ import TableCustom from "../../../components/TableCustom";
 import { useFetchEmailEarnerQuery } from "../../../store/api/achievements/achievementApi";
 import FormatYear from "../../../utils/formatDate";
 import { useState } from "react";
-import getSortOptions from "../../../components/GetSortOptions"
+import getSortOptions from "../../../components/GetSortOptions";
 
 const TableEarnerList = ({ achievementId }) => {
     const isSortable = true;
@@ -24,19 +24,19 @@ const TableEarnerList = ({ achievementId }) => {
     const earnerColumns = [
         {
             name: "No.",
-            selector: (row, index) => index + 1 || "N/A",    
+            selector: (row, index) => index + 1 || "N/A",
         },
         {
             name: "Name",
-            selector: (row) => row.name || "N/A",   
+            selector: (row) => row.name || "N/A",
         },
         {
             name: "Email",
-            selector: (row) => row.User?.email || "N/A",     
+            selector: (row) => row.User?.email || "N/A",
         },
         {
             name: "Date Of Birth",
-            selector: (row) => FormatYear(row.User?.dateOfBirth) || "N/A",   
+            selector: (row) => FormatYear(row.User?.dateOfBirth) || "N/A",
         },
         {
             name: "Academic Year",
@@ -86,8 +86,8 @@ const TableEarnerList = ({ achievementId }) => {
             onSearch={handleSearch}
             addNewBtn={false}
             sortOptions={getSortOptions("name", "-name")}
-        ></TableCustom>
-    )
+        />
+    );
 };
 
 export default TableEarnerList;

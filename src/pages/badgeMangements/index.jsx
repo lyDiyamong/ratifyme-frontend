@@ -7,6 +7,9 @@ import DashboardContainer from "../../components/styles/DashboardContainer";
 import BadgeList from "./BadgeList";
 import { useFetchBadgesQuery } from "../../store/api/badgeManagement/badgeApi";
 import { display } from "@mui/system";
+import { Box, CardMedia, Typography } from "@mui/material";
+import theme from "../../assets/themes";
+import StatusCode from "../../assets/images/NoData.svg";
 
 const BadgeManagement = () => {
     const [page, setPage] = useState(1);
@@ -70,7 +73,21 @@ const BadgeManagement = () => {
                 page={page || []}
                 result={result || []}
             >
-                <BadgeList />
+                {badges?.total === 0 ? (
+                    <Box display="flex" flexDirection="column" alignItems="center" p={4}>
+                        <CardMedia
+                            component="img"
+                            image={StatusCode}
+                            alt="No badges found"
+                            sx={{ maxWidth: 400, width: "100%" }}
+                        />
+                        <Typography variant="h6" mt={2} textAlign="center" color={theme.palette.text.secondary}>
+                            No badges Found
+                        </Typography>
+                    </Box>
+                ) : (
+                    <BadgeList />
+                )}
             </SearchBar>
         </DashboardContainer>
     );

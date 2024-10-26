@@ -6,9 +6,7 @@ import { useSelector } from "react-redux";
 // MUI import
 import { Box, Button, CardMedia, Stack, Typography } from "@mui/material";
 import DriveFolderUploadOutlined from "@mui/icons-material/DriveFolderUploadOutlined";
-import ConfettiExplosion from "react-confetti-explosion";
 import DownloadDoneOutlined from "@mui/icons-material/DownloadDoneOutlined";
-import AutoAwesome from "@mui/icons-material/AutoAwesome";
 
 // Custom import
 import Certificate from "../../../components/Certificate";
@@ -48,8 +46,7 @@ const CertificateGenerator = ({ badge }) => {
     // Catch status hook
     const [message, setMessage] = useCatchStatus(uploadCertError, "Get certificate failed");
 
-    const [isExploding, setIsExploding] = useState(false);
-    const [isCertUpload, setIsCertUpload] = useState(false)
+    const [isCertUpload, setIsCertUpload] = useState(false);
     const [isUploadCertModal, setIsUploadCertModal] = useState(false);
 
     const handleGenerateImage = async () => {
@@ -72,8 +69,8 @@ const CertificateGenerator = ({ badge }) => {
             // Open the uploaded certificate URL
             if (response) {
                 window.open(response?.uploadCert, "_blank");
-                if(response?.uploadCert){
-                    setIsCertUpload(true)
+                if (response?.uploadCert) {
+                    setIsCertUpload(true);
                 }
             }
         } catch (error) {
@@ -90,18 +87,12 @@ const CertificateGenerator = ({ badge }) => {
         window.open(earnerAchieResponse?.data?.certUrlPdf, "_blank");
     };
 
-    // Congrat handling
-    const handleCongrats = () => {
-        setIsExploding(true);
-        setTimeout(() => setIsExploding(false), 4000);
-    };
-
     // Disable Generate button effect
     useEffect(() => {
         if (certUrl) {
-            setIsCertUpload(true)
+            setIsCertUpload(true);
         }
-    }, [certUrl])
+    }, [certUrl]);
 
     return (
         <Box>
@@ -211,27 +202,13 @@ const CertificateGenerator = ({ badge }) => {
                         sx={{
                             flexDirection: "row",
                             gap: 2,
-                            justifyContent: "space-between",
+                            justifyContent: "end",
                             alignItems: "start",
                             maxWidth: 1000,
                             width: "100%",
                             mx: "auto",
                         }}
                     >
-                        <Button
-                            variant="outlined"
-                            color="success"
-                            sx={{
-                                maxWidth: 200,
-                                backgroundColor: theme.palette.customColors.green100,
-                                "&:hover": {
-                                    backgroundColor: theme.palette.background.success,
-                                },
-                            }}
-                            onClick={handleCongrats}
-                        >
-                            <AutoAwesome />
-                        </Button>
                         <Stack flexDirection={{ md: "row", xss: "column" }} gap={1}>
                             {/* Start Upload  */}
                             <AlertConfirmation
@@ -263,11 +240,6 @@ const CertificateGenerator = ({ badge }) => {
                             </Button>
                         </Stack>
                     </Stack>
-                    {isExploding && (
-                        <Box sx={{ position: "absolute", top: "20%", left: { md: "55%", xss: "50%" } }}>
-                            <ConfettiExplosion force={0.6} duration={3000} particleCount={150} width={1600} />
-                        </Box>
-                    )}
                 </Stack>
             )}
         </Box>

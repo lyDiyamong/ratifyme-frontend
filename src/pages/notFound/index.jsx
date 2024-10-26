@@ -12,7 +12,6 @@ import { useCheckAuthQuery } from "../../store/api/auth/authApi";
 
 const NotFoundPage = () => {
     const {data} = useCheckAuthQuery()
-    console.log("User data",data);
     // Navigate hook
     const navigate = useNavigate();
     return (

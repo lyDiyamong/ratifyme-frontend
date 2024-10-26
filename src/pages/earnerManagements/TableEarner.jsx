@@ -76,7 +76,6 @@ const TableEarner = () => {
     // Earner data fetched from the API
     const earnerData = response?.data;
 
-    console.log(earnerData);
 
     // Display earner in the earner table by the specific role , role = 1 (Admin), role = 2 (institutionOwner), role = 3 (issuer)
     const filteredEarnerData =
@@ -84,7 +83,7 @@ const TableEarner = () => {
             ? earnerData
             : earnerData?.filter((earner) =>
                   roleId === 2
-                      ? earner.institutionId === institutionId 
+                      ? earner.institutionId === institutionId
                       : earner.Issuer?.userId === userId,
               );
 

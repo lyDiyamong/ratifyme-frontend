@@ -71,9 +71,6 @@ const BadgeDetail = () => {
         }
     }
 
-    // console.log("Earner CredUrl💥", earnerAchieveData?.credUrl);
-    // console.log("Try to see the Status🎉", earnerAchieveData?.status);
-
     // Handler to get emails from IssuerBadgeButton
     const handleGetEmails = (emails) => {
         setSelectedEmails(emails);
@@ -189,7 +186,14 @@ const BadgeDetail = () => {
                 )}
             </Stack>
 
-            <Tabs value={value} onChange={handleChange} textColor="primary" indicatorColor="primary">
+            <Tabs
+                value={value}
+                onChange={handleChange}
+                textColor="primary"
+                indicatorColor="primary"
+                variant="scrollable"
+                scrollButtons="auto"
+            >
                 <Tab label="Description" icon={<Description />} iconPosition="start" />
                 {role === "issuer" && <Tab label="Earner List" icon={<Group />} iconPosition="start" />}
                 {role === "earner" && <Tab label="Your Certificate" icon={<WorkspacePremium />} iconPosition="start" />}

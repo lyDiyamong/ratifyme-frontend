@@ -31,7 +31,7 @@ const BadgeListCard = ({ badges, onView, total }) => {
                     </Typography>
                     <Grid container spacing={2}>
                         {badges?.map((badge) => (
-                            <Grid item xs={12} sm={6} md={4} lg={3} xl={2.4} key={badge?.id}>
+                            <Grid item xss={12} sm={6} md={4} lg={3} xl={2.4} key={badge?.id}>
                                 <Card
                                     sx={{
                                         maxWidth: { xss: "100%", lg: 360 },
@@ -65,7 +65,7 @@ const BadgeListCard = ({ badges, onView, total }) => {
                                                 sx={{
                                                     width: "100%",
                                                     height: "auto",
-                                                    maxHeight: 170,
+                                                    minHeight: 170,
                                                     objectFit: "contain",
                                                 }}
                                             />

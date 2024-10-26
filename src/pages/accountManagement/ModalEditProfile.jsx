@@ -1,7 +1,9 @@
 // React Library Import
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import dayjs from "dayjs";
+import * as yup from "yup";
 
 // MUI Import
 import Box from "@mui/material/Box";
@@ -20,15 +22,37 @@ import FormInput from "../../components/FormInput";
 import SelectForm from "../../components/SelectionForm";
 import { SpinLoading } from "../../components/loading/SpinLoading";
 import PhoneNumberForm from "../../components/PhoneNumberForm";
+import AlertMessage from "../../components/alert/AlertMessage";
 
 // Fetching Data Import
 import { useUpdateUserProfileMutation } from "../../store/api/users/userInfoProfileApi";
 
 const CustomPaper = (props) => <Paper {...props} sx={{ borderRadius: "16px" }} />;
 
+// Yup schema
+const validationSchema = yup.object({
+    firstName: yup
+        .string()
+        .matches(/^[A-Za-z]+$/, "First name should contain only letters and no spaces")
+        .required("First name is required"),
+    lastName: yup
+        .string()
+        .matches(/^[A-Za-z]+$/, "Last name should contain only letters and no spaces")
+        .required("Last name is required"),
+    username: yup.string().matches(/^\S*$/, "Username should not contain spaces").required("Username is required"),
+    phoneNumber: yup.string().required("Phone number is required"),
+    email: yup.string().email("Invalid email format").required("Email is required"),
+    Gender: yup.string(),
+    dateOfBirth: yup.date().nullable(),
+    country: yup.string(),
+    organization: yup.string(),
+    occupation: yup.string(),
+});
+
 // =========== Start Edit Profile Modal ===========
 const EditProfileModal = ({ open, userData, onClose }) => {
     const { handleSubmit, control, reset } = useForm({
+        resolver: yupResolver(validationSchema),
         defaultValues: {
             dateOfBirth: null,
             country: "",
@@ -44,6 +68,7 @@ const EditProfileModal = ({ open, userData, onClose }) => {
     });
 
     const [updateUserProfile, { isLoading, isError }] = useUpdateUserProfileMutation();
+    const [isSuccess, setIsSuccess] = useState(false);
 
     useEffect(() => {
         if (userData) {
@@ -68,9 +93,11 @@ const EditProfileModal = ({ open, userData, onClose }) => {
 
         try {
             await updateUserProfile({ id: userData.id, data: updatedData }).unwrap();
+            setIsSuccess(true);
             onClose();
         } catch (error) {
             console.error("Failed to update profile: ", error);
+            setIsSuccess(false);
         } finally {
             reset();
         }
@@ -94,7 +121,11 @@ const EditProfileModal = ({ open, userData, onClose }) => {
                 Personal Information
             </DialogTitle>
             <DialogContent>
-                {isError && <p style={{ color: "red" }}>Error updating profile. Please try again.</p>}
+                {isError && (
+                    <AlertMessage variant={isSuccess ? "success" : "error"}>
+                        {isSuccess ? "Profile updated successfully!" : "Error updating profile. Please try again."}
+                    </AlertMessage>
+                )}
                 <Box
                     sx={{
                         mt: 2,
@@ -108,11 +139,9 @@ const EditProfileModal = ({ open, userData, onClose }) => {
                     <FormInput name="firstName" label="First Name" control={control} type="text" required />
                     <FormInput name="lastName" label="Last Name" control={control} type="text" required />
                     <FormInput name="username" label="Username" control={control} type="text" required />
-
-                    {/* Use PhoneNumberForm component here */}
                     <PhoneNumberForm name="phoneNumber" label="Phone Number" control={control} required />
-
                     <FormInput name="email" label="Email Address" control={control} type="email" disabled={true} />
+
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <Controller
                             name="dateOfBirth"
@@ -123,30 +152,15 @@ const EditProfileModal = ({ open, userData, onClose }) => {
                                     openTo="year"
                                     views={["year", "month", "day"]}
                                     value={field.value}
-                                    onChange={(newValue) => {
-                                        field.onChange(newValue);
-                                    }}
+                                    onChange={(newValue) => field.onChange(newValue)}
                                     renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            {...field}
-                                            sx={{
-                                                width: "100%",
-                                                borderRadius: "12px",
-                                            }}
-                                        />
+                                        <TextField {...params} {...field} sx={{ width: "100%", borderRadius: "12px" }} />
                                     )}
                                 />
                             )}
                         />
                     </LocalizationProvider>
-                    <SelectForm
-                        control={control}
-                        name="Gender"
-                        label="Gender"
-                        options={optionSelect}
-                        required={false}
-                    />
+                    <SelectForm control={control} name="Gender" label="Gender" options={optionSelect} required={false} />
                 </Box>
             </DialogContent>
             <DialogActions sx={{ pb: "20px", pr: "20px" }}>
