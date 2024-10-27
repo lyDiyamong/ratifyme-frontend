@@ -32,7 +32,7 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
         }}
     >
         <Stack sx={{ flexDirection: "row", gap: 1, alignItems: "center" }}>
-            <Box sx={{ width: 40, height: 40 }} component="img" src={RatfiyME} alt="RatifyMe" />
+            <Box sx={{ width: 40, height: 40 }} component="img" src="https://ratifyme.s3.ap-southeast-2.amazonaws.com/Logo/RatifyME-Fevicon.svg" alt="RatifyMe" />
             <Divider sx={{ height: 45, borderColor: "black" }} orientation="vertical" />
             <Stack justifyContent="start" alignItems="start">
                 <Typography variant="h3" fontWeight={theme.fontWeight.semiBold}>
@@ -69,7 +69,7 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
                         textTransform: "uppercase",
                     }}
                 >
-                    ABOVE AND BEYOND SCHOOL
+                    {badge?.Institution?.institutionName}
                 </Typography>
             </Box>
 
@@ -116,12 +116,15 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
                             wordBreak: "break-word",
                             overflowWrap: "break-word",
                             maxWidth: "100%",
-                            textWrap: "wrap"
+                            textWrap: "wrap",
                         }}
                     >
                         {badge?.name}
                     </Typography>
                 </Box>
+
+                {/* Badge image */}
+                <Box component="img" src={badge?.imageUrl} alt={badge?.name} sx={{ maxWidth: 200, height: 200, objectFit:"contain" }} />
 
                 {/* Certificate description */}
                 <Box sx={{ display: "flex", justifyContent: "center" }}>
