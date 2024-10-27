@@ -8,7 +8,7 @@ import { Box, Divider, Typography, Stack } from "@mui/material";
 import certWave from "../assets/images/certWave.jpg";
 import theme from "../assets/themes";
 import FormatDate from "../utils/formatDate";
-import RatfiyME from "../assets/icons/RatifyME-Fevicon.svg";
+import RatfiyME from "../assets/icons/Favicon-Ratifyme.png";
 
 // =========== Start Certificate ===========
 // eslint-disable-next-line react/display-name
@@ -32,7 +32,7 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
         }}
     >
         <Stack sx={{ flexDirection: "row", gap: 1, alignItems: "center" }}>
-            <Box sx={{ width: 40, height: 40 }} component="img" src="https://ratifyme.s3.ap-southeast-2.amazonaws.com/Logo/RatifyME-Fevicon.svg" alt="RatifyMe" />
+            <Box sx={{ width: 40, height: 40, objectFit:'contain' }} component="img" src={RatfiyME} alt="RatifyMe" />
             <Divider sx={{ height: 45, borderColor: "black" }} orientation="vertical" />
             <Stack justifyContent="start" alignItems="start">
                 <Typography variant="h3" fontWeight={theme.fontWeight.semiBold}>

@@ -22,42 +22,55 @@ import { useFetchEarnerAchieByIdQuery } from "../../../store/api/earnerManagemen
 import AlertConfirmation from "../../../components/alert/AlertConfirmation";
 import { WarningAmberOutlined } from "@mui/icons-material";
 
-// Helper function to convert remote images to base64
+// Convert remote images to base64 with SVG support
 const convertImageToBase64 = async (imgUrl) => {
     try {
         const response = await fetch(imgUrl);
-        const blob = await response.blob();
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result);
-            reader.onerror = reject;
-            reader.readAsDataURL(blob);
-        });
+        const contentType = response.headers.get('Content-Type');
+
+        // Check if the image is SVG
+        if (contentType && contentType.includes('svg')) {
+            const svgText = await response.text();
+            // Encode SVG text as base64
+            const base64 = btoa(unescape(encodeURIComponent(svgText)));
+            return `data:image/svg+xml;base64,${base64}`;
+        } else {
+            const blob = await response.blob();
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(blob);
+            });
+        }
     } catch (error) {
         console.error("Error converting image:", error);
         return null;
     }
 };
 
+
 // Function to prepare and load images in base64
 const prepareImages = async (certificateRef) => {
-    const images = certificateRef.current.getElementsByTagName('img');
-    await Promise.all(Array.from(images).map(async (img) => {
-        try {
-            if (!img.src.startsWith('data:image')) {
-                const base64 = await convertImageToBase64(img.src);
-                if (base64) {
-                    img.src = base64;
-                    await new Promise((resolve, reject) => {
-                        img.onload = resolve;
-                        img.onerror = reject;
-                    });
+    const images = certificateRef.current.getElementsByTagName("img");
+    await Promise.all(
+        Array.from(images).map(async (img) => {
+            try {
+                if (!img.src.startsWith("data:image")) {
+                    const base64 = await convertImageToBase64(img.src);
+                    if (base64) {
+                        img.src = base64;
+                        await new Promise((resolve, reject) => {
+                            img.onload = resolve;
+                            img.onerror = reject;
+                        });
+                    }
                 }
+            } catch (error) {
+                console.error("Error preparing image:", error);
             }
-        } catch (error) {
-            console.error("Error preparing image:", error);
-        }
-    }));
+        }),
+    );
 };
 
 const CertificateGenerator = ({ badge }) => {
@@ -90,7 +103,7 @@ const CertificateGenerator = ({ badge }) => {
     // Generate certificate image and upload it
     const handleGenerateImage = async () => {
         try {
-            await new Promise(resolve => setTimeout(resolve, 100)); // Wait for DOM readiness
+            await new Promise((resolve) => setTimeout(resolve, 100)); // Wait for DOM readiness
             await document.fonts.ready; // Wait for fonts to load
             await prepareImages(certificateRef); // Preload and convert images
 
@@ -99,13 +112,15 @@ const CertificateGenerator = ({ badge }) => {
                 pixelRatio: 2,
                 cacheBust: true,
                 skipFonts: false,
-                backgroundColor: '#ffffff',
-                style: { transform: 'scale(1)', transformOrigin: 'top left' },
-                fetchRequestInit: { mode: 'cors', credentials: 'same-origin' },
+                backgroundColor: "#ffffff",
+                style: { transform: "scale(1)", transformOrigin: "top left" },
+                fetchRequestInit: { mode: "cors", credentials: "same-origin" },
             };
 
             const jpegDataUrl = await toJpeg(certificateRef.current, imageSettings);
-            const blob = await fetch(jpegDataUrl).then(res => res.blob()).then(b => new Blob([b], { type: 'image/jpeg' }));
+            const blob = await fetch(jpegDataUrl)
+                .then((res) => res.blob())
+                .then((b) => new Blob([b], { type: "image/jpeg" }));
 
             const formData = new FormData();
             formData.append("certFile", blob, `${earnerAchieResponse?.data?.credId}.jpg`);
@@ -113,7 +128,7 @@ const CertificateGenerator = ({ badge }) => {
             const response = await uploadCert({
                 achieveId,
                 earnerId,
-                uploadedCert: formData
+                uploadedCert: formData,
             }).unwrap();
 
             if (response?.uploadCert) {
@@ -138,6 +153,20 @@ const CertificateGenerator = ({ badge }) => {
             setIsCertUpload(true);
         }
     }, [certUrl]);
+
+    // Use in your component
+    useEffect(() => {
+        const preloadImages = async () => {
+            const images = certificateRef.current.getElementsByTagName("img");
+            for (let img of images) {
+                const base64 = await convertImageToBase64(img.src);
+                if (base64) {
+                    img.src = base64;
+                }
+            }
+        };
+        preloadImages();
+    }, []);
 
     return (
         <Box>
@@ -280,7 +309,12 @@ const CertificateGenerator = ({ badge }) => {
                             >
                                 Get Certificate
                             </Button>
-                            <Button disabled={earnerAchieResponse?.data?.certUrlPdf ? false : true} startIcon={<DriveFolderUploadOutlined />} variant="outlined" onClick={handleViewCert}>
+                            <Button
+                                disabled={earnerAchieResponse?.data?.certUrlPdf ? false : true}
+                                startIcon={<DriveFolderUploadOutlined />}
+                                variant="outlined"
+                                onClick={handleViewCert}
+                            >
                                 View Certificate
                             </Button>
                         </Stack>
