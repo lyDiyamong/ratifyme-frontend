@@ -48,6 +48,18 @@ export const badgeApi = createApi({
             ],
         }),
 
+        updateBadge: builder.mutation({
+            query: ({ id, updatedBadge }) => ({
+                url: `/issuers/badgeClasses/editBadge/${id}`,
+                method: "PATCH",
+                body: updatedBadge,
+            }),
+            invalidatesTags: (result) => [
+                { type: "BadgeIssuer", id: "LIST" },
+                { type: "Badge", id: "LIST" },
+            ],
+        }),
+
         uploadCerti: builder.mutation({
             query: ({ achieveId, earnerId, uploadedCert }) => ({
                 url: `/earners/uploadCerti/${achieveId}/earner/${earnerId}`,
@@ -105,7 +117,7 @@ export const badgeApi = createApi({
                 url: `/issuers/badgeClasses/earner/${earnerId}?page=${page}&limit=${limit}&search=${search}`,
                 method: "GET",
             }),
-            providesTags: (result, error, earnerId) => {
+            providesTags: (result, error, { earnerId }) => {
                 return result?.badgeClasses
                     ? [
                           ...result.badgeClasses.map(({ id }) => ({ type: "BadgeEarner", id })),
@@ -114,14 +126,26 @@ export const badgeApi = createApi({
                     : [{ type: "BadgeEarner", id: `LIST-${earnerId}` }];
             },
         }),
+
         claimBadge: builder.mutation({
             query: ({ earnerId, achievementIds, badgeClassId, status }) => ({
                 url: `/earners/achievement/${earnerId}`,
                 method: "PATCH",
                 body: { achievementIds, badgeClassId, status },
             }),
-            // Update to match the tag provided by fetchClaimBadgeByEarner
-            invalidatesTags: (result, error, { earnerId }) => [{ type: "Earner", id: `LIST-${earnerId}` }],
+            invalidatesTags: (result, error, { earnerId, achievementIds }) => {
+                const tags = [{ type: "BadgeEarner", id: `LIST-${earnerId}` }];
+
+                // Check if achievementIds is an array
+                if (Array.isArray(achievementIds)) {
+                    // Only add tags for achievementIds if it is an array
+                    tags.push(...achievementIds.map((id) => ({ type: "BadgeEarner", id })));
+                } else {
+                    console.warn("achievementIds is not an array:", achievementIds);
+                }
+
+                return tags;
+            },
         }),
 
         fetchClaimBadgeByEarner: builder.query({
@@ -129,29 +153,19 @@ export const badgeApi = createApi({
                 url: `/issuers/badgeClasses/claim/${earnerId}?page=${page}&limit=${limit}&search=${search}`,
                 method: "GET",
             }),
-            providesTags: (result, error, earnerId) => {
+            providesTags: (result, error, { earnerId }) => {
                 const badgesWithTrueStatus =
                     result?.badgeClasses?.filter(
                         (badge) => badge.Achievements?.[0]?.Earners?.[0]?.EarnerAchievements?.status === true,
                     ) || [];
 
-                // Providing tags for caching based on the filtered badges
                 return badgesWithTrueStatus.length
                     ? [
-                          ...result.badgeClasses.map((badgeClasses) => ({ type: "Earner", id: badgeClasses.id })),
-                          { type: "Earner", id: `LIST-${earnerId}` },
+                          ...badgesWithTrueStatus.map((badge) => ({ type: "BadgeEarner", id: badge.id })),
+                          { type: "BadgeEarner", id: `LIST-${earnerId}` },
                       ]
-                    : [{ type: "Earner", id: `LIST-${earnerId}` }];
+                    : [{ type: "BadgeEarner", id: `LIST-${earnerId}` }];
             },
-        }),
-
-        updateBadge: builder.mutation({
-            query: ({ id, updatedBadge }) => ({
-                url: `/issuers/badgeClasses/editBadge/${id}`,
-                method: "PATCH",
-                body: updatedBadge,
-            }),
-            invalidatesTags: (result) => [{ type: "BadgeIssuer", id: `LIST` }, [{ type: "Badge", id: "LIST" }]],
         }),
     }),
 });

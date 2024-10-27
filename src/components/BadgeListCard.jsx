@@ -1,19 +1,63 @@
-// React import
+// React Import
+import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 
 // MUI import
-import { Grid, Card, CardContent, CardMedia, Typography, Button, Box, Stack, Pagination, useMediaQuery } from "@mui/material";
+import { Grid, Card, CardContent, CardMedia, Typography, Button, Box, Stack, Tooltip, useMediaQuery } from "@mui/material";
+import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
+import ErrorIcon from "@mui/icons-material/Error";
 
 // Custom import
 import theme from "../assets/themes";
 import StatusCode from "../assets/images/NoData.svg";
 import GoldBadge from "../assets/images/DiamondBadge.svg";
 
-const BadgeListCard = ({ badges, onView, total }) => {
+const BadgeListCard = ({ badges, onView, total, refetch }) => {
     const handleView = (id) => {
         onView(id);
     };
+    const { roleId } = useSelector((state) => state.global);
     const totalBadge = typeof total === "number" ? total : total?.length;
+
+    const [afterCheck, setAfterCheck] = useState([]);
+
+    useEffect(() => {
+        const processBadges = (badges) => {
+            if (!badges) return { issuedBadge: [], claimedBadge: [] };
+
+            const achievements = badges.flatMap(({ Achievements }) => Achievements) || [];
+            const uniqueBadges = [];
+            const seenBadgeIds = new Set();
+            for (const achievement of achievements) {
+                if (!seenBadgeIds.has(achievement.badgeClassId)) {
+                    uniqueBadges.push(achievement);
+                    seenBadgeIds.add(achievement.badgeClassId);
+                }
+            }
+
+            const issuedBadge = uniqueBadges.map((item) => {
+                if (!item.Earners || item.Earners.length === 0) return null;
+                return item.Earners.some((earner) => earner.EarnerAchievements?.issuedOn !== null)
+                    ? item.Earners.find((earner) => earner.EarnerAchievements?.issuedOn)?.EarnerAchievements?.issuedOn
+                    : null;
+            });
+            console.log(issuedBadge);
+
+            const claimedBadge = uniqueBadges.map((item) =>
+                item.Earners
+                    ? item.Earners.some((earner) => earner.EarnerAchievements?.claimedOn !== null)
+                        ? item.Earners.find((earner) => earner.EarnerAchievements?.claimedOn)?.EarnerAchievements?.claimedOn
+                        : null
+                    : null,
+            );
+
+            return { issuedBadge, claimedBadge };
+        };
+
+        // Process badges based on current badges and set `afterCheck` accordingly
+        const { issuedBadge, claimedBadge } = processBadges(badges);
+        setAfterCheck(roleId === 4 ? claimedBadge : issuedBadge);
+    }, [badges, roleId]);
 
     return (
         <Box my={3}>
@@ -30,8 +74,8 @@ const BadgeListCard = ({ badges, onView, total }) => {
                         Total Badges: {total || 0}
                     </Typography>
                     <Grid container spacing={2}>
-                        {badges?.map((badge) => (
-                            <Grid item xss={12} sm={6} md={4} lg={3} xl={2.4} key={badge?.id}>
+                        {badges?.map((badge, index) => (
+                            <Grid item xs={12} sm={6} md={4} lg={3} xl={2.4} key={badge?.id}>
                                 <Card
                                     sx={{
                                         maxWidth: { xss: "100%", lg: 360 },
@@ -44,7 +88,7 @@ const BadgeListCard = ({ badges, onView, total }) => {
                                         "&:hover": { transform: "scale(1.02)" },
                                     }}
                                 >
-                                    <Stack alignItems="center">
+                                    <Stack alignItems="center" position="relative">
                                         <Box
                                             minHeight={140}
                                             minWidth={140}
@@ -69,9 +113,43 @@ const BadgeListCard = ({ badges, onView, total }) => {
                                                     objectFit: "contain",
                                                 }}
                                             />
+                                            {(roleId === 3 || roleId === 4) &&
+                                                (typeof afterCheck?.[index] === "string" ? (
+                                                    <CheckCircleRoundedIcon
+                                                        sx={{
+                                                            display: "block",
+                                                            position: "absolute",
+                                                            right: "1px",
+                                                            top: "1px",
+                                                            color: theme.palette.primary.main,
+                                                        }}
+                                                    />
+                                                ) : (
+                                                    <Tooltip
+                                                        title={roleId === 4 ? "Not yet claimed" : "Not issued yet"}
+                                                        arrow
+                                                        placement="right-end"
+                                                    >
+                                                        <ErrorIcon
+                                                            sx={{
+                                                                position: "absolute",
+                                                                right: "1px",
+                                                                top: "1px",
+                                                                color: theme.palette.customColors.gray300,
+                                                            }}
+                                                        />
+                                                    </Tooltip>
+                                                ))}
+                                            {/* {(roleId === 3 || roleId === 4) &&
+                                                (afterCheck[index] === null ? (
+                                                    <Tooltip title={roleId === 4 ? "Not yet claimed" : "Not issued yet"} arrow>
+                                                        <ErrorIcon />
+                                                    </Tooltip>
+                                                ) : (
+                                                    <CheckCircleRoundedIcon />
+                                                ))} */}
                                         </Box>
                                     </Stack>
-
                                     <CardContent>
                                         <Stack>
                                             <Typography

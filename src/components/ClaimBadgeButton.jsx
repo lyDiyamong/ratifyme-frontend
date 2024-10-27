@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import ConfettiExplosion from "react-confetti-explosion";
 
 // MUI import
-import { Box, Button } from "@mui/material";
+import { Button } from "@mui/material";
 
 // Custom import
 import AlertConfirmation from "./alert/AlertConfirmation";
@@ -15,11 +15,15 @@ import theme from "../assets/themes";
 // Api import
 import { useClaimBadgeMutation } from "../store/api/badgeManagement/badgeApi";
 import { useFetchEarnerAchieByIdQuery } from "../store/api/earnerManagement/earnerApis";
+import { skipToken } from "@reduxjs/toolkit/query";
 
 const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
     // =========== API Hooks & Data Fetching ===========
-    const { data: earnerAchieResponse, refetch } = useFetchEarnerAchieByIdQuery({ achieveId: achievementIds, earnerId });
-    const [claimBadge, { isSuccess }] = useClaimBadgeMutation();
+    const { data: earnerAchieResponse, refetch } = useFetchEarnerAchieByIdQuery({
+        achieveId: achievementIds,
+        earnerId: earnerId,
+    });
+    const [claimBadge, { isLoading, isSuccess }] = useClaimBadgeMutation();
 
     // =========== State Management ===========
     // Claim state
@@ -52,7 +56,7 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
             setIsExploding(true);
             refetch();
         } catch (error) {
-            setMessage("Badge Claimed failed");
+            setMessage("Badge Claimed failed", error);
         } finally {
             setIsClaimBadgeModal(false);
         }
@@ -92,21 +96,53 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
                 confirmButtonColorHover={theme.palette.customColors.green400}
                 icon={VerifiedRoundedIcon}
             />
-            <Button
-                onClick={() => setIsClaimBadgeModal(true)}
-                disabled={issuedOn === null || claimed}
-                variant="contained"
-                sx={{
-                    color: theme.palette.customColors.white,
-                    fontSize: theme.typography.body1,
-                    fontWeight: theme.fontWeight.bold,
-                    borderRadius: theme.customShape.btn,
-                    px: 3,
-                    textTransform: "none",
-                }}
-            >
-                {claimed ? "Claimed" : "Claim Badge"}
-            </Button>
+            {issuedOn === null ? (
+                <Tooltip
+                    title="Waiting for issue"
+                    componentsProps={{
+                        tooltip: {
+                            sx: {
+                                fontSize: theme.typography.body2,
+                                bgcolor: theme.palette.customColors.gray300,
+                            },
+                        },
+                    }}
+                >
+                    <span>
+                        <Button
+                            onClick={() => setIsClaimBadgeModal(true)}
+                            disabled={claimed || isLoading}
+                            variant="contained"
+                            sx={{
+                                color: theme.palette.customColors.white,
+                                fontSize: theme.typography.body1,
+                                fontWeight: theme.fontWeight.bold,
+                                borderRadius: theme.customShape.btn,
+                                px: 3,
+                                textTransform: "none",
+                            }}
+                        >
+                            {isLoading ? "Claiming..." : "Claim Badge"}
+                        </Button>
+                    </span>
+                </Tooltip>
+            ) : (
+                <Button
+                    onClick={() => setIsClaimBadgeModal(true)}
+                    disabled={claimed || isLoading}
+                    variant="contained"
+                    sx={{
+                        color: theme.palette.customColors.white,
+                        fontSize: theme.typography.body1,
+                        fontWeight: theme.fontWeight.bold,
+                        borderRadius: theme.customShape.btn,
+                        px: 3,
+                        textTransform: "none",
+                    }}
+                >
+                    {isLoading ? "Claiming..." : claimed ? "Claimed" : "Claim Badge"}
+                </Button>
+            )}
         </>
         // =========== End ClaimBadgeButton ===========
     );

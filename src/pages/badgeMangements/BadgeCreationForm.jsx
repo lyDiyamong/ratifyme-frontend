@@ -114,7 +114,7 @@ const BadgeCreationForm = () => {
             tagsOrLanguage: "",
             achievementType: "",
 
-            expirationDate: null,
+            expiredDate: null,
             additionLink: "",
         },
         mode: "onChange",
@@ -156,7 +156,8 @@ const BadgeCreationForm = () => {
         formData.append("description", data.badgeDescription);
         formData.append("tags", data.tagsOrLanguage.join(","));
         formData.append("startedDate", data.startDate ? data.startDate.toISOString() : null);
-        formData.append("expiredDate", data.endDate ? data.endDate.toISOString() : null);
+        formData.append("endDate", data.endDate ? data.endDate.toISOString() : null);
+        formData.append("expiredDate", data.expiredDate ? data.expiredDate.toISOString() : null);
         formData.append("issuerId", issuerData.id);
         formData.append("institutionId", issuerData.institutionId);
 

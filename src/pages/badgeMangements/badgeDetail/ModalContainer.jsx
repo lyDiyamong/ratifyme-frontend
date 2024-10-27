@@ -15,7 +15,7 @@ const CustomPaper = (props) => <Paper {...props} sx={{ borderRadius: "16px" }} /
 
 const ModalContainer = ({ open, onClose, title, options, control, onGetEmail, badgeId, emails }) => {
     const { issuerData } = useSelector((state) => state.global);
-    const [sendBadge] = useSendBadgeMutation();
+    const [sendBadge, { refetch }] = useSendBadgeMutation();
     const { data: earner } = useFetchEarnerQuery({ issuerId: issuerData?.id });
 
     const [list, setList] = useState([]);
@@ -37,6 +37,7 @@ const ModalContainer = ({ open, onClose, title, options, control, onGetEmail, ba
             try {
                 const result = { id: badgeId, earners: earnerIds };
                 await sendBadge(result).unwrap();
+                refetch();
             } catch (error) {
                 console.error("Error issuing badge:", error);
             }
