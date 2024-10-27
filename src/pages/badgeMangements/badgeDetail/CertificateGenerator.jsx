@@ -26,10 +26,10 @@ import { WarningAmberOutlined } from "@mui/icons-material";
 const convertImageToBase64 = async (imgUrl) => {
     try {
         const response = await fetch(imgUrl);
-        const contentType = response.headers.get('Content-Type');
+        const contentType = response.headers.get("Content-Type");
 
         // Check if the image is SVG
-        if (contentType && contentType.includes('svg')) {
+        if (contentType && contentType.includes("svg")) {
             const svgText = await response.text();
             // Encode SVG text as base64
             const base64 = btoa(unescape(encodeURIComponent(svgText)));
@@ -48,7 +48,6 @@ const convertImageToBase64 = async (imgUrl) => {
         return null;
     }
 };
-
 
 // Function to prepare and load images in base64
 const prepareImages = async (certificateRef) => {
@@ -99,6 +98,7 @@ const CertificateGenerator = ({ badge }) => {
 
     const [isCertUpload, setIsCertUpload] = useState(false);
     const [isUploadCertModal, setIsUploadCertModal] = useState(false);
+    const [viewBtn, setViewBtn] = useState(false);
 
     // Generate certificate image and upload it
     const handleGenerateImage = async () => {
@@ -134,6 +134,7 @@ const CertificateGenerator = ({ badge }) => {
             if (response?.uploadCert) {
                 window.open(response.uploadCert, "_blank");
                 setIsCertUpload(true);
+                setViewBtn(true);
             }
         } catch (error) {
             setMessage("Failed to generate certificate. Please try again.");
@@ -310,7 +311,7 @@ const CertificateGenerator = ({ badge }) => {
                                 Get Certificate
                             </Button>
                             <Button
-                                disabled={earnerAchieResponse?.data?.certUrlPdf ? false : true}
+                                disabled={earnerAchieResponse?.data?.certUrlPdf || viewBtn ? false : true}
                                 startIcon={<DriveFolderUploadOutlined />}
                                 variant="outlined"
                                 onClick={handleViewCert}

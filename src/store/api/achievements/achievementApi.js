@@ -23,7 +23,7 @@ export const achievementApi = createApi({
                     achievementId: achievementId,
                 },
             }),
-            invalidatesTags: [{ type: "EarnerAchievement", id: "LIST" }],
+            invalidatesTags: [{ type: "Achievement", id: "LIST" }],
         }),
         fetchEmailEarner: builder.query({
             query: ({ achievementId, limit = 100, sort = "", page = 1, search = "" }) => ({

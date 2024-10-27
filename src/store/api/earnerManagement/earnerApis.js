@@ -1,4 +1,3 @@
-// import { Search } from "@mui/icons-material";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const earnerApi = createApi({
@@ -6,30 +5,16 @@ export const earnerApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_SERVER_BASE_URL }),
     tagTypes: ["Earner"],
     endpoints: (builder) => ({
-        // fetchEarner: builder.query({
-        //     query: ({ issuerId = null, roleId = null, page = 1, limit =10, sort="", search="", institutionId=null }) => {
-        //         let query = `/earners?page=${page}&limit=${limit}&sort=${sort}`;
-        //         if (search) query += `&search=${search}`;
 
-        //         if (roleId === 2) {
-        //             query += `&institutionId=${institutionId}`;
-        //         } else if (roleId !== 1) {
-        //             query += `&issuerId=${issuerId}`;
-        //         }
-
-        //         return query;
-        //     },
-        //     providesTags: ["Earner"],
-        // }),
         fetchEarner: builder.query({
             query: ({
-                issuerId = null, // Default to null if undefined
-                roleId = 1, // Default roleId if undefined
-                page = 1, // Default to first page
-                limit = 10, // Default to 10 items per page
-                sort = "", // Default sorting value
-                search = "", // Default search string
-                institutionId = null, // Default to null if undefined
+                issuerId = null,
+                roleId = 1,
+                page = 1,
+                limit = 10,
+                sort = "",
+                search = "",
+                institutionId = null,
             } = {}) => {
                 // Default empty object to avoid undefined destructuring
                 // Construct the base query

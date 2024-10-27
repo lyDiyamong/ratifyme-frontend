@@ -4,7 +4,7 @@ const badgeSchema = yup.object().shape({
     badgeName: yup
         .string()
         .min(6, "Name must be at least 6 characters")
-        .max(30, "Name must be less than 30 characters")
+        .max(50, "Name must be less than 50 characters")
         .required("Badge name is required"),
     badgeDescription: yup.string().max(300, "Name must be at least 300 characters"),
     tags: yup.string().max(255, "Name must be less than 255 characters"),

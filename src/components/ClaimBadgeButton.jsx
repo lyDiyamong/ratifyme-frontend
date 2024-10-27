@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import ConfettiExplosion from "react-confetti-explosion";
 
 // MUI import
-import { Button } from "@mui/material";
+import { Box, Button, Tooltip } from "@mui/material";
 
 // Custom import
 import AlertConfirmation from "./alert/AlertConfirmation";
@@ -15,7 +15,6 @@ import theme from "../assets/themes";
 // Api import
 import { useClaimBadgeMutation } from "../store/api/badgeManagement/badgeApi";
 import { useFetchEarnerAchieByIdQuery } from "../store/api/earnerManagement/earnerApis";
-import { skipToken } from "@reduxjs/toolkit/query";
 
 const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
     // =========== API Hooks & Data Fetching ===========

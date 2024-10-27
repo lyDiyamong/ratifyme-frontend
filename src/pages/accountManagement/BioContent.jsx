@@ -49,7 +49,7 @@ const BioContent = () => {
 
     // Handle form submit to update the bio
     const handleSubmit = async () => {
-        if (bio && userId) {
+        if (userId) {
             try {
                 await updateUserProfile({ id: userId, data: { bio } }).unwrap();
                 setIsEditing(false);
@@ -77,12 +77,12 @@ const BioContent = () => {
                     // alignItems: "center",
                     gap: 2,
                     // width: "100%",
-                    height: "270px",    
+                    height: "270px",
                     position: "relative",
                 }}
             >
                 {/* Header with "About Me" and Status */}
-                <Stack direction="row" >
+                <Stack direction="row">
                     <Stack direction="row" gap={3} alignItems="center">
                         <Typography
                             sx={{
@@ -97,9 +97,7 @@ const BioContent = () => {
                             label={bio ? "Active" : "No Bio"}
                             icon={<CheckCircleOutlineIcon color="green" />}
                             sx={{
-                                backgroundColor: bio
-                                    ? theme.palette.customColors.green100
-                                    : theme.palette.customColors.red100,
+                                backgroundColor: bio ? theme.palette.customColors.green100 : theme.palette.customColors.red100,
                                 color: bio ? theme.palette.customColors.green300 : theme.palette.customColors.red300,
                                 fontWeight: "bold",
                                 py: 0.5,
@@ -155,9 +153,7 @@ const BioContent = () => {
                                         },
                                     }}
                                 />
-                                <Typography sx={{ color: theme.palette.text.secondary }}>
-                                    {`${bio.length}/500 `}
-                                </Typography>
+                                <Typography sx={{ color: theme.palette.text.secondary }}>{`${bio.length}/500 `}</Typography>
                             </Stack>
                         ) : (
                             <Typography

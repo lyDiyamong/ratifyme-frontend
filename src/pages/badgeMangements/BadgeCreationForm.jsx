@@ -21,6 +21,9 @@ import { useCreateBadgeMutation } from "../../store/api/badgeManagement/badgeApi
 import { useFetchAchievementTypeQuery } from "../../store/api/achievements/achievementTypeApi";
 import { CameraAltRounded } from "@mui/icons-material";
 import BadgeDefaultSvg from "../../assets/icons/BadgeDefaultSvg.svg";
+import AlertMessage from "../../components/alert/AlertMessage";
+import useCatchStatus from "../../hooks/useCatchStatus";
+import PageLoading from "../../components/loading/PageLoading";
 
 // The data static of the description
 const steps = [
@@ -47,10 +50,6 @@ const schema = yup.object().shape({
         .min(10, "Criteria must be at least 10 characters long")
         .max(255, "Criteria cannot exceed 255 characters")
         .required("Criteria is required"),
-    // achievementType: yup
-    //     .string()
-    //     // .min(1, "Please select at least one achievement type")
-    //     .required("Achievment is reqiured"),
     startDate: yup
         .date()
         .typeError("Please select a valid date")
@@ -61,10 +60,14 @@ const schema = yup.object().shape({
         .typeError("Please select a valid date")
         .min(yup.ref("startDate"), "End date cannot be earlier than Start Date")
         .required("End date is required"),
+    expiredDate: yup
+        .date()
+        .typeError("Please select a valid date")
+        .min(yup.ref("endDate"), "Expiration date cannot be earlier than End Date"),
     badgeName: yup
         .string()
         .min(3, "Badge name must be at least 3 characters long")
-        .max(150, "Badge name cannot exceed 150 characters")
+        .max(50, "Badge name cannot exceed 50 characters")
         .required("Badge name is required"),
     badgeDescription: yup.string().max(255, "Description cannot exceed 255 characters").required("Description is required"),
 });
@@ -79,7 +82,8 @@ const BadgeCreationForm = () => {
     // Slow loading
     const [loading, setLoading] = useState(false);
 
-    const [createBadge] = useCreateBadgeMutation();
+    const [createBadge, { isLoading, isError, error, isSuccess, data }] = useCreateBadgeMutation();
+    const [message, setMessage] = useCatchStatus(isError || isSuccess, isError ? error?.data?.message : data?.message);
 
     const { data: achievementType } = useFetchAchievementTypeQuery();
 
@@ -91,6 +95,7 @@ const BadgeCreationForm = () => {
         0: ["narrative", "achievementType"], // First step fields
         1: ["badgeName", "badgeDescription", "startDate", "endDate"], // Second step fields
     };
+
     // React Hook Form
     const {
         control,
@@ -187,9 +192,9 @@ const BadgeCreationForm = () => {
             // Reset form and image state
             reset();
             setUploadedImage(null);
-            navigate("/dashboard/management/badges");
-        } catch (error) {
-            console.error("Error creating badge:", error);
+            navigate("/dashboard/management/badges", {
+                state: { successMessage: "Badge created successfully!" },
+            });
         } finally {
             setLoading(false);
         }
@@ -237,9 +242,13 @@ const BadgeCreationForm = () => {
             onSubmit={handleSubmit(onSubmit)}
             component="form"
         >
+            <PageLoading isLoading={isLoading} />
             {/* Start the Image Upload */}
-            {/* <Typography>Hello</Typography> */}
-            {/* <ImageSelection onImageSelect={(file) => setUploadedImage(file)} /> */}
+            {message && (
+                <AlertMessage variant={isError ? "error" : "success"} onClose={() => setMessage("")}>
+                    {message}
+                </AlertMessage>
+            )}
             <Stack direction={{ md: "row", xss: "column-reverse" }} gap={3} alignItems={{ md: "center", xss: "start" }}>
                 <Box
                     sx={{

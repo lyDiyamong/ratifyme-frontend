@@ -12,7 +12,7 @@ import ModalContainer from "./badgeDetail/ModalContainer";
 import { useFetchEarnerQuery } from "../../store/api/earnerManagement/earnerApis";
 import { useFetchEmailEarnerQuery } from "../../store/api/achievements/achievementApi";
 
-const IssuerBadgeButton = ({ onGetEmail, control, issuerId, badgeId, achievementId }) => {
+const IssuerBadgeButton = ({ onGetEmail, control, issuerId, badgeId, achievementId, setHasEarner }) => {
     const [open, setOpen] = useState(false);
     const { data: earners } = useFetchEarnerQuery({ issuerId });
     const { data: email } = useFetchEmailEarnerQuery({
@@ -43,11 +43,13 @@ const IssuerBadgeButton = ({ onGetEmail, control, issuerId, badgeId, achievement
                     fontSize: theme.typography.body1,
                     borderRadius: theme.customShape.btn,
                     px: 3,
+                    textTransform: "none",
                 }}
             >
                 Add Earner
             </Button>
             <ModalContainer
+                setHasEarner={setHasEarner}
                 open={open}
                 onClose={() => setOpen(false)}
                 title="Select Earners"

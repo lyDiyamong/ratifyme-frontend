@@ -39,7 +39,14 @@ const HeroAboutSection = () => {
                         }}
                     />
 
-                    <Stack sx={{ flexDirection: "row", gap: 3, animation: "bounceIn 2s ease-in-out 0.5s" }}>
+                    <Stack
+                        sx={{
+                            flexDirection: "row",
+                            gap: 3,
+                            animation: "bounceIn 2s ease-in-out 0.5s",
+                            display: { sm: "flex", xss: "none" },
+                        }}
+                    >
                         <Stack sx={{ justifyContent: "center", alignItems: "center", flexDirection: "row", gap: 1 }}>
                             <ApartmentOutlined sx={{ color: theme.palette.text.disabled, fontSize: 20 }} />
                             <Typography variant="body1" sx={{ color: theme.palette.text.disabled }}>

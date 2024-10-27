@@ -1,5 +1,6 @@
 // React import
 import { useState } from "react";
+
 // MUI Import
 import { Button } from "@mui/material";
 import theme from "../../assets/themes";
@@ -7,10 +8,11 @@ import theme from "../../assets/themes";
 // Custom Import
 import { useIssueOnBadgeMutation } from "../../store/api/achievements/achievementApi";
 import AlertConfirmation from "../../components/alert/AlertConfirmation";
-import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
+import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 
 import AlertMessage from "../../components/alert/AlertMessage";
 import useCatchStatus from "../../hooks/useCatchStatus";
+import PageLoading from "../../components/loading/PageLoading";
 
 const IssueToEarnerButton = ({ achievementId }) => {
     const [issueOnBadge, { isLoading, isSuccess, isError }] = useIssueOnBadgeMutation();
@@ -23,19 +25,24 @@ const IssueToEarnerButton = ({ achievementId }) => {
 
     const handleIssueBadge = async () => {
         try {
-            // Here, pass the correct parameters expected by the mutation
             await issueOnBadge({ achievementId }).unwrap();
         } catch (error) {
-            setMessage("Issue badge failed also failed")
-        }
-        finally{
-            setIsUploadCertModal(false)
+            setMessage("Issue badge failed also failed");
+        } finally {
+            setIsUploadCertModal(false);
         }
     };
 
     return (
         <>
-        {message && <AlertMessage variant={isSuccess ? "success": "error"} onClose={() => setMessage('')} >{message}</AlertMessage>}
+            <PageLoading isLoading={isLoading} />
+
+            {message && (
+                <AlertMessage variant={isSuccess ? "success" : "error"} onClose={() => setMessage("")}>
+                    {message}
+                </AlertMessage>
+            )}
+            
             <AlertConfirmation
                 open={isUploadCertModal}
                 title="Issue to Earner"
@@ -44,23 +51,24 @@ const IssueToEarnerButton = ({ achievementId }) => {
                 onConfirm={handleIssueBadge}
                 confirmText="Issue"
                 cancelText="Cancel"
-                iconBgColor={theme.palette.primary.light}
-                iconColor={theme.palette.primary.main}
+                iconBgColor={theme.palette.customColors.orange100}
+                iconColor={theme.palette.customColors.orange400}
                 confirmButtonColor={theme.palette.primary.main}
                 confirmButtonColorHover={theme.palette.primary.dark}
                 icon={ForwardToInboxIcon}
             />
             <Button
                 onClick={() => setIsUploadCertModal(true)}
-                disabled={isLoading}
+                // disabled={isLoading}
                 variant="outlined"
                 sx={{
                     fontSize: theme.typography.body1,
                     borderRadius: theme.customShape.btn,
                     px: 3,
+                    textTransform: "none",
                 }}
             >
-                {isLoading ? "Issuing..." : "Send Issue"}
+                Issue Badge
             </Button>
         </>
     );

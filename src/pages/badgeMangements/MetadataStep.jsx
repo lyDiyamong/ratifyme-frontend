@@ -1,12 +1,8 @@
-import { Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { useForm } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 
 // Custom imports
-import SelectForm from "../../components/SelectionForm";
 import MultiSelectForm from "../../components/MultiSelectionForm";
 import FormInput from "../../components/FormInput";
 import DateSelectionForm from "../../components/DateSelectionForm";
@@ -37,29 +33,27 @@ const MetadataStep = ({ control, errors }) => {
                 {/* <DateSelectionForm control={control} name="issuedOn" label="Issued On*" /> */}
 
                 {/* Start Date */}
-                <DateSelectionForm control={control} name="startDate" label="Start Date*" />
-                {errors.startDate && (
-                    <Typography sx={{ fontSize: 12, mx: "14px", mt: "3px" }} color="error">
-                        {errors.startDate.message}
-                    </Typography>
-                )}
+                <Box>
+                    <DateSelectionForm control={control} name="startDate" label="Start Date*" />
+                    {errors.startDate && (
+                        <Typography sx={{ fontSize: 12, mx: "14px" }} color="error">
+                            {errors.startDate.message}
+                        </Typography>
+                    )}
+                </Box>
 
                 {/* End Date */}
-                <DateSelectionForm control={control} name="endDate" label="End Date*" />
-                {errors.endDate && (
-                    <Typography sx={{ fontSize: 12, mx: "14px", mt: "3px" }} color="error">
-                        {errors.endDate.message}
-                    </Typography>
-                )}
+                <Box>
+                    <DateSelectionForm control={control} name="endDate" label="End Date*" />
+                    {errors.endDate && (
+                        <Typography sx={{ fontSize: 12, mx: "14px" }} color="error">
+                            {errors.endDate.message}
+                        </Typography>
+                    )}
+                </Box>
 
                 {/* Badge Description */}
-                <FormInput
-                    name="badgeDescription"
-                    label="Badge Description"
-                    control={control}
-                    type="text"
-                    required={true}
-                />
+                <FormInput name="badgeDescription" label="Badge Description" control={control} type="text" required={true} />
 
                 {/* Tags / Language */}
                 <MultiSelectForm

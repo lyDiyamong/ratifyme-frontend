@@ -10,7 +10,7 @@ import { Box, Typography, Pagination } from "@mui/material";
 import BadgeListCard from "../../components/BadgeListCard";
 import PageLoading from "../../components/loading/PageLoading";
 
-const BadgeList = ({ badges, total, onPage, page, limit, result, isLoading, isError }) => {
+const BadgeList = ({ badges, total, onPage, page, limit, result, isLoading, isError, refetch }) => {
     const navigate = useNavigate();
     const { roleId, issuerData, institutionData } = useSelector((state) => state.global);
     const isSmallScreen = window.innerWidth < 600;
@@ -57,7 +57,7 @@ const BadgeList = ({ badges, total, onPage, page, limit, result, isLoading, isEr
                 minHeight: isSmallScreen ? "auto" : "900px",
             }}
         >
-            <BadgeListCard badges={badges} onView={handleView} total={totalBadge} />
+            <BadgeListCard refetch={refetch} badges={badges} onView={handleView} total={totalBadge} />
 
             <Box sx={{ display: "flex", justifyContent: "end", marginY: 2 }}>
                 <Pagination
