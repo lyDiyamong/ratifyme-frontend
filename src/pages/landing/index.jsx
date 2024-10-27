@@ -4,16 +4,19 @@ import Testimonial from "./Testimonial";
 import OurCustomers from "./OurCustomer.jsx";
 import Faq from "./Faq";
 import HeroSection from "./HeroSection.jsx";
-import { Box, Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import HowItWorks from "./HowItWorks.jsx";
+import SecondHeadTitle from "./SecondHeadTitle.jsx";
 
 const HomePage = () => {
     return (
-        <Stack gap={12}>
+        <Stack gap={15}>
             <HeroSection />
             <OurCustomers />
+            <SecondHeadTitle />
             <HowItWorks />
-            {/* <WhatWeDo /> */}
+            <WhatWeDo />
+
             {/* <Testimonial /> */}
             <Faq />
         </Stack>

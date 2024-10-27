@@ -326,7 +326,9 @@ const BookCard = ({ title, description, imageUrl }) => {
 const MemberCardInfo = () => {
     return (
         <LandingContainer>
-            <Stack sx={{ gap: 2, justifyContent: "center", my: 6, alignItems: "center" }}>
+            <Stack
+                sx={{ gap: 2, justifyContent: "center", my: 6, alignItems: "center", animation: "bounceIn 2s ease-in-out 0.5s" }}
+            >
                 <Typography textAlign="center" variant="h1" fontWeight={theme.fontWeight.bold} color="#0B3558">
                     TechA Members team
                 </Typography>
@@ -362,6 +364,20 @@ const MemberCardInfo = () => {
                 ))}
                 {/* </Box> */}
             </Stack>
+            <style>
+                {`
+                @keyframes bounceIn {
+                    60% {
+                        opacity: 1;
+                        transform: translateY(15px);
+                    }
+                    100% {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+                `}
+            </style>
         </LandingContainer>
     );
 };

@@ -18,7 +18,7 @@ const HeroAboutSection = () => {
         <Box component="section" display="flex" justifyContent="center" alignItems="center" paddingTop="32px" minHeight="500px">
             {/*  Start Hero Container  */}
             <LandingContainer>
-                <Stack sx={{ justifyContent: "center", alignItems: "center", gap: 3 }}>
+                <Stack sx={{ justifyContent: "center", alignItems: "center", gap: 4 }}>
                     <Chip
                         icon={<Circle color="#0AA4A5" sx={{ fontSize: 10 }} />}
                         label="v1.0.0"
@@ -35,10 +35,11 @@ const HeroAboutSection = () => {
                             borderRadius: "8px",
                             fontSize: 16,
                             fontWeight: theme.fontWeight.bold,
+                            animation: "bounceIn 2s ease-in-out 0.5s",
                         }}
                     />
 
-                    <Stack sx={{ flexDirection: "row", gap: 3 }}>
+                    <Stack sx={{ flexDirection: "row", gap: 3, animation: "bounceIn 2s ease-in-out 0.5s" }}>
                         <Stack sx={{ justifyContent: "center", alignItems: "center", flexDirection: "row", gap: 1 }}>
                             <ApartmentOutlined sx={{ color: theme.palette.text.disabled, fontSize: 20 }} />
                             <Typography variant="body1" sx={{ color: theme.palette.text.disabled }}>
@@ -61,10 +62,10 @@ const HeroAboutSection = () => {
                         </Stack>
                     </Stack>
 
-                    <Stack sx={{ gap: 1 }}>
+                    <Stack sx={{ gap: 1, animation: "bounceIn 2s ease-in-out 0.5s" }}>
                         <Typography
                             sx={{
-                                fontSize: "72px",
+                                fontSize: { md: "72px", sm: "50px", xss: "40px" },
                                 textAlign: "center",
                                 maxWidth: 600,
                                 fontWeight: theme.fontWeight.bold,
@@ -107,6 +108,21 @@ const HeroAboutSection = () => {
                         </Link>
                     </Stack>
                 </Stack>
+
+                <style>
+                    {`
+                @keyframes bounceIn {
+                    60% {
+                        opacity: 1;
+                        transform: translateY(15px);
+                    }
+                    100% {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+                `}
+                </style>
             </LandingContainer>
             {/* End Hero Container  */}
         </Box>

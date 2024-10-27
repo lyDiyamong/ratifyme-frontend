@@ -1,8 +1,6 @@
-import { Link } from "react-router-dom";
 // Mui Import
 import { Box, Button, Chip, Stack, TextField, Typography } from "@mui/material";
 //Custom Import
-import PosterHeroSvg from "../../assets/images/Poster.svg";
 import LandingContainer from "../../components/styles/LandingContainer";
 import {
     AdminPanelSettingsOutlined,
@@ -10,9 +8,9 @@ import {
     ArrowForwardIosOutlined,
     CastForEducationOutlined,
     Circle,
-    VerifiedRounded,
 } from "@mui/icons-material";
 import theme from "../../assets/themes";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
     return (
@@ -20,7 +18,13 @@ const HeroSection = () => {
         <Box component="section" display="flex" justifyContent="center" alignItems="center" paddingTop="32px" minHeight="500px">
             {/*  Start Hero Container  */}
             <LandingContainer>
-                <Stack sx={{ justifyContent: "center", alignItems: "center", gap: 5 }}>
+                <Stack
+                    sx={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: 4,
+                    }}
+                >
                     <Chip
                         icon={<Circle color="#0AA4A5" sx={{ fontSize: 10 }} />}
                         label="v1.0.0"
@@ -37,10 +41,18 @@ const HeroSection = () => {
                             borderRadius: "8px",
                             fontSize: 16,
                             fontWeight: theme.fontWeight.bold,
+                            animation: "bounceIn 2s ease-in-out 0.5s",
                         }}
                     />
 
-                    <Stack sx={{ flexDirection: "row", gap: 3 }}>
+                    <Stack
+                        sx={{
+                            flexDirection: "row",
+                            gap: 3,
+                            animation: "bounceIn 2s ease-in-out 0.5s",
+                            display: { xs: "flex", xss: "none" },
+                        }}
+                    >
                         <Stack sx={{ justifyContent: "center", alignItems: "center", flexDirection: "row", gap: 1 }}>
                             <ApartmentOutlined sx={{ color: theme.palette.text.disabled, fontSize: 20 }} />
                             <Typography variant="body1" sx={{ color: theme.palette.text.disabled }}>
@@ -63,10 +75,10 @@ const HeroSection = () => {
                         </Stack>
                     </Stack>
 
-                    <Stack sx={{ gap: 1 }}>
+                    <Stack sx={{ gap: 1, animation: "bounceIn 2s ease-in-out 0.5s" }}>
                         <Typography
                             sx={{
-                                fontSize: "72px",
+                                fontSize: { md: "72px", sm: "50px", xss: "40px" },
                                 textAlign: "center",
                                 maxWidth: 600,
                                 fontWeight: theme.fontWeight.bold,
@@ -80,7 +92,6 @@ const HeroSection = () => {
                             variant="h3"
                             sx={{
                                 textAlign: "center",
-                                // fontWeight: theme.fontWeight.semiBold,
                                 lineHeight: 1.2,
                                 marginBottom: "20px",
                                 maxWidth: 600,
@@ -90,20 +101,24 @@ const HeroSection = () => {
                         </Typography>
                     </Stack>
 
-                    <Stack sx={{ flexDirection: "row", gap: 2 }}>
-                        <Button
-                            variant="contained"
-                            sx={{
-                                color: theme.palette.customColors.white,
-                                fontWeight: theme.fontWeight.bold,
-                                textTransform: "none",
-                                fontSize: "18px",
-                                px: 3,
-                                py: 1.5,
-                            }}
-                        >
-                            Let's Get Start
-                        </Button>
+                    <Stack sx={{ flexDirection: { sm: "row", xss: "column" }, gap: 2 }}>
+                        <Link to="/auth/get-started">
+                            <Button
+                                variant="contained"
+                                sx={{
+                                    color: theme.palette.customColors.white,
+                                    fontWeight: theme.fontWeight.bold,
+                                    textTransform: "none",
+                                    fontSize: "18px",
+                                    width: "100%",
+                                    height: "100%",
+                                    px: 2,
+                                    py: 1,
+                                }}
+                            >
+                                Let's Get Start
+                            </Button>
+                        </Link>
                         <a
                             href="https://ratifyme.digital/credential/RMC-6a322632-33ff-4d9a-a1a5-b9e89c4eff58"
                             target="_blank"
@@ -119,8 +134,8 @@ const HeroSection = () => {
                                     fontWeight: theme.fontWeight.bold,
                                     textTransform: "none",
                                     fontSize: "18px",
-                                    px: 3,
-                                    py: 1.5,
+                                    px: 2,
+                                    py: 1,
                                     "&:hover": {
                                         background: "#133E87",
                                     },
@@ -131,6 +146,21 @@ const HeroSection = () => {
                         </a>
                     </Stack>
                 </Stack>
+
+                <style>
+                    {`
+                @keyframes bounceIn {
+                    60% {
+                        opacity: 1;
+                        transform: translateY(15px);
+                    }
+                    100% {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+                `}
+                </style>
             </LandingContainer>
             {/* End Hero Container  */}
         </Box>

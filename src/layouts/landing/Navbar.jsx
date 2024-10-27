@@ -124,7 +124,7 @@ const Navbar = () => {
     };
 
     const buttonStyle = {
-        color: "text.primary",
+        color: "#0B3558",
         fontWeight: theme.fontWeight.bold,
         borderRadius: theme.shape.borderRadius.btn,
         textTransform: "none",
@@ -133,8 +133,8 @@ const Navbar = () => {
     const menuResItem = {
         borderRadius: "0px",
         backgroundColor: "inherit",
-        color: `${theme.palette.text.primary}`,
         fontWeight: theme.fontWeight.bold,
+        color: "#0B3558",
     };
 
     return (
@@ -156,12 +156,29 @@ const Navbar = () => {
                 }}
             >
                 <LandingContainer>
-                    <Toolbar disableGutters sx={{ width: "100%" }}>
-                        <Box flexGrow={1} display={"flex"}>
+                    <Toolbar disableGutters sx={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
+                        <Box display={"flex"}>
                             <Link to={"/"}>
                                 <Box component="img" sx={{ width: 120 }} alt="The house from the offer." src={RatifyMeLogo} />
                             </Link>
                         </Box>
+
+                        <Stack
+                            justifyContent="center"
+                            flexDirection="row"
+                            alignItems="center"
+                            display={{ md: "flex", xss: "none" }}
+                        >
+                            <Link to="/price">
+                                <Button sx={buttonStyle}>Price</Button>
+                            </Link>
+                            <Link to="/contactus">
+                                <Button sx={buttonStyle}>Contact Us</Button>
+                            </Link>
+                            <Link to="/aboutUs">
+                                <Button sx={buttonStyle}>About Us</Button>
+                            </Link>
+                        </Stack>
 
                         {/* Main Navbar */}
                         <Box
@@ -174,16 +191,6 @@ const Navbar = () => {
                             }}
                         >
                             <Box display={"flex"} gap={2} alignItems="center">
-                                <Link to="/price">
-                                    <Button sx={buttonStyle}>Price</Button>
-                                </Link>
-                                <Link to="/contactus">
-                                    <Button sx={buttonStyle}>Contact Us</Button>
-                                </Link>
-                                <Link to="/aboutUs">
-                                    <Button sx={buttonStyle}>About Us</Button>
-                                </Link>
-
                                 {institutionData && userInfo ? (
                                     <Link to="/dashboard" onClick={handleServicePlanClick}>
                                         <Stack direction="row" gap={1} alignItems="center">
@@ -207,11 +214,12 @@ const Navbar = () => {
                                     <>
                                         <Link to="/auth/login">
                                             <Button
-                                                variant="outlined"
+                                                variant="text"
                                                 sx={{
                                                     borderRadius: theme.customShape.btn,
                                                     fontWeight: theme.fontWeight.bold,
                                                     textTransform: "none",
+                                                    color: "#0B3558",
                                                 }}
                                             >
                                                 Sign In
@@ -280,6 +288,13 @@ const Navbar = () => {
                                     <Link to="/contactus">
                                         <Button variant="text" sx={menuResItem}>
                                             Contact Us
+                                        </Button>
+                                    </Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleMenuClose}>
+                                    <Link to="/aboutUs">
+                                        <Button variant="text" sx={menuResItem}>
+                                            About Us
                                         </Button>
                                     </Link>
                                 </MenuItem>

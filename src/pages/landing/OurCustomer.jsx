@@ -9,9 +9,8 @@ const OurCustomers = () => {
         "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/2560px-Amazon_logo.svg.png",
         "https://ratifyme.s3.ap-southeast-2.amazonaws.com/Logo/emcast-logo.png",
         "https://ratifyme.s3.ap-southeast-2.amazonaws.com/Logo/AboveBeyond.png",
-
         "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/640px-Google_2015_logo.svg.png",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/2560px-Amazon_logo.svg.png",
+        "https://ratifyme.s3.ap-southeast-2.amazonaws.com/Logo/RatfiyME.png",
     ];
 
     const duplicatedImages = [...images, ...images];
@@ -27,7 +26,6 @@ const OurCustomers = () => {
                     component={motion.div}
                     direction="row"
                     sx={{
-                        // maxWidth: "1000px",
                         mx: "auto",
                         overflow: "hidden",
                         width: "100%",
@@ -51,7 +49,7 @@ const OurCustomers = () => {
                                 key={index}
                                 src={src}
                                 alt={`Logo ${index + 1}`}
-                                sx={{ maxHeight: "60px", margin: "0 10px" }}
+                                sx={{ maxHeight: { md: "60px", sm: "40px", xss: "30px" }, margin: "0 10px" }}
                             />
                         ))}
                     </Stack>
