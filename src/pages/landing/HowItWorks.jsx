@@ -6,6 +6,7 @@ import BadgeDetail from "../../assets/images/BadgeDetail.svg";
 import BadgeDetailEarner from "../../assets/images/BadgeDetailEarner.svg";
 import BenefitGrid from "./BenefitGrid";
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 const HowItWorks = () => {
     const sectionRef = useRef(null);
@@ -96,19 +97,21 @@ const HowItWorks = () => {
                                 Ready to start ? 🤙
                             </Typography>
 
-                            <Button
-                                variant="contained"
-                                endIcon={<ArrowForwardIosOutlined />}
-                                sx={{
-                                    color: "white",
-                                    backgroundColor: "#rgb(0,107,255)",
-                                    textTransform: "none",
-                                    fontWeight: theme.fontWeight.bold,
-                                    fontSize: "18px",
-                                }}
-                            >
-                                Start as Institution
-                            </Button>
+                            <Link to="/auth/signup?as=institution">
+                                <Button
+                                    variant="contained"
+                                    endIcon={<ArrowForwardIosOutlined />}
+                                    sx={{
+                                        color: "white",
+                                        backgroundColor: "#rgb(0,107,255)",
+                                        textTransform: "none",
+                                        fontWeight: theme.fontWeight.bold,
+                                        fontSize: { sm: "18px", xss: "14px" },
+                                    }}
+                                >
+                                    Start as Institution
+                                </Button>
+                            </Link>
 
                             <Typography variant="h6">
                                 *You can create an account and run it on your computer for free. Invite your issuer, and let’s get
