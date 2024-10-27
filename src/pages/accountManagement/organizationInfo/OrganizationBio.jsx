@@ -20,7 +20,7 @@ const OrganizationBio = ({ institutionInfo }) => {
 
     const [institutionBio, setInstitutionBio] = useState(""); // Initialize as empty string
     const [isEditing, setIsEditing] = useState(false);
-    const [profileImage, setProfileImage] = useState(DefaultProfileSvg);
+    const [profileImage, setProfileImage] = useState("");
 
     const bioRef = useRef(null);
 
@@ -48,7 +48,7 @@ const OrganizationBio = ({ institutionInfo }) => {
         // Set profile image and institutionBio if institutionInfo is available
         if (institutionInfo) {
             const imageUrl = institutionInfo?.institutionProfileImage;
-            setProfileImage(imageUrl || DefaultProfileSvg); // Fallback to default image
+            setProfileImage(imageUrl);
             setInstitutionBio(institutionBioText);
         }
     }, [institutionInfo, institutionBioText]);
