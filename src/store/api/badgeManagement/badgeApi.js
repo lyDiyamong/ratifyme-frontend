@@ -48,6 +48,18 @@ export const badgeApi = createApi({
             ],
         }),
 
+        updateBadge: builder.mutation({
+            query: ({ id, updatedBadge }) => ({
+                url: `/issuers/badgeClasses/editBadge/${id}`,
+                method: "PATCH",
+                body: updatedBadge,
+            }),
+            invalidatesTags: (result) => [
+                { type: "BadgeIssuer", id: "LIST" },
+                { type: "Badge", id: "LIST" },
+            ],
+        }),
+
         uploadCerti: builder.mutation({
             query: ({ achieveId, earnerId, uploadedCert }) => ({
                 url: `/earners/uploadCerti/${achieveId}/earner/${earnerId}`,
@@ -154,15 +166,6 @@ export const badgeApi = createApi({
                       ]
                     : [{ type: "BadgeEarner", id: `LIST-${earnerId}` }];
             },
-        }),
-
-        updateBadge: builder.mutation({
-            query: ({ id, updatedBadge }) => ({
-                url: `/issuers/badgeClasses/editBadge/${id}`,
-                method: "PATCH",
-                body: updatedBadge,
-            }),
-            invalidatesTags: (result) => [{ type: "BadgeIssuer", id: `LIST` }, [{ type: "Badge", id: "LIST" }]],
         }),
     }),
 });

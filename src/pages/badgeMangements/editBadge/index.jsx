@@ -33,7 +33,7 @@ const EditBadge = () => {
     // Api hook
     const [updateBadge, { reset: updatedReset, isSuccess, isError }] = useUpdateBadgeMutation();
 
-    const { data: badgeResponse } = useFetchOneBadgeQuery(badgeId);
+    const { data: badgeResponse, refetch } = useFetchOneBadgeQuery(badgeId);
     const badgeData = badgeResponse?.data;
     const userID = badgeData?.id;
 
@@ -59,10 +59,7 @@ const EditBadge = () => {
     const parsedExpirationDate = dayjs(badgeData?.expiredDate);
 
     // Status custom hook
-    const [message, setMessage] = useCatchStatus(
-        isSuccess || isError,
-        isSuccess ? "Update succesfully" : "Update Failed",
-    );
+    const [message, setMessage] = useCatchStatus(isSuccess || isError, isSuccess ? "Update succesfully" : "Update Failed");
 
     // Handle submit
     const onSubmit = async (data) => {
@@ -88,6 +85,7 @@ const EditBadge = () => {
     useEffect(() => {
         if (isSuccess) {
             navigate(`/dashboard/management/badges/badgeDetail/${userID}`);
+            refetch();
         }
     }, [isSuccess, navigate, userID]);
 
@@ -144,8 +142,7 @@ const EditBadge = () => {
             // Extract criteria narratives
             const criteriaNarratives = badgeData?.Criterias?.map((criteria) => criteria.narrative) || [];
             // Extract achievement type names
-            const achievementNames =
-                badgeData?.Achievements?.map((achievement) => achievement.AchievementType.name) || [];
+            const achievementNames = badgeData?.Achievements?.map((achievement) => achievement.AchievementType.name) || [];
 
             reset({
                 // Core
@@ -195,7 +192,7 @@ const EditBadge = () => {
                         top: "50%",
                         left: "50%",
                         transform: "translate(-50%, -50%)",
-                        width: {md: "40%", xss: '70%'},
+                        width: { md: "40%", xss: "70%" },
                         p: 4,
                     }}
                 >
@@ -208,15 +205,11 @@ const EditBadge = () => {
                 </Box>
             </Modal>
 
-                <PageTitle
-                    title="Edit Badge"
-                    subtitle="Update the details to ensure it accurately represents your achievement."
-                />
-            <Box component="form" onSubmit={handleSubmit(onSubmit)} >
-
+            <PageTitle title="Edit Badge" subtitle="Update the details to ensure it accurately represents your achievement." />
+            <Box component="form" onSubmit={handleSubmit(onSubmit)}>
                 <Stack
                     sx={{
-                        my : 3,
+                        my: 3,
                         flexDirection: { md: "row", xss: "column" },
                         width: "100%",
                         justifyContent: "space-between",
@@ -268,9 +261,7 @@ const EditBadge = () => {
                                 <Box
                                     component="img"
                                     onClick={() => setIsModalOpen(true)}
-                                    src={
-                                        displayImg || "https://www.mylittleadventure.com/images/default/default-img.png"
-                                    }
+                                    src={displayImg || "https://www.mylittleadventure.com/images/default/default-img.png"}
                                     alt="Badge"
                                     sx={{
                                         width: "100%",
@@ -305,11 +296,7 @@ const EditBadge = () => {
                                         onChange={handleFileChange}
                                     />
                                 </Button>
-                                <Button
-                                    variant="outlined"
-                                    onClick={() => setIsModalOpen(true)}
-                                    startIcon={<ZoomInMapOutlined />}
-                                >
+                                <Button variant="outlined" onClick={() => setIsModalOpen(true)} startIcon={<ZoomInMapOutlined />}>
                                     View
                                 </Button>
                             </Stack>
