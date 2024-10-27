@@ -1,6 +1,10 @@
-// React library import
+// MUI import
 import { Box, Stack, Typography } from "@mui/material";
+
+// Framer Motion import
 import { motion } from "framer-motion";
+
+// Custom import
 import LandingContainer from "../../components/styles/LandingContainer";
 
 const OurCustomers = () => {

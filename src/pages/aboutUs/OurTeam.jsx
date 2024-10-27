@@ -1,6 +1,8 @@
-import { Stack, Typography } from "@mui/material";
+// MUI import
+import { Stack } from "@mui/material";
+
+// Custom import
 import MemberCardInfo from "./MemberCardInfo";
-import theme from "../../assets/themes";
 
 const AboutOurTeam = () => {
     return (

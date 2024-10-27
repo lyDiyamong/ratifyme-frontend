@@ -1,6 +1,5 @@
-// React library import
+// Custom import
 import WhatWeDo from "./WhatWeDo";
-import Testimonial from "./Testimonial";
 import OurCustomers from "./OurCustomer.jsx";
 import Faq from "./Faq";
 import HeroSection from "./HeroSection.jsx";
@@ -16,8 +15,6 @@ const HomePage = () => {
             <SecondHeadTitle />
             <HowItWorks />
             <WhatWeDo />
-
-            {/* <Testimonial /> */}
             <Faq />
         </Stack>
     );

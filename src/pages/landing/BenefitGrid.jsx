@@ -1,5 +1,9 @@
-import { Box, Typography, Grid, Paper } from "@mui/material";
+// React import
 import { useEffect, useRef, useState } from "react";
+// MUI import
+import { Box, Typography, Grid, Paper } from "@mui/material";
+
+// Custom import
 import BadgeDefault from "../../assets/images/BadgeDefault.svg";
 import CreateBadge3D from "../../assets/images/CreateBadge3D.svg";
 import ShareSocialMedia from "../../assets/images/ShareSocialMedia.svg";

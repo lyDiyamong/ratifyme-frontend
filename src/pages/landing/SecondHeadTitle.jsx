@@ -1,9 +1,14 @@
-import { Box, Typography, Stack, Grid, Button } from "@mui/material";
+// React import
+import { Link } from "react-router-dom";
+
+// MUI import
+import { Box, Typography, Grid, Button } from "@mui/material";
+
+// Custom import
 import LandingContainer from "../../components/styles/LandingContainer";
 import theme from "../../assets/themes";
 import CredentailImage from "../../assets/images/CredentailImage.svg";
 import DevicesShare from "../../assets/images/DevicesShare.svg";
-import { Link } from "react-router-dom";
 
 const SecondHeadTitle = () => {
     return (

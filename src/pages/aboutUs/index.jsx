@@ -1,4 +1,7 @@
+// MUI import
 import { Stack } from "@mui/material";
+
+// Custom import
 import HeroAboutSection from "./HeroSection";
 import DemoSection from "./DemoSection";
 

@@ -1,5 +1,8 @@
-import LandingContainer from "../../components/styles/LandingContainer";
+// MUI import
 import { Box, Stack, Typography } from "@mui/material";
+
+// Custom import
+import LandingContainer from "../../components/styles/LandingContainer";
 import ArrowStyleIcon from "../../assets/images/ArrowStyleIcon.svg";
 import ArrowStyleIRotatecon from "../../assets/images/ArrowStyleIRotatecon.svg";
 import theme from "../../assets/themes";

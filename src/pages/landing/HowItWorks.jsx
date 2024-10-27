@@ -1,42 +1,18 @@
-import { Box, Typography, Stack, Grid, Grid2, Chip, Button } from "@mui/material";
+//  React import
+import { Link } from "react-router-dom";
+
+//  MUI import
+import { Box, Typography, Stack, Grid, Chip, Button } from "@mui/material";
+import { ArrowForwardIosOutlined, CheckCircleOutline } from "@mui/icons-material";
+
+// Custom import
 import LandingContainer from "../../components/styles/LandingContainer";
 import theme from "../../assets/themes";
-import { ArrowForwardIosOutlined, Check, CheckCircleOutline } from "@mui/icons-material";
 import BadgeDetail from "../../assets/images/BadgeDetail.svg";
 import BadgeDetailEarner from "../../assets/images/BadgeDetailEarner.svg";
 import BenefitGrid from "./BenefitGrid";
-import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 
 const HowItWorks = () => {
-    const sectionRef = useRef(null);
-    const [isVisible, setIsVisible] = useState(false);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        setIsVisible(true);
-                    } else {
-                        setIsVisible(false); // Reset visibility when the section leaves the viewport
-                    }
-                });
-            },
-            { threshold: 0.1 },
-        );
-
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current);
-        }
-
-        return () => {
-            if (sectionRef.current) {
-                observer.unobserve(sectionRef.current);
-            }
-        };
-    }, []);
-
     const features = ["Dashboard", "Manage earners", "Add earner", "Manage badges", "Issue badge to earners"];
 
     return (
@@ -63,7 +39,6 @@ const HowItWorks = () => {
         `,
                     backgroundSize: "80px 80px",
                     backgroundBlendMode: "multiply",
-                    // animation: "bounceIn 2s ease-in-out 0.5s",
                     animation: "bounceIn 0.75s ease-in-out 0.5s",
                 }}
             >
