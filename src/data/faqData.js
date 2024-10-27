@@ -9,7 +9,7 @@ export const accordionData = [
 
     {
         panel: "panel2",
-        title: "How does RatifyMe verify credentials?",
+        title: "How does RatifyMe verify credentials? 🚀",
         subtitle: "",
         content:
             "We partner with trusted institutions, businesses, and credential issuers to ensure the legitimacy of the documents and certifications uploaded for verification. Our technology ensures real-time, accurate validation.",
@@ -33,7 +33,7 @@ export const accordionData = [
 
     {
         panel: "panel5",
-        title: "How long does the verification process take?",
+        title: "How long does the verification process take? 🕗",
         subtitle: "",
         content:
             "Credential verification on RatifyMe is fast and can be completed within minutes, depending on the type of credential and the issuing institution.",

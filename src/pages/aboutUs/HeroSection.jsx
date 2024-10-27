@@ -1,6 +1,6 @@
+import { Link } from "react-router-dom";
 // Mui Import
 import { Box, Button, Chip, Stack, Typography } from "@mui/material";
-
 //Custom Import
 import LandingContainer from "../../components/styles/LandingContainer";
 import {
@@ -11,21 +11,14 @@ import {
     Circle,
 } from "@mui/icons-material";
 import theme from "../../assets/themes";
-import { Link } from "react-router-dom";
 
-const HeroSection = () => {
+const HeroAboutSection = () => {
     return (
         //============ Start Hero Section  ============
         <Box component="section" display="flex" justifyContent="center" alignItems="center" paddingTop="32px" minHeight="500px">
             {/*  Start Hero Container  */}
             <LandingContainer>
-                <Stack
-                    sx={{
-                        justifyContent: "center",
-                        alignItems: "center",
-                        gap: 4,
-                    }}
-                >
+                <Stack sx={{ justifyContent: "center", alignItems: "center", gap: 4 }}>
                     <Chip
                         icon={<Circle color="#0AA4A5" sx={{ fontSize: 10 }} />}
                         label="v1.0.0"
@@ -46,14 +39,7 @@ const HeroSection = () => {
                         }}
                     />
 
-                    <Stack
-                        sx={{
-                            flexDirection: "row",
-                            gap: 3,
-                            animation: "bounceIn 2s ease-in-out 0.5s",
-                            display: { xs: "flex", xss: "none" },
-                        }}
-                    >
+                    <Stack sx={{ flexDirection: "row", gap: 3, animation: "bounceIn 2s ease-in-out 0.5s" }}>
                         <Stack sx={{ justifyContent: "center", alignItems: "center", flexDirection: "row", gap: 1 }}>
                             <ApartmentOutlined sx={{ color: theme.palette.text.disabled, fontSize: 20 }} />
                             <Typography variant="body1" sx={{ color: theme.palette.text.disabled }}>
@@ -93,6 +79,7 @@ const HeroSection = () => {
                             variant="h3"
                             sx={{
                                 textAlign: "center",
+                                // fontWeight: theme.fontWeight.semiBold,
                                 lineHeight: 1.2,
                                 marginBottom: "20px",
                                 maxWidth: 600,
@@ -102,49 +89,23 @@ const HeroSection = () => {
                         </Typography>
                     </Stack>
 
-                    <Stack sx={{ flexDirection: { sm: "row", xss: "column" }, gap: 2 }}>
-                        <Link to="/auth/get-started">
+                    <Stack sx={{ flexDirection: "row" }}>
+                        <Link to="/aboutOurTeam">
                             <Button
                                 variant="contained"
-                                sx={{
-                                    color: theme.palette.customColors.white,
-                                    fontWeight: theme.fontWeight.bold,
-                                    textTransform: "none",
-                                    fontSize: "18px",
-                                    width: "100%",
-                                    height: "100%",
-                                    px: 2,
-                                    py: 1,
-                                }}
-                            >
-                                Let's Get Start
-                            </Button>
-                        </Link>
-                        <a
-                            href="https://ratifyme.digital/credential/RMC-6a322632-33ff-4d9a-a1a5-b9e89c4eff58"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <Button
-                                variant="outlined"
                                 endIcon={<ArrowForwardIosOutlined />}
                                 sx={{
                                     color: theme.palette.customColors.white,
-                                    background: "#0B3558",
-                                    border: `1px solid #D0D1D6`,
                                     fontWeight: theme.fontWeight.bold,
                                     textTransform: "none",
                                     fontSize: "18px",
                                     px: 2,
                                     py: 1,
-                                    "&:hover": {
-                                        background: "#133E87",
-                                    },
                                 }}
                             >
-                                Demo Credential
+                                Our teams
                             </Button>
-                        </a>
+                        </Link>
                     </Stack>
                 </Stack>
 
@@ -169,4 +130,4 @@ const HeroSection = () => {
     //============ End Hero Section  ============
 };
 
-export default HeroSection;
+export default HeroAboutSection;
