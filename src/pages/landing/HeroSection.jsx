@@ -51,7 +51,7 @@ const HeroSection = () => {
                             flexDirection: "row",
                             gap: 3,
                             animation: "bounceIn 2s ease-in-out 0.5s",
-                            display: { xs: "flex", xss: "none" },
+                            display: { sm: "flex", xss: "none" },
                         }}
                     >
                         <Stack sx={{ justifyContent: "center", alignItems: "center", flexDirection: "row", gap: 1 }}>
