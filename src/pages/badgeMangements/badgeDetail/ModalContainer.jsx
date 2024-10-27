@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Paper, Box, Typography, IconButton } from "@mui/material";
 import { Close } from "@mui/icons-material";
@@ -9,6 +9,7 @@ import { useFetchEarnerQuery } from "../../../store/api/earnerManagement/earnerA
 import { SpinLoading } from "../../../components/loading/SpinLoading";
 import AlertMessage from "../../../components/alert/AlertMessage";
 import useCatchStatus from "../../../hooks/useCatchStatus";
+import PageLoading from "../../../components/loading/PageLoading";
 
 const CustomPaper = (props) => <Paper {...props} sx={{ borderRadius: "16px" }} />;
 
@@ -19,32 +20,34 @@ const ModalContainer = ({ open, onClose, title, options, control, onGetEmail, ba
     const [list, setList] = useState([]); // List of selected emails
 
     const { issuerData } = useSelector((state) => state.global);
-    const [sendBadge, { isSuccess, refetch }] = useSendBadgeMutation();
-    const { data: earner } = useFetchEarnerQuery({ issuerId: issuerData?.id });
+    const [sendBadge, { isLoading, isSuccess }] = useSendBadgeMutation();
+    const { data: earner, refetch } = useFetchEarnerQuery({ issuerId: issuerData?.id });
 
+    // Set message only if isSuccess is true after refetch or sendBadge
     const [message, setMessage] = useCatchStatus(isSuccess, isSuccess ? successMsg : "Earner added to list has failed");
+
+    // Watch isSuccess for alert message changes
+    useEffect(() => {
+        if (isSuccess) {
+            setMessage("Earners added to list successfully.");
+        }
+    }, [isSuccess, refetch]);
 
     const earnerIds = earner?.data?.filter((earner) => list.includes(earner.User.email))?.map((earner) => earner.id) || [];
 
-    // Function to handle selection from the dropdown
     const handleSelect = (selectedOption) => {
         const selectedEmail = availableOptions.find((option) => option.value === selectedOption)?.label;
 
-        // Check if the selected email is not already in the list to avoid duplicates
-        // Also check if the selected email is not the "No earner data available" option
         if (selectedEmail && selectedEmail !== "No earner data available" && !list.includes(selectedEmail)) {
-            setList((prevList) => [...prevList, selectedEmail]); // Add to selected list
-            setSelectedValue(selectedOption); // Update the selected value in SelectForm
+            setList((prevList) => [...prevList, selectedEmail]);
+            setSelectedValue(selectedOption);
         }
     };
 
-    // Function to remove an email from the selected list
     const removeEarner = (emailToRemove) => {
-        // Remove email from the list
         setList((prevList) => {
             const updatedList = prevList.filter((email) => email !== emailToRemove);
 
-            // If the updated list is empty, reset the selected value
             if (updatedList.length === 0) {
                 setSelectedValue(null);
             }
@@ -52,10 +55,9 @@ const ModalContainer = ({ open, onClose, title, options, control, onGetEmail, ba
             return updatedList;
         });
 
-        // If the removed email matches the selectedValue in SelectForm, reset it
         const removedValue = availableOptions.find((option) => option.label === emailToRemove)?.value;
         if (selectedValue === removedValue) {
-            setSelectedValue(null); // Clear the SelectForm's value
+            setSelectedValue(null);
         }
     };
 
@@ -67,7 +69,7 @@ const ModalContainer = ({ open, onClose, title, options, control, onGetEmail, ba
                 await sendBadge(result).unwrap();
                 refetch();
                 setSuccessMsg("Earners added to list successfully.");
-                setHasEarner(null)
+                setHasEarner(null);
             } catch (error) {
                 console.error("Error issuing badge:", error);
             } finally {
@@ -78,26 +80,24 @@ const ModalContainer = ({ open, onClose, title, options, control, onGetEmail, ba
         onClose();
     };
 
-    // Mapping the options for the SelectForm dropdown
     const fetchOptions = options?.map((element) => ({ value: element.id, label: element.email })) || [];
 
-    // Filter out selected emails and invited emails from the options
     const availableOptions = fetchOptions.filter(
         (option) => !list.includes(option.label) && !emails.some((earner) => earner.Earner.User.email === option.label),
     );
 
-    // Check if availableOptions is empty and add a custom message if so
     if (availableOptions.length === 0) {
         availableOptions.push({
-            value: "", // Set an empty value or a unique identifier
+            value: "",
             label: "No earner data available",
-            disabled: true, // Disable the option to prevent selection
+            disabled: true,
         });
     }
 
-    // Display the selected emails
     return (
         <>
+            <PageLoading isLoading={isLoading} />
+
             {message && <AlertMessage variant={isSuccess ? "success" : "error"}>{message}</AlertMessage>}
             <Dialog
                 open={open}
@@ -123,10 +123,10 @@ const ModalContainer = ({ open, onClose, title, options, control, onGetEmail, ba
                             name="email"
                             label="Email"
                             control={control}
-                            options={availableOptions} // Use available options based on selected and invited emails
+                            options={availableOptions}
                             required={false}
                             onChange={handleSelect}
-                            value={selectedValue} // Control the select value
+                            value={selectedValue}
                         />
 
                         <Box>
@@ -140,7 +140,6 @@ const ModalContainer = ({ open, onClose, title, options, control, onGetEmail, ba
                                     borderRadius: "8px",
                                 }}
                             >
-                                {/* Display the selected emails with a remove option */}
                                 {list.map((item, index) => (
                                     <Box
                                         key={index}
@@ -156,7 +155,6 @@ const ModalContainer = ({ open, onClose, title, options, control, onGetEmail, ba
                                         </IconButton>
                                     </Box>
                                 ))}
-                                {/* Show invited emails */}
                                 {emails
                                     .filter((earner) => !list.includes(earner.Earner.User.email))
                                     .map((earner) => (
@@ -176,6 +174,7 @@ const ModalContainer = ({ open, onClose, title, options, control, onGetEmail, ba
                     <Button onClick={onClose} sx={{ textTransform: "none" }}>
                         Cancel
                     </Button>
+
                     <Button
                         onClick={handleSave}
                         variant="contained"

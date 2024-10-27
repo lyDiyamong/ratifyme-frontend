@@ -15,7 +15,10 @@ import GoldBadge from "../assets/images/DiamondBadge.svg";
 const BadgeListCard = ({ badges, onView, total, refetch }) => {
     const handleView = (id) => {
         onView(id);
+        // Trigger refetch after viewing the badge to update the data
+        refetch();
     };
+
     const { roleId } = useSelector((state) => state.global);
     const totalBadge = typeof total === "number" ? total : total?.length;
 
@@ -41,7 +44,6 @@ const BadgeListCard = ({ badges, onView, total, refetch }) => {
                     ? item.Earners.find((earner) => earner.EarnerAchievements?.issuedOn)?.EarnerAchievements?.issuedOn
                     : null;
             });
-            console.log(issuedBadge);
 
             const claimedBadge = uniqueBadges.map((item) =>
                 item.Earners
@@ -140,14 +142,6 @@ const BadgeListCard = ({ badges, onView, total, refetch }) => {
                                                         />
                                                     </Tooltip>
                                                 ))}
-                                            {/* {(roleId === 3 || roleId === 4) &&
-                                                (afterCheck[index] === null ? (
-                                                    <Tooltip title={roleId === 4 ? "Not yet claimed" : "Not issued yet"} arrow>
-                                                        <ErrorIcon />
-                                                    </Tooltip>
-                                                ) : (
-                                                    <CheckCircleRoundedIcon />
-                                                ))} */}
                                         </Box>
                                     </Stack>
                                     <CardContent>
@@ -164,7 +158,6 @@ const BadgeListCard = ({ badges, onView, total, refetch }) => {
                                             >
                                                 {badge?.name}
                                             </Typography>
-                                            {/* Issuer Name and Instituton Name */}
                                             <Typography
                                                 variant="body2"
                                                 sx={{

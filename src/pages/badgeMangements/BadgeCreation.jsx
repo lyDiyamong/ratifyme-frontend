@@ -11,7 +11,7 @@ const BadgeCreation = () => {
         <DashboardContainer sx={{ pb: 4 }}>
             <Stack gap={3}>
                 <PageTitle
-                    title="BadgeCreation"
+                    title="Badge Creation"
                     subtitle="This section guides you through the process of creating new badges"
                 />
                 {/* <SearchBar showButton={false} textInButton=""/> */}

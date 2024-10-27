@@ -34,10 +34,13 @@ const BadgeManagement = () => {
         field = null;
     }
 
-    const { data: badges, isLoading } = useFetchBadgesQuery(
-        roleId === 1 ? { search: searchQuery } : { field, fk: activeId, search: searchQuery },
-        { skip: roleId !== 1 && (!activeId || !field) },
-    );
+    const {
+        data: badges,
+        isLoading,
+        refetch,
+    } = useFetchBadgesQuery(roleId === 1 ? { search: searchQuery } : { field, fk: activeId, search: searchQuery }, {
+        skip: roleId !== 1 && (!activeId || !field),
+    });
 
     const allowRole = roleId === 3 ? true : false;
 
@@ -63,39 +66,48 @@ const BadgeManagement = () => {
 
     return (
         <DashboardContainer sx={{ pb: 4 }}>
-            <PageLoading isLoading={isLoading} />
-            {/* Show AlertMessage if successMessage exists */}
-            {state?.successMessage && <AlertMessage variant="success">{state.successMessage}</AlertMessage>}
+            {/* Conditionally render PageLoading while data is being fetched */}
+            {isLoading ? (
+                <PageLoading isLoading={isLoading} />
+            ) : (
+                <>
+                    {/* Show AlertMessage if successMessage exists */}
+                    {state?.successMessage && <AlertMessage variant="success">{state.successMessage}</AlertMessage>}
 
-            <PageTitle title="Badge Management" subtitle="Monitor, assign, and manage all your digital badges with ease." />
+                    <PageTitle
+                        title="Badge Management"
+                        subtitle="Monitor, assign, and manage all your digital badges with ease."
+                    />
 
-            <SearchBar
-                showButton={allowRole}
-                textInButton="Add Badge"
-                badges={badges?.data || []}
-                onSearchChange={handleSearchChange}
-                total={badges?.total || 0}
-                onPage={onPage}
-                limit={limit || []}
-                page={page || []}
-                result={result || []}
-            >
-                {badges?.total === 0 ? (
-                    <Box display="flex" flexDirection="column" alignItems="center" p={4}>
-                        <CardMedia
-                            component="img"
-                            image={StatusCode}
-                            alt="No badges found"
-                            sx={{ maxWidth: 400, width: "100%" }}
-                        />
-                        <Typography variant="h6" mt={2} textAlign="center" color={theme.palette.text.secondary}>
-                            No badges Found
-                        </Typography>
-                    </Box>
-                ) : (
-                    <BadgeList />
-                )}
-            </SearchBar>
+                    <SearchBar
+                        showButton={allowRole}
+                        textInButton="Add Badge"
+                        badges={badges?.data || []}
+                        onSearchChange={handleSearchChange}
+                        total={badges?.total || 0}
+                        onPage={onPage}
+                        limit={limit || []}
+                        page={page || []}
+                        result={result || []}
+                    >
+                        {badges?.total === 0 ? (
+                            <Box display="flex" flexDirection="column" alignItems="center" p={4}>
+                                <CardMedia
+                                    component="img"
+                                    image={StatusCode}
+                                    alt="No badges found"
+                                    sx={{ maxWidth: 400, width: "100%" }}
+                                />
+                                <Typography variant="h6" mt={2} textAlign="center" color={theme.palette.text.secondary}>
+                                    No badges Found
+                                </Typography>
+                            </Box>
+                        ) : (
+                            <BadgeList refetch={refetch} />
+                        )}
+                    </SearchBar>
+                </>
+            )}
         </DashboardContainer>
     );
 };
