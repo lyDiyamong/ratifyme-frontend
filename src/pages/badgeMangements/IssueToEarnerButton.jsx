@@ -1,5 +1,6 @@
 // React import
 import { useState } from "react";
+
 // MUI Import
 import { Button } from "@mui/material";
 import theme from "../../assets/themes";
@@ -46,8 +47,8 @@ const IssueToEarnerButton = ({ achievementId }) => {
                 onConfirm={handleIssueBadge}
                 confirmText="Issue"
                 cancelText="Cancel"
-                iconBgColor={theme.palette.primary.light}
-                iconColor={theme.palette.primary.main}
+                iconBgColor={theme.palette.customColors.orange100}
+                iconColor={theme.palette.customColors.orange400}
                 confirmButtonColor={theme.palette.primary.main}
                 confirmButtonColorHover={theme.palette.primary.dark}
                 icon={ForwardToInboxIcon}

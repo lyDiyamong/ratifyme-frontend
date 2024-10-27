@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { skipToken } from "@reduxjs/toolkit/query";
 import PageTitle from "../../components/PageTitle";
 import SearchBar from "../../components/SearchBar";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import BadgeList from "./BadgeList";
 import { useFetchBadgesQuery } from "../../store/api/badgeManagement/badgeApi";
-import { display } from "@mui/system";
 import { Box, CardMedia, Typography } from "@mui/material";
 import theme from "../../assets/themes";
 import StatusCode from "../../assets/images/NoData.svg";
+import { useLocation } from "react-router";
+import AlertMessage from "../../components/alert/AlertMessage";
+import PageLoading from "../../components/loading/PageLoading";
 
 const BadgeManagement = () => {
+    const { state } = useLocation();
     const [page, setPage] = useState(1);
     const [limit] = useState(10);
 
@@ -32,7 +34,7 @@ const BadgeManagement = () => {
         field = null;
     }
 
-    const { data: badges } = useFetchBadgesQuery(
+    const { data: badges, isLoading } = useFetchBadgesQuery(
         roleId === 1 ? { search: searchQuery } : { field, fk: activeId, search: searchQuery },
         { skip: roleId !== 1 && (!activeId || !field) },
     );
@@ -61,7 +63,12 @@ const BadgeManagement = () => {
 
     return (
         <DashboardContainer sx={{ pb: 4 }}>
+            <PageLoading isLoading={isLoading} />
+            {/* Show AlertMessage if successMessage exists */}
+            {state?.successMessage && <AlertMessage variant="success">{state.successMessage}</AlertMessage>}
+
             <PageTitle title="Badge Management" subtitle="Monitor, assign, and manage all your digital badges with ease." />
+
             <SearchBar
                 showButton={allowRole}
                 textInButton="Add Badge"

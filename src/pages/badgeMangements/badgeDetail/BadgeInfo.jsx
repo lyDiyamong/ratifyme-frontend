@@ -4,9 +4,9 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 // MUI Import
-import { Box, Typography, Chip, Stack, Button, Modal, useMediaQuery } from "@mui/material";
+import { Box, Typography, Chip, Stack, useMediaQuery } from "@mui/material";
 import theme from "../../../assets/themes";
-import { BorderColorRounded, ConfirmationNumber, Delete } from "@mui/icons-material";
+import { BorderColorRounded, Delete } from "@mui/icons-material";
 
 // Custom Import
 import IssuerBadgeButton from "../IssuerBadgeButton";
@@ -24,6 +24,8 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
 
     const [deleteBadge, { refetch }] = useDeleteBadgeMutation();
 
+    const badgeEarner = badge?.Achievements[0]?.Earners?.length !== 0 ? null : true;
+    const [hasEarner, setHasEarner] = useState(badgeEarner);
     const { control } = useForm();
 
     // assign variable from props that has fetch value
@@ -146,6 +148,7 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
                                 {userRole === "issuer" ? (
                                     <>
                                         <IssuerBadgeButton
+                                            setHasEarner={setHasEarner}
                                             onGetEmail={onGetEmails}
                                             control={control}
                                             issuerId={activeUserId}
@@ -166,15 +169,17 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
                         )}
                     </Stack>
                 </Stack>
-                <MoreMenu
-                    menuItems={menuItems}
-                    iconStyles={{
-                        color: "black",
-                        position: "absolute",
-                        right: { md: "3%", xss: "5%" },
-                        display: userRole !== "issuer" ? "none" : "block",
-                    }}
-                />
+                {hasEarner && (
+                    <MoreMenu
+                        menuItems={menuItems}
+                        iconStyles={{
+                            color: "black",
+                            position: "absolute",
+                            right: { md: "3%", xss: "5%" },
+                            display: userRole !== "issuer" ? "none" : "block",
+                        }}
+                    />
+                )}
             </Box>
 
             <Box
@@ -182,6 +187,7 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
                     backgroundColor: theme.palette.customColors.white,
                     boxShadow: theme.customShadows.default,
                     borderRadius: theme.customShape.card,
+                    padding: "24px",
                 }}
             >
                 <Box
