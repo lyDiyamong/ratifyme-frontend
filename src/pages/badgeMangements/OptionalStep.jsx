@@ -13,7 +13,7 @@ const OptionalStep = ({ control }) => {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Stack gap={2}>
                 {/* Expiration Date */}
-                <DateSelectionForm control={control} name="expirationDate" label="Expiration Date" />
+                <DateSelectionForm control={control} name="expiredDate" label="Expiration Date" />
                 {/* Addition Link */}
                 <FormInput label="Addition Link" name="additionLink" control={control} type="text" required={false} />
 

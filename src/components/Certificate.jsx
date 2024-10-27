@@ -8,7 +8,7 @@ import { Box, Divider, Typography, Stack } from "@mui/material";
 import certWave from "../assets/images/certWave.jpg";
 import theme from "../assets/themes";
 import FormatDate from "../utils/formatDate";
-import RatfiyME from "../assets/icons/RatifyME-Fevicon.svg";
+import RatfiyME from "../assets/icons/Favicon-Ratifyme.png";
 
 // =========== Start Certificate ===========
 // eslint-disable-next-line react/display-name
@@ -17,6 +17,7 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
         ref={ref}
         sx={{
             minWidth: "1000px",
+            maxWidth: "1000px",
             height: 700,
             border: "10px solid #ffffff",
             padding: 3,
@@ -31,7 +32,7 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
         }}
     >
         <Stack sx={{ flexDirection: "row", gap: 1, alignItems: "center" }}>
-            <Box sx={{ width: 40, height: 40 }} component="img" src={RatfiyME} alt="RatifyMe" />
+            <Box sx={{ width: 40, height: 40, objectFit:'contain' }} component="img" src={RatfiyME} alt="RatifyMe" />
             <Divider sx={{ height: 45, borderColor: "black" }} orientation="vertical" />
             <Stack justifyContent="start" alignItems="start">
                 <Typography variant="h3" fontWeight={theme.fontWeight.semiBold}>
@@ -39,7 +40,12 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
                 </Typography>
                 <Typography variant="body2">
                     RatifyMe by{" "}
-                    <span style={{ color: theme.palette.primary.main, fontWeight: theme.fontWeight.semiBold }}>TechA</span>
+                    <Typography
+                        component="span"
+                        sx={{ color: theme.palette.primary.main, fontWeight: theme.fontWeight.semiBold }}
+                    >
+                        TechA
+                    </Typography>
                 </Typography>
             </Stack>
         </Stack>
@@ -63,7 +69,7 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
                         textTransform: "uppercase",
                     }}
                 >
-                    ABOVE AND BEYOND SCHOOL
+                    {badge?.Institution?.institutionName}
                 </Typography>
             </Box>
 
@@ -99,16 +105,27 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
                 >
                     successfully completed all requirements in
                 </Typography>
-                <Typography
-                    sx={{
-                        fontSize: theme.typography.h1,
-                        color: theme.palette.text.primary,
-                        fontWeight: theme.fontWeight.bold,
-                        lineHeight: 2,
-                    }}
-                >
-                    {badge?.name}
-                </Typography>
+                <Box sx={{ maxWidth: "100%", overflowWrap: "break-word", paddingX: 3 }}>
+                    <Typography
+                        sx={{
+                            fontSize: theme.typography.h1,
+                            color: theme.palette.text.primary,
+                            fontWeight: theme.fontWeight.bold,
+                            lineHeight: 1.2,
+                            textAlign: "center",
+                            wordBreak: "break-word",
+                            overflowWrap: "break-word",
+                            maxWidth: "100%",
+                            textWrap: "wrap",
+                        }}
+                    >
+                        {badge?.name}
+                    </Typography>
+                </Box>
+
+                {/* Badge image */}
+                <Box component="img" src={badge?.imageUrl} alt={badge?.name} sx={{ maxWidth: 200, height: 200, objectFit:"contain" }} />
+
                 {/* Certificate description */}
                 <Box sx={{ display: "flex", justifyContent: "center" }}>
                     <Typography
