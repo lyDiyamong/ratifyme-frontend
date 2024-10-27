@@ -43,6 +43,7 @@ const IssuerBadgeButton = ({ onGetEmail, control, issuerId, badgeId, achievement
                     fontSize: theme.typography.body1,
                     borderRadius: theme.customShape.btn,
                     px: 3,
+                    textTransform: "none",
                 }}
             >
                 Add Earner

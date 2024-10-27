@@ -12,6 +12,7 @@ import { Button, Stack } from "@mui/material";
 // Custom import
 import DashboardContainer from "./styles/DashboardContainer";
 import theme from "../assets/themes";
+import { Add } from "@mui/icons-material";
 
 // Styled components
 const Search = styled("div")(({ theme }) => ({
@@ -136,6 +137,7 @@ export default function SearchBar({
                     <Link to="/dashboard/management/badges/badgecreation">
                         <Button
                             variant="contained"
+                            startIcon={<Add />}
                             sx={{
                                 backgroundColor: theme.palette.primary.main,
                                 color: theme.palette.customColors.white,
@@ -144,7 +146,7 @@ export default function SearchBar({
                                 paddingY: "8px",
                                 boxShadow: theme.customShadows.default,
                                 fontWeight: theme.fontWeight.bold,
-                                fontSize: "1.2rem",
+                                fontSize: "14px",
                                 whiteSpace: "nowrap",
                             }}
                         >

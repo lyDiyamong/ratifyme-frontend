@@ -10,13 +10,23 @@ import theme from "../../../assets/themes";
 import SelectForm from "../../../components/SelectionForm";
 import { useSendBadgeMutation } from "../../../store/api/achievements/achievementApi";
 import { useFetchEarnerQuery } from "../../../store/api/earnerManagement/earnerApis";
+import { SpinLoading } from "../../../components/loading/SpinLoading";
+import AlertMessage from "../../../components/alert/AlertMessage";
+import useCatchStatus from "../../../hooks/useCatchStatus";
 
 const CustomPaper = (props) => <Paper {...props} sx={{ borderRadius: "16px" }} />;
 
 const ModalContainer = ({ open, onClose, title, options, control, onGetEmail, badgeId, emails }) => {
+    const [loading, setLoading] = useState(false);
+    const [successMsg, setSuccessMsg] = useState("");
+
+    // Separate useSendBadgeMutation and useCatchStatus to avoid undefined references
     const { issuerData } = useSelector((state) => state.global);
-    const [sendBadge, { refetch }] = useSendBadgeMutation();
+    const [sendBadge, { isSuccess, refetch }] = useSendBadgeMutation();
     const { data: earner } = useFetchEarnerQuery({ issuerId: issuerData?.id });
+
+    // Now pass the value of `isSuccess` to useCatchStatus
+    const [message, setMessage] = useCatchStatus(isSuccess, isSuccess ? successMsg : "Earner added to list has failed");
 
     const [list, setList] = useState([]);
 
@@ -35,15 +45,18 @@ const ModalContainer = ({ open, onClose, title, options, control, onGetEmail, ba
     const handleSave = async () => {
         if (earnerIds.length > 0) {
             try {
+                setLoading(true);
                 const result = { id: badgeId, earners: earnerIds };
                 await sendBadge(result).unwrap();
                 refetch();
+                setSuccessMsg("Earners added to list successfully.");
             } catch (error) {
                 console.error("Error issuing badge:", error);
+            } finally {
+                setLoading(false);
             }
         }
         onGetEmail(list);
-
         onClose();
     };
 
@@ -56,74 +69,83 @@ const ModalContainer = ({ open, onClose, title, options, control, onGetEmail, ba
     const filteredList = list.filter((item) => !filteredEmails.some((earner) => earner.Earner.User.email === item));
 
     return (
-        <Dialog
-            open={open}
-            onClose={onClose}
-            PaperComponent={CustomPaper}
-            sx={{ noValidate: true, height: "auto", Height: "800px" }}
-            component="form"
-        >
-            <DialogTitle sx={{ padding: "20px", fontSize: theme.typography.h4, fontWeight: theme.fontWeight.semiBold }}>
-                {title}
-            </DialogTitle>
-            <DialogContent>
-                <Box
-                    sx={{
-                        mt: 2,
-                        width: { xs: "280px", sm: "420px", md: "500px" },
-                        display: "flex",
-                        flexDirection: "column",
-                        rowGap: "16px",
-                    }}
-                >
-                    <SelectForm
-                        name="email"
-                        label="Email"
-                        control={control}
-                        options={fetchOptions}
-                        required={false}
-                        onChange={handleSelect}
-                    />
-                    <Box>
-                        <h4>Selected Emails:</h4>
-                        <Box
-                            sx={{
-                                height: "200px",
-                                overflowY: "auto",
-                                border: "1px solid #ccc",
-                                padding: "8px",
-                                borderRadius: "8px",
-                            }}
-                        >
-                            {" "}
-                            {/* Uninvited Email */}
-                            {filteredList.map((item, index) => (
-                                <Box key={index} sx={{ py: 1 }}>
-                                    {item}
-                                </Box>
-                            ))}
-                            {/* Invited Email */}
-                            {filteredEmails.map((earner) => (
-                                <Box key={earner.Earner.User.id} sx={{ display: "flex", justifyContent: "space-between" }}>
-                                    {earner.Earner.User.email}{" "}
-                                    <Typography sx={{ color: theme.palette.customColors.gray500 }}>Invited</Typography>
-                                </Box>
-                            ))}
+        <>
+            {message && <AlertMessage variant={isSuccess ? "success" : "error"}>{message}</AlertMessage>}
+            <Dialog
+                open={open}
+                onClose={onClose}
+                PaperComponent={CustomPaper}
+                sx={{ noValidate: true, height: "auto", Height: "800px" }}
+                component="form"
+            >
+                <DialogTitle sx={{ padding: "20px", fontSize: theme.typography.h4, fontWeight: theme.fontWeight.semiBold }}>
+                    {title}
+                </DialogTitle>
+                <DialogContent>
+                    <Box
+                        sx={{
+                            mt: 2,
+                            width: { xs: "280px", sm: "420px", md: "500px" },
+                            display: "flex",
+                            flexDirection: "column",
+                            rowGap: "16px",
+                        }}
+                    >
+                        <SelectForm
+                            name="email"
+                            label="Email"
+                            control={control}
+                            options={fetchOptions}
+                            required={false}
+                            onChange={handleSelect}
+                        />
+                        <Box>
+                            <h4>Selected Emails:</h4>
+                            <Box
+                                sx={{
+                                    height: "200px",
+                                    overflowY: "auto",
+                                    border: "1px solid #ccc",
+                                    padding: "8px",
+                                    borderRadius: "8px",
+                                }}
+                            >
+                                {/* Uninvited Email */}
+                                {filteredList.map((item, index) => (
+                                    <Box key={index} sx={{ py: 1 }}>
+                                        {item}
+                                    </Box>
+                                ))}
+                                {/* Invited Email */}
+                                {filteredEmails.map((earner) => (
+                                    <Box key={earner.Earner.User.id} sx={{ display: "flex", justifyContent: "space-between" }}>
+                                        {earner.Earner.User.email}{" "}
+                                        <Typography sx={{ color: theme.palette.customColors.gray500 }}>Invited</Typography>
+                                    </Box>
+                                ))}
+                            </Box>
                         </Box>
                     </Box>
-                </Box>
-            </DialogContent>
-            <DialogActions sx={{ pb: "20px" }}>
-                <Button onClick={onClose}>Cancel</Button>
-                <Button
-                    onClick={handleSave}
-                    variant="contained"
-                    sx={{ color: theme.palette.customColors.white, borderRadius: theme.customShape.btn }}
-                >
-                    Save
-                </Button>
-            </DialogActions>
-        </Dialog>
+                </DialogContent>
+                <DialogActions sx={{ pb: "20px" }}>
+                    <Button onClick={onClose} sx={{ textTransform: "none" }}>
+                        Cancel
+                    </Button>
+                    <Button
+                        onClick={handleSave}
+                        variant="contained"
+                        disabled={loading}
+                        sx={{
+                            color: theme.palette.customColors.white,
+                            borderRadius: theme.customShape.btn,
+                            textTransform: "none",
+                        }}
+                    >
+                        {loading ? <SpinLoading size={24} /> : "Save"}
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </>
     );
 };
 

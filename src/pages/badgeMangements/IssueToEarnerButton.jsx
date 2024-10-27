@@ -7,7 +7,7 @@ import theme from "../../assets/themes";
 // Custom Import
 import { useIssueOnBadgeMutation } from "../../store/api/achievements/achievementApi";
 import AlertConfirmation from "../../components/alert/AlertConfirmation";
-import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
+import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 
 import AlertMessage from "../../components/alert/AlertMessage";
 import useCatchStatus from "../../hooks/useCatchStatus";
@@ -23,19 +23,21 @@ const IssueToEarnerButton = ({ achievementId }) => {
 
     const handleIssueBadge = async () => {
         try {
-            // Here, pass the correct parameters expected by the mutation
             await issueOnBadge({ achievementId }).unwrap();
         } catch (error) {
-            setMessage("Issue badge failed also failed")
-        }
-        finally{
-            setIsUploadCertModal(false)
+            setMessage("Issue badge failed also failed");
+        } finally {
+            setIsUploadCertModal(false);
         }
     };
 
     return (
         <>
-        {message && <AlertMessage variant={isSuccess ? "success": "error"} onClose={() => setMessage('')} >{message}</AlertMessage>}
+            {message && (
+                <AlertMessage variant={isSuccess ? "success" : "error"} onClose={() => setMessage("")}>
+                    {message}
+                </AlertMessage>
+            )}
             <AlertConfirmation
                 open={isUploadCertModal}
                 title="Issue to Earner"
@@ -58,9 +60,10 @@ const IssueToEarnerButton = ({ achievementId }) => {
                     fontSize: theme.typography.body1,
                     borderRadius: theme.customShape.btn,
                     px: 3,
+                    textTransform: "none",
                 }}
             >
-                {isLoading ? "Issuing..." : "Send Issue"}
+                Issue Badge
             </Button>
         </>
     );
