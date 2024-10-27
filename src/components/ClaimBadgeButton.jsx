@@ -15,10 +15,14 @@ import theme from "../assets/themes";
 // Api import
 import { useClaimBadgeMutation } from "../store/api/badgeManagement/badgeApi";
 import { useFetchEarnerAchieByIdQuery } from "../store/api/earnerManagement/earnerApis";
+import { skipToken } from "@reduxjs/toolkit/query";
 
 const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
     // =========== API Hooks & Data Fetching ===========
-    const { data: earnerAchieResponse, refetch } = useFetchEarnerAchieByIdQuery({ achieveId: achievementIds, earnerId });
+    const { data: earnerAchieResponse, refetch } = useFetchEarnerAchieByIdQuery({
+        achieveId: achievementIds,
+        earnerId: earnerId,
+    });
     const [claimBadge, { isLoading, isSuccess }] = useClaimBadgeMutation();
 
     // =========== State Management ===========
@@ -92,21 +96,53 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
                 confirmButtonColorHover={theme.palette.customColors.green400}
                 icon={VerifiedRoundedIcon}
             />
-            <Button
-                onClick={() => setIsClaimBadgeModal(true)}
-                disabled={claimed || isLoading}
-                variant="contained"
-                sx={{
-                    color: theme.palette.customColors.white,
-                    fontSize: theme.typography.body1,
-                    fontWeight: theme.fontWeight.bold,
-                    borderRadius: theme.customShape.btn,
-                    px: 3,
-                    textTransform: "none",
-                }}
-            >
-                {isLoading ? "Claiming..." : issuedOn === null || !claimed ? "Claim Badge" : "Claimed"}
-            </Button>
+            {issuedOn === null ? (
+                <Tooltip
+                    title="Waiting for issue"
+                    componentsProps={{
+                        tooltip: {
+                            sx: {
+                                fontSize: theme.typography.body2,
+                                bgcolor: theme.palette.customColors.gray300,
+                            },
+                        },
+                    }}
+                >
+                    <span>
+                        <Button
+                            onClick={() => setIsClaimBadgeModal(true)}
+                            disabled={claimed || isLoading}
+                            variant="contained"
+                            sx={{
+                                color: theme.palette.customColors.white,
+                                fontSize: theme.typography.body1,
+                                fontWeight: theme.fontWeight.bold,
+                                borderRadius: theme.customShape.btn,
+                                px: 3,
+                                textTransform: "none",
+                            }}
+                        >
+                            {isLoading ? "Claiming..." : "Claim Badge"}
+                        </Button>
+                    </span>
+                </Tooltip>
+            ) : (
+                <Button
+                    onClick={() => setIsClaimBadgeModal(true)}
+                    disabled={claimed || isLoading}
+                    variant="contained"
+                    sx={{
+                        color: theme.palette.customColors.white,
+                        fontSize: theme.typography.body1,
+                        fontWeight: theme.fontWeight.bold,
+                        borderRadius: theme.customShape.btn,
+                        px: 3,
+                        textTransform: "none",
+                    }}
+                >
+                    {isLoading ? "Claiming..." : claimed ? "Claimed" : "Claim Badge"}
+                </Button>
+            )}
         </>
         // =========== End ClaimBadgeButton ===========
     );

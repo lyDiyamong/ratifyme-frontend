@@ -239,7 +239,7 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
                         />
                         <DetailItem
                             label="Duration"
-                            value={days ? `${days} days` : "No duration available"}
+                            value={days === 1 ? `${days} day` : days ? `${days} days` : "No duration available"}
                             isSmallScreen={isSmallScreen}
                         />
                         <DetailItem
