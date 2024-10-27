@@ -180,6 +180,9 @@ const Navbar = () => {
                                 <Link to="/contactus">
                                     <Button sx={buttonStyle}>Contact Us</Button>
                                 </Link>
+                                <Link to="/aboutUs">
+                                    <Button sx={buttonStyle}>About Us</Button>
+                                </Link>
 
                                 {institutionData && userInfo ? (
                                     <Link to="/dashboard" onClick={handleServicePlanClick}>
@@ -201,7 +204,7 @@ const Navbar = () => {
                                         </Stack>
                                     </Link>
                                 ) : (
-                                    <Box>
+                                    <>
                                         <Link to="/auth/login">
                                             <Button
                                                 variant="outlined"
@@ -227,7 +230,7 @@ const Navbar = () => {
                                                 Sign Up
                                             </Button>
                                         </Link>
-                                    </Box>
+                                    </>
                                 )}
                             </Box>
                         </Box>

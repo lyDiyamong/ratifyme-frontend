@@ -1,6 +1,7 @@
 // React library import
 import { Box, Stack, Typography } from "@mui/material";
 import { motion } from "framer-motion";
+import LandingContainer from "../../components/styles/LandingContainer";
 
 const OurCustomers = () => {
     const images = [
@@ -16,45 +17,47 @@ const OurCustomers = () => {
     const duplicatedImages = [...images, ...images];
 
     return (
-        <Box sx={{ textAlign: "center", padding: "40px 0", maxWidth: 1200, mx: "auto" }}>
-            <Typography variant="h3" sx={{ marginBottom: "50px" }}>
-                Trusted by more than <span style={{ fontWeight: "bold", color: "#000" }}>100,000</span> of the world's leading
-                organizations
-            </Typography>
-            <Stack
-                component={motion.div}
-                direction="row"
-                sx={{
-                    // maxWidth: "1000px",
-                    mx: "auto",
-                    overflow: "hidden",
-                    width: "100%",
-                }}
-            >
+        <LandingContainer>
+            <Box sx={{ textAlign: "center", padding: "40px 0" }}>
+                <Typography variant="h3" sx={{ marginBottom: "50px" }}>
+                    Trusted by more than <span style={{ fontWeight: "bold", color: "#000" }}>100,000</span> of the world's leading
+                    organizations
+                </Typography>
                 <Stack
                     component={motion.div}
                     direction="row"
-                    initial={{ x: 0 }}
-                    animate={{ x: ["0%", "-50%"] }}
-                    transition={{
-                        repeat: Infinity,
-                        duration: 8,
-                        ease: "linear",
+                    sx={{
+                        // maxWidth: "1000px",
+                        mx: "auto",
+                        overflow: "hidden",
+                        width: "100%",
                     }}
-                    sx={{ display: "flex", gap: 2 }}
                 >
-                    {duplicatedImages.map((src, index) => (
-                        <Box
-                            component="img"
-                            key={index}
-                            src={src}
-                            alt={`Logo ${index + 1}`}
-                            sx={{ maxHeight: "60px", margin: "0 10px" }}
-                        />
-                    ))}
+                    <Stack
+                        component={motion.div}
+                        direction="row"
+                        initial={{ x: 0 }}
+                        animate={{ x: ["0%", "-50%"] }}
+                        transition={{
+                            repeat: Infinity,
+                            duration: 8,
+                            ease: "linear",
+                        }}
+                        sx={{ display: "flex", gap: 2 }}
+                    >
+                        {duplicatedImages.map((src, index) => (
+                            <Box
+                                component="img"
+                                key={index}
+                                src={src}
+                                alt={`Logo ${index + 1}`}
+                                sx={{ maxHeight: "60px", margin: "0 10px" }}
+                            />
+                        ))}
+                    </Stack>
                 </Stack>
-            </Stack>
-        </Box>
+            </Box>
+        </LandingContainer>
     );
 };
 

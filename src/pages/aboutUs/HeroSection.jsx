@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 // Mui Import
 import { Box, Button, Chip, Stack, TextField, Typography } from "@mui/material";
 //Custom Import
-import PosterHeroSvg from "../../assets/images/Poster.svg";
 import LandingContainer from "../../components/styles/LandingContainer";
 import {
     AdminPanelSettingsOutlined,
@@ -10,17 +9,16 @@ import {
     ArrowForwardIosOutlined,
     CastForEducationOutlined,
     Circle,
-    VerifiedRounded,
 } from "@mui/icons-material";
 import theme from "../../assets/themes";
 
-const HeroSection = () => {
+const HeroAboutSection = () => {
     return (
         //============ Start Hero Section  ============
         <Box component="section" display="flex" justifyContent="center" alignItems="center" paddingTop="32px" minHeight="500px">
             {/*  Start Hero Container  */}
             <LandingContainer>
-                <Stack sx={{ justifyContent: "center", alignItems: "center", gap: 5 }}>
+                <Stack sx={{ justifyContent: "center", alignItems: "center", gap: 3 }}>
                     <Chip
                         icon={<Circle color="#0AA4A5" sx={{ fontSize: 10 }} />}
                         label="v1.0.0"
@@ -90,45 +88,23 @@ const HeroSection = () => {
                         </Typography>
                     </Stack>
 
-                    <Stack sx={{ flexDirection: "row", gap: 2 }}>
-                        <Button
-                            variant="contained"
-                            sx={{
-                                color: theme.palette.customColors.white,
-                                fontWeight: theme.fontWeight.bold,
-                                textTransform: "none",
-                                fontSize: "18px",
-                                px: 3,
-                                py: 1.5,
-                            }}
-                        >
-                            Let's Get Start
-                        </Button>
-                        <a
-                            href="https://ratifyme.digital/credential/RMC-6a322632-33ff-4d9a-a1a5-b9e89c4eff58"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
+                    <Stack sx={{ flexDirection: "row" }}>
+                        <Link to="/aboutOurTeam">
                             <Button
-                                variant="outlined"
+                                variant="contained"
                                 endIcon={<ArrowForwardIosOutlined />}
                                 sx={{
                                     color: theme.palette.customColors.white,
-                                    background: "#0B3558",
-                                    border: `1px solid #D0D1D6`,
                                     fontWeight: theme.fontWeight.bold,
                                     textTransform: "none",
                                     fontSize: "18px",
-                                    px: 3,
-                                    py: 1.5,
-                                    "&:hover": {
-                                        background: "#133E87",
-                                    },
+                                    px: 2,
+                                    py: 1,
                                 }}
                             >
-                                Demo Credential
+                                Our teams
                             </Button>
-                        </a>
+                        </Link>
                     </Stack>
                 </Stack>
             </LandingContainer>
@@ -138,4 +114,4 @@ const HeroSection = () => {
     //============ End Hero Section  ============
 };
 
-export default HeroSection;
+export default HeroAboutSection;
