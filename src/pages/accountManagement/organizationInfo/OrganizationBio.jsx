@@ -8,8 +8,6 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 // Custom imports
 import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
-import MaleUserDefault from "../../../assets/images/MaleUser.svg";
-import FemaleUserDefault from "../../../assets/images/FemaleUser.svg";
 import theme from "../../../assets/themes";
 
 // Fetching data imports
@@ -18,9 +16,9 @@ import { useUpdateInstitutionMutation } from "../../../store/api/institutionMana
 
 // =========== Start BioContent in profile page ===========
 const OrganizationBio = ({ institutionInfo }) => {
-    const { userId } = useSelector((state) => state.global);
+    const { userId, institutionData } = useSelector((state) => state.global);
 
-    const [institutionBio, setInstitutionBio] = useState("");
+    const [institutionBio, setInstitutionBio] = useState(""); // Initialize as empty string
     const [isEditing, setIsEditing] = useState(false);
     const [profileImage, setProfileImage] = useState(DefaultProfileSvg);
 
@@ -33,10 +31,10 @@ const OrganizationBio = ({ institutionInfo }) => {
     const getDynamicValue = (property, ...sources) => {
         for (let source of sources) {
             if (source?.[property] !== undefined) {
-                return source[property];
+                return source[property] || ""; // Return empty string if undefined
             }
         }
-        return null; // or provide a default fallback value if all are undefined
+        return ""; // Return empty string as fallback
     };
 
     // Use institutionBio instead of bio
@@ -50,7 +48,7 @@ const OrganizationBio = ({ institutionInfo }) => {
         // Set profile image and institutionBio if institutionInfo is available
         if (institutionInfo) {
             const imageUrl = institutionInfo?.institutionProfileImage;
-            setProfileImage(imageUrl);
+            setProfileImage(imageUrl || DefaultProfileSvg); // Fallback to default image
             setInstitutionBio(institutionBioText);
         }
     }, [institutionInfo, institutionBioText]);
@@ -63,9 +61,9 @@ const OrganizationBio = ({ institutionInfo }) => {
 
     // Handle form submit to update the bio
     const handleSubmit = async () => {
-        if (institutionBio && userId) {
+        if (userId) {
             try {
-                await updateOrgProfile({ id: userId, updatedData: { institutionBio } }).unwrap();
+                await updateOrgProfile({ id: institutionData?.id, updatedData: { institutionBio } }).unwrap();
                 setIsEditing(false);
             } catch (error) {
                 console.error("Failed to update institutionBio:", error);
@@ -220,7 +218,6 @@ const OrganizationBio = ({ institutionInfo }) => {
                             overflowY: "auto",
                             wordWrap: "break-word",
                             whiteSpace: "normal",
-                            // textAlign: "center",
                         }}
                         title={institutionBio}
                     >
