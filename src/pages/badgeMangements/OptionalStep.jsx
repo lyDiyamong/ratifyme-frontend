@@ -14,10 +14,10 @@ const OptionalStep = ({ control, errors }) => {
             <Stack gap={2}>
                 {/* Expiration Date */}
                 <Box>
-                    <DateSelectionForm control={control} name="expirationDate" label="Expiration Date" />
-                    {errors.expirationDate && (
+                    <DateSelectionForm control={control} name="expiredDate" label="Expiration Date" />
+                    {errors.expiredDate && (
                         <Typography sx={{ fontSize: 12, mx: "14px" }} color="error">
-                            {errors.expirationDate.message}
+                            {errors.expiredDate.message}
                         </Typography>
                     )}
                 </Box>

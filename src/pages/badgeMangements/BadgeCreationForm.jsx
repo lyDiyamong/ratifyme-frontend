@@ -50,10 +50,6 @@ const schema = yup.object().shape({
         .min(10, "Criteria must be at least 10 characters long")
         .max(255, "Criteria cannot exceed 255 characters")
         .required("Criteria is required"),
-    // achievementType: yup
-    //     .string()
-    //     // .min(1, "Please select at least one achievement type")
-    //     .required("Achievment is reqiured"),
     startDate: yup
         .date()
         .typeError("Please select a valid date")
@@ -64,16 +60,14 @@ const schema = yup.object().shape({
         .typeError("Please select a valid date")
         .min(yup.ref("startDate"), "End date cannot be earlier than Start Date")
         .required("End date is required"),
-    expirationDate: yup
+    expiredDate: yup
         .date()
         .typeError("Please select a valid date")
-        .min(yup.ref("endDate"), "Expiration date cannot be earlier than End Date")
-        // .min(new Date(new Date().setHours(0, 0, 0, 0)), "Expiration date cannot be in the past")
-        .required("Expiration date is required"),
+        .min(yup.ref("endDate"), "Expiration date cannot be earlier than End Date"),
     badgeName: yup
         .string()
         .min(3, "Badge name must be at least 3 characters long")
-        .max(150, "Badge name cannot exceed 150 characters")
+        .max(50, "Badge name cannot exceed 50 characters")
         .required("Badge name is required"),
     badgeDescription: yup.string().max(255, "Description cannot exceed 255 characters").required("Description is required"),
 });
@@ -89,7 +83,7 @@ const BadgeCreationForm = () => {
     const [loading, setLoading] = useState(false);
 
     const [createBadge, { isLoading, isError, error, isSuccess, data }] = useCreateBadgeMutation();
-    const [message, setMessage] = useCatchStatus(isError || isSuccess, isError ? "Please upload badge image" : data?.message);
+    const [message, setMessage] = useCatchStatus(isError || isSuccess, isError ? error?.data?.message : data?.message);
 
     const { data: achievementType } = useFetchAchievementTypeQuery();
 
@@ -201,8 +195,6 @@ const BadgeCreationForm = () => {
             navigate("/dashboard/management/badges", {
                 state: { successMessage: "Badge created successfully!" },
             });
-        } catch (error) {
-            setMessage("Error creating badge: " + (error?.data?.message || "Something went wrong."));
         } finally {
             setLoading(false);
         }
@@ -252,7 +244,11 @@ const BadgeCreationForm = () => {
         >
             <PageLoading isLoading={isLoading} />
             {/* Start the Image Upload */}
-            {message && <AlertMessage variant={isError ? "error" : "success"}>{message}</AlertMessage>}
+            {message && (
+                <AlertMessage variant={isError ? "error" : "success"} onClose={() => setMessage("")}>
+                    {message}
+                </AlertMessage>
+            )}
             <Stack direction={{ md: "row", xss: "column-reverse" }} gap={3} alignItems={{ md: "center", xss: "start" }}>
                 <Box
                     sx={{
