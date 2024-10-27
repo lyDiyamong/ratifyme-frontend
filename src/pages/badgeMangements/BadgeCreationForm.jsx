@@ -21,6 +21,9 @@ import { useCreateBadgeMutation } from "../../store/api/badgeManagement/badgeApi
 import { useFetchAchievementTypeQuery } from "../../store/api/achievements/achievementTypeApi";
 import { CameraAltRounded } from "@mui/icons-material";
 import BadgeDefaultSvg from "../../assets/icons/BadgeDefaultSvg.svg";
+import AlertMessage from "../../components/alert/AlertMessage";
+import useCatchStatus from "../../hooks/useCatchStatus";
+import PageLoading from "../../components/loading/PageLoading";
 
 // The data static of the description
 const steps = [
@@ -61,6 +64,12 @@ const schema = yup.object().shape({
         .typeError("Please select a valid date")
         .min(yup.ref("startDate"), "End date cannot be earlier than Start Date")
         .required("End date is required"),
+    expirationDate: yup
+        .date()
+        .typeError("Please select a valid date")
+        .min(yup.ref("endDate"), "Expiration date cannot be earlier than End Date")
+        // .min(new Date(new Date().setHours(0, 0, 0, 0)), "Expiration date cannot be in the past")
+        .required("Expiration date is required"),
     badgeName: yup
         .string()
         .min(3, "Badge name must be at least 3 characters long")
@@ -79,7 +88,8 @@ const BadgeCreationForm = () => {
     // Slow loading
     const [loading, setLoading] = useState(false);
 
-    const [createBadge] = useCreateBadgeMutation();
+    const [createBadge, { isLoading, isError, error, isSuccess, data }] = useCreateBadgeMutation();
+    const [message, setMessage] = useCatchStatus(isError || isSuccess, isError ? "Please upload badge image" : data?.message);
 
     const { data: achievementType } = useFetchAchievementTypeQuery();
 
@@ -91,6 +101,7 @@ const BadgeCreationForm = () => {
         0: ["narrative", "achievementType"], // First step fields
         1: ["badgeName", "badgeDescription", "startDate", "endDate"], // Second step fields
     };
+
     // React Hook Form
     const {
         control,
@@ -187,9 +198,11 @@ const BadgeCreationForm = () => {
             // Reset form and image state
             reset();
             setUploadedImage(null);
-            navigate("/dashboard/management/badges");
+            navigate("/dashboard/management/badges", {
+                state: { successMessage: "Badge created successfully!" },
+            });
         } catch (error) {
-            console.error("Error creating badge:", error);
+            setMessage("Error creating badge: " + (error?.data?.message || "Something went wrong."));
         } finally {
             setLoading(false);
         }
@@ -237,9 +250,9 @@ const BadgeCreationForm = () => {
             onSubmit={handleSubmit(onSubmit)}
             component="form"
         >
+            <PageLoading isLoading={isLoading} />
             {/* Start the Image Upload */}
-            {/* <Typography>Hello</Typography> */}
-            {/* <ImageSelection onImageSelect={(file) => setUploadedImage(file)} /> */}
+            {message && <AlertMessage variant={isError ? "error" : "success"}>{message}</AlertMessage>}
             <Stack direction={{ md: "row", xss: "column-reverse" }} gap={3} alignItems={{ md: "center", xss: "start" }}>
                 <Box
                     sx={{
