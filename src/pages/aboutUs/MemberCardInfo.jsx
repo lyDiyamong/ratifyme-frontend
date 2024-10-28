@@ -43,7 +43,7 @@ const cardData = [
         role: "UX/UI Manager and QA",
         description: "Crafts and oversees the project’s visual design, prioritizing user engagement, appeal, and functionality.",
         imageUrl: ChounanProfile,
-        linkGitHub: "#",
+        linkGitHub: "https://github.com/t-chounan23125",
         linkLinkedIn: "#",
     },
     {

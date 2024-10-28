@@ -46,7 +46,7 @@ export default function WhatWeDo() {
             <Stack sx={{ gap: 1, animation: "bounceIn 2s ease-in-out 0.5s", justifyContent: "center", alignItems: "center" }}>
                 <Typography
                     sx={{
-                        fontSize: "72px",
+                        fontSize: { md: "72px", sm: "50px", xss: "40px" },
                         textAlign: "center",
                         maxWidth: 600,
                         fontWeight: theme.fontWeight.bold,
@@ -195,7 +195,6 @@ export default function WhatWeDo() {
                     container
                     spacing={3}
                     ref={sectionRef}
-                    variant="outlined"
                     className={isVisible ? "animate" : ""}
                     sx={{ animation: isVisible ? "bounceIn 2s ease-in-out 0.5s" : "none" }}
                 >
