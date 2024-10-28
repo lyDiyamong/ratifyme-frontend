@@ -15,10 +15,13 @@ const ContactUsPage = () => {
     // For use theme costom
     const theme = useTheme();
     // Form controller
-    const { handleSubmit, control } = useForm();
+    const { handleSubmit, control, reset } = useForm();
 
     // Handle submission
-    const onSubmit = (data) => console.log(data);
+    const onSubmit = (data) => {
+        console.log(data);
+        reset();
+    };
 
     return (
         // Use Container to wrap the contact us form and contact us icon
@@ -44,9 +47,8 @@ const ContactUsPage = () => {
                             Contact Us
                         </Typography>
                         <Typography gutterBottom my={2}>
-                            Thank you for your interest in RatifyMe by TechA. We
-                            are the experts in digital credentialing, and we are
-                            here to help you:
+                            Thank you for your interest in RatifyMe by TechA. We are the experts in digital credentialing, and we
+                            are here to help you:
                         </Typography>
                     </Box>
                     <Box
@@ -59,45 +61,20 @@ const ContactUsPage = () => {
                     >
                         {/* FormInput is the input Feild that we custom */}
                         {/* Name feild */}
-                        <FormInput
-                            name="name"
-                            label="Name"
-                            control={control}
-                            type="text"
-                            required={true}
-                        />
+                        <FormInput name="name" label="Name" control={control} type="text" required={true} />
                         {/* Email feild */}
-                        <FormInput
-                            label="Email"
-                            name="email"
-                            control={control}
-                            required={true}
-                            type="email"
-                        />
+                        <FormInput label="Email" name="email" control={control} required={true} type="email" />
                         {/* Organization Name feild */}
-                        <FormInput
-                            name="organization"
-                            label="Organization Name"
-                            control={control}
-                            type="text"
-                            required={true}
-                        />
+                        <FormInput name="organization" label="Organization Name" control={control} type="text" required={true} />
                         {/* Profession feild */}
-                        <FormInput
-                            name="profession"
-                            label="Profession"
-                            control={control}
-                            type="text"
-                            required={true}
-                        />
+                        <FormInput name="profession" label="Profession" control={control} type="text" required={true} />
                         {/* Descriptive */}
                         <Typography
                             sx={{
                                 color: theme.palette.text.secondary,
                             }}
                         >
-                            We would like to contact you about our products that
-                            may be of interest to you.
+                            We would like to contact you about our products that may be of interest to you.
                         </Typography>
                         {/* Button submit that handle submit form */}
                         <Button

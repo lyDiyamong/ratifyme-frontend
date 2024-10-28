@@ -356,22 +356,24 @@ const Navbar = () => {
                                     </Link>
 
                                     {/* Dropdown Menu */}
-                                    <Menu
-                                        id="profile-menu"
-                                        anchorEl={anchorEl}
-                                        open={openProfileMenu}
-                                        onClose={handleMenuCloseProfile}
-                                        MenuListProps={{
-                                            "aria-labelledby": "basic-button",
-                                        }}
-                                    >
-                                        <MenuItem onClick={handleProfileMenuItemClick}>
-                                            {userInfo?.firstName} {userInfo?.lastName}
-                                        </MenuItem>
-                                        <MenuItem onClick={handleProfileMenuItemClick}>
-                                            {institutionData?.institutionName}
-                                        </MenuItem>
-                                    </Menu>
+                                    <Link to="/dashboard">
+                                        <Menu
+                                            id="profile-menu"
+                                            anchorEl={anchorEl}
+                                            open={openProfileMenu}
+                                            onClose={handleMenuCloseProfile}
+                                            MenuListProps={{
+                                                "aria-labelledby": "basic-button",
+                                            }}
+                                        >
+                                            <MenuItem onClick={handleProfileMenuItemClick}>
+                                                {userInfo?.firstName} {userInfo?.lastName}
+                                            </MenuItem>
+                                            <MenuItem onClick={handleProfileMenuItemClick}>
+                                                {institutionData?.institutionName}
+                                            </MenuItem>
+                                        </Menu>
+                                    </Link>
                                 </Box>
                             )}
                         </Box>

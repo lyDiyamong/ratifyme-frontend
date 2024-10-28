@@ -7,7 +7,7 @@ import purpleArrowSvg from "../../assets/icons/purplearrow.svg";
 import yellowArrowSvg from "../../assets/icons/yellowarrow.svg";
 
 // This function is working as create card content based on role
-export const createCardContent = (roleId, data, userId) => {
+export const createCardContent = (roleId, data, userId, badge) => {
     switch (roleId) {
         case 1:
             return createAdminContent(data);
@@ -16,7 +16,7 @@ export const createCardContent = (roleId, data, userId) => {
         case 3:
             return createIssuerContent(data, userId);
         case 4:
-            return createEarnerContent(data, userId);
+            return createEarnerContent(data, userId, badge);
         default:
             return [];
     }
@@ -24,12 +24,11 @@ export const createCardContent = (roleId, data, userId) => {
 
 // Admin content
 const createAdminContent = (data) => {
-    const totalInstitutions = data.length;
-    const totalIssuers = data.reduce((total, institution) => total + (institution.Issuers?.length || 0), 0);
-    const totalEarners = data.reduce(
+    const totalInstitutions = data?.length || 0;
+    const totalIssuers = data?.reduce((total, institution) => total + (institution.Issuers?.length || 0), 0);
+    const totalEarners = data?.reduce(
         (total, institution) =>
-            total +
-            (institution.Issuers?.reduce((issuerTotal, issuer) => issuerTotal + (issuer.Earners?.length || 0), 0) || 0),
+            total + (institution.Issuers?.reduce((issuerTotal, issuer) => issuerTotal + (issuer.Earners?.length || 0), 0) || 0),
         0,
     );
 
@@ -42,23 +41,12 @@ const createAdminContent = (data) => {
 
 // Institution Owner Content
 const createInstitutionContent = (data, userId) => {
-    // Find the institution that matches the userId
-    const institution = data.find(inst => inst.userId === userId);
+    const institution = data?.find((inst) => inst.userId === userId);
+    if (!institution) return []; // No institution found for the userId
 
-    if (!institution) return []; // Return empty if no institution found for the userId
-
-    // Count total earners for this institution
-    const totalEarners = institution.Issuers.reduce((total, issuer) => {
-        return total + (issuer.Earners?.length || 0);
-    }, 0);
-
-    // Count total badges for this institution (from all issuers)
-    const totalBadges = institution.Issuers.reduce((total, issuer) => {
-        return total + (issuer.BadgeClasses?.length || 0);
-    }, 0);
-
-    // Count total badges earned by earners in this institution
-    const totalIssuers = institution.Issuers?.length
+    const totalEarners = institution.Issuers?.reduce((total, issuer) => total + (issuer.Earners?.length || 0), 0) || 0;
+    const totalBadges = institution.Issuers?.reduce((total, issuer) => total + (issuer.BadgeClasses?.length || 0), 0) || 0;
+    const totalIssuers = institution.Issuers?.length || 0;
 
     return [
         { image: yellowGraphSvg, title: "Total Earners", icon: yellowArrowSvg, value: totalEarners },
@@ -70,16 +58,16 @@ const createInstitutionContent = (data, userId) => {
 // Issuer content
 const createIssuerContent = (data, userId) => {
     const institutions = data.filter((institution) => institution.Issuers.some((issuer) => issuer.userId === userId));
-
     const totalInstitutions = institutions.length;
+
     const totalBadges = institutions.reduce(
         (total, institution) =>
             total + (institution.Issuers.find((issuer) => issuer.userId === userId)?.BadgeClasses?.length || 0),
         0,
     );
+
     const totalIssuerEarners = institutions.reduce(
-        (total, institution) =>
-            total + (institution.Issuers.find((issuer) => issuer.userId === userId)?.Earners?.length || 0),
+        (total, institution) => total + (institution.Issuers.find((issuer) => issuer.userId === userId)?.Earners?.length || 0),
         0,
     );
 
@@ -91,22 +79,28 @@ const createIssuerContent = (data, userId) => {
 };
 
 // Earner content
-const createEarnerContent = (data, userId) => {
+const createEarnerContent = (data, userId, badge) => {
     const earnerData = [];
 
     data.forEach((institution) => {
-        institution.Issuers.forEach((issuer) => {
-            const matchedEarners = issuer.Earners.filter((earner) => earner.userId === userId);
-            earnerData.push(...matchedEarners);
+        institution.Issuers?.forEach((issuer) => {
+            const matchedEarners = issuer.Earners?.filter((earner) => earner.userId === userId);
+            earnerData.push(...(matchedEarners || []));
         });
     });
 
-    const totalBadges = earnerData.reduce((count, earner) => {
-        return count + (earner.Achievement?.BadgeClass ? 1 : 0);
-    }, 0);
+    const totalBadges = badge?.totalRecords || 0;
 
-    const totalAchievements = earnerData.length;
+    const uniqueAchievementsMap = new Map();
+    const allAchievements = earnerData.flatMap(({ Achievements }) => Achievements || []);
 
+    allAchievements.forEach((achievement) => {
+        if (!uniqueAchievementsMap.has(achievement.badgeClassId)) {
+            uniqueAchievementsMap.set(achievement.badgeClassId, achievement);
+        }
+    });
+
+    const totalAchievements = uniqueAchievementsMap.size;
     const totalIssuers = new Set(earnerData.map((earner) => earner.issuerId)).size;
 
     return [

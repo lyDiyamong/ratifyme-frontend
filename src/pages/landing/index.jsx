@@ -6,11 +6,13 @@ import HeroSection from "./HeroSection.jsx";
 import { Stack } from "@mui/material";
 import HowItWorks from "./HowItWorks.jsx";
 import SecondHeadTitle from "./SecondHeadTitle.jsx";
+import DigitalBadgeFlowStepper from "./DigitalBadgeFlowStepper.jsx";
 
 const HomePage = () => {
     return (
-        <Stack gap={15}>
+        <Stack gap={{md: 15, xss: 6}}>
             <HeroSection />
+            <DigitalBadgeFlowStepper/>
             <OurCustomers />
             <SecondHeadTitle />
             <HowItWorks />

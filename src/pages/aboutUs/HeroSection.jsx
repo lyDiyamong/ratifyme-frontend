@@ -15,7 +15,7 @@ import theme from "../../assets/themes";
 const HeroAboutSection = () => {
     return (
         //============ Start Hero Section  ============
-        <Box component="section" display="flex" justifyContent="center" alignItems="center" paddingTop="32px" minHeight="500px">
+        <Box component="section" display="flex" justifyContent="center" alignItems="center"  minHeight="500px">
             {/*  Start Hero Container  */}
             <LandingContainer>
                 <Stack sx={{ justifyContent: "center", alignItems: "center", gap: 4 }}>

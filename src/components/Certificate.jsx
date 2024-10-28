@@ -32,7 +32,7 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
         }}
     >
         <Stack sx={{ flexDirection: "row", gap: 1, alignItems: "center" }}>
-            <Box sx={{ width: 40, height: 40, objectFit:'contain' }} component="img" src={RatfiyME} alt="RatifyMe" />
+            <Box sx={{ width: 40, height: 40, objectFit: "contain" }} component="img" src={RatfiyME} alt="RatifyMe" />
             <Divider sx={{ height: 45, borderColor: "black" }} orientation="vertical" />
             <Stack justifyContent="start" alignItems="start">
                 <Typography variant="h3" fontWeight={theme.fontWeight.semiBold}>
@@ -79,12 +79,13 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
                 }}
             >
                 <Typography
+                variant="body1"
                     sx={{
                         color: theme.palette.text.disabled,
-                        letterSpacing: 2,
-                        fontSize: theme.typography.body2,
-                        lineHeight: 2,
-                        fontWeight: theme.fontWeight.bold,
+                        // letterSpacing: 2,
+                        // fontSize: theme.typography.body2,
+                        // lineHeight: 2,
+                        // fontWeight: theme.fontWeight.bold,
                     }}
                 >
                     Certifies that
@@ -95,12 +96,13 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
                 </Typography>
 
                 <Typography
+                variant="body1"
                     sx={{
                         color: theme.palette.text.disabled,
-                        letterSpacing: 2,
-                        fontSize: theme.typography.body2,
+                        // letterSpacing: 2,
+                        // fontSize: theme.typography.body2,
                         lineHeight: 2,
-                        fontWeight: theme.fontWeight.bold,
+                        // fontWeight: theme.fontWeight.bold,
                     }}
                 >
                     successfully completed all requirements in
@@ -124,29 +126,15 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
                 </Box>
 
                 {/* Badge image */}
-                <Box component="img" src={badge?.imageUrl} alt={badge?.name} sx={{ maxWidth: 200, height: 200, objectFit:"contain" }} />
-
-                {/* Certificate description */}
-                <Box sx={{ display: "flex", justifyContent: "center" }}>
-                    <Typography
-                        sx={{
-                            fontSize: theme.typography.body2,
-                            color: theme.palette.text.disabled,
-                            lineHeight: 2,
-                            width: 500,
-                            textWrap: "wrap",
-                            textAlign: "center",
-                        }}
-                    >
-                        {badge?.description}
-                    </Typography>
-                </Box>
-                {/* Issuer name */}
-                <Typography
-                    sx={{
-                        fontSize: theme.typography.body2,
-                    }}
-                >
+                <Box
+                    component="img"
+                    src={badge?.imageUrl}
+                    alt={badge?.name}
+                    sx={{ maxWidth: 200, height: 200, objectFit: "contain", my: 2 }}
+                />
+            </Box>
+            <Box>
+                <Typography variant="body1" sx={{ textAlign: "center" }}>
                     Issuer:{" "}
                     <Typography
                         component="span"
@@ -159,8 +147,6 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
                         {`${badge?.Issuer?.User?.firstName} ${badge?.Issuer?.User?.lastName}` || "N/A"}
                     </Typography>
                 </Typography>
-            </Box>
-            <Box sx={{ mt: 3 }}>
                 <Typography variant="body1" sx={{ textAlign: "center" }}>
                     Issued On: {FormatDate(earnerAchieve?.issuedOn)}
                 </Typography>

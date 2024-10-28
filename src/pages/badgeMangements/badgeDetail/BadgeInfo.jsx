@@ -234,11 +234,6 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
                             isSmallScreen={isSmallScreen}
                         />
                         <DetailItem
-                            label="Issued Date"
-                            value={result.createdAt ? result.createdAt.split("T")[0] : "N/A"}
-                            isSmallScreen={isSmallScreen}
-                        />
-                        <DetailItem
                             label="Badge’s Expiry Date"
                             value={expiredDate || "No expiry date"}
                             isSmallScreen={isSmallScreen}

@@ -7,25 +7,29 @@ import { Box, Typography, CircularProgress } from "@mui/material";
 //Custom Import
 import { createCardContent } from "./OverviewCardFetch";
 import theme from "../../assets/themes";
+import PageLoading from "../../components/loading/PageLoading";
 
 // Fetching Data
 import { useFetchInstitutionStatsQuery } from "../../store/api/reports/institutionStatApis";
+import { useFetchBadgeByEarnerQuery } from "../../store/api/badgeManagement/badgeApi";
 import { useSelector } from "react-redux";
 
 // =========== Start Overview Card ===========
 const CardsList = () => {
+    // Redux toolkit hook
     const { data: response, isLoading, isError } = useFetchInstitutionStatsQuery();
-    const { userId, roleId } = useSelector((state) => state.global);
+    const { userId, roleId, earnerData } = useSelector((state) => state.global);
+    const { data: badge, isLoading: badgeLoading } = useFetchBadgeByEarnerQuery({ earnerId: earnerData?.id }, {skip: !earnerData});
     const [cardContents, setCardContents] = useState([]);
 
     useEffect(() => {
         if (response && roleId) {
-            const cardData = createCardContent(roleId, response.data, userId);
+            const cardData = createCardContent(roleId, response?.data, userId, badge) || [];
             setCardContents(cardData);
         }
-    }, [response, userId]);
+    }, [response, userId, badge, roleId]);
 
-    if (isLoading) return <CircularProgress />;
+    if (isLoading || badgeLoading) return <PageLoading isLoading={isLoading || badgeLoading} />;
     if (isError) return <Typography color="error">Error fetching data</Typography>;
 
     return (
@@ -39,7 +43,7 @@ const CardsList = () => {
                 },
             }}
         >
-            {cardContents.map(({ title, image, icon, value }, index) => (
+            {cardContents?.map(({ title, image, icon, value }, index) => (
                 <Box
                     key={title || index}
                     sx={{
