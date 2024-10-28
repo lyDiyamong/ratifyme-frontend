@@ -89,11 +89,11 @@ const BadgeCreationForm = () => {
 
     const allAchievementTypes = achievementType?.data || [];
 
-    const userName = `${issuerData.User.firstName} ${issuerData.User.lastName}`;
+    const userName = `${issuerData?.User?.firstName} ${issuerData?.User?.lastName}`;
 
     const stepFields = {
-        0: ["narrative", "achievementType"], // First step fields
-        1: ["badgeName", "badgeDescription", "startDate", "endDate"], // Second step fields
+        0: ["narrative", "achievementType"],
+        1: ["badgeName", "badgeDescription", "startDate", "endDate"],
     };
 
     // React Hook Form
@@ -103,6 +103,7 @@ const BadgeCreationForm = () => {
         trigger,
         reset,
         formState: { errors },
+        setValue
     } = useForm({
         defaultValues: {
             issuer: userName || "",
@@ -207,6 +208,11 @@ const BadgeCreationForm = () => {
         }
         event.target.value = "";
     };
+    useEffect(()=> {
+        if(userName){
+            setValue("issuer", userName)
+        }
+    }, [userName, issuerData])
 
     // Monitor changes in the uploaded image using useEffect
     useEffect(() => {
