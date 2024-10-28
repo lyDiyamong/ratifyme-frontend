@@ -15,67 +15,93 @@ import BunthongProfile from "../../assets/images/BunthongProfile.jpeg";
 import RothanakProfile from "../../assets/images/RothanakProfile.png";
 import RothaProfile from "../../assets/images/RothaProfile.png";
 import RatifyMEFevicon from "../../assets/icons/RatifyME-Fevicon.svg";
+import { GitHub, LinkedIn } from "@mui/icons-material";
 
 const cardData = [
     {
         id: 1,
         title: "Prak Sreypov",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, culpa.",
+        role: "Project Manager",
+        description: "Leads project planning, execution, and delivery while ensuring seamless collaboration across the team.",
         imageUrl: SreyPovProfile,
-        link: "#",
+        linkGitHub: "https://github.com/PrakSreypov",
+        linkLinkedIn: "https://www.linkedin.com/in/sreypov-prak-8422ab262/",
     },
     {
         id: 2,
         title: "Khun Malen",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, culpa.",
+        role: "Full Stack Developer & QA",
+        description:
+            "Enhances project quality through rigorous testing, creating and executing test cases, identifying issues, and verifying resolutions.",
         imageUrl: MelenProfile,
-        link: "#",
+        linkGitHub: "https://github.com/Maalenn",
+        linkLinkedIn: "https://www.linkedin.com/in/ma-len-a96200334/",
     },
     {
         id: 3,
         title: "Tep Chounan",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, culpa.",
+        role: "UX/UI Manager and QA",
+        description: "Crafts and oversees the project’s visual design, prioritizing user engagement, appeal, and functionality.",
         imageUrl: ChounanProfile,
-        link: "#",
+        linkGitHub: "#",
+        linkLinkedIn: "#",
     },
     {
         id: 4,
         title: "Sreang Lyhour",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, culpa.",
+        role: "Full Stack Developer",
+        description: "Oversees database design and maintenance, ensuring data integrity, security, and optimal performance.",
         imageUrl: LyhourProfile,
-        link: "#",
+        linkGitHub: "https://github.com/Lyhua-tech",
+        linkLinkedIn: "https://t.me/c/1926286452/4/3791",
     },
     {
         id: 5,
         title: "Samon Rotha",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, culpa.",
+        role: "Full Stack Developer",
+        description:
+            "Focuses on crafting interactive and visually aligned components to enhance responsiveness and design adherence.",
         imageUrl: RothaProfile,
-        link: "#",
+        linkGitHub: "https://github.com/RothaSAMON",
+        linkLinkedIn: "https://www.linkedin.com/in/samon-rotha-034534316/",
     },
     {
         id: 6,
         title: "Ly Diyamong",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, culpa.",
+        role: "Full Stack Developer",
+        description:
+            "Specializes in server-side development, managing database interactions and API integrations for security and stability.",
         imageUrl: YamongProfile,
-        link: "#",
+        linkGitHub: "https://github.com/lyDiyamong",
+        linkLinkedIn: "https://t.me/c/1926286452/4/3790",
     },
     {
         id: 7,
         title: "Phok Keomonyrothanak",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, culpa.",
+        role: "DevOps Engineer",
+        description:
+            "Improves product design and user experience, ensuring the final product is both user-friendly and visually appealing.",
         imageUrl: RothanakProfile,
-        link: "#",
+        linkGitHub: "https://github.com/RatanakANB",
+        linkLinkedIn: "https://www.linkedin.com/in/rattanak-phok-605905256/",
     },
     {
         id: 8,
         title: "Ron Bunthong",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, culpa.",
+        role: "DevOps Engineer",
+        description:
+            "Handles deployment and infrastructure, focusing on CI/CD pipeline setup and process automation for reliable delivery.",
         imageUrl: BunthongProfile,
-        link: "#",
+        linkGitHub: "https://github.com/BunthongDev",
+        linkLinkedIn: "https://www.linkedin.com/in/bun-thong-509b10293/",
     },
 ];
 
-const BookCard = ({ title, description, imageUrl }) => {
+const BookCard = ({ title, role, linkGitHub, linkLinkedIn, description, imageUrl }) => {
+    const openLink = (url) => {
+        window.open(url, "_blank", "noopener,noreferrer");
+    };
+
     return (
         <Box
             sx={{
@@ -85,7 +111,6 @@ const BookCard = ({ title, description, imageUrl }) => {
                 width: "100%",
                 height: "350px",
                 backgroundColor: "whitesmoke",
-                // boxShadow: "1px 1px 12px #000",
                 perspective: "2000px",
                 display: "flex",
                 alignItems: "center",
@@ -101,7 +126,22 @@ const BookCard = ({ title, description, imageUrl }) => {
                 <Typography variant="h6" fontWeight="bold">
                     {title}
                 </Typography>
-                <Typography variant="body2">{description}</Typography>
+                <Typography py={1} px={4}>
+                    {role}
+                </Typography>
+                <Typography variant="body2" p={4}>
+                    {description}
+                </Typography>
+
+                <Stack flexDirection="row" gap={1} justifyContent="center" alignItems="center">
+                    <Box onClick={() => openLink(linkGitHub)} sx={{ cursor: "pointer" }}>
+                        <GitHub sx={{ fontSize: "24px", color: "#000" }} />
+                    </Box>
+
+                    <Box onClick={() => openLink(linkLinkedIn)} sx={{ cursor: "pointer" }}>
+                        <LinkedIn sx={{ fontSize: "26px" }} color="primary" />
+                    </Box>
+                </Stack>
             </Box>
             <Box
                 className="cover"
@@ -115,7 +155,6 @@ const BookCard = ({ title, description, imageUrl }) => {
                     cursor: "pointer",
                     transition: "all 0.5s",
                     transformOrigin: "0",
-                    // boxShadow: "1px 1px 12px #000",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -130,9 +169,6 @@ const BookCard = ({ title, description, imageUrl }) => {
                     sx={{
                         width: "100%",
                         height: "100%",
-                        // borderRadius: "50%",
-                        // marginBottom: "8px",
-                        position: "relative",
                         borderRadius: "10px",
                     }}
                 />
@@ -164,12 +200,17 @@ const MemberCardInfo = () => {
     return (
         <LandingContainer>
             <Stack
-                sx={{ gap: 2, justifyContent: "center", my: 6, alignItems: "center", animation: "bounceIn 2s ease-in-out 0.5s" }}
+                sx={{
+                    gap: 2,
+                    justifyContent: "center",
+                    my: 6,
+                    alignItems: "center",
+                    animation: "bounceIn 2s ease-in-out 0.5s",
+                }}
             >
                 <Typography textAlign="center" variant="h1" fontWeight={theme.fontWeight.bold} color="#0B3558">
                     TechA Members team
                 </Typography>
-
                 <Typography variant="h3" textAlign="center" color="#476788" maxWidth={800}>
                     Our team is customer-obsessed, mission-oriented, and believes anything is possible. 🚀
                 </Typography>
@@ -195,15 +236,26 @@ const MemberCardInfo = () => {
                     },
                 }}
             >
-                {/* <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}> */}
                 {cardData.map((card) => (
-                    <BookCard key={card.id} title={card.title} description={card.description} imageUrl={card.imageUrl} />
+                    <BookCard
+                        key={card.id}
+                        title={card.title}
+                        role={card.role}
+                        description={card.description}
+                        imageUrl={card.imageUrl}
+                        linkGitHub={card.linkGitHub}
+                        linkLinkedIn={card.linkLinkedIn}
+                    />
                 ))}
-                {/* </Box> */}
             </Stack>
+
             <style>
                 {`
                 @keyframes bounceIn {
+                    0% {
+                        opacity: 0;
+                        transform: translateY(-30px);
+                    }
                     60% {
                         opacity: 1;
                         transform: translateY(15px);

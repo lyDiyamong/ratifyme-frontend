@@ -9,7 +9,7 @@ import SecondHeadTitle from "./SecondHeadTitle.jsx";
 
 const HomePage = () => {
     return (
-        <Stack gap={15}>
+        <Stack gap={{md: 15, xss: 6}}>
             <HeroSection />
             <OurCustomers />
             <SecondHeadTitle />

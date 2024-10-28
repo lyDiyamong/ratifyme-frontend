@@ -7,7 +7,7 @@ import DemoSection from "./DemoSection";
 
 const AboutUs = () => {
     return (
-        <Stack gap={12}>
+        <Stack gap={{ md: 15, xss: 6 }}>
             <HeroAboutSection />
             <DemoSection />
         </Stack>
