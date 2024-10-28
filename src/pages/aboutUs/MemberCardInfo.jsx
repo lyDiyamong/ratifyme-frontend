@@ -12,8 +12,8 @@ import SreyPovProfile from "../../assets/images/SreyPovProfile.jpeg";
 import ChounanProfile from "../../assets/images/ChounanProfile.jpeg";
 import MelenProfile from "../../assets/images/MelenProfile.jpeg";
 import BunthongProfile from "../../assets/images/BunthongProfile.jpeg";
-import RothanakProfile from "../../assets/images/RothanakProfile.png";
-import RothaProfile from "../../assets/images/RothaProfile.png";
+import RothanakProfile from "../../assets/images/RothanakProfile.jpeg";
+import RothaProfile from "../../assets/images/RothaProfile.jpeg";
 import RatifyMEFevicon from "../../assets/icons/RatifyME-Fevicon.svg";
 import { GitHub, LinkedIn } from "@mui/icons-material";
 
