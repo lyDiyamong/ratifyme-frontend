@@ -52,7 +52,7 @@ const SecondHeadTitle = () => {
                     </Typography>
 
                     <a
-                        href="https://ratifyme.digital/credential/RMC-6a322632-33ff-4d9a-a1a5-b9e89c4eff58"
+                        href="https://ratifyme.digital/credential/RMC-e84e6a67-77b5-4bb5-b638-2cb24338de14"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
