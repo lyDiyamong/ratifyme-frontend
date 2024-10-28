@@ -1,10 +1,13 @@
+// Custom import
 import DashboardIconSvg from "../assets/icons/dashboard.svg";
 import ManagementIconSvg from "../assets/icons/management.svg";
 import SaleIconSvg from "../assets/icons/sales.svg";
-import BackpackIconSvg from "../assets/icons/backpack.svg"
+import BackpackIconSvg from "../assets/icons/backpack.svg";
 import ReportIconSvg from "../assets/icons/report.svg";
 import SettingIconSvg from "../assets/icons/setting.svg";
 import LogoutIconSvg from "../assets/icons/logout.svg";
+import AchievementIconSvg from "../assets/icons/achievements.svg";
+import OrganizationIconSvg from "../assets/icons/OrganizationSvg.svg";
 
 // Navigation Items
 export const sidebarItems = [
@@ -21,15 +24,23 @@ export const sidebarItems = [
         subItems: [
             {
                 text: "Badges",
-                path: "/management/badges",
+                path: "/dashboard/management/badges",
+                roles: [1, 2, 3],
+            },
+            {
+                text: "Institutions",
+                path: "/dashboard/management/institutions",
+                roles: [1],
             },
             {
                 text: "Issuers",
-                path: "/management/issuers",
+                path: "/dashboard/management/issuers",
+                roles: [1, 2],
             },
             {
                 text: "Earners",
-                path: "/management/eaners",
+                path: "/dashboard/management/earners",
+                roles: [1, 2, 3],
             },
         ],
     },
@@ -40,25 +51,48 @@ export const sidebarItems = [
         subItems: [
             {
                 text: "Service Plans",
-                path: "/sales/servicePlan",
+                path: "/dashboard/sales/servicePlan",
+                roles: [1],
             },
             {
                 text: "Billing and Invoice",
-                path: "/sales/billing&invoice",
+                path: "/dashboard/sales/billing&invoice",
+                roles: [1],
+            },
+            {
+                text: "Invoices",
+                path: "/dashboard/sales/invoice",
+                roles: [2],
             },
         ],
     },
     {
         text: "Reports",
         icon: ReportIconSvg,
-        path: "/reports",
+        path: "/dashboard/reports",
         altText: "Reports icon",
+        roles: [1, 2],
     },
     {
-        text: "My Backpack",
-        icon: BackpackIconSvg,
-        path: "/mybackpacks",
+        text: "My Achievement",
+        icon: AchievementIconSvg,
+        path: "/dashboard/myachievement",
         altText: "Backpack icon",
+        roles: [4],
+    },
+    {
+        text: "My Backpacks",
+        icon: BackpackIconSvg,
+        path: "/dashboard/mybackpacks",
+        altText: "Backpack icon",
+        roles: [4],
+    },
+    {
+        text: "Organization",
+        icon: OrganizationIconSvg,
+        path: "/dashboard/organization",
+        altText: "Organization icon",
+        roles: [3],
     },
     {
         text: "Settings",
@@ -67,11 +101,7 @@ export const sidebarItems = [
         subItems: [
             {
                 text: "Account",
-                path: "/setting/account",
-            },
-            {
-                text: "Privacy & Security",
-                path: "/setting/privacy&security",
+                path: "/dashboard/setting/account",
             },
         ],
     },

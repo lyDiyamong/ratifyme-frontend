@@ -1,5 +1,5 @@
 // React library import
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 // MUI import
@@ -26,19 +26,23 @@ import { useTheme } from "@emotion/react";
 
 // Custom import
 import FlexBetween from "../../components/styles/FlexBetween";
-import LogoIconSvg from "../../assets/icons/logo.svg";
+import LogoIconSvg from "../../assets/icons/RatfiyME.svg";
 import { sidebarItems } from "../../data/sidebarData";
+import { useSelector } from "react-redux";
+import { useLogoutMutation } from "../../store/api/auth/authApi";
+import AlertConfirmation from "../../components/alert/AlertConfirmation";
 
 // Icon Style Constant
 const iconStyles = { width: "20px", height: "20px" };
 
 /**
+ * Sidebar component for navigation.
  *
- *
- * @param {number} drawerWidth  - The width of sidebar
- * @param {boolean} drawerWidth  - The prop to check the action of sidebar
- * @param {boolean} setIsSidebarOpen  - The prop to set the action of sidebar
- * @param {boolean} isDesktop  - The prop to check screen size
+ * @param {object} user - Current user object
+ * @param {number} drawerWidth - The width of the sidebar
+ * @param {boolean} isSidebarOpen - Whether the sidebar is open
+ * @param {function} setIsSidebarOpen - Function to set the sidebar state
+ * @param {boolean} isDesktop - Whether the view is for desktop
  * @return {JSX.Element}
  */
 const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) => {
@@ -46,7 +50,11 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
     const navigate = useNavigate();
     const theme = useTheme();
 
+    const [logout] = useLogoutMutation();
+
     const [active, setActive] = useState("");
+    const { roleId } = useSelector((state) => state.global);
+    const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
 
     useEffect(() => {
         setActive(pathname.substring(1));
@@ -69,15 +77,28 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
 
     const handleNavigation = useCallback(
         (path) => {
-            setActive(path.substring(1));
-            navigate(path);
-            if (!isDesktop) setIsSidebarOpen(false);
+            if (path === "/logout") {
+                setIsLogoutDialogOpen(true); // Open the dialog instead of logging out directly
+            } else {
+                setActive(path.substring(1));
+                navigate(path);
+                if (!isDesktop) setIsSidebarOpen(false);
+            }
         },
-        [navigate],
+        [navigate, setIsSidebarOpen, isDesktop],
     );
 
     // Determine the Drawer variant based on isDesktop and isSidebarOpen
     const drawerVariant = isDesktop ? (isSidebarOpen ? "persistent" : "temporary") : "temporary";
+
+    // Filter sidebar items based on roleId
+    const filteredSidebarItems = sidebarItems
+        .filter(({ roles = [] }) => !roles.length || roles.includes(roleId))
+        .map((item) => ({
+            ...item,
+            subItems: item.subItems?.filter((subItem) => !subItem.roles || subItem.roles.includes(roleId)),
+        }))
+        .filter((item) => item.subItems?.length > 0 || !item.dropdown); // Only keep items with subItems or without dropdown
 
     return (
         <Box component="nav">
@@ -107,7 +128,7 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
                         <FlexBetween>
                             {/* logo image  */}
                             <Box display="flex" alignItems="center" gap="0.5rem">
-                                <Box component="img" src={LogoIconSvg} alt="Brand Logo" />
+                                <Box component="img" src={LogoIconSvg} width={140} alt="Brand Logo" />
                             </Box>
 
                             {/* IconButton for open and close sidebar  */}
@@ -127,8 +148,9 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
 
                     {/* ============ Start list of Sidebar ============ */}
                     <List>
-                        {sidebarItems.map(({ text, icon, dropdown, subItems, path, altText }) => {
-                            const lcText = text.toLowerCase();
+                        {filteredSidebarItems.map(({ text, icon, dropdown, subItems, path, altText }) => {
+                            // if (roles && !roles.includes(userRole)) return null;
+                            const lcText = text.toLowerCase().replace(/\s+/g, "");
 
                             // ============ Start list item of sidebar when dropdown ============
                             if (dropdown) {
@@ -284,6 +306,26 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
                     </FlexBetween>
                 </Box>
                 {/* End Sidebar footer  */}
+
+                {/* Logout Confirmation Dialog */}
+                <AlertConfirmation
+                    open={isLogoutDialogOpen}
+                    title="Confirm Logout"
+                    message="Are you sure you want to log out?"
+                    onClose={() => setIsLogoutDialogOpen(false)}
+                    onConfirm={async () => {
+                        await logout().unwrap();
+                        localStorage.removeItem("loginMessageShown");
+                        navigate("/auth/login");
+                        setIsLogoutDialogOpen(false);
+                    }}
+                    confirmText="Logout"
+                    cancelText="Cancel"
+                    iconBgColor="#ffebee"
+                    iconColor={theme.palette.error.main}
+                    confirmButtonColor={theme.palette.error.main}
+                    confirmButtonColorHover={theme.palette.error.dark}
+                />
             </Drawer>
             {/* ============ End Drawer of Sidebar ============ */}
         </Box>

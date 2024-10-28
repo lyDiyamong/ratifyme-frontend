@@ -1,0 +1,28 @@
+.vi__container {
+    width: 100%;
+    gap: 18px;
+}
+
+.vi__character {
+    background-color: #fff;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1), 0 0 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    width: 50px !important;
+    height: 80px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    color: #1a87ec;
+    font-weight: bold;
+    font-size: 42px;
+}
+
+.vi__character:focus {
+    outline: none;
+    box-shadow: 0 6px 24px rgba(0, 0, 255, 0.3);
+    transform: scale(1.05);
+}

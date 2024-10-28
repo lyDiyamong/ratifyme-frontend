@@ -1,41 +1,67 @@
 export const accordionData = [
     {
         panel: "panel1",
-        title: "What is an Open Badge?",
+        title: "What is RatifyMe?",
         subtitle: "",
         content:
-            "An Open Badge is a digital representation of a skill, achievement, or credential. It includes metadata that verifies the issuer, criteria for earning the badge, and evidence of the accomplishment. The badge can be shared across platforms like LinkedIn, portfolios, or social media.",
+            "RatifyMe is a digital credentials verification platform that allows organizations and individuals to verify the authenticity of academic, professional, and other credentials quickly and securely.",
     },
 
     {
         panel: "panel2",
-        title: "How do I create an Open Badge?",
+        title: "How does RatifyMe verify credentials? 🚀",
         subtitle: "",
         content:
-            "To create an Open Badge, you’ll need to design the badge itself, define the achievement or skill it represents, and use a platform that supports Open Badges to issue it. This platform will also store metadata such as issuer information, badge criteria, and recipient details.",
+            "We partner with trusted institutions, businesses, and credential issuers to ensure the legitimacy of the documents and certifications uploaded for verification. Our technology ensures real-time, accurate validation.",
     },
 
     {
         panel: "panel3",
-        title: "Who can issue an Open Badge?",
+        title: "Who can use RatifyMe?",
         subtitle: "",
         content:
-            "Any organization or individual with the appropriate authority can issue Open Badges. This includes educational institutions, employers, and professional associations. Issuers must ensure that the badge reflects verifiable achievements or skills.",
+            "RatifyMe is designed for companies, educational institutions, government agencies, and individuals who need to verify credentials for hiring, admissions, certifications, or personal use.",
     },
 
     {
         panel: "panel4",
-        title: "How can I earn an Open Badge?",
+        title: "Is my data safe with RatifyMe?",
         subtitle: "",
         content:
-            "To earn an Open Badge, you need to complete the criteria set by the issuer. This could include completing a course, passing an exam, or demonstrating a particular skill. Once the criteria are met, the issuer will award the badge, which can be added to your digital profiles.",
+            "Yes. We prioritize data security and employ advanced encryption to ensure your sensitive information is protected throughout the verification process.",
     },
 
     {
         panel: "panel5",
-        title: "Where can I display my Open Badges?",
+        title: "How long does the verification process take? 🕗",
         subtitle: "",
         content:
-            "Open Badges can be displayed on a variety of digital platforms, including social media profiles (LinkedIn, Twitter), personal websites, ePortfolios, and job boards. The badge includes metadata that allows viewers to verify its authenticity and see what it represents.",
+            "Credential verification on RatifyMe is fast and can be completed within minutes, depending on the type of credential and the issuing institution.",
     },
+
+    {
+        panel: "panel6",
+        title: "Can I verify international credentials?",
+        subtitle: "",
+        content:
+            "Absolutely. RatifyMe is equipped to handle cross-border credential verification, making it easy for organizations and individuals to validate qualifications globally.",
+    },
+
+    {
+        panel: "panel7",
+        title: "Do I need to create an account to use RatifyMe?",
+        subtitle: "",
+        content:
+            "Yes, creating an account allows you to track your verification requests, manage documents, and access additional features securely.",
+    },
+
+    {
+        panel: "panel8",
+        title: "How much does it cost to use RatifyMe?",
+        subtitle: "",
+        content:
+            "Our pricing varies based on the type of verification and the volume of requests. Contact us for more details on our pricing plans tailored to meet your needs.",
+    },
+
+
 ];

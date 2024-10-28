@@ -6,85 +6,142 @@ import { useController } from "react-hook-form";
 import { TextField, IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-// Custom import
-import theme from "../assets/themes/index";
-
 /**
- * FormInput component
+ * FormInput Component
  *
- * A reusable input component for forms that integrates with React Hook Form and Material UI.
- * It supports various input types including password fields with visibility toggle.
+ * A reusable input component that supports custom and Yup validation.
  *
  * @param {string} label - The label text for the input field.
  * @param {string} name - The name of the input field, used by React Hook Form.
  * @param {object} control - The control object provided by React Hook Form.
- * @param {string} [type="text"] - The type of the input field (e.g., "text", "password").
+ * @param {string} [type="text"] - The type of the input field (e.g., "text", "email", "password").
  * @param {boolean} [required=false] - Whether the input field is required.
- * @param {JSX.Element} [icon] - An optional icon element to display inside the input field.
+ * @param {object} schema - Yup validation schema for this input.
+ * @param {object} [validationRules] - Additional validation rules for the input.
  * @param {...object} rest - Additional props to pass to the TextField component.
- * @returns {JSX.Element} The rendered FormInput component.
+ * @param {...condition} name - If "name" have word description in it, it will catch to make the textFild height larger
+ *
+ * ==== Usage =====
+ * // Yup validation schema for email
+const schema = Yup.object().shape({
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+});
+
+const MyForm = () => {
+    const { control, handleSubmit } = useForm();
+
+    const onSubmit = (data) => {
+        console.log("Form data:", data);
+    };
+
+    return (
+        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+            <FormInput
+                label="Email"
+                name="email"
+                control={control}
+                required={true}
+                schema={schema.fields.email}
+            />
+
+            <FormInput
+                label="Password"
+                name="password"
+                control={control}
+                type="password"
+                required={true}
+                schema={schema.fields.password}
+            />
+
+            <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
+                Submit
+            </Button>
+        </Box >
+    );
+};
  */
-const FormInput = ({ label, name, control, type = "text", required = false, icon, ...rest }) => {
+const FormInput = ({ label, name, control, type = "text", required = false, schema, validationRules = {}, startIcon, ...rest }) => {
     const [showPassword, setShowPassword] = useState(false);
 
-    // Toggle password visibility
-    const handleClickShowPassword = () => {
-        setShowPassword(!showPassword);
+    const handleClickShowPassword = () => setShowPassword((prev) => !prev);
+
+    const handleMouseDownPassword = (event) => event.preventDefault();
+
+    const validateWithYup = async (value) => {
+        try {
+            // Validate the input using Yup schema
+            if (schema) {
+                await schema.validateSync(value);
+            }
+            return true;
+        } catch (error) {
+            return error.message;
+        }
     };
 
-    // Prevent default action on mouse down for the password visibility icon
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
+    // Combine Yup validation with custom validation rules
+    const combinedValidationRules = {
+        required: required ? `${label} is required` : false,
+        validate: async (value) => {
+            let customError = true;
+
+            // If there are additional custom validation rules
+            if (validationRules?.validate) {
+                customError = validationRules.validate(value);
+            }
+
+            // First, check if Yup validation passes
+            const yupValidationError = await validateWithYup(value);
+            if (yupValidationError !== true) return yupValidationError;
+
+            // Then, check custom validation
+            return typeof customError === 'string' ? customError : true;
+        },
     };
 
-    // Use useController to connect the input field with React Hook Form
+    // UseController hook for form control
     const {
-        field, // Contains value, onChange, onBlur, and name for the input
-        fieldState: { error } // Contains error state and message for validation
+        field,
+        fieldState: { error },
     } = useController({
         name,
         control,
         defaultValue: "",
-        rules: {
-            required: required ? `${label} is required` : false, // Add validation rule based on the required prop
-        },
+        rules: combinedValidationRules,
     });
 
     return (
         <TextField
             label={label}
             fullWidth
-            required={required} // Conditionally set the required prop
-            {...field} // Spread the field props onto the TextField component
-            type={type === "password" && !showPassword ? "password" : "text"} // Handle password visibility toggle
-            error={!!error} // Set error state if validation fails
-            helperText={error ? error.message : null} // Display error message if present
-            sx={{
-                "& .MuiOutlinedInput-root": {
-                    borderRadius: theme.customShape.input, // Apply custom border-radius
-                },
-                "& .MuiInputBase-input": {
-                    fontSize: theme.typography.body2, // Apply custom font size
-                },
-            }}
+            required={required}
+            {...field}
+            // Update the type logic here to toggle between "text" and "password"
+            type={type === "password" ? (showPassword ? "text" : "password") : type}
+            error={!!error}
+            helperText={error ? error.message : null}
+
+            // Check if this is the description field, and if so, set multiline and rows
+            multiline={name.toLowerCase().includes("description")}
+            rows={name.toLowerCase().includes("description") ? 4 : 1}
+
             InputProps={{
-                endAdornment: (
-                    <InputAdornment sx={{ position: "absolute", right: 15 }}>
-                        {type === "password" ? (
-                            <IconButton
-                                onClick={handleClickShowPassword}
-                                onMouseDown={handleMouseDownPassword}
-                                edge="end"
-                            >
-                                {showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                        ) : (
-                            icon // Display optional icon if provided
-                        )}
+                startAdornment: startIcon && (
+                    <InputAdornment position="start">
+                        {startIcon}
+                    </InputAdornment>
+                ),
+                endAdornment: type === "password" && (
+                    <InputAdornment position="end">
+                        <IconButton onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword} edge="end">
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
                     </InputAdornment>
                 ),
             }}
-            {...rest} // Pass down any additional props to the TextField component
+
+            {...rest}
         />
     );
 };

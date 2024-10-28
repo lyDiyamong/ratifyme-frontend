@@ -1,19 +1,22 @@
-// React library import
-import React from "react";
+// Custom import
 import WhatWeDo from "./WhatWeDo";
-import Testimonial from "./Testimonial";
-import OurCustomer from "./OurCustomer.jsx";
+import OurCustomers from "./OurCustomer.jsx";
 import Faq from "./Faq";
 import HeroSection from "./HeroSection.jsx";
 import { Stack } from "@mui/material";
+import HowItWorks from "./HowItWorks.jsx";
+import SecondHeadTitle from "./SecondHeadTitle.jsx";
+import DigitalBadgeFlowStepper from "./DigitalBadgeFlowStepper.jsx";
 
 const HomePage = () => {
     return (
-        <Stack gap={8}>
+        <Stack gap={{md: 15, xss: 6}}>
             <HeroSection />
-            <OurCustomer />
+            <DigitalBadgeFlowStepper/>
+            <OurCustomers />
+            <SecondHeadTitle />
+            <HowItWorks />
             <WhatWeDo />
-            <Testimonial />
             <Faq />
         </Stack>
     );

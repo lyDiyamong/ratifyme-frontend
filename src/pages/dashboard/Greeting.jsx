@@ -1,50 +1,94 @@
-// MUI component
-import { Box, Stack, Typography } from "@mui/material";
+// MUI Import
+import { Box, Stack, Typography, CircularProgress } from "@mui/material";
 
-// Custom theme
-import theme from "../../assets/themes/index";
-import GreetingIconSvg from "../assets/images/Greeting-illu.svg";
+// Custom Import
+import theme from "../../assets/themes";
+import GreetingMaleIconSvg from "../../assets/images/GreetingMale.png";
+import GreetingFemaleIconSvg from "../../assets/images/GreetingFemale.png";
 
+// Fetching Data
+import { useFetchInfoUserByIdQuery } from "../../store/api/users/userInfoProfileApi";
+import { useSelector } from "react-redux";
+
+// ============ Start Greeting Section ============
 const Greeting = () => {
+    const { userId, userInfo } = useSelector((state) => state.global);
+
+    const { data: info, isLoading, isError } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
+
+    const userData = info?.data;
+
     return (
-        // ============ Start Greeting Section ============
         <Stack
             component="section"
-            flexDirection={{ xs: "column", md: "row" }}
+            flexDirection="row"
             sx={{
-                boxShadow: theme.shadows.default,
-                borderRadius : theme.shape.borderRadius.section,
+                boxShadow: theme.customShadows.default,
+                borderRadius: theme.customShape.section,
                 justifyContent: "space-between",
                 alignItems: "center",
-                padding: "32px",
-                bgcolor: theme.palette.background.paper,
+                padding: { xss: "16px", sm: "32px" },
+                background: "linear-gradient(109.6deg, rgb(120, 143, 251) 11.2%, #7CB9E8 91.1%)",
+                width: "100%",
+                height: "240px",
             }}
         >
-            {/* Start Text Container */}
-            <Box maxWidth={500}>
-                <Typography sx={{ fontSize: theme.typography.h3, marginBottom: 2, color: theme.palette.primary.main }}>
-                    Welcome back, John Doe
-                </Typography>
-                <Typography sx={{ fontSize: theme.typography.body2 }}>
-                    You’ve complete 82% of your badges this week! Keep it up, we will help with global standard!
-                </Typography>
-            </Box>
-            {/* End Text Container */}
+            {/* Conditional rendering based on loading and error states */}
+            {isLoading ? (
+                <CircularProgress />
+            ) : isError ? (
+                <Typography color="error">Error fetching user data</Typography>
+            ) : (
+                <Stack flexDirection="row" alignItems="center" justifyContent="space-between" width="100%">
+                    {/* Start Text Container */}
+                    <Box>
+                        <Stack direction={{ xss: "column", md: "column" }}>
+                            <Typography
+                                sx={{
+                                    color: theme.palette.customColors.white,
+                                    fontWeight: theme.fontWeight.bold,
+                                    fontSize: { xs: "18px", sm: "24px", md: "28px", lg: "32px" },
+                                    mr: "12px",
+                                    textWrap: "nowrap",
+                                }}
+                            >
+                                Welcome back,
+                            </Typography>
+                            <Typography
+                                sx={{
+                                    marginBottom: 1,
+                                    color: theme.palette.customColors.white,
+                                    fontWeight: theme.fontWeight.bold,
+                                    fontSize: { xs: "18px", sm: "24px", md: "28px", lg: "32px" },
+                                    textWrap: "wrap",
+                                }}
+                            >
+                                {userData?.firstName || "No"} {userData?.lastName || "Name"}
+                            </Typography>
 
-            {/* Img Container */}
-            <Box
-                component="img"
-                src={GreetingIconSvg}
-                alt="greeting"
-                sx={{
-                    width: "100%",
-                    maxWidth: 250,
-                    maxHeight: 200,
-                }}
-            />
+                        </Stack>
+
+                        <Typography variant="body2" sx={{ color: theme.palette.customColors.white, textWrap: "wrap" }}>
+                            Just wanted to say I’m really looking forward to working with you. Let’s rock this!
+                        </Typography>
+                    </Box>
+                    {/* End Text Container */}
+
+                    {/* Img Container */}
+                    <Box
+                        component="img"
+                        src={userInfo?.genderId === 1 ? GreetingMaleIconSvg : GreetingFemaleIconSvg}
+                        alt="greeting"
+                        sx={{
+                            width: "100%",
+                            maxWidth: {xs: 100, md: 140},
+                        }}
+                    />
+                </Stack>
+            )}
         </Stack>
-        // ============ End Greeting Section ============
     );
 };
 
 export default Greeting;
+// ============ End Greeting Section ============

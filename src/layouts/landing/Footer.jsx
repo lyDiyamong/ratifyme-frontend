@@ -1,3 +1,6 @@
+// React import
+import { Link } from "react-router-dom";
+
 // MUI import
 import {
     Box,
@@ -9,19 +12,16 @@ import {
     ListItem,
 } from "@mui/material";
 
-// React Router library import
-import { Link } from "react-router-dom";
-
 // Icons and Images import
-import VerifyMeLogo from "../../assets/images/VerifyME-Logo.svg";
+import RatifyMeLogo from "../../assets/icons/RatfiyME.svg";
 
-// Config themes import
+// Custom import
 import theme from "../../assets/themes";
 import LandingContainer from "../../components/styles/LandingContainer";
 import FlexBetween from "../../components/styles/FlexBetween";
 
+// Data import
 import {learnMoreLinks, otherSolutionsLinks, copyrightLinks, socialMediaLinks} from "../../data/footerData";
-
 
 const Footer = () => {
     // Copyright item style
@@ -58,6 +58,7 @@ const Footer = () => {
                             justifyContent: "space-between",
                         }}
                     >
+                        {/* Start the Logo and Info */}
                         <Grid item xs={12} md={3}>
                             <Link to="/">
                                 <Box
@@ -65,8 +66,8 @@ const Footer = () => {
                                     sx={{
                                         width: 140,
                                     }}
-                                    alt="VerifyME Logo"
-                                    src={VerifyMeLogo}
+                                    alt="RatifyME Logo"
+                                    src={RatifyMeLogo}
                                 />
                             </Link>
 
@@ -79,13 +80,15 @@ const Footer = () => {
                                         marginBottom: "20px",
                                     }}
                                 >
-                                    {" VerifyME "}
+                                    {" RatifyME "}
                                 </Typography>{" "}
                                 by TechA is a digital credential network. We
                                 help the people speak a common language of
                                 verified knowledge, skills, and abilities.
                             </Typography>
                         </Grid>
+
+                        {/* Start Learn More section */}
                         <Grid item xs={6} md={2}>
                             <Typography
                                 variant="h4"
@@ -111,6 +114,8 @@ const Footer = () => {
                                 ))}
                             </List>
                         </Grid>
+
+                        {/* Start Other Solutions section */}
                         <Grid item xs={6} md={2}>
                             <Typography
                                 variant="h4"
@@ -135,6 +140,8 @@ const Footer = () => {
                                 ))}
                             </List>
                         </Grid>
+
+                        {/* Start Social Media section */}
                         <Grid item xs={12} md={3}>
                             <Typography
                                 variant="h4"
@@ -170,7 +177,7 @@ const Footer = () => {
                                         color: theme.palette.primary.main,
                                     }}
                                 >
-                                    {" VerifyME "}
+                                    {" RatifyME "}
                                 </Typography>{" "}
                                 revolution. Follow us on [Social media
                                 platforms] for updates and insights.
@@ -195,6 +202,7 @@ const Footer = () => {
                                 color: "text.disabled",
                             }}
                         >
+                            {/* Start Copyright text */}
                             <Typography >
                                 © Copyright -{" "}
                                 <Typography
@@ -205,6 +213,7 @@ const Footer = () => {
                                 </Typography>
                             </Typography>
 
+                            {/* Start the Policy items */}
                             <Box
                                 sx={{
                                     display: "flex",
