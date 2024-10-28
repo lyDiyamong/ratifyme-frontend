@@ -110,7 +110,7 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
                     <span>
                         <Button
                             onClick={() => setIsClaimBadgeModal(true)}
-                            disabled={claimed || isLoading}
+                            disabled={issuedOn === null|| claimed}
                             variant="contained"
                             sx={{
                                 color: theme.palette.customColors.white,
@@ -121,14 +121,14 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
                                 textTransform: "none",
                             }}
                         >
-                            {isLoading ? "Claiming..." : "Claim Badge"}
+                            {claimed ? "Claimed" :  "Claim Badge" }
                         </Button>
                     </span>
                 </Tooltip>
             ) : (
                 <Button
                     onClick={() => setIsClaimBadgeModal(true)}
-                    disabled={claimed || isLoading}
+                    disabled={issuedOn === null|| claimed}
                     variant="contained"
                     sx={{
                         color: theme.palette.customColors.white,
@@ -139,7 +139,7 @@ const ClaimBadgeButton = ({ earnerId, badgeClassId, achievementIds }) => {
                         textTransform: "none",
                     }}
                 >
-                    {isLoading ? "Claiming..." : claimed ? "Claimed" : "Claim Badge"}
+                    {claimed ? "Claimed" :  "Claim Badge" }
                 </Button>
             )}
         </>
