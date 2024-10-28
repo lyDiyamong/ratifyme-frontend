@@ -20,6 +20,23 @@ Join RatifyME today and take your achievements from hidden to highlighted—lett
 
 As our project is ready to be deploy this is the link to Demo our Project Showcase. RatifyMe Digital - www.ratifyme.digital
 
+## User Roles:
+
+#### *Institution*
+- **Manage Payment Subscription**: Continue or Cancel Subscription
+- **Manage Issuers**: Invite or Remove Issuers to the institution
+- **Monitor**: Track badges and earners
+
+#### *Issuer*
+- **Create & Manage Badge**
+- **Invite Earner**: Add earners to the institution
+- **Assign Badge**: Add earners to specific badges
+- **Issue Badge**: Issue badges to earners
+
+#### *Earner*
+- **Claim Badge**
+- **Generate Certificate**
+
 # Tech Stack
 
 -   Client: React, Node, MUi
