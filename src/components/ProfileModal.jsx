@@ -2,18 +2,7 @@
 import { useState, useEffect } from "react";
 
 // MUI import
-import {
-    Stack,
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    Typography,
-    Avatar,
-    IconButton,
-    Box,
-    Grid,
-    Card,
-} from "@mui/material";
+import { Stack, Dialog, DialogTitle, DialogContent, Typography, Avatar, IconButton, Box, Grid, Card } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { styled } from "@mui/system";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
@@ -46,24 +35,24 @@ const getValue = (obj, keyPath) => {
 const StyledDialog = styled(Dialog)(({ theme }) => ({
     ".MuiPaper-root": {
         borderRadius: theme.shape.borderRadius * 2,
-        boxShadow: "0px 4px 24px rgba(0, 0, 0, 0.2)",
         backgroundColor: theme.palette.customColors.white,
     },
 }));
 
 const StyledCard = styled(Card)(({ theme }) => ({
     borderRadius: theme.shape.borderRadius * 2,
-    boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.2)",
     padding: theme.spacing(3),
     marginBottom: theme.spacing(2),
     backgroundColor: theme.palette.customColors.white,
+    border: "1px solid #E4E5EB",
+    boxShadow: "none",
 }));
 
 const ProfileCard = styled(Card)(({ theme }) => ({
     borderRadius: theme.shape.borderRadius * 2,
-    boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.2)",
+    border: "1px solid #E4E5EB",
+    boxShadow: "none",
     padding: "20px",
-    background: `linear-gradient(45deg, ${theme.palette.primary.light}, ${theme.palette.secondary.light})`,
     height: "100%",
 }));
 
@@ -90,7 +79,7 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
         <StyledDialog open={open} onClose={onClose} maxWidth="md" fullWidth>
             {/* Modal Header */}
             <Box display="flex" justifyContent="space-between" alignItems="center" pt={2} pr={2}>
-                <DialogTitle variant="h3" sx={{ fontWeight: theme.fontWeight.bold, color: theme.palette.primary.main }}>
+                <DialogTitle variant="h3" sx={{ fontWeight: theme.fontWeight.bold }}>
                     Personal Information
                 </DialogTitle>
                 <IconButton onClick={onClose} aria-label="Close">
@@ -100,7 +89,7 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
 
             {/* Card */}
             <DialogContent>
-                <Grid container spacing={4}>
+                <Grid container spacing={2}>
                     <Grid item xs={12} md={6} mb={2} sx={{ height: "full" }}>
                         {/* Profile Card */}
                         <ProfileCard>
@@ -120,13 +109,21 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
                                     {getValue(item, nameKey) || "N/A"}
                                 </Typography>
                                 <Stack direction="row" alignItems="center" spacing={1}>
-                                    <WorkOutlineIcon sx={{ color: theme.palette.secondary.light }} />
+                                    <Typography
+                                        sx={{
+                                            color: theme.palette.text.secondary,
+                                            textTransform: "capitalize",
+
+                                        }}
+                                    >
+                                        Position :
+                                    </Typography>
                                     <Typography
                                         variant="body1"
                                         sx={{
-                                            color: theme.palette.secondary.contrastText,
+                                            color: theme.palette.text.secondary,
                                             textTransform: "capitalize",
-                                            fontWeight: theme.fontWeight.bold,
+
                                         }}
                                         mt={1}
                                     >
@@ -144,6 +141,11 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
                                         overflowY: "scroll",
                                         wordWrap: "break-word",
                                         whiteSpace: "normal",
+                                        "&::-webkit-scrollbar": {
+                                            display: "none",
+                                        },
+                                        "-ms-overflow-style": "none",
+                                        "scrollbar-width": "none",
                                     }}
                                 >
                                     {getValue(item, desKey) || "No bio available"}
@@ -174,10 +176,7 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
                                                     {label}
                                                 </Typography>
 
-                                                <Typography
-                                                    variant="body3"
-                                                    sx={{ color: theme.palette.text.secondary }}
-                                                >
+                                                <Typography variant="body3" sx={{ color: theme.palette.text.secondary }}>
                                                     {getValue(item, valueKey) || "N/A"}
                                                 </Typography>
                                             </Stack>

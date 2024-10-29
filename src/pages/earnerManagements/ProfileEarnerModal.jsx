@@ -60,32 +60,32 @@ const ProfileEarnerModal = ({ open, onClose, userId }) => {
             desKey="User.bio"
             details={[
                 { 
-                    icon: <PhoneIcon fontSize="small" sx={{ color: "#ff6f61" }}/>, 
+                    icon: <PhoneIcon fontSize="small" />, 
                     label: "Phone", 
                     valueKey: "User.phoneNumber" 
                 },
                 { 
-                    icon: <CakeIcon fontSize="small" sx={{ color: "#f48fb1" }} />, 
+                    icon: <CakeIcon fontSize="small"  />, 
                     label: "Date of Birth",
                     valueKey: "User.formattedDateOfBirth" 
                 },
                 { 
-                    icon: <EmailIcon fontSize="small" sx={{ color: "#42a5f5" }} />,  
+                    icon: <EmailIcon fontSize="small"  />,  
                     label: "Email", 
                     valueKey: "User.email" 
                 },
                 {
-                    icon: <BusinessCenterIcon fontSize="small" sx={{ color: "#9575cd" }} />,
+                    icon: <BusinessCenterIcon fontSize="small"  />,
                     label: "Organization", 
                     valueKey: "Issuer.Institution.institutionName" 
                 },
                 {
-                    icon: <SchoolIcon fontSize="small" sx={{ color: "#4db6ac" }} />,
+                    icon: <SchoolIcon fontSize="small" />,
                     label: "Education", 
                     valueKey: "AcademicBackground.AcademicLevel.name" 
                 },
                 { 
-                    icon: <PublicIcon fontSize="small" sx={{ color: "#81c784" }} />,
+                    icon: <PublicIcon fontSize="small" />,
                     label: "Nationality", 
                     valueKey: "User.nationality" 
                 },
