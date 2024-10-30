@@ -61,7 +61,7 @@ const MetadataStep = ({ control, errors }) => {
                     label="Tags / Language"
                     options={optionLanguage}
                     control={control}
-                    required={true}
+                    required={false}
                 />
             </Stack>
         </LocalizationProvider>

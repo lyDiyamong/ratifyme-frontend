@@ -103,7 +103,7 @@ const BadgeCreationForm = () => {
         trigger,
         reset,
         formState: { errors },
-        setValue
+        setValue,
     } = useForm({
         defaultValues: {
             issuer: userName || "",
@@ -132,7 +132,7 @@ const BadgeCreationForm = () => {
     const handleNext = async () => {
         // Start loading
         setLoading(true);
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve));
         // Validate by field of each step
         const isValid = await trigger(stepFields[activeStep]);
         // Move to next step if valid
@@ -145,10 +145,10 @@ const BadgeCreationForm = () => {
 
     const handleBack = () => {
         setLoading(true);
-        setTimeout(() => {
-            setActiveStep((prevActiveStep) => prevActiveStep - 1);
-            setLoading(false);
-        }, 1000);
+        // setTimeout(() => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+        setLoading(false);
+        // }, 1000);
     };
 
     const onSubmit = async (data) => {
@@ -160,7 +160,7 @@ const BadgeCreationForm = () => {
         // Append form data fields
         formData.append("name", data.badgeName);
         formData.append("description", data.badgeDescription);
-        formData.append("tags", data.tagsOrLanguage.join(","));
+        formData.append("tags", data.tagsOrLanguage ? data.tagsOrLanguage.join(",") : []);
         formData.append("startedDate", data.startDate ? data.startDate.toISOString() : null);
         formData.append("endDate", data.endDate ? data.endDate.toISOString() : null);
         formData.append("expiredDate", data.expiredDate ? data.expiredDate.toISOString() : null);
@@ -208,11 +208,11 @@ const BadgeCreationForm = () => {
         }
         event.target.value = "";
     };
-    useEffect(()=> {
-        if(userName){
-            setValue("issuer", userName)
+    useEffect(() => {
+        if (userName) {
+            setValue("issuer", userName);
         }
-    }, [userName, issuerData])
+    }, [userName, issuerData]);
 
     // Monitor changes in the uploaded image using useEffect
     useEffect(() => {
