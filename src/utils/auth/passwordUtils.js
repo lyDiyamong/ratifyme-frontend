@@ -4,7 +4,8 @@ export const passwordSchema = ({ passwordName = "password", passwordConfirmName 
     yup.object({
         [passwordName]: yup
             .string()
-            .min(10, "⚠️ Your password must be at least 10 characters.")
+            .min(8, "⚠️ Your password must be at least 8 characters.")
+            .max(15, "⚠️ Your password must be at most 15 characters.")
             .matches(/[a-z]/, "⚠️ Your password must contain at least one lowercase letter.")
             .matches(/[A-Z]/, "⚠️ Your password must contain at least one uppercase letter.")
             .matches(/\d/, "⚠️ Your password must contain at least one number.")

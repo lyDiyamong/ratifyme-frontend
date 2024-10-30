@@ -13,9 +13,9 @@ const OurCustomers = () => {
         "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/2560px-Amazon_logo.svg.png",
         "https://ratifyme.s3.ap-southeast-2.amazonaws.com/Logo/emcast-logo.png",
         "https://ratifyme.s3.ap-southeast-2.amazonaws.com/Logo/AboveBeyond.png",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/640px-Google_2015_logo.svg.png",
+        "https://ratifyme.s3.ap-southeast-2.amazonaws.com/Logo/logo-with-name-vottamean.png",
         "https://ratifyme.s3.ap-southeast-2.amazonaws.com/Logo/RatfiyME.png",
-        "https://ratifyme.s3.ap-southeast-2.amazonaws.com/Logo/poipet-insider.png"
+        "https://ratifyme.s3.ap-southeast-2.amazonaws.com/Logo/poipet-insider.png",
     ];
 
     const duplicatedImages = [...images, ...images];

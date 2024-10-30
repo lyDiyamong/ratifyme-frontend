@@ -1,8 +1,9 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { createBaseQuery } from "../../../utils/baseQuery";
 
 export const achievementApi = createApi({
     reducerPath: "achievementApi",
-    baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_SERVER_BASE_URL }),
+    baseQuery: createBaseQuery(),
     tagTypes: ["Achievement"],
     endpoints: (builder) => ({
         sendBadge: builder.mutation({

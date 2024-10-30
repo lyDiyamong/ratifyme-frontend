@@ -1,15 +1,16 @@
 // fieldOfStudyApi.js
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { createBaseQuery } from "../../../utils/baseQuery";
 
 export const fieldOfStudyApi = createApi({
-    reducerPath: 'fieldOfStudyApi',
-    baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_SERVER_BASE_URL }),
-    tagTypes: ['FieldOfStudy', 'AcademicLevel'],
+    reducerPath: "fieldOfStudyApi",
+    baseQuery: createBaseQuery(),
+    tagTypes: ["FieldOfStudy", "AcademicLevel"],
     endpoints: (builder) => ({
         fetchFieldOfStudies: builder.query({
             query: () => ({
-                url: '/earners/fieldofstudies',
-                method: 'GET',
+                url: "/earners/fieldofstudies",
+                method: "GET",
             }),
             // providesTags: (result) => {
             //     if (result) {
@@ -25,8 +26,8 @@ export const fieldOfStudyApi = createApi({
         // New endpoint for fetching academic levels
         fetchAcademicLevels: builder.query({
             query: () => ({
-                url: '/earners/academiclevels',
-                method: 'GET',
+                url: "/earners/academiclevels",
+                method: "GET",
             }),
             // providesTags: (result) => {
             //     if (result) {
@@ -42,7 +43,7 @@ export const fieldOfStudyApi = createApi({
     }),
 });
 
-export const { 
+export const {
     useFetchFieldOfStudiesQuery,
-    useFetchAcademicLevelsQuery // Export the new hook
+    useFetchAcademicLevelsQuery, // Export the new hook
 } = fieldOfStudyApi;

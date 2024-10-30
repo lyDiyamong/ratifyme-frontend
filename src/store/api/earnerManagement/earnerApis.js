@@ -1,21 +1,13 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { createBaseQuery } from "../../../utils/baseQuery";
 
 export const earnerApi = createApi({
     reducerPath: "earnerApi",
-    baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_SERVER_BASE_URL }),
+    baseQuery: createBaseQuery(),
     tagTypes: ["Earner"],
     endpoints: (builder) => ({
-
         fetchEarner: builder.query({
-            query: ({
-                issuerId = null,
-                roleId = 1,
-                page = 1,
-                limit = 10,
-                sort = "",
-                search = "",
-                institutionId = null,
-            } = {}) => {
+            query: ({ issuerId = null, roleId = 1, page = 1, limit = 10, sort = "", search = "", institutionId = null } = {}) => {
                 // Default empty object to avoid undefined destructuring
                 // Construct the base query
                 let query = `/earners?page=${page}&limit=${limit}&sort=${sort}`;
@@ -115,7 +107,7 @@ export const earnerApi = createApi({
             invalidatesTags: ["AcademicBackground"],
         }),
         deleteAcademicBackgroundById: builder.mutation({
-            query: ({id}) => ({
+            query: ({ id }) => ({
                 url: `/earners/academicbackgrounds/${id}`,
                 method: "DELETE",
             }),

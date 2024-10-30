@@ -1,10 +1,9 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { createBaseQuery } from "../../../utils/baseQuery";
 
 export const userApi = createApi({
     reducerPath: "userApi",
-    baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_SERVER_BASE_URL,
-    }),
+    baseQuery: createBaseQuery(),
     tagTypes: ["User"],
     endpoints: (builder) => ({
         fetchUser: builder.query({
@@ -26,8 +25,8 @@ export const userApi = createApi({
             query: ({ id }) => ({
                 url: `/users/upload-profile-image/${id}`,
                 method: "DELETE",
-            })
-        })
+            }),
+        }),
     }),
 });
 
