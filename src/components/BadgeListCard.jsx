@@ -28,27 +28,27 @@ const BadgeListCard = ({ badges, onView, total, refetch }) => {
         const processBadges = (badges) => {
             if (!badges) return { issuedBadge: [], claimedBadge: [] };
 
-            const achievements = badges.flatMap(({ Achievements }) => Achievements) || [];
+            const achievements = badges?.flatMap(({ Achievements }) => Achievements) || [];
             const uniqueBadges = [];
             const seenBadgeIds = new Set();
             for (const achievement of achievements) {
-                if (!seenBadgeIds.has(achievement.badgeClassId)) {
+                if (!seenBadgeIds.has(achievement?.badgeClassId)) {
                     uniqueBadges.push(achievement);
-                    seenBadgeIds.add(achievement.badgeClassId);
+                    seenBadgeIds.add(achievement?.badgeClassId);
                 }
             }
 
             const issuedBadge = uniqueBadges.map((item) => {
-                if (!item.Earners || item.Earners.length === 0) return null;
-                return item.Earners.some((earner) => earner.EarnerAchievements?.issuedOn !== null)
-                    ? item.Earners.find((earner) => earner.EarnerAchievements?.issuedOn)?.EarnerAchievements?.issuedOn
+                if (!item?.Earners || item?.Earners.length === 0) return null;
+                return item?.Earners.some((earner) => earner?.EarnerAchievements?.issuedOn !== null)
+                    ? item?.Earners.find((earner) => earner?.EarnerAchievements?.issuedOn)?.EarnerAchievements?.issuedOn
                     : null;
             });
 
             const claimedBadge = uniqueBadges.map((item) =>
-                item.Earners
-                    ? item.Earners.some((earner) => earner.EarnerAchievements?.claimedOn !== null)
-                        ? item.Earners.find((earner) => earner.EarnerAchievements?.claimedOn)?.EarnerAchievements?.claimedOn
+                item?.Earners
+                    ? item?.Earners?.some((earner) => earner?.EarnerAchievements?.claimedOn !== null)
+                        ? item?.Earners?.find((earner) => earner?.EarnerAchievements?.claimedOn)?.EarnerAchievements?.claimedOn
                         : null
                     : null,
             );
@@ -60,6 +60,7 @@ const BadgeListCard = ({ badges, onView, total, refetch }) => {
         const { issuedBadge, claimedBadge } = processBadges(badges);
         setAfterCheck(roleId === 4 ? claimedBadge : issuedBadge);
     }, [badges, roleId]);
+
 
     return (
         <Box my={3}>

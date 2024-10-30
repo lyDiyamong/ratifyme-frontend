@@ -31,7 +31,7 @@ const EditBadge = () => {
     const navigate = useNavigate();
 
     // Api hook
-    const [updateBadge, { reset: updatedReset, isSuccess, isError }] = useUpdateBadgeMutation();
+    const [updateBadge, { reset: updatedReset, isSuccess, isError, error }] = useUpdateBadgeMutation();
 
     const { data: badgeResponse, refetch } = useFetchOneBadgeQuery(badgeId);
     const badgeData = badgeResponse?.data;
@@ -59,7 +59,7 @@ const EditBadge = () => {
     const parsedExpirationDate = dayjs(badgeData?.expiredDate);
 
     // Status custom hook
-    const [message, setMessage] = useCatchStatus(isSuccess || isError, isSuccess ? "Update succesfully" : "Update Failed");
+    const [message, setMessage] = useCatchStatus(isSuccess || isError, isSuccess ? "Update succesfully" : error?.data?.message);
 
     // Handle submit
     const onSubmit = async (data) => {

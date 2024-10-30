@@ -117,7 +117,7 @@ const InstitutionManagement = () => {
             ) : (
                 // Billing and Invoice Table
                 <TableCustom
-                    title="Issuer List"
+                    title="Institution List"
                     data={institutions}
                     columns={invoiceColumns}
                     pagination
