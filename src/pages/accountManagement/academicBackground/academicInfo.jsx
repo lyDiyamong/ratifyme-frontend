@@ -6,12 +6,15 @@ import MoreMenu from "../../../components/MoreMenu";
 import EditAcademicModal from "./EditAcademicModal";
 import dayjs from "dayjs";
 import { useDeleteAcademicBackgroundByIdMutation } from "../../../store/api/earnerManagement/earnerApis";
+import useCatchStatus from "../../../hooks/useCatchStatus";
+import AlertMessage from "../../../components/alert/AlertMessage";
 
 const AcademicInfo = ({ academicData }) => {
     const { userId, fieldOfStudyId, academicYear, academicLevelId, academicId } = academicData;
-    const [deleteAcademicBackground] = useDeleteAcademicBackgroundByIdMutation();
+    const [deleteAcademicBackground, { isSuccess, isError }] = useDeleteAcademicBackgroundByIdMutation();
     const [open, setOpen] = useState(false);
     const [selectedData, setSelectedData] = useState(null);
+    const [message, setMessage] = useCatchStatus(isSuccess || isError, isSuccess ? "Deleted successfully" : "Deleted failed");
 
     const handleOpen = () => {
         setSelectedData({
@@ -25,12 +28,14 @@ const AcademicInfo = ({ academicData }) => {
 
     const handleClose = () => setOpen(false);
 
-    const handleDelete = (id) => {
-        deleteAcademicBackground(id)
-            .then(() => {})
-            .catch((error) => {
-                console.error("Error deleting academic background:", error);
-            });
+    const handleDelete = async (id) => {
+        try {
+            await deleteAcademicBackground({ id });
+        } catch (error) {
+            setMessage("Deleted failed");
+        } finally {
+            setOpen(false);
+        }
     };
 
     const menuItems = [
@@ -42,13 +47,18 @@ const AcademicInfo = ({ academicData }) => {
         {
             label: "Delete",
             icon: <Delete color="error" />,
-            onClick: () => handleDelete(academicData.userId),
+            onClick: () => handleDelete(academicId),
         },
     ];
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
     return (
         <>
+            {message && (
+                <AlertMessage variant={isSuccess ? "success" : "error"} onClose={() => setMessage("")}>
+                    {message}
+                </AlertMessage>
+            )}
             <Card
                 sx={{
                     boxShadow: theme.customShadows.default,

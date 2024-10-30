@@ -115,7 +115,7 @@ export const earnerApi = createApi({
             invalidatesTags: ["AcademicBackground"],
         }),
         deleteAcademicBackgroundById: builder.mutation({
-            query: (id) => ({
+            query: ({id}) => ({
                 url: `/earners/academicbackgrounds/${id}`,
                 method: "DELETE",
             }),
