@@ -18,20 +18,25 @@ import SelectForm from "../../../components/SelectionForm";
 // Api import
 import { useFetchAcademicLevelsQuery, useFetchFieldOfStudiesQuery } from "../../../store/api/earnerManagement/fieldOfStudyApi";
 import PageLoading from "../../../components/loading/PageLoading";
+import { yupResolver } from "@hookform/resolvers/yup";
+import academicBgSchema from "../../../utils/schema/academicBgSchema";
+import HelperTextForm from "../../../components/alert/HelperTextForm";
 
 const EditAcademicModal = ({ open, onClose, initialData, academicId }) => {
     const [updateAcademicBackgroundById] = useUpdateAcademicBackgroundByIdMutation();
     const {
         data: fieldOfStudiesData,
         error: fieldOfStudiesError,
-        isLoading: isFieldOfStudiesLoading
+        isLoading: isFieldOfStudiesLoading,
     } = useFetchFieldOfStudiesQuery();
-    const {
-        data: fetchAcademicLevelsData,
-        isLoading: isAcademicLevelsLoading
-    } = useFetchAcademicLevelsQuery();
+    const { data: fetchAcademicLevelsData, isLoading: isAcademicLevelsLoading } = useFetchAcademicLevelsQuery();
 
-    const { control, handleSubmit, reset } = useForm({});
+    const {
+        control,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm({ resolver: yupResolver(academicBgSchema) });
 
     useEffect(() => {
         if (initialData) {
@@ -113,20 +118,24 @@ const EditAcademicModal = ({ open, onClose, initialData, academicId }) => {
                         width: { xs: "280px", sm: "420px", md: "500px" },
                     }}
                 >
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <Controller
-                            name="academicYear"
-                            control={control}
-                            render={({ field }) => (
-                                <DatePicker
-                                    label="Academic Year"
-                                    value={field.value || null}
-                                    onChange={(newValue) => field.onChange(newValue)}
-                                    renderInput={(params) => <TextField {...params} fullWidth />}
-                                />
-                            )}
-                        />
-                    </LocalizationProvider>
+                    <Box width="100%">
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <Controller
+                                name="academicYear"
+                                control={control}
+                                render={({ field }) => (
+                                    <DatePicker
+                                        sx={{ width: "100%", maxWidth: 1000 }}
+                                        label="Academic Year"
+                                        value={field.value || null}
+                                        onChange={(newValue) => field.onChange(newValue)}
+                                        renderInput={(params) => <TextField {...params} fullWidth />}
+                                    />
+                                )}
+                            />
+                        </LocalizationProvider>
+                        {errors.academicYear && <HelperTextForm color={"error"} message={errors?.academicYear?.message} />}
+                    </Box>
 
                     <SelectForm
                         name="academicLevelId"

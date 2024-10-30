@@ -5,16 +5,21 @@ import theme from "../../../assets/themes";
 import AcademicBgSvg from "../../../assets/icons/AcademicBgSvg.svg";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import SelectForm from "../../../components/SelectionForm";
-import {
-    useFetchAcademicLevelsQuery,
-    useFetchFieldOfStudiesQuery,
-} from "../../../store/api/earnerManagement/fieldOfStudyApi";
+import { useFetchAcademicLevelsQuery, useFetchFieldOfStudiesQuery } from "../../../store/api/earnerManagement/fieldOfStudyApi";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useCreateAcademicBackgroundMutation } from "../../../store/api/earnerManagement/earnerApis";
 import dayjs from "dayjs";
+import { yupResolver } from "@hookform/resolvers/yup";
+import academicBgSchema from "../../../utils/schema/academicBgSchema";
+import HelperTextForm from "../../../components/alert/HelperTextForm";
 
 const AddAcademicModal = ({ open, onClose, onSubmit, userId }) => {
-    const { control, handleSubmit, reset } = useForm();
+    const {
+        control,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm({ resolver: yupResolver(academicBgSchema) });
     const [createAcademicBackground] = useCreateAcademicBackgroundMutation();
     const { data: fieldOfStudiesData, error: fieldOfStudiesError, isLoading } = useFetchFieldOfStudiesQuery();
     const { data: fetchAcademicLevelsData } = useFetchAcademicLevelsQuery();
@@ -75,23 +80,6 @@ const AddAcademicModal = ({ open, onClose, onSubmit, userId }) => {
 
             <Divider sx={{ my: 1, backgroundColor: theme.palette.text.contrastText }} />
 
-            {/* <DialogContent>
-                <Box
-                    sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        rowGap: "16px",
-                        width: { xs: "280px", sm: "420px", md: "500px" },
-                    }}
-                    noValidate
-                >
-                    <FormInput name="academicLevel" label="Academic Level" control={control} type="text" required />
-                    <DateSelectionForm control={control} name="academicYear" label="Academic Year" />
-                    <FormInput name="fieldOfStudy" label="Field of Study" control={control} type="text" required />
-                    <FormInput name="description" label="Description" control={control} type="text" required />
-                </Box>
-            </DialogContent> */}
-
             <DialogContent>
                 <Box
                     sx={{
@@ -101,20 +89,25 @@ const AddAcademicModal = ({ open, onClose, onSubmit, userId }) => {
                         width: { xs: "280px", sm: "420px", md: "500px" },
                     }}
                 >
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <Controller
-                            name="academicYear"
-                            control={control}
-                            render={({ field }) => (
-                                <DatePicker
-                                    label="Academic Year"
-                                    value={field.value || null}
-                                    onChange={(newValue) => field.onChange(newValue)}
-                                    renderInput={(params) => <TextField {...params} fullWidth />}
-                                />
-                            )}
-                        />
-                    </LocalizationProvider>
+                    <Box width="100%">
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <Controller
+                                name="academicYear"
+                                control={control}
+                                width="100%"
+                                render={({ field }) => (
+                                    <DatePicker
+                                        sx={{ width: "100%", maxWidth: 1000 }}
+                                        label="Academic Year"
+                                        value={field.value || null}
+                                        onChange={(newValue) => field.onChange(newValue)}
+                                        renderInput={(params) => <TextField {...params} fullWidth />}
+                                    />
+                                )}
+                            />
+                        </LocalizationProvider>
+                        {errors.academicYear && <HelperTextForm color={"error"} message={errors?.academicYear?.message} />}
+                    </Box>
 
                     <SelectForm
                         name="academicLevelId"
@@ -154,11 +147,7 @@ const AddAcademicModal = ({ open, onClose, onSubmit, userId }) => {
                 >
                     Cancel
                 </Button>
-                <Button
-                    type="submit"
-                    variant="contained"
-                    sx={{ color: theme.palette.customColors.white, width: "100%" }}
-                >
+                <Button type="submit" variant="contained" sx={{ color: theme.palette.customColors.white, width: "100%" }}>
                     Create
                 </Button>
             </Stack>
