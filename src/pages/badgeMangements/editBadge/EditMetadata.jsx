@@ -7,6 +7,7 @@ import MultiSelectForm from "../../../components/MultiSelectionForm";
 import DateSelectionForm from "../../../components/DateSelectionForm";
 import HelperTextForm from "../../../components/alert/HelperTextForm";
 
+
 const EditMetadata = ({ control, schema, errors }) => {
     const optionLanguage = [
         { name: "JavaScript", label: "JavaScript" },
@@ -29,14 +30,6 @@ const EditMetadata = ({ control, schema, errors }) => {
                 gap: 2,
             }}
         >
-            {/* <Stack>
-                <Typography variant="h4" color="primary" fontWeight={theme.fontWeight.bold}>
-                    Metadata
-                </Typography>
-                <Typography variant="body1" color="gray">
-                    This information related to Metadata.
-                </Typography>
-            </Stack> */}
             <Stack gap={3} alignItems="center">
                 <Stack gap={3} alignItems="center" flexDirection={{ sm: "row", xss: "column" }} width="100%">
                     {/* Badge Name */}
@@ -49,19 +42,6 @@ const EditMetadata = ({ control, schema, errors }) => {
                         schema={schema.fields.badgeName}
                     />
 
-                    {/* Issued On */}
-                    <DateSelectionForm control={control} name="issuedOn" label="Issued On" required />
-                </Stack>
-
-                <Stack gap={3} alignItems="center" flexDirection={{ sm: "row", xss: "column" }} width="100%">
-                    <Box width="100%">
-                        {/* Start Date */}
-                        <DateSelectionForm control={control} name="startedDate" label="Start Date" required />
-                        {errors.startedDate && (
-                            <HelperTextForm color={"error"} message={errors?.startedDate?.message} />
-                        )}
-                    </Box>
-
                     {/* Tags / Language */}
                     <MultiSelectForm
                         name="tagsOrLanguage"
@@ -70,6 +50,18 @@ const EditMetadata = ({ control, schema, errors }) => {
                         control={control}
                         required={false}
                     />
+                </Stack>
+
+                <Stack gap={3} alignItems="center" flexDirection={{ sm: "row", xss: "column" }} width="100%">
+                    <Box width="100%">
+                        {/* Start Date */}
+                        <DateSelectionForm control={control} name="startedDate" label="Start Date" required />
+                        {errors.startedDate && <HelperTextForm color={"error"} message={errors?.startedDate?.message} />}
+                    </Box>
+                    <Box width="100%">
+                        <DateSelectionForm control={control} name="endDate" label="End Date" errors={errors} />
+                        {errors.endDate && <HelperTextForm color={"error"} message={errors?.endDate?.message} />}
+                    </Box>
                 </Stack>
 
                 {/* Badge Description */}

@@ -1,7 +1,7 @@
 // React Import
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 // MUI Import
 import { Stack, Tab, Tabs, Typography } from "@mui/material";
@@ -20,10 +20,12 @@ import { useFetchEarnerAchieByIdQuery } from "../../../store/api/earnerManagemen
 import { Box } from "@mui/system";
 import theme from "../../../assets/themes";
 import PageLoading from "../../../components/loading/PageLoading";
+import AlertMessage from "../../../components/alert/AlertMessage";
 
 const BadgeDetail = () => {
     // Fetch ID from the URL
     const { id } = useParams();
+    const { state } = useLocation();
 
     const [selectedEmails, setSelectedEmails] = useState([]);
     // Fetch badge by ID
@@ -91,6 +93,7 @@ const BadgeDetail = () => {
 
     return (
         <DashboardContainer sx={{ display: "flex", flexDirection: "column", mb: 3 }}>
+            {state?.successMessage && <AlertMessage variant="success">{state.successMessage}</AlertMessage>}
             <PageTitle title="Badge Detail" subtitle={subtitle} />
 
             {/* Conditional rendering based on Status */}

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import * as yup from "yup";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 
 // MUI import
@@ -12,6 +12,7 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
 // Custom import
+import badgeSchema from "../../utils/schema/badgeSchema";
 import theme from "../../assets/themes";
 import CoreElementStep from "./CoreElementStep";
 import MetadataStep from "./MetadataStep";
@@ -44,33 +45,7 @@ const steps = [
     },
 ];
 
-const schema = yup.object().shape({
-    narrative: yup
-        .string()
-        .min(10, "Criteria must be at least 10 characters long")
-        .max(255, "Criteria cannot exceed 255 characters")
-        .required("Criteria is required"),
-    startDate: yup
-        .date()
-        .typeError("Please select a valid date")
-        .min(new Date(new Date().setHours(0, 0, 0, 0)), "Start date cannot be in the past")
-        .required("Start date is required"),
-    endDate: yup
-        .date()
-        .typeError("Please select a valid date")
-        .min(yup.ref("startDate"), "End date cannot be earlier than Start Date")
-        .required("End date is required"),
-    expiredDate: yup
-        .date()
-        .typeError("Please select a valid date")
-        .min(yup.ref("endDate"), "Expiration date cannot be earlier than End Date"),
-    badgeName: yup
-        .string()
-        .min(3, "Badge name must be at least 3 characters long")
-        .max(50, "Badge name cannot exceed 50 characters")
-        .required("Badge name is required"),
-    badgeDescription: yup.string().max(255, "Description cannot exceed 255 characters").required("Description is required"),
-});
+
 
 const BadgeCreationForm = () => {
     const { issuerData } = useSelector((state) => state.global);
@@ -93,7 +68,7 @@ const BadgeCreationForm = () => {
 
     const stepFields = {
         0: ["narrative", "achievementType"],
-        1: ["badgeName", "badgeDescription", "startDate", "endDate"],
+        1: ["badgeName", "badgeDescription", "startedDate", "endDate"],
     };
 
     // React Hook Form
@@ -114,7 +89,7 @@ const BadgeCreationForm = () => {
 
             badgeName: "",
             issuedOn: null,
-            startDate: null,
+            startedDate: null,
             endDate: null,
             badgeDescription: "",
             tagsOrLanguage: "",
@@ -124,7 +99,7 @@ const BadgeCreationForm = () => {
             additionLink: "",
         },
         mode: "onChange",
-        resolver: yupResolver(schema),
+        resolver: yupResolver(badgeSchema),
     });
 
     const maxSteps = steps.length;
@@ -161,7 +136,7 @@ const BadgeCreationForm = () => {
         formData.append("name", data.badgeName);
         formData.append("description", data.badgeDescription);
         formData.append("tags", data.tagsOrLanguage ? data.tagsOrLanguage.join(",") : []);
-        formData.append("startedDate", data.startDate ? data.startDate.toISOString() : null);
+        formData.append("startedDate", data.startedDate ? data.startedDate.toISOString() : null);
         formData.append("endDate", data.endDate ? data.endDate.toISOString() : null);
         formData.append("expiredDate", data.expiredDate ? data.expiredDate.toISOString() : null);
         formData.append("issuerId", issuerData.id);
@@ -224,11 +199,11 @@ const BadgeCreationForm = () => {
     const renderStepContent = () => {
         switch (activeStep) {
             case 0:
-                return <CoreElementStep control={control} errors={errors} schema={schema} />;
+                return <CoreElementStep control={control} errors={errors} schema={badgeSchema} />;
             case 1:
-                return <MetadataStep control={control} errors={errors} schema={schema} />;
+                return <MetadataStep control={control} errors={errors} schema={badgeSchema} />;
             case 2:
-                return <OptionalStep control={control} errors={errors} schema={schema} />;
+                return <OptionalStep control={control} errors={errors} schema={badgeSchema} />;
             default:
                 return null;
         }

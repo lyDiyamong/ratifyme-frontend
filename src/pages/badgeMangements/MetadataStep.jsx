@@ -34,7 +34,7 @@ const MetadataStep = ({ control, errors }) => {
 
                 {/* Start Date */}
                 <Box>
-                    <DateSelectionForm control={control} name="startDate" label="Start Date*" />
+                    <DateSelectionForm control={control} name="startedDate" label="Start Date*" />
                     {errors.startDate && (
                         <Typography sx={{ fontSize: 12, mx: "14px" }} color="error">
                             {errors.startDate.message}
