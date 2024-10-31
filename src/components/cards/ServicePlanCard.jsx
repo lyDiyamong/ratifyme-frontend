@@ -22,81 +22,24 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 import PageLoading from "../../components/loading/PageLoading";
 import { SpinLoading } from "../loading/SpinLoading";
+import { plans } from "../../data/pricePage/servicePlanData";
+import AlertConfirmation from "../../components/alert/AlertConfirmation";
 
 // Public key from Stripe
 const stripePromise = loadStripe(String(import.meta.env.VITE_STRIPE_PUBLIC_KEY));
-// Static plans data with placeholders for dynamic prices
-// Dynamically map plans with IDs and prices from the backend
-const plans = (monthlyPlans, annualPlans) => {
-    return [
-        {
-            monthlyId: monthlyPlans?.find((plan) => plan.name === "Standard")?.id,
-            anualId: annualPlans?.find((plan) => plan.name === "Standard")?.id,
-            label: "Standard",
-            priceMonthly: monthlyPlans?.find((plan) => plan.name === "Standard")?.price || "0.00",
-            priceAnnually: annualPlans?.find((plan) => plan.name === "Standard")?.price || "0.00",
-            description: "Begin your credentialing journey with a reliable solution and essential tools.",
-            issuingLimits: [250],
-            features: [
-                "Templates library",
-                "Mass issuing & delivery (limited)",
-                "PDF certificate export",
-                "Social media sharing (LinkedIn, Facebook)",
-                "Verifiable certificates/badges",
-            ],
-            buttonLabel: "Start free",
-        },
-        {
-            monthlyId: monthlyPlans?.find((plan) => plan.name === "Professional")?.id,
-            anualId: annualPlans?.find((plan) => plan.name === "Professional")?.id,
-            label: "Professional",
-            priceMonthly: monthlyPlans?.find((plan) => plan.name === "Professional")?.price || "39.99",
-            priceAnnually: annualPlans?.find((plan) => plan.name === "Professional")?.price || "299.99",
-            description: "For small companies looking for professional branding & data insights.",
-            issuingLimits: [1000],
-            features: [
-                "Branded emails",
-                "Scheduled issuing",
-                "Expirable credentials",
-                "Advanced analytics",
-                "Custom email sender",
-                "Premium branding (Add-On)",
-                "Verified status (Add-On)",
-                "Custom domain (Add-On)",
-            ],
-            buttonLabel: "Explore",
-            isPopular: true,
-        },
-        {
-            monthlyId: monthlyPlans?.find((plan) => plan.name === "Premium")?.id,
-            anualId: annualPlans?.find((plan) => plan.name === "Premium")?.id,
-            label: "Premium",
-            priceMonthly: monthlyPlans?.find((plan) => plan.name === "Premium")?.price || "59.99",
-            priceAnnually: annualPlans?.find((plan) => plan.name === "Premium")?.price || "499.99",
-            description: "For medium and large enterprises requiring advanced customization & tailored approach.",
-            issuingLimits: [3000],
-            features: [
-                "Role-based access",
-                "Multiple workspaces",
-                "Custom fonts",
-                "Premium branding",
-                "Custom domain",
-                "Verified status",
-                "Multiple sender details",
-                "Certified recipients directory",
-                "Dedicated account manager",
-            ],
-            buttonLabel: "Go to Advanced",
-        },
-    ];
-};
 
 const ServicePlanCard = () => {
+    const { institutionData, userId, roleId } = useSelector((state) => state.global);
+    const navigate = useNavigate();
+
     const { data, isLoading } = useGetServicePlanQuery();
+
     const [billingCycle, setBillingCycle] = useState("monthly");
     const [activePlan, setActivePlan] = useState(null);
-    const [userSelectedPlan, setUserSelectedPlan] = useState(false); // Track if user clicked a plan
+    const [userSelectedPlan, setUserSelectedPlan] = useState(false);
     const [loadingPlanId, setLoadingPlanId] = useState(null);
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
 
     const monthlyPlans = data?.data?.filter((plan) => plan.duration === 1);
     const annualPlans = data?.data?.filter((plan) => plan.duration === 12);
@@ -105,13 +48,13 @@ const ServicePlanCard = () => {
     const handleBillingCycleChange = (event, newCycle) => {
         if (newCycle !== null) {
             setBillingCycle(newCycle);
-            setUserSelectedPlan(false); // Reset user selection when changing billing cycle
+            setUserSelectedPlan(false);
         }
     };
 
     const handleCardClick = (planId) => {
         setActivePlan(planId);
-        setUserSelectedPlan(true); // Mark as user-selected when clicked
+        setUserSelectedPlan(true);
     };
 
     useEffect(() => {
@@ -122,15 +65,22 @@ const ServicePlanCard = () => {
         }
     }, [billingCycle, mappedPlans, userSelectedPlan]);
 
-    const { institutionData, userId } = useSelector((state) => state.global);
-    const navigate = useNavigate();
-
     const handleSubscribe = async (id) => {
+        if (roleId !== 2) {
+            setAlertMessage("You are already an earner or issuer. To become an institution, please create a new account.");
+            setShowAlert(true);
+            return;
+        }
+
+        if (!institutionData.id) {
+            setAlertMessage("Please create an account before subscribing.");
+            setShowAlert(true);
+            return;
+        }
+
         setLoadingPlanId(id);
 
         try {
-            if (!institutionData.id) return navigate("/auth/signup?as=institution");
-
             const response = await axios.post(`${import.meta.env.VITE_SERVER_BASE_URL}/subscriptions/subscribe/${id}`, {
                 userId,
             });
@@ -145,11 +95,17 @@ const ServicePlanCard = () => {
         }
     };
 
+    const handleAlertConfirm = () => {
+        setShowAlert(false);
+        if (!institutionData.id) {
+            navigate("/auth/signup?as=institution");
+        }
+    };
+
     if (isLoading) return <PageLoading isLoading={isLoading} />;
 
     return (
-        <Container sx={{ p: 2 }}>           
-
+        <Container sx={{ p: 2 }}>
             <ToggleButtonGroup
                 value={billingCycle}
                 exclusive
@@ -260,6 +216,17 @@ const ServicePlanCard = () => {
                     );
                 })}
             </Box>
+
+            <AlertConfirmation
+                open={showAlert}
+                title="Action Required"
+                message={alertMessage}
+                onClose={() => setShowAlert(false)}
+                onConfirm={handleAlertConfirm}
+                confirmText="OK"
+                iconColor={theme.palette.customColors.red400}
+                iconBgColor={theme.palette.customColors.red100}
+            />
         </Container>
     );
 };

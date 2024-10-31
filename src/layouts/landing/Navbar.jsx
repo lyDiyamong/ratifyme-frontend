@@ -18,35 +18,12 @@ import { useLogoutMutation } from "../../store/api/auth/authApi";
 import useCatchStatus from "../../hooks/useCatchStatus";
 import AlertMessage from "../../components/alert/AlertMessage";
 
-const useHideOnScroll = () => {
-    const [show, setShow] = useState(true);
-    const [lastScrollY, setLastScrollY] = useState(0);
-
-    const handleScroll = () => {
-        if (window.scrollY > lastScrollY) {
-            setShow(false);
-        } else {
-            setShow(true);
-        }
-        setLastScrollY(window.scrollY);
-    };
-
-    useState(() => {
-        window.addEventListener("scroll", handleScroll);
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, [lastScrollY]);
-
-    return show;
-};
-
 const Navbar = () => {
     const [navbarAnchorEl, setNavbarAnchorEl] = useState(null);
     const [alertOpen, setAlertOpen] = useState(false);
     const [alertTitle, setAlertTitle] = useState("");
     const [alertMessage, setAlertMessage] = useState("");
-    const { institutionData, userInfo } = useSelector((state) => state.global);
+    const { institutionData, userInfo, roleId } = useSelector((state) => state.global);
     const navigate = useNavigate();
 
     const gender = userInfo?.Gender?.name;
@@ -60,9 +37,9 @@ const Navbar = () => {
     const subscriptions = subscriptionOfInstitution?.data || [];
     const filteredSubscriptions = subscriptions.filter((sub) => sub.status === true);
 
-    const hasActiveSubscription = filteredSubscriptions.length > 0;
+    const isInstitution = !!institutionData;
+    const hasActiveSubscription = isInstitution && filteredSubscriptions.length > 0;
 
-    const show = useHideOnScroll();
     const openNavbarMenu = Boolean(navbarAnchorEl);
 
     const [logout, { isError, error, isSuccess }] = useLogoutMutation();
@@ -191,8 +168,8 @@ const Navbar = () => {
                             }}
                         >
                             <Box display={"flex"} gap={2} alignItems="center">
-                                {institutionData && userInfo ? (
-                                    <Link to="/dashboard" onClick={handleServicePlanClick}>
+                                {(institutionData && userInfo) || userInfo ? (
+                                    <Link to="/dashboard" {...(roleId === 2 ? { onClick: handleServicePlanClick } : {})}>
                                         <Stack direction="row" gap={1} alignItems="center">
                                             <Box
                                                 component="img"
@@ -333,7 +310,7 @@ const Navbar = () => {
                                 )}
                             </Menu>
 
-                            {institutionData && userInfo && (
+                            {((institutionData && userInfo) || userInfo) && (
                                 <Box>
                                     <Link>
                                         <Stack direction="row" alignItems="center">
@@ -369,9 +346,12 @@ const Navbar = () => {
                                             <MenuItem onClick={handleProfileMenuItemClick}>
                                                 {userInfo?.firstName} {userInfo?.lastName}
                                             </MenuItem>
-                                            <MenuItem onClick={handleProfileMenuItemClick}>
-                                                {institutionData?.institutionName}
-                                            </MenuItem>
+
+                                            {roleId === 2 && (
+                                                <MenuItem onClick={handleProfileMenuItemClick}>
+                                                    {institutionData?.institutionName}
+                                                </MenuItem>
+                                            )}
                                         </Menu>
                                     </Link>
                                 </Box>

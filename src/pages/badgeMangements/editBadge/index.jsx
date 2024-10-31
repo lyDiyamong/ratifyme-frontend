@@ -22,7 +22,6 @@ import DashboardContainer from "../../../components/styles/DashboardContainer";
 import { useFetchAchievementTypeQuery } from "../../../store/api/achievements/achievementTypeApi";
 import { useFetchOneBadgeQuery, useUpdateBadgeMutation } from "../../../store/api/badgeManagement/badgeApi";
 import theme from "../../../assets/themes";
-import AlertMessage from "../../../components/alert/AlertMessage";
 import useCatchStatus from "../../../hooks/useCatchStatus";
 import badgeSchema from "../../../utils/schema/badgeSchema";
 import PageLoading from "../../../components/loading/PageLoading";
@@ -173,11 +172,6 @@ const EditBadge = () => {
 
     return (
         <DashboardContainer sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            {message && (
-                <AlertMessage variant={isError ? "error" : "success"} onClose={() => setMessage("")}>
-                    {message}
-                </AlertMessage>
-            )}
             <Modal
                 open={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
@@ -359,10 +353,10 @@ const EditBadge = () => {
                                     borderRadius: theme.customShape.btn,
                                     fontWeight: theme.fontWeight.bold,
                                     px: 2,
-                                    textTransform: 'none'
+                                    textTransform: "none",
                                 }}
                             >
-                                {loading ? <SpinLoading size={24}/> : 'Save'}
+                                {loading ? <SpinLoading size={24} /> : "Save"}
                             </Button>
                         </Stack>
                     </Stack>

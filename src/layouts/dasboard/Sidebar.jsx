@@ -292,21 +292,6 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
                     {/* ============ End list of Sidebar ============ */}
                 </Box>
 
-                {/* Start Sidebar footer  */}
-                <Box position="absolute" bottom="2rem">
-                    <Divider />
-                    <FlexBetween textTransform="none" gap="1rem" m="1.5rem 2rem 0 3rem">
-                        <Box textAlign="left">
-                            <Typography fontWeight="bold" fontSize="0.9rem">
-                                User Name
-                            </Typography>
-                            <Typography fontSize="0.8rem">user@example.com</Typography>
-                        </Box>
-                        <SettingsOutlined sx={{ fontSize: "25px" }} />
-                    </FlexBetween>
-                </Box>
-                {/* End Sidebar footer  */}
-
                 {/* Logout Confirmation Dialog */}
                 <AlertConfirmation
                     open={isLogoutDialogOpen}

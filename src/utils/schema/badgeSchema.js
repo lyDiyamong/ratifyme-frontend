@@ -19,7 +19,8 @@ const badgeSchema = yup.object().shape({
     expiredDate: yup
         .date()
         .typeError("Please select a valid date")
-        .min(yup.ref("endDate"), "Expiration date cannot be earlier than End Date"),
+        .min(yup.ref("endDate"), "Expiration date cannot be earlier than End Date")
+        .required('Expired date is required.'),
     badgeName: yup
         .string()
         .min(3, "Badge name must be at least 3 characters long")

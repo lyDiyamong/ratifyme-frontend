@@ -39,9 +39,9 @@ const steps = [
             "A clear statement capture essential information about learning and achievements by storing this metadata inside the badge image.",
     },
     {
-        label: "Optional Elements :",
+        label: "Additional Elements :",
         description:
-            "A optional statement of the badge. The specific elements required for an Open Badge may vary depending on the implementation and the preferences of the issuer.",
+            "An additional statement of the badge. The specific elements required for an Open Badge may vary depending on the implementation and the preferences of the issuer.",
     },
 ];
 
