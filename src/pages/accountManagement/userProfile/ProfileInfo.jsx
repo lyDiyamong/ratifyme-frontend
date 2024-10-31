@@ -10,8 +10,8 @@ import EmailIcon from "../../../assets/icons/Email.svg";
 import OrganizationIcon from "../../../assets/icons/Organization.svg";
 import PhoneIcon from "../../../assets/icons/Phone.svg";
 import GenderIcon from "../../../assets/icons/Gender.svg";
-import EducationIcon from "../../../assets/icons/Education.svg";
 import Link from "../../../assets/icons/Link.svg";
+import usernameIcon from "../../../assets/icons/usernameIcon.svg";
 import formatPhoneNumber from "../../../utils/formatPhoneNumber";
 import FormatDate from "../../../utils/formatDate";
 import theme from "../../../assets/themes";
@@ -43,11 +43,11 @@ const profileInfoConfig = {
         { icon: Link, label: "Link", valueKey: "Institution.institutionWebsiteUrl" },
     ],
     earner: [
+        { icon: usernameIcon, label: "Username", valueKey: "username" },
         { icon: PhoneIcon, label: "Phone", valueKey: "phoneNumber" },
         { icon: EmailIcon, label: "Email", valueKey: "email" },
         { icon: BirthDateIcon, label: "Date of Birth", valueKey: "dateOfBirth" },
         { icon: GenderIcon, label: "Gender", valueKey: "Gender.name" },
-        { icon: EducationIcon, label: "Education", valueKey: "AcademicBackground.AcademicLevel.name" },
     ],
 };
 // =========== End Profile info configuration ===========

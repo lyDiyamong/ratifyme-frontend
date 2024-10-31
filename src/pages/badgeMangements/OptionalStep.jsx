@@ -7,8 +7,13 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import theme from "../../assets/themes";
 import FormInput from "../../components/FormInput";
 import DateSelectionForm from "../../components/DateSelectionForm";
+import * as yup from "yup";
 
 const OptionalStep = ({ control, errors }) => {
+    const orgSchema = yup.object().shape({
+        additionLink: yup.string().url("Invalid URL format"),
+    });
+
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Stack gap={2}>
@@ -22,7 +27,13 @@ const OptionalStep = ({ control, errors }) => {
                     )}
                 </Box>
                 {/* Addition Link */}
-                <FormInput label="Addition Link" name="additionLink" control={control} type="text" required={false} />
+                <FormInput
+                    label="Addition Link"
+                    name="additionLink"
+                    control={control}
+                    type="text"
+                    required={false}
+                />
 
                 {/* Submit button */}
                 <Stack alignItems="end">

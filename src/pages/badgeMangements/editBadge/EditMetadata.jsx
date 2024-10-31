@@ -30,7 +30,19 @@ const EditMetadata = ({ control, schema, errors }) => {
             }}
         >
             <Stack gap={3} alignItems="center">
-                <Stack gap={3} alignItems="center" flexDirection={{ sm: "row", xss: "column" }} width="100%">
+                <Stack
+                    gap={3}
+                    alignItems="center"
+                    flexDirection="row"
+                    width="100%"
+                    sx={{
+                        flexDirection: "row",
+                        "@media (max-width: 1500px)": {
+                            // Media query for 1500px and below
+                            flexDirection: "column",
+                        },
+                    }}
+                >
                     {/* Badge Name */}
                     <FormInput
                         name="badgeName"
@@ -51,7 +63,19 @@ const EditMetadata = ({ control, schema, errors }) => {
                     />
                 </Stack>
 
-                <Stack gap={3} alignItems="center" flexDirection={{ sm: "row", xss: "column" }} width="100%">
+                <Stack
+                    gap={3}
+                    alignItems="center"
+                    flexDirection="row"
+                    width="100%"
+                    sx={{
+                        flexDirection: "row",
+                        "@media (max-width: 1500px)": {
+                            // Media query for 1500px and below
+                            flexDirection: "column",
+                        },
+                    }}
+                >
                     <Box width="100%">
                         {/* Start Date */}
                         <DateSelectionForm control={control} name="startedDate" label="Start Date" required />

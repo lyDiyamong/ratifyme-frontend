@@ -27,6 +27,7 @@ const badgeSchema = yup.object().shape({
         .max(50, "Badge name cannot exceed 50 characters")
         .required("Badge name is required"),
     badgeDescription: yup.string().max(255, "Description cannot exceed 255 characters").required("Description is required"),
+    additionLink: yup.string().url("Invalid URL format"),
 });
 
 export default badgeSchema

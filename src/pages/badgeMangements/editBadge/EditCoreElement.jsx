@@ -17,10 +17,20 @@ const EditCoreElement = ({ control, schema }) => {
                 gap: 2,
             }}
         >
-            <Stack gap={3} alignItems="center" flexDirection={{ sm: "row", xss: "column" }}>
+            <Stack
+                gap={3}
+                alignItems="center"
+                sx={{
+                    flexDirection: "row",
+                    "@media (max-width: 1500px)": {
+                        // Media query for 1500px and below
+                        flexDirection: "column",
+                    },
+                }}
+            >
                 <FormInput
                     name="narrative"
-                    label="Criteria*"
+                    label="Criteria"
                     control={control}
                     type="text"
                     required={false}

@@ -45,8 +45,6 @@ const steps = [
     },
 ];
 
-
-
 const BadgeCreationForm = () => {
     const { issuerData } = useSelector((state) => state.global);
     const navigate = useNavigate();
@@ -295,7 +293,7 @@ const BadgeCreationForm = () => {
                             color: theme.palette.text.disabled,
                         }}
                     >
-                        Badge image must use images in PNG format, with dimensions.
+                        The badge image can be any type of image, but the image size must be below 1 MB.
                     </Typography>
                 </Stack>
             </Stack>

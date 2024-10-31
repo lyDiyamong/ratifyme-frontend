@@ -11,7 +11,7 @@ const orgSchema = yup.object().shape({
         .string()
         .required("Phone number is required")
         .min(12, "Phone number is invalid")
-        .max(15, "Phone number must be less than or equal to 15 characters")
+        .max(15, "Phone number must be less than or equal to 15 characters"),
 });
 
 export default orgSchema;

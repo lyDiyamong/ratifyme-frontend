@@ -2,7 +2,7 @@
 import { useController } from "react-hook-form";
 
 // MUI import
-import { InputLabel, MenuItem, FormControl, Select, FormHelperText } from "@mui/material";
+import { InputLabel, MenuItem, FormControl, Select, FormHelperText, Chip } from "@mui/material";
 
 // Custom import
 import theme from "../assets/themes";
@@ -58,25 +58,40 @@ const SelectForm = ({ name, control, options, label, required }) => {
         fieldState: { error },
     } = useController({ name, control, rules: validationRules });
 
+    // This handles the change event and updates the value in react-hook-form
     const handleChange = (event) => {
         const {
             target: { value },
         } = event;
+
+        // Update react-hook-form with the new value
+        // The value will be an array of selected values
         field.onChange(value);
+    };
+
+    // Custom rendering of selected values
+    const renderValue = (selected) => {
+        const selectedValues = selected.slice(0, 2); // Limit to first 2 selected values
+        const remainingCount = selected.length - 2; // Count of remaining selected items
+
+        return (
+            <div style={{ display: "flex", flexWrap: "wrap" }}>
+                {selectedValues.map((value) => (
+                    <Chip key={value} label={value} style={{ margin: "2px" }} />
+                ))}
+                {remainingCount > 0 && <Chip label={`+${remainingCount}`} style={{ margin: "2px" }} />}
+            </div>
+        );
     };
 
     return (
         <FormControl fullWidth error={!!error}>
             <InputLabel id={`${name}-label`}>{label}</InputLabel>
             <Select
-                multiple
+                multiple // Enable multiple selection
                 required={required}
                 sx={{
                     borderRadius: theme.customShape.input,
-                    maxWidth: "100%",
-                    overflow: "hidden",
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
                 }}
                 labelId={`${name}-label`}
                 id={`${name}-select`}
@@ -85,33 +100,25 @@ const SelectForm = ({ name, control, options, label, required }) => {
                 onChange={handleChange}
                 onBlur={field.onBlur}
                 inputProps={{ "aria-required": required }}
-                renderValue={
-                    name !== "tagsOrLanguage"
-                        ? (selected) => {
-                              // Limit to 3 items displayed with ellipsis for overflow
-                              const displayedValues =
-                                  selected.length > 6 ? `${selected.slice(0, 6).join(", ")},...` : selected.join(", ");
-                              return displayedValues;
-                          }
-                        : ""
-                }
+                renderValue={renderValue}
                 MenuProps={{
                     PaperProps: {
                         sx: {
                             borderRadius: theme.customShape.input,
-                            maxHeight: 48 * 4.5 + 8,
-                            minWidth: 700,
-                            overflowY: "auto",
+                            maxHeight: 48 * 7 + 8, // Limit to 7 visible items (assuming ~48px height each)
+                            overflowY: "auto", // Enable vertical scrolling
                         },
                     },
                 }}
             >
+                {/* Render options for the select input */}
                 {options.map((option) => (
-                    <MenuItem key={option.value} value={option.name}>
+                    <MenuItem key={option.name} value={option.name}>
                         {option.name}
                     </MenuItem>
                 ))}
             </Select>
+            {/* Display validation error message if any */}
             {error && <FormHelperText>{error.message}</FormHelperText>}
         </FormControl>
     );
