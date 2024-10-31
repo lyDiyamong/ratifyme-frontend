@@ -17,9 +17,15 @@ const EditCoreElement = ({ control, schema }) => {
                 gap: 2,
             }}
         >
-
             <Stack gap={3} alignItems="center" flexDirection={{ sm: "row", xss: "column" }}>
-                <FormInput name="narrative" label="Criteria" control={control} type="text" required={false} schema={schema.fields.narrative} />
+                <FormInput
+                    name="narrative"
+                    label="Criteria*"
+                    control={control}
+                    type="text"
+                    required={false}
+                    schema={schema.fields.narrative}
+                />
                 <MultiSelectForm
                     name="AchievementTypes"
                     label="Achievement Types"

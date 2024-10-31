@@ -21,7 +21,7 @@ const CoreElementStep = ({ control, schema, errors }) => {
                 {/* Criteria */}
                 <FormInput
                     name="narrative"
-                    label="Criteria"
+                    label="Criteria*"
                     control={control}
                     type="text"
                     required={true}

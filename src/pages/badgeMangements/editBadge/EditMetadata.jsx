@@ -7,7 +7,6 @@ import MultiSelectForm from "../../../components/MultiSelectionForm";
 import DateSelectionForm from "../../../components/DateSelectionForm";
 import HelperTextForm from "../../../components/alert/HelperTextForm";
 
-
 const EditMetadata = ({ control, schema, errors }) => {
     const optionLanguage = [
         { name: "JavaScript", label: "JavaScript" },
@@ -35,7 +34,7 @@ const EditMetadata = ({ control, schema, errors }) => {
                     {/* Badge Name */}
                     <FormInput
                         name="badgeName"
-                        label="Badge Name"
+                        label="Badge Name*"
                         control={control}
                         type="text"
                         required={false}
@@ -59,7 +58,7 @@ const EditMetadata = ({ control, schema, errors }) => {
                         {errors.startedDate && <HelperTextForm color={"error"} message={errors?.startedDate?.message} />}
                     </Box>
                     <Box width="100%">
-                        <DateSelectionForm control={control} name="endDate" label="End Date" errors={errors} />
+                        <DateSelectionForm control={control} name="endDate" label="End Date*" errors={errors} />
                         {errors.endDate && <HelperTextForm color={"error"} message={errors?.endDate?.message} />}
                     </Box>
                 </Stack>
