@@ -217,7 +217,7 @@ const TableEarner = () => {
             )}
             <AlertConfirmation
                 open={isDeleteOpen}
-                title="Delete Item"
+                title="Delete Earner"
                 message="Are you sure you want to delete this earner? This action cannot be undone."
                 onClose={() => setIsDeleteOpen(false)}
                 onConfirm={handleDelete}

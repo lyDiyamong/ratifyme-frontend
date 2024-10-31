@@ -14,8 +14,6 @@ import PageLoading from "../../../components/loading/PageLoading";
 
 const AcademicBackground = () => {
     const { userId } = useSelector((state) => state.global);
-    const { data: response, isLoading, isError } = useFetchEarnerQuery();
-    const { data: info } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
     const { data: academicBackgroundData } = useFetchAcademicBackgroundByUserQuery({ userId });
 
     const [open, setOpen] = useState(false);
@@ -27,8 +25,8 @@ const AcademicBackground = () => {
         handleClose();
     };
 
-    if (isLoading) return <PageLoading isLoading={isLoading}>Loading...</PageLoading>;
-    if (isError) return <Typography>Error loading data.</Typography>;
+    // if (isLoading) return <PageLoading isLoading={isLoading}>Loading...</PageLoading>;
+    // if (isError) return <Typography>Error loading data.</Typography>;
 
     return (
         <Stack

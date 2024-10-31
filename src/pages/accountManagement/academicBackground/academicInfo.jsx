@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Box, Card, CardContent, Stack, Typography, IconButton, Divider, useMediaQuery } from "@mui/material";
-import { AccessTime, AccountBalanceRounded, BorderColorRounded, Delete, School } from "@mui/icons-material";
+import { AccessTime, AccountBalanceRounded, BorderColorRounded, Delete, DeleteForeverOutlined, School } from "@mui/icons-material";
 import theme from "../../../assets/themes";
 import MoreMenu from "../../../components/MoreMenu";
 import EditAcademicModal from "./EditAcademicModal";
@@ -8,12 +8,14 @@ import dayjs from "dayjs";
 import { useDeleteAcademicBackgroundByIdMutation } from "../../../store/api/earnerManagement/earnerApis";
 import useCatchStatus from "../../../hooks/useCatchStatus";
 import AlertMessage from "../../../components/alert/AlertMessage";
+import AlertConfirmation from "../../../components/alert/AlertConfirmation";
 
 const AcademicInfo = ({ academicData }) => {
     const { userId, fieldOfStudyId, academicYear, academicLevelId, academicId } = academicData;
     const [deleteAcademicBackground, { isSuccess, isError }] = useDeleteAcademicBackgroundByIdMutation();
     const [open, setOpen] = useState(false);
     const [selectedData, setSelectedData] = useState(null);
+     const [isDeleteModal, setIsDeleteModal] = useState(false);
     const [message, setMessage] = useCatchStatus(isSuccess || isError, isSuccess ? "Deleted successfully" : "Deleted failed");
 
     const handleOpen = () => {
@@ -47,13 +49,27 @@ const AcademicInfo = ({ academicData }) => {
         {
             label: "Delete",
             icon: <Delete color="error" />,
-            onClick: () => handleDelete(academicId),
+            onClick: () => setIsDeleteModal(true),
         },
     ];
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
     return (
         <>
+        <AlertConfirmation
+                open={isDeleteModal}
+                title="Delete this Academic Background"
+                message="Are you sure you want to delete this? This action cannot be undone."
+                onClose={() => setIsDeleteModal(false)}
+                onConfirm={() => handleDelete(academicId)}
+                confirmText="Delete"
+                cancelText="Cancel"
+                iconColor={theme.palette.error.main}
+                iconBgColor={theme.palette.customColors.red100}
+                confirmButtonColor={theme.palette.customColors.red300}
+                icon={DeleteForeverOutlined}
+            />
+            {/* Delete confirm modal */}
             {message && (
                 <AlertMessage variant={isSuccess ? "success" : "error"} onClose={() => setMessage("")}>
                     {message}
