@@ -1,4 +1,4 @@
-// React library import 
+// React library import
 import { useState } from "react";
 
 // MUI import
@@ -8,6 +8,67 @@ import { ErrorOutline } from "@mui/icons-material";
 // Custom import
 import theme from "../../assets/themes";
 import { SpinLoading } from "../../components/loading/SpinLoading";
+
+/**
+ * AlertConfirmation Component
+ *
+ * A reusable confirmation dialog that displays a title, message, icon, and customizable buttons for confirming or canceling actions.
+ * Ideal for confirming potentially destructive actions like deletions or irreversible operations.
+ *
+ * @param {boolean} open - Controls the open state of the dialog.
+ * @param {string} title - The title text displayed in the dialog.
+ * @param {string} message - The main message or description displayed in the dialog.
+ * @param {function} onClose - Callback function triggered when the dialog is closed.
+ * @param {function} onConfirm - Callback function triggered when the confirm button is clicked.
+ * @param {React.ElementType} [icon=ErrorOutline] - Icon component displayed in the dialog header.
+ * @param {string} iconColor - Color of the icon.
+ * @param {string} cancelText - Label for the cancel button.
+ * @param {string} confirmText - Label for the confirm button.
+ * @param {string} [dialogWidth="450px"] - Width of the dialog box.
+ * @param {string} [confirmButtonColor=theme.palette.primary.main] - Color of the confirm button.
+ * @param {string} confirmButtonColorHover - Hover color for the confirm button.
+ * @param {string} [iconBgColor=theme.palette.primary.light] - Background color for the icon container.
+ * @param {boolean} [showIcon=true] - Whether to show the icon.
+ * @param {object} additionalInfo - Additional props to be passed to the Dialog component.
+ *
+ * @returns {JSX.Element} - Rendered AlertConfirmation component.
+ *
+ * @example
+ * import AlertConfirmation from "./AlertConfirmation";
+ * import WarningIcon from "@mui/icons-material/Warning";
+ * import { useState } from "react";
+ *
+ * const MyComponent = () => {
+ *   const [isOpen, setIsOpen] = useState(false);
+ *
+ *   const handleClose = () => setIsOpen(false);
+ *   const handleConfirm = async () => {
+ *     console.log("Confirmed action");
+ *     setIsOpen(false);
+ *   };
+ *
+ *   return (
+ *     <div>
+ *       <button onClick={() => setIsOpen(true)}>Open Confirmation</button>
+ *       <AlertConfirmation
+ *         open={isOpen}
+ *         title="Delete Item"
+ *         message="Are you sure you want to delete this item? This action cannot be undone."
+ *         onClose={handleClose}
+ *         onConfirm={handleConfirm}
+ *         icon={WarningIcon}
+ *         iconColor="red"
+ *         cancelText="Cancel"
+ *         confirmText="Delete"
+ *         confirmButtonColor="#D32F2F"
+ *         confirmButtonColorHover="#B71C1C"
+ *       />
+ *     </div>
+ *   );
+ * };
+ *
+ * export default MyComponent;
+ */
 
 const AlertConfirmation = ({
     open,
