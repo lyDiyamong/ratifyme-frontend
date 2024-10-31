@@ -49,6 +49,8 @@ function AlertMessage({ variant, children, onClose }) {
                 sx={{
                     display: "flex",
                     alignItems: "center",
+                    border: "1px solid",
+                    borderColor: variant === "success" ? "green" : variant === "error" ? "red" : "transparent",
                     "& .MuiAlert-action": {
                         p: 0,
                         margin: 0,

@@ -56,7 +56,7 @@ const validationSchema = yup.object({
     occupation: yup.string(),
 });
 
-const EditProfileModal = ({ open, userData, onClose }) => {
+const EditProfileModal = ({ open, userData, onClose, onSuccess }) => {
     const { handleSubmit, control, reset } = useForm({
         resolver: yupResolver(validationSchema),
         defaultValues: {
@@ -97,16 +97,16 @@ const EditProfileModal = ({ open, userData, onClose }) => {
         const updatedData = {
             ...data,
             dateOfBirth: data.dateOfBirth,
-            genderId: Number(data.Gender), // Convert gender ID if needed
+            genderId: Number(data.Gender),
         };
 
         try {
             await updateUserProfile({ id: userData.id, data: updatedData }).unwrap();
-            setIsSuccess(true);
+            onSuccess("Profile updated successfully!", true);
             onClose();
         } catch (error) {
             console.error("Failed to update profile:", error);
-            setIsSuccess(false);
+            onSuccess("Error updating profile. Please try again.", false);
         } finally {
             reset();
         }

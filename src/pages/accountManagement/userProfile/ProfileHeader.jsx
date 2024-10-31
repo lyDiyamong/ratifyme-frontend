@@ -24,7 +24,7 @@ import MoreMenu from "../../../components/MoreMenu";
 import AlertMessage from "../../../components/alert/AlertMessage";
 
 // =========== Start Profile Header ===========
-const ProfileHeader = () => {
+const ProfileHeader = ({onEditSuccess}) => {
     const { userId } = useSelector((state) => state.global);
     const [open, setOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -242,7 +242,7 @@ const ProfileHeader = () => {
                 />
             </Stack>
             {/* Edit Profile Modal */}
-            <EditProfileModal open={open} onClose={handleClose} userData={userData} />
+            <EditProfileModal open={open} onSuccess={onEditSuccess} onClose={handleClose} userData={userData} />
         </Stack>
     );
 };
