@@ -9,10 +9,9 @@ import {
 } from "../../../store/api/earnerManagement/earnerApis";
 import { useNavigate, useParams } from "react-router";
 import { useVerifyCredMutation } from "../../../store/api/earnerManagement/verificationApi";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import VerificationModal from "../../../components/VerificationModals";
 import VerificationFailureModal from "../../../components/VerificationFailModal";
-import LinearBufferLoading from "../../../components/loading/LinearBufferLoading";
 import { Skeleton, Stack } from "@mui/material";
 
 const Credential = () => {

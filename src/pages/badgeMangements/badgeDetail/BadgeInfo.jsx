@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 // MUI Import
 import { Box, Typography, Chip, Stack, Button, Modal, useMediaQuery } from "@mui/material";
 import theme from "../../../assets/themes";
-import { BorderColorRounded, ConfirmationNumber, Delete } from "@mui/icons-material";
+import { BorderColorRounded, ConfirmationNumber, Delete, DeleteForeverOutlined } from "@mui/icons-material";
 
 // Custom Import
 import IssuerBadgeButton from "../IssuerBadgeButton";
@@ -18,11 +18,15 @@ import FormatDate from "../../../utils/formatDate";
 // Api Import
 import { useDeleteBadgeMutation } from "../../../store/api/badgeManagement/badgeApi";
 import AlertMessage from "../../../components/alert/AlertMessage";
+import AlertConfirmation from "../../../components/alert/AlertConfirmation";
 
 const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
     // define breakpoint of the screen
     const isSmallScreen = useMediaQuery(theme.breakpoints.down(theme.breakpoints.values.sm));
     const navigate = useNavigate();
+
+    // Delete Modal confirmation
+    const [isDeleteModal, setIsDeleteModal] = useState(false);
 
     const [deleteBadge, { refetch }] = useDeleteBadgeMutation();
 
@@ -59,7 +63,7 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
             icon: <BorderColorRounded color="primary" />,
             onClick: () => navigate(`/dashboard/management/badges/editBadge/${result?.id}`),
         },
-        { label: "Delete badge", icon: <Delete color="error" />, onClick: () => handleDeleteBadge(result?.id) },
+        { label: "Delete badge", icon: <Delete color="error" />, onClick: () => setIsDeleteModal(true) },
     ];
 
     // Define sub-component to use in tab content
@@ -168,6 +172,20 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
                             )}
                         </Stack>
                     </Stack>
+                    <AlertConfirmation
+                        open={isDeleteModal}
+                        title="Delete your Badge"
+                        message="Are you sure you want to delete this badge? If you delete this badge you will not be able to restore this badge. Click 'Delete' button to delete you badge"
+                        onClose={() => setIsDeleteModal(false)}
+                        onConfirm={() => handleDeleteBadge(result?.id)}
+                        confirmText="Delete"
+                        cancelText="Cancel"
+                        iconBgColor={theme.palette.customColors.red100}
+                        iconColor={theme.palette.customColors.red200}
+                        confirmButtonColor={theme.palette.customColors.red300}
+                        confirmButtonColorHover={theme.palette.customColors.red400}
+                        icon={DeleteForeverOutlined}
+                    />
                     <MoreMenu
                         menuItems={menuItems}
                         iconStyles={{
