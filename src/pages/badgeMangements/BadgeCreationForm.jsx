@@ -187,12 +187,6 @@ const BadgeCreationForm = () => {
         }
     }, [userName, issuerData]);
 
-    // Monitor changes in the uploaded image using useEffect
-    useEffect(() => {
-        if (uploadedImage) {
-            console.log("Image selected:", uploadedImage);
-        }
-    }, [uploadedImage]);
 
     const renderStepContent = () => {
         switch (activeStep) {

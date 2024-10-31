@@ -11,7 +11,6 @@ import FormatDate from "../../../utils/formatDate";
 
 const CredentialContent = ({ earnerData, achieveData, credUrl, credId, verifyCred }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    console.log("achieveData?.BadgeClass", achieveData?.BadgeClass);
 
     const handleOpenModal = () => setIsModalOpen(true);
     const handleCloseModal = () => setIsModalOpen(false);

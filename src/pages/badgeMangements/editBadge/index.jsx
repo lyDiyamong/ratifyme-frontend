@@ -58,7 +58,6 @@ const EditBadge = () => {
         resolver: yupResolver(badgeSchema),
     });
 
-    const parsedExpirationDate = dayjs(badgeData?.endDate);
 
     // Status custom hook
     const [message, setMessage] = useCatchStatus(isSuccess || isError, isSuccess ? "Updated succesfully" : "Updated failed");
@@ -66,6 +65,7 @@ const EditBadge = () => {
     // Handle submit
     const onSubmit = async (data) => {
         const formData = new FormData();
+        console.log("Error form", errors);
         // Append core badge details
         appendBadgeDetails(formData, data);
         // Append Achievements
@@ -103,6 +103,7 @@ const EditBadge = () => {
         formData.append("startedDate", dayjs(data.startedDate) || null);
         formData.append("issuerId", badgeData?.Issuer.id);
         formData.append("endDate", data.endDate);
+        formData.append("expiredDate", data.expiredDate);
     };
 
     // Helper function to append achievements to FormData
@@ -160,8 +161,9 @@ const EditBadge = () => {
                 startedDate: dayjs(badgeData?.startedDate) || null,
                 badgeDescription: badgeData?.description || "",
                 tagsOrLanguage: tagsValue || "",
+                endDate: dayjs(badgeData?.endDate) || null,
                 // Optional
-                endDate: parsedExpirationDate || null,
+                expiredDate: dayjs(badgeData?.expiredDate) || null
             });
 
             // Set the uploaded image URL if available

@@ -4,6 +4,7 @@ import { Stack } from "@mui/material";
 // Custom import
 import DateSelectionForm from "../../../components/DateSelectionForm";
 import FormInput from "../../../components/FormInput";
+import HelperTextForm from "../../../components/alert/HelperTextForm";
 
 const EditOptionalElements = ({ control, errors }) => {
     return (
@@ -22,6 +23,8 @@ const EditOptionalElements = ({ control, errors }) => {
                     type="text"
                     required={false}
                 />
+                <DateSelectionForm control={control} name="expiredDate" label="Expire Date" errors={errors} />
+                {errors.expiredDate && <HelperTextForm color={"error"} message={errors?.expiredDate?.message} />}
             </Stack>
         </Stack>
     );
