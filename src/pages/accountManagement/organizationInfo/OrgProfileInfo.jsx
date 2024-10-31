@@ -94,7 +94,7 @@ const OrgProfileInfo = ({ institutionInfo }) => {
                         Organization Information is crucial for us to provide you with tailored services.
                     </Typography>
                 </Box>
-                <Stack mt={3} spacing={1.5} justifyContent="start" width="100%">
+                <Stack mt={3} spacing={3.5} justifyContent="start" width="100%">
                     {details.map(({ icon, label, valueKey }, index) => {
                         let value =
                             roleName === "admin" && label === "Organization"
