@@ -53,7 +53,7 @@ const AddressFields = ({ control, schema }) => {
                                 }),
                             }}
                         />
-                        {error && <Typography fontSize='12px' color="error">{error.message}</Typography>}
+                        {error && <Typography fontSize='12px' mx={2} mt='2px' color="error">{error.message}</Typography>}
                     </Box>
                 )}
             />

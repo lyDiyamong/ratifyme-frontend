@@ -102,7 +102,7 @@ const PasswordFields = ({
                     Your password must contain:
                 </Typography>
                 <Typography variant="body2" color={validationState.hasMinLength ? "success.main" : "text.secondary"}>
-                    {validationState.hasMinLength ? "✔" : "✖"} At least 10 characters
+                    {validationState.hasMinLength ? "✔" : "✖"} At least 8 characters
                 </Typography>
                 <Typography variant="body2" color={validationState.hasLowercase ? "success.main" : "text.secondary"}>
                     {validationState.hasLowercase ? "✔" : "✖"} Contains a lowercase letter
