@@ -58,14 +58,10 @@ const SelectForm = ({ name, control, options, label, required }) => {
         fieldState: { error },
     } = useController({ name, control, rules: validationRules });
 
-    // This handles the change event and updates the value in react-hook-form
     const handleChange = (event) => {
         const {
             target: { value },
         } = event;
-
-        // Update react-hook-form with the new value
-        // The value will be an array of selected values
         field.onChange(value);
     };
 
@@ -73,36 +69,49 @@ const SelectForm = ({ name, control, options, label, required }) => {
         <FormControl fullWidth error={!!error}>
             <InputLabel id={`${name}-label`}>{label}</InputLabel>
             <Select
-                multiple // Enable multiple selection
+                multiple
                 required={required}
                 sx={{
                     borderRadius: theme.customShape.input,
+                    maxWidth: "100%",
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
                 }}
                 labelId={`${name}-label`}
                 id={`${name}-select`}
-                value={field.value || []} // Default to an empty array for multi-select
+                value={field.value || []}
                 label={label}
                 onChange={handleChange}
                 onBlur={field.onBlur}
                 inputProps={{ "aria-required": required }}
+                renderValue={
+                    name !== "tagsOrLanguage"
+                        ? (selected) => {
+                              // Limit to 3 items displayed with ellipsis for overflow
+                              const displayedValues =
+                                  selected.length > 6 ? `${selected.slice(0, 6).join(", ")},...` : selected.join(", ");
+                              return displayedValues;
+                          }
+                        : ""
+                }
                 MenuProps={{
                     PaperProps: {
                         sx: {
                             borderRadius: theme.customShape.input,
-                            maxHeight: 48 * 7 + 8, // Limit to 7 visible items (assuming ~48px height each)
-                            overflowY: "auto", // Enable vertical scrolling
+                            maxHeight: 48 * 4.5 + 8,
+                            minWidth: 700,
+                            overflowY: "auto",
                         },
                     },
                 }}
             >
-                {/* Render options for the select input */}
                 {options.map((option) => (
-                    <MenuItem key={option.name} value={option.name}>
+                    <MenuItem key={option.value} value={option.name}>
                         {option.name}
                     </MenuItem>
                 ))}
             </Select>
-            {/* Display validation error message if any */}
             {error && <FormHelperText>{error.message}</FormHelperText>}
         </FormControl>
     );
