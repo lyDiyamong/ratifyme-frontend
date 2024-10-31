@@ -1,6 +1,6 @@
 // React Library Import
 import { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useFormState } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import dayjs from "dayjs";
 import * as yup from "yup";
@@ -16,7 +16,7 @@ import { Paper, TextField } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 
-// Custom Import
+// Custom Imports
 import theme from "../../assets/themes/index";
 import FormInput from "../../components/FormInput";
 import SelectForm from "../../components/SelectionForm";
@@ -26,10 +26,12 @@ import AlertMessage from "../../components/alert/AlertMessage";
 
 // Fetching Data Import
 import { useUpdateUserProfileMutation } from "../../store/api/users/userInfoProfileApi";
+import HelperTextForm from "../../components/alert/HelperTextForm";
 
+// Custom Paper Component with Styling
 const CustomPaper = (props) => <Paper {...props} sx={{ borderRadius: "16px" }} />;
 
-// Yup schema
+// Validation Schema with Yup
 const validationSchema = yup.object({
     firstName: yup
         .string()
@@ -43,13 +45,17 @@ const validationSchema = yup.object({
     phoneNumber: yup.string().required("Phone number is required"),
     email: yup.string().email("Invalid email format").required("Email is required"),
     Gender: yup.string(),
-    dateOfBirth: yup.date().nullable(),
+    dateOfBirth: yup
+        .date()
+        .nullable()
+        .typeError("Invalid date")
+        .min(new Date(1900, 0, 1), "Year cannot be earlier than 1900")
+        .max(new Date(), "Date of birth cannot be in the future"),
     country: yup.string(),
     organization: yup.string(),
     occupation: yup.string(),
 });
 
-// =========== Start Edit Profile Modal ===========
 const EditProfileModal = ({ open, userData, onClose }) => {
     const { handleSubmit, control, reset } = useForm({
         resolver: yupResolver(validationSchema),
@@ -67,9 +73,12 @@ const EditProfileModal = ({ open, userData, onClose }) => {
         },
     });
 
+    const { errors } = useFormState({ control });
+
     const [updateUserProfile, { isLoading, isError }] = useUpdateUserProfileMutation();
     const [isSuccess, setIsSuccess] = useState(false);
 
+    // Populate fields with existing user data on load
     useEffect(() => {
         if (userData) {
             reset({
@@ -79,7 +88,7 @@ const EditProfileModal = ({ open, userData, onClose }) => {
                 phoneNumber: userData.phoneNumber || "",
                 email: userData.email || "",
                 dateOfBirth: userData.dateOfBirth ? dayjs(userData.dateOfBirth) : null,
-                Gender: userData.Gender.id || "",
+                Gender: userData.Gender?.id || "",
             });
         }
     }, [userData, open, reset]);
@@ -88,7 +97,7 @@ const EditProfileModal = ({ open, userData, onClose }) => {
         const updatedData = {
             ...data,
             dateOfBirth: data.dateOfBirth,
-            genderId: Number(data.Gender),
+            genderId: Number(data.Gender), // Convert gender ID if needed
         };
 
         try {
@@ -96,7 +105,7 @@ const EditProfileModal = ({ open, userData, onClose }) => {
             setIsSuccess(true);
             onClose();
         } catch (error) {
-            console.error("Failed to update profile: ", error);
+            console.error("Failed to update profile:", error);
             setIsSuccess(false);
         } finally {
             reset();
@@ -142,24 +151,30 @@ const EditProfileModal = ({ open, userData, onClose }) => {
                     <PhoneNumberForm name="phoneNumber" label="Phone Number" control={control} required />
                     <FormInput name="email" label="Email Address" control={control} type="email" disabled={true} />
 
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <Controller
-                            name="dateOfBirth"
-                            control={control}
-                            render={({ field }) => (
-                                <DatePicker
-                                    label="Date of Birth"
-                                    openTo="year"
-                                    views={["year", "month", "day"]}
-                                    value={field.value}
-                                    onChange={(newValue) => field.onChange(newValue)}
-                                    renderInput={(params) => (
-                                        <TextField {...params} {...field} sx={{ width: "100%", borderRadius: "12px" }} />
-                                    )}
-                                />
-                            )}
-                        />
-                    </LocalizationProvider>
+                    <Box>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <Controller
+                                name="dateOfBirth"
+                                control={control}
+                                render={({ field }) => (
+                                    <DatePicker
+                                        sx={{ width: "100%" }}
+                                        label="Date of Birth"
+                                        openTo="year"
+                                        views={["year", "month", "day"]}
+                                        value={field.value}
+                                        onChange={(newValue) => field.onChange(newValue)}
+                                        renderInput={(params) => (
+                                            <TextField {...params} {...field} sx={{ width: "100%", borderRadius: "12px" }} />
+                                        )}
+                                    />
+                                )}
+                            />
+                        </LocalizationProvider>
+
+                        {errors.dateOfBirth && <HelperTextForm color={"error"} message={errors.dateOfBirth.message} />}
+                    </Box>
+
                     <SelectForm control={control} name="Gender" label="Gender" options={optionSelect} required={false} />
                 </Box>
             </DialogContent>
@@ -178,4 +193,3 @@ const EditProfileModal = ({ open, userData, onClose }) => {
 };
 
 export default EditProfileModal;
-// =========== End Edit Profile Modal ===========
