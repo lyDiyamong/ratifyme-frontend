@@ -30,6 +30,10 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
 
     const [deleteBadge, { refetch }] = useDeleteBadgeMutation();
 
+    const badgeEarner = badge?.Achievements[0]?.Earners?.length !== 0 ? null : true;
+
+    const [hasEarner, setHasEarner] = useState(badgeEarner);
+
     const { control } = useForm();
 
     // assign variable from props that has fetch value
@@ -152,6 +156,7 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
                                     {userRole === "issuer" ? (
                                         <>
                                             <IssuerBadgeButton
+                                                setHasEarner={setHasEarner}
                                                 onGetEmail={onGetEmails}
                                                 control={control}
                                                 issuerId={activeUserId}
@@ -186,15 +191,17 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
                         confirmButtonColorHover={theme.palette.customColors.red400}
                         icon={DeleteForeverOutlined}
                     />
-                    <MoreMenu
-                        menuItems={menuItems}
-                        iconStyles={{
-                            color: "black",
-                            position: "absolute",
-                            right: { md: "3%", xss: "5%" },
-                            display: userRole !== "issuer" ? "none" : "block",
-                        }}
-                    />
+                    {hasEarner && (
+                        <MoreMenu
+                            menuItems={menuItems}
+                            iconStyles={{
+                                color: "black",
+                                position: "absolute",
+                                right: { md: "3%", xss: "5%" },
+                                display: userRole !== "issuer" ? "none" : "block",
+                            }}
+                        />
+                    )}
                 </Box>
                 {/* End badge overview info card  */}
 
