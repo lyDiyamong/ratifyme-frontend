@@ -79,16 +79,7 @@ const ProfileEarnerModal = ({ open, onClose, userId }) => {
                     label: "Organization", 
                     valueKey: "Issuer.Institution.institutionName" 
                 },
-                {
-                    icon: <SchoolIcon fontSize="small" />,
-                    label: "Education", 
-                    valueKey: "AcademicBackground.AcademicLevel.name" 
-                },
-                { 
-                    icon: <PublicIcon fontSize="small" />,
-                    label: "Nationality", 
-                    valueKey: "User.nationality" 
-                },
+                
             ]}
         >
             {isLoading && <p>Loading...</p>}
