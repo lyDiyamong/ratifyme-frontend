@@ -1,7 +1,7 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Stack, Typography } from "@mui/material";
 import theme from "../../../assets/themes";
 
-const ShareSocialModal = ({ open, handleClose, credUrl }) => {
+const ShareSocialModal = ({ open, handleClose, credUrl, badgeImg }) => {
     return (
         <Dialog open={open} onClose={handleClose} fullWidth>
             <DialogTitle variant="h4" fontWeight={theme.fontWeight.semiBold} my={2}>
@@ -13,7 +13,7 @@ const ShareSocialModal = ({ open, handleClose, credUrl }) => {
                 <Stack gap={2}>
                     <Stack
                         component="a"
-                        href={`https://www.linkedin.com/sharing/share-offsite/?url=${credUrl}&text=Grateful%20for%20the%20opportunity%20to%20grow%20and%20achieve%20this%20milestone.%20%23lifelonglearning%20%23achievement%20%23ratifyme%20%23openbadge`}
+                        href={`https://www.linkedin.com/sharing/share-offsite/?url=${credUrl}&url=${encodeURIComponent(badgeImg)}&text=Grateful%20for%20the%20opportunity%20to%20grow%20and%20achieve%20this%20milestone.%20%23lifelonglearning%20%23achievement%20%23ratifyme%20%23openbadge`}
                         target="_blank"
                         flexDirection="row"
                         sx={{
@@ -58,7 +58,7 @@ const ShareSocialModal = ({ open, handleClose, credUrl }) => {
 
                     <Stack
                         component="a"
-                        href={`https://www.facebook.com/sharer/sharer.php?u=${credUrl}`}
+                        href={`https://www.facebook.com/sharer/sharer.php?u=${credUrl}&u=${badgeImg}`}
                         target="_blank"
                         flexDirection="row"
                         sx={{

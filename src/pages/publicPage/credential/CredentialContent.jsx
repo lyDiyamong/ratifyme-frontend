@@ -62,7 +62,7 @@ const CredentialContent = ({ earnerData, achieveData, credUrl, credId, verifyCre
                             </Button>
 
                             {/* Share Modal Component */}
-                            <ShareSocialModal open={isModalOpen} handleClose={handleCloseModal} credUrl={credUrl} />
+                            <ShareSocialModal open={isModalOpen} handleClose={handleCloseModal} credUrl={credUrl} badgeImg={achieveData?.BadgeClass?.imageUrl} />
 
                             <Button
                                 component="a"
