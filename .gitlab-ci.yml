@@ -15,7 +15,7 @@ genKey:
     stage: genKey
     script:
         - echo "Creating key.pem file from environment variable"
-        - echo "$AUTH_KEY" | base64 --decode > key.pem
+        - echo "$AUTH_KEY" > key.pem
         - chmod 400 key.pem
     artifacts:
         paths:
