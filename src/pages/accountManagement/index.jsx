@@ -35,7 +35,7 @@ const AccountManagement = () => {
     const orgInfoDisabled = userRole === 3 || userRole === 4 || userRole === 1;
 
     return (
-        <DashboardContainer sx={{ display: "flex",  flexDirection: "column", mb: 3 }}>
+        <DashboardContainer sx={{ display: "flex", flexDirection: "column", mb: 3 }}>
             <PageTitle title="My Profile" subtitle="View and update your personal information and account settings." />
 
             {/* Tabs for User Profile, Bio Content, and Settings */}
@@ -47,10 +47,19 @@ const AccountManagement = () => {
                 variant="scrollable"
                 scrollButtons="auto"
             >
-                <Tab icon={<PersonIcon />} label="Profile" iconPosition="start" />
-                {!orgInfoDisabled && <Tab icon={<BusinessRounded />} label="Organization Info" iconPosition="start" />}
-                {!isDisabled && <Tab icon={<SchoolRounded />} label="Academic" iconPosition="start" />}
-                <Tab icon={<SettingsIcon />} label="Profile Settings" iconPosition="start" />
+                <Tab icon={<PersonIcon />} label="Profile" iconPosition="start" sx={{ textTransform: "none" }} />
+                {!orgInfoDisabled && (
+                    <Tab
+                        icon={<BusinessRounded />}
+                        label="Organization Info"
+                        iconPosition="start"
+                        sx={{ textTransform: "none" }}
+                    />
+                )}
+                {!isDisabled && (
+                    <Tab icon={<SchoolRounded />} label="Academic" iconPosition="start" sx={{ textTransform: "none" }} />
+                )}
+                <Tab icon={<SettingsIcon />} label="Password Settings" iconPosition="start" sx={{ textTransform: "none" }} />
             </Tabs>
 
             {/* Conditional rendering based on the selected tab */}

@@ -224,9 +224,28 @@ const BadgeDetail = () => {
                         variant="scrollable"
                         scrollButtons="auto"
                     >
-                        <Tab label="Description" icon={<Description />} iconPosition="start" />
-                        {role === "issuer" && <Tab label="Earner List" icon={<Group />} iconPosition="start" />}
-                        {role === "earner" && <Tab label="Your Certificate" icon={<WorkspacePremium />} iconPosition="start" />}
+                        <Tab
+                            label="Description"
+                            icon={<Description />}
+                            iconPosition="start"
+                            sx={{ textTransform: "none", fontSize: "16px" }}
+                        />
+                        {role === "issuer" && (
+                            <Tab
+                                label="Earner List"
+                                icon={<Group />}
+                                iconPosition="start"
+                                sx={{ textTransform: "none", fontSize: "16px" }}
+                            />
+                        )}
+                        {role === "earner" && (
+                            <Tab
+                                label="Your Certificate"
+                                icon={<WorkspacePremium />}
+                                iconPosition="start"
+                                sx={{ textTransform: "none", fontSize: "16px" }}
+                            />
+                        )}
                     </Tabs>
                     {value === 0 && (
                         <BadgeInfo
