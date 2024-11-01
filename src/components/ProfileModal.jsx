@@ -159,14 +159,14 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
                         <StyledCard>
                             <Typography
                                 variant="h6"
-                                mb={2}
+                                mb={5}
                                 sx={{
                                     fontWeight: theme.fontWeight.bold,
                                 }}
                             >
                                 Additional Details
                             </Typography>
-                            <Grid container spacing={3}>
+                            <Grid container spacing={5}>
                                 {details.map(({ icon, label, valueKey }, index) => (
                                     <Grid item xs={12} sm={6} key={index}>
                                         <Stack direction="row" spacing={1}>
@@ -188,7 +188,7 @@ const ProfileModal = ({ open, onClose, item, avatarKey, nameKey, roleKey, desKey
 
                         {/* Address */}
                         <StyledCard>
-                            <Typography variant="h6" mb={3} sx={{ fontWeight: theme.fontWeight.bold }}>
+                            <Typography variant="h6" mb={5} sx={{ fontWeight: theme.fontWeight.bold }}>
                                 Address
                             </Typography>
                             <Typography variant="body3" sx={{ color: theme.palette.customColors.gray500 }}>
