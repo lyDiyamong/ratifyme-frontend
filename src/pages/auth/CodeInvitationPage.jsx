@@ -2,8 +2,6 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { Box, Typography, Button } from "@mui/material";
-import FormInput from "../../components/FormInput";
-import theme from "../../assets/themes";
 import { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -21,14 +19,16 @@ import { useVerifyInvitationMutation } from "../../store/api/userManagement/veri
 import PageLoading from "../../components/loading/PageLoading";
 import AlertMessage from "../../components/alert/AlertMessage";
 import useCatchStatus from "../../hooks/useCatchStatus";
+import FormInput from "../../components/FormInput";
+import theme from "../../assets/themes";
 
 const schema = yup.object({
     inviteEmail: yup.string().email("⚠️ Invalid email").required("⚠️ Email is required"),
     inviterCode: yup
         .string()
+        .required("⚠️ Verification code is required")
         .matches(/^\d+$/, "⚠️ Verification code must be numeric")
-        .length(6, "⚠️ Verification code must be 6 digits")
-        .required("⚠️ Verification code is required"),
+        .length(6, "⚠️ Verification code must be 6 digits"),
 });
 
 const CodeInvitationPage = () => {
