@@ -73,6 +73,7 @@ const BadgeManagement = () => {
                 <>
                     {/* Show AlertMessage if successMessage exists */}
                     {state?.successMessage && <AlertMessage variant="success">{state.successMessage}</AlertMessage>}
+                    {state?.badgeDeletedMsg && <AlertMessage variant="success">{state.badgeDeletedMsg}</AlertMessage>}
 
                     <PageTitle
                         title="Badge Management"

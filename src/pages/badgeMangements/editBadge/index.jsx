@@ -341,6 +341,7 @@ const EditBadge = () => {
                                         borderRadius: theme.customShape.btn,
                                         fontWeight: theme.fontWeight.bold,
                                         px: 2,
+                                        textTransform: 'none'
                                     }}
                                 >
                                     Back

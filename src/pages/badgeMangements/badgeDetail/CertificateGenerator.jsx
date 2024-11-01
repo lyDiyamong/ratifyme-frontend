@@ -304,7 +304,7 @@ const CertificateGenerator = ({ badge }) => {
                                 variant="contained"
                                 color="primary"
                                 onClick={() => setIsUploadCertModal(true)}
-                                sx={{ maxWidth: 200, color: theme.palette.customColors.white }}
+                                sx={{ maxWidth: 200, color: theme.palette.customColors.white, textTransform: "none" }}
                                 startIcon={<DownloadDoneOutlined />}
                                 disabled={isCertUpload}
                             >
@@ -315,6 +315,7 @@ const CertificateGenerator = ({ badge }) => {
                                 startIcon={<DriveFolderUploadOutlined />}
                                 variant="outlined"
                                 onClick={handleViewCert}
+                                sx={{ textTransform: "none" }}
                             >
                                 View Certificate
                             </Button>

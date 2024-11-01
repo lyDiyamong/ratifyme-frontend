@@ -111,7 +111,7 @@ const BadgeDetail = () => {
             ) : (
                 <>
                     {showAlert && <AlertMessage variant="success">{state.successMessage}</AlertMessage>}
-                    <PageTitle title="Badge Detail" subtitle={subtitle} />
+                    <PageTitle title="Badge Details" subtitle={subtitle} />
 
                     {/* Conditional rendering based on Status */}
                     <Stack gap={2} sx={{ display: role === "earner" ? "block" : "none" }}>
