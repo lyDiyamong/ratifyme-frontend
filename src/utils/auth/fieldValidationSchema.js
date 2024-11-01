@@ -1,5 +1,8 @@
 import * as yup from "yup";
 
+const today = new Date();
+const minDateOfBirth = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+
 export const schema = yup.object({
     firstName: yup
         .string()
@@ -55,7 +58,7 @@ export const schema = yup.object({
     dateOfBirth: yup
         .date()
         .typeError("⚠️ Please select a valid date")
-        .max(new Date(), "⚠️ Date of Birth cannot be in the future")
+        .max(minDateOfBirth, "⚠️ You must be at least 18 years old")
         .required("⚠️ Date of Birth is required"),
     institutionWebsiteUrl: yup.string().url("⚠️ Please enter a valid URL"),
 });

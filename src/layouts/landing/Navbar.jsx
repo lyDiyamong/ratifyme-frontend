@@ -83,10 +83,13 @@ const Navbar = () => {
 
     const handleCancel = () => {
         setAlertOpen(false);
+        navigate("/price");
     };
 
     const handleProfileMenuItemClick = (e) => {
-        handleServicePlanClick(e);
+        if (roleId === 2) {
+            handleServicePlanClick(e);
+        }
         handleMenuCloseProfile();
     };
 
@@ -94,9 +97,9 @@ const Navbar = () => {
     const handleMenuProfileClick = (event) => {
         // Toggle the profile menu
         if (openProfileMenu) {
-            handleMenuCloseProfile(); // Close if already open
+            handleMenuCloseProfile();
         } else {
-            setAnchorEl(event.currentTarget); // Open if closed
+            setAnchorEl(event.currentTarget);
         }
     };
 
@@ -121,7 +124,6 @@ const Navbar = () => {
                     {message}
                 </AlertMessage>
             )}
-            {/* <Slide appear={false} direction="down" in={show}> */}
             <AppBar
                 position="sticky"
                 sx={{
@@ -220,7 +222,7 @@ const Navbar = () => {
                             </Box>
                         </Box>
 
-                        {/* Responsive Navbar */}
+                        {/* =========== Start Responsive Navbar =========== */}
                         <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }}>
                             <Button
                                 aria-controls="mobile-menu"
@@ -357,6 +359,7 @@ const Navbar = () => {
                                 </Box>
                             )}
                         </Box>
+                        {/* =========== End Responsive Navbar =========== */}
                     </Toolbar>
                 </LandingContainer>
             </AppBar>

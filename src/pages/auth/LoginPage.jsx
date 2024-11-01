@@ -60,7 +60,7 @@ const LoginPage = () => {
             const response = await signIn(formData).unwrap();
 
             if (response.subscriptionStatus === "inactive") {
-                navigate("/price");
+                navigate("/");
             } else {
                 navigate("/dashboard");
             }

@@ -1,5 +1,5 @@
 // React library import
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 // MUI import
 import { Box, Typography, Button, Stack } from "@mui/material";
@@ -10,8 +10,32 @@ import theme from "../../assets/themes";
 import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
 import AccountCreatedIconSvg from "../../assets/images/accountCreated.png";
 import AuthOutletImage from "../../components/auth/AuthOutletImage";
+import { useState } from "react";
+import AlertConfirmation from "../../components/alert/AlertConfirmation";
 
 const SignupSuccessPage = () => {
+    const location = useLocation();
+    const { roleId } = location.state || {};
+    const navigate = useNavigate();
+
+    // State to manage the dialog
+    const [openDialog, setOpenDialog] = useState(false);
+
+    // Function to handle navigation after confirmation
+    const handleConfirm = () => {
+        setOpenDialog(false);
+        navigate("/price");
+    };
+
+    // Function to handle when the button is clicked
+    const handleDashboardRedirect = () => {
+        if (roleId === 2) {
+            setOpenDialog(true);
+        } else {
+            navigate("/auth/login");
+        }
+    };
+
     return (
         // ============ Start reset password success container ============
         <>
@@ -59,21 +83,20 @@ const SignupSuccessPage = () => {
                             </Typography>
                         </Box>
 
-                        <Link to="/auth/login">
-                            <Button
-                                fullWidth
-                                variant="contained"
-                                size="large"
-                                sx={{
-                                    color: theme.palette.customColors.white,
-                                    fontWeight: theme.fontWeight.bold,
-                                    borderRadius: theme.customShape.btn,
-                                    textTransform: "none",
-                                }}
-                            >
-                                Go to Dashboard
-                            </Button>
-                        </Link>
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            size="large"
+                            onClick={handleDashboardRedirect}
+                            sx={{
+                                color: theme.palette.customColors.white,
+                                fontWeight: theme.fontWeight.bold,
+                                borderRadius: theme.customShape.btn,
+                                textTransform: "none",
+                            }}
+                        >
+                            Go to Dashboard
+                        </Button>
                     </Stack>
                 </Box>
 
@@ -88,6 +111,18 @@ const SignupSuccessPage = () => {
                     description="Transform the future of education and employment by launching a digital credential business that empowers people to securely showcase their skills in a rapidly evolving world."
                 />
             </Box>
+
+            <AlertConfirmation
+                open={openDialog}
+                title="Choose a Service Plan"
+                message="Before going to the dashboard, please choose a service plan."
+                onClose={() => setOpenDialog(false)}
+                onConfirm={handleConfirm}
+                confirmText="Go to Plans"
+                cancelText="Cancel"
+                iconColor={theme.palette.customColors.green400}
+                iconBgColor={theme.palette.customColors.green100}
+            />
         </>
         // ============ End reset password success container ============
     );
