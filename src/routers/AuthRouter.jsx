@@ -1,5 +1,5 @@
 // React library Import
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 
 // Component Import
 import AuthLayout from "../layouts/auth";
@@ -16,6 +16,56 @@ import SuccessPayment from "../pages/prices/SuccessPayment";
 import EmailVerificationPage from "../pages/auth/EmailVerificationPage";
 import SignupSuccessPage from "../pages/auth/SignupSuccessPage";
 import NotFoundPage from "../pages/notFound";
+import AlertConfirmation from "../components/alert/AlertConfirmation";
+import { useEffect, useState } from "react";
+import theme from "../assets/themes";
+
+const ProtectedRoute = ({ children }) => {
+    const { state } = useLocation();
+    const [openAlert, setOpenAlert] = useState(false);
+    const [redirect, setRedirect] = useState(false); // Control actual redirection
+    const role = new URLSearchParams(window.location.search).get("as");
+
+    // Check if user has verified code for `issuer` or `earner` role
+    const isVerified = state?.isVerified || false;
+
+    useEffect(() => {
+        // Open AlertConfirmation dialog if verification fails
+        if ((role === "issuer" || role === "earner") && !isVerified) {
+            setOpenAlert(true);
+        }
+    }, [role, isVerified]);
+
+    const handleConfirm = () => {
+        // Close the dialog and set redirection to true
+        setOpenAlert(false);
+        setRedirect(true);
+    };
+
+    // Redirect after confirmation
+    if (redirect) {
+        return <Navigate to="/auth/get-started" replace />;
+    }
+
+    return (
+        <>
+            {openAlert && (
+                <AlertConfirmation
+                    open={openAlert}
+                    title="Verification Required"
+                    message="You need to verify your invitation code to continue."
+                    onConfirm={handleConfirm}
+                    onClose={() => setOpenAlert(false)}
+                    confirmText="Go to Code Verification"
+                    cancelText="Close"
+                    iconColor={theme.palette.customColors.red400}
+                    iconBgColor={theme.palette.customColors.red100}
+                />
+            )}
+            {!openAlert && children}
+        </>
+    );
+};
 
 const AuthRouter = () => {
     return (
@@ -23,6 +73,14 @@ const AuthRouter = () => {
             <Route element={<AuthLayout />}>
                 <Route path="/join-invitation" element={<CodeInvitationPage />} />
                 <Route path="/get-started" element={<SignupOptPage />} />
+                <Route
+                    path="/signup"
+                    element={
+                        <ProtectedRoute>
+                            <SignupPage />
+                        </ProtectedRoute>
+                    }
+                />
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/signup-success" element={<SignupSuccessPage />} />
                 <Route path="/verify-email" element={<EmailVerificationPage />} />

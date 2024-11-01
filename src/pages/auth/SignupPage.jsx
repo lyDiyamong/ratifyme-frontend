@@ -32,7 +32,7 @@ const roleIdData = {
 };
 
 const SignupPage = () => {
-    const { search } = useLocation();
+    const { search, pathname } = useLocation();
     const location = useLocation();
     const navigate = useNavigate();
     const [role, setRole] = useState("");
@@ -54,7 +54,16 @@ const SignupPage = () => {
     useEffect(() => {
         const queryRole = new URLSearchParams(search).get("as") || "";
         setRole(queryRole);
-    }, [search]);
+
+        const validRoles = ["institution", "earner", "issuer"];
+
+        // Check for valid routes
+        const isValidPath = pathname === "/auth/signup" && validRoles.includes(queryRole.toLowerCase());
+
+        if (!isValidPath) {
+            navigate("/not-found");
+        }
+    }, [search, pathname, navigate]);
 
     const methods = useForm({
         defaultValues: {

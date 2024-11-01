@@ -26,8 +26,8 @@ import AlertConfirmation from "../../components/alert/AlertConfirmation";
 import PageLoading from "../../components/loading/PageLoading";
 
 const schema = yup.object({
-    email: yup.string().email("Invalid email").required("Email is required"),
-    password: yup.string().min(6, "Password too short").required("Password is required"),
+    email: yup.string().email("⚠️ Invalid email").required("⚠️ Email is required"),
+    password: yup.string().min(6, "⚠️ Password too short").required("⚠️ Password is required"),
 });
 
 const LoginPage = () => {
@@ -60,7 +60,7 @@ const LoginPage = () => {
             const response = await signIn(formData).unwrap();
 
             if (response.subscriptionStatus === "inactive") {
-                navigate("/price");
+                navigate("/");
             } else {
                 navigate("/dashboard");
             }

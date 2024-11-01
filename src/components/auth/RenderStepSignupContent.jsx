@@ -14,7 +14,7 @@ const RenderStepSignupContent = ({ step, control, role, guest, watch, errors }) 
             return <AddressFields control={control} />;
         case 2:
             return role === "institution" ? (
-                <InstitutionInfoFields control={control} />
+                <InstitutionInfoFields control={control} watch={watch} />
             ) : (
                 <AccountSetupFields control={control} role={role} guest={guest} watch={watch} />
             );

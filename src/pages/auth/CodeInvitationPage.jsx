@@ -2,30 +2,33 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { Box, Typography, Button } from "@mui/material";
-import FormInput from "../../components/FormInput";
-import theme from "../../assets/themes";
 import { useEffect, useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+// MUI import
+import { Stack } from "@mui/system";
+import EmailOutlined from "@mui/icons-material/EmailOutlined";
+import TaskAltOutlined from "@mui/icons-material/TaskAltOutlined";
+import { CheckCircleOutline } from "@mui/icons-material";
 
 // Custom import
 import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
-import { Stack } from "@mui/system";
-import EmailOutlined from "@mui/icons-material/EmailOutlined";
 import OutletImageComponent from "./OutletImageTemplate";
-import TaskAltOutlined from "@mui/icons-material/TaskAltOutlined";
 import AlertConfirmation from "../../components/alert/AlertConfirmation";
 import { useVerifyInvitationMutation } from "../../store/api/userManagement/verifyInvitationApi";
 import PageLoading from "../../components/loading/PageLoading";
-import { CheckCircleOutline } from "@mui/icons-material";
 import AlertMessage from "../../components/alert/AlertMessage";
 import useCatchStatus from "../../hooks/useCatchStatus";
+import FormInput from "../../components/FormInput";
+import theme from "../../assets/themes";
 
 const schema = yup.object({
-    email: yup.string().email("Invalid email").required("Email is required"),
-    verifyCode: yup
+    inviteEmail: yup.string().email("⚠️ Invalid email").required("⚠️ Email is required"),
+    inviterCode: yup
         .string()
-        .matches(/^\d+$/, "Verification code must be numeric")
-        .length(6, "Verification code must be 6 digits")
-        .required("Verification code is required"),
+        .required("⚠️ Verification code is required")
+        .matches(/^\d+$/, "⚠️ Verification code must be numeric")
+        .length(6, "⚠️ Verification code must be 6 digits"),
 });
 
 const CodeInvitationPage = () => {
@@ -46,7 +49,7 @@ const CodeInvitationPage = () => {
         handleSubmit,
         control,
         formState: { errors },
-    } = useForm();
+    } = useForm({ mode: "onChange", resolver: yupResolver(schema) });
 
     const onSubmit = async (data) => {
         try {
@@ -69,11 +72,11 @@ const CodeInvitationPage = () => {
         const { inviter, guest, user } = data;
 
         if (user === null) {
-            navigate(`/auth/signup?as=${role}`, { state: { inviter, guest } });
+            navigate(`/auth/signup?as=${role}`, { state: { inviter, guest, isVerified: true } });
         } else {
             navigate(`/auth/login`);
         }
-        setOpenDialog(false); // Close dialog after confirmation
+        setOpenDialog(false);
     };
 
     const handleCloseErrorDialog = () => {
@@ -132,7 +135,7 @@ const CodeInvitationPage = () => {
                             label={role === "issuer" ? "Institution Code" : "Issuer Code"}
                             type="text"
                             required={true}
-                            schema={schema.fields.verifyCode}
+                            schema={schema.fields.inviterCode}
                         />
                         <FormInput
                             name="inviteEmail"
@@ -141,7 +144,7 @@ const CodeInvitationPage = () => {
                             control={control}
                             label="Email Address"
                             required={true}
-                            schema={schema.fields.email}
+                            schema={schema.fields.inviteEmail}
                         />
                         <Button
                             fullWidth
