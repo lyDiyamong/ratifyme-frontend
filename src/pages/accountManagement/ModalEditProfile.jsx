@@ -31,26 +31,42 @@ import HelperTextForm from "../../components/alert/HelperTextForm";
 // Custom Paper Component with Styling
 const CustomPaper = (props) => <Paper {...props} sx={{ borderRadius: "16px" }} />;
 
+const today = new Date();
+const minDateOfBirth = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+
 // Validation Schema with Yup
 const validationSchema = yup.object({
     firstName: yup
         .string()
-        .matches(/^[A-Za-z]+$/, "First name should contain only letters and no spaces")
-        .required("First name is required"),
+        .matches(/^[A-Za-z]+$/, "⚠️ First name should contain only letters and no spaces")
+        .required("⚠️ First name is required")
+        .min(2, "⚠️ First name must be at least 2 characters")
+        .max(30, "⚠️ First name must be at most 30 characters"),
     lastName: yup
         .string()
-        .matches(/^[A-Za-z]+$/, "Last name should contain only letters and no spaces")
-        .required("Last name is required"),
-    username: yup.string().matches(/^\S*$/, "Username should not contain spaces").required("Username is required"),
-    phoneNumber: yup.string().required("Phone number is required"),
-    email: yup.string().email("Invalid email format").required("Email is required"),
+        .matches(/^[A-Za-z]+$/, "⚠️ Last name should contain only letters and no spaces")
+        .required("⚠️ Last name is required")
+        .min(2, "⚠️ Last name must be at least 2 characters")
+        .max(30, "⚠️ Last name must be at most 30 characters"),
+    username: yup
+        .string()
+        .matches(/^[a-zA-Z0-9_]+$/, "⚠️ Username can only include letters, numbers, and underscores.")
+        .min(3, "⚠️ Username must be at least 3 characters.")
+        .max(15, "⚠️ Username must be at most 15 characters.")
+        .required("⚠️ Username is required"),
+    phoneNumber: yup
+        .string()
+        .required("⚠️ Phone number is required")
+        .min(12, "⚠️ Phone number is invalid")
+        .max(15, "⚠️ Phone number must be less than or equal to 15 characters"),
+    email: yup.string().email("⚠️ Invalid email format").required("⚠️ Email is required"),
     Gender: yup.string(),
     dateOfBirth: yup
         .date()
-        .nullable()
-        .typeError("Invalid date")
+        .typeError("⚠️ Please select a valid date")
+        .max(minDateOfBirth, "⚠️ You must be at least 18 years old")
         .min(new Date(1900, 0, 1), "Year cannot be earlier than 1900")
-        .max(new Date(), "Date of birth cannot be in the future"),
+        .required("⚠️ Date of Birth is required"),
     country: yup.string(),
     organization: yup.string(),
     occupation: yup.string(),
@@ -59,6 +75,7 @@ const validationSchema = yup.object({
 const EditProfileModal = ({ open, userData, onClose, onSuccess }) => {
     const { handleSubmit, control, reset } = useForm({
         resolver: yupResolver(validationSchema),
+        mode: "onChange",
         defaultValues: {
             dateOfBirth: null,
             country: "",
@@ -179,11 +196,13 @@ const EditProfileModal = ({ open, userData, onClose, onSuccess }) => {
                 </Box>
             </DialogContent>
             <DialogActions sx={{ pb: "20px", pr: "20px" }}>
-                <Button onClick={onClose}>Cancel</Button>
+                <Button onClick={onClose} sx={{ textTransform: "none" }}>
+                    Cancel
+                </Button>
                 <Button
                     type="submit"
                     variant="contained"
-                    sx={{ color: theme.palette.customColors.white, borderRadius: theme.customShape.btn }}
+                    sx={{ color: theme.palette.customColors.white, borderRadius: theme.customShape.btn, textTransform: "none" }}
                 >
                     {isLoading ? <SpinLoading size={20} /> : "Save"}
                 </Button>

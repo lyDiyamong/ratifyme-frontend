@@ -1,12 +1,12 @@
 // React Import
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // MUI Import
-import { Box, Typography, Chip, Stack, Button, Modal, useMediaQuery } from "@mui/material";
+import { Box, Typography, Chip, Stack, useMediaQuery } from "@mui/material";
 import theme from "../../../assets/themes";
-import { BorderColorRounded, ConfirmationNumber, Delete, DeleteForeverOutlined } from "@mui/icons-material";
+import { BorderColorRounded, Delete, DeleteForeverOutlined } from "@mui/icons-material";
 
 // Custom Import
 import IssuerBadgeButton from "../IssuerBadgeButton";
@@ -17,7 +17,6 @@ import FormatDate from "../../../utils/formatDate";
 
 // Api Import
 import { useDeleteBadgeMutation } from "../../../store/api/badgeManagement/badgeApi";
-import AlertMessage from "../../../components/alert/AlertMessage";
 import AlertConfirmation from "../../../components/alert/AlertConfirmation";
 
 const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
@@ -53,7 +52,8 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
     const handleDeleteBadge = async (id) => {
         try {
             await deleteBadge(id).unwrap();
-            navigate("/dashboard/management/badges");
+            const badgeDeletedMsg = "Badge deleted successfully.";
+            navigate("/dashboard/management/badges", { state: { badgeDeletedMsg } });
             refetch();
         } catch (error) {
             console.error("Error deleting post:", error);

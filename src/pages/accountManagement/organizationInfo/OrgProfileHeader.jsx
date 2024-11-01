@@ -114,9 +114,11 @@ const OrgProfileHeader = ({ institutionInfo }) => {
                     bgcolor: theme.palette.customColors.white,
                 }}
             >
-                {message && <AlertMessage variant="success" onClose={() => setMessage("")}>
-                    {message}
-                </AlertMessage>}
+                {message && (
+                    <AlertMessage variant="success" onClose={() => setMessage("")}>
+                        {message}
+                    </AlertMessage>
+                )}
                 {/* The image view */}
                 <Modal
                     open={isModalOpen}
@@ -276,6 +278,7 @@ const OrgProfileHeader = ({ institutionInfo }) => {
                                 color: theme.palette.customColors.white,
                                 fontWeight: "bold",
                                 borderRadius: theme.customShape.btn,
+                                textTransform: "none",
                             }}
                         >
                             Edit profile

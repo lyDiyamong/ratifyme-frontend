@@ -65,7 +65,7 @@ const BadgeCreationForm = () => {
     const userName = `${issuerData?.User?.firstName} ${issuerData?.User?.lastName}`;
 
     const stepFields = {
-        0: ["narrative", "achievementType"],
+        0: ["narrative", "AchievementTypes"],
         1: ["badgeName", "badgeDescription", "startedDate", "endDate"],
     };
 
@@ -186,7 +186,6 @@ const BadgeCreationForm = () => {
             setValue("issuer", userName);
         }
     }, [userName, issuerData]);
-
 
     const renderStepContent = () => {
         switch (activeStep) {

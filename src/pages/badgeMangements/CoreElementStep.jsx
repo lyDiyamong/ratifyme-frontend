@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
@@ -16,12 +16,12 @@ const CoreElementStep = ({ control, schema, errors }) => {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Stack gap={2}>
                 {/* Issuer */}
-                <FormInput disabled name="issuer" label="Issuer*" control={control} type="text" required={true} />
+                <FormInput disabled name="issuer" label="Issuer" control={control} type="text" required={true} />
 
                 {/* Criteria */}
                 <FormInput
                     name="narrative"
-                    label="Criteria*"
+                    label="Criteria"
                     control={control}
                     type="text"
                     required={true}
@@ -36,13 +36,8 @@ const CoreElementStep = ({ control, schema, errors }) => {
                         options={achievementType?.data || []}
                         control={control}
                         required={true}
-                        schema={schema?.fields.achievementType} // Use the same name in validation schema
+                        schema={schema?.fields.AchievementTypes} // Use the same name in validation schema
                     />
-                    {errors.achievementType && (
-                        <Typography sx={{ mx: "12px", fontSize: "12px", mt: "3px" }} color="error">
-                            {errors.achievementType.message}
-                        </Typography>
-                    )}
                 </Box>
             </Stack>
         </LocalizationProvider>

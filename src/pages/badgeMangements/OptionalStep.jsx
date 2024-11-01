@@ -27,13 +27,7 @@ const OptionalStep = ({ control, errors }) => {
                     )}
                 </Box>
                 {/* Addition Link */}
-                <FormInput
-                    label="Addition Link"
-                    name="additionLink"
-                    control={control}
-                    type="text"
-                    required={false}
-                />
+                <FormInput label="Addition Link" name="additionLink" control={control} type="text" required={false} />
 
                 {/* Submit button */}
                 <Stack alignItems="end">
@@ -44,9 +38,10 @@ const OptionalStep = ({ control, errors }) => {
                             color: theme.palette.background.default,
                             borderRadius: theme.customShape.btn,
                             fontWeight: theme.fontWeight.bold,
+                            textTransform: "none",
                         }}
                     >
-                        Submit
+                        Create
                     </Button>
                 </Stack>
             </Stack>

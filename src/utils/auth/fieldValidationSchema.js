@@ -7,11 +7,15 @@ export const schema = yup.object({
     firstName: yup
         .string()
         .matches(/^[A-Za-z]+$/, "⚠️ First name must contain only letters and no spaces")
-        .required("⚠️ First name is required"),
+        .required("⚠️ First name is required")
+        .min(2, "⚠️ First name must be at least 2 characters")
+        .max(30, "⚠️ First name must be at most 30 characters"),
     lastName: yup
         .string()
         .matches(/^[A-Za-z]+$/, "⚠️ Last name must contain only letters and no spaces")
-        .required("⚠️ Last name is required"),
+        .required("⚠️ Last name is required")
+        .min(2, "⚠️ Last name must be at least 2 characters")
+        .max(30, "⚠️ Last name must be at most 30 characters"),
     genderId: yup.string().required("⚠️ Gender is required"),
     username: yup
         .string()
@@ -59,6 +63,7 @@ export const schema = yup.object({
         .date()
         .typeError("⚠️ Please select a valid date")
         .max(minDateOfBirth, "⚠️ You must be at least 18 years old")
+        .min(new Date(1900, 0, 1), "⚠️ Year cannot be earlier than 1900")
         .required("⚠️ Date of Birth is required"),
     institutionWebsiteUrl: yup.string().url("⚠️ Please enter a valid URL"),
 });

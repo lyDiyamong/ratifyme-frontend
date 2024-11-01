@@ -228,6 +228,7 @@ const ProfileHeader = ({onEditSuccess}) => {
                         color: theme.palette.customColors.white,
                         fontWeight: "bold",
                         borderRadius: theme.customShape.btn,
+                        textTransform: 'none'
                     }}
                 >
                     Edit profile
