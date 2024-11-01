@@ -9,7 +9,7 @@ import LandingContainer from "../../components/styles/LandingContainer";
 
 const OurCustomers = () => {
     const images = [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/640px-Google_2015_logo.svg.png",
+        "https://agteach.site/static/media/agteach_logo.0de2a986a254e6f3a27325e8d5f6af91.svg",
         "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/2560px-Amazon_logo.svg.png",
         "https://ratifyme.s3.ap-southeast-2.amazonaws.com/Logo/emcast-logo.png",
         "https://ratifyme.s3.ap-southeast-2.amazonaws.com/Logo/AboveBeyond.png",
