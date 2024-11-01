@@ -38,9 +38,12 @@ const BadgeManagement = () => {
         data: badges,
         isLoading,
         refetch,
-    } = useFetchBadgesQuery(roleId === 1 ? { search: searchQuery } : { field, fk: activeId, search: searchQuery }, {
-        skip: roleId !== 1 && (!activeId || !field),
-    });
+    } = useFetchBadgesQuery(
+        roleId === 1 ? { search: searchQuery, limit, page } : { field, fk: activeId, search: searchQuery, limit, page },
+        {
+            skip: roleId !== 1 && (!activeId || !field),
+        },
+    );
 
     const allowRole = roleId === 3 ? true : false;
 

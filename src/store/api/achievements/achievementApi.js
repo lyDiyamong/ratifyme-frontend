@@ -21,7 +21,7 @@ export const achievementApi = createApi({
                 url: "/issuers/badgeClasses/issueOn",
                 method: "PATCH",
                 body: {
-                    achievementId: achievementId,
+                    achievementId,
                 },
             }),
             invalidatesTags: [{ type: "Achievement", id: "LIST" }],

@@ -22,6 +22,7 @@ const IssueToEarnerButton = ({ achievementId }) => {
         isSuccess || isError,
         isSuccess ? "Issue badge successfully" : "Issue badge failed",
     );
+    console.log(achievementId);
 
     const handleIssueBadge = async () => {
         try {
@@ -42,7 +43,7 @@ const IssueToEarnerButton = ({ achievementId }) => {
                     {message}
                 </AlertMessage>
             )}
-            
+
             <AlertConfirmation
                 open={isUploadCertModal}
                 title="Issue to Earner"

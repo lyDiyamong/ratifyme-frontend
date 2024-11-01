@@ -26,40 +26,49 @@ const BadgeListCard = ({ badges, onView, total, refetch }) => {
 
     useEffect(() => {
         const processBadges = (badges) => {
-            if (!badges) return { issuedBadge: [], claimedBadge: [] };
+            if (!badges || badges.length === 0) return { issuedBadge: [], claimedBadge: [] };
 
-            const achievements = badges?.flatMap(({ Achievements }) => Achievements) || [];
-            const uniqueBadges = [];
-            const seenBadgeIds = new Set();
-            for (const achievement of achievements) {
-                if (!seenBadgeIds.has(achievement?.badgeClassId)) {
-                    uniqueBadges.push(achievement);
-                    seenBadgeIds.add(achievement?.badgeClassId);
+            const issuedBadge = [];
+            const claimedBadge = [];
+
+            badges.forEach((badge) => {
+                if (badge.Achievements && badge.Achievements.length > 0) {
+                    badge.Achievements.forEach((achievement) => {
+                        if (achievement.Earners && achievement.Earners.length > 0) {
+                            achievement.Earners.forEach((earner) => {
+                                const earnerAchievements = earner.EarnerAchievements;
+
+                                // Process issuedOn dates
+                                if (earnerAchievements && earnerAchievements.issuedOn) {
+                                    issuedBadge.push(earnerAchievements.issuedOn);
+                                }
+
+                                // Process claimedOn dates (assuming you want to do this as well)
+                                if (earnerAchievements.claimedOn) {
+                                    claimedBadge.push(earnerAchievements.claimedOn);
+                                }
+                            });
+                        }
+                    });
                 }
-            }
-
-            const issuedBadge = uniqueBadges.map((item) => {
-                if (!item?.Earners || item?.Earners.length === 0) return null;
-                return item?.Earners.some((earner) => earner?.EarnerAchievements?.issuedOn !== null)
-                    ? item?.Earners.find((earner) => earner?.EarnerAchievements?.issuedOn)?.EarnerAchievements?.issuedOn
-                    : null;
             });
 
-            const claimedBadge = uniqueBadges.map((item) =>
-                item?.Earners
-                    ? item?.Earners?.some((earner) => earner?.EarnerAchievements?.claimedOn !== null)
-                        ? item?.Earners?.find((earner) => earner?.EarnerAchievements?.claimedOn)?.EarnerAchievements?.claimedOn
-                        : null
-                    : null,
-            );
+            // Get unique dates for issued and claimed badges
+            const uniqueIssuedBadge = [...new Set(issuedBadge)];
+            const uniqueClaimedBadge = [...new Set(claimedBadge)];
 
-            return { issuedBadge, claimedBadge };
+            return { issuedBadge: uniqueIssuedBadge, claimedBadge: uniqueClaimedBadge };
         };
+        const result = processBadges(badges);
+        console.log(result);
+        // Output will display arrays of unique issued and claimed badges based on the provided data.
 
         // Process badges based on current badges and set `afterCheck` accordingly
         const { issuedBadge, claimedBadge } = processBadges(badges);
         setAfterCheck(roleId === 4 ? claimedBadge : issuedBadge);
     }, [badges, roleId]);
+    console.log(afterCheck);
+    console.log(badges);
 
 
     return (

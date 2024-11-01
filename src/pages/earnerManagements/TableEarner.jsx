@@ -69,6 +69,7 @@ const TableEarner = () => {
         order: sortOrder,
         search: searchQuery,
     });
+    console.log(response);
 
     // Load and filter invited users on mount
     useEffect(() => {
@@ -93,9 +94,14 @@ const TableEarner = () => {
     const filteredEarnerData =
         roleId === 1
             ? earnerData
-            : earnerData?.filter((earner) =>
-                  roleId === 2 ? earner.institutionId === institutionId : earner.Issuer?.userId === userId,
-              );
+            : earnerData
+                  ?.filter((earner) => (roleId === 2 ? earner.institutionId === institutionId : earner.Issuer?.userId === userId))
+                  .map((earner) => ({
+                      ...earner,
+                      Achievements: [
+                          ...new Map(earner.Achievements.map((achievement) => [achievement.badgeClassId, achievement])).values(),
+                      ],
+                  }));
 
     // Handle View (open the modal)
     const handleView = (userId) => {
@@ -173,11 +179,7 @@ const TableEarner = () => {
         },
         {
             name: "Badge",
-            selector: (row) => row.Achievement?.BadgeClass?.name || "N/A",
-        },
-        {
-            name: "Academic Year",
-            selector: (row) => FormatYear(row.AcademicBackground?.academicYear) || "N/A",
+            selector: (row) => (row.Achievements.length === 0 ? 0 : row.Achievements.length),
         },
         {
             name: "Action",
