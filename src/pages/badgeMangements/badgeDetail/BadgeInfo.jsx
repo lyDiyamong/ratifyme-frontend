@@ -30,6 +30,8 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
     const [deleteBadge, { refetch }] = useDeleteBadgeMutation();
 
     const badgeEarner = badge?.Achievements[0]?.Earners?.length !== 0 ? null : true;
+    console.log("badgeEarner", badgeEarner);
+    console.log("badge?.Achievements[0]", badge?.Achievements[0]);
 
     const [hasEarner, setHasEarner] = useState(badgeEarner);
 

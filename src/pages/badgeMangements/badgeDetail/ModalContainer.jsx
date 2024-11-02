@@ -77,6 +77,7 @@ const ModalContainer = ({ open, onClose, title, options, control, onGetEmail, ba
                 refetch();
                 setSuccessMsg("Earners added to list successfully.");
                 setHasEarner(null);
+                window.location.reload();
             } catch (error) {
                 console.error("Error issuing badge:", error);
             } finally {
