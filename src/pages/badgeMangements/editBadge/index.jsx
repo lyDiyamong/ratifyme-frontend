@@ -160,7 +160,7 @@ const EditBadge = () => {
                 issuedOn: dayjs(badgeData?.issuedOn) || null,
                 startedDate: dayjs(badgeData?.startedDate) || null,
                 badgeDescription: badgeData?.description || "",
-                tagsOrLanguage: tagsValue || "",
+                tagsOrLanguage: tagsValue.join(", ") || "",
                 endDate: dayjs(badgeData?.endDate) || null,
                 // Optional
                 expiredDate: dayjs(badgeData?.expiredDate) || null

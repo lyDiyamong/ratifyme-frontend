@@ -18,7 +18,7 @@ const CredentialContent = ({ earnerData, achieveData, credUrl, credId, verifyCre
     return (
         <Grid container spacing={2} my={2}>
             {/* Left Sticky Section */}
-            <Grid item xs={12} md={4}>
+            <Grid item xss={12} md={4}>
                 <Stack
                     sx={{
                         position: "sticky",
@@ -141,7 +141,7 @@ const CredentialContent = ({ earnerData, achieveData, credUrl, credId, verifyCre
             </Grid>
 
             {/* Right Scrollable Section */}
-            <Grid item xs={12} md={8}>
+            <Grid item xss={12} md={8}>
                 {/* Stack for all content sections */}
                 <Stack spacing={2} sx={{ height: "100%", overflowY: "auto" }}>
                     {/* Issuer By Section */}

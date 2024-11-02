@@ -24,7 +24,7 @@ const OurCustomers = () => {
         <LandingContainer>
             <Box sx={{ textAlign: "center", padding: "40px 0" }}>
                 <Typography variant="h3" sx={{ marginBottom: "50px" }}>
-                    Trusted by more than <span style={{ fontWeight: "bold", color: "#000" }}>100,000</span> of the world's leading
+                    Trusted by more than <span style={{ fontWeight: "bold", color: "#000" }}>100,000</span> of the world&apos;s leading
                     organizations
                 </Typography>
                 <Stack
