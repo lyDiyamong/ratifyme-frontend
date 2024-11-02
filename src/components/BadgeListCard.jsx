@@ -73,10 +73,6 @@ const BadgeListCard = ({ badges, onView, total, refetch }) => {
 
         // Set afterCheck based on roleId
         setAfterCheck(roleId === 4 ? claimedBadge : issuedBadge);
-
-        // Debugging log
-        console.log("Processed issued badges:", issuedBadge);
-        console.log("Processed claimed badges:", claimedBadge);
     }, [badges, roleId]);
 
     return (
