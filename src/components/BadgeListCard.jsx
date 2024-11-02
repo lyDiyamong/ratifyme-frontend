@@ -28,48 +28,56 @@ const BadgeListCard = ({ badges, onView, total, refetch }) => {
         const processBadges = (badges) => {
             if (!badges || badges.length === 0) return { issuedBadge: [], claimedBadge: [] };
 
-            const issuedBadge = [];
-            const claimedBadge = [];
+            // This will store one issuedOn and one claimedOn value per badge
+            const processedBadges = badges.map((badge) => {
+                let issuedOnValue = null;
+                let claimedOnValue = null;
 
-            badges.forEach((badge) => {
-                if (badge.Achievements && badge.Achievements.length > 0) {
-                    badge.Achievements.forEach((achievement) => {
-                        if (achievement.Earners && achievement.Earners.length > 0) {
-                            achievement.Earners.forEach((earner) => {
-                                const earnerAchievements = earner.EarnerAchievements;
+                // Iterate through each Achievement in the current badge
+                for (const achievement of badge?.Achievements || []) {
+                    if (achievement.Earners.length > 0) {
+                        for (const earner of achievement.Earners) {
+                            const issuedOn = earner.EarnerAchievements?.issuedOn;
+                            const claimedOn = earner.EarnerAchievements?.claimedOn;
 
-                                // Process issuedOn dates
-                                if (earnerAchievements && earnerAchievements.issuedOn) {
-                                    issuedBadge.push(earnerAchievements.issuedOn);
-                                }
+                            // Capture the first valid issuedOn
+                            if (!issuedOnValue && issuedOn && issuedOn !== "null") {
+                                issuedOnValue = issuedOn;
+                            }
 
-                                // Process claimedOn dates (assuming you want to do this as well)
-                                if (earnerAchievements.claimedOn) {
-                                    claimedBadge.push(earnerAchievements.claimedOn);
-                                }
-                            });
+                            // Capture the first valid claimedOn
+                            if (!claimedOnValue && claimedOn && claimedOn !== "null") {
+                                claimedOnValue = claimedOn;
+                            }
+
+                            // Stop further checks if both issuedOn and claimedOn are found
+                            if (issuedOnValue && claimedOnValue) break;
                         }
-                    });
+                    }
+
+                    // Exit if both values are found for this badge
+                    if (issuedOnValue && claimedOnValue) break;
                 }
+
+                return { issuedOn: issuedOnValue, claimedOn: claimedOnValue };
             });
 
-            // Get unique dates for issued and claimed badges
-            const uniqueIssuedBadge = [...new Set(issuedBadge)];
-            const uniqueClaimedBadge = [...new Set(claimedBadge)];
+            // Separate arrays for issued and claimed values
+            const issuedBadge = processedBadges.map((badge) => badge.issuedOn);
+            const claimedBadge = processedBadges.map((badge) => badge.claimedOn);
 
-            return { issuedBadge: uniqueIssuedBadge, claimedBadge: uniqueClaimedBadge };
+            return { issuedBadge, claimedBadge };
         };
-        const result = processBadges(badges);
-        console.log(result);
-        // Output will display arrays of unique issued and claimed badges based on the provided data.
 
-        // Process badges based on current badges and set `afterCheck` accordingly
         const { issuedBadge, claimedBadge } = processBadges(badges);
-        setAfterCheck(roleId === 4 ? claimedBadge : issuedBadge);
-    }, [badges, roleId]);
-    console.log(afterCheck);
-    console.log(badges);
 
+        // Set afterCheck based on roleId
+        setAfterCheck(roleId === 4 ? claimedBadge : issuedBadge);
+
+        // Debugging log
+        console.log("Processed issued badges:", issuedBadge);
+        console.log("Processed claimed badges:", claimedBadge);
+    }, [badges, roleId]);
 
     return (
         <Box my={3}>
