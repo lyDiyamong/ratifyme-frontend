@@ -156,7 +156,7 @@ const Footer = () => {
 
                             <List sx={{ display: "flex", gap: 2, my: 2 }}>
                                 {socialMediaLinks.map((link, index) => (
-                                    <Link key={index} sx={linkItemStyle}>
+                                    <Link key={index} sx={linkItemStyle} to={link.to}>
                                         <Box
                                             component="img"
                                             sx={{
