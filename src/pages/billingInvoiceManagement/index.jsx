@@ -65,7 +65,7 @@ const BillingInvoiceManagement = () => {
         },
         {
             name: "Organization Name",
-            selector: (row) => <TableAvatars profileImage={row.Institution?.institutionProfileImage} name={row.name} />,
+            selector: (row) => <TableAvatars profileImage={row.Institution?.institutionProfileImage} name={row.subscriptionName} />,
         },
         {
             name: "Email Address",
@@ -144,7 +144,7 @@ const BillingInvoiceManagement = () => {
                     sortOrder={sortOrder}
                     onSearch={handleSearch}
                     isSortable={isSortable}
-                    sortOptions={getSortOptions("name", "-name")}
+                    sortOptions={getSortOptions("subscriptionName", "-subscriptionName")}
                 >
                 </TableCustom>
             )}
