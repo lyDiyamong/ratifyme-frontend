@@ -1,3 +1,4 @@
+// React library import
 import dayjs from "dayjs";
 
 const FormatDate = (dateString) => {
