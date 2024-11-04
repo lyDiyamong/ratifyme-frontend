@@ -1,5 +1,7 @@
-// fieldOfStudyApi.js
+// React library import
 import { createApi } from "@reduxjs/toolkit/query/react";
+
+// Custom import
 import { createBaseQuery } from "../../../utils/baseQuery";
 
 export const fieldOfStudyApi = createApi({
