@@ -5,14 +5,14 @@ import { useEffect, useState } from "react";
 import { Grid, useMediaQuery } from "@mui/material";
 
 // Custom import
-import Greeting from "./Greeting";
 import PageTitle from "../../components/PageTitle";
-import Overview from "./Overview";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import AlertMessage from "../../components/alert/AlertMessage";
 import CodeInvitationCard from "../../components/cards/CodeInvitationCard";
+import Greeting from "./Greeting";
+import Overview from "./Overview";
 
-// Api import
+// API import
 import { useCheckAuthQuery } from "../../store/api/auth/authApi";
 
 const Dashboard = () => {

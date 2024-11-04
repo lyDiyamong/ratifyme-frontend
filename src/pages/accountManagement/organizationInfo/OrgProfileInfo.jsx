@@ -1,4 +1,4 @@
-// React Library Import
+// React library import
 import { useSelector } from "react-redux";
 
 // MUI Import
@@ -17,7 +17,7 @@ import formatPhoneNumber from "../../../utils/formatPhoneNumber";
 import FormatDate from "../../../utils/formatDate";
 import theme from "../../../assets/themes";
 
-// Fetching Data Import
+// API Import
 import { useFetchInfoUserByIdQuery } from "../../../store/api/users/userInfoProfileApi";
 
 // =========== Start Profile info configuration ===========
@@ -94,7 +94,7 @@ const OrgProfileInfo = ({ institutionInfo }) => {
                         Organization Information is crucial for us to provide you with tailored services.
                     </Typography>
                 </Box>
-                <Stack mt={3} spacing={1.5} justifyContent="start" width="100%">
+                <Stack mt={3} spacing={3.5} justifyContent="start" width="100%">
                     {details.map(({ icon, label, valueKey }, index) => {
                         let value =
                             roleName === "admin" && label === "Organization"

@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
-import dayjs from "dayjs";
 import { yupResolver } from "@hookform/resolvers/yup";
+import dayjs from "dayjs";
 
 // MUI import
 import { ArrowBack, ZoomInMapOutlined } from "@mui/icons-material";
@@ -14,24 +14,28 @@ import { Modal, Backdrop } from "@mui/material";
 import { Box, Button, Stack, Typography } from "@mui/material";
 
 // Custom import
+import PageTitle from "../../../components/PageTitle";
+import DashboardContainer from "../../../components/styles/DashboardContainer";
+import PageLoading from "../../../components/loading/PageLoading";
+import { SpinLoading } from "../../../components/loading/SpinLoading";
 import EditCoreElement from "./EditCoreElement";
 import EditMetadata from "./EditMetadata";
 import EditOptionalElements from "./EditOptionalElements";
-import PageTitle from "../../../components/PageTitle";
-import DashboardContainer from "../../../components/styles/DashboardContainer";
+import useCatchStatus from "../../../hooks/useCatchStatus";
+import badgeSchema from "../../../utils/schema/badgeSchema";
+import theme from "../../../assets/themes";
+
+// API import
 import { useFetchAchievementTypeQuery } from "../../../store/api/achievements/achievementTypeApi";
 import { useFetchOneBadgeQuery, useUpdateBadgeMutation } from "../../../store/api/badgeManagement/badgeApi";
-import theme from "../../../assets/themes";
-import AlertMessage from "../../../components/alert/AlertMessage";
-import useCatchStatus from "../../../hooks/useCatchStatus";
-import badgSchema from "../../../utils/schema/badgeSchema";
 
 const EditBadge = () => {
     const { id: badgeId } = useParams();
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
     // Api hook
-    const [updateBadge, { reset: updatedReset, isSuccess, isError }] = useUpdateBadgeMutation();
+    const [updateBadge, { reset: updatedReset, isSuccess, isError, isLoading: updateBadgeLoading }] = useUpdateBadgeMutation();
 
     const { data: badgeResponse, refetch } = useFetchOneBadgeQuery(badgeId);
     const badgeData = badgeResponse?.data;
@@ -53,17 +57,17 @@ const EditBadge = () => {
         formState: { errors },
     } = useForm({
         mode: "onChange",
-        resolver: yupResolver(badgSchema),
+        resolver: yupResolver(badgeSchema),
     });
 
-    const parsedExpirationDate = dayjs(badgeData?.expiredDate);
 
     // Status custom hook
-    const [message, setMessage] = useCatchStatus(isSuccess || isError, isSuccess ? "Update succesfully" : "Update Failed");
+    const [message, setMessage] = useCatchStatus(isSuccess || isError, isSuccess ? "Updated succesfully" : "Updated failed");
 
     // Handle submit
     const onSubmit = async (data) => {
         const formData = new FormData();
+        console.log("Error form", errors);
         // Append core badge details
         appendBadgeDetails(formData, data);
         // Append Achievements
@@ -76,9 +80,13 @@ const EditBadge = () => {
             formData.append("badgeFile", uploadedImage);
         }
 
+        setLoading(true);
         await updateBadge({ id: badgeId, updatedBadge: formData }).unwrap();
         reset();
         updatedReset();
+        navigate(`/dashboard/management/badges/badgeDetail/${userID}`, {
+            state: { successMessage: "Badge edited successfully!" },
+        });
     };
 
     // Navigate on successful update
@@ -96,6 +104,7 @@ const EditBadge = () => {
         formData.append("tags", data.tagsOrLanguage.join(", "));
         formData.append("startedDate", dayjs(data.startedDate) || null);
         formData.append("issuerId", badgeData?.Issuer.id);
+        formData.append("endDate", data.endDate);
         formData.append("expiredDate", data.expiredDate);
     };
 
@@ -153,23 +162,20 @@ const EditBadge = () => {
                 issuedOn: dayjs(badgeData?.issuedOn) || null,
                 startedDate: dayjs(badgeData?.startedDate) || null,
                 badgeDescription: badgeData?.description || "",
-                tagsOrLanguage: tagsValue || "",
+                tagsOrLanguage: tagsValue.join(", ") || "",
+                endDate: dayjs(badgeData?.endDate) || null,
                 // Optional
-                expiredDate: parsedExpirationDate || null,
+                expiredDate: dayjs(badgeData?.expiredDate) || null
             });
 
             // Set the uploaded image URL if available
             setDisplayImg(badgeData?.imageUrl || null);
         }
     }, [badgeData]);
+    if (updateBadgeLoading) return <PageLoading isLoading={updateBadgeLoading} />;
 
     return (
         <DashboardContainer sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            {message && (
-                <AlertMessage variant={isError ? "error" : "success"} onClose={() => setMessage("")}>
-                    {message}
-                </AlertMessage>
-            )}
             <Modal
                 open={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
@@ -321,11 +327,12 @@ const EditBadge = () => {
                                 Update your badge information that related to your Badge.
                             </Typography>
                         </Stack>
-                        <EditCoreElement control={control} reset={reset} schema={badgSchema} />
 
-                        <EditMetadata control={control} reset={reset} schema={badgSchema} errors={errors} />
+                        <EditMetadata control={control} reset={reset} schema={badgeSchema} errors={errors} />
 
-                        <EditOptionalElements control={control} reset={reset} schema={badgSchema} errors={errors} />
+                        <EditCoreElement control={control} reset={reset} schema={badgeSchema} />
+
+                        <EditOptionalElements control={control} reset={reset} schema={badgeSchema} errors={errors} />
                         {/* Submit button */}
                         <Stack alignItems="end" flexDirection="row" justifyContent="end" gap={1}>
                             <Link to={`/dashboard/management/badges/badgeDetail/${userID}`}>
@@ -336,6 +343,7 @@ const EditBadge = () => {
                                         borderRadius: theme.customShape.btn,
                                         fontWeight: theme.fontWeight.bold,
                                         px: 2,
+                                        textTransform: 'none'
                                     }}
                                 >
                                     Back
@@ -350,9 +358,10 @@ const EditBadge = () => {
                                     borderRadius: theme.customShape.btn,
                                     fontWeight: theme.fontWeight.bold,
                                     px: 2,
+                                    textTransform: "none",
                                 }}
                             >
-                                Save
+                                {loading ? <SpinLoading size={24} /> : "Save"}
                             </Button>
                         </Stack>
                     </Stack>

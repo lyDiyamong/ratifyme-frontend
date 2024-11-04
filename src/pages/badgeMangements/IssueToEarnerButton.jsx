@@ -1,18 +1,19 @@
-// React import
+// React library import
 import { useState } from "react";
 
-// MUI Import
+// MUI import
 import { Button } from "@mui/material";
-import theme from "../../assets/themes";
-
-// Custom Import
-import { useIssueOnBadgeMutation } from "../../store/api/achievements/achievementApi";
-import AlertConfirmation from "../../components/alert/AlertConfirmation";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 
+// Custom import
+import AlertConfirmation from "../../components/alert/AlertConfirmation";
 import AlertMessage from "../../components/alert/AlertMessage";
-import useCatchStatus from "../../hooks/useCatchStatus";
 import PageLoading from "../../components/loading/PageLoading";
+import useCatchStatus from "../../hooks/useCatchStatus";
+import theme from "../../assets/themes";
+
+// API import
+import { useIssueOnBadgeMutation } from "../../store/api/achievements/achievementApi";
 
 const IssueToEarnerButton = ({ achievementId }) => {
     const [issueOnBadge, { isLoading, isSuccess, isError }] = useIssueOnBadgeMutation();
@@ -22,6 +23,7 @@ const IssueToEarnerButton = ({ achievementId }) => {
         isSuccess || isError,
         isSuccess ? "Issue badge successfully" : "Issue badge failed",
     );
+    console.log(achievementId);
 
     const handleIssueBadge = async () => {
         try {
@@ -42,7 +44,7 @@ const IssueToEarnerButton = ({ achievementId }) => {
                     {message}
                 </AlertMessage>
             )}
-            
+
             <AlertConfirmation
                 open={isUploadCertModal}
                 title="Issue to Earner"

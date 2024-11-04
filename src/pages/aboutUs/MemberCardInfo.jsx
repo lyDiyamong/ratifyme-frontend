@@ -1,5 +1,6 @@
 // MUI import
 import { Box, Typography, CardMedia, Stack } from "@mui/material";
+import { GitHub, LinkedIn } from "@mui/icons-material";
 
 // Custom import
 import LandingContainer from "../../components/styles/LandingContainer";
@@ -15,7 +16,6 @@ import BunthongProfile from "../../assets/images/BunthongProfile.jpeg";
 import RothanakProfile from "../../assets/images/RothanakProfile.jpeg";
 import RothaProfile from "../../assets/images/RothaProfile.jpeg";
 import RatifyMEFevicon from "../../assets/icons/RatifyME-Fevicon.svg";
-import { GitHub, LinkedIn } from "@mui/icons-material";
 
 const cardData = [
     {

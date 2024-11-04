@@ -4,8 +4,8 @@ import { Box } from "@mui/material";
 // Custom import
 import PageTitle from "../../components/PageTitle";
 import DashboardContainer from "../../components/styles/DashboardContainer";
-import theme from "../../assets/themes";
 import ServicePlanCard from "../../components/cards/ServicePlanCard";
+import theme from "../../assets/themes";
 
 const ServicePlanManagement = () => {
     return (

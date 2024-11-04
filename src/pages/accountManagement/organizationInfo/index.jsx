@@ -3,17 +3,19 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 // MUI import
-import { Box, Grid, Stack } from "@mui/material";
+import { Grid, Stack } from "@mui/material";
+
+// Custom import
 import OrgProfileInfo from "./OrgProfileInfo";
 import OrgProfileHeader from "./OrgProfileHeader";
 import OrganizationBio from "./OrganizationBio";
 import PageTitle from "../../../components/PageTitle";
+import DashboardContainer from "../../../components/styles/DashboardContainer";
 
 // Api import
 import { useGetIssuersQuery } from "../../../store/api/issuerManagement/issuerApi";
 import { useGetInstitutionByIdQuery } from "../../../store/api/institutionManagement/institutionApi";
 import { useFetchInfoUserByIdQuery } from "../../../store/api/users/userInfoProfileApi";
-import DashboardContainer from "../../../components/styles/DashboardContainer";
 
 const OrganizationInfo = () => {
     const { userId } = useSelector((state) => state.global);

@@ -1,16 +1,16 @@
 // React library import
 import { useNavigate, Link } from "react-router-dom";
+import { useState } from "react";
 
 // MUI import
 import { Box, Typography, Button, Stack } from "@mui/material";
 import { ArrowBackOutlined, ErrorOutlineOutlined } from "@mui/icons-material";
 
 // Custom import
-import theme from "../../assets/themes";
-import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
-import OutletImageComponent from "./OutletImageTemplate";
 import { SpinLoading } from "../../components/loading/SpinLoading";
-import { useState } from "react";
+import OutletImageComponent from "./OutletImageTemplate";
+import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
+import theme from "../../assets/themes";
 
 const ResetPasswordExpiredPage = () => {
     const [loading, setLoading] = useState(false);

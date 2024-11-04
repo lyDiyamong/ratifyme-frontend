@@ -2,18 +2,13 @@
 import * as React from "react";
 
 // MUI import
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import Typography from "@mui/material/Typography";
+import { Stack, Box,Typography,  Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Stack } from "@mui/material";
-import Box from "@mui/material/Box";
 
 // Custom import
-import theme from "../../assets/themes/index";
 import LandingContainer from "../../components/styles/LandingContainer";
 import { accordionData } from "../../data/faqData";
+import theme from "../../assets/themes/index";
 
 // <!-- ============ Start Faq component ============ -->
 const Faq = () => {

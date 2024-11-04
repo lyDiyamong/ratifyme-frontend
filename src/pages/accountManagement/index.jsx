@@ -1,21 +1,23 @@
 // React import
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 // MUI import
 import { Tabs, Tab } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { BusinessRounded, SchoolRounded } from "@mui/icons-material";
 
 // Custom import
-import PageTitle from "../../components/PageTitle";
-import DashboardContainer from "../../components/styles/DashboardContainer";
 import UserProfile from "./userProfile/index";
 import ChangePasswordForm from "./changePassword/";
 import OrganizationInfo from "./organizationInfo";
-import { BusinessRounded, SchoolRounded } from "@mui/icons-material";
-import { useFetchInfoUserByIdQuery } from "../../store/api/users/userInfoProfileApi";
-import { useSelector } from "react-redux";
 import AcademicBackground from "./academicBackground";
+import PageTitle from "../../components/PageTitle";
+import DashboardContainer from "../../components/styles/DashboardContainer";
+
+// API import
+import { useFetchInfoUserByIdQuery } from "../../store/api/users/userInfoProfileApi";
 
 // =========== Start Account Management ===========
 const AccountManagement = () => {
@@ -35,7 +37,7 @@ const AccountManagement = () => {
     const orgInfoDisabled = userRole === 3 || userRole === 4 || userRole === 1;
 
     return (
-        <DashboardContainer sx={{ display: "flex",  flexDirection: "column", mb: 3 }}>
+        <DashboardContainer sx={{ display: "flex", flexDirection: "column", mb: 3 }}>
             <PageTitle title="My Profile" subtitle="View and update your personal information and account settings." />
 
             {/* Tabs for User Profile, Bio Content, and Settings */}
@@ -47,10 +49,19 @@ const AccountManagement = () => {
                 variant="scrollable"
                 scrollButtons="auto"
             >
-                <Tab icon={<PersonIcon />} label="Profile" iconPosition="start" />
-                {!orgInfoDisabled && <Tab icon={<BusinessRounded />} label="Organization Info" iconPosition="start" />}
-                {!isDisabled && <Tab icon={<SchoolRounded />} label="Academic" iconPosition="start" />}
-                <Tab icon={<SettingsIcon />} label="Profile Settings" iconPosition="start" />
+                <Tab icon={<PersonIcon />} label="Profile" iconPosition="start" sx={{ textTransform: "none" }} />
+                {!orgInfoDisabled && (
+                    <Tab
+                        icon={<BusinessRounded />}
+                        label="Organization Info"
+                        iconPosition="start"
+                        sx={{ textTransform: "none" }}
+                    />
+                )}
+                {!isDisabled && (
+                    <Tab icon={<SchoolRounded />} label="Academic" iconPosition="start" sx={{ textTransform: "none" }} />
+                )}
+                <Tab icon={<SettingsIcon />} label="Password Settings" iconPosition="start" sx={{ textTransform: "none" }} />
             </Tabs>
 
             {/* Conditional rendering based on the selected tab */}

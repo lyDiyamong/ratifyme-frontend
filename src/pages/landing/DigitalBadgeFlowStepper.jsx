@@ -1,17 +1,22 @@
+// React library import
 import PropTypes from "prop-types";
+
+// MUI import
+import LandingContainer from "../../components/styles/LandingContainer";
+
+// Custom import
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Typography from "@mui/material/Typography";
+import StepConnector, { stepConnectorClasses } from "@mui/material/StepConnector";
+import { Box, Grid, Paper } from "@mui/material";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import ShareIcon from "@mui/icons-material/Share";
-import StepConnector, { stepConnectorClasses } from "@mui/material/StepConnector";
 import { Business } from "@mui/icons-material";
-import { Box, Grid, Paper } from "@mui/material";
-import LandingContainer from "../../components/styles/LandingContainer";
 
 // Colorlib Connector Style
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({

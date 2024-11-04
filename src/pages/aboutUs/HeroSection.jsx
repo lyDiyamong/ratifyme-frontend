@@ -1,8 +1,8 @@
+// React library import
 import { Link } from "react-router-dom";
+
 // Mui Import
 import { Box, Button, Chip, Stack, Typography } from "@mui/material";
-//Custom Import
-import LandingContainer from "../../components/styles/LandingContainer";
 import {
     AdminPanelSettingsOutlined,
     ApartmentOutlined,
@@ -10,6 +10,9 @@ import {
     CastForEducationOutlined,
     Circle,
 } from "@mui/icons-material";
+
+//Custom Import
+import LandingContainer from "../../components/styles/LandingContainer";
 import theme from "../../assets/themes";
 
 const HeroAboutSection = () => {
@@ -86,7 +89,6 @@ const HeroAboutSection = () => {
                             variant="h3"
                             sx={{
                                 textAlign: "center",
-                                // fontWeight: theme.fontWeight.semiBold,
                                 lineHeight: 1.2,
                                 marginBottom: "20px",
                                 maxWidth: 600,

@@ -3,27 +3,29 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 // MUI import
 import { Button, MobileStepper, Stack, Typography, CircularProgress, Box, Skeleton, IconButton } from "@mui/material";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+import { CameraAltRounded } from "@mui/icons-material";
 
 // Custom import
-import theme from "../../assets/themes";
+import { SpinLoading } from "../../components/loading/SpinLoading";
+import AlertMessage from "../../components/alert/AlertMessage";
+import PageLoading from "../../components/loading/PageLoading";
 import CoreElementStep from "./CoreElementStep";
 import MetadataStep from "./MetadataStep";
 import OptionalStep from "./OptionalStep";
-import { SpinLoading } from "../../components/loading/SpinLoading";
+import useCatchStatus from "../../hooks/useCatchStatus";
+import badgeSchema from "../../utils/schema/badgeSchema";
+import BadgeDefaultSvg from "../../assets/icons/BadgeDefaultSvg.svg";
+import theme from "../../assets/themes";
+
+// API import
 import { useCreateBadgeMutation } from "../../store/api/badgeManagement/badgeApi";
 import { useFetchAchievementTypeQuery } from "../../store/api/achievements/achievementTypeApi";
-import { CameraAltRounded } from "@mui/icons-material";
-import BadgeDefaultSvg from "../../assets/icons/BadgeDefaultSvg.svg";
-import AlertMessage from "../../components/alert/AlertMessage";
-import useCatchStatus from "../../hooks/useCatchStatus";
-import PageLoading from "../../components/loading/PageLoading";
 
 // The data static of the description
 const steps = [
@@ -38,39 +40,11 @@ const steps = [
             "A clear statement capture essential information about learning and achievements by storing this metadata inside the badge image.",
     },
     {
-        label: "Optional Elements :",
+        label: "Additional Elements :",
         description:
-            "A optional statement of the badge. The specific elements required for an Open Badge may vary depending on the implementation and the preferences of the issuer.",
+            "An additional statement of the badge. The specific elements required for an Open Badge may vary depending on the implementation and the preferences of the issuer.",
     },
 ];
-
-const schema = yup.object().shape({
-    narrative: yup
-        .string()
-        .min(10, "Criteria must be at least 10 characters long")
-        .max(255, "Criteria cannot exceed 255 characters")
-        .required("Criteria is required"),
-    startDate: yup
-        .date()
-        .typeError("Please select a valid date")
-        .min(new Date(new Date().setHours(0, 0, 0, 0)), "Start date cannot be in the past")
-        .required("Start date is required"),
-    endDate: yup
-        .date()
-        .typeError("Please select a valid date")
-        .min(yup.ref("startDate"), "End date cannot be earlier than Start Date")
-        .required("End date is required"),
-    expiredDate: yup
-        .date()
-        .typeError("Please select a valid date")
-        .min(yup.ref("endDate"), "Expiration date cannot be earlier than End Date"),
-    badgeName: yup
-        .string()
-        .min(3, "Badge name must be at least 3 characters long")
-        .max(50, "Badge name cannot exceed 50 characters")
-        .required("Badge name is required"),
-    badgeDescription: yup.string().max(255, "Description cannot exceed 255 characters").required("Description is required"),
-});
 
 const BadgeCreationForm = () => {
     const { issuerData } = useSelector((state) => state.global);
@@ -92,8 +66,8 @@ const BadgeCreationForm = () => {
     const userName = `${issuerData?.User?.firstName} ${issuerData?.User?.lastName}`;
 
     const stepFields = {
-        0: ["narrative", "achievementType"],
-        1: ["badgeName", "badgeDescription", "startDate", "endDate"],
+        0: ["narrative", "AchievementTypes"],
+        1: ["badgeName", "badgeDescription", "startedDate", "endDate"],
     };
 
     // React Hook Form
@@ -103,7 +77,7 @@ const BadgeCreationForm = () => {
         trigger,
         reset,
         formState: { errors },
-        setValue
+        setValue,
     } = useForm({
         defaultValues: {
             issuer: userName || "",
@@ -114,7 +88,7 @@ const BadgeCreationForm = () => {
 
             badgeName: "",
             issuedOn: null,
-            startDate: null,
+            startedDate: null,
             endDate: null,
             badgeDescription: "",
             tagsOrLanguage: "",
@@ -124,7 +98,7 @@ const BadgeCreationForm = () => {
             additionLink: "",
         },
         mode: "onChange",
-        resolver: yupResolver(schema),
+        resolver: yupResolver(badgeSchema),
     });
 
     const maxSteps = steps.length;
@@ -132,7 +106,7 @@ const BadgeCreationForm = () => {
     const handleNext = async () => {
         // Start loading
         setLoading(true);
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve));
         // Validate by field of each step
         const isValid = await trigger(stepFields[activeStep]);
         // Move to next step if valid
@@ -145,10 +119,10 @@ const BadgeCreationForm = () => {
 
     const handleBack = () => {
         setLoading(true);
-        setTimeout(() => {
-            setActiveStep((prevActiveStep) => prevActiveStep - 1);
-            setLoading(false);
-        }, 1000);
+        // setTimeout(() => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+        setLoading(false);
+        // }, 1000);
     };
 
     const onSubmit = async (data) => {
@@ -160,8 +134,8 @@ const BadgeCreationForm = () => {
         // Append form data fields
         formData.append("name", data.badgeName);
         formData.append("description", data.badgeDescription);
-        formData.append("tags", data.tagsOrLanguage.join(","));
-        formData.append("startedDate", data.startDate ? data.startDate.toISOString() : null);
+        formData.append("tags", data.tagsOrLanguage ? data.tagsOrLanguage.join(",") : []);
+        formData.append("startedDate", data.startedDate ? data.startedDate.toISOString() : null);
         formData.append("endDate", data.endDate ? data.endDate.toISOString() : null);
         formData.append("expiredDate", data.expiredDate ? data.expiredDate.toISOString() : null);
         formData.append("issuerId", issuerData.id);
@@ -208,27 +182,20 @@ const BadgeCreationForm = () => {
         }
         event.target.value = "";
     };
-    useEffect(()=> {
-        if(userName){
-            setValue("issuer", userName)
-        }
-    }, [userName, issuerData])
-
-    // Monitor changes in the uploaded image using useEffect
     useEffect(() => {
-        if (uploadedImage) {
-            console.log("Image selected:", uploadedImage);
+        if (userName) {
+            setValue("issuer", userName);
         }
-    }, [uploadedImage]);
+    }, [userName, issuerData]);
 
     const renderStepContent = () => {
         switch (activeStep) {
             case 0:
-                return <CoreElementStep control={control} errors={errors} schema={schema} />;
+                return <CoreElementStep control={control} errors={errors} schema={badgeSchema} />;
             case 1:
-                return <MetadataStep control={control} errors={errors} schema={schema} />;
+                return <MetadataStep control={control} errors={errors} schema={badgeSchema} />;
             case 2:
-                return <OptionalStep control={control} errors={errors} schema={schema} />;
+                return <OptionalStep control={control} errors={errors} schema={badgeSchema} />;
             default:
                 return null;
         }
@@ -320,7 +287,7 @@ const BadgeCreationForm = () => {
                             color: theme.palette.text.disabled,
                         }}
                     >
-                        Badge image must use images in PNG format, with dimensions.
+                        The badge image can be any type of image, but the image size must be below 1 MB.
                     </Typography>
                 </Stack>
             </Stack>

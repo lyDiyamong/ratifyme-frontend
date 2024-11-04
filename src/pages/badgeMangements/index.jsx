@@ -1,16 +1,24 @@
+// Reacl library import
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router";
+
+// MUI import
+import { Box, CardMedia, Typography } from "@mui/material";
+
+// Custom import
 import PageTitle from "../../components/PageTitle";
 import SearchBar from "../../components/SearchBar";
 import DashboardContainer from "../../components/styles/DashboardContainer";
-import BadgeList from "./BadgeList";
-import { useFetchBadgesQuery } from "../../store/api/badgeManagement/badgeApi";
-import { Box, CardMedia, Typography } from "@mui/material";
-import theme from "../../assets/themes";
-import StatusCode from "../../assets/images/NoData.svg";
-import { useLocation } from "react-router";
 import AlertMessage from "../../components/alert/AlertMessage";
 import PageLoading from "../../components/loading/PageLoading";
+import BadgeList from "./BadgeList";
+import StatusCode from "../../assets/images/NoData.svg";
+import theme from "../../assets/themes";
+
+// API import
+import { useFetchBadgesQuery } from "../../store/api/badgeManagement/badgeApi";
+
 
 const BadgeManagement = () => {
     const { state } = useLocation();
@@ -38,9 +46,12 @@ const BadgeManagement = () => {
         data: badges,
         isLoading,
         refetch,
-    } = useFetchBadgesQuery(roleId === 1 ? { search: searchQuery } : { field, fk: activeId, search: searchQuery }, {
-        skip: roleId !== 1 && (!activeId || !field),
-    });
+    } = useFetchBadgesQuery(
+        roleId === 1 ? { search: searchQuery, limit, page } : { field, fk: activeId, search: searchQuery, limit, page },
+        {
+            skip: roleId !== 1 && (!activeId || !field),
+        },
+    );
 
     const allowRole = roleId === 3 ? true : false;
 
@@ -73,6 +84,7 @@ const BadgeManagement = () => {
                 <>
                     {/* Show AlertMessage if successMessage exists */}
                     {state?.successMessage && <AlertMessage variant="success">{state.successMessage}</AlertMessage>}
+                    {state?.badgeDeletedMsg && <AlertMessage variant="success">{state.badgeDeletedMsg}</AlertMessage>}
 
                     <PageTitle
                         title="Badge Management"

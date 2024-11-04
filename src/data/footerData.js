@@ -5,10 +5,8 @@ import LinkedIn from "../assets/icons/linkedin.svg";
 
 // Learn More section mapping
 export const learnMoreLinks = [
-    { to: "/", text: "About Us" },
-    { to: "/", text: "Support" },
-    { to: "/", text: "Careers" },
-    { to: "/", text: "For Developers" },
+    { to: "/aboutUs", text: "About Us" },
+    { to: "/aboutOurTeam", text: "Our Team" },
 ];
 
 // Other Solutions section mapping
@@ -19,7 +17,7 @@ export const otherSolutionsLinks = [
 
 // Social Media section mapping
 export const socialMediaLinks = [
-    { src: Facebook, alt: "Facebook" },
+    { to: "https://www.facebook.com/profile.php?id=61566569411637", src: Facebook, alt: "Facebook" },
     { src: Instagram, alt: "Instagram" },
     { src: LinkedIn, alt: "LinkedIn" },
 ];

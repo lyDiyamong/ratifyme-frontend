@@ -1,7 +1,10 @@
+// MUI import
 import { Box, Stack } from "@mui/system";
-import theme from "../../../assets/themes";
 import { Card, CardContent, Typography } from "@mui/material";
 import { AccountBalanceOutlined, EmojiEventsOutlined, EventAvailableOutlined, PendingActionsOutlined } from "@mui/icons-material";
+
+// Custom import
+import theme from "../../../assets/themes";
 
 const BadgeDetailsCred = ({ BadgeName, Criteria, StartDate, EndDate }) => {
     return (

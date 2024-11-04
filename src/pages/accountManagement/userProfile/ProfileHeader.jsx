@@ -2,32 +2,36 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-// MUI Import
+// MUI import
 import { Stack, Box, Typography, IconButton, Button, Modal, Backdrop } from "@mui/material";
 import { CameraAltRounded, FullscreenExitOutlined } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-// Custom Import
+
+// Custom import
+import EditProfileModal from "../ModalEditProfile";
+import MoreMenu from "../../../components/MoreMenu";
+import AlertMessage from "../../../components/alert/AlertMessage";
 import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
 import MaleUserDefault from "../../../assets/images/MaleUser.svg";
 import FemaleUserDefault from "../../../assets/images/FemaleUser.svg";
-import EditProfileModal from "../ModalEditProfile";
 import theme from "../../../assets/themes";
 
-// Fetching Data Import
+// API import
 import {
     useFetchInfoUserByIdQuery,
     useDeleteUserPfMutation,
     useUploadUserPfMutation,
 } from "../../../store/api/users/userInfoProfileApi";
-import MoreMenu from "../../../components/MoreMenu";
 
 // =========== Start Profile Header ===========
-const ProfileHeader = () => {
+const ProfileHeader = ({onEditSuccess}) => {
     const { userId } = useSelector((state) => state.global);
     const [open, setOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [updateImage, setUpdateImage] = useState(DefaultProfileSvg);
+    const [message, setMessage] = useState("");
+    const [isError, setIsError] = useState(false);
     const { data: info } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
     const userData = info?.data;
 
@@ -47,15 +51,29 @@ const ProfileHeader = () => {
         if (file) {
             const formData = new FormData();
             formData.append("image", file);
-            const result = await updateImg({ id: userId, data: formData }).unwrap();
-            setUpdateImage(result?.record.profileImage);
+            try {
+                const result = await updateImg({ id: userId, data: formData }).unwrap();
+                setUpdateImage(result?.record.profileImage);
+                setMessage("Profile image updated successfully!");
+                setIsError(false);
+            } catch (error) {
+                setMessage(error.data.message || "Failed to update profile image.");
+                setIsError(true);
+            }
         }
         event.target.value = "";
     };
 
     const handleDeleteImage = async () => {
-        await deleteImg({ id: userId });
-        setUpdateImage(null);
+        try {
+            await deleteImg({ id: userId }).unwrap();
+            setUpdateImage(null);
+            setMessage("Profile image deleted successfully!");
+            setIsError(false);
+        } catch (error) {
+            setMessage(error.data.message || "Failed to delete profile image.");
+            setIsError(true);
+        }
     };
 
     useEffect(() => {
@@ -96,6 +114,12 @@ const ProfileHeader = () => {
                 bgcolor: theme.palette.customColors.white,
             }}
         >
+            {message && (
+                <AlertMessage variant={isError ? "error" : "success"} onClose={() => setMessage("")}>
+                    {message}
+                </AlertMessage>
+            )}
+
             {/* The image view */}
             <Modal
                 open={isModalOpen}
@@ -172,12 +196,7 @@ const ProfileHeader = () => {
                         },
                     }}
                 >
-                    <input
-                        type="file"
-                        id="profile-image-upload"
-                        style={{ display: "none" }}
-                        onChange={handleFileChange}
-                    />
+                    <input type="file" id="profile-image-upload" style={{ display: "none" }} onChange={handleFileChange} />
                     <label htmlFor="profile-image-upload">
                         <IconButton component="span" sx={{ color: theme.palette.customColors.white }}>
                             <CameraAltRounded />
@@ -210,6 +229,7 @@ const ProfileHeader = () => {
                         color: theme.palette.customColors.white,
                         fontWeight: "bold",
                         borderRadius: theme.customShape.btn,
+                        textTransform: 'none'
                     }}
                 >
                     Edit profile
@@ -224,7 +244,7 @@ const ProfileHeader = () => {
                 />
             </Stack>
             {/* Edit Profile Modal */}
-            <EditProfileModal open={open} onClose={handleClose} userData={userData} />
+            <EditProfileModal open={open} onSuccess={onEditSuccess} onClose={handleClose} userData={userData} />
         </Stack>
     );
 };

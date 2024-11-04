@@ -1,23 +1,30 @@
+// React library import
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+
+// MUI import
+import { RestartAltOutlined, DeleteOutline } from "@mui/icons-material";
 import { Avatar, Box, IconButton, Tooltip, Typography } from "@mui/material";
+
+// Custom import
 import InviteUserModal from "../../components/modals/InviteUserModal";
 import AlertConfirmation from "../../components/alert/AlertConfirmation";
+import TableCustom from "../../components/TableCustom";
+import PageLoading from "../../components/loading/PageLoading";
+import useCatchStatus from "../../hooks/useCatchStatus";
+import AlertMessage from "../../components/alert/AlertMessage";
+import InviteUserStatus from "../../components/chips/inviteUserStatus";
+import getSortOptions from "../../components/GetSortOptions";
+import FormatDate from "../../utils/formatDate";
 import theme from "../../assets/themes";
+
+// API import
 import {
     useInviteEarnerMutation,
     useFetchAllInvitedUserQuery,
     useResendInviteEarnerMutation,
     useDeleteInvitedUserMutation,
 } from "../../store/api/userManagement/inviteUserApi";
-import { useSelector } from "react-redux";
-import { RestartAltOutlined, DeleteOutline } from "@mui/icons-material";
-import TableCustom from "../../components/TableCustom";
-import FormatDate from "../../utils/formatDate";
-import PageLoading from "../../components/loading/PageLoading";
-import useCatchStatus from "../../hooks/useCatchStatus";
-import AlertMessage from "../../components/alert/AlertMessage";
-import InviteUserStatus from "../../components/chips/inviteUserStatus";
-import getSortOptions from "../../components/GetSortOptions";
 
 const TableEarnerInvitation = () => {
     const isSortable = true;

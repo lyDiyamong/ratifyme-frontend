@@ -1,6 +1,5 @@
 // React import
 import { useNavigate } from "react-router";
-import { useSelector } from "react-redux";
 
 // MUI import
 import { Box, Button, Typography } from "@mui/material";
@@ -8,6 +7,8 @@ import { Box, Button, Typography } from "@mui/material";
 // Custom import
 import NotFoundSvg from "../../assets/images/NotFound.svg";
 import theme from "../../assets/themes";
+
+// API import
 import { useCheckAuthQuery } from "../../store/api/auth/authApi";
 
 const NotFoundPage = () => {

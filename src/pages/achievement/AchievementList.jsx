@@ -1,9 +1,9 @@
-// React Import
+// React library import
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
-// MUI Import
+// MUI import
 import { Box } from "@mui/system";
 import { Pagination, Typography } from "@mui/material";
 

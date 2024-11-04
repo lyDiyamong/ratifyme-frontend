@@ -1,9 +1,10 @@
-// MUI Import
+// MUI import
 import DashboardContainer from "../../components/styles/DashboardContainer";
 
-// Custom Import
+// Custom import
 import TableReport from "./TableReport";
 import PageTitle from "../../components/PageTitle";
+
 // ============ Start Report Page ============
 const reportManagement = () => {
     return (

@@ -1,6 +1,9 @@
-import { Box, Stack } from "@mui/system";
-import theme from "../../../assets/themes";
+// MUI import
 import { Button, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/system";
+
+// Custom import
+import theme from "../../../assets/themes";
 
 const AchievementTypesCred = ({ achievementTypes }) => {
     return (

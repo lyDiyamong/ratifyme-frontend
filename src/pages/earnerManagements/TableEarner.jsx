@@ -1,22 +1,28 @@
-// React Library
+// React library import
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
-// MUI Import
+// MUI import
 import { Box, Typography, CircularProgress } from "@mui/material";
+import { DeleteForeverOutlined } from "@mui/icons-material";
 
-// Custom Import
+// Custom import
 import TableCustom from "../../components/TableCustom";
 import MenuSelection from "../../components/TableAction/MenuSelection";
-import FormatYear from "../../utils/formatDate";
-import ProfileEarnerModal from "./ProfileEarnerModal";
 import InviteUserModal from "../../components/modals/InviteUserModal";
 import { TableAvatars } from "../../components/avartars/TableAvatars";
+import AlertMessage from "../../components/alert/AlertMessage";
+import getSortOptions from "../../components/GetSortOptions";
+import AlertConfirmation from "../../components/alert/AlertConfirmation";
+import FormatYear from "../../utils/formatDate";
+import ProfileEarnerModal from "./ProfileEarnerModal";
+import useCatchStatus from "../../hooks/useCatchStatus";
+import theme from "../../assets/themes";
 
-// Fetching Data Import
+// API import
 import { useFetchEarnerQuery, useDeleteEarnerByIdMutation } from "../../store/api/earnerManagement/earnerApis";
 import { useInviteEarnerMutation, useFetchAllInvitedUserQuery } from "../../store/api/userManagement/inviteUserApi";
-import getSortOptions from "../../components/GetSortOptions";
+
 
 // ============ Start Table Earner Modal ============
 const TableEarner = () => {
@@ -30,12 +36,19 @@ const TableEarner = () => {
     const [sortColumn, setSortColumn] = useState("name");
     const [sortOrder, setSortOrder] = useState("name");
     const [searchQuery, setSearchQuery] = useState("");
+    const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+    const [selectedRowId, setSelectedRowId] = useState(null);
 
     const { roleId, userId, issuerData, institutionData } = useSelector((state) => state.global);
-    const [deleteEarner] = useDeleteEarnerByIdMutation();
+    const [deleteEarner, { isSuccess: isDeleteEarnerSuccess, error: deleteEarnerError }] = useDeleteEarnerByIdMutation();
     const issuerId = issuerData?.id;
     const { data: invitedUserData } = useFetchAllInvitedUserQuery();
     const [inviteEarner] = useInviteEarnerMutation();
+
+    const [message, setMessage] = useCatchStatus(
+        isDeleteEarnerSuccess,
+        isDeleteEarnerSuccess ? "Deleted earner successfully" : deleteEarnerError?.data?.message,
+    );
 
     const institutionId = institutionData?.id;
     // Local State for invited users
@@ -56,6 +69,7 @@ const TableEarner = () => {
         order: sortOrder,
         search: searchQuery,
     });
+    console.log(response);
 
     // Load and filter invited users on mount
     useEffect(() => {
@@ -76,16 +90,18 @@ const TableEarner = () => {
     // Earner data fetched from the API
     const earnerData = response?.data;
 
-
     // Display earner in the earner table by the specific role , role = 1 (Admin), role = 2 (institutionOwner), role = 3 (issuer)
     const filteredEarnerData =
         roleId === 1
             ? earnerData
-            : earnerData?.filter((earner) =>
-                  roleId === 2
-                      ? earner.institutionId === institutionId
-                      : earner.Issuer?.userId === userId,
-              );
+            : earnerData
+                  ?.filter((earner) => (roleId === 2 ? earner.institutionId === institutionId : earner.Issuer?.userId === userId))
+                  .map((earner) => ({
+                      ...earner,
+                      Achievements: [
+                          ...new Map(earner.Achievements.map((achievement) => [achievement.badgeClassId, achievement])).values(),
+                      ],
+                  }));
 
     // Handle View (open the modal)
     const handleView = (userId) => {
@@ -99,10 +115,20 @@ const TableEarner = () => {
         setSelectedUserId(null);
     };
 
+    const handleDeleteClick = (userId) => {
+        // <-- Set the selected row ID here
+        setSelectedRowId(userId); 
+        // <-- Open delete confirmation modal
+        setIsDeleteOpen(true); 
+    };
     // Handle Delete row in table
-    const handleDelete = async (userId) => {
+    const handleDelete = async () => {
         try {
-            await deleteEarner(userId).unwrap();
+            await deleteEarner(selectedRowId).unwrap();
+            // Close the dialog after delete
+            setIsDeleteOpen(false); 
+            // Reset the selected row ID
+            setSelectedRowId(null); 
         } catch (err) {
             console.error("Failed to delete:", err);
         }
@@ -131,7 +157,7 @@ const TableEarner = () => {
             );
 
             reset();
-            setDialogOpen(false); // Close the dialog on success
+            setDialogOpen(false);
         } catch (error) {
             console.error("Error sending invitation", error);
         }
@@ -145,7 +171,7 @@ const TableEarner = () => {
         },
         {
             name: "Name",
-            selector: (row) => <TableAvatars profileImage={row.User.profileImage} name={row.name} />,
+            selector: (row) => <TableAvatars profileImage={row.User.profileImage} name={`${row.User.firstName} ${row.User.lastName}`} />,
         },
         {
             name: "Email",
@@ -157,15 +183,11 @@ const TableEarner = () => {
         },
         {
             name: "Badge",
-            selector: (row) => row.Achievement?.BadgeClass?.name || "N/A",
-        },
-        {
-            name: "Academic Year",
-            selector: (row) => FormatYear(row.AcademicBackground?.academicYear) || "N/A",
+            selector: (row) => (row.Achievements.length === 0 ? 0 : row.Achievements.length),
         },
         {
             name: "Action",
-            selector: (row) => <MenuSelection onView={() => handleView(row.id)} onDelete={() => handleDelete(row.id)} />,
+            selector: (row) => <MenuSelection onView={() => handleView(row.id)} onDelete={() => handleDeleteClick(row.id)} />,
         },
     ];
 
@@ -194,6 +216,25 @@ const TableEarner = () => {
 
     return (
         <Box>
+            {message && (
+                <AlertMessage variant={isDeleteEarnerSuccess ? "success" : "error"} onClose={() => setMessage("")}>
+                    {message}
+                </AlertMessage>
+            )}
+            <AlertConfirmation
+                open={isDeleteOpen}
+                title="Delete Earner"
+                message="Are you sure you want to delete this earner? This action cannot be undone."
+                onClose={() => setIsDeleteOpen(false)}
+                onConfirm={handleDelete}
+                confirmText="Delete"
+                cancelText="Cancel"
+                iconBgColor={theme.palette.customColors.red100}
+                iconColor={theme.palette.customColors.red200}
+                confirmButtonColor={theme.palette.customColors.red300}
+                confirmButtonColorHover={theme.palette.customColors.red400}
+                icon={DeleteForeverOutlined}
+            />
             {/* Modal for Viewing Profile */}
             <ProfileEarnerModal open={openModal} onClose={handleCloseModal} userId={selectedUserId} />
 
