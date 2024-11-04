@@ -167,7 +167,7 @@ const TableEarner = () => {
         },
         {
             name: "Name",
-            selector: (row) => <TableAvatars profileImage={row.User.profileImage} name={row.name} />,
+            selector: (row) => <TableAvatars profileImage={row.User.profileImage} name={`${row.User.firstName} ${row.User.lastName}`} />,
         },
         {
             name: "Email",
