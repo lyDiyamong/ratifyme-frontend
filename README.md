@@ -18,7 +18,9 @@ Join RatifyME today and take your achievements from hidden to highlighted—lett
 
 # Demo
 
-As our project is ready to be deploy this is the link to Demo our Project Showcase. RatifyMe Digital - www.ratifyme.digital
+As our project is ready to be deploy this is the link to Demo our Project Showcase.
+- [RatifyMe Digital - www.ratifyme.digital](https://www.ratifyme.digital) 
+- [RatifyMe Digital - tech-a.anbschool.org](https://tech-a.anbschool.org/) 
 
 ## User Roles:
 
