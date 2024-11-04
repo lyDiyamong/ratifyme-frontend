@@ -7,13 +7,13 @@ import * as yup from "yup";
 import { Stack, Box, Typography, Button, Grid } from "@mui/material";
 
 // Custom import
-import theme from "../../../assets/themes";
 import FormInput from "../../../components/FormInput";
-import ChangePassword from "../../../assets/images/ChangePassword.svg";
-import useCatchStatus from "../../../hooks/useCatchStatus";
 import AlertMessage from "../../../components/alert/AlertMessage";
 import PasswordFields from "../../../components/auth/PasswordFields";
+import useCatchStatus from "../../../hooks/useCatchStatus";
 import { passwordSchema } from "../../../utils/auth/passwordUtils";
+import ChangePassword from "../../../assets/images/ChangePassword.svg";
+import theme from "../../../assets/themes";
 
 // Api import
 import { useUpdatePasswordMutation } from "../../../store/api/auth/authApi";

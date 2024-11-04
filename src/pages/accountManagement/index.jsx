@@ -1,21 +1,23 @@
 // React import
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 // MUI import
 import { Tabs, Tab } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { BusinessRounded, SchoolRounded } from "@mui/icons-material";
 
 // Custom import
-import PageTitle from "../../components/PageTitle";
-import DashboardContainer from "../../components/styles/DashboardContainer";
 import UserProfile from "./userProfile/index";
 import ChangePasswordForm from "./changePassword/";
 import OrganizationInfo from "./organizationInfo";
-import { BusinessRounded, SchoolRounded } from "@mui/icons-material";
-import { useFetchInfoUserByIdQuery } from "../../store/api/users/userInfoProfileApi";
-import { useSelector } from "react-redux";
 import AcademicBackground from "./academicBackground";
+import PageTitle from "../../components/PageTitle";
+import DashboardContainer from "../../components/styles/DashboardContainer";
+
+// API import
+import { useFetchInfoUserByIdQuery } from "../../store/api/users/userInfoProfileApi";
 
 // =========== Start Account Management ===========
 const AccountManagement = () => {

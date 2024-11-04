@@ -1,11 +1,11 @@
-// React Library Import
+// React iibrary import
 import { useEffect, useState } from "react";
 import { useForm, Controller, useFormState } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import dayjs from "dayjs";
 import * as yup from "yup";
 
-// MUI Import
+// MUI import
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -16,17 +16,17 @@ import { Paper, TextField } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 
-// Custom Imports
-import theme from "../../assets/themes/index";
+// Custom imports
 import FormInput from "../../components/FormInput";
 import SelectForm from "../../components/SelectionForm";
 import { SpinLoading } from "../../components/loading/SpinLoading";
 import PhoneNumberForm from "../../components/PhoneNumberForm";
 import AlertMessage from "../../components/alert/AlertMessage";
-
-// Fetching Data Import
-import { useUpdateUserProfileMutation } from "../../store/api/users/userInfoProfileApi";
 import HelperTextForm from "../../components/alert/HelperTextForm";
+import theme from "../../assets/themes/index";
+
+// API import
+import { useUpdateUserProfileMutation } from "../../store/api/users/userInfoProfileApi";
 
 // Custom Paper Component with Styling
 const CustomPaper = (props) => <Paper {...props} sx={{ borderRadius: "16px" }} />;

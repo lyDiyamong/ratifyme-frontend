@@ -12,7 +12,7 @@ import MaleUserDefault from "../../assets/images/MaleUser.svg";
 import FemaleUserDefault from "../../assets/images/FemaleUser.svg";
 import theme from "../../assets/themes";
 
-// Fetching data imports
+// API imports
 import { useFetchInfoUserByIdQuery, useUpdateUserProfileMutation } from "../../store/api/users/userInfoProfileApi";
 
 // =========== Start BioContent in profile page ===========

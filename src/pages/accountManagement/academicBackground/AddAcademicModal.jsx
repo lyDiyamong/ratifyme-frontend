@@ -1,17 +1,24 @@
-import { Dialog, DialogTitle, DialogContent, Button, Typography, Divider, Avatar, TextField } from "@mui/material";
+// React library import 
 import { Controller, useForm } from "react-hook-form";
-import { Box, Stack } from "@mui/system";
-import theme from "../../../assets/themes";
-import AcademicBgSvg from "../../../assets/icons/AcademicBgSvg.svg";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import SelectForm from "../../../components/SelectionForm";
-import { useFetchAcademicLevelsQuery, useFetchFieldOfStudiesQuery } from "../../../store/api/earnerManagement/fieldOfStudyApi";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { useCreateAcademicBackgroundMutation } from "../../../store/api/earnerManagement/earnerApis";
-import dayjs from "dayjs";
 import { yupResolver } from "@hookform/resolvers/yup";
-import academicBgSchema from "../../../utils/schema/academicBgSchema";
+import dayjs from "dayjs";
+
+// MUI import
+import { Dialog, DialogTitle, DialogContent, Button, Typography, Divider, Avatar, TextField } from "@mui/material";
+import { Box, Stack } from "@mui/system";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
+// Custom import
+import SelectForm from "../../../components/SelectionForm";
 import HelperTextForm from "../../../components/alert/HelperTextForm";
+import AcademicBgSvg from "../../../assets/icons/AcademicBgSvg.svg";
+import academicBgSchema from "../../../utils/schema/academicBgSchema";
+import theme from "../../../assets/themes";
+
+// API import
+import { useFetchAcademicLevelsQuery, useFetchFieldOfStudiesQuery } from "../../../store/api/earnerManagement/fieldOfStudyApi";
+import { useCreateAcademicBackgroundMutation } from "../../../store/api/earnerManagement/earnerApis";
 
 const AddAcademicModal = ({ open, onClose, onSubmit, userId }) => {
     const {

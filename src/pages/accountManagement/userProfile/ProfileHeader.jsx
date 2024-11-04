@@ -2,26 +2,27 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-// MUI Import
+// MUI import
 import { Stack, Box, Typography, IconButton, Button, Modal, Backdrop } from "@mui/material";
 import { CameraAltRounded, FullscreenExitOutlined } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-// Custom Import
+
+// Custom import
+import EditProfileModal from "../ModalEditProfile";
+import MoreMenu from "../../../components/MoreMenu";
+import AlertMessage from "../../../components/alert/AlertMessage";
 import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
 import MaleUserDefault from "../../../assets/images/MaleUser.svg";
 import FemaleUserDefault from "../../../assets/images/FemaleUser.svg";
-import EditProfileModal from "../ModalEditProfile";
 import theme from "../../../assets/themes";
 
-// Fetching Data Import
+// API import
 import {
     useFetchInfoUserByIdQuery,
     useDeleteUserPfMutation,
     useUploadUserPfMutation,
 } from "../../../store/api/users/userInfoProfileApi";
-import MoreMenu from "../../../components/MoreMenu";
-import AlertMessage from "../../../components/alert/AlertMessage";
 
 // =========== Start Profile Header ===========
 const ProfileHeader = ({onEditSuccess}) => {

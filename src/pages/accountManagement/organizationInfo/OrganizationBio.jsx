@@ -7,7 +7,6 @@ import { TextField, Box, Typography, Avatar, Button, Stack, Chip } from "@mui/ma
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 // Custom imports
-import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
 import theme from "../../../assets/themes";
 
 // Fetching data imports

@@ -1,4 +1,4 @@
-// React Library Import
+// React library import
 import { useSelector } from "react-redux";
 
 // MUI Import
@@ -17,7 +17,7 @@ import formatPhoneNumber from "../../../utils/formatPhoneNumber";
 import FormatDate from "../../../utils/formatDate";
 import theme from "../../../assets/themes";
 
-// Fetching Data Import
+// API Import
 import { useFetchInfoUserByIdQuery } from "../../../store/api/users/userInfoProfileApi";
 
 // =========== Start Profile info configuration ===========

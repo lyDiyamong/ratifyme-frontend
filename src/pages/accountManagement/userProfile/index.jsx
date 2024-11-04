@@ -1,3 +1,7 @@
+// React library import
+import { useEffect, useState } from "react";
+
+// MUI import
 import { Grid, Stack } from "@mui/material";
 
 // Custom Import
@@ -5,7 +9,6 @@ import ProfileHeader from "./ProfileHeader";
 import BioContent from "../BioContent";
 import ProfileInfoContainer from "./ProfileInfo";
 import AlertMessage from "../../../components/alert/AlertMessage";
-import { useEffect, useState } from "react";
 
 // =========== Start UserProfile ===========
 const UserProfile = () => {
