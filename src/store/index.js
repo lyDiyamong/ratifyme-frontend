@@ -1,4 +1,8 @@
+// React library import
 import { configureStore } from "@reduxjs/toolkit";
+import { setupListeners } from "@reduxjs/toolkit/query";
+
+// Custom import
 import { authApi } from "./api/auth/authApi";
 import { badgeApi } from "./api/badgeManagement/badgeApi";
 import { earnerApi } from "./api/earnerManagement/earnerApis";
@@ -13,10 +17,8 @@ import { verificationApi } from "./api/earnerManagement/verificationApi";
 import { institutionApi } from "./api/institutionManagement/institutionApi";
 import { inviteUserApi } from "./api/userManagement/inviteUserApi";
 import { issuerApi } from "./api/issuerManagement/issuerApi";
-
-import { setupListeners } from "@reduxjs/toolkit/query";
-import gloableReducer from "./slices/globalSlices";
 import { fieldOfStudyApi } from "./api/earnerManagement/fieldOfStudyApi";
+import gloableReducer from "./slices/globalSlices";
 
 const store = configureStore({
     reducer: {

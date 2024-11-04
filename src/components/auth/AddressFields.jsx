@@ -49,7 +49,7 @@ const AddressFields = ({ control, schema }) => {
                                 }),
                                 menu: (base) => ({
                                     ...base,
-                                    zIndex: 100, // Higher zIndex for the dropdown options
+                                    zIndex: 100,
                                 }),
                             }}
                         />

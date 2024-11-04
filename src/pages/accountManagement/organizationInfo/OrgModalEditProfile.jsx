@@ -13,15 +13,15 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Paper } from "@mui/material";
 
 // Custom Import
-import theme from "../../../assets/themes/index";
 import FormInput from "../../../components/FormInput";
 import { SpinLoading } from "../../../components/loading/SpinLoading";
 import PhoneNumberForm from "../../../components/PhoneNumberForm";
 import AlertMessage from "../../../components/alert/AlertMessage.jsx";
 import orgSchema from "../../../utils/schema/orgSchema";
 import useCatchStatus from "../../../hooks/useCatchStatus.js";
+import theme from "../../../assets/themes/index";
 
-// Fetching Data Import
+// API Import
 import { useUpdateInstitutionMutation } from "../../../store/api/institutionManagement/institutionApi";
 
 const CustomPaper = (props) => <Paper {...props} sx={{ borderRadius: "16px" }} />;

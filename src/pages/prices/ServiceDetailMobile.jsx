@@ -1,4 +1,3 @@
-// serviceDetailMobile
 // MUI import
 import { Grid, Box } from "@mui/material";
 

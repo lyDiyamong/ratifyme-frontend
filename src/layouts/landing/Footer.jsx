@@ -12,13 +12,11 @@ import {
     ListItem,
 } from "@mui/material";
 
-// Icons and Images import
-import RatifyMeLogo from "../../assets/icons/RatfiyME.svg";
-
 // Custom import
-import theme from "../../assets/themes";
 import LandingContainer from "../../components/styles/LandingContainer";
 import FlexBetween from "../../components/styles/FlexBetween";
+import RatifyMeLogo from "../../assets/icons/RatfiyME.svg";
+import theme from "../../assets/themes";
 
 // Data import
 import {learnMoreLinks, otherSolutionsLinks, copyrightLinks, socialMediaLinks} from "../../data/footerData";

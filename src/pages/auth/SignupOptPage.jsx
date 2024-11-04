@@ -1,5 +1,10 @@
+// Reacl library import
 import { Link, useNavigate } from "react-router-dom";
+
+// MUI import
 import { Box, Grid, Stack, Typography } from "@mui/material";
+
+// Custom import
 import theme from "../../assets/themes";
 import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
 import SignupOptionCard from "./SignupOptionCard";

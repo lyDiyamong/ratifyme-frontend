@@ -1,5 +1,6 @@
 // React library import
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 // MUI import
 import { Box, Typography, Button, Stack } from "@mui/material";
@@ -10,7 +11,6 @@ import theme from "../../assets/themes";
 import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
 import AccountCreatedIconSvg from "../../assets/images/accountCreated.png";
 import AuthOutletImage from "../../components/auth/AuthOutletImage";
-import { useState } from "react";
 import AlertConfirmation from "../../components/alert/AlertConfirmation";
 
 const SignupSuccessPage = () => {

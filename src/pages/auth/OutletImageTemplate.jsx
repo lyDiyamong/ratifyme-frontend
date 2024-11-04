@@ -1,5 +1,10 @@
+// React library import
 import { useState, useEffect } from "react";
+
+// MUI import
 import { Box, Typography } from "@mui/material";
+
+// Custom import
 import BusinessStartupSvg from "../../assets/images/DrawKitDashbaord.svg";
 import DashboardSvg from "../../assets/images/FutureTechnology.svg";
 import theme from "../../assets/themes";

@@ -1,6 +1,9 @@
+// MUI import
 import { Box, Stack } from "@mui/system";
-import theme from "../../../assets/themes";
 import { Button, Typography } from "@mui/material";
+
+// Custom import
+import theme from "../../../assets/themes";
 
 const SkillsCred = ({ tags }) => {
     return (

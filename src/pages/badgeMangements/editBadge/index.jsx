@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
-import dayjs from "dayjs";
 import { yupResolver } from "@hookform/resolvers/yup";
+import dayjs from "dayjs";
 
 // MUI import
 import { ArrowBack, ZoomInMapOutlined } from "@mui/icons-material";
@@ -14,18 +14,20 @@ import { Modal, Backdrop } from "@mui/material";
 import { Box, Button, Stack, Typography } from "@mui/material";
 
 // Custom import
+import PageTitle from "../../../components/PageTitle";
+import DashboardContainer from "../../../components/styles/DashboardContainer";
+import PageLoading from "../../../components/loading/PageLoading";
+import { SpinLoading } from "../../../components/loading/SpinLoading";
 import EditCoreElement from "./EditCoreElement";
 import EditMetadata from "./EditMetadata";
 import EditOptionalElements from "./EditOptionalElements";
-import PageTitle from "../../../components/PageTitle";
-import DashboardContainer from "../../../components/styles/DashboardContainer";
-import { useFetchAchievementTypeQuery } from "../../../store/api/achievements/achievementTypeApi";
-import { useFetchOneBadgeQuery, useUpdateBadgeMutation } from "../../../store/api/badgeManagement/badgeApi";
-import theme from "../../../assets/themes";
 import useCatchStatus from "../../../hooks/useCatchStatus";
 import badgeSchema from "../../../utils/schema/badgeSchema";
-import PageLoading from "../../../components/loading/PageLoading";
-import { SpinLoading } from "../../../components/loading/SpinLoading";
+import theme from "../../../assets/themes";
+
+// API import
+import { useFetchAchievementTypeQuery } from "../../../store/api/achievements/achievementTypeApi";
+import { useFetchOneBadgeQuery, useUpdateBadgeMutation } from "../../../store/api/badgeManagement/badgeApi";
 
 const EditBadge = () => {
     const { id: badgeId } = useParams();

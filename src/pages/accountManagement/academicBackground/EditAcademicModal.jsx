@@ -1,6 +1,7 @@
 // React import
 import { useForm, Controller } from "react-hook-form";
 import { useEffect } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
 import dayjs from "dayjs";
 
 // MUI import
@@ -10,17 +11,16 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 // Custom import
-import { useUpdateAcademicBackgroundByIdMutation } from "../../../store/api/earnerManagement/earnerApis";
-import theme from "../../../assets/themes";
-import EditAcademicBgSvg from "../../../assets/icons/EditAcademicBgSvg.svg";
 import SelectForm from "../../../components/SelectionForm";
+import PageLoading from "../../../components/loading/PageLoading";
+import HelperTextForm from "../../../components/alert/HelperTextForm";
+import academicBgSchema from "../../../utils/schema/academicBgSchema";
+import EditAcademicBgSvg from "../../../assets/icons/EditAcademicBgSvg.svg";
+import theme from "../../../assets/themes";
 
 // Api import
+import { useUpdateAcademicBackgroundByIdMutation } from "../../../store/api/earnerManagement/earnerApis";
 import { useFetchAcademicLevelsQuery, useFetchFieldOfStudiesQuery } from "../../../store/api/earnerManagement/fieldOfStudyApi";
-import PageLoading from "../../../components/loading/PageLoading";
-import { yupResolver } from "@hookform/resolvers/yup";
-import academicBgSchema from "../../../utils/schema/academicBgSchema";
-import HelperTextForm from "../../../components/alert/HelperTextForm";
 
 const EditAcademicModal = ({ open, onClose, initialData, academicId }) => {
     const [updateAcademicBackgroundById] = useUpdateAcademicBackgroundByIdMutation();

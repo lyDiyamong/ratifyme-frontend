@@ -1,4 +1,7 @@
+// React library import
 import { Route, Routes } from "react-router-dom";
+
+// Custom import
 import LandingLayout from "../layouts/landing";
 import HomePage from "../pages/landing/index";
 import ContactUsPage from "./../pages/contactus";

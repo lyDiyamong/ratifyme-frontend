@@ -10,12 +10,14 @@ import { VpnKeyOutlined } from "@mui/icons-material";
 
 // Custom import
 import PasswordFields from "../../components/auth/PasswordFields";
-import theme from "../../assets/themes";
-import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
 import { SpinLoading } from "../../components/loading/SpinLoading";
-import { useResetPasswordMutation, useVerifyResetTokenQuery } from "../../store/api/auth/authApi";
 import OutletImageComponent from "./OutletImageTemplate";
 import { passwordSchema } from "../../utils/auth/passwordUtils";
+import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
+import theme from "../../assets/themes";
+
+// API import
+import { useResetPasswordMutation, useVerifyResetTokenQuery } from "../../store/api/auth/authApi";
 
 const ResetPasswordPage = () => {
     const navigate = useNavigate();

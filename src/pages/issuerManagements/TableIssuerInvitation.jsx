@@ -15,9 +15,9 @@ import AlertMessage from "../../components/alert/AlertMessage";
 import InviteUserStatus from "../../components/chips/inviteUserStatus";
 import getSortOptions from "../../components/GetSortOptions";
 import { TableAvatars } from "../../components/avartars/TableAvatars";
-import theme from "../../assets/themes";
-import FormatDate from "../../utils/formatDate";
 import useCatchStatus from "../../hooks/useCatchStatus";
+import FormatDate from "../../utils/formatDate";
+import theme from "../../assets/themes";
 
 // API import
 import {
@@ -101,12 +101,12 @@ const TableIssuerInvitation = () => {
             setIsSuccess(true);
             setMessage(newIssuerResponse?.message || "Invitation sent successfully!");
 
-            reset(); // Reset the form fields
+            reset();
         } catch (err) {
             setIsSuccess(false);
             setMessage(err?.data?.message || "Failed to send invitation. Please try again.");
         } finally {
-            setDialogOpen(false); // Close dialog whether success or error
+            setDialogOpen(false);
         }
     };
 

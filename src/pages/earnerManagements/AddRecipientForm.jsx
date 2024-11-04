@@ -11,10 +11,10 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 
 
 // Custom import
-import theme from "../../assets/themes";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import FormInput from "../../components/FormInput";
 import SelectForm from "../../components/SelectionForm";
+import theme from "../../assets/themes";
 
 const AddRecipientForm = () => {
     const [loading, setLoading] = useState(false);

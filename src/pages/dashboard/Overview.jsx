@@ -1,8 +1,8 @@
 // MUI import
 import { Box, Grid } from "@mui/material";
+
 //Custom Import
 import CardsList from "./OverviewCard";
-// import Notification from "./Notification";
 
 // ============ Start Overview Seciton ============
 const Overview = () => {
@@ -12,9 +12,6 @@ const Overview = () => {
                 <Grid item sm={12} xs={12} md={12} xss={12} xl={12}>
                     <CardsList />
                 </Grid>
-                {/* <Grid item sm={12} xs={12} md={12} xss={12} xl={5}>
-                    <Notification />
-                </Grid> */}
             </Grid>
         </Box>
     );

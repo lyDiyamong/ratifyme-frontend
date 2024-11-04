@@ -1,12 +1,16 @@
+// Reacl library import
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { skipToken } from "@reduxjs/toolkit/query";
+
 // Custom import
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import PageTitle from "../../components/PageTitle";
 import SearchBar from "../../components/SearchBar";
-import { useEffect, useState } from "react";
 import BackpackList from "./BackpackList";
-import { useSelector } from "react-redux";
+
+// API import
 import { useFetchBadgeByEarnerQuery } from "../../store/api/badgeManagement/badgeApi";
-import { skipToken } from "@reduxjs/toolkit/query";
 
 const BackpackManagement = () => {
     const [page, setPage] = useState(1);

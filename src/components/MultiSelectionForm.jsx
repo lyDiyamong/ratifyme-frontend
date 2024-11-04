@@ -105,8 +105,9 @@ const SelectForm = ({ name, control, options, label, required }) => {
                     PaperProps: {
                         sx: {
                             borderRadius: theme.customShape.input,
-                            maxHeight: 48 * 7 + 8, // Limit to 7 visible items (assuming ~48px height each)
-                            overflowY: "auto", // Enable vertical scrolling
+                            // Limit to 7 visible items (assuming ~48px height each)
+                            maxHeight: 48 * 7 + 8, 
+                            overflowY: "auto",
                         },
                     },
                 }}

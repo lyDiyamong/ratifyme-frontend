@@ -103,7 +103,6 @@ const VerificationModal = ({ open, handleClose, achieveData, earnerData, credId,
                                                 <Typography
                                                     component="span"
                                                     sx={{ color: loadingStates[key] ? "gray" : "inherit" }}
-                                                    // sx={{ color: loadingStates[key] ? "gray" : "inherit", display: "block", mt: 1 }}
                                                 >
                                                     {loadingStates[key]
                                                         ? key === "IssuedOn"

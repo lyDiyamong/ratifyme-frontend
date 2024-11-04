@@ -1,3 +1,4 @@
+// React library import
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ element, role, allowedRoles }) => {

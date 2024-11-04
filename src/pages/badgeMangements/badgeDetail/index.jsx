@@ -6,21 +6,21 @@ import { useLocation, useParams } from "react-router-dom";
 // MUI Import
 import { Stack, Tab, Tabs, Typography } from "@mui/material";
 import { Description, Error, Group, TaskAltOutlined, WorkspacePremium } from "@mui/icons-material";
+import { Box } from "@mui/system";
 
 // Custom Import
 import DashboardContainer from "../../../components/styles/DashboardContainer";
 import PageTitle from "../../../components/PageTitle";
+import PageLoading from "../../../components/loading/PageLoading";
+import AlertMessage from "../../../components/alert/AlertMessage";
 import BadgeInfo from "./BadgeInfo";
 import TableEarnerList from "./TableEarnerList";
 import CertificateGenerator from "./CertificateGenerator";
+import theme from "../../../assets/themes";
 
 // Api import
 import { useFetchOneBadgeQuery } from "../../../store/api/badgeManagement/badgeApi";
 import { useFetchEarnerAchieByIdQuery } from "../../../store/api/earnerManagement/earnerApis";
-import { Box } from "@mui/system";
-import theme from "../../../assets/themes";
-import PageLoading from "../../../components/loading/PageLoading";
-import AlertMessage from "../../../components/alert/AlertMessage";
 
 const BadgeDetail = () => {
     // Fetch ID from the URL

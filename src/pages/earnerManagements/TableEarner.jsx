@@ -1,27 +1,27 @@
-// React Library
+// React library import
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
-// MUI Import
+// MUI import
 import { Box, Typography, CircularProgress } from "@mui/material";
+import { DeleteForeverOutlined } from "@mui/icons-material";
 
-// Custom Import
+// Custom import
 import TableCustom from "../../components/TableCustom";
 import MenuSelection from "../../components/TableAction/MenuSelection";
-import FormatYear from "../../utils/formatDate";
-import ProfileEarnerModal from "./ProfileEarnerModal";
 import InviteUserModal from "../../components/modals/InviteUserModal";
 import { TableAvatars } from "../../components/avartars/TableAvatars";
-import theme from "../../assets/themes";
 import AlertMessage from "../../components/alert/AlertMessage";
-import useCatchStatus from "../../hooks/useCatchStatus";
 import getSortOptions from "../../components/GetSortOptions";
 import AlertConfirmation from "../../components/alert/AlertConfirmation";
+import FormatYear from "../../utils/formatDate";
+import ProfileEarnerModal from "./ProfileEarnerModal";
+import useCatchStatus from "../../hooks/useCatchStatus";
+import theme from "../../assets/themes";
 
-// Fetching Data Import
+// API import
 import { useFetchEarnerQuery, useDeleteEarnerByIdMutation } from "../../store/api/earnerManagement/earnerApis";
 import { useInviteEarnerMutation, useFetchAllInvitedUserQuery } from "../../store/api/userManagement/inviteUserApi";
-import { DeleteForeverOutlined } from "@mui/icons-material";
 
 
 // ============ Start Table Earner Modal ============
@@ -116,15 +116,19 @@ const TableEarner = () => {
     };
 
     const handleDeleteClick = (userId) => {
-        setSelectedRowId(userId); // <-- Set the selected row ID here
-        setIsDeleteOpen(true); // <-- Open delete confirmation modal
+        // <-- Set the selected row ID here
+        setSelectedRowId(userId); 
+        // <-- Open delete confirmation modal
+        setIsDeleteOpen(true); 
     };
     // Handle Delete row in table
     const handleDelete = async () => {
         try {
             await deleteEarner(selectedRowId).unwrap();
-            setIsDeleteOpen(false); // Close the dialog after delete
-            setSelectedRowId(null); // Reset the selected row ID
+            // Close the dialog after delete
+            setIsDeleteOpen(false); 
+            // Reset the selected row ID
+            setSelectedRowId(null); 
         } catch (err) {
             console.error("Failed to delete:", err);
         }
@@ -153,7 +157,7 @@ const TableEarner = () => {
             );
 
             reset();
-            setDialogOpen(false); // Close the dialog on success
+            setDialogOpen(false);
         } catch (error) {
             console.error("Error sending invitation", error);
         }
@@ -167,7 +171,7 @@ const TableEarner = () => {
         },
         {
             name: "Name",
-            selector: (row) => <TableAvatars profileImage={row.User.profileImage} name={row.name} />,
+            selector: (row) => <TableAvatars profileImage={row.User.profileImage} name={`${row.User.firstName} ${row.User.lastName}`} />,
         },
         {
             name: "Email",

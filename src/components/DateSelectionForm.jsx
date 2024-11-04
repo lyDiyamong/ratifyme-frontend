@@ -50,8 +50,8 @@ const DateSelectionForm = ({ control, name, label, required=false }) => {
                 <LocalizationProvider dateAdapter={AdapterDayjs} >
                     <DatePicker
                         label={required ?  `${label}*` : label}
-                        value={field.value || null} // Ensures the value is always controlled
-                        onChange={(newValue) => field.onChange(newValue)} // Handle date change
+                        value={field.value || null}
+                        onChange={(newValue) => field.onChange(newValue)}
                         sx={{ width: "100%" }}
                     />
                 </LocalizationProvider>

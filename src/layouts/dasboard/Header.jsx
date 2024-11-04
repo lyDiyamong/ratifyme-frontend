@@ -1,6 +1,7 @@
 // React library import
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { useTheme } from "@emotion/react";
 
 // MUI import
@@ -15,18 +16,17 @@ import {
 } from "@mui/icons-material";
 
 // Custom import
-import FlexBetween from "../../components/styles/FlexBetween";
-import DashboardContainer from "../../components/styles/DashboardContainer";
 import DefaultProfileSvg from "../../assets/images/DefaultProfile.svg";
 import MaleUserDefault from "../../assets/images/MaleUser.svg";
 import FemaleUserDefault from "../../assets/images/FemaleUser.svg";
-
-// API import
-import { useFetchInfoUserByIdQuery } from "../../store/api/users/userInfoProfileApi";
-import { useNavigate } from "react-router";
+import FlexBetween from "../../components/styles/FlexBetween";
+import DashboardContainer from "../../components/styles/DashboardContainer";
 import NotificationSidebar from "../../components/NotificationSidebar";
 import PageLoading from "../../components/loading/PageLoading";
 import AlertConfirmation from "../../components/alert/AlertConfirmation";
+
+// API import
+import { useFetchInfoUserByIdQuery } from "../../store/api/users/userInfoProfileApi";
 import { useLogoutMutation } from "../../store/api/auth/authApi";
 
 // ============ Start Header ============

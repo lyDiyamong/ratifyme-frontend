@@ -1,5 +1,6 @@
-// React import
+// React library import
 import { useEffect, useRef, useState } from "react";
+
 // MUI import
 import { Box, Typography, Grid, Paper } from "@mui/material";
 
@@ -22,7 +23,8 @@ const BenefitGrid = () => {
                     if (entry.isIntersecting) {
                         setIsVisible(true);
                     } else {
-                        setIsVisible(false); // Reset visibility when the section leaves the viewport
+                        // Reset visibility when the section leaves the viewport
+                        setIsVisible(false); 
                     }
                 });
             },

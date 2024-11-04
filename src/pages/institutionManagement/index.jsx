@@ -1,4 +1,4 @@
-// React import
+// React lirary import
 import { useNavigate } from "react-router";
 import { useState } from "react";
 
@@ -9,13 +9,13 @@ import PageTitle from "../../components/PageTitle";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import TableCustom from "../../components/TableCustom";
 import MenuSelection from "../../components/TableAction/MenuSelection";
+import getSortOptions from "../../components/GetSortOptions";
+import { TableAvatars } from "../../components/avartars/TableAvatars";
 import FormatDate from "../../utils/formatDate";
 import useCatchStatus from "../../hooks/useCatchStatus";
-import getSortOptions from "../../components/GetSortOptions";
 
 // Api import
 import { useGetInstitutionQuery } from "../../store/api/institutionManagement/institutionApi";
-import { TableAvatars } from "../../components/avartars/TableAvatars";
 
 const InstitutionManagement = () => {
     const isSortable = true;

@@ -1,14 +1,21 @@
+// React library import
 import { useState } from "react";
+import dayjs from "dayjs";
+
+// MUI import
 import { Box, Card, CardContent, Stack, Typography, IconButton, Divider, useMediaQuery } from "@mui/material";
 import { AccessTime, AccountBalanceRounded, BorderColorRounded, Delete, DeleteForeverOutlined, School } from "@mui/icons-material";
-import theme from "../../../assets/themes";
-import MoreMenu from "../../../components/MoreMenu";
+
+// Custom import
 import EditAcademicModal from "./EditAcademicModal";
-import dayjs from "dayjs";
-import { useDeleteAcademicBackgroundByIdMutation } from "../../../store/api/earnerManagement/earnerApis";
 import useCatchStatus from "../../../hooks/useCatchStatus";
+import MoreMenu from "../../../components/MoreMenu";
 import AlertMessage from "../../../components/alert/AlertMessage";
 import AlertConfirmation from "../../../components/alert/AlertConfirmation";
+import theme from "../../../assets/themes";
+
+// API import
+import { useDeleteAcademicBackgroundByIdMutation } from "../../../store/api/earnerManagement/earnerApis";
 
 const AcademicInfo = ({ academicData }) => {
     const { userId, fieldOfStudyId, academicYear, academicLevelId, academicId } = academicData;

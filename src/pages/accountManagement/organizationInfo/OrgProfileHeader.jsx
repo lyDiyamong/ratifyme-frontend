@@ -13,15 +13,15 @@ import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
 import theme from "../../../assets/themes";
 import MoreMenu from "../../../components/MoreMenu";
 import OrgModalEditProfile from "./OrgModalEditProfile";
+import AlertMessage from "../../../components/alert/AlertMessage";
+import useCatchStatus from "../../../hooks/useCatchStatus";
 
-// Fetching Data Import
+// API import
 import { useFetchInfoUserByIdQuery } from "../../../store/api/users/userInfoProfileApi";
 import {
     useDeleteInstitutionImgMutation,
     useUploadInstitutionImgMutation,
 } from "../../../store/api/institutionManagement/institutionApi";
-import AlertMessage from "../../../components/alert/AlertMessage";
-import useCatchStatus from "../../../hooks/useCatchStatus";
 
 // =========== Start Profile Header ===========
 const OrgProfileHeader = ({ institutionInfo }) => {
@@ -288,7 +288,6 @@ const OrgProfileHeader = ({ institutionInfo }) => {
                             menuItems={menuItems}
                             iconStyles={{
                                 color: "black",
-                                // backgroundColor: theme.palette.background.secondary,
                                 borderRadius: theme.customShape.section,
                             }}
                         />

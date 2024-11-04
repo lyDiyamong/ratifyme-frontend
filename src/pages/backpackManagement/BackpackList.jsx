@@ -1,13 +1,13 @@
-// React Import
+// React import
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
-// MUI Import
+// MUI import
 import { Pagination, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
-// Custom Import
+// Custom import
 import BadgeListCard from "../../components/BadgeListCard";
 import PageLoading from "../../components/loading/PageLoading";
 
