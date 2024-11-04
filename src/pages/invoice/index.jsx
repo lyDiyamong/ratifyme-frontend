@@ -60,7 +60,7 @@ const InvoiceManagement = () => {
             : [
                   {
                       name: "Organization Name",
-                      selector: (row) => row.name,
+                      selector: (row) => row.subscriptionName,
                       sortable: true,
                   },
               ]),
