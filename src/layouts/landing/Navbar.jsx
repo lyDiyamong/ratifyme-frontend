@@ -1,23 +1,27 @@
+// React library import
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-import { AppBar, Box, Toolbar, Button, Menu, MenuItem, Slide, Stack, Typography, IconButton } from "@mui/material";
+// MUI import
+import { AppBar, Box, Toolbar, Button, Menu, MenuItem, Stack, Typography, IconButton } from "@mui/material";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import theme from "../../assets/themes";
-import RatifyMeLogo from "../../assets/icons/RatfiyME.svg";
+// Custom import
 import LandingContainer from "../../components/styles/LandingContainer";
-import { useGetSubInstitutionQuery } from "../../store/api/subscription/subscriptionApi";
+import AlertConfirmation from "../../components/alert/AlertConfirmation";
+import AlertMessage from "../../components/alert/AlertMessage";
+import RatifyMeLogo from "../../assets/icons/RatfiyME.svg";
 import DefaultProfileSvg from "../../assets/images/DefaultProfile.svg";
 import MaleUserDefault from "../../assets/images/MaleUser.svg";
 import FemaleUserDefault from "../../assets/images/FemaleUser.svg";
-import AlertConfirmation from "../../components/alert/AlertConfirmation";
-import { useLogoutMutation } from "../../store/api/auth/authApi";
 import useCatchStatus from "../../hooks/useCatchStatus";
-import AlertMessage from "../../components/alert/AlertMessage";
+import theme from "../../assets/themes";
 
+// API import
+import { useLogoutMutation } from "../../store/api/auth/authApi";
+import { useGetSubInstitutionQuery } from "../../store/api/subscription/subscriptionApi";
 const Navbar = () => {
     const [navbarAnchorEl, setNavbarAnchorEl] = useState(null);
     const [alertOpen, setAlertOpen] = useState(false);
