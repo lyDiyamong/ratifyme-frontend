@@ -34,12 +34,14 @@ const CoreElementStep = ({ control, schema, errors }) => {
                 <Box>
                     {/* Achievement Types */}
                     <MultiSelectForm
-                        name="AchievementTypes" // Use the same field name consistently
+                        // Use the same field name consistently
+                        name="AchievementTypes"
                         label="Achievement Types"
                         options={achievementType?.data || []}
                         control={control}
                         required={true}
-                        schema={schema?.fields.AchievementTypes} // Use the same name in validation schema
+                        // Use the same name in validation schema
+                        schema={schema?.fields.AchievementTypes}
                     />
                 </Box>
             </Stack>

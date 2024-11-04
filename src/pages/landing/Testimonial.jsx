@@ -54,13 +54,13 @@ const Testimonial = () => {
             </Typography>
             <Carousel
                 responsive={responsive}
-                infinite={true} // Makes the carousel loop infinitely
-                autoPlay={true} // Enables autoplay
-                autoPlaySpeed={3000} // Auto slides every 3 seconds
-                keyBoardControl={true} // Enable keyboard navigation
-                swipeable={true} // Allow swiping on touch devices
-                draggable={true} // Enable dragging for mouse users
-                showDots={true} // Show navigation dots
+                infinite={true} 
+                autoPlay={true} 
+                autoPlaySpeed={3000} 
+                keyBoardControl={true} 
+                swipeable={true} 
+                draggable={true}
+                showDots={true} 
             >
                 {testimonials.map((testimonial, index) => (
                     <div key={index} style={{ padding: "1rem" }}>
@@ -78,7 +78,7 @@ const Testimonial = () => {
                                 [theme.breakpoints.down("sm")]: {
                                     flexDirection: "column",
                                     textAlign: "center",
-                                    padding: "1rem", // Add more padding for better spacing
+                                    padding: "1rem", 
                                 },
                             }}
                         >
@@ -86,13 +86,13 @@ const Testimonial = () => {
                                 alt={testimonial.author}
                                 src={testimonial.image}
                                 sx={{
-                                    width: "100%", // Adjusted to fit container width on mobile
-                                    height: "auto", // Maintain aspect ratio
-                                    maxWidth: "150px", // Maximum size for mobile
+                                    width: "100%", 
+                                    height: "auto", 
+                                    maxWidth: "150px", 
                                     marginRight: "1.5rem",
                                     borderRadius: "12px",
                                     [theme.breakpoints.down("sm")]: {
-                                        width: "80%", // Smaller size on mobile to fit better
+                                        width: "80%", 
                                         height: "auto",
                                         marginBottom: "1rem",
                                         marginRight: 0,
@@ -136,7 +136,7 @@ const Testimonial = () => {
                                                 [theme.breakpoints.down("sm")]:
                                                     {
                                                         textAlign: "center",
-                                                        fontSize: "0.9rem", // Reduced font size for mobile
+                                                        fontSize: "0.9rem",
                                                     },
                                             }}
                                         >

@@ -288,7 +288,6 @@ const OrgProfileHeader = ({ institutionInfo }) => {
                             menuItems={menuItems}
                             iconStyles={{
                                 color: "black",
-                                // backgroundColor: theme.palette.background.secondary,
                                 borderRadius: theme.customShape.section,
                             }}
                         />

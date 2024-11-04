@@ -8,7 +8,7 @@ import theme from "../../assets/themes";
 // Custom import
 import ModalContainer from "./badgeDetail/ModalContainer";
 
-// Api import
+// API import
 import { useFetchEarnerQuery } from "../../store/api/earnerManagement/earnerApis";
 import { useFetchEmailEarnerQuery } from "../../store/api/achievements/achievementApi";
 

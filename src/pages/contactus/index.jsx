@@ -83,7 +83,7 @@ const ContactUsPage = () => {
                             variant="contained"
                             sx={{
                                 color: theme.palette.background.default,
-                                borderRadius: theme.customShape.btn, // Applying custom borderRadius to the Button
+                                borderRadius: theme.customShape.btn,
                             }}
                         >
                             Submit

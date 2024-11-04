@@ -79,7 +79,8 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
     const handleNavigation = useCallback(
         (path) => {
             if (path === "/logout") {
-                setIsLogoutDialogOpen(true); // Open the dialog instead of logging out directly
+                // Open the dialog instead of logging out directly
+                setIsLogoutDialogOpen(true); 
             } else {
                 setActive(path.substring(1));
                 navigate(path);
@@ -99,7 +100,8 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
             ...item,
             subItems: item.subItems?.filter((subItem) => !subItem.roles || subItem.roles.includes(roleId)),
         }))
-        .filter((item) => item.subItems?.length > 0 || !item.dropdown); // Only keep items with subItems or without dropdown
+        // Only keep items with subItems or without dropdown
+        .filter((item) => item.subItems?.length > 0 || !item.dropdown); 
 
     return (
         <Box component="nav">

@@ -145,7 +145,7 @@ const SignupPage = () => {
         if (isStepValid) {
             const currentValues = methods.getValues();
 
-            setFieldValues(currentValues); // Save values
+            setFieldValues(currentValues);
 
             // Mark current step as completed
             setStepCompletion((prev) => {

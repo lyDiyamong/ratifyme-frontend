@@ -23,7 +23,8 @@ const BenefitGrid = () => {
                     if (entry.isIntersecting) {
                         setIsVisible(true);
                     } else {
-                        setIsVisible(false); // Reset visibility when the section leaves the viewport
+                        // Reset visibility when the section leaves the viewport
+                        setIsVisible(false); 
                     }
                 });
             },

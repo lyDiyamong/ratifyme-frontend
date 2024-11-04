@@ -30,7 +30,8 @@ const OrganizationBio = ({ institutionInfo }) => {
     const getDynamicValue = (property, ...sources) => {
         for (let source of sources) {
             if (source?.[property] !== undefined) {
-                return source[property] || ""; // Return empty string if undefined
+                // Return empty string if undefined
+                return source[property] || ""; 
             }
         }
         return ""; // Return empty string as fallback

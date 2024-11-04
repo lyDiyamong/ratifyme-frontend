@@ -89,7 +89,6 @@ const HeroAboutSection = () => {
                             variant="h3"
                             sx={{
                                 textAlign: "center",
-                                // fontWeight: theme.fontWeight.semiBold,
                                 lineHeight: 1.2,
                                 marginBottom: "20px",
                                 maxWidth: 600,

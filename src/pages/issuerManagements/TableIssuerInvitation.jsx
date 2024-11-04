@@ -101,12 +101,12 @@ const TableIssuerInvitation = () => {
             setIsSuccess(true);
             setMessage(newIssuerResponse?.message || "Invitation sent successfully!");
 
-            reset(); // Reset the form fields
+            reset();
         } catch (err) {
             setIsSuccess(false);
             setMessage(err?.data?.message || "Failed to send invitation. Please try again.");
         } finally {
-            setDialogOpen(false); // Close dialog whether success or error
+            setDialogOpen(false);
         }
     };
 

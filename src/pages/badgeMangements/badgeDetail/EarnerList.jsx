@@ -43,12 +43,6 @@ const EarnerList = ({ achievementId }) => {
             selector: (row) => FormatYear(row.AcademicBackground?.academicYear) || "N/A",
             sortable: true,
         },
-        // {
-        //     name: "Action",
-        //     selector: (row) => (
-        //         <MenuSelection onView={() => handleView(row.id)} onDelete={() => handleDelete(row.id)} />
-        //     ),
-        // },
     ];
     // State for handling selected emails
     const earners = earner?.data.map((earner) => earner?.Earner);

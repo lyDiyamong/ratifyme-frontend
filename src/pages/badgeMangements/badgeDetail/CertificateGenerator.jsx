@@ -103,9 +103,12 @@ const CertificateGenerator = ({ badge }) => {
     // Generate certificate image and upload it
     const handleGenerateImage = async () => {
         try {
-            await new Promise((resolve) => setTimeout(resolve, 100)); // Wait for DOM readiness
-            await document.fonts.ready; // Wait for fonts to load
-            await prepareImages(certificateRef); // Preload and convert images
+            // Wait for DOM readiness
+            await new Promise((resolve) => setTimeout(resolve, 100)); 
+            // Wait for fonts to load
+            await document.fonts.ready; 
+            // Preload and convert images
+            await prepareImages(certificateRef); 
 
             const imageSettings = {
                 quality: 1.0,

@@ -24,7 +24,7 @@ const BioContent = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [profileImage, setProfileImage] = useState(DefaultProfileSvg);
 
-    const bioRef = useRef(null); // Reference to the Typography component
+    const bioRef = useRef(null);
 
     // Fetch user data and bio
     const { data: info } = useFetchInfoUserByIdQuery(userId, { skip: !userId });

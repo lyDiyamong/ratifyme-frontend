@@ -116,15 +116,19 @@ const TableEarner = () => {
     };
 
     const handleDeleteClick = (userId) => {
-        setSelectedRowId(userId); // <-- Set the selected row ID here
-        setIsDeleteOpen(true); // <-- Open delete confirmation modal
+        // <-- Set the selected row ID here
+        setSelectedRowId(userId); 
+        // <-- Open delete confirmation modal
+        setIsDeleteOpen(true); 
     };
     // Handle Delete row in table
     const handleDelete = async () => {
         try {
             await deleteEarner(selectedRowId).unwrap();
-            setIsDeleteOpen(false); // Close the dialog after delete
-            setSelectedRowId(null); // Reset the selected row ID
+            // Close the dialog after delete
+            setIsDeleteOpen(false); 
+            // Reset the selected row ID
+            setSelectedRowId(null); 
         } catch (err) {
             console.error("Failed to delete:", err);
         }
@@ -153,7 +157,7 @@ const TableEarner = () => {
             );
 
             reset();
-            setDialogOpen(false); // Close the dialog on success
+            setDialogOpen(false);
         } catch (error) {
             console.error("Error sending invitation", error);
         }

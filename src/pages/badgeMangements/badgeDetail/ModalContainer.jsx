@@ -23,8 +23,8 @@ const CustomPaper = (props) => <Paper {...props} sx={{ borderRadius: "16px" }} /
 const ModalContainer = ({ open, onClose, title, options, control, onGetEmail, badgeId, emails, setHasEarner }) => {
     const [loading, setLoading] = useState(false);
     const [successMsg, setSuccessMsg] = useState("");
-    const [selectedValue, setSelectedValue] = useState(null); // Controlled value for the SelectForm
-    const [list, setList] = useState([]); // List of selected emails
+    const [selectedValue, setSelectedValue] = useState(null); 
+    const [list, setList] = useState([]);
 
     const { issuerData } = useSelector((state) => state.global);
     const [sendBadge, { isLoading, isSuccess }] = useSendBadgeMutation();
