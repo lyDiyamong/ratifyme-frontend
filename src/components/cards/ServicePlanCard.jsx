@@ -1,5 +1,11 @@
+// React library import
 import { useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import axios from "axios";
+
+// MUI import
 import {
     Container,
     Box,
@@ -15,15 +21,16 @@ import {
     ToggleButtonGroup,
 } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
-import theme from "../../assets/themes";
-import { useGetServicePlanQuery } from "../../store/api/subscription/subscriptionApi";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
-import axios from "axios";
-import PageLoading from "../../components/loading/PageLoading";
+
+// Custom import
 import { SpinLoading } from "../loading/SpinLoading";
 import { plans } from "../../data/pricePage/servicePlanData";
+import PageLoading from "../../components/loading/PageLoading";
 import AlertConfirmation from "../../components/alert/AlertConfirmation";
+import theme from "../../assets/themes";
+
+// API import
+import { useGetServicePlanQuery } from "../../store/api/subscription/subscriptionApi";
 
 // Public key from Stripe
 const stripePromise = loadStripe(String(import.meta.env.VITE_STRIPE_PUBLIC_KEY));

@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import { Stack, Dialog, DialogTitle, DialogContent, Typography, Avatar, IconButton, Box, Grid, Card } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { styled } from "@mui/system";
-import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 
 // Custom import
 import DefaultProfileSvg from "../assets/images/DefaultProfile.svg";
