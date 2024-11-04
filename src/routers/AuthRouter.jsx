@@ -1,7 +1,8 @@
-// React library Import
+// React library import
+import { useEffect, useState } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 
-// Component Import
+// Custom import
 import AuthLayout from "../layouts/auth";
 import SignupPage from "../pages/auth/SignupPage";
 import LoginPage from "../pages/auth/LoginPage";
@@ -17,7 +18,6 @@ import EmailVerificationPage from "../pages/auth/EmailVerificationPage";
 import SignupSuccessPage from "../pages/auth/SignupSuccessPage";
 import NotFoundPage from "../pages/notFound";
 import AlertConfirmation from "../components/alert/AlertConfirmation";
-import { useEffect, useState } from "react";
 import theme from "../assets/themes";
 
 const ProtectedRoute = ({ children }) => {
