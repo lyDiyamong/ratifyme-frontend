@@ -1,8 +1,9 @@
+// MUI import
 import { Box, Stack, Typography } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
-// Custom imports
+// Custom import
 import MultiSelectForm from "../../components/MultiSelectionForm";
 import FormInput from "../../components/FormInput";
 import DateSelectionForm from "../../components/DateSelectionForm";

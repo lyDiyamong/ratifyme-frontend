@@ -1,14 +1,16 @@
-// MUI Import
+// React library import
+import { useSelector } from "react-redux";
+
+// MUI import
 import { Box, Stack, Typography, CircularProgress } from "@mui/material";
 
-// Custom Import
-import theme from "../../assets/themes";
+// Custom import
 import GreetingMaleIconSvg from "../../assets/images/GreetingMale.png";
 import GreetingFemaleIconSvg from "../../assets/images/GreetingFemale.png";
+import theme from "../../assets/themes";
 
-// Fetching Data
+// API import
 import { useFetchInfoUserByIdQuery } from "../../store/api/users/userInfoProfileApi";
-import { useSelector } from "react-redux";
 
 // ============ Start Greeting Section ============
 const Greeting = () => {

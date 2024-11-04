@@ -1,12 +1,14 @@
+// MUI import
+import { Stack } from "@mui/material";
+
 // Custom import
 import WhatWeDo from "./WhatWeDo";
 import OurCustomers from "./OurCustomer.jsx";
-import Faq from "./Faq";
 import HeroSection from "./HeroSection.jsx";
-import { Stack } from "@mui/material";
 import HowItWorks from "./HowItWorks.jsx";
 import SecondHeadTitle from "./SecondHeadTitle.jsx";
 import DigitalBadgeFlowStepper from "./DigitalBadgeFlowStepper.jsx";
+import Faq from "./Faq";
 
 const HomePage = () => {
     return (

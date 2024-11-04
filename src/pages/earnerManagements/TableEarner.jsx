@@ -1,27 +1,27 @@
-// React Library
+// React library import
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
-// MUI Import
+// MUI import
 import { Box, Typography, CircularProgress } from "@mui/material";
+import { DeleteForeverOutlined } from "@mui/icons-material";
 
-// Custom Import
+// Custom import
 import TableCustom from "../../components/TableCustom";
 import MenuSelection from "../../components/TableAction/MenuSelection";
-import FormatYear from "../../utils/formatDate";
-import ProfileEarnerModal from "./ProfileEarnerModal";
 import InviteUserModal from "../../components/modals/InviteUserModal";
 import { TableAvatars } from "../../components/avartars/TableAvatars";
-import theme from "../../assets/themes";
 import AlertMessage from "../../components/alert/AlertMessage";
-import useCatchStatus from "../../hooks/useCatchStatus";
 import getSortOptions from "../../components/GetSortOptions";
 import AlertConfirmation from "../../components/alert/AlertConfirmation";
+import FormatYear from "../../utils/formatDate";
+import ProfileEarnerModal from "./ProfileEarnerModal";
+import useCatchStatus from "../../hooks/useCatchStatus";
+import theme from "../../assets/themes";
 
-// Fetching Data Import
+// API import
 import { useFetchEarnerQuery, useDeleteEarnerByIdMutation } from "../../store/api/earnerManagement/earnerApis";
 import { useInviteEarnerMutation, useFetchAllInvitedUserQuery } from "../../store/api/userManagement/inviteUserApi";
-import { DeleteForeverOutlined } from "@mui/icons-material";
 
 
 // ============ Start Table Earner Modal ============

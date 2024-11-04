@@ -17,7 +17,7 @@ import { TableAvatars } from "../../components/avartars/TableAvatars";
 import theme from "../../assets/themes";
 import getSortOptions from "../../components/GetSortOptions"
 
-// Api import
+// API import
 import { useGetSubscritptionQuery } from "../../store/api/subscription/subscriptionApi";
 
 // ============ Start Table Earner Modal ============

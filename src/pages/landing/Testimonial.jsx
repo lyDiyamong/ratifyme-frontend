@@ -7,9 +7,9 @@ import { FormatQuote } from "@mui/icons-material";
 import { Card, CardContent, Typography, Avatar, Grid } from "@mui/material";
 
 //Custom import
-import theme from "../../assets/themes";
-import { testimonials } from "../../data/testimonialData";
 import LandingContainer from "../../components/styles/LandingContainer";
+import { testimonials } from "../../data/testimonialData";
+import theme from "../../assets/themes";
 
 // Configuration for the carousel responsiveness
 const responsive = {

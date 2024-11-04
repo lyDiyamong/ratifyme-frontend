@@ -1,26 +1,29 @@
+// React library import
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { useLocation, useNavigate, Link } from "react-router-dom";
-import { Box, Typography, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 // MUI import
-import { Stack } from "@mui/system";
 import EmailOutlined from "@mui/icons-material/EmailOutlined";
 import TaskAltOutlined from "@mui/icons-material/TaskAltOutlined";
+import { Stack } from "@mui/system";
+import { Box, Typography, Button } from "@mui/material";
 import { CheckCircleOutline } from "@mui/icons-material";
 
 // Custom import
-import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
-import OutletImageComponent from "./OutletImageTemplate";
 import AlertConfirmation from "../../components/alert/AlertConfirmation";
-import { useVerifyInvitationMutation } from "../../store/api/userManagement/verifyInvitationApi";
 import PageLoading from "../../components/loading/PageLoading";
 import AlertMessage from "../../components/alert/AlertMessage";
-import useCatchStatus from "../../hooks/useCatchStatus";
 import FormInput from "../../components/FormInput";
+import useCatchStatus from "../../hooks/useCatchStatus";
+import OutletImageComponent from "./OutletImageTemplate";
+import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
 import theme from "../../assets/themes";
+
+// API import
+import { useVerifyInvitationMutation } from "../../store/api/userManagement/verifyInvitationApi";
 
 const schema = yup.object({
     inviteEmail: yup.string().email("⚠️ Invalid email").required("⚠️ Email is required"),

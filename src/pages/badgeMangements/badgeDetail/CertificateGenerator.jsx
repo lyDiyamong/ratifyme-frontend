@@ -7,20 +7,20 @@ import { useSelector } from "react-redux";
 import { Box, Button, CardMedia, Stack, Typography } from "@mui/material";
 import DriveFolderUploadOutlined from "@mui/icons-material/DriveFolderUploadOutlined";
 import DownloadDoneOutlined from "@mui/icons-material/DownloadDoneOutlined";
+import { WarningAmberOutlined } from "@mui/icons-material";
 
 // Custom import
 import Certificate from "../../../components/Certificate";
-import useCatchStatus from "../../../hooks/useCatchStatus";
 import AlertMessage from "../../../components/alert/AlertMessage";
-import theme from "../../../assets/themes";
-import ComingSoonImg from "../../../assets/images/Coming-soon.svg";
 import PageLoading from "../../../components/loading/PageLoading";
+import AlertConfirmation from "../../../components/alert/AlertConfirmation";
+import useCatchStatus from "../../../hooks/useCatchStatus";
+import ComingSoonImg from "../../../assets/images/Coming-soon.svg";
+import theme from "../../../assets/themes";
 
 // Api import
 import { useUploadCertiMutation } from "../../../store/api/badgeManagement/badgeApi";
 import { useFetchEarnerAchieByIdQuery } from "../../../store/api/earnerManagement/earnerApis";
-import AlertConfirmation from "../../../components/alert/AlertConfirmation";
-import { WarningAmberOutlined } from "@mui/icons-material";
 
 // Convert remote images to base64 with SVG support
 const convertImageToBase64 = async (imgUrl) => {

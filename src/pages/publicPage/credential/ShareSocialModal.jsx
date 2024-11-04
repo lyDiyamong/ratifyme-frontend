@@ -1,4 +1,8 @@
+
+// MUI import
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Stack, Typography } from "@mui/material";
+
+// Custom import
 import theme from "../../../assets/themes";
 
 const ShareSocialModal = ({ open, handleClose, credUrl, badgeImg }) => {

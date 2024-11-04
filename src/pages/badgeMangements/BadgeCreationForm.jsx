@@ -3,28 +3,29 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-
 import { yupResolver } from "@hookform/resolvers/yup";
 
 // MUI import
 import { Button, MobileStepper, Stack, Typography, CircularProgress, Box, Skeleton, IconButton } from "@mui/material";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+import { CameraAltRounded } from "@mui/icons-material";
 
 // Custom import
-import badgeSchema from "../../utils/schema/badgeSchema";
-import theme from "../../assets/themes";
+import { SpinLoading } from "../../components/loading/SpinLoading";
+import AlertMessage from "../../components/alert/AlertMessage";
+import PageLoading from "../../components/loading/PageLoading";
 import CoreElementStep from "./CoreElementStep";
 import MetadataStep from "./MetadataStep";
 import OptionalStep from "./OptionalStep";
-import { SpinLoading } from "../../components/loading/SpinLoading";
+import useCatchStatus from "../../hooks/useCatchStatus";
+import badgeSchema from "../../utils/schema/badgeSchema";
+import BadgeDefaultSvg from "../../assets/icons/BadgeDefaultSvg.svg";
+import theme from "../../assets/themes";
+
+// API import
 import { useCreateBadgeMutation } from "../../store/api/badgeManagement/badgeApi";
 import { useFetchAchievementTypeQuery } from "../../store/api/achievements/achievementTypeApi";
-import { CameraAltRounded } from "@mui/icons-material";
-import BadgeDefaultSvg from "../../assets/icons/BadgeDefaultSvg.svg";
-import AlertMessage from "../../components/alert/AlertMessage";
-import useCatchStatus from "../../hooks/useCatchStatus";
-import PageLoading from "../../components/loading/PageLoading";
 
 // The data static of the description
 const steps = [

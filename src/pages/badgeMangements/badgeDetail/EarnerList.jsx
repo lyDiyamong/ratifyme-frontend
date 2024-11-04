@@ -2,14 +2,13 @@
 import { CardMedia, Typography, Box } from "@mui/material";
 
 // Custom import
-import StatusCode from "../../../assets/images/NoData.svg";
-import theme from "../../../assets/themes";
 import TableCustom from "../../../components/TableCustom";
 import FormatYear from "../../../utils/formatDate";
+import StatusCode from "../../../assets/images/NoData.svg";
+import theme from "../../../assets/themes";
 
 // Api import
 import { useFetchEmailEarnerQuery } from "../../../store/api/achievements/achievementApi";
-
 
 const EarnerList = ({ achievementId }) => {
     const { data: earner } = useFetchEmailEarnerQuery({ achievementId });

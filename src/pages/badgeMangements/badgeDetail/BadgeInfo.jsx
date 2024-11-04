@@ -1,23 +1,23 @@
-// React Import
+// React import
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-// MUI Import
+// MUI import
 import { Box, Typography, Chip, Stack, useMediaQuery } from "@mui/material";
-import theme from "../../../assets/themes";
 import { BorderColorRounded, Delete, DeleteForeverOutlined } from "@mui/icons-material";
 
-// Custom Import
-import IssuerBadgeButton from "../IssuerBadgeButton";
-import IssueToEarnerButton from "../IssueToEarnerButton";
+// Custom import
 import ClaimBadgeButton from "../../../components/ClaimBadgeButton";
 import MoreMenu from "../../../components/MoreMenu";
-import FormatDate from "../../../utils/formatDate";
-
-// Api Import
-import { useDeleteBadgeMutation } from "../../../store/api/badgeManagement/badgeApi";
 import AlertConfirmation from "../../../components/alert/AlertConfirmation";
+import IssuerBadgeButton from "../IssuerBadgeButton";
+import IssueToEarnerButton from "../IssueToEarnerButton";
+import FormatDate from "../../../utils/formatDate";
+import theme from "../../../assets/themes";
+
+// Api import
+import { useDeleteBadgeMutation } from "../../../store/api/badgeManagement/badgeApi";
 
 const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
     // define breakpoint of the screen

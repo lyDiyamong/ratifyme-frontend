@@ -1,15 +1,16 @@
+// React library import
+import { useEffect, useRef, useState } from "react";
+
 // MUI import
 import { Typography, Grid, Box, Stack, Paper } from "@mui/material";
+import { Check } from "@mui/icons-material";
 
-// React library import
-import SelectTextInfo from "../../assets/images/SelectTextInfo.svg";
-import theme from "../../assets/themes/index";
 
 //Custom import
 import LandingContainer from "../../components/styles/LandingContainer";
 import Institution from "../../assets/images/Institution.svg";
-import { useEffect, useRef, useState } from "react";
-import { Check } from "@mui/icons-material";
+import SelectTextInfo from "../../assets/images/SelectTextInfo.svg";
+import theme from "../../assets/themes/index";
 
 //============ start What We Do section ============
 export default function WhatWeDo() {

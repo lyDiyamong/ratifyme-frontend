@@ -1,18 +1,16 @@
-// MUI Import 
+// MUI import 
 import {
     Phone as PhoneIcon,
     Email as EmailIcon,
     Cake as CakeIcon,
-    School as SchoolIcon,
-    Public as PublicIcon,
     BusinessCenter as BusinessCenterIcon,
 } from "@mui/icons-material";
 
-// Custom Import
+// Custom import
 import ProfileModal from "../../components/ProfileModal";
 import FormatDate from "../../utils/formatDate";
 
-// Fetching Data Import
+// API import
 import { useFetchEarnerByIdQuery } from "../../store/api/earnerManagement/earnerApis";
 
 /**

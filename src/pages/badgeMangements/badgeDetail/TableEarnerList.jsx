@@ -1,8 +1,13 @@
-import TableCustom from "../../../components/TableCustom";
-import { useFetchEmailEarnerQuery } from "../../../store/api/achievements/achievementApi";
-import FormatYear from "../../../utils/formatDate";
+// Reacl library import
 import { useState } from "react";
+
+// Custom import
+import TableCustom from "../../../components/TableCustom";
 import getSortOptions from "../../../components/GetSortOptions";
+import FormatYear from "../../../utils/formatDate";
+
+// API import
+import { useFetchEmailEarnerQuery } from "../../../store/api/achievements/achievementApi";
 
 const TableEarnerList = ({ achievementId }) => {
     const isSortable = true;

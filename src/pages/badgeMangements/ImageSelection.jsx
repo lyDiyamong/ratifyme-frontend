@@ -42,7 +42,6 @@ const ImageSelection = ({ onImageSelect }) => {
 
                         setImage(file);
                         onImageSelect(file);
-                        // setLoading(false); // Stop loading
 
                         // SetTimeout to see Loading
                         setTimeout(() => {

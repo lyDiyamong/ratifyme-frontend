@@ -15,9 +15,9 @@ import AlertMessage from "../../components/alert/AlertMessage";
 import InviteUserStatus from "../../components/chips/inviteUserStatus";
 import getSortOptions from "../../components/GetSortOptions";
 import { TableAvatars } from "../../components/avartars/TableAvatars";
-import theme from "../../assets/themes";
-import FormatDate from "../../utils/formatDate";
 import useCatchStatus from "../../hooks/useCatchStatus";
+import FormatDate from "../../utils/formatDate";
+import theme from "../../assets/themes";
 
 // API import
 import {

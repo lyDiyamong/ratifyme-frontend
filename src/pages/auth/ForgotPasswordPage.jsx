@@ -7,7 +7,6 @@ import * as yup from "yup";
 // MUI import
 import { Box, Typography, Button, Stack } from "@mui/material";
 import { ArrowBackOutlined, LockOutlined } from "@mui/icons-material";
-import { useForgotPasswordMutation } from "../../store/api/auth/authApi";
 import EmailOutlined from "@mui/icons-material/EmailOutlined";
 
 // Custom import
@@ -19,6 +18,9 @@ import OutletImageComponent from "./OutletImageTemplate";
 import useCatchStatus from "../../hooks/useCatchStatus";
 import AlertMessage from "../../components/alert/AlertMessage";
 import PageLoading from "../../components/loading/PageLoading";
+
+// API import
+import { useForgotPasswordMutation } from "../../store/api/auth/authApi";
 
 const schema = yup.object({
     email: yup

@@ -1,4 +1,4 @@
-// Custom Import
+// Custom import
 import blueGraphSvg from "../../assets/images/bluegraph.svg";
 import purpleGraphSvg from "../../assets/images/purplegraph.svg";
 import yellowGraphSvg from "../../assets/images/yellowgraph.svg";

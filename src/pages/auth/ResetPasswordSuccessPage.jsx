@@ -6,9 +6,9 @@ import { Box, Typography, Button, Stack } from "@mui/material";
 import { CheckCircleOutline } from "@mui/icons-material";
 
 // Custom import
+import OutletImageComponent from "./OutletImageTemplate";
 import theme from "../../assets/themes";
 import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
-import OutletImageComponent from "./OutletImageTemplate";
 import ResetPasswordIconSvg from "../../assets/icons/resetPasswordSuccess.svg";
 
 const ResetPasswordSuccessPage = () => {

@@ -1,10 +1,12 @@
-// Custom Imports
+// React library import
+import { useSelector } from "react-redux";
+
+// Custom import
 import DashboardContainer from "../../components/styles/DashboardContainer";
-import TableIssuer from "./TableIssuer";
-import TableIssuerInvitation from "./TableIssuerInvitation";
 import PageTitle from "../../components/PageTitle";
 import CustomTabs from "../../components/tabs/customTabs";
-import { useSelector } from "react-redux";
+import TableIssuer from "./TableIssuer";
+import TableIssuerInvitation from "./TableIssuerInvitation";
 
 // Issuer Management Component
 const IssuerManagement = () => {

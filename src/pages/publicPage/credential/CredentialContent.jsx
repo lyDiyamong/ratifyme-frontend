@@ -1,13 +1,18 @@
-import { Box, Grid, Typography, Button, Stack } from "@mui/material";
-import theme from "../../../assets/themes";
-import { CalendarMonthOutlined, LinkedIn, Share, VerifiedUserOutlined, VerifiedUserRounded } from "@mui/icons-material";
+// React library import
 import { useState } from "react";
-import ShareSocialModal from "./ShareSocialModal";
-import IssuerByCred from "./IssuerByCred";
-import BadgeDetailsCred from "./BadgeDetailsCred";
-import SkillsCred from "./SkillsCred";
+
+// MUI import
+import { Box, Grid, Typography, Button, Stack } from "@mui/material";
+import { CalendarMonthOutlined, LinkedIn, Share, VerifiedUserOutlined, VerifiedUserRounded } from "@mui/icons-material";
+
+// Custom import
 import AchievementTypesCred from "./AchievementTypesCred";
+import BadgeDetailsCred from "./BadgeDetailsCred";
+import IssuerByCred from "./IssuerByCred";
+import ShareSocialModal from "./ShareSocialModal";
+import SkillsCred from "./SkillsCred";
 import FormatDate from "../../../utils/formatDate";
+import theme from "../../../assets/themes";
 
 const CredentialContent = ({ earnerData, achieveData, credUrl, credId, verifyCred }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);

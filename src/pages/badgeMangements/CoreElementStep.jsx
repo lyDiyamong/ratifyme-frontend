@@ -1,12 +1,15 @@
+// MUI import
 import { Stack } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { Box } from "@mui/system";
 
-// Custom imports
+// Custom import
 import MultiSelectForm from "../../components/MultiSelectionForm";
 import FormInput from "../../components/FormInput";
+
+// API import
 import { useFetchAchievementTypeQuery } from "../../store/api/achievements/achievementTypeApi";
-import { Box } from "@mui/system";
 
 const CoreElementStep = ({ control, schema, errors }) => {
     // Fetch achievement types data

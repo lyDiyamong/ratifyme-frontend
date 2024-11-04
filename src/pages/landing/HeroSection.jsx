@@ -1,8 +1,8 @@
+// React library import
+import { Link } from "react-router-dom";
+
 // Mui Import
 import { Box, Button, Chip, Stack, Typography } from "@mui/material";
-
-//Custom Import
-import LandingContainer from "../../components/styles/LandingContainer";
 import {
     AdminPanelSettingsOutlined,
     ApartmentOutlined,
@@ -10,8 +10,10 @@ import {
     CastForEducationOutlined,
     Circle,
 } from "@mui/icons-material";
+
+//Custom Import
+import LandingContainer from "../../components/styles/LandingContainer";
 import theme from "../../assets/themes";
-import { Link } from "react-router-dom";
 
 const HeroSection = () => {
     return (

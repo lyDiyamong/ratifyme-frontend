@@ -6,24 +6,26 @@ import * as yup from "yup";
 
 // MUI import
 import { Box, Typography, Button, Checkbox, FormControlLabel, IconButton, Divider } from "@mui/material";
+import { Stack } from "@mui/system";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import Google from "@mui/icons-material/Google";
+import LockOpenOutlined from "@mui/icons-material/LockOpenOutlined";
+import EmailOutlined from "@mui/icons-material/EmailOutlined";
 
 // Custom import
 import FormInput from "../../components/FormInput";
-import theme from "../../assets/themes";
-import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
 import { SpinLoading } from "../../components/loading/SpinLoading";
-import { useResendVerificationMutation, useSignInMutation } from "../../store/api/auth/authApi";
-import { Stack } from "@mui/system";
-import LockOpenOutlined from "@mui/icons-material/LockOpenOutlined";
-import EmailOutlined from "@mui/icons-material/EmailOutlined";
-import OutletImageComponent from "./OutletImageTemplate";
-import useCatchStatus from "../../hooks/useCatchStatus";
 import AlertMessage from "../../components/alert/AlertMessage";
 import AlertConfirmation from "../../components/alert/AlertConfirmation";
 import PageLoading from "../../components/loading/PageLoading";
+import OutletImageComponent from "./OutletImageTemplate";
+import useCatchStatus from "../../hooks/useCatchStatus";
+import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
+import theme from "../../assets/themes";
+
+// API import
+import { useResendVerificationMutation, useSignInMutation } from "../../store/api/auth/authApi";
 
 const schema = yup.object({
     email: yup.string().email("⚠️ Invalid email").required("⚠️ Email is required"),

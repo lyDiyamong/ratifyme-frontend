@@ -1,5 +1,8 @@
+// MUI import
 import { Box, Typography, Card } from "@mui/material";
-import theme from "../../assets/themes"; // Assuming you have a theme file
+
+// Custom import
+import theme from "../../assets/themes";
 
 const SignupOptionCard = ({ title, description, onClick, circleBg, icon }) => {
     return (

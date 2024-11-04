@@ -1,7 +1,7 @@
-//React Library
+//React library import
 import { useState } from "react";
 
-//MUI Import
+//MUI import
 import { Button } from "@mui/material";
 
 //Custom import

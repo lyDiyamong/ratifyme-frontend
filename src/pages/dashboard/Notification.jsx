@@ -1,7 +1,7 @@
-//Mui import
+//MUI import
 import { Box, Stack, Card, CardMedia, CardContent, Typography, Link } from "@mui/material";
 
-//Custom Import
+//Custom import
 import { notiCardData } from "../../data/dashboardPage/cardNotification";
 import theme from "../../assets/themes";
 

@@ -1,15 +1,22 @@
+// Reacl library import
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+
+// MUI import
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Paper, Box, Typography, IconButton } from "@mui/material";
 import { Close } from "@mui/icons-material";
-import theme from "../../../assets/themes";
-import SelectForm from "../../../components/SelectionForm";
-import { useSendBadgeMutation } from "../../../store/api/achievements/achievementApi";
-import { useFetchEarnerQuery } from "../../../store/api/earnerManagement/earnerApis";
+
+// Custom import
 import { SpinLoading } from "../../../components/loading/SpinLoading";
 import AlertMessage from "../../../components/alert/AlertMessage";
-import useCatchStatus from "../../../hooks/useCatchStatus";
 import PageLoading from "../../../components/loading/PageLoading";
+import SelectForm from "../../../components/SelectionForm";
+import useCatchStatus from "../../../hooks/useCatchStatus";
+import theme from "../../../assets/themes";
+
+// API import
+import { useSendBadgeMutation } from "../../../store/api/achievements/achievementApi";
+import { useFetchEarnerQuery } from "../../../store/api/earnerManagement/earnerApis";
 
 const CustomPaper = (props) => <Paper {...props} sx={{ borderRadius: "16px" }} />;
 
