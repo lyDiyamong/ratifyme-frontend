@@ -1,12 +1,12 @@
-// React Import
+// React library import
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
-// MUI Import
+// MUI import
 import { Box, Typography, Pagination } from "@mui/material";
 
-// Custom Import
+// Custom import
 import BadgeListCard from "../../components/BadgeListCard";
 import PageLoading from "../../components/loading/PageLoading";
 
@@ -39,7 +39,7 @@ const BadgeList = ({ badges, total, onPage, page, limit, result, isLoading, isEr
     } else if (isError) {
         return <Typography>Error...</Typography>;
     }
-    const totalBadge = badges.length !== total ? result : total;
+    const totalBadge = badges.length !== total ? total : result;
     // If the number of returned badges is less than the limit, it means you're on the last page
     const totalPages = totalBadge > 0 ? Math.ceil(totalBadge / limit) : 0;
 

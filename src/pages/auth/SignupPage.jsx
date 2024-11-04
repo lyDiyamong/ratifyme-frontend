@@ -8,17 +8,19 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Typography, Button, Stepper, Step, Stack } from "@mui/material";
 
 // Custom import
-import theme from "../../assets/themes";
-import { useSignUpMutation } from "../../store/api/auth/authApi";
-import useCatchStatus from "../../hooks/useCatchStatus";
 import AlertMessage from "../../components/alert/AlertMessage";
-import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
-import { passwordSchema } from "../../utils/auth/passwordUtils";
-import { schema } from "../../utils/auth/fieldValidationSchema.js";
 import RenderStepSignupContent from "../../components/auth/RenderStepSignupContent.jsx";
 import { GetStepIcon, CustomConnector, CustomStepIcon, CustomStepLabel } from "../../components/auth/CustomSteppers.jsx";
 import PageLoading from "../../components/loading/PageLoading.jsx";
 import AuthOutletImage from "../../components/auth/AuthOutletImage.jsx";
+import useCatchStatus from "../../hooks/useCatchStatus";
+import { passwordSchema } from "../../utils/auth/passwordUtils";
+import { schema } from "../../utils/auth/fieldValidationSchema.js";
+import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
+import theme from "../../assets/themes";
+
+// API import
+import { useSignUpMutation } from "../../store/api/auth/authApi";
 
 const passwordSchemaName = passwordSchema({
     passwordName: "password",
@@ -32,7 +34,7 @@ const roleIdData = {
 };
 
 const SignupPage = () => {
-    const { search } = useLocation();
+    const { search, pathname } = useLocation();
     const location = useLocation();
     const navigate = useNavigate();
     const [role, setRole] = useState("");
@@ -54,7 +56,16 @@ const SignupPage = () => {
     useEffect(() => {
         const queryRole = new URLSearchParams(search).get("as") || "";
         setRole(queryRole);
-    }, [search]);
+
+        const validRoles = ["institution", "earner", "issuer"];
+
+        // Check for valid routes
+        const isValidPath = pathname === "/auth/signup" && validRoles.includes(queryRole.toLowerCase());
+
+        if (!isValidPath) {
+            navigate("/not-found");
+        }
+    }, [search, pathname, navigate]);
 
     const methods = useForm({
         defaultValues: {
@@ -134,7 +145,7 @@ const SignupPage = () => {
         if (isStepValid) {
             const currentValues = methods.getValues();
 
-            setFieldValues(currentValues); // Save values
+            setFieldValues(currentValues);
 
             // Mark current step as completed
             setStepCompletion((prev) => {

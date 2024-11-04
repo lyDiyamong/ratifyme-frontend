@@ -1,15 +1,15 @@
-// React Library import
+// React library import
 import { useSelector } from "react-redux";
 import { useState } from "react";
 
-// MUI Import
+// MUI import
 import { Box, Typography, CircularProgress } from "@mui/material";
 
-// Custom Import
+// Custom import
 import TableCustom from "../../components/TableCustom";
 import { TableAvatars } from "../../components/avartars/TableAvatars";
 
-// Fetching Data Import
+// API import
 import { useFetchInstitutionStatsQuery } from "../../store/api/reports/institutionStatApis";
 
 // ============ Start Table Report ============
@@ -27,7 +27,7 @@ const TableReport = () => {
 
     if (roleId === 1) {
         // Admin
-        filteredReportData = reportData; // Admin sees all reports
+        filteredReportData = reportData;
     } else if (roleId === 2) {
         // Institution Owner
         filteredReportData = reportData?.filter((report) => report.userId === userId);

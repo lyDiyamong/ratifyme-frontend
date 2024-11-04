@@ -1,7 +1,10 @@
+// MUI import
 import { Box, Stack } from "@mui/system";
-import theme from "../../../assets/themes";
-import { Avatar, Button, Chip, Tooltip, Typography } from "@mui/material";
+import { Avatar, Chip, Tooltip, Typography } from "@mui/material";
 import { VerifiedRounded } from "@mui/icons-material";
+
+// Custom import
+import theme from "../../../assets/themes";
 import IssuerSvg from "../../../assets/icons/IssuerSvg.svg";
 
 const CustomTooltip = ({ title, children }) => {

@@ -82,10 +82,6 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
                 variant="body1"
                     sx={{
                         color: theme.palette.text.disabled,
-                        // letterSpacing: 2,
-                        // fontSize: theme.typography.body2,
-                        // lineHeight: 2,
-                        // fontWeight: theme.fontWeight.bold,
                     }}
                 >
                     Certifies that
@@ -99,10 +95,7 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
                 variant="body1"
                     sx={{
                         color: theme.palette.text.disabled,
-                        // letterSpacing: 2,
-                        // fontSize: theme.typography.body2,
                         lineHeight: 2,
-                        // fontWeight: theme.fontWeight.bold,
                     }}
                 >
                     successfully completed all requirements in

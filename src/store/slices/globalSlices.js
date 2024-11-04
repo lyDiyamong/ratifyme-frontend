@@ -1,3 +1,4 @@
+// React library import
 import { createSlice } from "@reduxjs/toolkit";
 
 // Initial state for global slice

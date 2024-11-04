@@ -1,21 +1,24 @@
-import React, { useState } from "react";
-import { Button, CardMedia, Stack, Typography } from "@mui/material";
-import theme from "../../../assets/themes";
-import AcademicInfo from "./academicInfo";
-import { useFetchAcademicBackgroundByUserQuery, useFetchEarnerQuery } from "../../../store/api/earnerManagement/earnerApis";
-import { useFetchInfoUserByIdQuery } from "../../../store/api/users/userInfoProfileApi";
+// React library import
+import { useState } from "react";
 import { useSelector } from "react-redux";
-import FormatDate from "../../../utils/formatDate";
-import { Box } from "@mui/system";
-import StatusCode from "../../../assets/images/Search-Illustation.svg";
+
+// MUI import
+import { Button, CardMedia, Stack, Typography } from "@mui/material";
 import { LoupeRounded } from "@mui/icons-material";
+import { Box } from "@mui/system";
+
+// Custom import
+import StatusCode from "../../../assets/images/Search-Illustation.svg";
+import AcademicInfo from "./academicInfo";
 import AddAcademicModal from "./AddAcademicModal";
-import PageLoading from "../../../components/loading/PageLoading";
+import FormatDate from "../../../utils/formatDate";
+import theme from "../../../assets/themes";
+
+// API import
+import { useFetchAcademicBackgroundByUserQuery } from "../../../store/api/earnerManagement/earnerApis";
 
 const AcademicBackground = () => {
     const { userId } = useSelector((state) => state.global);
-    const { data: response, isLoading, isError } = useFetchEarnerQuery();
-    const { data: info } = useFetchInfoUserByIdQuery(userId, { skip: !userId });
     const { data: academicBackgroundData } = useFetchAcademicBackgroundByUserQuery({ userId });
 
     const [open, setOpen] = useState(false);
@@ -26,9 +29,6 @@ const AcademicBackground = () => {
     const handleSubmit = (academicData) => {
         handleClose();
     };
-
-    if (isLoading) return <PageLoading isLoading={isLoading}>Loading...</PageLoading>;
-    if (isError) return <Typography>Error loading data.</Typography>;
 
     return (
         <Stack

@@ -7,7 +7,6 @@ import { TextField, Box, Typography, Avatar, Button, Stack, Chip } from "@mui/ma
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 // Custom imports
-import DefaultProfileSvg from "../../../assets/images/DefaultProfile.svg";
 import theme from "../../../assets/themes";
 
 // Fetching data imports
@@ -31,7 +30,8 @@ const OrganizationBio = ({ institutionInfo }) => {
     const getDynamicValue = (property, ...sources) => {
         for (let source of sources) {
             if (source?.[property] !== undefined) {
-                return source[property] || ""; // Return empty string if undefined
+                // Return empty string if undefined
+                return source[property] || ""; 
             }
         }
         return ""; // Return empty string as fallback

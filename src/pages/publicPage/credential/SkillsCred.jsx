@@ -1,6 +1,9 @@
+// MUI import
 import { Box, Stack } from "@mui/system";
-import theme from "../../../assets/themes";
 import { Button, Typography } from "@mui/material";
+
+// Custom import
+import theme from "../../../assets/themes";
 
 const SkillsCred = ({ tags }) => {
     return (
@@ -43,20 +46,26 @@ const SkillsCred = ({ tags }) => {
                         },
                     }}
                 >
-                    {tags?.split(",").map((tag) => (
-                        <Button
-                            key={tag}
-                            variant="outlined"
-                            sx={{
-                                pointerEvents: "none",
-                                borderRadius: theme.customShape.btn,
-                                borderColor: "#C7E4FF",
-                                textTransform: "none",
-                            }}
-                        >
-                            {tag}
-                        </Button>
-                    ))}
+                    {tags ? (
+                        tags.split(",").map((tag) => (
+                            <Button
+                                key={tag}
+                                variant="outlined"
+                                sx={{
+                                    pointerEvents: "none",
+                                    borderRadius: theme.customShape.btn,
+                                    borderColor: "#C7E4FF",
+                                    textTransform: "none",
+                                }}
+                            >
+                                {tag}
+                            </Button>
+                        ))
+                    ) : (
+                        <Typography variant="subtitle1" color="textSecondary">
+                            There are no data!
+                        </Typography>
+                    )}
                 </Stack>
             </Stack>
         </Box>

@@ -1,9 +1,13 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+// React library import
+import { createApi } from "@reduxjs/toolkit/query/react";
+
+// Custom import
+import { createBaseQuery } from "../../../utils/baseQuery";
 
 //Testing Verification API
 export const verificationApi = createApi({
     reducerPath: "verificationApi",
-    baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_SERVER_BASE_URL }),
+    baseQuery: createBaseQuery(),
     endpoints: (builder) => ({
         verifyCred: builder.mutation({
             query: ({ credId, verifyData }) => ({

@@ -1,52 +1,33 @@
+// React library import
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-import { AppBar, Box, Toolbar, Button, Menu, MenuItem, Slide, Stack, Typography, IconButton } from "@mui/material";
+// MUI import
+import { AppBar, Box, Toolbar, Button, Menu, MenuItem, Stack, Typography, IconButton } from "@mui/material";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import theme from "../../assets/themes";
-import RatifyMeLogo from "../../assets/icons/RatfiyME.svg";
+// Custom import
 import LandingContainer from "../../components/styles/LandingContainer";
-import { useGetSubInstitutionQuery } from "../../store/api/subscription/subscriptionApi";
+import AlertConfirmation from "../../components/alert/AlertConfirmation";
+import AlertMessage from "../../components/alert/AlertMessage";
+import RatifyMeLogo from "../../assets/icons/RatfiyME.svg";
 import DefaultProfileSvg from "../../assets/images/DefaultProfile.svg";
 import MaleUserDefault from "../../assets/images/MaleUser.svg";
 import FemaleUserDefault from "../../assets/images/FemaleUser.svg";
-import AlertConfirmation from "../../components/alert/AlertConfirmation";
-import { useLogoutMutation } from "../../store/api/auth/authApi";
 import useCatchStatus from "../../hooks/useCatchStatus";
-import AlertMessage from "../../components/alert/AlertMessage";
+import theme from "../../assets/themes";
 
-const useHideOnScroll = () => {
-    const [show, setShow] = useState(true);
-    const [lastScrollY, setLastScrollY] = useState(0);
-
-    const handleScroll = () => {
-        if (window.scrollY > lastScrollY) {
-            setShow(false);
-        } else {
-            setShow(true);
-        }
-        setLastScrollY(window.scrollY);
-    };
-
-    useState(() => {
-        window.addEventListener("scroll", handleScroll);
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, [lastScrollY]);
-
-    return show;
-};
-
+// API import
+import { useLogoutMutation } from "../../store/api/auth/authApi";
+import { useGetSubInstitutionQuery } from "../../store/api/subscription/subscriptionApi";
 const Navbar = () => {
     const [navbarAnchorEl, setNavbarAnchorEl] = useState(null);
     const [alertOpen, setAlertOpen] = useState(false);
     const [alertTitle, setAlertTitle] = useState("");
     const [alertMessage, setAlertMessage] = useState("");
-    const { institutionData, userInfo } = useSelector((state) => state.global);
+    const { institutionData, userInfo, roleId } = useSelector((state) => state.global);
     const navigate = useNavigate();
 
     const gender = userInfo?.Gender?.name;
@@ -60,9 +41,9 @@ const Navbar = () => {
     const subscriptions = subscriptionOfInstitution?.data || [];
     const filteredSubscriptions = subscriptions.filter((sub) => sub.status === true);
 
-    const hasActiveSubscription = filteredSubscriptions.length > 0;
+    const isInstitution = !!institutionData;
+    const hasActiveSubscription = isInstitution && filteredSubscriptions.length > 0;
 
-    const show = useHideOnScroll();
     const openNavbarMenu = Boolean(navbarAnchorEl);
 
     const [logout, { isError, error, isSuccess }] = useLogoutMutation();
@@ -106,10 +87,13 @@ const Navbar = () => {
 
     const handleCancel = () => {
         setAlertOpen(false);
+        navigate("/price");
     };
 
     const handleProfileMenuItemClick = (e) => {
-        handleServicePlanClick(e);
+        if (roleId === 2) {
+            handleServicePlanClick(e);
+        }
         handleMenuCloseProfile();
     };
 
@@ -117,9 +101,9 @@ const Navbar = () => {
     const handleMenuProfileClick = (event) => {
         // Toggle the profile menu
         if (openProfileMenu) {
-            handleMenuCloseProfile(); // Close if already open
+            handleMenuCloseProfile();
         } else {
-            setAnchorEl(event.currentTarget); // Open if closed
+            setAnchorEl(event.currentTarget);
         }
     };
 
@@ -144,7 +128,6 @@ const Navbar = () => {
                     {message}
                 </AlertMessage>
             )}
-            {/* <Slide appear={false} direction="down" in={show}> */}
             <AppBar
                 position="sticky"
                 sx={{
@@ -191,8 +174,8 @@ const Navbar = () => {
                             }}
                         >
                             <Box display={"flex"} gap={2} alignItems="center">
-                                {institutionData && userInfo ? (
-                                    <Link to="/dashboard" onClick={handleServicePlanClick}>
+                                {(institutionData && userInfo) || userInfo ? (
+                                    <Link to="/dashboard" {...(roleId === 2 ? { onClick: handleServicePlanClick } : {})}>
                                         <Stack direction="row" gap={1} alignItems="center">
                                             <Box
                                                 component="img"
@@ -243,7 +226,7 @@ const Navbar = () => {
                             </Box>
                         </Box>
 
-                        {/* Responsive Navbar */}
+                        {/* =========== Start Responsive Navbar =========== */}
                         <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }}>
                             <Button
                                 aria-controls="mobile-menu"
@@ -333,7 +316,7 @@ const Navbar = () => {
                                 )}
                             </Menu>
 
-                            {institutionData && userInfo && (
+                            {((institutionData && userInfo) || userInfo) && (
                                 <Box>
                                     <Link>
                                         <Stack direction="row" alignItems="center">
@@ -369,14 +352,18 @@ const Navbar = () => {
                                             <MenuItem onClick={handleProfileMenuItemClick}>
                                                 {userInfo?.firstName} {userInfo?.lastName}
                                             </MenuItem>
-                                            <MenuItem onClick={handleProfileMenuItemClick}>
-                                                {institutionData?.institutionName}
-                                            </MenuItem>
+
+                                            {roleId === 2 && (
+                                                <MenuItem onClick={handleProfileMenuItemClick}>
+                                                    {institutionData?.institutionName}
+                                                </MenuItem>
+                                            )}
                                         </Menu>
                                     </Link>
                                 </Box>
                             )}
                         </Box>
+                        {/* =========== End Responsive Navbar =========== */}
                     </Toolbar>
                 </LandingContainer>
             </AppBar>

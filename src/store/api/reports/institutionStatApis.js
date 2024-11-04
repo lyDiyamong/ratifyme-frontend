@@ -1,11 +1,15 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+// React library import
+import { createApi } from "@reduxjs/toolkit/query/react";
+
+// Custom import
+import { createBaseQuery } from "../../../utils/baseQuery";
 
 export const institutionStatApi = createApi({
-    reducerPath: 'institutionStatApi',
-    baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_SERVER_BASE_URL }),
+    reducerPath: "institutionStatApi",
+    baseQuery: createBaseQuery(),
     endpoints: (builder) => ({
         fetchInstitutionStats: builder.query({
-            query: () => '/institutions/institutionStats',
+            query: () => "/institutions/institutionStats",
         }),
     }),
 });

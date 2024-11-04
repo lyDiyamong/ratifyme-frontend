@@ -1,8 +1,13 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+// React library import
+import { createApi } from "@reduxjs/toolkit/query/react";
+
+// Custom import
+import { createBaseQuery } from "../../../utils/baseQuery";
+
 
 export const achievementTypeApi = createApi({
     reducerPath: "achievementTypeApi",
-    baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_SERVER_BASE_URL }),
+    baseQuery: createBaseQuery(),
     tagTypes: ["AchievementType"],
     endpoints: (builder) => ({
         fetchAchievementType: builder.query({

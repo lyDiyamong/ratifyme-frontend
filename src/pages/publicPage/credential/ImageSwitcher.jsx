@@ -1,6 +1,11 @@
+// React library import
 import { useState, useEffect } from "react";
+
+// MUI import
 import { Box, Button, CardMedia, Skeleton, Stack, Typography } from "@mui/material";
 import { VerifiedUserRounded } from "@mui/icons-material";
+
+// Custom import
 import DefaultAchivementImage from "../../../assets/icons/DefaultAchivementImage.svg";
 
 const ImageSwitcher = ({ images = [], credId }) => {
@@ -14,19 +19,6 @@ const ImageSwitcher = ({ images = [], credId }) => {
             setLoading(false);
         }
     }, [images]);
-
-    // Delay the display of content for at least 3 seconds
-    // useEffect(() => {
-    //     const timeout = setTimeout(() => {
-    //         if (images.length > 0) {
-    //             setSelectedImage(images[0]);
-    //             setLoading(false);
-    //         }
-    //     }, 1000);
-
-    //     // Clear timeout if component unmounts
-    //     return () => clearTimeout(timeout);
-    // }, [images]);
 
     const handleImageSelect = (image) => {
         setSelectedImage(image);

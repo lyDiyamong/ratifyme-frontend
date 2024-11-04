@@ -1,19 +1,25 @@
+// React library import
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router";
+
+// MUI import
 import { Box } from "@mui/system";
+import { Skeleton, Stack } from "@mui/material";
+
+// Custom import
 import LandingContainer from "../../../components/styles/LandingContainer";
+import VerificationModal from "../../../components/VerificationModals";
+import VerificationFailureModal from "../../../components/VerificationFailModal";
 import ImageSwitcher from "./ImageSwitcher";
 import CredentialContent from "./CredentialContent";
+
+// API import
+import { useVerifyCredMutation } from "../../../store/api/earnerManagement/verificationApi";
 import {
     useFetchEarnerAchieveByUidQuery,
     useFetchEarnerByIdQuery,
     useFetchAchieveByidQuery,
 } from "../../../store/api/earnerManagement/earnerApis";
-import { useNavigate, useParams } from "react-router";
-import { useVerifyCredMutation } from "../../../store/api/earnerManagement/verificationApi";
-import { useEffect, useState } from "react";
-import VerificationModal from "../../../components/VerificationModals";
-import VerificationFailureModal from "../../../components/VerificationFailModal";
-import LinearBufferLoading from "../../../components/loading/LinearBufferLoading";
-import { Skeleton, Stack } from "@mui/material";
 
 const Credential = () => {
     const { credId } = useParams();

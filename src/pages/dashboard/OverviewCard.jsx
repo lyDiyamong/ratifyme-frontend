@@ -1,18 +1,18 @@
-// React Library
+// React library import
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-// MUI Import
-import { Box, Typography, CircularProgress } from "@mui/material";
+// MUI import
+import { Box, Typography } from "@mui/material";
 
-//Custom Import
+//Custom import
+import PageLoading from "../../components/loading/PageLoading";
 import { createCardContent } from "./OverviewCardFetch";
 import theme from "../../assets/themes";
-import PageLoading from "../../components/loading/PageLoading";
 
-// Fetching Data
+// API import
 import { useFetchInstitutionStatsQuery } from "../../store/api/reports/institutionStatApis";
 import { useFetchBadgeByEarnerQuery } from "../../store/api/badgeManagement/badgeApi";
-import { useSelector } from "react-redux";
 
 // =========== Start Overview Card ===========
 const CardsList = () => {

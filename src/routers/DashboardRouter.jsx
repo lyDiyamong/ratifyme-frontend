@@ -1,4 +1,7 @@
+// React library import
 import { Route, Routes } from "react-router-dom";
+
+// Custom import
 import DashboardLayout from "../layouts/dasboard";
 import Dashboard from "../pages/dashboard";
 import BadgeManagement from "../pages/badgeMangements";

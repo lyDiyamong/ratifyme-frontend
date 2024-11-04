@@ -2,14 +2,13 @@
 import { CardMedia, Typography, Box } from "@mui/material";
 
 // Custom import
-import StatusCode from "../../../assets/images/NoData.svg";
-import theme from "../../../assets/themes";
 import TableCustom from "../../../components/TableCustom";
 import FormatYear from "../../../utils/formatDate";
+import StatusCode from "../../../assets/images/NoData.svg";
+import theme from "../../../assets/themes";
 
 // Api import
 import { useFetchEmailEarnerQuery } from "../../../store/api/achievements/achievementApi";
-
 
 const EarnerList = ({ achievementId }) => {
     const { data: earner } = useFetchEmailEarnerQuery({ achievementId });
@@ -44,12 +43,6 @@ const EarnerList = ({ achievementId }) => {
             selector: (row) => FormatYear(row.AcademicBackground?.academicYear) || "N/A",
             sortable: true,
         },
-        // {
-        //     name: "Action",
-        //     selector: (row) => (
-        //         <MenuSelection onView={() => handleView(row.id)} onDelete={() => handleDelete(row.id)} />
-        //     ),
-        // },
     ];
     // State for handling selected emails
     const earners = earner?.data.map((earner) => earner?.Earner);

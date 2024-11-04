@@ -1,4 +1,4 @@
-// React import
+// React lirary import
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState } from "react";
@@ -9,14 +9,14 @@ import { Box, Typography } from "@mui/material";
 // Custom import
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import TableCustom from "../../components/TableCustom";
+import SkeletonLoading from "../../components/loading/SkeletonLoading";
+import AlertMessage from "../../components/alert/AlertMessage";
 import FormatDate from "../../utils/formatDate";
 import PageTitle from "../../components/PageTitle";
+import theme from "../../assets/themes";
 
 // API import
 import { useGetSubInstitutionQuery } from "../../store/api/subscription/subscriptionApi";
-import theme from "../../assets/themes";
-import SkeletonLoading from "../../components/loading/SkeletonLoading";
-import AlertMessage from "../../components/alert/AlertMessage";
 
 const InvoiceManagement = () => {
     const [searchQuery, setSearchQuery] = useState("");
@@ -60,7 +60,7 @@ const InvoiceManagement = () => {
             : [
                   {
                       name: "Organization Name",
-                      selector: (row) => row.name,
+                      selector: (row) => row.subscriptionName,
                       sortable: true,
                   },
               ]),

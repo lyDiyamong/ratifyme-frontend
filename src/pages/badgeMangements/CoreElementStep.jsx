@@ -1,12 +1,15 @@
-import { Stack, Typography } from "@mui/material";
+// MUI import
+import { Stack } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { Box } from "@mui/system";
 
-// Custom imports
+// Custom import
 import MultiSelectForm from "../../components/MultiSelectionForm";
 import FormInput from "../../components/FormInput";
+
+// API import
 import { useFetchAchievementTypeQuery } from "../../store/api/achievements/achievementTypeApi";
-import { Box } from "@mui/system";
 
 const CoreElementStep = ({ control, schema, errors }) => {
     // Fetch achievement types data
@@ -16,7 +19,7 @@ const CoreElementStep = ({ control, schema, errors }) => {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Stack gap={2}>
                 {/* Issuer */}
-                <FormInput disabled name="issuer" label="Issuer*" control={control} type="text" required={true} />
+                <FormInput disabled name="issuer" label="Issuer" control={control} type="text" required={true} />
 
                 {/* Criteria */}
                 <FormInput
@@ -31,18 +34,15 @@ const CoreElementStep = ({ control, schema, errors }) => {
                 <Box>
                     {/* Achievement Types */}
                     <MultiSelectForm
-                        name="AchievementTypes" // Use the same field name consistently
+                        // Use the same field name consistently
+                        name="AchievementTypes"
                         label="Achievement Types"
                         options={achievementType?.data || []}
                         control={control}
                         required={true}
-                        schema={schema?.fields.achievementType} // Use the same name in validation schema
+                        // Use the same name in validation schema
+                        schema={schema?.fields.AchievementTypes}
                     />
-                    {errors.achievementType && (
-                        <Typography sx={{ mx: "12px", fontSize: "12px", mt: "3px" }} color="error">
-                            {errors.achievementType.message}
-                        </Typography>
-                    )}
                 </Box>
             </Stack>
         </LocalizationProvider>

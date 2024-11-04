@@ -2,7 +2,7 @@
 import { useController } from "react-hook-form";
 
 // MUI import
-import { InputLabel, MenuItem, FormControl, Select, FormHelperText } from "@mui/material";
+import { InputLabel, MenuItem, FormControl, Select, FormHelperText, Chip } from "@mui/material";
 
 // Custom import
 import theme from "../assets/themes";
@@ -69,6 +69,21 @@ const SelectForm = ({ name, control, options, label, required }) => {
         field.onChange(value);
     };
 
+    // Custom rendering of selected values
+    const renderValue = (selected) => {
+        const selectedValues = selected.slice(0, 2); // Limit to first 2 selected values
+        const remainingCount = selected.length - 2; // Count of remaining selected items
+
+        return (
+            <div style={{ display: "flex", flexWrap: "wrap" }}>
+                {selectedValues.map((value) => (
+                    <Chip key={value} label={value} style={{ margin: "2px" }} />
+                ))}
+                {remainingCount > 0 && <Chip label={`+${remainingCount}`} style={{ margin: "2px" }} />}
+            </div>
+        );
+    };
+
     return (
         <FormControl fullWidth error={!!error}>
             <InputLabel id={`${name}-label`}>{label}</InputLabel>
@@ -80,17 +95,19 @@ const SelectForm = ({ name, control, options, label, required }) => {
                 }}
                 labelId={`${name}-label`}
                 id={`${name}-select`}
-                value={field.value || []} // Default to an empty array for multi-select
+                value={field.value || []}
                 label={label}
                 onChange={handleChange}
                 onBlur={field.onBlur}
                 inputProps={{ "aria-required": required }}
+                renderValue={renderValue}
                 MenuProps={{
                     PaperProps: {
                         sx: {
                             borderRadius: theme.customShape.input,
-                            maxHeight: 48 * 7 + 8, // Limit to 7 visible items (assuming ~48px height each)
-                            overflowY: "auto", // Enable vertical scrolling
+                            // Limit to 7 visible items (assuming ~48px height each)
+                            maxHeight: 48 * 7 + 8, 
+                            overflowY: "auto",
                         },
                     },
                 }}

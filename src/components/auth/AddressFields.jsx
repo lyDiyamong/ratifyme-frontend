@@ -49,11 +49,11 @@ const AddressFields = ({ control, schema }) => {
                                 }),
                                 menu: (base) => ({
                                     ...base,
-                                    zIndex: 100, // Higher zIndex for the dropdown options
+                                    zIndex: 100,
                                 }),
                             }}
                         />
-                        {error && <Typography fontSize='12px' color="error">{error.message}</Typography>}
+                        {error && <Typography fontSize='12px' mx={2} mt='2px' color="error">{error.message}</Typography>}
                     </Box>
                 )}
             />

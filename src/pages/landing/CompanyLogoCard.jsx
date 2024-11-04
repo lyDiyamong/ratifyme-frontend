@@ -1,10 +1,8 @@
-//Import Mui
+//MUI import
 import { Box, Card, CardContent, Grid } from "@mui/material";
-//Custome Import
-import logoImage from "../../data/ourCustomerData";
-import AnBLogoSvg from "../../assets/images/AnB.svg";
 
-//LogoCards Component
+//Custom import
+import logoImage from "../../data/ourCustomerData";
 
 const InfoCard = ({ logoSrc, alt }) => {
     return (

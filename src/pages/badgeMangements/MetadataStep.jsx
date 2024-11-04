@@ -1,8 +1,9 @@
+// MUI import
 import { Box, Stack, Typography } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
-// Custom imports
+// Custom import
 import MultiSelectForm from "../../components/MultiSelectionForm";
 import FormInput from "../../components/FormInput";
 import DateSelectionForm from "../../components/DateSelectionForm";
@@ -34,10 +35,10 @@ const MetadataStep = ({ control, errors }) => {
 
                 {/* Start Date */}
                 <Box>
-                    <DateSelectionForm control={control} name="startDate" label="Start Date*" />
-                    {errors.startDate && (
+                    <DateSelectionForm control={control} name="startedDate" label="Start Date*" />
+                    {errors.startedDate && (
                         <Typography sx={{ fontSize: 12, mx: "14px" }} color="error">
-                            {errors.startDate.message}
+                            {errors.startedDate.message}
                         </Typography>
                     )}
                 </Box>
@@ -61,7 +62,7 @@ const MetadataStep = ({ control, errors }) => {
                     label="Tags / Language"
                     options={optionLanguage}
                     control={control}
-                    required={true}
+                    required={false}
                 />
             </Stack>
         </LocalizationProvider>

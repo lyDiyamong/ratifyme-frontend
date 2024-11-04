@@ -103,7 +103,6 @@ const VerificationModal = ({ open, handleClose, achieveData, earnerData, credId,
                                                 <Typography
                                                     component="span"
                                                     sx={{ color: loadingStates[key] ? "gray" : "inherit" }}
-                                                    // sx={{ color: loadingStates[key] ? "gray" : "inherit", display: "block", mt: 1 }}
                                                 >
                                                     {loadingStates[key]
                                                         ? key === "IssuedOn"
@@ -150,7 +149,7 @@ const VerificationModal = ({ open, handleClose, achieveData, earnerData, credId,
 
                                 <Box display="flex" alignItems="center" gap={1}>
                                     <Typography variant="body2">
-                                        This credential was securely issued via Certifier. All the displayed information is valid.
+                                        This credential was securely issued via RatifyME. All the displayed information is valid.
                                     </Typography>
                                 </Box>
                             </Stack>

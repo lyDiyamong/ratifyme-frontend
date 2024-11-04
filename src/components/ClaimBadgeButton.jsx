@@ -1,4 +1,4 @@
-// React import
+// React library import
 import { useEffect, useState } from "react";
 import ConfettiExplosion from "react-confetti-explosion";
 
@@ -12,7 +12,7 @@ import useCatchStatus from "../hooks/useCatchStatus";
 import AlertMessage from "./alert/AlertMessage";
 import theme from "../assets/themes";
 
-// Api import
+// API import
 import { useClaimBadgeMutation } from "../store/api/badgeManagement/badgeApi";
 import { useFetchEarnerAchieByIdQuery } from "../store/api/earnerManagement/earnerApis";
 

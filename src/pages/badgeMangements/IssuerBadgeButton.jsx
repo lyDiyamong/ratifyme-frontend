@@ -1,14 +1,14 @@
-// React Import
+// React library import
 import { useState } from "react";
 
-// MUI Import
+// MUI import
 import { Button } from "@mui/material";
 import theme from "../../assets/themes";
 
-// Custom Import
+// Custom import
 import ModalContainer from "./badgeDetail/ModalContainer";
 
-// Api Import
+// API import
 import { useFetchEarnerQuery } from "../../store/api/earnerManagement/earnerApis";
 import { useFetchEmailEarnerQuery } from "../../store/api/achievements/achievementApi";
 

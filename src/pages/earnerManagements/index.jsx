@@ -1,13 +1,15 @@
-// MUI Import
+// React library import
+import { useSelector } from "react-redux";
+
+// MUI import
 import DashboardContainer from "../../components/styles/DashboardContainer";
 
-// Custom Import
+// Custom import
 import TableEarner from "./TableEarner";
 
 import PageTitle from "../../components/PageTitle";
 import TableEarnerInvitation from "./TableEarnerInvitation";
 import CustomTabs from "../../components/tabs/customTabs";
-import { useSelector } from "react-redux";
 
 // ============ Start EarnerManagement ============
 const EarnerManagement = () => {

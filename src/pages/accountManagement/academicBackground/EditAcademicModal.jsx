@@ -1,6 +1,7 @@
 // React import
 import { useForm, Controller } from "react-hook-form";
 import { useEffect } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
 import dayjs from "dayjs";
 
 // MUI import
@@ -10,28 +11,32 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 // Custom import
-import { useUpdateAcademicBackgroundByIdMutation } from "../../../store/api/earnerManagement/earnerApis";
-import theme from "../../../assets/themes";
-import EditAcademicBgSvg from "../../../assets/icons/EditAcademicBgSvg.svg";
 import SelectForm from "../../../components/SelectionForm";
+import PageLoading from "../../../components/loading/PageLoading";
+import HelperTextForm from "../../../components/alert/HelperTextForm";
+import academicBgSchema from "../../../utils/schema/academicBgSchema";
+import EditAcademicBgSvg from "../../../assets/icons/EditAcademicBgSvg.svg";
+import theme from "../../../assets/themes";
 
 // Api import
+import { useUpdateAcademicBackgroundByIdMutation } from "../../../store/api/earnerManagement/earnerApis";
 import { useFetchAcademicLevelsQuery, useFetchFieldOfStudiesQuery } from "../../../store/api/earnerManagement/fieldOfStudyApi";
-import PageLoading from "../../../components/loading/PageLoading";
 
 const EditAcademicModal = ({ open, onClose, initialData, academicId }) => {
     const [updateAcademicBackgroundById] = useUpdateAcademicBackgroundByIdMutation();
     const {
         data: fieldOfStudiesData,
         error: fieldOfStudiesError,
-        isLoading: isFieldOfStudiesLoading
+        isLoading: isFieldOfStudiesLoading,
     } = useFetchFieldOfStudiesQuery();
-    const {
-        data: fetchAcademicLevelsData,
-        isLoading: isAcademicLevelsLoading
-    } = useFetchAcademicLevelsQuery();
+    const { data: fetchAcademicLevelsData, isLoading: isAcademicLevelsLoading } = useFetchAcademicLevelsQuery();
 
-    const { control, handleSubmit, reset } = useForm({});
+    const {
+        control,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm({ resolver: yupResolver(academicBgSchema) });
 
     useEffect(() => {
         if (initialData) {
@@ -113,20 +118,24 @@ const EditAcademicModal = ({ open, onClose, initialData, academicId }) => {
                         width: { xs: "280px", sm: "420px", md: "500px" },
                     }}
                 >
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <Controller
-                            name="academicYear"
-                            control={control}
-                            render={({ field }) => (
-                                <DatePicker
-                                    label="Academic Year"
-                                    value={field.value || null}
-                                    onChange={(newValue) => field.onChange(newValue)}
-                                    renderInput={(params) => <TextField {...params} fullWidth />}
-                                />
-                            )}
-                        />
-                    </LocalizationProvider>
+                    <Box width="100%">
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <Controller
+                                name="academicYear"
+                                control={control}
+                                render={({ field }) => (
+                                    <DatePicker
+                                        sx={{ width: "100%", maxWidth: 1000 }}
+                                        label="Academic Year"
+                                        value={field.value || null}
+                                        onChange={(newValue) => field.onChange(newValue)}
+                                        renderInput={(params) => <TextField {...params} fullWidth />}
+                                    />
+                                )}
+                            />
+                        </LocalizationProvider>
+                        {errors.academicYear && <HelperTextForm color={"error"} message={errors?.academicYear?.message} />}
+                    </Box>
 
                     <SelectForm
                         name="academicLevelId"

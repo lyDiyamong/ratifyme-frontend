@@ -26,38 +26,52 @@ const BadgeListCard = ({ badges, onView, total, refetch }) => {
 
     useEffect(() => {
         const processBadges = (badges) => {
-            if (!badges) return { issuedBadge: [], claimedBadge: [] };
+            if (!badges || badges.length === 0) return { issuedBadge: [], claimedBadge: [] };
 
-            const achievements = badges.flatMap(({ Achievements }) => Achievements) || [];
-            const uniqueBadges = [];
-            const seenBadgeIds = new Set();
-            for (const achievement of achievements) {
-                if (!seenBadgeIds.has(achievement.badgeClassId)) {
-                    uniqueBadges.push(achievement);
-                    seenBadgeIds.add(achievement.badgeClassId);
+            // This will store one issuedOn and one claimedOn value per badge
+            const processedBadges = badges.map((badge) => {
+                let issuedOnValue = null;
+                let claimedOnValue = null;
+
+                // Iterate through each Achievement in the current badge
+                for (const achievement of badge?.Achievements || []) {
+                    if (achievement.Earners.length > 0) {
+                        for (const earner of achievement.Earners) {
+                            const issuedOn = earner.EarnerAchievements?.issuedOn;
+                            const claimedOn = earner.EarnerAchievements?.claimedOn;
+
+                            // Capture the first valid issuedOn
+                            if (!issuedOnValue && issuedOn && issuedOn !== "null") {
+                                issuedOnValue = issuedOn;
+                            }
+
+                            // Capture the first valid claimedOn
+                            if (!claimedOnValue && claimedOn && claimedOn !== "null") {
+                                claimedOnValue = claimedOn;
+                            }
+
+                            // Stop further checks if both issuedOn and claimedOn are found
+                            if (issuedOnValue && claimedOnValue) break;
+                        }
+                    }
+
+                    // Exit if both values are found for this badge
+                    if (issuedOnValue && claimedOnValue) break;
                 }
-            }
 
-            const issuedBadge = uniqueBadges.map((item) => {
-                if (!item.Earners || item.Earners.length === 0) return null;
-                return item.Earners.some((earner) => earner.EarnerAchievements?.issuedOn !== null)
-                    ? item.Earners.find((earner) => earner.EarnerAchievements?.issuedOn)?.EarnerAchievements?.issuedOn
-                    : null;
+                return { issuedOn: issuedOnValue, claimedOn: claimedOnValue };
             });
 
-            const claimedBadge = uniqueBadges.map((item) =>
-                item.Earners
-                    ? item.Earners.some((earner) => earner.EarnerAchievements?.claimedOn !== null)
-                        ? item.Earners.find((earner) => earner.EarnerAchievements?.claimedOn)?.EarnerAchievements?.claimedOn
-                        : null
-                    : null,
-            );
+            // Separate arrays for issued and claimed values
+            const issuedBadge = processedBadges.map((badge) => badge.issuedOn);
+            const claimedBadge = processedBadges.map((badge) => badge.claimedOn);
 
             return { issuedBadge, claimedBadge };
         };
 
-        // Process badges based on current badges and set `afterCheck` accordingly
         const { issuedBadge, claimedBadge } = processBadges(badges);
+
+        // Set afterCheck based on roleId
         setAfterCheck(roleId === 4 ? claimedBadge : issuedBadge);
     }, [badges, roleId]);
 

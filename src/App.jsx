@@ -1,12 +1,12 @@
-// MUI Import
+// MUI import
 import { ThemeProvider } from "@emotion/react";
 import { CssBaseline } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-// Custom Import
+// Custom import
 import theme from "./assets/themes";
 
-// Router Import
+// Router import
 import LandingRouter from "./routers/LandingRouter";
 import AuthRouter from "./routers/AuthRouter";
 import DashboardRouter from "./routers/DashboardRouter";

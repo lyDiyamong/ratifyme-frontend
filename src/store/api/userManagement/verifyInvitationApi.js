@@ -1,14 +1,17 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { createBaseQuery } from '../../../utils/baseQuery';
+// React library import
+import { createApi } from "@reduxjs/toolkit/query/react";
+
+// Custom import
+import { createBaseQuery } from "../../../utils/baseQuery";
 
 export const verifyInvitationApi = createApi({
-    reducerPath: 'verifyInvitationApi',
+    reducerPath: "verifyInvitationApi",
     baseQuery: createBaseQuery(),
     endpoints: (builder) => ({
         verifyInvitation: builder.mutation({
-            query: ({data, role}) => ({
+            query: ({ data, role }) => ({
                 url: `/users/verifyInvitation?as=${role}`,
-                method: 'POST',
+                method: "POST",
                 body: data,
             }),
         }),

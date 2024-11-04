@@ -1,6 +1,9 @@
+// React library import
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { clearAuthState, setAuthState } from "../../slices/globalSlices";
+
+// Custom import
 import { createBaseQuery } from "../../../utils/baseQuery";
+import { clearAuthState, setAuthState } from "../../slices/globalSlices";
 import { handleAuthSuccess } from "../../../utils/auth/authHelpers";
 
 export const authApi = createApi({

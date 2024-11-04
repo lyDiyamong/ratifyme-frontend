@@ -11,7 +11,7 @@ import InstitutionProfileCard from "./InstitutionProfileCard";
 import theme from "../../assets/themes";
 import StatusCode from "../../assets/images/Search-Illustation.svg";
 
-// Api import
+// API import
 import { useGetIssuersQuery } from "../../store/api/issuerManagement/issuerApi";
 
 const Organization = () => {

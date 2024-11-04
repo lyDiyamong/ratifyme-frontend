@@ -1,27 +1,38 @@
+// React library import
 import * as yup from "yup";
+
+const today = new Date();
+const minDateOfBirth = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
 
 export const schema = yup.object({
     firstName: yup
         .string()
         .matches(/^[A-Za-z]+$/, "⚠️ First name must contain only letters and no spaces")
-        .required("⚠️ First name is required"),
+        .required("⚠️ First name is required")
+        .min(2, "⚠️ First name must be at least 2 characters")
+        .max(30, "⚠️ First name must be at most 30 characters"),
     lastName: yup
         .string()
         .matches(/^[A-Za-z]+$/, "⚠️ Last name must contain only letters and no spaces")
-        .required("⚠️ Last name is required"),
+        .required("⚠️ Last name is required")
+        .min(2, "⚠️ Last name must be at least 2 characters")
+        .max(30, "⚠️ Last name must be at most 30 characters"),
     genderId: yup.string().required("⚠️ Gender is required"),
     username: yup
         .string()
-        .matches(
-            /^[a-zA-Z0-9._-]+$/,
-            "⚠️ Username must not contain spaces and can only include letters, numbers, dots, underscores, and hyphens.",
-        )
+        .matches(/^[a-zA-Z0-9_]+$/, "⚠️ Username can only include letters, numbers, and underscores.")
+        .min(3, "⚠️ Username must be at least 3 characters.")
+        .max(15, "⚠️ Username must be at most 15 characters.")
         .required("⚠️ Username is required"),
     email: yup
         .string()
         .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "⚠️ Invalid email format")
         .required("⚠️ Email is required"),
-    phoneNumber: yup.string().required("⚠️ Phone number is required"),
+    phoneNumber: yup
+        .string()
+        .required("⚠️ Phone number is required")
+        .min(12, "⚠️ Phone number is invalid")
+        .max(15, "⚠️ Phone number must be less than or equal to 15 characters"),
     country: yup.string().required("⚠️ Country is required"),
     city: yup
         .string()
@@ -30,16 +41,30 @@ export const schema = yup.object({
         .max(50, "⚠️ City cannot be longer than 50 characters")
         .matches(/^[a-zA-Z\s]+$/, "⚠️ City must only contain letters and spaces"),
     street: yup.string().required("⚠️ Street is required"),
-    postalCode: yup.string().matches(/^\d+$/, "⚠️ Verification code must be numeric").required("Verification code is required"),
-    institutionName: yup.string().required("⚠️ Institution name is required"),
-    institutionPhoneNumber: yup.string().required("⚠️ Phone number is required"),
+    postalCode: yup
+        .string()
+        .matches(/^\d{5,6}$/, "⚠️ Postal code must be 5 or 6 digits")
+        .required("Postal code is required"),
+    institutionName: yup
+        .string()
+        .min(3, "⚠️ Institution name must be at least 3 characters.")
+        .max(50, "⚠️ Institution name must be at most 50 characters.")
+        .required("⚠️ Institution name is required"),
+
+    institutionPhoneNumber: yup
+        .string()
+        .required("⚠️ Phone number is required")
+        .min(12, "⚠️ Phone number is invalid")
+        .max(15, "⚠️ Phone number must be less than or equal to 15 characters"),
     institutionEmail: yup
         .string()
-        .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email format")
+        .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "⚠️ Invalid email format")
         .required("⚠️ Email is required"),
     dateOfBirth: yup
         .date()
         .typeError("⚠️ Please select a valid date")
-        .max(new Date(), "⚠️ Date of Birth cannot be in the future")
+        .max(minDateOfBirth, "⚠️ You must be at least 18 years old")
+        .min(new Date(1900, 0, 1), "⚠️ Year cannot be earlier than 1900")
         .required("⚠️ Date of Birth is required"),
+    institutionWebsiteUrl: yup.string().url("⚠️ Please enter a valid URL"),
 });

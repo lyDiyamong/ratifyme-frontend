@@ -1,22 +1,24 @@
 // React library import
 import { useEffect, useState } from "react";
-import VerificationInput from "react-verification-input";
 import { useLocation, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import VerificationInput from "react-verification-input";
 
 // MUI import
 import { Box, Typography, Button, Stack } from "@mui/material";
 
 // Custom import
-import { useVerifyEmailMutation, useResendVerificationMutation } from "../../store/api/auth/authApi";
-import "../../assets/styles/EmailVerificationPage.css";
 import RatifyMELogo from "../../assets/icons/RatfiyME.svg";
 import OutletImageComponent from "./OutletImageTemplate";
 import theme from "../../assets/themes";
 import AlertMessage from "../../components/alert/AlertMessage";
 import PageLoading from "../../components/loading/PageLoading";
 import useCatchStatus from "../../hooks/useCatchStatus";
+import "../../assets/styles/EmailVerificationPage.css";
 import { SpinLoading } from "../../components/loading/SpinLoading";
+
+// API import
+import { useVerifyEmailMutation, useResendVerificationMutation } from "../../store/api/auth/authApi";
 
 const EmailVerificationPage = () => {
     // Retrieve email from location.state
@@ -67,7 +69,7 @@ const EmailVerificationPage = () => {
         try {
             setLoading(true);
             await verifyEmail({ verifyCode: verificationCode }).unwrap();
-            navigate(roleId === 2 ? "/price" : "/auth/signup-success");
+            navigate("/auth/signup-success", { state: { roleId } });
         } catch (error) {
             setVerificationCode("");
             setInputKey((prevKey) => prevKey + 1);

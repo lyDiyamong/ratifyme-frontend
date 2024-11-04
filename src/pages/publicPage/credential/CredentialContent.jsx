@@ -1,17 +1,21 @@
-import { Box, Grid, Typography, Button, Stack } from "@mui/material";
-import theme from "../../../assets/themes";
-import { CalendarMonthOutlined, LinkedIn, Share, VerifiedUserOutlined, VerifiedUserRounded } from "@mui/icons-material";
+// React library import
 import { useState } from "react";
-import ShareSocialModal from "./ShareSocialModal";
-import IssuerByCred from "./IssuerByCred";
-import BadgeDetailsCred from "./BadgeDetailsCred";
-import SkillsCred from "./SkillsCred";
+
+// MUI import
+import { Box, Grid, Typography, Button, Stack } from "@mui/material";
+import { CalendarMonthOutlined, LinkedIn, Share, VerifiedUserOutlined, VerifiedUserRounded } from "@mui/icons-material";
+
+// Custom import
 import AchievementTypesCred from "./AchievementTypesCred";
+import BadgeDetailsCred from "./BadgeDetailsCred";
+import IssuerByCred from "./IssuerByCred";
+import ShareSocialModal from "./ShareSocialModal";
+import SkillsCred from "./SkillsCred";
 import FormatDate from "../../../utils/formatDate";
+import theme from "../../../assets/themes";
 
 const CredentialContent = ({ earnerData, achieveData, credUrl, credId, verifyCred }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    console.log("achieveData?.BadgeClass", achieveData?.BadgeClass);
 
     const handleOpenModal = () => setIsModalOpen(true);
     const handleCloseModal = () => setIsModalOpen(false);
@@ -19,7 +23,7 @@ const CredentialContent = ({ earnerData, achieveData, credUrl, credId, verifyCre
     return (
         <Grid container spacing={2} my={2}>
             {/* Left Sticky Section */}
-            <Grid item xs={12} md={4}>
+            <Grid item xss={12} md={4}>
                 <Stack
                     sx={{
                         position: "sticky",
@@ -63,7 +67,7 @@ const CredentialContent = ({ earnerData, achieveData, credUrl, credId, verifyCre
                             </Button>
 
                             {/* Share Modal Component */}
-                            <ShareSocialModal open={isModalOpen} handleClose={handleCloseModal} credUrl={credUrl} />
+                            <ShareSocialModal open={isModalOpen} handleClose={handleCloseModal} credUrl={credUrl} badgeImg={achieveData?.BadgeClass?.imageUrl} />
 
                             <Button
                                 component="a"
@@ -142,7 +146,7 @@ const CredentialContent = ({ earnerData, achieveData, credUrl, credId, verifyCre
             </Grid>
 
             {/* Right Scrollable Section */}
-            <Grid item xs={12} md={8}>
+            <Grid item xss={12} md={8}>
                 {/* Stack for all content sections */}
                 <Stack spacing={2} sx={{ height: "100%", overflowY: "auto" }}>
                     {/* Issuer By Section */}

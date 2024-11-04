@@ -1,36 +1,47 @@
 //React import
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 // MUI component
 import { Stack, Box, Typography, Button, Grid } from "@mui/material";
 
 // Custom import
-import theme from "../../../assets/themes";
 import FormInput from "../../../components/FormInput";
-import ChangePassword from "../../../assets/images/ChangePassword.svg";
-import useCatchStatus from "../../../hooks/useCatchStatus";
 import AlertMessage from "../../../components/alert/AlertMessage";
 import PasswordFields from "../../../components/auth/PasswordFields";
+import useCatchStatus from "../../../hooks/useCatchStatus";
 import { passwordSchema } from "../../../utils/auth/passwordUtils";
+import ChangePassword from "../../../assets/images/ChangePassword.svg";
+import theme from "../../../assets/themes";
 
 // Api import
 import { useUpdatePasswordMutation } from "../../../store/api/auth/authApi";
+import { useState } from "react";
+import { SpinLoading } from "../../../components/loading/SpinLoading";
 
 const ChangePasswordForm = () => {
-    const schema = passwordSchema({
+    const [loading, setLoading] = useState(false);
+
+    const combinedSchema = passwordSchema({
         passwordName: "newPassword",
         passwordConfirmName: "passwordConfirm",
-    });
+    }).concat(
+        yup.object({
+            passwordCurrent: yup
+                .string()
+                .required("⚠️ Current password is required")
+                .notOneOf([yup.ref("newPassword")], "⚠️ Current password must differ from the new password"),
+            newPassword: yup
+                .string()
+                .notOneOf([yup.ref("passwordCurrent")], "⚠️ New password must differ from the current password")
+                .required("⚠️ New password is required"),
+        }),
+    );
 
-    const {
-        handleSubmit,
-        control,
-        watch,
-        reset,
-    } = useForm({
+    const { handleSubmit, control, watch, reset } = useForm({
         mode: "onChange",
-        resolver: yupResolver(schema),
+        resolver: yupResolver(combinedSchema),
     });
     // Update password hook
     const [updatePassword, { isSuccess, isError, error }] = useUpdatePasswordMutation();
@@ -41,10 +52,15 @@ const ChangePasswordForm = () => {
     );
     // Handle react hook form
     const onSubmit = async (data) => {
-        await updatePassword({
-            data,
-        }).unwrap();
-        reset();
+        try {
+            setLoading(true);
+            await updatePassword({
+                data,
+            }).unwrap();
+            reset();
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -94,7 +110,7 @@ const ChangePasswordForm = () => {
                 <Box component="form" onSubmit={handleSubmit(onSubmit)} display="flex" flexDirection="column" gap={4} noValidate>
                     {/* Password */}
                     <FormInput
-                        label="Password"
+                        label="Current Password"
                         name="passwordCurrent"
                         control={control}
                         type="password"
@@ -118,10 +134,10 @@ const ChangePasswordForm = () => {
                             color: theme.palette.background.default,
                             borderRadius: theme.customShape.btn,
                             fontWeight: theme.fontWeight.bold,
-                            width: 4,
+                            textTransform: "none",
                         }}
                     >
-                        Save
+                        {loading ? <SpinLoading size={24} /> : "Save"}
                     </Button>
                 </Box>
             </Stack>
@@ -134,7 +150,8 @@ const ChangePasswordForm = () => {
                     alt="Change Password"
                     sx={{
                         width: "100%",
-                        display: { xs: "none", md: "block" },
+                        display: { xss: "none", md: "block" },
+                        textTransform: "none",
                     }}
                 />
             </Grid>

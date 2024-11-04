@@ -1,14 +1,21 @@
+// React library import
+import * as yup from "yup";
+
 // MUI import
 import { Stack, Button, Box, Typography } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
-// Custom imports
+// Custom import
 import theme from "../../assets/themes";
 import FormInput from "../../components/FormInput";
 import DateSelectionForm from "../../components/DateSelectionForm";
 
 const OptionalStep = ({ control, errors }) => {
+    const orgSchema = yup.object().shape({
+        additionLink: yup.string().url("Invalid URL format"),
+    });
+
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Stack gap={2}>
@@ -33,9 +40,10 @@ const OptionalStep = ({ control, errors }) => {
                             color: theme.palette.background.default,
                             borderRadius: theme.customShape.btn,
                             fontWeight: theme.fontWeight.bold,
+                            textTransform: "none",
                         }}
                     >
-                        Submit
+                        Create
                     </Button>
                 </Stack>
             </Stack>

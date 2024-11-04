@@ -79,6 +79,7 @@ const TableCustom = ({
     sortOrder,
 }) => {
     const [searchQuery, setSearchQuery] = useState("");
+    const [sortValue, setSortValue] = useState("ASC");
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
     // Default columns if not provided
@@ -103,6 +104,11 @@ const TableCustom = ({
         if (onSearch) {
             onSearch(query);
         }
+    };
+
+    const handleSortChange = (value) => {
+        setSortValue(value);
+        onSortChange(value);
     };
 
     return (
@@ -133,7 +139,7 @@ const TableCustom = ({
                                 borderRadius: theme.customShape.btn,
                                 textTransform: "none",
                                 justifyContent: isMobile ? "center" : "space-between",
-                                }}
+                            }}
                         >
                             {!isMobile && addNewLabel}
                         </Button>
@@ -145,7 +151,11 @@ const TableCustom = ({
                         variant="outlined"
                         size="small"
                         placeholder="Search ..."
-                        sx={{ flexGrow: 1, minWidth: { md: "250px", sm: "150px" } }}
+                        sx={{
+                            flexGrow: 1,
+                            minWidth: { md: "50px", sm: "150px" },
+                            width: "70%" // 70% width on mobile
+                        }}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
@@ -158,18 +168,18 @@ const TableCustom = ({
                     {isSortable && (
                         <FormControl
                             sx={{
-                                minWidth: { md: 140, sm: 100, xs: 80 },
-                                width: { md: "auto", sm: "auto", xs: "100%" },
-                                mx: { xs: 1, sm: 2, md: 3 },
-                                mt: { xs: 1, sm: 0 },
+                                minWidth: { md: 160 },
+                                width: "30%",
                             }}
                             size="small"
                             variant="outlined"
                         >
-                            <InputLabel sx={{ display: { xs: "none", sm: "block" } }}>Sort by</InputLabel>
+                            <InputLabel >Sort by</InputLabel>
+
                             <Select
-                                label={window.innerWidth >= 600 ? "Sort by" : ""}
-                                onChange={(e) => onSortChange(e.target.value)}
+                                value={sortValue}
+                                label={window.innerWidth >= 300 ? "Sort by" : ""}
+                                onChange={(e) => handleSortChange(e.target.value)}
                                 displayEmpty
                                 IconComponent={(props) => (
                                     <IconButton {...props} sx={{ padding: 0, display: { xs: "flex" } }}>
@@ -189,7 +199,6 @@ const TableCustom = ({
                             </Select>
                         </FormControl>
                     )}
-
                     {/* Add New Button */}
                     {addNewBtn && (
                         <Button

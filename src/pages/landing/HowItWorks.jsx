@@ -59,7 +59,7 @@ const HowItWorks = () => {
                     </Box>
 
                     <Typography variant="h2" fontWeight={theme.fontWeight.semiBold}>
-                        Integrate Certifier to automate your workflows
+                        Integrate RatifyME to automate your workflows
                     </Typography>
                     <Typography variant="h4">
                         Save yourself hours, boost team productivity & increase organizational efficiency by integrating Certifier

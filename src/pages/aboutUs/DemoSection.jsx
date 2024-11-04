@@ -1,15 +1,17 @@
-// MUI import
-import { Box, Button, Stack, Typography } from "@mui/material";
+// React library import
 import { useState } from "react";
 
+// MUI import
+import { Box, Button, Stack, Typography } from "@mui/material";
+import { PlayCircle } from "@mui/icons-material";
+
 // Custom import
-import LandingContainer from "../../components/styles/LandingContainer";
 import ArrowStyleIcon from "../../assets/images/ArrowStyleIcon.svg";
 import ArrowStyleIRotatecon from "../../assets/images/ArrowStyleIRotatecon.svg";
-import DigitalCredentailVideo from "../../assets/images/Digital_CredentailVideo.mp4";
+import LandingContainer from "../../components/styles/LandingContainer";
 import LandingDemo from "../../assets/images/LandingDemo.svg";
+import DigitalCredentailVideo from "../../assets/images/Digital_CredentailVideo.mp4";
 import theme from "../../assets/themes";
-import { PlayCircle } from "@mui/icons-material";
 
 const DemoSection = () => {
     const [isPlaying, setIsPlaying] = useState(false);
