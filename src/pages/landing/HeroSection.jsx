@@ -123,7 +123,7 @@ const HeroSection = () => {
                             </Button>
                         </Link>
                         <a
-                            href="https://ratifyme.digital/credential/RMC-e84e6a67-77b5-4bb5-b638-2cb24338de14"
+                            href="https://tech-a.anbschool.org/credential/RMC-48c71123-916c-48b2-9d34-8f5caf272500"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
