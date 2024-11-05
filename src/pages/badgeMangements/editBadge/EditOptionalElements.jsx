@@ -1,5 +1,5 @@
 // MUI import
-import { Stack } from "@mui/material";
+import { Stack, Box } from "@mui/material";
 
 // Custom import
 import DateSelectionForm from "../../../components/DateSelectionForm";
@@ -15,7 +15,11 @@ const EditOptionalElements = ({ control, errors }) => {
         >
             <Stack gap={3}>
                 {/* End Date */}
-                <DateSelectionForm control={control} name="endDate" label="End Date" errors={errors} />
+                <Box width="100%">
+                        {/* Start Date */}
+                        <DateSelectionForm control={control} name="expiredDate" label="Expire Date" required />
+                        {errors.expiredDate && <HelperTextForm color={"error"} message={errors?.expiredDate?.message} />}
+                    </Box>
                 <FormInput
                     label="Addition Link"
                     name="additionLink"

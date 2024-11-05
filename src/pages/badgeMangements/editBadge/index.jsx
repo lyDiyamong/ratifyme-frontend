@@ -60,10 +60,6 @@ const EditBadge = () => {
         resolver: yupResolver(badgeSchema),
     });
 
-
-    // Status custom hook
-    const [message, setMessage] = useCatchStatus(isSuccess || isError, isSuccess ? "Updated succesfully" : "Updated failed");
-
     // Handle submit
     const onSubmit = async (data) => {
         const formData = new FormData();
