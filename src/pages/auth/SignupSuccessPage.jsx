@@ -120,8 +120,8 @@ const SignupSuccessPage = () => {
                 onConfirm={handleConfirm}
                 confirmText="Go to Plans"
                 cancelText="Cancel"
-                iconColor={theme.palette.customColors.green400}
-                iconBgColor={theme.palette.customColors.green100}
+                iconColor={theme.palette.customColors.red400}
+                iconBgColor={theme.palette.customColors.red100}
             />
         </>
         // ============ End reset password success container ============

@@ -69,7 +69,7 @@ const TableEarner = () => {
         order: sortOrder,
         search: searchQuery,
     });
-    console.log(response);
+
 
     // Load and filter invited users on mount
     useEffect(() => {

@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
-import { yupResolver } from "@hookform/resolvers/yup";
 import dayjs from "dayjs";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 // MUI import
 import { ArrowBack, ZoomInMapOutlined } from "@mui/icons-material";
@@ -14,20 +14,18 @@ import { Modal, Backdrop } from "@mui/material";
 import { Box, Button, Stack, Typography } from "@mui/material";
 
 // Custom import
-import PageTitle from "../../../components/PageTitle";
-import DashboardContainer from "../../../components/styles/DashboardContainer";
-import PageLoading from "../../../components/loading/PageLoading";
-import { SpinLoading } from "../../../components/loading/SpinLoading";
 import EditCoreElement from "./EditCoreElement";
 import EditMetadata from "./EditMetadata";
 import EditOptionalElements from "./EditOptionalElements";
-import useCatchStatus from "../../../hooks/useCatchStatus";
-import badgeSchema from "../../../utils/schema/badgeSchema";
-import theme from "../../../assets/themes";
-
-// API import
+import PageTitle from "../../../components/PageTitle";
+import DashboardContainer from "../../../components/styles/DashboardContainer";
 import { useFetchAchievementTypeQuery } from "../../../store/api/achievements/achievementTypeApi";
 import { useFetchOneBadgeQuery, useUpdateBadgeMutation } from "../../../store/api/badgeManagement/badgeApi";
+import theme from "../../../assets/themes";
+import useCatchStatus from "../../../hooks/useCatchStatus";
+import badgeSchema from "../../../utils/schema/badgeSchema";
+import PageLoading from "../../../components/loading/PageLoading";
+import { SpinLoading } from "../../../components/loading/SpinLoading";
 
 const EditBadge = () => {
     const { id: badgeId } = useParams();
@@ -60,6 +58,7 @@ const EditBadge = () => {
         resolver: yupResolver(badgeSchema),
     });
 
+    const parsedExpirationDate = dayjs(badgeData?.endDate);
 
     // Status custom hook
     const [message, setMessage] = useCatchStatus(isSuccess || isError, isSuccess ? "Updated succesfully" : "Updated failed");
@@ -67,7 +66,6 @@ const EditBadge = () => {
     // Handle submit
     const onSubmit = async (data) => {
         const formData = new FormData();
-        console.log("Error form", errors);
         // Append core badge details
         appendBadgeDetails(formData, data);
         // Append Achievements
@@ -161,11 +159,11 @@ const EditBadge = () => {
                 badgeName: badgeData?.name || "",
                 issuedOn: dayjs(badgeData?.issuedOn) || null,
                 startedDate: dayjs(badgeData?.startedDate) || null,
+                endDate: parsedExpirationDate || null,
                 badgeDescription: badgeData?.description || "",
-                tagsOrLanguage: tagsValue.join(", ") || "",
-                endDate: dayjs(badgeData?.endDate) || null,
+                tagsOrLanguage: tagsValue || "",
                 // Optional
-                expiredDate: dayjs(badgeData?.expiredDate) || null
+                expiredDate : dayjs(badgeData?.expiredDate) || null
             });
 
             // Set the uploaded image URL if available
@@ -343,7 +341,6 @@ const EditBadge = () => {
                                         borderRadius: theme.customShape.btn,
                                         fontWeight: theme.fontWeight.bold,
                                         px: 2,
-                                        textTransform: 'none'
                                     }}
                                 >
                                     Back
