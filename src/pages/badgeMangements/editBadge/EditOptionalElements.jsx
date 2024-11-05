@@ -14,12 +14,6 @@ const EditOptionalElements = ({ control, errors }) => {
             }}
         >
             <Stack gap={3}>
-                {/* End Date */}
-                <Box width="100%">
-                        {/* Start Date */}
-                        <DateSelectionForm control={control} name="expiredDate" label="Expire Date" required />
-                        {errors.expiredDate && <HelperTextForm color={"error"} message={errors?.expiredDate?.message} />}
-                    </Box>
                 <FormInput
                     label="Addition Link"
                     name="additionLink"
