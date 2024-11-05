@@ -23,7 +23,7 @@ const IssueToEarnerButton = ({ achievementId }) => {
         isSuccess || isError,
         isSuccess ? "Issue badge successfully" : "Issue badge failed",
     );
-    console.log(achievementId);
+
 
     const handleIssueBadge = async () => {
         try {
