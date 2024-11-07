@@ -13,8 +13,8 @@ const TableEarnerList = ({ achievementId }) => {
     const isSortable = true;
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [sortColumn, setSortColumn] = useState("name");
-    const [sortOrder, setSortOrder] = useState("name");
+    const [sortColumn, setSortColumn] = useState("earnerName");
+    const [sortOrder, setSortOrder] = useState("earnerName");
     const [searchQuery, setSearchQuery] = useState("");
 
     const { data: earner } = useFetchEmailEarnerQuery({
@@ -33,11 +33,11 @@ const TableEarnerList = ({ achievementId }) => {
         },
         {
             name: "Name",
-            selector: (row) => row.name || "N/A",
+            selector: (row) => row.earnerName || "N/A",
         },
         {
             name: "Email",
-            selector: (row) => row.User?.email || "N/A",
+            selector: (row) => row.Earners?.User?.email || "N/A",
         },
         {
             name: "Date Of Birth",
@@ -60,7 +60,7 @@ const TableEarnerList = ({ achievementId }) => {
 
     //Handle sorting change
     const handleSortChange = (column) => {
-        const newSortOrder = sortOrder === "-name" ? "name" : "name";
+        const newSortOrder = sortOrder === "-earnerName" ? "earnerName" : "earnerName";
         setSortColumn(column);
         setSortOrder(newSortOrder);
     };
@@ -72,11 +72,10 @@ const TableEarnerList = ({ achievementId }) => {
     };
 
     // State for handling selected emails
-    const earners = earner?.data.map((earner) => earner?.Earner);
     return (
         <TableCustom
             title="Earner List"
-            data={earners}
+            data={earner?.data || []}
             columns={earnerColumns}
             pagination
             totalRows={earner?.total || 0}
@@ -90,7 +89,7 @@ const TableEarnerList = ({ achievementId }) => {
             sortOrder={sortOrder}
             onSearch={handleSearch}
             addNewBtn={false}
-            sortOptions={getSortOptions("name", "-name")}
+            sortOptions={getSortOptions("earnerName", "-earnerName")}
         />
     );
 };

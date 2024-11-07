@@ -48,7 +48,7 @@ const SignupPage = () => {
 
     // Fallback steps in case role is not defined
     const steps = {
-        institution: ["General Info", "Address Info", "Institution Info", "Account Setup", "Password Setup"],
+        institution: ["Institution Info", "General Info", "Address Info", "Account Setup", "Password Setup"],
         issuer: ["General Info", "Address Info", "Account Setup", "Password Setup"],
         earner: ["General Info", "Address Info", "Account Setup", "Password Setup"],
     };
@@ -114,14 +114,22 @@ const SignupPage = () => {
         // Define which fields to validate for each step
         switch (activeStep) {
             case 0:
-                fieldsToValidate = ["firstName", "lastName", "genderId", "dateOfBirth"];
+                if (role === "institution") {
+                    fieldsToValidate = ["institutionName", "institutionEmail", "institutionPhoneNumber", "institutionWebsiteUrl"];
+                } else {
+                    fieldsToValidate = ["firstName", "lastName", "genderId", "dateOfBirth"];
+                }
                 break;
             case 1:
-                fieldsToValidate = ["country", "city", "street", "postalCode"];
+                if (role === "institution") {
+                    fieldsToValidate = ["firstName", "lastName", "genderId", "dateOfBirth"];
+                } else {
+                    fieldsToValidate = ["country", "city", "street", "postalCode"];
+                }
                 break;
             case 2:
                 if (role === "institution") {
-                    fieldsToValidate = ["institutionName", "institutionEmail", "institutionPhoneNumber", "institutionWebsiteUrl"];
+                    fieldsToValidate = ["country", "city", "street", "postalCode"];
                 } else {
                     fieldsToValidate = ["username", "phoneNumber", "email"];
                 }
