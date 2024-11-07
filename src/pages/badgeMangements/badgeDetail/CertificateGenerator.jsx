@@ -91,8 +91,8 @@ const CertificateGenerator = ({ badge }) => {
     const certUrl = earnerAchieResponse?.data?.certUrlPdf;
 
     // Upload Certificate hook
-    const [uploadCert, { isLoading: certiLoading, isError: uploadCertError }] = useUploadCertiMutation();
-
+    const [uploadCert, { isLoading: certiLoading, isError: uploadCertError, data: certUploadRes }] = useUploadCertiMutation();
+    console.log(certUploadRes);
     // Catch status hook
     const [message, setMessage] = useCatchStatus(uploadCertError, "Get certificate failed");
 
@@ -104,11 +104,11 @@ const CertificateGenerator = ({ badge }) => {
     const handleGenerateImage = async () => {
         try {
             // Wait for DOM readiness
-            await new Promise((resolve) => setTimeout(resolve, 100)); 
+            await new Promise((resolve) => setTimeout(resolve, 100));
             // Wait for fonts to load
-            await document.fonts.ready; 
+            await document.fonts.ready;
             // Preload and convert images
-            await prepareImages(certificateRef); 
+            await prepareImages(certificateRef);
 
             const imageSettings = {
                 quality: 1.0,
@@ -148,7 +148,7 @@ const CertificateGenerator = ({ badge }) => {
 
     // View handling
     const handleViewCert = () => {
-        window.open(earnerAchieResponse?.data?.certUrlPdf, "_blank");
+        window.open(certUploadRes.uploadCert, "_blank");
     };
 
     // Disable Generate button effect
@@ -156,7 +156,7 @@ const CertificateGenerator = ({ badge }) => {
         if (certUrl) {
             setIsCertUpload(true);
         }
-    }, [certUrl]);
+    }, [earnerAchieResponse, certUrl]);
 
     // Use in your component
     useEffect(() => {

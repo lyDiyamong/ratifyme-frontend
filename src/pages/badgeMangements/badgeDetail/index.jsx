@@ -1,7 +1,7 @@
 // React Import
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 // MUI Import
 import { Stack, Tab, Tabs, Typography } from "@mui/material";
@@ -26,6 +26,7 @@ const BadgeDetail = () => {
     // Fetch ID from the URL
     const { id } = useParams();
     const { state } = useLocation();
+    const navigate = useNavigate()
     const [showAlert, setShowAlert] = useState(!!state?.successMessage);
 
     const [selectedEmails, setSelectedEmails] = useState([]);
@@ -33,7 +34,9 @@ const BadgeDetail = () => {
     const { roleId, issuerData, earnerData } = useSelector((state) => state.global);
     const { data: oneBadgeRes, refetch, isLoading, isError } = useFetchOneBadgeQuery(id);
     const oneBadge = oneBadgeRes?.data;
-
+    if (isError) {
+        navigate('/404')
+    }
     // Tab state
     const [value, setValue] = useState(0);
     const achievementId = oneBadge?.Achievements.map((achievement) => achievement.id);
