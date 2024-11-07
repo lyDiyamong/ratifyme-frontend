@@ -2,15 +2,7 @@
 import { Link } from "react-router-dom";
 
 // MUI import
-import {
-    Box,
-    Typography,
-    Container,
-    Grid,
-    Divider,
-    List,
-    ListItem,
-} from "@mui/material";
+import { Box, Typography, Container, Grid, Divider, List, ListItem } from "@mui/material";
 
 // Custom import
 import LandingContainer from "../../components/styles/LandingContainer";
@@ -19,7 +11,7 @@ import RatifyMeLogo from "../../assets/icons/RatfiyME.svg";
 import theme from "../../assets/themes";
 
 // Data import
-import {learnMoreLinks, otherSolutionsLinks, copyrightLinks, socialMediaLinks} from "../../data/footerData";
+import { learnMoreLinks, otherSolutionsLinks, copyrightLinks, socialMediaLinks } from "../../data/footerData";
 
 const Footer = () => {
     // Copyright item style
@@ -80,9 +72,8 @@ const Footer = () => {
                                 >
                                     {" RatifyME "}
                                 </Typography>{" "}
-                                by TechA is a digital credential network. We
-                                help the people speak a common language of
-                                verified knowledge, skills, and abilities.
+                                by TechA is a digital credential network. We help the people speak a common language of verified
+                                knowledge, skills, and abilities.
                             </Typography>
                         </Grid>
 
@@ -102,10 +93,7 @@ const Footer = () => {
                             <List>
                                 {learnMoreLinks.map((link, index) => (
                                     <ListItem key={index} sx={SubListItemStyle}>
-                                        <Link
-                                            to={link.to}
-                                            style={linkItemStyle}
-                                        >
+                                        <Link to={link.to} style={linkItemStyle}>
                                             {link.text}
                                         </Link>
                                     </ListItem>
@@ -128,10 +116,7 @@ const Footer = () => {
                             <List>
                                 {otherSolutionsLinks.map((link, index) => (
                                     <ListItem key={index} sx={SubListItemStyle}>
-                                        <Link
-                                            to={link.to}
-                                            style={linkItemStyle}
-                                        >
+                                        <Link to={link.to} style={linkItemStyle}>
                                             {link.text}
                                         </Link>
                                     </ListItem>
@@ -153,18 +138,35 @@ const Footer = () => {
                             </Typography>
 
                             <List sx={{ display: "flex", gap: 2, my: 2 }}>
-                                {socialMediaLinks.map((link, index) => (
-                                    <Link key={index} sx={linkItemStyle} to={link.to}>
-                                        <Box
-                                            component="img"
-                                            sx={{
-                                                width: 30,
-                                            }}
-                                            alt={link.alt}
-                                            src={link.src}
-                                        />
-                                    </Link>
-                                ))}
+                                {socialMediaLinks.map((link, index) =>
+                                    link.to && link.to !== "#" ? (
+                                        <Link target="_blank" key={index} sx={linkItemStyle} to={link.to}>
+                                            <Box
+                                                component="img"
+                                                sx={{
+                                                    mt: 1,
+                                                    width: 30,
+                                                }}
+                                                alt={link.alt}
+                                                src={link.src}
+                                            />
+                                        </Link>
+                                    ) : (
+                                        <>
+                                            <Box
+                                            key={index}
+                                                component="img"
+                                                sx={{
+                                                    cursor: "pointer",
+                                                    linkItemStyle,
+                                                    width: 30,
+                                                }}
+                                                alt={link.alt}
+                                                src={link.src}
+                                            />
+                                        </>
+                                    ),
+                                )}
                             </List>
                             <Typography variant="body2" color="text.disabled">
                                 Join the{" "}
@@ -177,8 +179,7 @@ const Footer = () => {
                                 >
                                     {" RatifyME "}
                                 </Typography>{" "}
-                                revolution. Follow us on [Social media
-                                platforms] for updates and insights.
+                                revolution. Follow us on [Social media platforms] for updates and insights.
                             </Typography>
                         </Grid>
                     </Grid>
@@ -189,24 +190,19 @@ const Footer = () => {
                 <Divider />
 
                 {/* ============ Start copyright section ============ */}
-                <Box
-                    sx={{ bgcolor: "inherit", color: "inherit", my: 2}}
-                >
+                <Box sx={{ bgcolor: "inherit", color: "inherit", my: 2 }}>
                     <Container>
                         <FlexBetween
                             variant="body2"
                             sx={{
-                                display: { sm: "flex", xss: 'block',  },
+                                display: { sm: "flex", xss: "block" },
                                 color: "text.disabled",
                             }}
                         >
                             {/* Start Copyright text */}
-                            <Typography >
+                            <Typography>
                                 © Copyright -{" "}
-                                <Typography
-                                    component="span"
-                                    sx={{ color: theme.palette.primary.main }}
-                                >
+                                <Typography component="span" sx={{ color: theme.palette.primary.main }}>
                                     Tech A
                                 </Typography>
                             </Typography>
@@ -217,17 +213,12 @@ const Footer = () => {
                                     display: "flex",
                                     justifyContent: "space-between",
                                     gap: 2,
-                                    flexDirection: { xss: 'column', sm: 'row' },
-                                    mt: { xss: 2, sm: 0}
+                                    flexDirection: { xss: "column", sm: "row" },
+                                    mt: { xss: 2, sm: 0 },
                                 }}
                             >
                                 {copyrightLinks.map((link, index) => (
-                                    <Link
-                                        variant="body2"
-                                        key={index}
-                                        to={link.to}
-                                        style={copyrightItem}
-                                    >
+                                    <Link variant="body2" key={index} to={link.to} style={copyrightItem}>
                                         {link.text}
                                     </Link>
                                 ))}
@@ -243,4 +234,3 @@ const Footer = () => {
 };
 
 export default Footer;
-

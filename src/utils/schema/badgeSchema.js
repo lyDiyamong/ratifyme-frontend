@@ -5,8 +5,12 @@ const badgeSchema = yup.object().shape({
         .string()
         .required("⚠️ Criteria is required")
         .min(10, "⚠️ Criteria must be at least 10 characters long")
-        .max(50, "⚠️ Criteria cannot exceed 50 characters"),
-    AchievementTypes: yup.mixed().required("⚠️ Achievement type is required"),
+        .max(150, "⚠️ Criteria cannot exceed 150 characters"),
+    AchievementTypes: yup
+        .array()
+        .of(yup.string()) // assuming AchievementTypes contains strings, adjust if necessary
+        .min(1, "⚠️ At least one achievement type must be selected")
+        .required("⚠️ Achievement type is required"),
     startedDate: yup
         .date()
         .typeError("⚠️ Please select a valid date")
@@ -25,7 +29,7 @@ const badgeSchema = yup.object().shape({
     badgeName: yup
         .string()
         .min(3, "⚠️ Badge name must be at least 3 characters long")
-        .max(50, "⚠️ Badge name cannot exceed 50 characters")
+        .max(150, "⚠️ Badge name cannot exceed 150 characters")
         .required("⚠️ Badge name is required"),
     badgeDescription: yup.string().max(255, "⚠️ Description cannot exceed 255 characters").required("⚠️ Description is required"),
     additionLink: yup.string().url("⚠️ Invalid URL format"),

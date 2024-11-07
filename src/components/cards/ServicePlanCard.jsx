@@ -227,6 +227,7 @@ const ServicePlanCard = () => {
             <AlertConfirmation
                 open={showAlert}
                 title="Action Required"
+                cancelText="Cancel"
                 message={alertMessage}
                 onClose={() => setShowAlert(false)}
                 onConfirm={handleAlertConfirm}

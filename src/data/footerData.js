@@ -18,8 +18,8 @@ export const otherSolutionsLinks = [
 // Social Media section mapping
 export const socialMediaLinks = [
     { to: "https://www.facebook.com/profile.php?id=61566569411637", src: Facebook, alt: "Facebook" },
-    { src: Instagram, alt: "Instagram" },
-    { src: LinkedIn, alt: "LinkedIn" },
+    { to: "#", src: Instagram, alt: "Instagram" },
+    { to: "#", src: LinkedIn, alt: "LinkedIn" },
 ];
 
 // Copyright section mapping

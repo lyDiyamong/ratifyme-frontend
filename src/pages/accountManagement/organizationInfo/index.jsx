@@ -30,7 +30,7 @@ const OrganizationInfo = () => {
     const userRole = info?.data?.Role?.name;
 
     return (
-        <DashboardContainer sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
+        <DashboardContainer sx={{ display: "flex", flexDirection: "column", gap: 4, p:0 }}>
             <Stack gap={3}>
                 <PageTitle
                     title="Organization Details"
