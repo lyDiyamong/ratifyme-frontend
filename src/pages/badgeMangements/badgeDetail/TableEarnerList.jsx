@@ -26,6 +26,8 @@ const TableEarnerList = ({ achievementId }) => {
         search: searchQuery,
     });
 
+    const earners = earner?.data
+
     const earnerColumns = [
         {
             name: "No.",
@@ -37,15 +39,11 @@ const TableEarnerList = ({ achievementId }) => {
         },
         {
             name: "Email",
-            selector: (row) => row.Earners?.User?.email || "N/A",
+            selector: (row) => row.Earner?.User?.email || "N/A",
         },
         {
             name: "Date Of Birth",
-            selector: (row) => FormatYear(row.User?.dateOfBirth) || "N/A",
-        },
-        {
-            name: "Academic Year",
-            selector: (row) => FormatYear(row.AcademicBackground?.academicYear) || "N/A",
+            selector: (row) => FormatYear(row.Earner?.User?.dateOfBirth) || "N/A",
         },
     ];
     //handle page change
@@ -75,7 +73,7 @@ const TableEarnerList = ({ achievementId }) => {
     return (
         <TableCustom
             title="Earner List"
-            data={earner?.data || []}
+            data={earners}
             columns={earnerColumns}
             pagination
             totalRows={earner?.total || 0}
