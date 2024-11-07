@@ -8,7 +8,7 @@ import { Check } from "@mui/icons-material";
 
 //Custom import
 import LandingContainer from "../../components/styles/LandingContainer";
-import Institution from "../../assets/images/Institution.svg";
+import BadgeDetailImageEarner from "../../assets/images/BadgeDetailEarner.svg";
 import SelectTextInfo from "../../assets/images/SelectTextInfo.svg";
 import theme from "../../assets/themes/index";
 
@@ -184,7 +184,7 @@ export default function WhatWeDo() {
                     </Stack>
                 </Box>
 
-                <Box component="img" src={Institution} alt="Image" sx={{ maxWidth: 500, width: "100%" }} />
+                <Box component="img" src={BadgeDetailImageEarner} alt="Image" sx={{ maxWidth: 500, width: "100%" }} />
             </Stack>
 
             <Box>
