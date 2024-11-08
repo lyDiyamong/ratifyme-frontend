@@ -38,7 +38,7 @@ const EditCoreElement = ({ control, schema }) => {
                 />
                 <MultiSelectForm
                     name="AchievementTypes"
-                    label="Achievement Types"
+                    label="Achievement Types*"
                     options={achievementType?.data || []}
                     control={control}
                     required={false}

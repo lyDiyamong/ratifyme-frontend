@@ -10,7 +10,6 @@ const badgeSchema = yup.object().shape({
     startedDate: yup
         .date()
         .typeError("⚠️ Please select a valid date")
-        .min(new Date(new Date().setHours(0, 0, 0, 0)), "⚠️ Start date cannot be in the past")
         .required("⚠️ Start date is required"),
     endDate: yup
         .date()

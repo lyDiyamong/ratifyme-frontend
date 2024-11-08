@@ -31,7 +31,6 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
 
     const badgeEarner = badge?.Achievements[0]?.Earners?.length !== 0 ? null : true;
 
-
     const [hasEarner, setHasEarner] = useState(badgeEarner);
 
     const { control } = useForm();
@@ -298,21 +297,29 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
                                 label="Tags"
                                 value={
                                     result?.tags
-                                        ? result.tags.split(",").map((tag, index) => (
-                                              <Chip
-                                                  key={index}
-                                                  label={tag}
-                                                  sx={{
-                                                      marginRight: 1,
-                                                      marginBottom: 1,
-                                                      backgroundColor: theme.palette.primary.light,
-                                                      color: theme.palette.primary.main,
-                                                      fontWeight: theme.fontWeight.bold,
-                                                  }}
-                                              />
-                                          ))
+                                        ? result.tags.split(",").map(
+                                              (tag, index) =>
+                                                  tag && (
+                                                      <Chip
+                                                          key={index}
+                                                          label={tag}
+                                                          sx={{
+                                                              marginRight: 1,
+                                                              marginBottom: 1,
+                                                              backgroundColor: theme.palette.primary.light,
+                                                              color: theme.palette.primary.main,
+                                                              fontWeight: theme.fontWeight.bold,
+                                                          }}
+                                                      />
+                                                  ),
+                                          )
                                         : "No tags"
                                 }
+                                isSmallScreen={isSmallScreen}
+                            />
+                            <DetailItem
+                                label="Expire Date"
+                                value={FormatDate(result?.expiredDate) || "No Expire date"}
                                 isSmallScreen={isSmallScreen}
                             />
                         </Box>

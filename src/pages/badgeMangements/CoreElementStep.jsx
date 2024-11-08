@@ -36,7 +36,7 @@ const CoreElementStep = ({ control, schema, errors }) => {
                     <MultiSelectForm
                         // Use the same field name consistently
                         name="AchievementTypes"
-                        label="Achievement Types"
+                        label="Achievement Types*"
                         options={achievementType?.data || []}
                         control={control}
                         required={true}
