@@ -29,7 +29,7 @@ const ActionButton = ({ label, onClick }) => {
                     backgroundColor: roleId === 1 ? "primary.dark" : "rgba(0, 0, 0, 0.04)",
                 },
                 textTransform: "capitalize",
-                borderRadius: roleId === 1 ? "10px" : "4px",
+                borderRadius: roleId === 1 ? "8px" : "4px",
             }}
         >
             {label}
