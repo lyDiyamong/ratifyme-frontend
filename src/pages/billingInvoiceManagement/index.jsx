@@ -5,7 +5,7 @@ import { useState } from "react";
 // Mui import
 import { Chip } from "@mui/material";
 
-// // Custom import
+// Custom import
 import TableCustom from "../../components/TableCustom";
 import FormatYear from "../../utils/formatDate";
 import DashboardContainer from "../../components/styles/DashboardContainer";
@@ -61,7 +61,7 @@ const BillingInvoiceManagement = () => {
     const subscriptionColumns = [
         {
             name: "No.",
-            selector: (row, index) => index + 1 || "N/A",
+            selector: (row) => row.id || "N/A",
         },
         {
             name: "Organization Name",

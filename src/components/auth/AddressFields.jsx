@@ -37,7 +37,7 @@ const AddressFields = ({ control, schema }) => {
                                 .getData()
                                 .find((option) => option.value === value)}
                             inputRef={ref}
-                            placeholder="Select Country"
+                            placeholder="Select Country *"
                             styles={{
                                 container: (base) => ({ ...base, width: "100%" }),
                                 control: (base) => ({
@@ -60,7 +60,7 @@ const AddressFields = ({ control, schema }) => {
 
             <FormInput
                 name="city"
-                label="City / State"
+                label="City / State *"
                 control={control}
                 type="text"
                 rules={{ required: "City is required" }}
@@ -68,7 +68,7 @@ const AddressFields = ({ control, schema }) => {
 
             <FormInput
                 name="street"
-                label="Street Address"
+                label="Street Address *"
                 control={control}
                 type="text"
                 rules={{ required: "Street Address is required" }}
@@ -76,7 +76,7 @@ const AddressFields = ({ control, schema }) => {
 
             <FormInput
                 name="postalCode"
-                label="Postal Code"
+                label="Postal Code *"
                 control={control}
                 type="text"
                 rules={{ required: "Postal Code is required" }}

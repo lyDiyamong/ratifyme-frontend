@@ -73,6 +73,10 @@ const ServicePlanCard = () => {
     }, [billingCycle, mappedPlans, userSelectedPlan]);
 
     const handleSubscribe = async (id) => {
+        if (userId && roleId === 1) {
+            return;
+        }
+
         if (userId && roleId !== 2) {
             setAlertMessage("You are already an earner or issuer. To become an institution, please create a new account.");
             setShowAlert(true);
