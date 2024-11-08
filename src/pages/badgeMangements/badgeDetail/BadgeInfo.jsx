@@ -315,6 +315,11 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
                                 }
                                 isSmallScreen={isSmallScreen}
                             />
+                            <DetailItem
+                                label="Expire Date"
+                                value={FormatDate(result?.expiredDate) || "No end date"}
+                                isSmallScreen={isSmallScreen}
+                            />
                         </Box>
                     </Box>
                 </Box>
