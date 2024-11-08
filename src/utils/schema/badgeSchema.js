@@ -6,11 +6,11 @@ const badgeSchema = yup.object().shape({
         .required("⚠️ Criteria is required")
         .min(10, "⚠️ Criteria must be at least 10 characters long")
         .max(50, "⚠️ Criteria cannot exceed 50 characters"),
-    AchievementTypes: yup.mixed().required("⚠️ Achievement type is required"),
-    startedDate: yup
-        .date()
-        .typeError("⚠️ Please select a valid date")
-        .required("⚠️ Start date is required"),
+    AchievementTypes: yup
+        .array()
+        .of(yup.string()) 
+        .min(1, "⚠️ At least one achievement type must be selected"),
+    startedDate: yup.date().typeError("⚠️ Please select a valid date").required("⚠️ Start date is required"),
     endDate: yup
         .date()
         .typeError("⚠️ Please select a valid date")
