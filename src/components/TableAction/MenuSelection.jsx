@@ -50,7 +50,7 @@ const MenuSelection = ({ onView, onDelete }) => {
     if (roleId === 1) {
         return (
             <Box>
-                <ActionButton label="View" onClick={handleView} fullWidth />
+                <ActionButton label="View" onClick={handleView} fullWidth/>
             </Box>
         );
     }
