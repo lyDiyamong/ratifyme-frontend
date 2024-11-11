@@ -61,7 +61,7 @@ const BillingInvoiceManagement = () => {
     const subscriptionColumns = [
         {
             name: "No.",
-            selector: (row) => row.id || "N/A",
+            selector: (row, index) => (currentPage - 1) * rowsPerPage + index + 1 || "N/A",
         },
         {
             name: "Organization Name",
