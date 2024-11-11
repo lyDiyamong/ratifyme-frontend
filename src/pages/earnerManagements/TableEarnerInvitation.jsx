@@ -173,6 +173,10 @@ const TableEarnerInvitation = () => {
     // ===================== Table Columns Definition =====================
     const columns = [
         {
+            name: "No.",
+            selector: (row, index) => (currentPage - 1) * rowsPerPage + index + 1 || "N/A",
+        },
+        {
             name: "Email",
             cell: (row) => (
                 <Box display="flex" alignItems="center" sx={{ width: "750px" }}>
