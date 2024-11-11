@@ -55,7 +55,7 @@ const InstitutionManagement = () => {
     const invoiceColumns = [
         {
             name: "No.",
-            selector: (row, index) => index + 1 || "N/A",
+            selector: (row, index) => (currentPage - 1) * rowsPerPage + index + 1 || "N/A",
         },
         {
             name: "Organization Name",
