@@ -180,6 +180,10 @@ const TableIssuerInvitation = () => {
     // ===================== Table Columns Definition =====================
     const columns = [
         {
+            name: "No.",
+            selector: (row, index) => (currentPage - 1) * rowsPerPage + index + 1 || "N/A",
+        },
+        {
             name: "Email",
             cell: (row) => <TableAvatars profileImage={row.User?.profileImage} name={row.inviteEmail} />,
         },
