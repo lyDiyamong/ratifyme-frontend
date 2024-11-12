@@ -211,6 +211,7 @@ const BadgeInfo = ({ badge, userRole, activeUserId, emails, onGetEmails }) => {
                         backgroundColor: theme.palette.customColors.white,
                         boxShadow: theme.customShadows.default,
                         borderRadius: theme.customShape.card,
+                        p:2
                     }}
                 >
                     <Box

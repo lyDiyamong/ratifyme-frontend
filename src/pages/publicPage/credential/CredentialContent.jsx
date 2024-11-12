@@ -20,6 +20,8 @@ const CredentialContent = ({ earnerData, achieveData, credUrl, credId, verifyCre
     const handleOpenModal = () => setIsModalOpen(true);
     const handleCloseModal = () => setIsModalOpen(false);
 
+    console.log("AchieveData BadgeClass🎉", achieveData?.BadgeClass);
+
     return (
         <Grid container spacing={2} my={2}>
             {/* Left Sticky Section */}
@@ -67,7 +69,12 @@ const CredentialContent = ({ earnerData, achieveData, credUrl, credId, verifyCre
                             </Button>
 
                             {/* Share Modal Component */}
-                            <ShareSocialModal open={isModalOpen} handleClose={handleCloseModal} credUrl={credUrl} badgeImg={achieveData?.BadgeClass?.imageUrl} />
+                            <ShareSocialModal
+                                open={isModalOpen}
+                                handleClose={handleCloseModal}
+                                credUrl={credUrl}
+                                badgeImg={achieveData?.BadgeClass?.imageUrl}
+                            />
 
                             <Button
                                 component="a"
@@ -152,14 +159,15 @@ const CredentialContent = ({ earnerData, achieveData, credUrl, credId, verifyCre
                     {/* Issuer By Section */}
                     <IssuerByCred
                         IssuerName={`${achieveData?.BadgeClass?.Issuer?.User?.firstName} ${achieveData?.BadgeClass?.Issuer?.User?.lastName}`}
+                        institutionName={earnerData?.Issuer?.Institution?.institutionName}
                     />
 
                     {/* Badge Details card Section */}
                     <BadgeDetailsCred
                         BadgeName={achieveData?.BadgeClass?.name}
-                        Criteria={achieveData?.BadgeClass?.Criterias[0]?.narrative}
                         StartDate={FormatDate(achieveData?.BadgeClass?.startedDate)}
                         EndDate={FormatDate(achieveData?.BadgeClass?.endDate)}
+                        ExpiredDate={FormatDate(achieveData?.BadgeClass?.expiredDate)}
                     />
 
                     {/* Description Section */}
@@ -183,6 +191,30 @@ const CredentialContent = ({ earnerData, achieveData, credUrl, credId, verifyCre
                             </Stack>
 
                             <Typography>{achieveData?.BadgeClass?.description}</Typography>
+                        </Stack>
+                    </Box>
+
+                    {/* Criteria Section */}
+                    <Box
+                        elevation={3}
+                        sx={{
+                            p: 2,
+                            backgroundColor: theme.palette.customColors.white,
+                            borderRadius: theme.customShape.input,
+                            border: "1px solid #F5F5F7",
+                        }}
+                    >
+                        <Stack spacing={2}>
+                            <Stack>
+                                <Typography variant="h4" fontWeight={theme.fontWeight.semiBold}>
+                                    Criteria
+                                </Typography>
+                                <Typography variant="subtitle1" color="textSecondary">
+                                    This Criteria is related to the Badge.
+                                </Typography>
+                            </Stack>
+
+                            <Typography>{achieveData?.BadgeClass?.Criterias[0]?.narrative}</Typography>
                         </Stack>
                     </Box>
 

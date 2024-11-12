@@ -91,7 +91,7 @@ const BadgeListCard = ({ badges, onView, total, refetch }) => {
                     </Typography>
                     <Grid container spacing={2}>
                         {badges?.map((badge, index) => (
-                            <Grid item xs={12} sm={6} md={4} lg={3} xl={2.4} key={badge?.id}>
+                            <Grid item xss={12} sm={6} md={4} lg={3} xl={2.4} key={badge?.id}>
                                 <Card
                                     sx={{
                                         maxWidth: { xss: "100%", lg: 360 },
