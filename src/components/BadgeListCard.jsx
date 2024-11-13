@@ -116,6 +116,7 @@ const BadgeListCard = ({ badges, onView, total, refetch }) => {
                                                 height: "100%",
                                                 maxWidth: 170,
                                                 maxHeight: 170,
+                                                m: 3
                                             }}
                                         >
                                             <Box

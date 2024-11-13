@@ -47,7 +47,7 @@ const Credential = () => {
     });
 
     // Verify Credentials Mutation
-    const [verifyCred, { isLoading: verifyLoading }] = useVerifyCredMutation();
+    const [verifyCred, { isLoading: verifyLoading, error: verifyError }] = useVerifyCredMutation();
 
     // If no data or there’s an error, redirect to 404
     if (!earnerAchieData && !earnerAchieveLoading) {
@@ -82,6 +82,7 @@ const Credential = () => {
                     issuerName: `${achieveData?.BadgeClass?.Issuer?.User?.firstName} ${achieveData?.BadgeClass?.Issuer?.User?.lastName}`,
                     issuedOn: earnerAchieData?.issuedOn,
                     claimedOn: earnerAchieData?.claimedOn,
+                    currentDate: new Date().toISOString()
                 },
             }).unwrap();
 
@@ -91,6 +92,9 @@ const Credential = () => {
             setFailOpen(true);
         }
     };
+    console.log("Date", new Date().toISOString() )
+    console.log("expired on", earnerAchieData?.expiredDate)
+    console.log("convert date",typeof new Date("2024-12-01T00:00:00.000Z"))
 
     return (
         <Box>
@@ -105,7 +109,7 @@ const Credential = () => {
             />
 
             {/* Failure Modal */}
-            <VerificationFailureModal open={failOpen} handleClose={handleFailClose} message="Verification failed" />
+            <VerificationFailureModal open={failOpen} handleClose={handleFailClose} message={verifyError?.data?.message} />
 
             {/* Image and Content */}
             <ImageSwitcher images={[earnerAchieData?.certUrlJpeg, achieveData?.BadgeClass?.imageUrl]} credId={credId} />

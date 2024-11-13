@@ -1,4 +1,4 @@
-// MUI import 
+// MUI import
 import { Box, Typography, DialogContent, IconButton, DialogTitle, Dialog, Stack } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { Error } from "@mui/icons-material";
@@ -11,8 +11,9 @@ const VerificationFailureModal = ({ open, handleClose, message }) => {
         <Dialog open={open} onClose={handleClose} fullWidth>
             <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <Typography variant="h4" sx={{ fontWeight: theme.fontWeight.bold }}>
-                    {message}
+                    Verification Failed
                 </Typography>
+
                 <IconButton edge="end" color="inherit" onClick={handleClose} aria-label="close">
                     <CloseIcon sx={{ color: theme.palette.customColors.gray300 }} />
                 </IconButton>
@@ -45,33 +46,19 @@ const VerificationFailureModal = ({ open, handleClose, message }) => {
                         </Box>
                         <Stack>
                             <Typography variant="body1" fontWeight={theme.fontWeight.semiBold} color={theme.palette.text.primary}>
-                                Invalid Verification
+                                {message}
                             </Typography>
                             <Typography variant="body2" color="textSecondary">
-                                Credential data does not match
+                            Digital credential is no longer valid.
                             </Typography>
                         </Stack>
                     </Stack>
 
                     <Stack spacing={1}>
-                        <Typography variant="h5" fontWeight={theme.fontWeight.bold}>
-                            Verification Failed Due to the Following Issues:
+                        <Typography variant="body2" color={theme.palette.text.secondary}>
+                            Due to a failed verification, this credential cannot be used as a recognized proof of qualification or
+                            achievement. Verification failure may occur if the credential has expired, been revoked. As such, it is not eligible for official or professional use.
                         </Typography>
-
-                        <Stack>
-                            <Typography variant="body1" sx={{ px: 2 }}>
-                                • The claimed date does not match the records.
-                            </Typography>
-                            <Typography variant="body1" sx={{ px: 2 }}>
-                                • The earner's name is invalid or does not match.
-                            </Typography>
-                            <Typography variant="body1" sx={{ px: 2 }}>
-                                • The issuance date is invalid or does not match.
-                            </Typography>
-                            <Typography variant="body1" sx={{ px: 2 }}>
-                                • The issuer's name is invalid or does not
-                            </Typography>
-                        </Stack>
                     </Stack>
                 </Stack>
             </DialogContent>
