@@ -10,6 +10,7 @@ import NotFoundPage from "../pages/notFound";
 import Credential from "../pages/publicPage/credential";
 import AboutUs from "../pages/aboutUs";
 import AboutOurTeam from "../pages/aboutUs/OurTeam";
+import TermsOfUse from "../pages/termsPolicy/TermsOfUse";
 
 const LandingRouter = () => {
     return (
@@ -21,6 +22,7 @@ const LandingRouter = () => {
                 <Route path="/credential/:credId" element={<Credential />} />
                 <Route path="/aboutUs" element={<AboutUs />} />
                 <Route path="/aboutOurTeam" element={<AboutOurTeam />} />
+                <Route path="/termsOfUse" element={<TermsOfUse />} />
             </Route>
             <Route path="*" element={<NotFoundPage />} />
         </Routes>
