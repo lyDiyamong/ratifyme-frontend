@@ -9,17 +9,19 @@ import HowItWorks from "./HowItWorks.jsx";
 import SecondHeadTitle from "./SecondHeadTitle.jsx";
 import DigitalBadgeFlowStepper from "./DigitalBadgeFlowStepper.jsx";
 import Faq from "./Faq";
+import CookieConsentAlert from "../../components/alert/CookieConsentAlert.jsx";
 
 const HomePage = () => {
     return (
-        <Stack gap={{md: 15, xss: 6}}>
+        <Stack gap={{ md: 15, xss: 6 }}>
             <HeroSection />
-            <DigitalBadgeFlowStepper/>
+            <DigitalBadgeFlowStepper />
             <OurCustomers />
             <SecondHeadTitle />
             <HowItWorks />
             <WhatWeDo />
             <Faq />
+            <CookieConsentAlert />
         </Stack>
     );
 };
