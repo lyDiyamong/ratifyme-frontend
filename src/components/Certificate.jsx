@@ -41,24 +41,8 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
                             src={badge?.Institution?.institutionProfileImage || null}
                             alt="RatifyMe"
                         />
-                        {/* <Divider sx={{ height: 45, borderColor: "black" }} orientation="vertical" /> */}
                     </>
                 ) : null}
-
-                {/* <Stack justifyContent="start" alignItems="start">
-                    <Typography variant="h3" fontWeight={theme.fontWeight.semiBold}>
-                        {badge?.Institution?.institutionName}
-                    </Typography>
-                    <Typography variant="body2">
-                        Organization{" "}
-                        <Typography
-                            component="span"
-                            sx={{ color: theme.palette.primary.main, fontWeight: theme.fontWeight.semiBold }}
-                        >
-                            {badge?.Institution?.institutionName}
-                        </Typography>
-                    </Typography>
-                </Stack> */}
             </Stack>
             <Stack sx={{ flexDirection: "row", gap: 1, alignItems: "center" }}>
                 <Box sx={{ width: 40, height: 40, objectFit: "contain" }} component="img" src={RatfiyME} alt="RatifyMe" />

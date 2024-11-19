@@ -92,9 +92,6 @@ const Credential = () => {
             setFailOpen(true);
         }
     };
-    console.log("Date", new Date().toISOString() )
-    console.log("expired on", earnerAchieData?.expiredDate)
-    console.log("convert date",typeof new Date("2024-12-01T00:00:00.000Z"))
 
     return (
         <Box>

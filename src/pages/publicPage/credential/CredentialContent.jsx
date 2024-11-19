@@ -20,7 +20,7 @@ const CredentialContent = ({ earnerData, achieveData, credUrl, credId, verifyCre
     const handleOpenModal = () => setIsModalOpen(true);
     const handleCloseModal = () => setIsModalOpen(false);
 
-    console.log("AchieveData BadgeClass🎉", achieveData?.BadgeClass);
+
 
     return (
         <Grid container spacing={2} my={2}>
