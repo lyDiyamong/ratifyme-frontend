@@ -30,7 +30,7 @@ const HeroSection = () => {
                 >
                     <Chip
                         icon={<Circle color="#0AA4A5" sx={{ fontSize: 10 }} />}
-                        label="v1.0.0"
+                        label="v1.3.0"
                         variant="outlined"
                         sx={{
                             color: "#0AA4A5",
