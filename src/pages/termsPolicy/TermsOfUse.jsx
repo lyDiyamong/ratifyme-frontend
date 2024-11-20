@@ -1,6 +1,7 @@
-import { Box, Typography, Container, Divider } from "@mui/material";
+import { Box, Typography, Container, Divider, Stack, Button } from "@mui/material";
 import termsContent from "../../data/termsContent";
 import theme from "../../assets/themes";
+import { Link } from "react-router-dom";
 
 const TermsOfUse = () => {
     return (
@@ -38,6 +39,39 @@ const TermsOfUse = () => {
                     {index < termsContent.length - 1 && <Divider sx={{ my: 2 }} />}
                 </Box>
             ))}
+
+            <Stack
+                sx={{
+                    backgroundColor: "#EAF2FF",
+                    p: 4,
+                    borderRadius: theme.customShape.section,
+                    gap: 2,
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}
+            >
+                <Typography variant="h2" sx={{ fontWeight: theme.fontWeight.semiBold, textAlign: "center" }}>
+                    Security that scales with your business
+                </Typography>
+                <Typography variant="h4" textAlign="center">
+                    RatifyME scales with you, providing secure administration, authentication, and permissions infrastructure as
+                    you grow.
+                </Typography>
+                <Link to="/auth/get-started">
+                    <Button
+                        variant="contained"
+                        sx={{
+                            color: theme.palette.customColors.white,
+                            fontWeight: theme.fontWeight.bold,
+                            textTransform: "none",
+                            px: 3,
+                            fontSize: { md: "20px", xss: "16px" },
+                        }}
+                    >
+                        Get Started
+                    </Button>
+                </Link>
+            </Stack>
         </Container>
     );
 };

@@ -24,7 +24,7 @@ export const socialMediaLinks = [
 
 // Copyright section mapping
 export const copyrightLinks = [
-    { to: "/", text: "Terms of Use" },
-    { to: "/", text: "Privacy Policy" },
+    { to: "/termsOfUse", text: "Terms of Use" },
+    { to: "/privacyPolicy", text: "Privacy Policy" },
     { to: "/", text: "Cookies" },
 ];

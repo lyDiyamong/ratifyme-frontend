@@ -2,11 +2,10 @@
 import { useState, useEffect } from "react";
 
 // MUI Import
-import { Box, Typography, Button, IconButton } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import { Box, Typography, Button } from "@mui/material";
 
 // Custom Import
-import cookie from "../../assets/images/cookie-img.jpg";
+import cookieImage from "../../assets/images/cookie-img.jpg";
 import theme from "../../assets/themes";
 
 const CookieConsentAlert = () => {
@@ -31,58 +30,92 @@ const CookieConsentAlert = () => {
         <Box
             sx={{
                 position: "fixed",
-                bottom: 30,
-                left: "50%",
-                transform: "translateX(-50%)",
-                bgcolor: theme.palette.customColors.white,
-                boxShadow: 3,
-                borderRadius: 2,
-                p: 3,
-                maxWidth: 500,
-                display: "flex",
-                alignItems: "center",
-                gap: 2,
+                bottom: 0,
+                left: 0,
+                width: "100%",
+                bgcolor: "white",
+                boxShadow: "0 -2px 10px rgba(0, 0, 0, 0.1)",
+                borderTopLeftRadius: "16px",
+                borderTopRightRadius: "16px",
+                p: 4,
                 zIndex: 9999,
+                display: "flex",
+                flexDirection: "column",
             }}
         >
-            {/* Image */}
-            <Box component="img" src={cookie} alt="Cookie" sx={{ width: 150, height: 150 }} />
+            <Box
+                sx={{
+                    maxWidth: "1000px",
 
-            {/* Content */}
-            <Box sx={{ flexGrow: 1 }}>
+                    mx: "auto",
+                }}
+            >
                 <Typography
+                    variant="h3"
                     sx={{
-                        fontSize: theme.typography.h3,
-                        fontWeight: theme.fontWeight.bold,
+                        fontWeight: theme.fontWeight.semiBold,
+                        color: theme.palette.text.primary,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
                     }}
                 >
-                    We use cookies
-                </Typography>
-                <Typography sx={{ mt: 1, fontSize: theme.typography.body1, fontWeight: theme.fontWeight.semiBold }}>
-                    This website uses cookies to enhance your experience.
+                    Want a Cookies?
+                    <Box
+                        component="img"
+                        src={cookieImage}
+                        alt="Cookies"
+                        sx={{ width: "60px", height: "60px", objectFit: "contain" }}
+                    />
                 </Typography>
 
-                {/* Buttons */}
-                <Box sx={{ display: "flex", gap: 1, mt: 2 }}>
+                <Typography
+                    variant="h5"
+                    sx={{
+                        mt: 1,
+                        mb: 3,
+                        color: theme.palette.text.secondary,
+                    }}
+                >
+                    This website uses cookies that are needed for the site to work properly and to get data on how you interact
+                    with it. By accepting, you agree to the use of cookies as described in our{" "}
+                    <a href="#" style={{ color: theme.palette.primary.main, fontWeight: theme.fontWeight.semiBold }}>
+                        Cookie policy
+                    </a>
+                    .
+                </Typography>
+                <Box sx={{ display: "flex", gap: 2 }}>
+                    <Button
+                        variant="outlined"
+                        sx={{
+                            borderColor: theme.palette.text.main,
+                            color: theme.palette.primary.main,
+                            borderRadius: "8px",
+                            px: { md: 6, xss: 2 },
+                            fontWeight: "bold",
+                        }}
+                        onClick={() => setOpen(false)}
+                    >
+                        Decline
+                    </Button>
                     <Button
                         variant="contained"
-                        color="primary"
-                        onClick={handleAccept}
                         sx={{
-                            fontSize: theme.typography.h4,
-                            fontWeight: theme.fontWeight.bold,
-                            color: theme.palette.customColors.white,
+                            bgcolor: theme.palette.primary.main,
+                            color: "white",
+                            borderRadius: "8px",
+                            px: { md: 6, xss: 2 },
+                            fontWeight: "bold",
+                            "&:hover": {
+                                bgcolor: theme.palette.primary.dark,
+                            },
                         }}
+                        onClick={handleAccept}
                     >
                         Accept
                     </Button>
                 </Box>
             </Box>
-
-            {/* Close Button */}
-            <IconButton onClick={() => setOpen(false)} sx={{ position: "absolute", top: 8, right: 8 }}>
-                <CloseIcon />
-            </IconButton>
         </Box>
     );
 };

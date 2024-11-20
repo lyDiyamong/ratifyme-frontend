@@ -190,7 +190,7 @@ const Footer = () => {
 
                 {/* ============ Start copyright section ============ */}
                 <Box
-                    sx={{ bgcolor: "inherit", color: "inherit", my: 2}}
+                    sx={{ bgcolor: "inherit", color: "inherit", py: 2}}
                 >
                     <Container>
                         <FlexBetween
