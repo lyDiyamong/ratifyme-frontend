@@ -45,6 +45,7 @@ const SignupPage = () => {
     const [stepCompletion, setStepCompletion] = useState([false, false, false, false, false]);
 
     const [message, setMessage] = useCatchStatus(isError || isSuccess, isError ? error?.data?.message : data?.message);
+    const [termOfUseMsg, setTermOfUseMsg] = useState("");
 
     // Fallback steps in case role is not defined
     const steps = {
@@ -86,6 +87,7 @@ const SignupPage = () => {
             institutionEmail: "",
             institutionPhoneNumber: "",
             institutionWebsiteUrl: "",
+            termsOfUse: false,
         },
         mode: "onChange",
         resolver: yupResolver(schema.concat(passwordSchemaName)),
@@ -217,20 +219,48 @@ const SignupPage = () => {
         }
     };
 
+    // const handleSubmitLastStep = async () => {
+    //     const fieldsToValidate = ["password", "passwordConfirm"];
+    //     const isStepValid = await trigger(fieldsToValidate);
+
+    //     if (isStepValid) {
+    //         const currentValues = methods.getValues();
+
+    //         try {
+    //             await onSubmit(currentValues);
+    //         } catch (err) {
+    //             console.error("Error during last step submission:", err);
+    //         }
+    //     }
+    // };
+
     const handleSubmitLastStep = async () => {
-        const fieldsToValidate = ["password", "passwordConfirm"];
-        const isStepValid = await trigger(fieldsToValidate);
+    // Validate password and confirm password
+    const fieldsToValidate = ["password", "passwordConfirm", "termsOfUse"];
+    const isStepValid = await trigger(fieldsToValidate);
+    
+    // Check if password fields and checkbox are properly filled
+    const termsAgreed = methods.getValues("termsOfUse");
 
-        if (isStepValid) {
-            const currentValues = methods.getValues();
+    if (!termsAgreed) {
+        setMessage("Please agree to the Terms of Use before proceeding.");
+        return; // Early exit if terms are not agreed
+    }
 
-            try {
-                await onSubmit(currentValues);
-            } catch (err) {
-                console.error("Error during last step submission:", err);
-            }
+    // Proceed if all validations pass
+    if (isStepValid) {
+        const currentValues = methods.getValues();
+    
+        try {
+            await onSubmit(currentValues);
+        } catch (err) {
+            console.error("Error during last step submission:", err);
         }
-    };
+    } else {
+        setMessage("Please ensure all fields are correctly filled.");
+    }
+};
+
 
     const handleBack = () => {
         setActiveStep((prevStep) => prevStep - 1);
