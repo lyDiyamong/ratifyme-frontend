@@ -28,22 +28,11 @@ const PasswordSetupFields = ({ control, role, guest, schema, errors, watch }) =>
                 pwdLabelName="Password"
                 confirmPwdLableName="Confirm Password"
             />
-            {/* <FormControlLabel
-                control={<Checkbox defaultChecked />}
-                label={
-                    <Typography variant="body2">
-                        I agree with the{" "}
-                        <Link to="/termsOfUse" target="_blank">
-                            Terms of Use
-                        </Link>
-                    </Typography>
-                }
-            /> */}
 
             <Controller
                 name="termsOfUse"
                 control={control}
-                rules={{ required: "You must agree to the Terms of Use." }} // Adding validation if needed
+                rules={{ required: "You must agree to the Terms of Use." }}
                 render={({ field }) => (
                     <FormControlLabel
                         control={<Checkbox {...field} />}
