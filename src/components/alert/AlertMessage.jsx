@@ -13,7 +13,7 @@ import CloseIcon from "@mui/icons-material/Close";
  * @param {Function} onClose - callback to handle manual closure
  * @return {JSX.Element} rendered AlertMessage component
  */
-function AlertMessage({ variant, children, onClose }) {
+function AlertMessage({ variant, children, onClose, timeOutClose = 5000 }) {
     const [visible, setVisible] = useState(true);
 
     useEffect(() => {
@@ -21,11 +21,11 @@ function AlertMessage({ variant, children, onClose }) {
         const timer = setTimeout(() => {
             setVisible(false);
             if (onClose) onClose();
-        }, 5000);
+        }, timeOutClose);
 
         // Cleanup timer on component unmount
         return () => clearTimeout(timer);
-    }, [onClose]);
+    }, [timeOutClose, onClose]);
 
     const handleClose = () => {
         setVisible(false);

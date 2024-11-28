@@ -99,7 +99,7 @@ const EditBadge = () => {
     const appendBadgeDetails = (formData, data) => {
         formData.append("name", data.badgeName);
         formData.append("description", data.badgeDescription);
-        formData.append("tags", data.tagsOrLanguage.join(", "));
+        formData.append("tags", data.tagsOrLanguage);
         formData.append("startedDate", dayjs(data.startedDate) || null);
         formData.append("issuerId", badgeData?.Issuer.id);
         formData.append("endDate", data.endDate);
@@ -142,7 +142,9 @@ const EditBadge = () => {
             // Fetch and process tags
             let tagsValue = [];
             if (typeof badgeData?.tags === "string") {
-                tagsValue = badgeData?.tags.split(",").map((tag) => tag.trim());
+                const tags = badgeData?.tags.split(",").map((tag) => tag.trim());
+                tagsValue = tags[0] === "" ? tags.slice(1) : tags
+
             } else if (Array.isArray(badgeData?.tags)) {
                 tagsValue = badgeData?.tags;
             }
@@ -161,7 +163,7 @@ const EditBadge = () => {
                 startedDate: dayjs(badgeData?.startedDate) || null,
                 endDate: parsedExpirationDate || null,
                 badgeDescription: badgeData?.description || "",
-                tagsOrLanguage: tagsValue || "",
+                tagsOrLanguage: tagsValue || [],
                 // Optional
                 expiredDate : dayjs(badgeData?.expiredDate) || null
             });

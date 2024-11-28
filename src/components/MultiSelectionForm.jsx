@@ -76,9 +76,7 @@ const SelectForm = ({ name, control, options, label, required }) => {
 
         return (
             <div style={{ display: "flex", flexWrap: "wrap" }}>
-                {selectedValues.map((value) => (
-                    <Chip key={value} label={value} style={{ margin: "2px" }} />
-                ))}
+                {selectedValues.map((value) => value && <Chip key={value} label={value} style={{ margin: "2px" }} />)}
                 {remainingCount > 0 && <Chip label={`+${remainingCount}`} style={{ margin: "2px" }} />}
             </div>
         );
@@ -106,7 +104,7 @@ const SelectForm = ({ name, control, options, label, required }) => {
                         sx: {
                             borderRadius: theme.customShape.input,
                             // Limit to 7 visible items (assuming ~48px height each)
-                            maxHeight: 48 * 7 + 8, 
+                            maxHeight: 48 * 7 + 8,
                             overflowY: "auto",
                         },
                     },

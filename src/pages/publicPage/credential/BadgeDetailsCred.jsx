@@ -6,7 +6,7 @@ import { AccountBalanceOutlined, EmojiEventsOutlined, EventAvailableOutlined, Pe
 // Custom import
 import theme from "../../../assets/themes";
 
-const BadgeDetailsCred = ({ BadgeName, Criteria, StartDate, EndDate }) => {
+const BadgeDetailsCred = ({ BadgeName, StartDate, EndDate, ExpiredDate }) => {
     return (
         <Box
             elevation={3}
@@ -96,39 +96,6 @@ const BadgeDetailsCred = ({ BadgeName, Criteria, StartDate, EndDate }) => {
                                 textAlign: "center",
                             }}
                         >
-                            <EmojiEventsOutlined
-                                sx={{
-                                    color: theme.palette.primary.main,
-                                    fontSize: 30,
-                                }}
-                            />
-                            <Typography variant="body1" fontWeight="bold" sx={{ mt: 1 }}>
-                                Criteria
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                {Criteria}
-                            </Typography>
-                        </CardContent>
-                    </Card>
-
-                    <Card
-                        sx={{
-                            width: 150,
-                            height: 150,
-                            borderRadius: 2,
-                            boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.05)",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            backgroundColor: "#fff",
-                            border: "1px solid #F5F5F7",
-                        }}
-                    >
-                        <CardContent
-                            sx={{
-                                textAlign: "center",
-                            }}
-                        >
                             <PendingActionsOutlined
                                 sx={{
                                     color: theme.palette.primary.main,
@@ -173,6 +140,39 @@ const BadgeDetailsCred = ({ BadgeName, Criteria, StartDate, EndDate }) => {
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 {EndDate}
+                            </Typography>
+                        </CardContent>
+                    </Card>
+
+                    <Card
+                        sx={{
+                            width: 150,
+                            height: 150,
+                            borderRadius: 2,
+                            boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.05)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            backgroundColor: "#fff",
+                            border: "1px solid #F5F5F7",
+                        }}
+                    >
+                        <CardContent
+                            sx={{
+                                textAlign: "center",
+                            }}
+                        >
+                            <EmojiEventsOutlined
+                                sx={{
+                                    color: theme.palette.primary.main,
+                                    fontSize: 30,
+                                }}
+                            />
+                            <Typography variant="body1" fontWeight="bold" sx={{ mt: 1 }}>
+                                Expired Date
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                {ExpiredDate}
                             </Typography>
                         </CardContent>
                     </Card>

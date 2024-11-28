@@ -1,5 +1,6 @@
 // MUI import
 import Button from "@mui/material/Button";
+import { useSelector } from "react-redux";
 
 /**
  * ActionButton Component
@@ -13,17 +14,22 @@ import Button from "@mui/material/Button";
 // ============ Start Action Button ============ 
 // This button is a reusable component that receives two props
 const ActionButton = ({ label, onClick }) => {
+    // Get roleId from the global state
+    const { roleId } = useSelector((state) => state.global);
+
     return (
         <Button
             onClick={onClick}
             size="small"
             sx={{
-                backgroundColor: "transparent",
-                color: "inherit",
+                backgroundColor: roleId === 1 ? "primary.main" : "transparent",
+                color: roleId === 1 ? "white" : "inherit",
+                fontWeight: roleId === 1 ? "bold" : "normal",
                 "&:hover": {
-                    backgroundColor: "rgba(0, 0, 0, 0.04)",
+                    backgroundColor: roleId === 1 ? "primary.dark" : "rgba(0, 0, 0, 0.04)",
                 },
                 textTransform: "capitalize",
+                borderRadius: roleId === 1 ? "8px" : "4px",
             }}
         >
             {label}
@@ -32,6 +38,4 @@ const ActionButton = ({ label, onClick }) => {
 };
 
 export default ActionButton;
-// ============ End Action Button ============ 
-
-
+// ============ End Action Button ============

@@ -7,27 +7,27 @@ const minDateOfBirth = new Date(today.getFullYear() - 18, today.getMonth(), toda
 export const schema = yup.object({
     firstName: yup
         .string()
-        .matches(/^[A-Za-z]+$/, "⚠️ First name must contain only letters and no spaces")
         .required("⚠️ First name is required")
+        .matches(/^[A-Za-z]+$/, "⚠️ First name must contain only letters and no spaces")
         .min(2, "⚠️ First name must be at least 2 characters")
         .max(30, "⚠️ First name must be at most 30 characters"),
     lastName: yup
         .string()
-        .matches(/^[A-Za-z]+$/, "⚠️ Last name must contain only letters and no spaces")
         .required("⚠️ Last name is required")
+        .matches(/^[A-Za-z]+$/, "⚠️ Last name must contain only letters and no spaces")
         .min(2, "⚠️ Last name must be at least 2 characters")
         .max(30, "⚠️ Last name must be at most 30 characters"),
     genderId: yup.string().required("⚠️ Gender is required"),
     username: yup
         .string()
+        .required("⚠️ Username is required")
         .matches(/^[a-zA-Z0-9_]+$/, "⚠️ Username can only include letters, numbers, and underscores.")
         .min(3, "⚠️ Username must be at least 3 characters.")
-        .max(15, "⚠️ Username must be at most 15 characters.")
-        .required("⚠️ Username is required"),
+        .max(15, "⚠️ Username must be at most 15 characters."),
     email: yup
         .string()
-        .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "⚠️ Invalid email format")
-        .required("⚠️ Email is required"),
+        .required("⚠️ Email is required")
+        .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "⚠️ Invalid email format"),
     phoneNumber: yup
         .string()
         .required("⚠️ Phone number is required")
@@ -43,14 +43,13 @@ export const schema = yup.object({
     street: yup.string().required("⚠️ Street is required"),
     postalCode: yup
         .string()
-        .matches(/^\d{5,6}$/, "⚠️ Postal code must be 5 or 6 digits")
-        .required("Postal code is required"),
+        .required("⚠️ Postal code is required")
+        .matches(/^\d{5,6}$/, "⚠️ Postal code must be 5 or 6 digits"),
     institutionName: yup
         .string()
+        .required("⚠️ Institution name is required")
         .min(3, "⚠️ Institution name must be at least 3 characters.")
-        .max(50, "⚠️ Institution name must be at most 50 characters.")
-        .required("⚠️ Institution name is required"),
-
+        .max(50, "⚠️ Institution name must be at most 50 characters."),
     institutionPhoneNumber: yup
         .string()
         .required("⚠️ Phone number is required")
@@ -58,8 +57,8 @@ export const schema = yup.object({
         .max(15, "⚠️ Phone number must be less than or equal to 15 characters"),
     institutionEmail: yup
         .string()
-        .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "⚠️ Invalid email format")
-        .required("⚠️ Email is required"),
+        .required("⚠️ Email is required")
+        .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "⚠️ Invalid email format"),
     dateOfBirth: yup
         .date()
         .typeError("⚠️ Please select a valid date")

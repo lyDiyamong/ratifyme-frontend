@@ -9,6 +9,7 @@ import { Box, Grid, Typography, Button } from "@mui/material";
 import LandingContainer from "../../components/styles/LandingContainer";
 import FormInput from "../../components/FormInput";
 import ContactUsIconSvg from "../../assets/icons/contactUs.svg";
+import CookieConsentAlert from "../../components/alert/CookieConsentAlert";
 
 // ============ Start contact us page ============
 const ContactUsPage = () => {
@@ -102,6 +103,8 @@ const ContactUsPage = () => {
                     />
                 </Grid>
             </Grid>
+
+            <CookieConsentAlert />
         </LandingContainer>
     );
 };

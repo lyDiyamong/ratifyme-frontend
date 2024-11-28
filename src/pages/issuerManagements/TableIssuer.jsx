@@ -120,6 +120,10 @@ const TableIssuer = () => {
         if (roleId === 1) {
             return [
                 {
+                    name: "No.",
+                    selector: (row, index) => (currentPage - 1) * rowsPerPage + index + 1 || "N/A",
+                },
+                {
                     name: "Issuer Name",
                     selector: (row) => row.issuerName || "N/A",
                     sortable: true,
@@ -131,6 +135,10 @@ const TableIssuer = () => {
         }
         if (roleId === 2) {
             return [
+                {
+                    name: "No.",
+                    selector: (row, index) => (currentPage - 1) * rowsPerPage + index + 1 || "N/A",
+                },
                 {
                     name: "Issuer Name",
                     selector: (row) => row.issuerName || "N/A",

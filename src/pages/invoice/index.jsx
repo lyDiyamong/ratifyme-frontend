@@ -55,6 +55,10 @@ const InvoiceManagement = () => {
 
     // Invoice columns
     const invoiceColumns = [
+        {
+            name: "No.",
+            selector: (row, index) => (currentPage - 1) * rowsPerPage + index + 1 || "N/A",
+        },
         ...(roleId === 2
             ? []
             : [

@@ -58,8 +58,59 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
     const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
 
     useEffect(() => {
-        setActive(pathname.substring(1));
+        const segments = pathname.split("/").filter(Boolean);
+
+        // Check if segments length is greater than 1 (nested route exists)
+        if (segments.length > 1) {
+            // (e.g., /dashboard/management)
+            if (segments.length === 2) {
+                const activePath = `${segments[1]}`;
+                setActive(activePath);
+                console.log(activePath);
+            }
+            // (e.g., /dashboard/management/badges)
+            else if (segments.length === 3) {
+                const activePath = `${segments[0]}/${segments[1]}/${segments[2]}`;
+                setActive(activePath);
+                console.log(activePath);
+            }
+        } else {
+            // (e.g., /dashboard)
+            setActive(segments[0]);
+        }
     }, [pathname]);
+
+    const handleNavigation = useCallback(
+        (path) => {
+            if (path === "/logout") {
+                setIsLogoutDialogOpen(true);
+            } else {
+                const segments = path.split("/").filter(Boolean);
+
+                if (segments.length > 1) {
+                    //(e.g., /dashboard/management)
+                    if (segments.length === 2) {
+                        const activePath = `${segments[1]}`;
+                        setActive(activePath);
+                        console.log(activePath);
+                    }
+                    // (e.g., /dashboard/management/badges)
+                    else if (segments.length === 3) {
+                        const activePath = `${segments[0]}/${segments[1]}/${segments[2]}`;
+                        setActive(activePath);
+                        console.log(activePath);
+                    }
+                } else {
+                    // (e.g., /dashboard)
+                    setActive(segments[0]);
+                }
+
+                navigate(path);
+                if (!isDesktop) setIsSidebarOpen(false);
+            }
+        },
+        [navigate, setIsSidebarOpen, isDesktop],
+    );
 
     const drawerStyles = useMemo(
         () => ({
@@ -76,20 +127,6 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
         [drawerWidth, isDesktop, theme.palette.divider],
     );
 
-    const handleNavigation = useCallback(
-        (path) => {
-            if (path === "/logout") {
-                // Open the dialog instead of logging out directly
-                setIsLogoutDialogOpen(true); 
-            } else {
-                setActive(path.substring(1));
-                navigate(path);
-                if (!isDesktop) setIsSidebarOpen(false);
-            }
-        },
-        [navigate, setIsSidebarOpen, isDesktop],
-    );
-
     // Determine the Drawer variant based on isDesktop and isSidebarOpen
     const drawerVariant = isDesktop ? (isSidebarOpen ? "persistent" : "temporary") : "temporary";
 
@@ -101,7 +138,7 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
             subItems: item.subItems?.filter((subItem) => !subItem.roles || subItem.roles.includes(roleId)),
         }))
         // Only keep items with subItems or without dropdown
-        .filter((item) => item.subItems?.length > 0 || !item.dropdown); 
+        .filter((item) => item.subItems?.length > 0 || !item.dropdown);
 
     return (
         <Box component="nav">
@@ -199,9 +236,7 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
                                                 <ListItemIcon sx={{ minWidth: "2rem" }}>
                                                     <Box component="img" src={icon} alt={altText} sx={iconStyles} />
                                                 </ListItemIcon>
-                                                <ListItemText
-                                                    primary={<Typography variant="body1">{text}</Typography>}
-                                                />
+                                                <ListItemText primary={<Typography variant="body1">{text}</Typography>} />
                                             </ListItem>
                                         </AccordionSummary>
                                         {/* End main list item of sidebar  */}
@@ -235,11 +270,7 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
                                                                 }}
                                                             />
                                                             <ListItemText
-                                                                primary={
-                                                                    <Typography variant="body1">
-                                                                        {subItem.text}
-                                                                    </Typography>
-                                                                }
+                                                                primary={<Typography variant="body1">{subItem.text}</Typography>}
                                                             />
                                                         </ListItemButton>
                                                     </ListItem>
@@ -259,8 +290,7 @@ const Sidebar = ({ drawerWidth, isSidebarOpen, setIsSidebarOpen, isDesktop }) =>
                                         disableRipple
                                         onClick={() => handleNavigation(path)}
                                         sx={{
-                                            backgroundColor:
-                                                active === lcText ? theme.palette.action.selected : "transparent",
+                                            backgroundColor: active === lcText ? theme.palette.action.selected : "transparent",
                                             "&:hover": {
                                                 backgroundColor:
                                                     active === lcText

@@ -8,8 +8,8 @@ import { ArrowForwardIosOutlined, CheckCircleOutline } from "@mui/icons-material
 // Custom import
 import LandingContainer from "../../components/styles/LandingContainer";
 import theme from "../../assets/themes";
-import BadgeDetail from "../../assets/images/BadgeDetail.svg";
-import BadgeDetailEarner from "../../assets/images/BadgeDetailEarner.svg";
+import BadgeDetailInstitution from "../../assets/images/Institution.svg";
+import BadgeDetailImageIssuer from "../../assets/images/BadgeDetail.svg";
 import BenefitGrid from "./BenefitGrid";
 
 const HowItWorks = () => {
@@ -96,7 +96,7 @@ const HowItWorks = () => {
                     </Stack>
                 </Box>
 
-                <Box component="img" src={BadgeDetail} alt="Image" sx={{ maxWidth: 500, width: "100%" }} />
+                <Box component="img" src={BadgeDetailInstitution} alt="Image" sx={{ maxWidth: 500, width: "100%" }} />
             </Stack>
 
             <Stack
@@ -164,7 +164,7 @@ const HowItWorks = () => {
                     </Stack>
                 </Box>
 
-                <Box component="img" src={BadgeDetailEarner} alt="Image" sx={{ maxWidth: 500, width: "100%" }} />
+                <Box component="img" src={BadgeDetailImageIssuer} alt="Image" sx={{ maxWidth: 500, width: "100%" }} />
             </Stack>
 
             <BenefitGrid />

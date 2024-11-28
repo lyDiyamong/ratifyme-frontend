@@ -1,10 +1,12 @@
-// MUI import 
-import { Box, Stack, Typography } from "@mui/material";
+// MUI import
+import { Box, Checkbox, FormControlLabel, Stack, Typography } from "@mui/material";
 
-// Custom import 
+// Custom import
 import PasswordFields from "./PasswordFields";
 import theme from "../../assets/themes";
 import { passwordSchema } from "../../utils/auth/passwordUtils";
+import { Link } from "react-router-dom";
+import { Controller } from "react-hook-form";
 
 const PasswordSetupFields = ({ control, role, guest, schema, errors, watch }) => {
     return (
@@ -25,6 +27,25 @@ const PasswordSetupFields = ({ control, role, guest, schema, errors, watch }) =>
                 schema={passwordSchema}
                 pwdLabelName="Password"
                 confirmPwdLableName="Confirm Password"
+            />
+
+            <Controller
+                name="termsOfUse"
+                control={control}
+                rules={{ required: "You must agree to the Terms of Use." }}
+                render={({ field }) => (
+                    <FormControlLabel
+                        control={<Checkbox {...field} />}
+                        label={
+                            <>
+                                I agree to the{" "}
+                                <Link to="/termsOfUse" target="_blank" rel="noopener noreferrer">
+                                    Terms of Use
+                                </Link>
+                            </>
+                        }
+                    />
+                )}
             />
         </Stack>
     );
