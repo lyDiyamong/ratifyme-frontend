@@ -136,7 +136,7 @@ const CredentialContent = ({ earnerData, achieveData, credUrl, credId, verifyCre
                                 // handleClose={handleOpen}
                                 fullWidth
                             >
-                                Verify credential
+                                Verify Credential
                             </Button>
 
                             <Box display="flex" alignItems="center" gap={1}>
