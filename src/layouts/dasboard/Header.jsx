@@ -164,29 +164,6 @@ const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                 <MenuIcon sx={{ fontSize: "32px", color: theme.palette.customColors.gray800 }} />
                             </IconButton>
                         )}
-                        {isTablet && (
-                            <FlexBetween
-                                backgroundColor={theme.palette.customColors.white}
-                                borderRadius="20px"
-                                paddingLeft="24px"
-                                width="30rem"
-                                py="4px"
-                                sx={{
-                                    borderRight: `1px solid ${theme.palette.divider}`,
-                                    boxShadow: theme.customShadows.default,
-                                }}
-                            >
-                                <InputBase placeholder="Search any topics..." sx={{ width: "30rem" }} />
-                                <IconButton>
-                                    <Search />
-                                </IconButton>
-                            </FlexBetween>
-                        )}
-                        {!isTablet && (
-                            <IconButton>
-                                <Search sx={{ fontSize: "28px", color: theme.palette.customColors.gray500 }} />
-                            </IconButton>
-                        )}
                     </FlexBetween>
                     {/* End left side */}
 

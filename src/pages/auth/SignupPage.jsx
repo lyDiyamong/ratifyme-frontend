@@ -48,7 +48,7 @@ const SignupPage = () => {
 
     // Fallback steps in case role is not defined
     const steps = {
-        institution: ["General Info", "Address Info", "Institution Info", "Account Setup", "Password Setup"],
+        institution: ["Institution Info", "General Info", "Address Info", "Account Setup", "Password Setup"],
         issuer: ["General Info", "Address Info", "Account Setup", "Password Setup"],
         earner: ["General Info", "Address Info", "Account Setup", "Password Setup"],
     };
@@ -86,6 +86,7 @@ const SignupPage = () => {
             institutionEmail: "",
             institutionPhoneNumber: "",
             institutionWebsiteUrl: "",
+            termsOfUse: false,
         },
         mode: "onChange",
         resolver: yupResolver(schema.concat(passwordSchemaName)),
@@ -114,14 +115,22 @@ const SignupPage = () => {
         // Define which fields to validate for each step
         switch (activeStep) {
             case 0:
-                fieldsToValidate = ["firstName", "lastName", "genderId", "dateOfBirth"];
+                if (role === "institution") {
+                    fieldsToValidate = ["institutionName", "institutionEmail", "institutionPhoneNumber", "institutionWebsiteUrl"];
+                } else {
+                    fieldsToValidate = ["firstName", "lastName", "genderId", "dateOfBirth"];
+                }
                 break;
             case 1:
-                fieldsToValidate = ["country", "city", "street", "postalCode"];
+                if (role === "institution") {
+                    fieldsToValidate = ["firstName", "lastName", "genderId", "dateOfBirth"];
+                } else {
+                    fieldsToValidate = ["country", "city", "street", "postalCode"];
+                }
                 break;
             case 2:
                 if (role === "institution") {
-                    fieldsToValidate = ["institutionName", "institutionEmail", "institutionPhoneNumber", "institutionWebsiteUrl"];
+                    fieldsToValidate = ["country", "city", "street", "postalCode"];
                 } else {
                     fieldsToValidate = ["username", "phoneNumber", "email"];
                 }
@@ -130,11 +139,11 @@ const SignupPage = () => {
                 if (role === "institution") {
                     fieldsToValidate = ["username", "phoneNumber", "email"];
                 } else {
-                    fieldsToValidate = ["password", "passwordConfirm"];
+                    fieldsToValidate = ["password", "passwordConfirm", "termsOfUse"];
                 }
                 break;
             case 4: // Only applicable to "institution"
-                fieldsToValidate = ["password", "passwordConfirm"];
+                fieldsToValidate = ["password", "passwordConfirm", "termsOfUse"];
                 break;
             default:
                 fieldsToValidate = [];
@@ -145,7 +154,11 @@ const SignupPage = () => {
         if (isStepValid) {
             const currentValues = methods.getValues();
 
-            setFieldValues(currentValues);
+            // setFieldValues(currentValues);
+            setFieldValues((prev) => ({
+                ...prev,
+                ...currentValues,
+            }));
 
             // Mark current step as completed
             setStepCompletion((prev) => {
@@ -210,9 +223,19 @@ const SignupPage = () => {
     };
 
     const handleSubmitLastStep = async () => {
-        const fieldsToValidate = ["password", "passwordConfirm"];
+        // Validate password and confirm password
+        const fieldsToValidate = ["password", "passwordConfirm", "termsOfUse"];
         const isStepValid = await trigger(fieldsToValidate);
 
+        // Check if password fields and checkbox are properly filled
+        const termsAgreed = methods.getValues("termsOfUse");
+
+        if (!termsAgreed) {
+            setMessage("Please agree to the Terms of Use before proceeding.");
+            return;
+        }
+
+        // Proceed if all validations pass
         if (isStepValid) {
             const currentValues = methods.getValues();
 
@@ -221,6 +244,8 @@ const SignupPage = () => {
             } catch (err) {
                 console.error("Error during last step submission:", err);
             }
+        } else {
+            setMessage("Please ensure all fields are correctly filled.");
         }
     };
 
@@ -233,7 +258,7 @@ const SignupPage = () => {
             <PageLoading isLoading={isLoading} />
             <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
                 {message && (
-                    <AlertMessage variant="error" onClose={() => setMessage("")}>
+                    <AlertMessage variant="error" timeOutClose={1000} onClose={() => setMessage("")}>
                         {message}
                     </AlertMessage>
                 )}

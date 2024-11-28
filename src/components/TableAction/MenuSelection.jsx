@@ -1,5 +1,6 @@
 // React library
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 // MUI import
 import { Box, Menu, IconButton } from "@mui/material";
@@ -7,6 +8,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 // Custom import
 import ActionButton from "./ActionButton";
+
 /**
  * MenuSelection Component
  *
@@ -17,6 +19,9 @@ import ActionButton from "./ActionButton";
  */
 // ============ Start Menu Selection ============
 const MenuSelection = ({ onView, onDelete }) => {
+    // Fetch roleId from global state
+    const { roleId } = useSelector((state) => state.global);
+
     // Open and Close Modal
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -28,16 +33,27 @@ const MenuSelection = ({ onView, onDelete }) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
     // View data
     const handleView = () => {
         onView();
         handleClose();
     };
+
     // Delete data
     const handleDelete = () => {
         onDelete();
         handleClose();
     };
+
+    // Conditionally render the three-dot menu or just the View button
+    if (roleId === 1) {
+        return (
+            <Box>
+                <ActionButton label="View" onClick={handleView} fullWidth/>
+            </Box>
+        );
+    }
 
     return (
         <Box>
@@ -76,4 +92,3 @@ const MenuSelection = ({ onView, onDelete }) => {
 
 export default MenuSelection;
 // ============ End Menu Selection ============
-

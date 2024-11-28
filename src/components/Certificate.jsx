@@ -31,22 +31,36 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
             justifyContent: "center",
         }}
     >
-        <Stack sx={{ flexDirection: "row", gap: 1, alignItems: "center" }}>
-            <Box sx={{ width: 40, height: 40, objectFit: "contain" }} component="img" src={RatfiyME} alt="RatifyMe" />
-            <Divider sx={{ height: 45, borderColor: "black" }} orientation="vertical" />
-            <Stack justifyContent="start" alignItems="start">
-                <Typography variant="h3" fontWeight={theme.fontWeight.semiBold}>
-                    RatifyMe
-                </Typography>
-                <Typography variant="body2">
-                    RatifyMe by{" "}
-                    <Typography
-                        component="span"
-                        sx={{ color: theme.palette.primary.main, fontWeight: theme.fontWeight.semiBold }}
-                    >
-                        TechA
+        <Stack sx={{ flexDirection: "row", gap: 2, justifyContent: "space-between" }}>
+            <Stack sx={{ flexDirection: "row", gap: 1, alignItems: "center" }}>
+                {badge?.Institution?.institutionProfileImage !== null ? (
+                    <>
+                        <Box
+                            sx={{ width: 55, objectFit: "contain" }}
+                            component="img"
+                            src={badge?.Institution?.institutionProfileImage || null}
+                            alt="RatifyMe"
+                        />
+                    </>
+                ) : null}
+            </Stack>
+            <Stack sx={{ flexDirection: "row", gap: 1, alignItems: "center" }}>
+                <Box sx={{ width: 40, height: 40, objectFit: "contain" }} component="img" src={RatfiyME} alt="RatifyMe" />
+                <Divider sx={{ height: 45, borderColor: "black" }} orientation="vertical" />
+                <Stack justifyContent="start" alignItems="start">
+                    <Typography variant="h3" fontWeight={theme.fontWeight.semiBold}>
+                        RatifyMe
                     </Typography>
-                </Typography>
+                    <Typography variant="body2">
+                        RatifyMe by{" "}
+                        <Typography
+                            component="span"
+                            sx={{ color: theme.palette.primary.main, fontWeight: theme.fontWeight.semiBold }}
+                        >
+                            TechA
+                        </Typography>
+                    </Typography>
+                </Stack>
             </Stack>
         </Stack>
 
@@ -79,7 +93,7 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
                 }}
             >
                 <Typography
-                variant="body1"
+                    variant="body1"
                     sx={{
                         color: theme.palette.text.disabled,
                     }}
@@ -92,7 +106,7 @@ const Certificate = forwardRef(({ recipientName, badge, earnerAchieve }, ref) =>
                 </Typography>
 
                 <Typography
-                variant="body1"
+                    variant="body1"
                     sx={{
                         color: theme.palette.text.disabled,
                         lineHeight: 2,

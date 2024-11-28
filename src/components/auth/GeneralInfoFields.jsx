@@ -31,13 +31,13 @@ const GeneralInfoFields = ({ control, schema, errors }) => {
             <FormInput name="lastName" label="Last Name" control={control} required schema={schema?.fields.lastName} />
             <SelectForm
                 name="genderId"
-                label="Gender"
+                label="Gender *"
                 options={genderOptions}
                 control={control}
                 defaultValue={getDefaultValue(schema?.fields.genderId?.defaultValue)}
             />
             <Box>
-                <DateSelectionForm control={control} name="dateOfBirth" label="Date of Birth" />
+                <DateSelectionForm control={control} name="dateOfBirth" label="Date of Birth *" />
                 {errors.dateOfBirth && (
                     <Typography sx={{ fontSize: 12, mx: "14px" }} color="error">
                         {errors.dateOfBirth.message}

@@ -100,15 +100,17 @@ const CertificateGenerator = ({ badge }) => {
     const [isUploadCertModal, setIsUploadCertModal] = useState(false);
     const [viewBtn, setViewBtn] = useState(false);
 
+    console.log("bagde", badge);
+
     // Generate certificate image and upload it
     const handleGenerateImage = async () => {
         try {
             // Wait for DOM readiness
-            await new Promise((resolve) => setTimeout(resolve, 100)); 
+            await new Promise((resolve) => setTimeout(resolve, 100));
             // Wait for fonts to load
-            await document.fonts.ready; 
+            await document.fonts.ready;
             // Preload and convert images
-            await prepareImages(certificateRef); 
+            await prepareImages(certificateRef);
 
             const imageSettings = {
                 quality: 1.0,

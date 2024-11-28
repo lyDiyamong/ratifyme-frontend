@@ -17,7 +17,7 @@ const ShareSocialModal = ({ open, handleClose, credUrl, badgeImg }) => {
                 <Stack gap={2}>
                     <Stack
                         component="a"
-                        href={`https://www.linkedin.com/sharing/share-offsite/?url=${credUrl}&url=${encodeURIComponent(badgeImg)}&text=Grateful%20for%20the%20opportunity%20to%20grow%20and%20achieve%20this%20milestone.%20%23lifelonglearning%20%23achievement%20%23ratifyme%20%23openbadge`}
+                        href={`https://www.linkedin.com/sharing/share-offsite/?url=${credUrl}&url=${badgeImg}&text=Grateful%20for%20the%20opportunity%20to%20grow%20and%20achieve%20this%20milestone.%20%23lifelonglearning%20%23achievement%20%23ratifyme%20%23openbadge`}
                         target="_blank"
                         flexDirection="row"
                         sx={{
@@ -152,7 +152,7 @@ const ShareSocialModal = ({ open, handleClose, credUrl, badgeImg }) => {
 
                     <Stack
                         component="a"
-                        href={`https://pinterest.com/pin/create/button/?url=${credUrl}&media=${credUrl}=Check out my achievement!`}
+                        href={`https://pinterest.com/pin/create/button/?url=${credUrl}&media=${badgeImg}&description=Check out my achievement!`}
                         target="_blank"
                         flexDirection="row"
                         sx={{

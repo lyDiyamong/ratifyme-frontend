@@ -9,13 +9,11 @@ import LandingContainer from "../../components/styles/LandingContainer";
 
 const OurCustomers = () => {
     const images = [
-        "https://agteach.site/static/media/agteach_logo.0de2a986a254e6f3a27325e8d5f6af91.svg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/2560px-Amazon_logo.svg.png",
+        "https://alphabeez.anbschool.org/static/media/agteach_logo.0de2a986a254e6f3a27325e8d5f6af91.svg",
         "https://ratifyme.s3.ap-southeast-2.amazonaws.com/Logo/emcast-logo.png",
         "https://ratifyme.s3.ap-southeast-2.amazonaws.com/Logo/AboveBeyond.png",
         "https://ratifyme.s3.ap-southeast-2.amazonaws.com/Logo/logo-with-name-vottamean.png",
         "https://ratifyme.s3.ap-southeast-2.amazonaws.com/Logo/RatfiyME.png",
-        "https://ratifyme.s3.ap-southeast-2.amazonaws.com/Logo/poipet-insider.png",
     ];
 
     const duplicatedImages = [...images, ...images];
@@ -24,8 +22,8 @@ const OurCustomers = () => {
         <LandingContainer>
             <Box sx={{ textAlign: "center", padding: "40px 0" }}>
                 <Typography variant="h3" sx={{ marginBottom: "50px" }}>
-                    Trusted by more than <span style={{ fontWeight: "bold", color: "#000" }}>100,000</span> of the world&apos;s leading
-                    organizations
+                    Trusted by more than <span style={{ fontWeight: "bold", color: "#000" }}>100,000</span> of the world&apos;s
+                    leading organizations
                 </Typography>
                 <Stack
                     component={motion.div}
@@ -43,7 +41,7 @@ const OurCustomers = () => {
                         animate={{ x: ["0%", "-50%"] }}
                         transition={{
                             repeat: Infinity,
-                            duration: 8,
+                            duration: 30,
                             ease: "linear",
                         }}
                         sx={{ display: "flex", gap: 2 }}

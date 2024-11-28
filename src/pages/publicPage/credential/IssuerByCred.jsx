@@ -36,7 +36,7 @@ const CustomTooltip = ({ title, children }) => {
     );
 };
 
-const IssuerByCred = ({ IssuerName }) => {
+const IssuerByCred = ({ IssuerName, institutionName }) => {
     return (
         <Box
             elevation={3}
@@ -51,15 +51,30 @@ const IssuerByCred = ({ IssuerName }) => {
             }}
         >
             <Stack flexDirection="row" alignItems="center" gap={1}>
-                <Avatar src={IssuerSvg} alt="Profile" sx={{ width: 56, height: 56 }} />
+                <Avatar src={IssuerSvg} alt="Profile" sx={{ width: 56, height: 56, display: { sm: "block", xss: "none" } }} />
                 <Stack>
                     <Typography variant="body3" fontWeight="bold" color="primary" gutterBottom>
-                        ISSUER BY
+                        ORGANIZATION
                     </Typography>
 
                     <Typography variant="h3" fontWeight={theme.fontWeight.semiBold} gutterBottom>
-                        {IssuerName}
+                        {institutionName}
                     </Typography>
+
+                    <CustomTooltip title={`This digital credential issued by ${IssuerName}`}>
+                        <Typography
+                            variant="body1"
+                            gutterBottom
+                            sx={{
+                                color: theme.palette.text.secondary,
+                                "&:hover": {
+                                    cursor: "help",
+                                },
+                            }}
+                        >
+                            {IssuerName}
+                        </Typography>
+                    </CustomTooltip>
                 </Stack>
             </Stack>
 

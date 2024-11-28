@@ -23,11 +23,11 @@ export const passwordSchema = ({ passwordName = "password", passwordConfirmName 
 // Update the password strength function to align with the full criteria
 export const getPasswordStrength = (password) => {
     let strength = 0;
-    if (password.length >= 8 && password.length <= 15) strength += 20; 
+    if (password.length >= 8 && password.length <= 15) strength += 20;
     if (/[a-z]/.test(password)) strength += 20; // Lowercase
     if (/[A-Z]/.test(password)) strength += 20; // Uppercase
     if (/\d/.test(password)) strength += 20; // Number
-    if (/[!@#$%^&*()_\-+=`~[\]{}|\\:;"'<>,.?/]/.test(password)) strength += 20; 
+    if (/[!@#$%^&*()_\-+=`~[\]{}|\\:;"'<>,.?/]/.test(password)) strength += 20;
     return strength;
 };
 

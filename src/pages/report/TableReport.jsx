@@ -69,11 +69,10 @@ const TableReport = () => {
     const reportColumns =
         roleId === 1
             ? [
-                  {
-                      name: "No.",
-                      selector: (row, index) => index + 1 || "N/A",
-                      sortable: false,
-                  },
+                {
+                    name: "No.",
+                    selector: (row, index) => (currentPage - 1) * rowsPerPage + index + 1 || "N/A",
+                },
                   {
                       name: "Organization Name",
                       selector: (row) => row.institutionName || "N/A",
@@ -99,10 +98,10 @@ const TableReport = () => {
                   },
               ]
             : [
-                  {
-                      name: "Issuer ID",
-                      selector: (row, index) => index + 1 || "N/A",
-                  },
+                {
+                    name: "No.",
+                    selector: (row, index) => (currentPage - 1) * rowsPerPage + index + 1 || "N/A",
+                },
                   {
                       name: "Issuer Name",
                       selector: (row) => row.issuerName || "N/A",

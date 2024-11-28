@@ -1,33 +1,37 @@
-// React library import
+// React Library
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 
-// MUI import
+// MUI Import
 import { Box, Typography } from "@mui/material";
 
-//Custom import
-import PageLoading from "../../components/loading/PageLoading";
+//Custom Import
 import { createCardContent } from "./OverviewCardFetch";
 import theme from "../../assets/themes";
+import PageLoading from "../../components/loading/PageLoading";
 
-// API import
+// Fetching Data
 import { useFetchInstitutionStatsQuery } from "../../store/api/reports/institutionStatApis";
-import { useFetchBadgeByEarnerQuery } from "../../store/api/badgeManagement/badgeApi";
+import { useFetchBadgeByEarnerQuery, useFetchClaimBadgeByEarnerQuery } from "../../store/api/badgeManagement/badgeApi";
+import { useSelector } from "react-redux";
 
 // =========== Start Overview Card ===========
 const CardsList = () => {
     // Redux toolkit hook
     const { data: response, isLoading, isError } = useFetchInstitutionStatsQuery();
     const { userId, roleId, earnerData } = useSelector((state) => state.global);
-    const { data: badge, isLoading: badgeLoading } = useFetchBadgeByEarnerQuery({ earnerId: earnerData?.id }, {skip: !earnerData});
+    const { data: badge, isLoading: badgeLoading } = useFetchBadgeByEarnerQuery(
+        { earnerId: earnerData?.id },
+        { skip: !earnerData },
+    );
+    const { data: claimedBadge } = useFetchClaimBadgeByEarnerQuery({ earnerId: earnerData?.id }, { skip: !earnerData });
     const [cardContents, setCardContents] = useState([]);
 
     useEffect(() => {
         if (response && roleId) {
-            const cardData = createCardContent(roleId, response?.data, userId, badge) || [];
+            const cardData = createCardContent(roleId, response?.data, userId, badge, claimedBadge) || [];
             setCardContents(cardData);
         }
-    }, [response, userId, badge, roleId]);
+    }, [response, userId, badge, roleId, claimedBadge]);
 
     if (isLoading || badgeLoading) return <PageLoading isLoading={isLoading || badgeLoading} />;
     if (isError) return <Typography color="error">Error fetching data</Typography>;

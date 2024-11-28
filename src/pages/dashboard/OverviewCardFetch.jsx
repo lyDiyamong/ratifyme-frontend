@@ -1,4 +1,4 @@
-// Custom import
+// Custom Import
 import blueGraphSvg from "../../assets/images/bluegraph.svg";
 import purpleGraphSvg from "../../assets/images/purplegraph.svg";
 import yellowGraphSvg from "../../assets/images/yellowgraph.svg";
@@ -7,7 +7,7 @@ import purpleArrowSvg from "../../assets/icons/purplearrow.svg";
 import yellowArrowSvg from "../../assets/icons/yellowarrow.svg";
 
 // This function is working as create card content based on role
-export const createCardContent = (roleId, data, userId, badge) => {
+export const createCardContent = (roleId, data, userId, badge, claimedBadge) => {
     switch (roleId) {
         case 1:
             return createAdminContent(data);
@@ -16,7 +16,7 @@ export const createCardContent = (roleId, data, userId, badge) => {
         case 3:
             return createIssuerContent(data, userId);
         case 4:
-            return createEarnerContent(data, userId, badge);
+            return createEarnerContent(data, userId, badge, claimedBadge);
         default:
             return [];
     }
@@ -79,7 +79,7 @@ const createIssuerContent = (data, userId) => {
 };
 
 // Earner content
-const createEarnerContent = (data, userId, badge) => {
+const createEarnerContent = (data, userId, badge, claimedBadge) => {
     const earnerData = [];
 
     data.forEach((institution) => {
@@ -91,21 +91,13 @@ const createEarnerContent = (data, userId, badge) => {
 
     const totalBadges = badge?.totalRecords || 0;
 
-    const uniqueAchievementsMap = new Map();
-    const allAchievements = earnerData.flatMap(({ Achievements }) => Achievements || []);
+    const claimedBadges = claimedBadge?.totalRecords || 0;
 
-    allAchievements.forEach((achievement) => {
-        if (!uniqueAchievementsMap.has(achievement.badgeClassId)) {
-            uniqueAchievementsMap.set(achievement.badgeClassId, achievement);
-        }
-    });
-
-    const totalAchievements = uniqueAchievementsMap.size;
     const totalIssuers = new Set(earnerData.map((earner) => earner.issuerId)).size;
 
     return [
         { image: yellowGraphSvg, title: "Total Issuers", icon: yellowArrowSvg, value: totalIssuers },
         { image: blueGraphSvg, title: "Total Badges", icon: purpleArrowSvg, value: totalBadges },
-        { image: purpleGraphSvg, title: "Total Achievements", icon: purpleArrowSvg, value: totalAchievements },
+        { image: purpleGraphSvg, title: "Total Achievements", icon: purpleArrowSvg, value: claimedBadges },
     ];
 };

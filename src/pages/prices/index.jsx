@@ -12,6 +12,7 @@ import theme from "../../assets/themes";
 
 // API import
 import { useCheckAuthQuery } from "../../store/api/auth/authApi";
+import CookieConsentAlert from "../../components/alert/CookieConsentAlert";
 
 const PricePage = () => {
     const { data, error, isLoading } = useCheckAuthQuery();
@@ -43,6 +44,8 @@ const PricePage = () => {
             </Typography>
             <Typography textAlign="center">Trusted for simplicity, time-efficiency, and professional impact</Typography>
             <ServicePlanCard />
+
+            <CookieConsentAlert />
         </LandingContainer>
         // ============ End servicePlanSection ============
     );

@@ -53,7 +53,7 @@ const cardData = [
         description: "Oversees database design and maintenance, ensuring data integrity, security, and optimal performance.",
         imageUrl: LyhourProfile,
         linkGitHub: "https://github.com/Lyhua-tech",
-        linkLinkedIn: "https://t.me/c/1926286452/4/3791",
+        linkLinkedIn: "https://www.linkedin.com/in/sreang-lyhour-aa9355292/",
     },
     {
         id: 5,
@@ -70,17 +70,17 @@ const cardData = [
         title: "Ly Diyamong",
         role: "Full Stack Developer",
         description:
-            "Specializes in server-side development, managing database interactions and API integrations for security and stability.",
+            "Specializing in server-side development, managing database interactions and API integrations for security and stability.",
         imageUrl: YamongProfile,
         linkGitHub: "https://github.com/lyDiyamong",
-        linkLinkedIn: "https://t.me/c/1926286452/4/3790",
+        linkLinkedIn: "https://www.linkedin.com/in/ly-diyamong",
     },
     {
         id: 7,
         title: "Phok Keomonyrothanak",
         role: "DevOps Engineer",
         description:
-            "Improves product design and user experience, ensuring the final product is both user-friendly and visually appealing.",
+            "Specializing in website deployment and managing web applications using AWS, Nginx, and GitLab Runner-powered CI/CD pipelines to streamline automation and ensure efficient, secure, and consistent delivery",
         imageUrl: RothanakProfile,
         linkGitHub: "https://github.com/RatanakANB",
         linkLinkedIn: "https://www.linkedin.com/in/rattanak-phok-605905256/",
@@ -90,7 +90,7 @@ const cardData = [
         title: "Ron Bunthong",
         role: "DevOps Engineer",
         description:
-            "Handles deployment and infrastructure, focusing on CI/CD pipeline setup and process automation for reliable delivery.",
+            "Skilled in integrating AWS cloud solutions with SEO strategies, optimizing web applications for search engines, and automating workflows through GitLab Runners",
         imageUrl: BunthongProfile,
         linkGitHub: "https://github.com/BunthongDev",
         linkLinkedIn: "https://www.linkedin.com/in/bun-thong-509b10293/",

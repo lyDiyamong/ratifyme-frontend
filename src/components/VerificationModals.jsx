@@ -32,15 +32,15 @@ const VerificationModal = ({ open, handleClose, achieveData, earnerData, credId,
         ClaimedOn: false,
         IssuedTo: false,
         CredentialId: false,
+        ExpiredDate: false,
     });
 
     // Simulates sequential loading with a timer
     const simulateSequentialLoading = () => {
-        const keys = ["IssuedOn", "IssuedBy", "ClaimedOn", "IssuedTo", "CredentialId"];
+        const keys = ["IssuedOn", "IssuedBy", "ClaimedOn", "IssuedTo", "CredentialId", "ExpiredDate"];
         keys.forEach((key, index) => {
             setTimeout(() => {
                 setLoadingStates((prev) => ({ ...prev, [key]: true }));
-
             }, index * 1000);
         });
     };
@@ -57,6 +57,7 @@ const VerificationModal = ({ open, handleClose, achieveData, earnerData, credId,
                 ClaimedOn: false,
                 IssuedTo: false,
                 CredentialId: false,
+                ExpiredDate: false,
             });
 
             simulateSequentialLoading();
@@ -75,7 +76,7 @@ const VerificationModal = ({ open, handleClose, achieveData, earnerData, credId,
             </DialogTitle>
             <DialogContent>
                 <List>
-                    {["IssuedOn", "IssuedBy", "ClaimedOn", "IssuedTo", "CredentialId"].map((key) => (
+                    {["IssuedOn", "IssuedBy", "ClaimedOn", "IssuedTo", "CredentialId", "ExpiredDate"].map((key) => (
                         <React.Fragment key={key}>
                             <ListItem>
                                 <Box display="flex" alignItems="center" gap={2}>
@@ -113,6 +114,8 @@ const VerificationModal = ({ open, handleClose, achieveData, earnerData, credId,
                                                             ? FormatDate(earnerAchieData?.claimedOn)
                                                             : key === "IssuedTo"
                                                             ? `${earnerData?.name}`
+                                                            : key === "ExpiredDate"
+                                                            ? FormatDate(achieveData?.BadgeClass?.expiredDate)
                                                             : credId
                                                         : "..."}
                                                 </Typography>

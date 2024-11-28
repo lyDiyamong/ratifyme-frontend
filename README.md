@@ -19,7 +19,6 @@ Join RatifyME today and take your achievements from hidden to highlighted—lett
 # Demo
 
 As our project is ready to be deploy this is the link to Demo our Project Showcase.
-- [RatifyMe Digital - www.ratifyme.digital](https://www.ratifyme.digital) 
 - [RatifyMe Digital - tech-a.anbschool.org](https://tech-a.anbschool.org/) 
 
 ## User Roles:
@@ -41,8 +40,8 @@ As our project is ready to be deploy this is the link to Demo our Project Showca
 
 # Tech Stack
 
--   Client: React, Node, MUi
--   Server: Node, Express, MySQL
+-   Client: React, MUI, Redux, Redux Toolkit
+-   Server: Node, Express, MySQL, Sequelize
 
 ## Getting Started
 
@@ -200,22 +199,15 @@ To run this project, you will need to add the following environment variables to
 
 `VITE_STRIPE_PUBLIC_KEY`
 
-## Features
-
--   **ReactJS**: For building dynamic UI components.
--   **Vite**: Fast build times and hot module replacement.
--   **MUI**: Consistent and customizable design system.
--   **Responsive Design**: Optimized for different screen sizes.
-
 ## Contribution
--   1 Prak Sreypov
--   2 Phok Keomonnyratanak
--   3 Samon Rotha
--   4 Ly Diyamong
--   5 Khun Malen
--   6 Sreang Lyhour
--   7 Rorn Bunthong
--   8 Tep Chounan
+-   Prak Sreypov
+-   Phok Keomonnyratanak
+-   Samon Rotha
+-   Ly Diyamong
+-   Khun Malen
+-   Sreang Lyhour
+-   Rorn Bunthong
+-   Tep Chounan
 
 ## License
 
@@ -226,4 +218,4 @@ This project is licensed under the RatifyMe by Tech_A Team License.
 For any questions or feedback, feel free to reach out:
 
 -   **Name**: RatifyMe by Tech_A Team
--   **Website**: [https://www.ratifyme.digital]
+-   **Website**: [https://tech-a.anbschool.org]
