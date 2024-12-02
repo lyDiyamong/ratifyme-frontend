@@ -26,5 +26,5 @@ export const socialMediaLinks = [
 export const copyrightLinks = [
     { to: "/termsOfUse", text: "Terms of Use" },
     { to: "/privacyPolicy", text: "Privacy Policy" },
-    { to: "/", text: "Cookies" },
+    { to: "/cookiePolicy", text: "Cookies" },
 ];

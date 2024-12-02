@@ -12,6 +12,7 @@ import AboutUs from "../pages/aboutUs";
 import AboutOurTeam from "../pages/aboutUs/OurTeam";
 import TermsOfUse from "../pages/termsPolicy/TermsOfUse";
 import PrivacyPolicy from "../pages/termsPolicy/PrivacyPolicy";
+import CookiePolicy from "../pages/termsPolicy/CookiePolicy";
 
 const LandingRouter = () => {
     return (
@@ -25,6 +26,7 @@ const LandingRouter = () => {
                 <Route path="/aboutOurTeam" element={<AboutOurTeam />} />
                 <Route path="/termsOfUse" element={<TermsOfUse />} />
                 <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
+                <Route path="/cookiePolicy" element={<CookiePolicy />} />
             </Route>
             <Route path="*" element={<NotFoundPage />} />
         </Routes>

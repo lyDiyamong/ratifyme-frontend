@@ -45,7 +45,7 @@ const CookieConsentAlert = () => {
         >
             <Box
                 sx={{
-                    maxWidth: "1000px",
+                    maxWidth: "900px",
 
                     mx: "auto",
                 }}
@@ -60,7 +60,7 @@ const CookieConsentAlert = () => {
                         gap: 1,
                     }}
                 >
-                    Want a Cookies?
+                    We use Cookie
                     <Box
                         component="img"
                         src={cookieImage}
@@ -79,32 +79,23 @@ const CookieConsentAlert = () => {
                 >
                     This website uses cookies that are needed for the site to work properly and to get data on how you interact
                     with it. By accepting, you agree to the use of cookies as described in our{" "}
-                    <a href="#" style={{ color: theme.palette.primary.main, fontWeight: theme.fontWeight.semiBold }}>
+                    <a
+                        href="/cookiePolicy"
+                        target="_blank"
+                        style={{ color: theme.palette.primary.main, fontWeight: theme.fontWeight.semiBold }}
+                    >
                         Cookie policy
                     </a>
                     .
                 </Typography>
-                <Box sx={{ display: "flex", gap: 2 }}>
-                    <Button
-                        variant="outlined"
-                        sx={{
-                            borderColor: theme.palette.text.main,
-                            color: theme.palette.primary.main,
-                            borderRadius: "8px",
-                            px: { md: 6, xss: 2 },
-                            fontWeight: "bold",
-                        }}
-                        onClick={() => setOpen(false)}
-                    >
-                        Decline
-                    </Button>
+                <Box sx={{ display: "flex", gap: 2, justifyContent: "end" }}>
                     <Button
                         variant="contained"
                         sx={{
                             bgcolor: theme.palette.primary.main,
                             color: "white",
                             borderRadius: "8px",
-                            px: { md: 6, xss: 2 },
+                            px: { md: 4, xss: 2 },
                             fontWeight: "bold",
                             "&:hover": {
                                 bgcolor: theme.palette.primary.dark,
@@ -112,7 +103,7 @@ const CookieConsentAlert = () => {
                         }}
                         onClick={handleAccept}
                     >
-                        Accept
+                        OK
                     </Button>
                 </Box>
             </Box>
