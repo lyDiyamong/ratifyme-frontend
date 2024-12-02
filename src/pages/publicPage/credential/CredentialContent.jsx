@@ -13,6 +13,7 @@ import ShareSocialModal from "./ShareSocialModal";
 import SkillsCred from "./SkillsCred";
 import FormatDate from "../../../utils/formatDate";
 import theme from "../../../assets/themes";
+import CopyCredUrl from "./CopyCredUrl";
 
 const CredentialContent = ({ earnerData, achieveData, credUrl, credId, verifyCred }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -221,6 +222,8 @@ const CredentialContent = ({ earnerData, achieveData, credUrl, credId, verifyCre
 
                     {/* Achievement Types Section */}
                     <AchievementTypesCred achievementTypes={achieveData?.BadgeClass?.Achievements} />
+
+                    <CopyCredUrl />
                 </Stack>
             </Grid>
         </Grid>
