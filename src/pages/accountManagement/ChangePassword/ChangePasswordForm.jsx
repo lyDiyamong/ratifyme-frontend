@@ -35,7 +35,9 @@ const ChangePasswordForm = () => {
             newPassword: yup
                 .string()
                 .notOneOf([yup.ref("passwordCurrent")], "⚠️ New password must differ from the current password")
-                .required("⚠️ New password is required"),
+                .required("⚠️ New password is required")
+                .min(8, "⚠️ Password must be at least 8 characters")
+                .max(15, "⚠️ Password must be less than or equal to 15 characters"),
         }),
     );
 

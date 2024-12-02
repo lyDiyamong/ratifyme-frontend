@@ -26,7 +26,7 @@ const AcademicBackground = () => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const handleSubmit = (academicData) => {
+    const handleSubmit = () => {
         handleClose();
     };
 

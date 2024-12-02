@@ -26,7 +26,7 @@ const ServicePlanManagement = () => {
                     boxShadow: theme.customShadows.default,
                 }}
             >
-                <ServicePlanCard />
+                <ServicePlanCard button={false} />
             </Box>
         </DashboardContainer>
         // ============ End ServicePlanManagement ============
