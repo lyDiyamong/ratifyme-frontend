@@ -35,7 +35,7 @@ import { useGetServicePlanQuery } from "../../store/api/subscription/subscriptio
 // Public key from Stripe
 const stripePromise = loadStripe(String(import.meta.env.VITE_STRIPE_PUBLIC_KEY));
 
-const ServicePlanCard = () => {
+const ServicePlanCard = ({ button = true }) => {
     const { institutionData, userId, roleId } = useSelector((state) => state.global);
     const navigate = useNavigate();
 
@@ -194,7 +194,7 @@ const ServicePlanCard = () => {
                                         {billingCycle === "monthly" ? "/month" : "/year"}
                                     </Typography>
                                 </Typography>
-                                <Button
+                                {button && <Button
                                     onClick={() => handleSubscribe(planId)}
                                     fullWidth
                                     variant="contained"
@@ -211,7 +211,7 @@ const ServicePlanCard = () => {
                                     }}
                                 >
                                     {isLoading ? <SpinLoading size="24px" /> : plan.buttonLabel}
-                                </Button>
+                                </Button>}
                                 <List dense sx={{ mt: 2 }}>
                                     {plan.features.map((feature, idx) => (
                                         <ListItem key={idx}>
