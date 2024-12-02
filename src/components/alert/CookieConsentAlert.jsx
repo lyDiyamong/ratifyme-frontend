@@ -60,7 +60,7 @@ const CookieConsentAlert = () => {
                         gap: 1,
                     }}
                 >
-                    Want a Cookies?
+                    Want a Cookie?
                     <Box
                         component="img"
                         src={cookieImage}
@@ -79,7 +79,7 @@ const CookieConsentAlert = () => {
                 >
                     This website uses cookies that are needed for the site to work properly and to get data on how you interact
                     with it. By accepting, you agree to the use of cookies as described in our{" "}
-                    <a href="#" style={{ color: theme.palette.primary.main, fontWeight: theme.fontWeight.semiBold }}>
+                    <a href="/cookiePolicy" target="_blank" style={{ color: theme.palette.primary.main, fontWeight: theme.fontWeight.semiBold }}>
                         Cookie policy
                     </a>
                     .
