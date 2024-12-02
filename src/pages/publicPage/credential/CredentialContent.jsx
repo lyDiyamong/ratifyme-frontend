@@ -223,7 +223,7 @@ const CredentialContent = ({ earnerData, achieveData, credUrl, credId, verifyCre
                     {/* Achievement Types Section */}
                     <AchievementTypesCred achievementTypes={achieveData?.BadgeClass?.Achievements} />
 
-                    <CopyCredUrl />
+                    <CopyCredUrl credUrl={credUrl} />
                 </Stack>
             </Grid>
         </Grid>

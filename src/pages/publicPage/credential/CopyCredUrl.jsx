@@ -1,8 +1,23 @@
+import { useState } from "react";
 import { Box, Typography, Stack } from "@mui/material";
 import { CopyAll } from "@mui/icons-material";
 import theme from "../../../assets/themes";
 
-const CopyCredUrl = ({ credUrl }) => {
+const CopyToClipboardBox = ({ credUrl }) => {
+    const [copyStatus, setCopyStatus] = useState("Copy");
+
+    const handleCopy = () => {
+        navigator.clipboard
+            .writeText(credUrl)
+            .then(() => {
+                setCopyStatus("Copied");
+                setTimeout(() => setCopyStatus("Copy"), 2000);
+            })
+            .catch(() => {
+                console.error("Failed to copy the text.");
+            });
+    };
+
     return (
         <Box
             elevation={3}
@@ -15,13 +30,21 @@ const CopyCredUrl = ({ credUrl }) => {
         >
             <Stack spacing={2}>
                 <Stack flexDirection="row" alignItems="center" gap={1}>
-                    <CopyAll />
-                    <Typography variant="h5">Copy</Typography>
+                    <CopyAll
+                        onClick={handleCopy}
+                        sx={{ cursor: "pointer", color: copyStatus === "Copied" ? "green" : "inherit" }}
+                    />
+                    <Typography
+                        variant="h5"
+                        sx={{ fontWeight: theme.fontWeight.semiBold, color: copyStatus === "Copied" ? "green" : "inherit" }}
+                    >
+                        {copyStatus}
+                    </Typography>
                 </Stack>
                 <Typography variant="body1">Your credential unique URL, copy it to showcase your skills!</Typography>
-            </Stack>
+            </Stack>  
         </Box>
     );
 };
 
-export default CopyCredUrl;
+export default CopyToClipboardBox;
