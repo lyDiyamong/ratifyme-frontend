@@ -4,7 +4,14 @@ import dayjs from "dayjs";
 
 // MUI import
 import { Box, Card, CardContent, Stack, Typography, IconButton, Divider, useMediaQuery } from "@mui/material";
-import { AccessTime, AccountBalanceRounded, BorderColorRounded, Delete, DeleteForeverOutlined, School } from "@mui/icons-material";
+import {
+    AccessTime,
+    AccountBalanceRounded,
+    BorderColorRounded,
+    Delete,
+    DeleteForeverOutlined,
+    School,
+} from "@mui/icons-material";
 
 // Custom import
 import EditAcademicModal from "./EditAcademicModal";
@@ -22,7 +29,7 @@ const AcademicInfo = ({ academicData }) => {
     const [deleteAcademicBackground, { isSuccess, isError }] = useDeleteAcademicBackgroundByIdMutation();
     const [open, setOpen] = useState(false);
     const [selectedData, setSelectedData] = useState(null);
-     const [isDeleteModal, setIsDeleteModal] = useState(false);
+    const [isDeleteModal, setIsDeleteModal] = useState(false);
     const [message, setMessage] = useCatchStatus(isSuccess || isError, isSuccess ? "Deleted successfully" : "Deleted failed");
 
     const handleOpen = () => {
@@ -43,7 +50,7 @@ const AcademicInfo = ({ academicData }) => {
         } catch (error) {
             setMessage("Deleted failed");
         } finally {
-            setOpen(false);
+            setIsDeleteModal(() => false);
         }
     };
 
@@ -63,7 +70,7 @@ const AcademicInfo = ({ academicData }) => {
 
     return (
         <>
-        <AlertConfirmation
+            <AlertConfirmation
                 open={isDeleteModal}
                 title="Delete this Academic Background"
                 message="Are you sure you want to delete this? This action cannot be undone."
