@@ -20,8 +20,6 @@ const CredentialContent = ({ earnerData, achieveData, credUrl, credId, verifyCre
     const handleOpenModal = () => setIsModalOpen(true);
     const handleCloseModal = () => setIsModalOpen(false);
 
-
-
     return (
         <Grid container spacing={2} my={2}>
             {/* Left Sticky Section */}
@@ -223,27 +221,6 @@ const CredentialContent = ({ earnerData, achieveData, credUrl, credId, verifyCre
 
                     {/* Achievement Types Section */}
                     <AchievementTypesCred achievementTypes={achieveData?.BadgeClass?.Achievements} />
-
-                    <Box
-                        elevation={3}
-                        sx={{
-                            p: 2,
-                            backgroundColor: theme.palette.customColors.white,
-                            borderRadius: theme.customShape.input,
-                            border: "1px solid #F5F5F7",
-                        }}
-                    >
-                        <Stack spacing={2}>
-                            <Typography variant="h4" fontWeight={theme.fontWeight.semiBold}>
-                                Addition Element
-                            </Typography>
-
-                            <Stack flexDirection="row" gap={1}>
-                                <CalendarMonthOutlined />
-                                <Typography>Expiration Date: {FormatDate(achieveData?.BadgeClass?.expiredDate)}</Typography>
-                            </Stack>
-                        </Stack>
-                    </Box>
                 </Stack>
             </Grid>
         </Grid>
