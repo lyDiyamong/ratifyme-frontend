@@ -1,11 +1,14 @@
 // MUI import
 import FacebookIcon from "@mui/icons-material/Facebook";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import { Box, Typography, Card, CardContent, Avatar } from "@mui/material";
+import { Box, Typography, Card, CardContent, Avatar, Tooltip } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import GmailLogoPng from "../assets/icons/GmailLogoPng.webp";
+import LinkIconPng from "../assets/icons/LinkIcon.svg";
 
 // Custom import
 import theme from "../assets/themes";
+import { EmailRounded, Link } from "@mui/icons-material";
 
 // Styled tag component
 const Tag = styled(Typography)(({ theme }) => ({
@@ -30,8 +33,8 @@ const SocialIconWrapper = styled(Box)(({ theme }) => ({
 
 // Styled oraganization logo component
 const OrganizationLogo = styled(Avatar)(({ theme }) => ({
-    width: theme.spacing(10),
-    height: theme.spacing(10),
+    width: theme.spacing(15),
+    height: theme.spacing(15),
 }));
 /**
  * OrganizationCard Component
@@ -71,6 +74,10 @@ const OrganizationCard = ({
     showFacebook = true,
     // Show or hide LinkedIn logo
     showLinkedIn = true,
+    // Org link
+    email,
+    // Org link
+    orgLink,
 }) => {
     return (
         // ============ Start Organization Card ============ //
@@ -79,12 +86,12 @@ const OrganizationCard = ({
                 sx={{
                     display: "flex",
                     // Stack vertically on mobile, horizontally on larger screens
-                    flexDirection: { xs: "column", md: "row" },
+                    flexDirection: { xss: "column", md: "row" },
                     justifyContent: "space-between",
                     padding: { xs: 2, md: 4 },
                     marginTop: { xs: 2, md: 4, xl: 5 },
                     borderRadius: theme.customShape.section,
-                    boxShadow: 3,
+                    boxShadow: theme.customShadows.default,
                     alignItems: "center",
                 }}
             >
@@ -93,7 +100,6 @@ const OrganizationCard = ({
                     <CardContent>
                         {/* Tag */}
                         {tag && <Tag>{tag}</Tag>}
-
                         {/* Title style */}
                         {title && (
                             <Typography
@@ -107,7 +113,6 @@ const OrganizationCard = ({
                                 {title}
                             </Typography>
                         )}
-
                         {/* Description style */}
                         {description && (
                             <Typography
@@ -124,16 +129,40 @@ const OrganizationCard = ({
                             </Typography>
                         )}
 
-                        {/* Social Icons style */}
+                        {/* Social Icons of Organization */}
                         <SocialIconWrapper
                             sx={{
-                                // Center icons on mobile
                                 justifyContent: { xs: "center", md: "flex-start" },
+                                alignItems: "center",
                             }}
                         >
-                            {/* Smaller icons on mobile screen */}
-                            {showFacebook && <FacebookIcon sx={{ fontSize: { xs: 40, md: 50 } }} />}{" "}
-                            {showLinkedIn && <LinkedInIcon sx={{ fontSize: { xs: 40, md: 50 } }} />}
+                            {email ? (
+                                <Tooltip title={`Email: ${email}`} arrow>
+                                    <a href={`mailto:${email}`} target="_blank" rel="noopener noreferrer">
+                                        <img src={GmailLogoPng} alt="email" width={40} height={40} />
+                                    </a>
+                                </Tooltip>
+                            ) : (
+                                <Tooltip title="No email available" arrow>
+                                    <span>
+                                        <EmailRounded sx={{ fontSize: { xs: 42 }, color: theme.palette.customColors.gray300 }} />
+                                    </span>
+                                </Tooltip>
+                            )}
+
+                            {orgLink ? (
+                                <Tooltip title={`Link: ${orgLink}`} arrow>
+                                    <a href={orgLink} target="_blank" rel="noopener noreferrer">
+                                        <img src={LinkIconPng} alt="link" width={32} />
+                                    </a>
+                                </Tooltip>
+                            ) : (
+                                <Tooltip title="No link available" arrow>
+                                    <span>
+                                        <Link sx={{ fontSize: { xs: 42 }, color: theme.palette.customColors.gray300 }} />
+                                    </span>
+                                </Tooltip>
+                            )}
                         </SocialIconWrapper>
                     </CardContent>
                 </Box>
