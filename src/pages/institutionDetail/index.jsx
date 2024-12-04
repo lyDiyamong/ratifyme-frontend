@@ -30,7 +30,7 @@ function InstitutionDetail() {
         isLoading: isInstitutionLoading,
         isError: isInstitutionError,
         error: institutionError,
-        isSuccess : institutionSuccess
+        isSuccess: institutionSuccess,
     } = useGetInstitutionByIdQuery(institutionId);
 
     const institution = institutionResponse?.data;
@@ -71,7 +71,9 @@ function InstitutionDetail() {
                 <OrganizationCard
                     title={institution?.institutionName}
                     description={institution?.institutionBio}
-                    logoUrl={institution?.User.profileImage}
+                    logoUrl={institution?.institutionProfileImage}
+                    email={institution?.institutionEmail}
+                    orgLink={institution?.institutionWebsiteUrl}
                 />
             )}
 
