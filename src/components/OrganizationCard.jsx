@@ -63,17 +63,11 @@ const OrganizationCard = ({
     // Default tag
     tag = "ORGANIZATION",
     // Default title
-    title = "Above & Beyond School",
+    title = "N/A",
     // Default description
-    description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    description = "N/A",
     // Organization logo URL
     logoUrl,
-    // Date in Mon DD, YYYY format
-    date,
-    // Show or hide Facebook logo
-    showFacebook = true,
-    // Show or hide LinkedIn logo
-    showLinkedIn = true,
     // Org link
     email,
     // Org link
@@ -182,20 +176,6 @@ const OrganizationCard = ({
                         <OrganizationLogo src={logoUrl} alt={title} />
                     ) : (
                         <OrganizationLogo>{title.charAt(0)}</OrganizationLogo>
-                    )}
-
-                    {/* Date style */}
-                    {date && (
-                        <Typography
-                            variant="body2"
-                            color="text.secondary"
-                            sx={{
-                                marginTop: { xs: 1, md: 2 },
-                                fontSize: { xs: "0.75rem", md: "0.875rem" },
-                            }}
-                        >
-                            {date}
-                        </Typography>
                     )}
                 </Box>
             </Card>

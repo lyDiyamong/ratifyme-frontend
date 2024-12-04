@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
-import { Box, Pagination } from "@mui/material";
+import { Box, CardMedia, Pagination, Typography } from "@mui/material";
 import OrganizationCard from "../../components/OrganizationCard";
 import DashboardContainer from "../../components/styles/DashboardContainer";
 import AlertMessage from "../../components/alert/AlertMessage";
@@ -8,6 +8,7 @@ import { SpinLoading } from "../../components/loading/SpinLoading";
 import BadgeListCard from "../../components/BadgeListCard";
 import useCatchStatus from "../../hooks/useCatchStatus";
 import theme from "../../assets/themes";
+import StatusCode from "../../assets/images/NoData.svg";
 import { useGetInstitutionByIdQuery } from "../../store/api/institutionManagement/institutionApi";
 import { useFetchBadgesByInstitutionsQuery } from "../../store/api/badgeManagement/badgeApi";
 
@@ -95,28 +96,42 @@ function InstitutionDetail() {
                         borderRadius: theme.customShape.section,
                         bgcolor: theme.palette.customColors.white,
                         px: 2,
-                        py: 2,
+                        pb: 2,
                         my: 3,
                     }}
                 >
-                    {isBadgesLoading ? (
-                        <SpinLoading />
-                    ) : badges.length > 0 ? (
-                        <BadgeListCard badges={paginatedBadges} onView={handleView} total={badges.length} />
-                    ) : (
-                        <AlertMessage variant="info">No badges available.</AlertMessage>
-                    )}
+                    {badges?.length > 0 ? (
+                        <>
+                            {isBadgesLoading ? (
+                                <SpinLoading />
+                            ) : (
+                                <BadgeListCard badges={paginatedBadges} onView={handleView} total={badges?.length} />
+                            )}
 
-                    {badges.length > 0 && (
-                        <Box sx={{ display: "flex", justifyContent: "end" }}>
-                            <Pagination
-                                count={totalPages}
-                                page={page}
-                                onChange={handlePageChange}
-                                size={isSmallScreen ? "small" : "large"}
-                                siblingCount={isSmallScreen ? 0 : 1}
-                                boundaryCount={isSmallScreen ? 1 : 2}
+                            {badges.length > 0 && (
+                                <Box sx={{ display: "flex", justifyContent: "end" }}>
+                                    <Pagination
+                                        count={totalPages}
+                                        page={page}
+                                        onChange={handlePageChange}
+                                        size={isSmallScreen ? "small" : "large"}
+                                        siblingCount={isSmallScreen ? 0 : 1}
+                                        boundaryCount={isSmallScreen ? 1 : 2}
+                                    />
+                                </Box>
+                            )}
+                        </>
+                    ) : (
+                        <Box display="flex" flexDirection="column" alignItems="center" p={4}>
+                            <CardMedia
+                                component="img"
+                                image={StatusCode}
+                                alt="No badges found"
+                                sx={{ maxWidth: 400, width: "100%" }}
                             />
+                            <Typography variant="h6" mt={2} textAlign="center" color={theme.palette.text.secondary}>
+                                No badges Found
+                            </Typography>
                         </Box>
                     )}
                 </Box>
