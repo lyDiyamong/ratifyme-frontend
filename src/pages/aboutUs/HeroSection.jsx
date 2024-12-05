@@ -24,7 +24,7 @@ const HeroAboutSection = () => {
                 <Stack sx={{ justifyContent: "center", alignItems: "center", gap: 4 }}>
                     <Chip
                         icon={<Circle color="#0AA4A5" sx={{ fontSize: 10 }} />}
-                        label="v1.3.0"
+                        label="v1.5.0"
                         variant="outlined"
                         sx={{
                             color: "#0AA4A5",

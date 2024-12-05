@@ -10,7 +10,7 @@ import ArrowStyleIcon from "../../assets/images/ArrowStyleIcon.svg";
 import ArrowStyleIRotatecon from "../../assets/images/ArrowStyleIRotatecon.svg";
 import LandingContainer from "../../components/styles/LandingContainer";
 import LandingDemo from "../../assets/images/LandingDemo.svg";
-import DigitalCredentailVideo from "../../assets/images/Digital_CredentailVideo.mp4";
+import DigitalCredentailVideo from "../../assets/images/RatifyMe-demo-video.mp4";
 import theme from "../../assets/themes";
 
 const DemoSection = () => {
@@ -26,7 +26,7 @@ const DemoSection = () => {
                 <Stack sx={{ flexDirection: "row", gap: 2 }}>
                     <Box component="img" src={ArrowStyleIcon} alt="Icon" />
                     <Typography textTransform="uppercase" textAlign="center" variant="h4" fontWeight={theme.fontWeight.semiBold}>
-                        About the Open badge concept
+                        About Our Platform
                     </Typography>
                     <Box component="img" src={ArrowStyleIRotatecon} alt="Icon" />
                 </Stack>
